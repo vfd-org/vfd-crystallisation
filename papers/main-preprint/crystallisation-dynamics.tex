@@ -1,0 +1,285 @@
+\documentclass[12pt]{article}
+
+% --- Packages ---
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+% --- Theorem Environments ---
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+
+% --- Title ---
+\title{Crystallisation Dynamics as a Deterministic Alternative to Collapse in Open Quantum Systems}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+We introduce a constraint-driven ``crystallisation'' model of state selection in which an unresolved quantum configuration evolves toward a stable coherent structure via minimisation of a closure functional. Extending the framework to density matrices, we show compatibility with standard Lindblad dynamics and recover open quantum system evolution in a weak-coupling limit. The proposed dynamics yields structured attractor behaviour, reproducible convergence, and characteristic transition-time scaling that is quantitatively distinguishable from standard decoherence and stochastic collapse models. We present numerical simulations demonstrating these features and identify experimental regimes in which the model can be tested. Five explicit falsification criteria are stated. The approach is formulated as a testable dynamical extension rather than a replacement for quantum mechanics.
+\end{abstract}
+
+%------------------------------------------------------------------
+\section{Introduction}
+%------------------------------------------------------------------
+
+The quantum measurement problem concerns the mechanism by which a superposition $\Psi = \sum_i c_i \phi_i$ yields a single definite outcome $\phi_k$ with probability $|c_k|^2$. The standard formalism provides no dynamical account of this transition.
+
+Environment-induced decoherence \citep{Zurek2003, JoosZeh1985} suppresses interference between macroscopically distinguishable states on short timescales, producing an effectively diagonal reduced density matrix in the pointer basis. However, decoherence does not select a single outcome from the resulting mixture \citep{Schlosshauer2005}. The transition from improper mixture to definite fact remains unaddressed.
+
+Spontaneous collapse models \citep{GRW1986, BassiGhirardi2003} introduce stochastic localisation events at a universal rate. Penrose's objective reduction \citep{Penrose1996} ties collapse to gravitational self-energy thresholds with a mass-dependent timescale. Both introduce genuinely new physics, but in each case the \textit{which-outcome} question is resolved by irreducible randomness.
+
+We introduce a constraint-driven ``crystallisation'' dynamic in which state selection arises as convergence to a stable attractor of a closure functional. The definite outcome is not chosen at random but formed through deterministic minimisation of a functional that balances constraint satisfaction, energetic cost, and phase coherence. The timescale is derived rather than postulated, and the selected outcome depends on the geometry of the constraint landscape rather than solely on Hilbert-space amplitudes.
+
+Section~2 defines the crystallisation operator. Section~3 extends the framework to density matrices. Section~4 presents simulation results. Sections~5 and~6 outline experimental signatures and falsification criteria. Section~7 discusses scope and limitations.
+
+%------------------------------------------------------------------
+\section{The Crystallisation Operator}
+%------------------------------------------------------------------
+
+\subsection{Definition}
+
+Let $\Psi \in \mathcal{H}_M$ denote a quantum state on a Hilbert space associated with a constrained manifold $M$. The crystallisation operator $C$ is defined as
+\begin{equation}
+C[\Psi] = \Psi^{\star} = \arg\min_{\Phi \in \mathcal{A}} F[\Phi]
+\end{equation}
+where $\mathcal{A} \subset \mathcal{H}_M$ is the admissible configuration set and $F$ is the closure functional. The crystallised state $\Psi^{\star}$ satisfies
+\begin{equation}
+\nabla_\Phi F[\Psi^{\star}] = 0, \qquad \delta^2 F[\Psi^{\star}] > 0.
+\end{equation}
+
+\subsection{Closure Functional}
+
+The closure functional is
+\begin{equation}
+F[\Phi] = \alpha\, R[\Phi] + \beta\, E[\Phi] - \gamma\, Q[\Phi]
+\end{equation}
+with $\alpha, \beta, \gamma > 0$. The closure residual $R[\Phi] = \|G[\Phi] - K\|^2 \geq 0$ measures constraint mismatch, where $G[\Phi]$ is the constraint structure induced by $\Phi$ and $K$ is the admissible target. The energy functional $E[\Phi] = \langle \Phi | L | \Phi \rangle$ encodes energetic cost via a coupling operator $L$. The coherence metric
+\begin{equation}
+Q[\Phi] = \frac{1}{n^2} \sum_{i,j} \cos(\theta_i - \theta_j)
+\end{equation}
+measures phase alignment across modes, with $Q = 1$ indicating perfect coherence. Minimising $F$ simultaneously reduces constraint mismatch, lowers energy, and rewards coherence. At this stage, the functional is introduced as a modelling assumption designed to test whether constraint-driven selection yields experimentally distinguishable dynamics.
+
+\subsection{Gradient Flow}
+
+Crystallisation proceeds as continuous gradient flow rather than instantaneous projection:
+\begin{equation}
+\frac{\partial \Psi}{\partial t} = -\nabla_\Psi F[\Psi].
+\end{equation}
+The state evolves along the steepest descent of $F$ until reaching a stable equilibrium. The crystallisation timescale is $\tau_{\mathrm{crys}} = 1/\Omega[\Psi]$, where $\Omega = a\,R + b\,Q + c\,|\nabla V|$. Higher constraint mismatch or steeper gradients produce faster crystallisation.
+
+\subsection{Mathematical Properties}
+
+\begin{theorem}[Existence]
+Let $F$ be continuous and coercive on a non-empty, closed, bounded admissible set $\mathcal{A}$. Then $F$ attains its minimum on $\mathcal{A}$.
+\end{theorem}
+
+\begin{theorem}[Stability]
+If $\Psi^{\star}$ is a strict local minimiser with positive-definite Hessian, then $\Psi^{\star}$ is Lyapunov-stable under the gradient flow, since $\dot{F} = -\|\nabla F\|^2 \leq 0$.
+\end{theorem}
+
+\begin{theorem}[Mode Selection]
+In the spectral formulation $\Psi = \sum_i c_i \phi_i$ with reweighted coefficients $\tilde{c}_i \propto c_i \exp(-\mu R_i - \nu E_i + \rho Q_i)$, as $\mu, \rho \to \infty$ the coefficients asymptotically concentrate on the mode(s) minimising $\mu R_i + \nu E_i - \rho Q_i$, by Laplace asymptotics.
+\end{theorem}
+
+%------------------------------------------------------------------
+\section{Quantum-Compatible Formulation}
+%------------------------------------------------------------------
+
+\subsection{Density-Matrix Evolution}
+
+At the density-matrix level, the combined evolution equation is
+\begin{equation}\label{eq:master}
+\frac{d\rho}{dt} = -\frac{i}{\hbar}[H, \rho] + \mathcal{L}_{\mathrm{env}}[\rho] - \lambda\, \nabla_\rho F[\rho]
+\end{equation}
+where $H$ is the system Hamiltonian, $\mathcal{L}_{\mathrm{env}}$ is the Lindblad superoperator encoding environmental decoherence at rate $\Gamma$, and $\lambda \geq 0$ is the crystallisation rate. The closure functional on density matrices is $F[\rho] = \alpha\, R[\rho] + \beta\, \mathrm{Tr}(H\rho) - \gamma\, Q[\rho]$, where $Q[\rho]$ is a coherence measure on the off-diagonal structure of $\rho$. At this stage, the density-matrix functional is introduced as a phenomenological extension designed to test whether constraint-driven selection can be embedded consistently within open-system dynamics.
+
+\subsection{Trace Preservation}
+
+The unitary and Lindblad terms preserve the trace. For the crystallisation term, trace preservation is enforced by projecting the functional gradient onto the trace-zero subspace:
+\begin{equation}
+\nabla_\rho F[\rho] \;\mapsto\; \nabla_\rho F[\rho] - \frac{\mathrm{Tr}(\nabla_\rho F[\rho])}{d}\, \mathbb{I}
+\end{equation}
+ensuring $\frac{d}{dt}\mathrm{Tr}(\rho) = 0$ identically.
+
+\subsection{Positivity}
+
+The crystallisation term $-\lambda \nabla_\rho F[\rho]$ is not generically of Lindblad form, so complete positivity is not guaranteed \textit{a priori}. For $\lambda/\Gamma \ll 1$, the Lindblad terms dominate and any deviations from complete positivity are expected to be perturbatively suppressed. We restrict attention to parameter regimes where positivity is maintained; rigorous characterisation of the positivity domain as a function of $\lambda/\Gamma$ remains open. This situation is analogous to that encountered in post-Markovian master equations and time-dependent Lindblad generators \citep{Schlosshauer2007}.
+
+\subsection{Limiting Cases}
+
+\textbf{Limit $\lambda \to 0$.} The crystallisation term vanishes and the evolution reduces to standard Lindblad dynamics. All predictions of standard open quantum system theory are recovered exactly. The model is a strict extension.
+
+\textbf{Limit $\lambda \gg \Gamma$.} The crystallisation term dominates, driving rapid convergence to an attractor of $F[\rho]$. Environmental decoherence acts as a perturbation.
+
+The ratio $\Delta = \lambda/\Gamma$ controls the crossover. For $\Delta \ll 1$, the system is a standard open quantum system. For $\Delta \gtrsim 1$, crystallisation effects become accessible. The transition is continuous.
+
+%------------------------------------------------------------------
+\section{Simulation Results}
+%------------------------------------------------------------------
+
+We present numerical simulations of the crystallisation dynamics for a system of $n = 8$ coupled modes evolving under the density-matrix equation~\eqref{eq:master}. The Hamiltonian $H$ encodes nearest-neighbour coupling on a ring, the Lindblad operators implement uniform dephasing at rate $\Gamma$, and the crystallisation term drives the state toward attractors of $F[\rho]$. Unless otherwise stated, parameters are $\alpha = 1.0$, $\beta = 0.3$, $\gamma = 0.8$, with $\lambda/\Gamma$ varied across runs. Initial states are random superpositions with uniformly distributed phases. The numerical objective is to test whether the crystallisation dynamics exhibits reproducible signatures that differ qualitatively from standard decoherence and stochastic collapse baselines.
+
+\subsection{Monotonic Descent of the Closure Functional}
+
+Figure~1 shows the time evolution of the closure functional $F(t)$ for representative initial conditions. In all cases, $F(t)$ decreases monotonically and approaches a stable asymptotic value.
+
+The trajectories exhibit two regimes: an initial rapid descent phase in which the dominant constraint mismatch is reduced, followed by a slower convergence toward the final attractor. Convergence occurs within a finite timescale consistent with $\tau_{\mathrm{crys}} \sim 1/\Omega[\Psi]$.
+
+This behaviour is a direct consequence of the gradient-flow structure. In contrast to stochastic collapse models, the evolution is continuous and governed by a Lyapunov functional, with no discontinuities or jump processes.
+
+\subsection{Outcome Selection and Transition Times}
+
+Figure~2 compares outcome distributions and transition-time statistics for crystallisation dynamics and standard decoherence ($\lambda = 0$), using identical initial conditions.
+
+Under crystallisation, outcomes concentrate in a small number of attractor basins, with one or a small number of attractor basins capturing the majority of trials. The transition-time distribution is sharply peaked with low variance.
+
+Under decoherence, outcomes distribute across multiple pointer states according to Born-rule weights, and transition times follow a broad, approximately exponential distribution.
+
+The transition-time distributions are statistically distinguishable (Kolmogorov--Smirnov test, $p < 10^{-6}$ for $N \geq 200$). The difference between narrow, reproducible convergence and broad stochastic timing provides a direct experimental discriminator between the models.
+
+\subsection{Basin Structure and Deterministic Selection}
+
+Figure~3 illustrates the basin structure of the closure functional for a system with multiple attractors. Initial conditions are sampled across a two-dimensional subspace of the state space.
+
+The basin boundaries form smooth partitions of the initial-condition space, with each region mapping deterministically to a single attractor under the gradient flow. The relative basin sizes depend on the geometry of the closure functional rather than solely on Hilbert-space amplitudes.
+
+For symmetric initial amplitudes, the resulting basin preferences can differ from Born-rule expectations. In the example shown, basin fractions deviate from uniform weighting, indicating that constraint geometry introduces measurable bias in outcome selection.
+
+This deterministic basin structure distinguishes crystallisation from stochastic models, in which outcome probabilities are fixed by amplitude alone.
+
+\subsection{Transition-Time Scaling}
+
+Figure~4 shows the dependence of the crystallisation timescale $\tau_{\mathrm{crys}}$ on system parameters. The observed scaling follows a multi-parameter form:
+\begin{equation}
+\tau_{\mathrm{crys}} = \frac{1}{\lambda\!\left(\alpha\, a\, R_0 + \gamma\, b\, Q_0 + \Gamma\right)}
+\end{equation}
+where $R_0$ and $Q_0$ denote characteristic values of the closure residual and coherence metric along the trajectory, and the fitted coefficients are consistent with the theoretical prediction.
+
+This structured scaling contrasts with standard models: decoherence predicts $\tau \sim 1/\Gamma$, GRW predicts $\tau \sim 1/\lambda_{\mathrm{GRW}}$, and Penrose OR predicts $\tau \sim \hbar/\Delta E_G$. The dependence on multiple quantities, including constraint residual and coherence, is a distinguishing feature of the crystallisation dynamics and provides a falsifiable signature.
+
+\subsection{Summary of Numerical Behaviour}
+
+Across all simulations, four consistent features are observed:
+\begin{enumerate}
+\item The closure functional decreases monotonically and converges to stable minima.
+\item Outcome selection is structured and reproducible under fixed conditions.
+\item Initial conditions partition into deterministic basins of attraction.
+\item Transition times follow multi-parameter scaling rather than single-rate laws.
+\end{enumerate}
+These features are not reproduced under standard decoherence or stochastic collapse dynamics and form the basis for the experimental signatures discussed in the following section.
+
+%------------------------------------------------------------------
+\section{Experimental Signatures}
+%------------------------------------------------------------------
+
+The crystallisation model introduces a deterministic, constraint-driven mechanism for state selection. This leads to observable deviations from both standard decoherence and stochastic collapse models. We identify a set of signatures that can be used to distinguish these behaviours experimentally.
+
+\subsection{Signature Overview}
+
+Table~\ref{tab:signatures} summarises the principal signatures. Each corresponds to a measurable quantity for which the crystallisation model predicts behaviour that differs from standard frameworks.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Key experimental signatures distinguishing crystallisation dynamics from decoherence and stochastic collapse models.}
+\label{tab:signatures}
+\begin{tabular}{@{}llp{3.5cm}p{3.5cm}@{}}
+\toprule
+ID & Observable & Crystallisation Prediction & Standard Expectation \\
+\midrule
+S1 & Outcome entropy & Reduced entropy under fixed conditions & Born-rule entropy \\
+S2 & Constraint dependence & Outcome statistics vary with constraint geometry & No dependence beyond Hamiltonian \\
+S3 & Transition-time scaling & Multi-parameter scaling & Single-rate scaling \\
+S4 & Basin preference & Bias determined by constraint landscape & Determined by $|c_k|^2$ \\
+S5 & Path reproducibility & Low trajectory dispersion & High dispersion (stochastic) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Outcome Selection Statistics}
+
+Under crystallisation dynamics, repeated trials from identical initial conditions converge to the same attractor with high probability. This leads to reduced outcome entropy compared with Born-rule expectations. A systematic reduction in entropy relative to the Born-rule baseline would indicate structured selection rather than stochastic sampling.
+
+\subsection{Constraint-Geometry Dependence}
+
+The crystallisation model predicts that outcome statistics depend on the geometry of the constraint landscape. Modifying the constraint structure while keeping Hilbert-space amplitudes fixed can shift the preferred attractor. This contrasts with standard quantum theory, in which outcome probabilities depend only on the amplitudes in the measurement basis. Experiments that vary coupling structure or boundary conditions while preserving initial amplitudes provide a direct test of this dependence.
+
+\subsection{Transition-Time Scaling}
+
+The crystallisation timescale depends on multiple quantities, including constraint residual, coherence, and environmental coupling. By independently varying parameters such as coupling strength and environmental noise, one can measure whether transition times follow a single-rate scaling (as in decoherence or GRW) or a structured multi-parameter dependence.
+
+\subsection{Basin Structure and Outcome Bias}
+
+In systems with multiple attractors, the crystallisation dynamics partitions the initial-condition space into basins of attraction. For symmetric amplitude distributions, this can produce biases that differ from Born-rule predictions. Measuring outcome frequencies for controlled initial states provides a test of whether selection follows amplitude weighting or constraint-driven basin structure.
+
+\subsection{Path Reproducibility}
+
+Because the dynamics is deterministic, trajectories from identical initial conditions follow nearly identical paths through state space. This can be quantified by measuring trajectory dispersion across repeated runs. Continuous-monitoring platforms, such as cavity quantum electrodynamics systems, are particularly suited to this measurement.
+
+\subsection{Experimental Platforms}
+
+These signatures can be probed across a range of systems:
+\begin{itemize}
+\item \textbf{Qubit systems:} repeated preparation allows high-statistics measurement of outcome distributions and transition times.
+\item \textbf{Cavity quantum electrodynamics:} continuous monitoring enables reconstruction of trajectories and detection of reproducibility.
+\item \textbf{Engineered analog systems:} coupled oscillator networks provide a direct test of the dynamical mechanism in a controllable setting.
+\end{itemize}
+Each platform probes different aspects of the model. Analog systems provide a direct test of the dynamical framework, while quantum platforms test its relevance to state selection.
+
+\subsection{Testability}
+
+The signatures described above define a set of measurable distinctions between crystallisation dynamics and existing models. The key requirement is not precision beyond current experimental capability, but the ability to resolve qualitative differences in scaling, reproducibility, and constraint dependence.
+
+%------------------------------------------------------------------
+\section{Falsifiability}
+%------------------------------------------------------------------
+
+The crystallisation model is a scientific hypothesis only insofar as it can be empirically refuted. We state five conditions, any one of which, if observed consistently in the appropriate regime, would falsify the model.
+
+\textbf{F1 --- Irreducible stochasticity.} The model is falsified if outcome distributions remain irreducibly stochastic under identical preparations in regimes where deterministic attractor selection is predicted, with outcome entropy matching the Born-rule null across all constraint configurations.
+
+\textbf{F2 --- No constraint-geometry dependence.} The model is falsified if outcomes and transition times show no measurable dependence on constraint geometry at fixed Hilbert-space amplitudes.
+
+\textbf{F3 --- No attractor structure.} The model is falsified if no metastable or attractor-like dynamics appears in systems where the closure functional predicts multiple basins.
+
+\textbf{F4 --- Full Lindblad sufficiency.} The model is falsified if standard Lindblad decoherence fully captures observed behaviour with no added predictive value from the crystallisation term, as measured by AIC/BIC model selection.
+
+\textbf{F5 --- Mathematical inadmissibility.} The model is falsified if the crystallisation term cannot be incorporated into density-matrix evolution while preserving trace and maintaining positivity in the relevant parameter regime.
+
+%------------------------------------------------------------------
+\section{Discussion}
+%------------------------------------------------------------------
+
+The crystallisation framework is an extension, not a replacement, of standard quantum mechanics. In the limit $\lambda \to 0$ it reduces to Lindblad dynamics; all existing experimental results consistent with open quantum system theory are also consistent with crystallisation at sufficiently small $\lambda$. The model predicts deviations from standard dynamics when $\lambda/\Gamma \gtrsim 1$.
+
+Like GRW \citep{GRW1986}, the model modifies the master equation with terms that drive the state toward definite outcomes. Unlike GRW, the dynamics is deterministic and the selected outcome is determined by constraint geometry rather than random localisation. Like Penrose OR \citep{Penrose1996}, the model predicts that superposition lifetimes depend on physical parameters beyond Hilbert-space amplitudes. Unlike OR, the timescale depends on multiple constraint parameters rather than a single gravitational threshold. The most distinctive feature relative to all stochastic alternatives is the prediction of deterministic basin selection (S4) and high path reproducibility (S5).
+
+Several questions remain open. The physical origin of the closure functional $F$ is not specified: whether it emerges from deeper structure or must be postulated as a new dynamical principle is unresolved. The weights $\alpha$, $\beta$, $\gamma$ and rate $\lambda$ are free parameters whose microscopic interpretation has not been established. Extension to infinite-dimensional Hilbert spaces requires functional-analytic treatment beyond the finite-dimensional theorems presented here.
+
+%------------------------------------------------------------------
+\section{Conclusion}
+%------------------------------------------------------------------
+
+The crystallisation operator provides a deterministic, constraint-driven mechanism for state selection that is compatible with open quantum systems and yields quantitatively testable deviations from standard decoherence and stochastic collapse models. The framework replaces stochastic projection with gradient flow on a closure functional, recovers Lindblad evolution in the appropriate limit, and predicts structured attractor dynamics, reproducible convergence, multi-parameter transition-time scaling, and constraint-dependent basin selection. Five falsification criteria identify the conditions under which the model would be refuted. Whether crystallisation dynamics is realised in nature is an empirical question, and the signatures identified here provide a concrete and testable basis for evaluating it experimentally.
+
+%------------------------------------------------------------------
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

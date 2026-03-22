@@ -1,0 +1,111 @@
+# VFD Crystallisation — Paper Architecture and Publication Plan
+
+This document describes how the crystallisation framework is organised for presentation, review, and testing.
+
+The materials in this repository are intended to present a testable framework; they do not assume correctness of the model and are structured to enable independent evaluation.
+
+## Structure: 1 + 2
+
+This research programme is presented as **one flagship paper** supported by **two companion papers** and a **supplementary layer**. This is not six separate publications — it is one coherent narrative with structured depth.
+
+---
+
+## Flagship Paper
+
+**"Crystallisation Dynamics as a Deterministic Alternative to Collapse in Open Quantum Systems"**
+`papers/main-preprint/crystallisation-dynamics.tex`
+
+- **Role**: The primary outward-facing paper. This is what people read first.
+- **Content**: Introduction, operator definition, quantum-compatible formulation, simulation results (4 figures), condensed signatures, falsification criteria, discussion.
+- **Audience**: Physicists in foundations/quantum info/collapse models. Readable in ~15 minutes.
+- **Claim level**: Testable dynamical extension, not a replacement for QM.
+- **Status**: Prepared for review.
+
+---
+
+## Companion Paper A — Formalism
+
+**"The Crystallisation Operator: Mathematical Structure and Properties"**
+`papers/formalism/crystallisation-formalism.tex`
+
+- **Role**: Full mathematical depth. Pure structure, no narrative.
+- **Content**: Formal operator definition, four theorems with proof sketches, spectral formulation, Hessian analysis, dynamical flow, crystallisation timescale.
+- **Audience**: Mathematical physicists wanting the rigorous foundation.
+- **Claim level**: Mathematical properties of the operator (existence, stability, descent, mode selection).
+- **Status**: Prepared for review.
+
+---
+
+## Companion Paper B — Experimental
+
+**"Experimental Signatures, Parameter Estimation, and Benchmark Comparison of the Crystallisation Operator"**
+`papers/experimental/crystallisation-experimental.tex`
+
+- **Role**: The "can we test this?" paper. Provides falsifiability, parameter estimation, and benchmarking in one coherent companion.
+- **Content**: Competing models, signature taxonomy (SGT-1 through SGT-6), experimental platforms (EP1-EP5), parameter estimation framework, identifiability/sensitivity, benchmark results, falsification criteria (F1-F5).
+- **Audience**: Experimentalists, reviewers, and critics evaluating testability.
+- **Claim level**: Framework for empirical discrimination. No claims of validation.
+- **Narrative arc**: signatures -> measurement -> comparison -> falsification
+- **Status**: Prepared for review.
+
+---
+
+## Supplementary Layer
+
+`papers/supplementary/`
+
+Not standalone papers. Reference material:
+
+| Resource | Content |
+|----------|---------|
+| `prediction-registry.tex` | 10 structured predictions with per-model expectations |
+| `parameter-registry.md` | Full 9-parameter specification with units/ranges/proxies |
+| `platform-mapping/*.md` | 5 platform-specific experimental guides |
+| `signatures.md` | 5 experiment class protocols |
+
+---
+
+## Publication Order
+
+1. **Flagship first** — main preprint on arXiv + website + GitHub
+2. **Experimental second** — shows testability and falsifiability
+3. **Formalism third** — for readers wanting mathematical depth
+
+Supplementary published alongside as downloadable references.
+
+---
+
+## X (Twitter) Strategy
+
+Do NOT post 3 separate papers. Instead:
+
+**One main post** with the flagship paper:
+- Core idea in 2 sentences
+- Key figure (Fig 3 or Fig 4)
+- Link to GitHub repo
+- Mention companion papers exist for depth
+
+**Thread** (optional):
+- What the operator does
+- How it differs from decoherence/GRW/OR
+- What would falsify it
+- Link to experimental companion
+
+---
+
+## Review Order
+
+1. Review main preprint ONLY
+2. Review experimental companion
+3. Review formalism companion
+4. Review supplementary
+
+---
+
+## Release Tags
+
+| Tag | Content |
+|-----|---------|
+| `v0.1-internal` | Internal review of main preprint |
+| `v0.2-cleaned` | Main preprint + experimental companion public |
+| `v1.0-public` | Full programme: all papers + supplementary |

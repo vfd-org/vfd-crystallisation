@@ -1,0 +1,121 @@
+\documentclass[12pt]{article}
+
+% --- Packages ---
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{longtable}
+\usepackage{array}
+
+% --- Theorem Environments ---
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+
+% --- Title ---
+\title{VFD Crystallisation --- Prediction Registry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document provides the prediction registry for the VFD crystallisation model. Each prediction specifies what the crystallisation model expects, what competing models expect, and under what conditions the VFD prediction would be falsified. Ten predictions are catalogued spanning analog validation, qubit-level tests, and precision quantum experiments. Key discrimination points and summary statistics are provided.
+\end{abstract}
+
+%------------------------------------------------------------------
+\section{Format}
+%------------------------------------------------------------------
+
+Each prediction specifies what the crystallisation model expects, what competing models expect, and under what conditions the VFD prediction would be falsified.
+
+%------------------------------------------------------------------
+\section{Prediction Table}
+%------------------------------------------------------------------
+
+\begin{longtable}{@{}lp{2cm}p{2.2cm}p{2cm}p{1.8cm}p{1.8cm}p{1.5cm}p{2.2cm}@{}}
+\caption{Full prediction registry for the VFD crystallisation model.} \label{tab:predictions} \\
+\toprule
+ID & Observable & VFD Prediction & Decoherence (M1) & GRW (M2) & Penrose OR (M3) & Difficulty & Falsified If \\
+\midrule
+\endfirsthead
+\toprule
+ID & Observable & VFD Prediction & Decoherence (M1) & GRW (M2) & Penrose OR (M3) & Difficulty & Falsified If \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+PRED-001 & Outcome entropy under fixed constraints & Low $H$; structured selection dominates & Moderate $H$; Born-rule & Moderate $H$; Born-rule with GRW corrections & Moderate $H$; threshold-triggered & Medium & $H$ matches Born-rule null across all constraint configs \\
+\addlinespace
+
+PRED-002 & Transition-time scaling with residual $R$ & $\tau \sim \frac{1}{aR + bQ + cB + d\Gamma}$; structured multi-parameter & $\tau \sim 1/\gamma_{\mathrm{env}}$; environment-dominated & $\tau \sim 1/\lambda_{\mathrm{GRW}}$; fixed stochastic rate & $\tau \sim \hbar/\Delta E_G$; mass-dependent & Medium & $\tau$ scaling matches single-parameter decoherence/GRW across all regimes \\
+\addlinespace
+
+PRED-003 & Basin preference under symmetric amplitudes, asymmetric constraints & Biased toward constraint-favoured basin & Equal preference (Born-rule symmetric) & Equal preference (Born-rule symmetric) & Possibly biased by $\Delta E_G$ but not constraint geometry & High & No measurable basin bias when constraints are asymmetric \\
+\addlinespace
+
+PRED-004 & Metastable plateau frequency in $F(t)$ & Plateaus present with structured dwell times & No plateaus; smooth exponential decay & No structured intermediates & Possible intermediate but mass-threshold driven & Medium & No plateaus in any system where the crystallisation model predicts them \\
+\addlinespace
+
+PRED-005 & Trajectory reproducibility ($D_{\mathrm{traj}}$) & Low $D_{\mathrm{traj}}$; near-identical paths from identical inits & Moderate $D_{\mathrm{traj}}$; environmental noise & High $D_{\mathrm{traj}}$; stochastic paths & Not well-defined & High & $D_{\mathrm{traj}}$ indistinguishable from stochastic baselines \\
+\addlinespace
+
+PRED-006 & Constraint-geometry sensitivity $\chi_C$ & Nonzero; outcomes shift with constraint perturbation & Zero or negligible beyond Hamiltonian encoding & Zero & Possibly nonzero via $\Delta E_G$ but different mechanism & High & $\chi_C = 0$ across all tested regimes \\
+\addlinespace
+
+PRED-007 & Coherence metric $Q$ at convergence & $Q \to$ high (phase alignment achieved) & $Q \to 0$ (decoherence destroys coherence) & $Q \to 0$ (collapse destroys superposition) & Not specified & Medium & $Q$ behaves identically to decoherence baseline \\
+\addlinespace
+
+PRED-008 & Noise threshold for deterministic$\to$stochastic transition & Sharp or structured crossover at critical noise & No crossover (always stochastic) & No crossover (always stochastic at GRW rate) & Crossover may exist at mass threshold & Medium & No crossover exists; behaviour always stochastic \\
+\addlinespace
+
+PRED-009 & Multi-basin $F$-landscape structure & Multiple attractors with measurable basin boundaries & No $F$-landscape concept & No basin structure & Possible but different mechanism & Medium & No multi-basin structure in engineered landscapes \\
+\addlinespace
+
+PRED-010 & Coupled-oscillator analog convergence & Matches crystallisation functional predictions quantitatively & N/A (classical system) & N/A & N/A & Low & Analog dynamics not captured by crystallisation model \\
+
+\end{longtable}
+
+%------------------------------------------------------------------
+\section{Summary Statistics}
+%------------------------------------------------------------------
+
+\begin{itemize}
+    \item \textbf{Total predictions:} 10
+    \item \textbf{Nearest-term testable (analog, EP5):} PRED-009, PRED-010
+    \item \textbf{Medium difficulty (qubit-level, EP1):} PRED-001, PRED-002, PRED-004, PRED-007, PRED-008
+    \item \textbf{High difficulty (precision quantum, EP2--EP4):} PRED-003, PRED-005, PRED-006
+    \item \textbf{Not predicted by the baseline models considered here:} PRED-003, PRED-005, PRED-006, PRED-009
+\end{itemize}
+
+%------------------------------------------------------------------
+\section{Key Discrimination Points}
+%------------------------------------------------------------------
+
+The strongest discrimination opportunities are:
+
+\begin{enumerate}
+    \item \textbf{PRED-003 (basin preference under asymmetric constraints):} The crystallisation model makes a prediction not shared by the Born-rule baselines considered here. If basin preference tracks constraint geometry rather than amplitudes, this is strong evidence for crystallisation dynamics.
+
+    \item \textbf{PRED-005 (path reproducibility):} Deterministic path convergence is fundamentally incompatible with stochastic collapse models. Measuring trajectory similarity across trials provides a direct test of the deterministic selection hypothesis.
+
+    \item \textbf{PRED-010 (analog validation):} The nearest-term demonstrator. If coupled-oscillator networks match crystallisation-functional predictions quantitatively, the mathematical framework gains credibility even before quantum-regime tests.
+\end{enumerate}
+
+%------------------------------------------------------------------
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

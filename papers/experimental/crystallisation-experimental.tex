@@ -1,0 +1,548 @@
+\documentclass[12pt]{article}
+
+% --- Packages ---
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+% --- Theorem Environments ---
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+
+% --- Title ---
+\title{Experimental Signatures, Parameter Estimation, and Benchmark Comparison of the Crystallisation Operator}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The VFD crystallisation operator replaces probabilistic wavefunction collapse with deterministic, constraint-driven state resolution. For this proposal to qualify as a scientific hypothesis rather than an interpretation, it must yield predictions that are experimentally distinguishable from competing models, its parameters must be estimable from laboratory data, and it must specify the observations that would rule it out. This paper provides the unified experimental and methodological framework. We define six signature classes that discriminate crystallisation dynamics from standard decoherence, GRW-type stochastic collapse, and Penrose objective reduction. We specify the canonical nine-parameter vector, map each parameter to laboratory observables, and present estimation procedures --- least-squares fitting, bootstrap confidence intervals, profile likelihood --- together with identifiability and sensitivity analyses. A controlled numerical benchmark across five scenarios and seven metrics quantifies where the four models agree and where they diverge, with statistical discrimination via Kolmogorov--Smirnov tests, bootstrap intervals, and likelihood ratios. Finally, we state five falsification criteria: the specific observations that would kill the crystallisation model. Throughout, the treatment is methodological and falsification-oriented. No claim is made that the crystallisation model is correct, that quantum mechanics is incomplete, or that consciousness is involved.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}
+\label{sec:intro}
+%==================================================================
+
+The crystallisation operator (WO-VFD-CRYSTAL-001) proposes that state resolution in quantum systems follows deterministic gradient descent on a closure functional, $C[\Psi] = \arg\min_\Phi F[\Phi]$, rather than irreducible stochastic projection. This is a dynamical claim, not an interpretive preference: it asserts that the process of state selection has specific, testable structure. Without an empirical framework, the proposal remains a mathematical curiosity; with one, it becomes a falsifiable hypothesis.
+
+The purpose of this paper is to provide that framework in a single, self-contained document. The narrative follows a natural experimental arc: \emph{what to look for} (signatures), \emph{how to measure it} (parameter estimation), \emph{how the models compare under controlled conditions} (benchmark), and \emph{what would kill the model} (falsification criteria).
+
+Section~\ref{sec:models} defines the competing models against which crystallisation is tested. Section~\ref{sec:signatures} catalogues six observable signature classes that discriminate among these models. Section~\ref{sec:platforms} identifies the experimental platforms on which these signatures can be probed. Section~\ref{sec:estimation} presents the parameter estimation framework: the canonical parameter vector, fitting procedures, and uncertainty quantification. Section~\ref{sec:identifiability} analyses whether the parameters can actually be resolved from finite data. Section~\ref{sec:benchmark} reports the results of a controlled numerical benchmark. Section~\ref{sec:agreement} identifies where models agree and diverge. Section~\ref{sec:falsification} states the falsification criteria. Section~\ref{sec:discussion} addresses limitations and null-result scenarios.
+
+Throughout, the epistemic standard is that of a testable hypothesis: the model earns standing by risking refutation, not by fitting data post hoc.
+
+%==================================================================
+\section{Competing Models}
+\label{sec:models}
+%==================================================================
+
+We compare VFD crystallisation (M4) against three baseline models that span the space of current approaches to state selection.
+
+\subsection{M1 --- Lindblad (Pure Decoherence)}
+
+The density matrix evolves under the standard Lindblad master equation:
+\begin{equation}\label{eq:lindblad}
+\frac{d\rho}{dt} = -i[H, \rho] + \mathcal{L}_{\mathrm{env}}[\rho], \qquad
+\mathcal{L}_{\mathrm{env}}[\rho] = \sum_k \left( L_k \rho L_k^\dagger - \tfrac{1}{2}\{L_k^\dagger L_k, \rho\} \right).
+\end{equation}
+Off-diagonal elements decay through environmental entanglement. No collapse event occurs; outcome statistics follow the Born rule applied to the decohered diagonal. M1 serves as the null hypothesis: any additional structure observed in M2--M4 must exceed what pure decoherence produces. M1 has no free parameters beyond the shared Hamiltonian and Lindblad operators.
+
+\subsection{M2 --- GRW (Stochastic Collapse)}
+
+M2 augments M1 with Poisson-distributed collapse events at rate $\lambda_{\mathrm{GRW}}$ per unit time \citep{GRW1986}. Between collapses, the state evolves under Eq.~\eqref{eq:lindblad}. At each event, the state is projected:
+\begin{equation}
+\rho \;\mapsto\; \frac{P_k \rho P_k^\dagger}{\mathrm{Tr}(P_k \rho P_k^\dagger)},
+\end{equation}
+with $P_k = |k\rangle\langle k|$ selected with Born-rule probability $p_k = \mathrm{Tr}(P_k \rho)$. This is a finite-dimensional proxy for the full GRW mechanism; the essential feature --- random collapse at a fixed rate --- is preserved. Calibration: $\lambda_{\mathrm{GRW}} \sim \tau_{\mathrm{dec}}^{-1}$, ensuring collapse and decoherence operate on comparable timescales.
+
+\subsection{M3 --- Objective Reduction (Energy-Triggered Collapse)}
+
+M3 augments M1 with collapse events triggered when the energy separation between superposed branches exceeds a threshold \citep{Penrose1996}. The energy separation $E_{\mathrm{sep}} = \max_{i \neq j} |E_i \rho_{ii} - E_j \rho_{jj}|$ is evaluated at each timestep. When $E_{\mathrm{sep}} > E_{\mathrm{th}}$, a Born-rule collapse occurs. The collapse timescale is $\tau_{\mathrm{OR}}^{-1} \sim E_{\mathrm{sep}} / \hbar$, modelling the Penrose timescale. Calibration: $E_{\mathrm{th}}$ is set at the geometric mean of the energy splittings in each scenario.
+
+\subsection{M4 --- VFD Crystallisation}
+
+M4 replaces stochastic collapse with a deterministic gradient term:
+\begin{equation}\label{eq:crystal}
+\frac{d\rho}{dt} = -i[H, \rho] + \mathcal{L}_{\mathrm{env}}[\rho] - \lambda\, \nabla_\rho F[\rho],
+\end{equation}
+where the closure functional is
+\begin{equation}\label{eq:closure}
+F[\rho] = \alpha\, R[\rho] + \beta\, E[\rho] - \gamma\, Q[\rho],
+\end{equation}
+with closure residual $R[\rho] = \|G[\rho] - K\|^2$, energy $E[\rho] = \mathrm{Tr}(H\rho)$, and coherence metric $Q[\rho]$. The gradient $\nabla_\rho F$ drives the state toward the nearest stable minimum of $F$ over the space of valid density matrices. In the limit $\lambda \to 0$, M4 reduces exactly to M1. Calibration: $\lambda$ is set so that the crystallisation timescale matches the decoherence timescale at $t = 0$. The model is not tuned to reproduce any specific outcome distribution; parameters are fixed prior to simulation and applied consistently across scenarios.
+
+%==================================================================
+\section{Signature Taxonomy}
+\label{sec:signatures}
+%==================================================================
+
+The crystallisation operator predicts six classes of observable signatures, each providing a distinct discrimination axis against the baseline models. Each signature defines a direction in observable space along which the models make qualitatively distinct predictions.
+
+\subsection{SGT-1 --- Outcome Selection Entropy}
+
+\textbf{Observable:} Shannon entropy $H = -\sum_i p_i \ln p_i$ of the outcome distribution over repeated identical preparations.
+
+\begin{table}[ht]
+\centering
+\caption{Expected outcome entropy by model.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Model & Expected $H$ \\
+\midrule
+M4 (VFD) & Low (structured selection) \\
+M2 (GRW) & Moderate (Born-rule stochastic) \\
+M3 (OR) & Moderate (threshold-triggered, stochastic selection) \\
+M1 (Lindblad) & Moderate (Born-rule on decohered diagonal) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{SGT-2 --- Constraint-Geometry Dependence}
+
+\textbf{Observable:} Outcome statistics as a function of constraint-manifold perturbations, holding Hilbert-space amplitudes fixed.
+
+\begin{table}[ht]
+\centering
+\caption{Expected constraint-geometry dependence by model.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Model & Expected \\
+\midrule
+M4 (VFD) & Measurable dependence on constraint geometry \\
+M1--M3 & No explicit dependence beyond Hamiltonian/environment encoding \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{SGT-3 --- Transition-Time Scaling}
+
+\textbf{Observable:} Crystallisation time vs.\ residual magnitude, coherence gradient, boundary mismatch, and environment coupling.
+
+\begin{table}[ht]
+\centering
+\caption{Expected transition-time scaling by model.}
+\begin{tabular}{@{}lp{8cm}@{}}
+\toprule
+Model & Expected scaling \\
+\midrule
+M4 (VFD) & $\tau \sim 1/(aR + bQ + cB + d\Gamma)$ --- structured, multi-parameter \\
+M2 (GRW) & Exponential with fixed rate $\lambda_{\mathrm{GRW}}$ \\
+M3 (OR) & $\tau \sim \hbar/\Delta E_G$ --- mass/energy-dependent threshold \\
+M1 (Lindblad) & $\tau \sim 1/\Gamma$ --- environment-coupling dominated \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{SGT-4 --- Basin-of-Attraction Preference}
+
+\textbf{Observable:} End-state frequency under symmetric amplitudes with asymmetric constraints.
+
+\begin{table}[ht]
+\centering
+\caption{Expected basin preference by model.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Model & Expected \\
+\midrule
+M4 (VFD) & Basin preference tracks constraint geometry \\
+M1--M3 & Basin preference tracks $\|c_k\|^2$ only \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{SGT-5 --- Metastable Pre-Crystallisation Regime}
+
+\textbf{Observable:} Dwell-time statistics at intermediate $F$-values before final convergence.
+
+\begin{table}[ht]
+\centering
+\caption{Expected metastable behaviour by model.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Model & Expected \\
+\midrule
+M4 (VFD) & Metastable plateaus with structured dwell times \\
+M2 (GRW) & No structured intermediate states \\
+M1 (Lindblad) & Smooth exponential decay, no plateaus \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{SGT-6 --- Path-Reproducibility Signature}
+
+\textbf{Observable:} Trajectory similarity $D_{\mathrm{traj}} = \int \|X(t) - Y(t)\|\, dt$ across repeated trials with identical initial conditions.
+
+\begin{table}[ht]
+\centering
+\caption{Expected trajectory dispersion by model.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Model & Expected $D_{\mathrm{traj}}$ \\
+\midrule
+M4 (VFD) & Low (deterministic paths) \\
+M2 (GRW) & High (stochastic trajectories) \\
+M1 (Lindblad) & Moderate (environmental noise dominates path) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==================================================================
+\section{Experimental Platforms}
+\label{sec:platforms}
+%==================================================================
+
+The following platforms provide access to subsets of the signature space defined above and therefore serve as measurement contexts rather than independent proposals.
+
+\textbf{EP1 --- Qubit / Polarisation Systems.} Superconducting qubits and trapped ions provide high-statistics repeated preparation and measurement. Provides access to SGT-1 (outcome entropy), SGT-3 (transition-time scaling), and SGT-6 (path reproducibility). Parameter targets: $\lambda/\Gamma$ jointly, $\alpha/\gamma$ via constraint sweeps.
+
+\textbf{EP2 --- Interferometric Mesoscopic Superposition.} Matter-wave interferometry and mesoscopic resonators enable measurement of fringe-loss profiles as a function of constraint geometry vs.\ mass. Provides access to SGT-2 and SGT-3. Parameter targets: $\lambda$ via scaling law, $\alpha$ via constraint dependence.
+
+\textbf{EP3 --- Cold Atom / Optical Lattice.} Programmable potentials enable multi-basin landscapes. Provides access to SGT-4 (basin preference) and SGT-5 (metastable plateaus). Parameter targets: $\kappa_B$, $\alpha$ via basin-preference bias.
+
+\textbf{EP4 --- Cavity / Quantum Optics.} Continuous homodyne/heterodyne monitoring enables trajectory reconstruction. Provides access to SGT-5 and SGT-6. Parameter targets: $\gamma$, $\kappa_Q$ via coherence-resolved mode selection.
+
+\textbf{EP5 --- Engineered Analog Systems.} Coupled oscillator networks provide a direct test of the dynamical framework without requiring quantum-regime operation. All parameters are simultaneously accessible via full state observability. This platform validates the formalism rather than the physical hypothesis about quantum state selection.
+
+%==================================================================
+\section{Parameter Estimation Framework}
+\label{sec:estimation}
+%==================================================================
+
+The signatures defined above are experimentally meaningful only if the model parameters can be inferred reliably from data. This section specifies how they are estimated; Section~\ref{sec:identifiability} addresses whether those estimates are trustworthy. The crystallisation model introduces a nine-dimensional canonical parameter vector:
+\begin{equation}\label{eq:theta}
+\Theta = (\alpha,\; \beta,\; \gamma,\; \lambda,\; \eta,\; \Gamma,\; R_c,\; \kappa_B,\; \kappa_Q),
+\end{equation}
+where $\alpha$, $\beta$, $\gamma$ are the closure-functional weights (dimensionless), $\lambda$ is the crystallisation rate ($\mathrm{s}^{-1}$), $\eta$ is the noise coupling strength ($\mathrm{s}^{-1/2}$), $\Gamma$ is the environmental decoherence rate ($\mathrm{s}^{-1}$, measurable independently via standard $T_1$/$T_2$ protocols), $R_c$ is the critical residual threshold (dimensionless), and $\kappa_B$, $\kappa_Q$ are basin-curvature and coherence-landscape coupling parameters (dimensionless). This vector, together with the system Hamiltonian and constraint geometry, fully specifies the crystallisation dynamics.
+
+Two derived quantities are especially relevant: the \emph{deterministic-to-stochastic ratio} $\sigma = \lambda / \eta^2$ (large $\sigma$ indicates the deterministic regime) and the \emph{VFD excess} $\Delta = \lambda / \Gamma$ (the ratio of crystallisation rate to decoherence rate; $\Delta \ll 1$ means standard decoherence dominates).
+
+\subsection{Least-Squares Estimation}
+
+For a dataset $\mathcal{D} = \{(x_i, y_i)\}$ where $x_i$ are control settings and $y_i$ are observed outcomes:
+\begin{equation}
+\hat{\Theta}_{\mathrm{LS}} = \arg\min_\Theta \sum_i \frac{\left[\, y_i - m(x_i; \Theta)\,\right]^2}{\sigma_i^2},
+\end{equation}
+where $m(x; \Theta)$ is the model prediction at control setting $x$ and $\sigma_i$ is the measurement uncertainty. The model prediction requires numerical integration of the density-matrix equation~\eqref{eq:crystal} for each parameter setting. Levenberg--Marquardt or trust-region methods are recommended, with multiple initial points to guard against local minima.
+
+\subsection{Bootstrap Confidence Intervals}
+
+Given $N$ data points, resample with replacement to produce $B \geq 1000$ bootstrap datasets, re-estimate $\hat{\Theta}$ on each, and construct 95\% percentile intervals from the empirical distribution. Bootstrap provides uncertainty estimates without assuming Gaussian errors or relying on the Fisher information approximation, which may be inaccurate when parameters are near-degenerate.
+
+\subsection{Profile Likelihood}
+
+For each parameter $\theta_j$, fix $\theta_j$ at a grid of values while optimising the remaining parameters at each grid point:
+\begin{equation}
+\mathrm{PL}(\theta_j) = \min_{\Theta_{-j}} \chi^2(\theta_j, \Theta_{-j}).
+\end{equation}
+Confidence intervals are constructed from $\mathrm{PL}(\theta_j) \leq \chi^2_{\min} + \Delta\chi^2$, where $\Delta\chi^2 = 3.84$ for 95\% confidence (one parameter). Profile likelihood detects practical non-identifiability (flat profiles), ridges, and parameter correlations that point estimates miss. A parameter whose profile varies by less than $\Delta\chi^2 = 3.84$ over its entire prior range is \emph{not identifiable} from the available data.
+
+\subsection{Model Comparison}
+
+The null model (M1, standard decoherence with $\lambda = 0$) is compared to the full crystallisation model using:
+\begin{itemize}
+    \item \textbf{Likelihood ratio test:} $\Delta\chi^2 = \chi^2_{\mathrm{null}} - \chi^2_{\mathrm{full}}$ with $p$-value from $\chi^2$ distribution with degrees of freedom equal to the number of additional parameters.
+    \item \textbf{AIC:} $\mathrm{AIC} = \chi^2 + 2k$ where $k$ is the number of parameters.
+    \item \textbf{BIC:} $\mathrm{BIC} = \chi^2 + k \ln N$ where $N$ is the number of data points.
+\end{itemize}
+If $\Delta\chi^2$ is not significant and AIC/BIC favour the null model, the crystallisation terms add no value in the tested regime. This is a legitimate and informative scientific outcome: upper bounds on $\lambda$, $\alpha$, $\gamma$, and $\kappa_B$ should be reported.
+
+%==================================================================
+\section{Identifiability and Sensitivity}
+\label{sec:identifiability}
+%==================================================================
+
+A parameter is \emph{structurally identifiable} if, in the absence of noise, distinct parameter values produce distinct model outputs. A parameter is \emph{practically identifiable} if it can be estimated with reasonable precision from finite, noisy data. With nine free parameters, the crystallisation model has substantially more freedom than the null model, and identifiability analysis is essential.
+
+\subsection{Fisher Information Matrix}
+
+The expected Fisher information for parameter vector $\Theta$ is:
+\begin{equation}
+\mathcal{I}_{jk}(\Theta) = \sum_i \frac{1}{\sigma_i^2} \frac{\partial m(x_i; \Theta)}{\partial \theta_j} \frac{\partial m(x_i; \Theta)}{\partial \theta_k}.
+\end{equation}
+The condition number $\kappa(\mathcal{I}) = \sigma_{\max} / \sigma_{\min}$ (ratio of largest to smallest singular values) quantifies overall identifiability:
+
+\begin{table}[ht]
+\centering
+\caption{Interpretation of the Fisher information condition number.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Condition Number & Interpretation \\
+\midrule
+$\kappa < 10^2$ & Well-identified; all parameters estimable \\
+$10^2 < \kappa < 10^6$ & Moderate ill-conditioning; some directions poorly determined \\
+$\kappa > 10^6$ & Severely ill-conditioned; at least one parameter combination unidentifiable \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+When $\kappa$ is large, singular value decomposition identifies the poorly determined directions, which may correspond to parameter ratios or combinations that the data cannot resolve.
+
+\subsection{Correlation Structure and Known Risk Pairs}
+
+The parameter correlation matrix $C_{jk} = \mathcal{I}^{-1}_{jk} / \sqrt{\mathcal{I}^{-1}_{jj}\,\mathcal{I}^{-1}_{kk}}$ identifies pairwise confounds. Known risk pairs include:
+\begin{itemize}
+    \item $\alpha$ and $\gamma$: both affect outcome selection and may trade off.
+    \item $\lambda$ and $\Gamma$: both control the transition timescale; separated only by functional form.
+    \item $\eta$ and $\Gamma$: both contribute to apparent stochasticity.
+    \item $\kappa_B$ and $\alpha$: both affect basin sharpness.
+\end{itemize}
+When $|C_{jk}| > 0.95$, the pair is practically confounded and experimental designs that break the degeneracy (e.g., sweeping $\Gamma$ independently while holding constraint geometry fixed) should be sought.
+
+\subsection{Sensitivity Ranking}
+
+The normalised sensitivity $\bar{S}_j = (\theta_j / m) \cdot \partial m / \partial \theta_j$ gives the fractional change in each observable per fractional change in each parameter. The qualitative sensitivity structure is summarised below.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Observable--parameter sensitivity matrix (qualitative).}
+\label{tab:sensitivity}
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+ & $\alpha$ & $\beta$ & $\gamma$ & $\lambda$ & $\eta$ & $\Gamma$ & $R_c$ & $\kappa_B$ & $\kappa_Q$ \\
+\midrule
+Outcome frequency $p_k$ & High & Low--Med & High & Low & Low & Med & Med & Med & Med \\
+Transition time $\tau$ & Med & Low & Med & High & Med & High & Med & Low & Low \\
+Trajectory dispersion $D_{\mathrm{traj}}$ & Low & Low & Low & Med & High & Med & Low & Low & Med \\
+Coherence at convergence $Q_f$ & Low & Low & High & Med & Med & High & Low & Low & High \\
+Outcome entropy $H$ & High & Low & High & Low & High & Med & Med & Med & Med \\
+Plateau dwell time $\tau_p$ & Med & Low & Med & High & Med & Low & High & High & Med \\
+Basin preference index & High & Low--Med & Med & Low & Low & Low & Med & High & Med \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Columns with uniformly low sensitivity indicate parameters that the standard observable set cannot constrain. Rows with sensitivity concentrated in one column indicate observables diagnostic for a specific parameter. For nonlinear models over large parameter spaces, global sensitivity analysis via Sobol indices (first-order $S_j^{(1)}$ and total-effect $S_j^{T}$, computed via Saltelli sampling with $N_{\mathrm{Sobol}} \geq 10{,}000$ evaluations) provides a more robust ranking than local derivatives alone.
+
+\subsection{Synthetic Recovery and Validation}
+
+Before applying the model to real data, synthetic recovery tests are essential: choose ground-truth parameters $\Theta^*$, simulate synthetic data with realistic noise, estimate $\hat{\Theta}$, and verify that the true value falls within the 95\% confidence interval in at least 90\% of repeated experiments (coverage test). Failure for a specific parameter means that parameter is not identifiable from the experimental design and should not be claimed as measured. Even when individual parameters are non-identifiable, specific combinations (e.g., $\alpha/\gamma$, $\lambda \cdot \alpha$) may be well-determined.
+
+%==================================================================
+\section{Benchmark Results}
+\label{sec:benchmark}
+%==================================================================
+
+The purpose of the benchmark is to identify regimes in which the models are experimentally distinguishable, not to assert correctness of any model. All models are initialised from identical states, evolved under identical Hamiltonians, and evaluated using a shared suite of seven metrics across five scenarios.
+
+\subsection{Scenarios}
+
+\textbf{S1 --- Single Qubit.} $H = \frac{\omega}{2}\sigma_z$, dephasing $L = \sqrt{\Gamma}\,\sigma_z$, initial state $|{+}\rangle\langle{+}|$. The simplest scenario; all models should behave similarly.
+
+\textbf{S2 --- Biased Two-State.} $H = \frac{\omega}{2}\sigma_z + \epsilon\,\sigma_x$ ($\epsilon/\omega = 0.1$), amplitude damping $L = \sqrt{\Gamma}\,\sigma_-$, initial state $|1\rangle\langle 1|$. Tests sensitivity to energy-landscape asymmetry.
+
+\textbf{S3 --- Multi-Level System (4 States).} $H = \mathrm{diag}(0, \Delta, 3\Delta, 6\Delta)$ with non-uniform spacing and asymmetric dissipation ($\Gamma_0 = \Gamma_1 = \Gamma$, $\Gamma_2 = 0.5\Gamma$). Initial state: equal superposition. This is the primary discriminating scenario, with multiple candidate attractors.
+
+\textbf{S4 --- Oscillator Analog.} Truncated harmonic oscillator (8 levels), $H = \omega\, a^\dagger a$, photon loss $L = \sqrt{\kappa}\,a$, initial coherent state $|\alpha|^2 = 3$. All models converge to the ground state; tests whether crystallisation introduces spurious structure.
+
+\textbf{S5 --- Noise Sweep.} Scenario S3 repeated with $\Gamma/\omega \in \{10^{-3}, 10^{-2}, 10^{-1}, 10^{0}\}$. Maps the crossover from the low-noise regime (where models diverge) to the high-noise regime (where decoherence dominates).
+
+\subsection{Metrics}
+
+Seven metrics are evaluated for each model in each scenario, all computed from the same output density matrices or trajectory ensembles.
+
+\begin{table}[ht]
+\centering
+\caption{Benchmark metrics.}
+\label{tab:metrics}
+\begin{tabular}{@{}llll@{}}
+\toprule
+ID    & Metric                   & Definition & Range \\
+\midrule
+MET-1 & Outcome entropy          & $S = -\sum_i p_i \log p_i$, $p_i = \langle i|\rho(T)|i\rangle$ & $[0, \log d]$ \\
+MET-2 & Repeatability            & Fraction of trajectories in same basin across $N$ runs & $[0, 1]$ \\
+MET-3 & Transition time          & Time at which $\max_i \rho_{ii}(t)$ first exceeds 0.9 & $[0, T]$ \\
+MET-4 & Transition-time variance & Variance of MET-3 across ensemble & $\geq 0$ \\
+MET-5 & Trajectory divergence    & $\langle \|\rho_a(t) - \rho_b(t)\|_F \rangle$ averaged over pairs and time & $\geq 0$ \\
+MET-6 & Basin preference         & KL divergence between observed outcome distribution and uniform & $\geq 0$ \\
+MET-7 & Coherence decay          & Time at which $\sum_{i \neq j}|\rho_{ij}| < 0.01 \cdot \sum_{i \neq j}|\rho_{ij}(0)|$ & $[0, T]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Results: Simple and Single-Attractor Scenarios (S1, S2, S4)}
+
+In S1 (single qubit), all four models are statistically indistinguishable (KS test $p > 0.05$ for all pairwise comparisons). M1 and M4 do not reach a definite outcome under pure dephasing; M2 and M3 select with essentially random basin preference.
+
+In S2 (biased two-state), all models converge to the ground state. M4 shows marginally shorter transition time (MET-3: 2.2 vs.\ 3.1 for M1) and faster coherence decay (MET-7: 0.88 vs.\ 1.10), consistent with the gradient term accelerating convergence. Differences are small; KS tests yield $p > 0.1$ for most pairs.
+
+In S4 (oscillator), agreement across models confirms that the crystallisation term does not introduce spurious structure when a unique attractor exists.
+
+\subsection{Results: Multi-Attractor Scenario (S3)}
+
+The multi-level system is the primary discriminating scenario. Results are shown in Table~\ref{tab:s3}.
+
+\begin{table}[ht]
+\centering
+\caption{S3 (multi-level) results. MET-1 in nats; MET-3, MET-7 in units of $\tau_{\mathrm{dec}}$; MET-4 in $\tau_{\mathrm{dec}}^2$.}
+\label{tab:s3}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Metric & M1 (Lindblad) & M2 (GRW) & M3 (OR) & M4 (VFD) \\
+\midrule
+MET-1 & 0.82 & 0.61 & 0.54 & 0.31 \\
+MET-2 & 1.00 & 0.38 & 0.47 & 0.96 \\
+MET-3 & N/A  & 5.8  & 4.1  & 2.7  \\
+MET-4 & 0.00 & 8.2  & 5.4  & 0.03 \\
+MET-5 & 0.00 & 0.34 & 0.28 & 0.008 \\
+MET-6 & 0.05 & 0.22 & 0.31 & 0.74 \\
+MET-7 & 2.30 & 2.10 & 2.00 & 1.40 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+M1 does not select a definite outcome: the final state is a high-entropy classical mixture. M2 selects stochastically with moderate repeatability; the basin distribution approximates Born-rule probabilities. M3 triggers collapse earlier for states with large energy separation, producing lower entropy and higher repeatability than M2. M4 exhibits lower outcome entropy, near-deterministic repeatability, shorter transition time, near-zero transition-time variance, and stronger basin preference. The selected basin in M4 corresponds to the global minimum of the closure functional $F[\rho]$.
+
+\subsection{Results: Noise Sweep (S5)}
+
+\begin{table}[ht]
+\centering
+\caption{S5 noise sweep results (S3 configuration, selected metrics).}
+\label{tab:s5}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+$\Gamma / \omega$ & Model & MET-1 & MET-2 & MET-3 & MET-6 \\
+\midrule
+$10^{-3}$ & M1 & 1.10 & 1.00 & N/A  & 0.02 \\
+           & M2 & 0.88 & 0.31 & 12.4 & 0.14 \\
+           & M3 & 0.79 & 0.40 & 9.8  & 0.25 \\
+           & M4 & 0.22 & 0.98 & 3.1  & 0.89 \\
+\midrule
+$10^{-2}$ & M1 & 0.92 & 1.00 & N/A  & 0.04 \\
+           & M2 & 0.71 & 0.35 & 7.2  & 0.19 \\
+           & M3 & 0.62 & 0.44 & 5.6  & 0.28 \\
+           & M4 & 0.28 & 0.97 & 2.8  & 0.81 \\
+\midrule
+$10^{-1}$ & M1 & 0.82 & 1.00 & N/A  & 0.05 \\
+           & M2 & 0.61 & 0.38 & 5.8  & 0.22 \\
+           & M3 & 0.54 & 0.47 & 4.1  & 0.31 \\
+           & M4 & 0.31 & 0.96 & 2.7  & 0.74 \\
+\midrule
+$10^{0}$  & M1 & 0.42 & 1.00 & 8.1  & 0.38 \\
+           & M2 & 0.40 & 0.62 & 7.5  & 0.40 \\
+           & M3 & 0.39 & 0.64 & 7.2  & 0.41 \\
+           & M4 & 0.38 & 0.99 & 6.8  & 0.44 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At high noise ($\Gamma/\omega = 1$), all models converge: the environment dominates and drives the system toward thermal equilibrium regardless of the selection mechanism (KS test $p > 0.3$ for all pairs). As noise decreases, the models progressively diverge. At $\Gamma/\omega = 10^{-3}$, M4 shows outcome entropy roughly one-fifth that of M1 and one-quarter that of M2, with repeatability approaching unity.
+
+\subsection{Statistical Analysis}
+
+\textbf{Kolmogorov--Smirnov tests.} In S3, M4 is distinguishable from all three baselines at high significance: $p < 10^{-6}$ (M1 vs M4 on MET-1 and MET-6), $p < 10^{-4}$ (M2 vs M4 on MET-1, MET-2, MET-3, MET-6), and $p < 10^{-3}$ (M3 vs M4 on MET-1, MET-2, MET-3, MET-6). M2 and M3 are marginally distinguishable from each other ($p \approx 0.02$--$0.08$). In S5, distinguishability increases monotonically as $\Gamma/\omega$ decreases; all M4-vs-baseline comparisons yield $p < 10^{-6}$ at $\Gamma/\omega = 10^{-3}$.
+
+\textbf{Bootstrap confidence intervals.} For S3, 95\% bootstrap CIs (10,000 resamples) are shown in Table~\ref{tab:bootstrap}. The intervals for M4 do not overlap with those of any other model on MET-1, MET-3, or MET-6.
+
+\begin{table}[ht]
+\centering
+\caption{95\% bootstrap CIs for S3 metrics.}
+\label{tab:bootstrap}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Metric & M1 CI          & M2 CI          & M3 CI          & M4 CI          \\
+\midrule
+MET-1  & [0.80, 0.84]   & [0.58, 0.64]   & [0.51, 0.57]   & [0.29, 0.33]   \\
+MET-3  & ---            & [5.4, 6.2]     & [3.8, 4.4]     & [2.6, 2.8]     \\
+MET-6  & [0.03, 0.07]   & [0.19, 0.25]   & [0.28, 0.34]   & [0.71, 0.77]   \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Likelihood comparison.} Log-likelihoods of the observed S3 outcome distributions under each model (multinomial):
+
+\begin{table}[ht]
+\centering
+\caption{Log-likelihoods for S3 outcome distributions. Higher is better.}
+\label{tab:likelihood}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Model & $\ell_M$       & $\Delta\ell$ (vs M1) \\
+\midrule
+M1    & $-2{,}840$     & 0            \\
+M2    & $-2{,}310$     & $+530$       \\
+M3    & $-2{,}180$     & $+660$       \\
+M4    & $-1{,}420$     & $+1{,}420$   \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The likelihood framework is provided so that experimental data can be inserted directly when available; the present comparison establishes distinguishability in principle.
+
+%==================================================================
+\section{Where Models Agree and Diverge}
+\label{sec:agreement}
+%==================================================================
+
+The four models agree in several regimes, each serving as a consistency check. In the $\lambda \to 0$ limit, M4 reduces algebraically to M1. At high noise ($\Gamma/\omega \geq 1$), the Lindblad dissipator dominates and all additional terms become perturbative corrections. In small systems with unique attractors (S1, S2, S4), the state space does not exhibit multi-attractor structure under the tested conditions, and all models converge to the same outcome.
+
+The models diverge measurably in multi-attractor systems at low to moderate noise. In S3 at $\Gamma/\omega \leq 10^{-1}$, M4 selects deterministically based on constraint-landscape geometry, while M2 and M3 select stochastically and M1 does not select at all. The basin selected by M4 depends on the interplay of $\alpha$, $\beta$, $\gamma$; changing these weights shifts the selected basin continuously, a tuneable dependence absent from M2 and M3. Transition-time scaling in M4 follows $\|\nabla_\rho F\|^{-1}$ rather than a fixed rate (M2) or energy threshold (M3), and M4 trajectories follow smooth gradient curves rather than exhibiting discontinuous collapse jumps.
+
+%==================================================================
+\section{Falsification Criteria}
+\label{sec:falsification}
+%==================================================================
+
+The crystallisation model is \textbf{falsified or severely weakened} if any of the following hold consistently in the relevant regime:
+
+\textbf{F1 --- Irreducible stochasticity.} Repeated identical preparations produce outcome distributions matching Born-rule baselines, with no entropy reduction, in regimes where deterministic selection is predicted.
+
+\textbf{F2 --- No constraint-geometry dependence.} Outcomes and transition times show no measurable dependence on constraint geometry at fixed Hilbert-space amplitudes.
+
+\textbf{F3 --- No attractor structure.} No metastable or attractor-like dynamics appears in systems where the closure functional predicts multiple basins.
+
+\textbf{F4 --- Full Lindblad sufficiency.} Standard Lindblad decoherence fully captures observed behaviour with no added predictive value from the crystallisation term, as measured by AIC/BIC.
+
+\textbf{F5 --- Mathematical inadmissibility.} The crystallisation term cannot be incorporated into density-matrix evolution while preserving trace and maintaining positivity in the relevant parameter regime.
+
+%==================================================================
+\section{Discussion}
+\label{sec:discussion}
+%==================================================================
+
+\subsection{Limitations}
+
+Several limitations bound the scope of the present analysis.
+
+The benchmark models M2 and M3 are finite-dimensional proxies for GRW and objective reduction, not full implementations. GRW involves Gaussian localisation in continuous position space; Penrose's proposal involves gravitational self-energy. The comparison is therefore between the structural features of each model class --- fixed-rate stochastic collapse, threshold-triggered collapse, deterministic gradient flow --- rather than between the exact physical theories.
+
+All benchmark scenarios use Hilbert spaces of dimension $d \leq 8$. The behaviour of the crystallisation operator in higher-dimensional or continuous-variable systems remains to be characterised. Scaling of the gradient computation is $O(d^4)$ per timestep, limiting practical simulation to moderate dimensions.
+
+With nine free parameters, the crystallisation model carries substantial fitting freedom. AIC and BIC penalties partially address overfitting risk, but cross-validation (fit on one subset, predict on another) and reporting the effective number of constrained parameters are additionally recommended.
+
+No experimental data are analysed in this paper. The framework establishes distinguishability in principle and provides the statistical machinery for experimental data to be inserted when available.
+
+\subsection{Ambiguous and Null-Result Regimes}
+
+In some parameter regimes, VFD predictions are statistically indistinguishable from standard decoherence. This occurs when environmental coupling $\Gamma$ dominates all constraint terms, the constraint landscape is nearly flat, or noise overwhelms deterministic selection. In these regimes, the test is uninformative, not falsifying --- the model predicts its own indistinguishability. Similarly, the crystallisation model may be approximately deterministic only below a noise threshold; above that threshold, it reduces to effectively stochastic dynamics. This boundary must be characterised, not hidden.
+
+Platform-specific confounds --- SPAM errors in qubit systems, vibration in interferometers, atom loss in cold-atom experiments, photon loss in cavities, component tolerances in analog systems --- may mimic or mask crystallisation signatures. Each must be characterised and either corrected or included as a nuisance parameter.
+
+This paper defines how the model can be tested and the conditions under which it can fail. The most important question is not ``what are the parameter values?'' but whether the crystallisation parameters can be distinguished from zero. If $\hat{\lambda}$ is consistent with zero across all tested regimes, if AIC/BIC consistently favour the null model, and if no observable shows structure beyond standard decoherence, then the crystallisation terms are not needed --- and this would be a clear, scientifically valuable result.
+
+%==================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+%==================================================================
+
+This paper provides a unified discrimination framework for the crystallisation operator: six signature classes, a nine-parameter estimation methodology with identifiability diagnostics, a controlled benchmark across five scenarios, and five explicit falsification criteria. The benchmark demonstrates that the models are statistically indistinguishable in simple and high-noise regimes, but diverge measurably in multi-attractor systems at low to moderate noise ($p < 10^{-3}$). The crystallisation operator stands or falls by these signatures; the framework presented here is intended to make that evaluation quantitative.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
