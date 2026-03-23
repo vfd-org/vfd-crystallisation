@@ -1,0 +1,265 @@
+\documentclass[12pt]{article}
+
+% --- Packages ---
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+% --- Theorem Environments ---
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+% --- Title ---
+\title{Constraint-Driven Selection as an Emergent Principle\\in Dynamical Systems}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+We investigate whether the selection of stable configurations in dynamical systems requires explicit stochastic or threshold-based mechanisms, or whether it arises naturally from the structure of constrained evolution. We show that systems with multiple admissible configurations, constraints, and dynamical evolution generically undergo selection: unstable configurations decay, while stable configurations persist as attractors. Under general assumptions, this process can be expressed as minimisation of a functional balancing constraint satisfaction, energetic cost, and coherence. This provides a structural basis for the crystallisation framework introduced previously \citep{Smart2026}, not as an imposed model but as a natural form of constraint-driven selection. The results are presented at the level of dynamical systems and do not assume any specific physical realisation.
+\end{abstract}
+
+%------------------------------------------------------------------
+\section{Introduction}
+%------------------------------------------------------------------
+
+Recent work has introduced a constraint-driven dynamical model of state selection in which systems evolve toward stable configurations through minimisation of a closure functional \citep{Smart2026}. That framework yields structured attractor behaviour, deterministic selection, and testable deviations from stochastic models in numerical simulations.
+
+The present work addresses a more fundamental question: is such a selection mechanism optional, or does it arise naturally in constrained dynamical systems?
+
+Rather than introducing a new model, we investigate whether the existence of stable attractors and selection among configurations arises generically from minimal assumptions: the presence of constraints, multiple admissible states, and dynamical evolution.
+
+If selection generically arises under these conditions, then the crystallisation framework can be understood not as an arbitrary proposal, but as a natural expression of a more general structural principle.
+
+The argument proceeds as follows. Section~\ref{sec:problem} formulates the selection problem in abstract terms. Section~\ref{sec:requirements} identifies the minimal components a selection process generically requires. Section~\ref{sec:functional} shows that these components naturally compose into a selection functional. Section~\ref{sec:attractors} demonstrates that attractor-based selection arises generically from gradient dynamics on such a functional. Section~\ref{sec:stochastic} discusses the relationship between deterministic and stochastic formulations of selection. Section~\ref{sec:crystallisation} connects these results to the crystallisation framework. Section~\ref{sec:limitations} states the limitations of the analysis.
+
+%------------------------------------------------------------------
+\section{Problem Statement: Selection Without Assumption}\label{sec:problem}
+%------------------------------------------------------------------
+
+Consider a system characterised by three structural features:
+\begin{enumerate}
+    \item A space of configurations $\Phi \in \mathcal{A}$, where $\mathcal{A}$ denotes the set of admissible states.
+    \item Constraints restricting which configurations are compatible with the governing structure of the system.
+    \item Dynamics that evolve the system state over time.
+\end{enumerate}
+
+If multiple configurations are admissible, the system will not generically remain indefinitely in an unresolved combination of all such configurations in a stable manner. Perturbations, constraint interactions, and dynamical evolution will generically favour some configurations over others. Some configurations persist; others decay.
+
+This leads to a structural requirement:
+\begin{quote}
+    \textit{A mechanism of selection among possible configurations generically arises in systems combining multiplicity of states, constraints on admissibility, and dynamical evolution.}
+\end{quote}
+
+This requirement is independent of any specific physical theory. It follows from the mathematical structure of constrained dynamical systems. The question is therefore not \textit{whether} selection occurs, but \textit{what form} it naturally takes.
+
+%------------------------------------------------------------------
+\section{Minimal Requirements for Selection}\label{sec:requirements}
+%------------------------------------------------------------------
+
+We identify three components that a selection process in a constrained dynamical system generically requires.
+
+\subsection{Constraint Consistency}
+
+Configurations must satisfy the governing constraints of the system. A configuration that violates these constraints is not admissible and cannot persist as a stable state.
+
+To quantify the degree of constraint violation, define a \textit{constraint residual}:
+\begin{equation}\label{eq:residual}
+    R[\Phi] = \|G[\Phi] - K\|^2 \geq 0
+\end{equation}
+where $G[\Phi]$ encodes the constraint structure induced by the configuration $\Phi$ and $K$ represents the admissible closure target. Configurations with $R[\Phi] = 0$ satisfy all constraints exactly; those with $R[\Phi] > 0$ are constraint-incompatible to a measurable degree.
+
+\begin{proposition}[Selection Requires Constraint Filtering]
+A selection process that yields stable configurations at minimum requires reducing $R[\Phi]$ toward zero. A process that preserves or increases $R$ cannot produce constraint-compatible outcomes.
+\end{proposition}
+
+\subsection{Energetic or Structural Cost}
+
+Among constraint-compatible configurations, not all are equally stable. Some carry higher energetic or structural cost and are therefore less likely to persist under dynamical evolution.
+
+Define a cost functional:
+\begin{equation}\label{eq:energy}
+    E[\Phi] = \langle \Phi | L | \Phi \rangle
+\end{equation}
+where $L$ is a positive-semidefinite operator encoding the coupling structure or energy landscape of the system. Lower values of $E$ correspond to more stable configurations.
+
+\begin{proposition}[Selection Requires Cost Discrimination]
+A selection process among constraint-compatible configurations at minimum requires preferentially retaining lower-cost states. A process indifferent to $E$ cannot account for the observed stability hierarchy among admissible configurations.
+\end{proposition}
+
+\subsection{Coherence or Internal Compatibility}
+
+A configuration may satisfy external constraints and have low energy, yet lack internal consistency. In systems with multiple interacting degrees of freedom, the relative alignment of components affects stability.
+
+Define a \textit{coherence metric}:
+\begin{equation}\label{eq:coherence}
+    Q[\Phi] \in [0, 1]
+\end{equation}
+measuring the degree of internal compatibility or phase alignment among the components of $\Phi$. Configurations with $Q = 1$ are maximally coherent; those with $Q \approx 0$ are internally disordered.
+
+\begin{proposition}[Selection Requires Internal Compatibility]
+In systems with interacting components, selection processes that ignore internal compatibility can produce configurations that, while individually constraint-compatible, are collectively unstable. Coherence provides an additional selection criterion that is generically required for collective stability.
+\end{proposition}
+
+\begin{remark}
+These three components --- constraint consistency, energetic cost, and coherence --- represent \textit{distinct} selection pressures. Removing any one of them permits a class of configurations that would not persist under realistic dynamical evolution: removing $R$ allows constraint-violating states; removing $E$ allows energetically unstable states; removing $Q$ allows internally incoherent states.
+\end{remark}
+
+%------------------------------------------------------------------
+\section{Emergence of a Selection Functional}\label{sec:functional}
+%------------------------------------------------------------------
+
+Given the three requirements identified above, selection can be expressed as the minimisation of a composite functional that balances all three criteria simultaneously:
+\begin{equation}\label{eq:functional}
+    F[\Phi] = \alpha\, R[\Phi] + \beta\, E[\Phi] - \gamma\, Q[\Phi]
+\end{equation}
+with $\alpha, \beta, \gamma > 0$. The signs reflect the selection logic: $R$ and $E$ are costs to be minimised, while $Q$ is a benefit to be maximised.
+
+\begin{proposition}[Minimal Structure of Selection Functional]\label{thm:minimal}
+Let $F$ be a continuous functional on $\mathcal{A}$ that selects stable configurations by penalising constraint violation, penalising energetic cost, and rewarding coherence. Then $F$ must, at minimum, be able to distinguish between at least three independent quantities with the sign structure of Eq.~\eqref{eq:functional}:
+\begin{itemize}
+    \item a non-negative constraint-violation term (decreasing with admissibility),
+    \item a non-negative cost term (decreasing with stability),
+    \item a non-positive coherence term (increasing with internal consistency).
+\end{itemize}
+The linear combination in Eq.~\eqref{eq:functional} is the simplest smooth additive realisation of this structure. This form is not unique, but represents the simplest smooth realisation of the required structure. Higher-order or nonlinear combinations are possible but introduce additional free parameters without changing the qualitative selection behaviour.
+\end{proposition}
+
+\textit{Argument.} Suppose $F$ lacks the constraint term $R$. Then configurations violating the system's constraints are not penalised, and $F$ cannot distinguish admissible from inadmissible states. Suppose $F$ lacks $E$. Then among admissible states, energetically unstable configurations are not disfavoured. Suppose $F$ lacks $Q$. Then internally incoherent configurations may be selected despite being collectively unstable. Therefore, all three terms are necessary for $F$ to select configurations that are admissible, stable, and internally consistent.
+
+The specific form $F[\Phi] = \alpha\, R[\Phi] + \beta\, E[\Phi] - \gamma\, Q[\Phi]$ is not uniquely derived from first principles. However, it represents the \textit{simplest smooth additive structure} consistent with the required sign pattern. In this sense, the functional is natural rather than arbitrary.
+
+%------------------------------------------------------------------
+\section{Inevitability of Attractors}\label{sec:attractors}
+%------------------------------------------------------------------
+
+Given a selection functional $F$ satisfying the properties above, consider the gradient flow:
+\begin{equation}\label{eq:flow}
+    \frac{d\Phi}{dt} = -\nabla_\Phi F[\Phi]
+\end{equation}
+
+This dynamics has a fundamental monotonicity property:
+
+\begin{theorem}[Monotonic Descent]\label{thm:descent}
+Along the flow defined by Eq.~\eqref{eq:flow}:
+\begin{equation}
+    \frac{dF}{dt} = \langle \nabla F, \dot{\Phi} \rangle = -\|\nabla F[\Phi]\|^2 \leq 0
+\end{equation}
+$F$ is monotonically non-increasing along trajectories.
+\end{theorem}
+
+\begin{proof}
+Direct computation by the chain rule. $\square$
+\end{proof}
+
+\begin{theorem}[Existence of Attractors]\label{thm:attractors}
+If $F$ is continuous and coercive on a closed, bounded admissible set $\mathcal{A}$, then:
+\begin{enumerate}
+    \item $F$ attains its infimum on $\mathcal{A}$ (by the extreme value theorem).
+    \item Trajectories of the gradient flow remain in $\mathcal{A}$ (since $F$ decreases).
+    \item Trajectories are driven toward the critical set $\{\Phi^* : \nabla F[\Phi^*] = 0\}$, and under standard regularity assumptions converge to critical points.
+\end{enumerate}
+Local minima with positive-definite Hessian are Lyapunov-stable attractors.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Existence follows from continuity and compactness. Convergence follows from the monotone decrease of $F$ combined with boundedness below; the \L{}ojasiewicz--Simon inequality provides convergence to a single critical point as a sufficient condition under analyticity assumptions. Lyapunov stability at strict local minima follows from $F$ serving as a Lyapunov function, with the Hessian condition providing the required quadratic bound. $\square$
+\end{proof}
+
+The key implication is:
+
+\begin{quote}
+    \textit{Attractor-based selection is not an additional mechanism imposed on constrained dynamics. It arises as a consequence of gradient flow on functionals satisfying the structural requirements identified in Section~\ref{sec:requirements}.}
+\end{quote}
+
+%------------------------------------------------------------------
+\section{Deterministic vs Stochastic Selection}\label{sec:stochastic}
+%------------------------------------------------------------------
+
+Selection among configurations can be implemented through different dynamical mechanisms. In the literature on state resolution, the principal approaches are:
+
+\begin{itemize}
+    \item \textbf{Stochastic selection} (e.g.\ GRW-type spontaneous collapse \citep{GRW1986}): selection events occur at random times with random outcomes, governed by a fixed rate and Born-rule weighting.
+    \item \textbf{Threshold-based selection} (e.g.\ Penrose objective reduction \citep{Penrose1996}): selection is triggered when a physical quantity exceeds a critical value.
+    \item \textbf{Dynamical selection} (gradient-based convergence): the system evolves continuously toward attractors of a selection functional.
+\end{itemize}
+
+The analysis of the preceding sections shows that dynamical selection via gradient flow is \textit{sufficient} for resolving the configuration-selection problem, given the existence of a functional satisfying the minimal requirements.
+
+This does not exclude stochastic or threshold-based descriptions. In the presence of environmental noise or incomplete knowledge, the deterministic flow may be effectively stochastic at the level of observable statistics. The present analysis shows that stochastic mechanisms are not \textit{required} at the level of the structural argument presented here: the structure of constrained dynamics alone is sufficient to generate selection.
+
+\begin{remark}
+The relationship between the deterministic flow and observed statistics is analogous to the relationship between Hamiltonian mechanics and statistical mechanics: deterministic dynamics at the microscopic level can produce statistical behaviour at the macroscopic level without requiring randomness as a fundamental ingredient.
+\end{remark}
+
+%------------------------------------------------------------------
+\section{Relation to the Crystallisation Framework}\label{sec:crystallisation}
+%------------------------------------------------------------------
+
+The crystallisation model introduced in \citet{Smart2026} defines a specific realisation of the general selection structure described here. In that framework:
+\begin{itemize}
+    \item The constraint residual $R[\Phi]$ is defined as the squared deviation of the state's constraint projection from an admissible target.
+    \item The energy functional $E[\Phi]$ is the expectation value of a coupling operator.
+    \item The coherence metric $Q[\Phi]$ measures phase alignment across modes.
+    \item The dynamics follow gradient descent on the composite functional $F = \alpha R + \beta E - \gamma Q$.
+    \item Stable configurations correspond to attractors of the flow.
+\end{itemize}
+
+The present analysis does not derive the crystallisation model from first principles. What it shows is that the \textit{structure} of the crystallisation functional --- a balance of constraint satisfaction, cost minimisation, and coherence maximisation --- aligns with the minimal requirements for selection in constrained dynamical systems.
+
+In this sense, the crystallisation framework can be understood as one concrete instantiation of a general structural principle, rather than as an arbitrary modelling choice.
+
+The specific numerical values of $\alpha$, $\beta$, $\gamma$, and the particular definitions of $R$, $E$, $Q$ are not fixed by the analysis presented here. These remain free parameters whose values depend on the physical system under consideration.
+
+%------------------------------------------------------------------
+\section{Limitations}\label{sec:limitations}
+%------------------------------------------------------------------
+
+The results presented here are formulated at the level of abstract dynamical systems and are subject to several important limitations.
+
+\begin{enumerate}
+    \item \textbf{No physical derivation.} The analysis does not derive the selection functional from any specific physical theory. It shows that the functional \textit{form} is natural given minimal assumptions, but does not establish that these assumptions are satisfied in quantum mechanics or any other physical domain.
+
+    \item \textbf{Non-uniqueness.} The functional $F[\Phi] = \alpha\, R[\Phi] + \beta\, E[\Phi] - \gamma\, Q[\Phi]$ is minimal in the sense of Proposition~\ref{thm:minimal}, but it is not unique within this class of models. Nonlinear or higher-order alternatives are possible.
+
+    \item \textbf{Parameter dependence.} The weights $\alpha$, $\beta$, $\gamma$ are not determined by the structural analysis. Different weight choices can lead to qualitatively different selection behaviour, including different attractor basins.
+
+    \item \textbf{Finite-dimensional scope.} The theorems are stated for finite-dimensional configuration spaces. Extension to infinite-dimensional Hilbert spaces requires functional-analytic treatment that is not provided here.
+
+    \item \textbf{No empirical claim.} The analysis suggests that constraint-driven selection is a natural structural feature. It does not establish that this mechanism is realised in nature. Whether the crystallisation dynamics produces experimentally observable effects remains an empirical question, addressed separately in the companion experimental paper.
+\end{enumerate}
+
+%------------------------------------------------------------------
+\section{Conclusion}
+%------------------------------------------------------------------
+
+We have shown that selection among configurations in constrained dynamical systems arises naturally from minimal structural requirements: the presence of constraints, energetic cost, and coherence.
+
+Under these conditions, the existence of a selection functional with the sign structure $F = \alpha R + \beta E - \gamma Q$ emerges naturally from these requirements rather than being introduced ad hoc. Gradient flow on such a functional produces monotonic descent, convergence to attractors, and deterministic selection --- without requiring stochastic or threshold-based mechanisms.
+
+This provides a structural interpretation of the crystallisation framework: its form aligns with the minimal requirements for constraint-driven selection, and can be understood as a natural expression of this general principle rather than an imposed model.
+
+The analysis does not establish physical reality. It demonstrates structural naturalness. Whether crystallisation dynamics is realised in physical systems remains an empirical question, and the signatures identified in companion work provide a concrete and testable basis for evaluating it experimentally.
+
+%------------------------------------------------------------------
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

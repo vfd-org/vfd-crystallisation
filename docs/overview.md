@@ -4,9 +4,9 @@ This document describes how the crystallisation framework is organised for prese
 
 The materials in this repository are intended to present a testable framework; they do not assume correctness of the model and are structured to enable independent evaluation.
 
-## Structure: 1 + 2
+## Structure: 1 + 3
 
-This research programme is presented as **one flagship paper** supported by **two companion papers** and a **supplementary layer**. This is not six separate publications — it is one coherent narrative with structured depth.
+This research programme is presented as **one flagship paper** supported by **three companion papers** and a **supplementary layer**. This is not a collection of independent publications — it is one coherent narrative with structured depth.
 
 ---
 
@@ -50,6 +50,19 @@ This research programme is presented as **one flagship paper** supported by **tw
 
 ---
 
+## Companion Paper C — Inevitability
+
+**"Constraint-Driven Selection as an Emergent Principle in Dynamical Systems"**
+`papers/inevitability/constraint-driven-selection.tex`
+
+- **Role**: Shows that the crystallisation functional is not arbitrary but arises naturally from minimal structural requirements for selection in constrained dynamical systems.
+- **Content**: Problem statement, minimal requirements (R, E, Q), emergence of the selection functional, inevitability of attractors, deterministic vs stochastic selection, connection to the crystallisation framework, limitations.
+- **Audience**: Dynamical systems researchers and physicists evaluating whether the framework has structural justification beyond being a proposal.
+- **Claim level**: Structural naturalness, not physical derivation. The functional form is shown to be minimal given stated assumptions; no claim of fundamental law.
+- **Status**: Prepared for review.
+
+---
+
 ## Supplementary Layer
 
 `papers/supplementary/`
@@ -69,7 +82,8 @@ Not standalone papers. Reference material:
 
 1. **Flagship first** — main preprint on arXiv + website + GitHub
 2. **Experimental second** — shows testability and falsifiability
-3. **Formalism third** — for readers wanting mathematical depth
+3. **Inevitability third** — shows the functional form is structurally natural
+4. **Formalism fourth** — for readers wanting full mathematical depth
 
 Supplementary published alongside as downloadable references.
 

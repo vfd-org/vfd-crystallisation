@@ -34,15 +34,16 @@ In this framework, what is conventionally treated as collapse is modelled as con
 
 ---
 
-## Papers (1 + 2 structure)
+## Papers (1 + 3 structure)
 
-The flagship paper is the primary entry point; the companion papers provide mathematical and experimental depth.
+The flagship paper is the primary entry point; the companion papers provide mathematical depth, experimental methodology, and structural justification.
 
 | Role | Paper | Location |
 |------|-------|----------|
-| **Flagship** | Crystallisation Dynamics | `papers/main-preprint/` |
-| Companion A | Mathematical Formalism | `papers/formalism/` |
-| Companion B | Experimental Signatures + Benchmarks | `papers/experimental/` |
+| **Flagship** | Crystallisation Dynamics as a Deterministic Alternative to Collapse | `papers/main-preprint/` |
+| Companion A | Mathematical Structure and Properties | `papers/formalism/` |
+| Companion B | Experimental Signatures, Estimation + Benchmarks | `papers/experimental/` |
+| Companion C | Constraint-Driven Selection as an Emergent Principle | `papers/inevitability/` |
 | Supplementary | Prediction registry, parameter registry, platform sheets | `papers/supplementary/` |
 
 ---
@@ -55,6 +56,7 @@ vfd-crystallisation/
 │   ├── main-preprint/          Flagship paper
 │   ├── formalism/              Companion A: mathematical depth
 │   ├── experimental/           Companion B: signatures + estimation + benchmarks
+│   ├── inevitability/          Companion C: structural inevitability argument
 │   └── supplementary/          Registries + platform mapping sheets
 ├── src/vfd/crystallisation/    Reference implementation
 │   ├── operator.py             Core crystallisation operator

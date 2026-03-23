@@ -53,6 +53,9 @@ build_paper "$PAPERS_DIR/formalism"
 echo "Building experimental companion (B)..."
 build_paper "$PAPERS_DIR/experimental"
 
+echo "Building inevitability paper..."
+build_paper "$PAPERS_DIR/inevitability"
+
 echo "Building supplementary..."
 build_paper "$PAPERS_DIR/supplementary"
 
