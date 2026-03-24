@@ -34,17 +34,18 @@ In this framework, what is conventionally treated as collapse is modelled as con
 
 ---
 
-## Papers (1 + 3 structure)
+## Papers (1 + 4 structure)
 
-The flagship paper is the primary entry point; the companion papers provide mathematical depth, experimental methodology, and structural justification.
+The flagship paper is the primary entry point; the companion papers provide mathematical depth, experimental methodology, structural justification, and a concrete demonstration.
 
 | Role | Paper | Location |
 |------|-------|----------|
-| **Flagship** | Crystallisation Dynamics as a Deterministic Alternative to Collapse | `papers/main-preprint/` |
-| Companion A | Mathematical Structure and Properties | `papers/formalism/` |
-| Companion B | Experimental Signatures, Estimation + Benchmarks | `papers/experimental/` |
-| Companion C | Constraint-Driven Selection as an Emergent Principle | `papers/inevitability/` |
-| Supplementary | Prediction registry, parameter registry, platform sheets | `papers/supplementary/` |
+| **Flagship** | Crystallisation Dynamics as a Deterministic Alternative to Collapse | [`papers/main-preprint/`](papers/main-preprint/) |
+| Companion A | Mathematical Structure and Properties | [`papers/formalism/`](papers/formalism/) |
+| Companion B | Experimental Signatures, Estimation + Benchmarks | [`papers/experimental/`](papers/experimental/) |
+| Companion C | Constraint-Driven Selection as an Emergent Principle | [`papers/inevitability/`](papers/inevitability/) |
+| Companion D | Triplet Closure, Regime Structure + ARIA Demonstration | [`papers/mechanism/`](papers/mechanism/) |
+| Supplementary | Prediction registry, parameter registry, platform sheets | [`papers/supplementary/`](papers/supplementary/) |
 
 ---
 
@@ -57,6 +58,7 @@ vfd-crystallisation/
 │   ├── formalism/              Companion A: mathematical depth
 │   ├── experimental/           Companion B: signatures + estimation + benchmarks
 │   ├── inevitability/          Companion C: structural inevitability argument
+│   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   └── supplementary/          Registries + platform mapping sheets
 ├── src/vfd/crystallisation/    Reference implementation
 │   ├── operator.py             Core crystallisation operator

@@ -55,6 +55,9 @@ Build-Paper (Join-Path $PapersDir "experimental")
 Write-Host "Building inevitability paper..."
 Build-Paper (Join-Path $PapersDir "inevitability")
 
+Write-Host "Building mechanism paper..."
+Build-Paper (Join-Path $PapersDir "mechanism")
+
 Write-Host "Building supplementary..."
 Build-Paper (Join-Path $PapersDir "supplementary")
 

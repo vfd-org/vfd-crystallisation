@@ -56,6 +56,9 @@ build_paper "$PAPERS_DIR/experimental"
 echo "Building inevitability paper..."
 build_paper "$PAPERS_DIR/inevitability"
 
+echo "Building mechanism paper..."
+build_paper "$PAPERS_DIR/mechanism"
+
 echo "Building supplementary..."
 build_paper "$PAPERS_DIR/supplementary"
 

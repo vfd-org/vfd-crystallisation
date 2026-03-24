@@ -1,0 +1,301 @@
+\documentclass[12pt]{article}
+
+% --- Packages ---
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+% --- Theorem Environments ---
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+% --- Title ---
+\title{Crystallisation as a Selection Mechanism:\\Triplet Closure, Regime Structure, and a Deterministic Demonstration}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+We present a mechanistic account of state selection in constrained systems based on the crystallisation framework. The central result is \textit{triplet closure}: three classes of constraint---internal consistency, boundary compatibility, and observational coupling---are jointly sufficient for discrete state resolution under generic conditions, whereas any pair alone generically is not. We define a regime structure governed by the ratio $\Delta = \lambda/\Gamma$ that interpolates between decoherence-dominated and constraint-dominated evolution. The framework is demonstrated using a deterministic governed reasoning system (ARIA) in which a canonical request, fixed context, and three candidate responses are resolved to a single output through constraint-driven selection. The demonstration produces a cryptographically verifiable proof pack confirming that identical inputs yield identical candidates and identical selection. The paper does not claim that this mechanism governs physical collapse; rather, it provides a structural framework for constraint-driven selection, a phenomenological route to testable deviation, and a concrete reproducible demonstration in a working system.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}
+%==================================================================
+
+The standard quantum formalism describes the transition from superposition to definite outcome through the Born rule: a state $\Psi = \sum_i c_i \phi_i$ yields outcome $\phi_k$ with probability $|c_k|^2$. This is a statistical prescription, not a dynamical one. It specifies \textit{what} is observed, but provides no mechanism for \textit{how} selection occurs.
+
+Decoherence \citep{Zurek2003, Schlosshauer2007} explains why interference between macroscopically distinct states is suppressed, producing an effectively diagonal reduced density matrix. However, decoherence does not select a single outcome from the resulting mixture \citep{Schlosshauer2005}. Collapse models \citep{GRW1986, Penrose1996} introduce explicit selection mechanisms---stochastic localisation or gravitational thresholds---but in each case the \textit{which-outcome} question is resolved by irreducible randomness or a single-parameter trigger.
+
+Previous work \citep{Smart2026} introduced the crystallisation operator: a constraint-driven dynamical mechanism in which selection arises as convergence to a stable attractor of a closure functional. The present paper extends that framework in two directions.
+
+First, we formalise \textit{triplet closure}: the observation that three classes of constraint---internal, boundary, and observational---are jointly sufficient for discrete state resolution, while any pair alone generically leaves the system underdetermined. This provides a structural explanation for why selection occurs when it does.
+
+Second, we demonstrate the mechanism in a concrete, non-physical system: ARIA, a deterministic governed reasoning pipeline. This demonstration does not claim physical relevance. It shows that the crystallisation mechanism operates as described---producing deterministic, reproducible, constraint-driven selection from a well-defined candidate space---and that its operation can be independently verified.
+
+\paragraph{Scope of contributions.}
+This paper makes three distinct contributions. First, it defines a \textit{structural} mechanism of selection in constrained systems based on minimisation of a closure functional (Sections~\ref{sec:constraints}--\ref{sec:triplet}). Second, it proposes a \textit{phenomenological} regime-based extension of this mechanism to physical state selection as a falsifiable conjecture (Sections~\ref{sec:regimes}--\ref{sec:observables}). Third, it provides a \textit{demonstrative} instantiation of the mechanism in a deterministic computational system (Section~\ref{sec:aria}). These contributions are logically independent and should be evaluated separately.
+
+%==================================================================
+\section{Constraint Space Formalism}\label{sec:constraints}
+%==================================================================
+
+\subsection{Configuration Space}
+
+Let $\mathcal{A}$ denote the space of admissible configurations for a system. Each configuration $\Phi \in \mathcal{A}$ represents a possible resolved state. We assume $\mathcal{A}$ is finite-dimensional, closed, and bounded.
+
+The system begins in a state $\Psi$ that is not a single element of $\mathcal{A}$ but an unresolved combination of multiple admissible configurations. Selection is the process by which $\Psi$ resolves to a single $\Phi^* \in \mathcal{A}$. In general, $\mathcal{A}$ need not be discrete prior to selection. It may contain continuous families of admissible configurations, with discrete resolved states emerging only through the action of the closure dynamics.
+
+\subsection{Underdetermination}
+
+If the system has $n > 1$ admissible configurations and no additional structure, selection is underdetermined: there is no basis for preferring one configuration over another. Any selection mechanism must introduce additional structure that distinguishes among admissible states.
+
+The question is: what is the minimal additional structure required for definite selection?
+
+%==================================================================
+\section{The Crystallisation Mechanism}\label{sec:mechanism}
+%==================================================================
+
+Selection is modelled as minimisation of a closure functional:
+\begin{equation}\label{eq:functional}
+    F[\Phi] = \alpha\, R[\Phi] + \beta\, E[\Phi] - \gamma\, Q[\Phi]
+\end{equation}
+where $R \geq 0$ measures constraint mismatch (lower is more admissible), $E \geq 0$ measures energetic or structural cost (lower is more stable), and $Q \in [0,1]$ measures internal coherence (higher is more consistent). The negative contribution of $Q$ reflects that greater internal coherence reduces the effective closure cost. The selected configuration is:
+\begin{equation}
+    \Phi^* = \arg\min_{\Phi \in \mathcal{A}} F[\Phi]
+\end{equation}
+
+The dynamics follow gradient flow:
+\begin{equation}\label{eq:flow}
+    \frac{d\Phi}{dt} = -\nabla_\Phi F[\Phi]
+\end{equation}
+which produces monotonic descent ($\dot{F} = -\|\nabla F\|^2 \leq 0$) and convergence to stable attractors. Selection is the arrival at a local minimum of $F$ with positive-definite Hessian.
+
+This mechanism is deterministic in the sense that, given a fixed initial state and fixed constraint structure, the ensuing trajectory is fixed and converges to a corresponding attractor of the landscape of $F$. No stochastic element is required.
+
+%==================================================================
+\section{Triplet Closure}\label{sec:triplet}
+%==================================================================
+
+\subsection{Three Constraint Classes}
+
+We identify three classes of constraint that act on the configuration space:
+
+\begin{definition}[Internal Consistency ($D$)]
+Constraints arising from the internal structure of the configuration: self-consistency, logical coherence, compatibility of components. Measured by the coherence metric $Q[\Phi]$.
+\end{definition}
+
+\begin{definition}[Boundary Compatibility ($B$)]
+Constraints arising from the interface between the system and its environment: boundary conditions, coupling requirements, admissibility under external structure. Measured by the closure residual $R[\Phi]$.
+\end{definition}
+
+\begin{definition}[Observational Coupling ($O$)]
+Constraints arising from the interaction between the system and a measurement or selection apparatus: energetic cost of realisation, coupling to the observational channel. Measured by the energy functional $E[\Phi]$. Here ``observational'' refers to coupling to a selection or readout channel, not necessarily to a conscious observer.
+\end{definition}
+
+\subsection{Sufficiency of the Triplet}
+
+\begin{proposition}[Triplet Closure]\label{prop:triplet}
+The joint imposition of internal ($D$), boundary ($B$), and observational ($O$) constraints generically reduces the set of stable configurations to a discrete set of attractors. Any pair of constraint classes alone is generically insufficient for discrete resolution.
+\end{proposition}
+
+\textit{Argument.} Consider each pair:
+\begin{itemize}
+    \item \textbf{$D + B$ without $O$:} Internal consistency and boundary compatibility restrict the configuration space but do not distinguish among configurations with equal constraint satisfaction and coherence. Without observational coupling, a continuous family of equally admissible states may persist.
+    \item \textbf{$D + O$ without $B$:} Internal consistency and observational coupling select for coherent, low-cost configurations, but without boundary constraints the selection is not anchored to the system's embedding. Multiple configurations may satisfy $D$ and $O$ equally while differing in boundary compatibility.
+    \item \textbf{$B + O$ without $D$:} Boundary compatibility and observational coupling select for low-cost, externally compatible configurations, but without internal consistency the selected configuration may be incoherent---a collection of individually compatible components that do not form a stable whole.
+\end{itemize}
+
+When all three classes act simultaneously, the intersection of their constraint surfaces generically produces isolated points (attractors) rather than continuous families.
+
+\paragraph{Geometric interpretation.}
+Each constraint class can be viewed as defining a submanifold of the admissible configuration space $\mathcal{A}$. Under generic conditions, pairwise intersections of such constraint manifolds retain positive dimension, corresponding to continuous families of admissible configurations. The intersection of three independent constraint classes generically reduces dimensionality further, producing isolated points. This provides a geometric basis for discrete attractor formation under triplet closure.
+
+\begin{remark}
+The term ``generically'' indicates that the result holds for typical constraint configurations. Degenerate cases with exact symmetries may retain continuous solution sets, but such degeneracies are structurally unstable under perturbation.
+\end{remark}
+
+\subsection{Key Statement}
+
+\begin{quote}
+\textit{Under generic conditions, three constraint classes are sufficient for discrete state resolution, whereas two are generically insufficient.}
+\end{quote}
+
+This provides a structural answer to the question of \textit{when} selection occurs: it occurs when constraints from all three classes are simultaneously active.
+
+%==================================================================
+\section{Regime Structure}\label{sec:regimes}
+%==================================================================
+
+At the density-matrix level, we introduce the following phenomenological evolution equation as a compact representation of the competition between environmental decoherence and constraint-driven selection:
+\begin{equation}\label{eq:master}
+    \frac{d\rho}{dt} = -\frac{i}{\hbar}[H, \rho] + \mathcal{L}_{\mathrm{env}}[\rho] - \lambda\, \nabla_\rho F[\rho]
+\end{equation}
+where $\mathcal{L}_{\mathrm{env}}$ is the Lindblad superoperator at rate $\Gamma$ and $\lambda$ is the crystallisation rate. This equation should be understood as an effective ansatz rather than a derived microscopic law. It is intended to capture the qualitative structure of the proposed dynamics.
+
+The behaviour of the system is governed by the dimensionless ratio:
+\begin{equation}
+    \Delta = \frac{\lambda}{\Gamma}
+\end{equation}
+
+\subsection{Regime Classification}
+
+\begin{table}[ht]
+\centering
+\caption{Regime structure as a function of $\Delta = \lambda/\Gamma$.}
+\label{tab:regimes}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Regime & Condition & Behaviour \\
+\midrule
+Decoherence-dominated & $\Delta \ll 1$ & Standard Lindblad dynamics; Born-rule statistics \\
+Transition & $\Delta \sim 1$ & Mixed behaviour; partial attractor structure \\
+Constraint-dominated & $\Delta \gg 1$ & Rapid convergence to attractor structure; basin-sensitive selection \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In the decoherence-dominated regime, the crystallisation term is a perturbative correction and standard quantum predictions are recovered. In the constraint-dominated regime, the system rapidly converges to an attractor of $F[\rho]$ and selection may increasingly reflect constraint geometry rather than Born-rule weighting. The transition regime interpolates between these limits.
+
+Within this phenomenological framework, $\Delta$ is the key experimental parameter: it governs whether crystallisation effects may be observable. Measuring the dependence of outcome statistics on $\Delta$ would provide a direct test of the conjecture. The present discussion defines the phenomenological regimes in which deviations would be expected, but does not by itself establish that any known physical system occupies the constraint-dominated regime.
+
+%==================================================================
+\section{Observable Consequences}\label{sec:observables}
+%==================================================================
+
+The crystallisation mechanism suggests three classes of potentially observable deviation from standard quantum statistics, each expected to become more pronounced as $\Delta$ increases. These should be understood as testable predictions rather than established behaviour.
+
+\textbf{Repeatability.} Under fixed initial conditions and constraint structure, the crystallisation dynamics converges to the same attractor across repeated trials. Outcome entropy is reduced relative to Born-rule expectations: $H_{\mathrm{crystal}} < H_{\mathrm{Born}}$.
+
+\textbf{Entropy reduction.} The degree of entropy reduction scales with $\Delta$. At $\Delta \ll 1$, outcome statistics are indistinguishable from Born-rule predictions. At $\Delta \gtrsim 1$, a measurable entropy deficit appears, growing as the constraint landscape increasingly dominates selection.
+
+\textbf{Basin selection.} In systems with multiple attractors, the selected basin may depend on constraint geometry rather than solely on Hilbert-space amplitudes. Under symmetric amplitudes but asymmetric constraint geometry, basin preferences can deviate from the uniform distribution predicted by the Born rule. This is a falsifiable prediction not shared by any stochastic or threshold-based collapse model.
+
+These predictions are conditional on the applicability of the phenomenological model and do not by themselves establish that such regimes are realised in known physical systems.
+
+%==================================================================
+\section{ARIA Demonstration}\label{sec:aria}
+%==================================================================
+
+\paragraph{ARIA system context.}
+ARIA is a governed deterministic reasoning system in which task inputs, context formation, candidate generation, policy enforcement, and final selection are explicitly structured, auditable, and replayable. In contrast to conventional stochastic generation pipelines, ARIA constructs a fixed candidate space under canonical request and context constraints, applies deterministic selection under an explicit policy, and records the full process as a verifiable proof artifact.
+
+The ARIA demonstration should be understood as an executable instantiation of the proposed selection mechanism, not as evidence about quantum systems. Its role is to demonstrate that triplet-constrained resolution, deterministic attractor selection, and replayable verification can coexist in a working system. In this mapping, the proposal space corresponds to the admissible configuration space $\mathcal{A}$, and crystallisation corresponds to deterministic resolution within that space under the closure functional.
+
+\subsection{Pipeline Structure}
+
+ARIA operates as follows:
+\begin{enumerate}
+    \item \textbf{Canonical request.} A user query is normalised to a canonical form with fixed constraints: ``Why is the sky blue?'' with constraints \textit{scientifically accurate} and \textit{under 150 words}. The canonical request is hashed to ensure identity.
+    \item \textbf{Deterministic context.} A context snapshot is assembled from fixed sources under a deterministic ranking policy (score-then-tiebreak, with source-ID-ascending tie-breaking). The snapshot is hashed.
+    \item \textbf{Proposal space.} Three candidate responses are generated via distinct reasoning strategies (direct solution, sequential decomposition, and structured explanation) in governed deterministic mode with canonical request closure, frozen context, replayable proposal bundles, and fail-closed policy enforcement. All candidates and their prompts are hashed.
+    \item \textbf{Deterministic selection.} Candidates are scored on a composite metric and the highest-scoring candidate is selected. The selection result (candidate ID and hash) is recorded.
+    \item \textbf{Enforcement.} The selected output passes through governance checks (11 passed, 0 violations, 1 warning in this run). The system operates in fail-closed mode: any violation blocks output.
+    \item \textbf{Proof pack.} All artifacts---request, context, prompts, candidates, scores, selection, enforcement results---are bundled with cryptographic hashes into a verifiable proof pack.
+\end{enumerate}
+
+\subsection{Constraint Mapping}
+
+The ARIA pipeline instantiates the triplet closure structure:
+\begin{itemize}
+    \item \textbf{Internal consistency ($D$):} Each candidate must be internally coherent---logically consistent, factually accurate, self-contained.
+    \item \textbf{Boundary compatibility ($B$):} Each candidate must satisfy the boundary constraints of the canonical request: scientific accuracy, word-count limit, audience appropriateness.
+    \item \textbf{Observational coupling ($O$):} The composite scoring metric couples the system to the selection apparatus, providing the energetic cost analogue that distinguishes among candidates satisfying $D$ and $B$.
+\end{itemize}
+
+All three constraint classes are active simultaneously. In this operational sense, the system instantiates triplet closure.
+
+\subsection{Results}
+
+Three candidates were produced:
+\begin{table}[ht]
+\centering
+\caption{ARIA demonstration: candidate scores and selection.}
+\label{tab:aria}
+\begin{tabular}{@{}llcl@{}}
+\toprule
+Candidate ID & Strategy & Score & Selected \\
+\midrule
+\texttt{cand-eed8} & Direct solution & 0.85 & $\checkmark$ \\
+\texttt{cand-3dbf} & Sequential decomposition & 0.82 & \\
+\texttt{cand-6cfa} & Structured explanation & 0.79 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The highest-scoring candidate was selected deterministically. In this sense, the candidate set constitutes the unresolved admissible space, while the composite scoring and governance structure define the closure conditions that reduce that space to a single selected output. The proof pack confirms:
+\begin{itemize}
+    \item All artifact hashes are consistent.
+    \item The manifest records \texttt{all\_deterministic: true}.
+    \item The governed run was executed under deterministic policy with canonical request closure, frozen context snapshot, fixed proposal-space enumeration, replayable proposal bundles, and fail-closed enforcement.
+    \item The determinism policy is \texttt{strict} with \texttt{fail\_closed: true}, and the proof pack supports independent replay verification of the final selection.
+\end{itemize}
+
+Given fixed inputs, identical candidate sets and identical selections are reproduced. This is verified by the hash chain in the proof pack and can be independently replayed. In this sense, the proof pack functions as a portable reproducibility artifact rather than a runtime-only logging record.
+
+\subsection{What This Demonstrates}
+
+The ARIA demonstration shows that:
+\begin{enumerate}
+    \item Constraint-driven selection produces a definite output from a candidate space.
+    \item The selection is deterministic and reproducible under fixed conditions.
+    \item Triplet closure (internal + boundary + observational) is satisfied.
+    \item The process is transparent: every step is recorded, hashed, and verifiable.
+\end{enumerate}
+
+The demonstration does \textit{not} show that this mechanism operates in quantum systems. It shows that the mechanism can be concretely instantiated, implemented, and verified in a working system---and that its core properties (determinism, constraint-driven selection, reproducibility) are not abstract claims but observable facts in a working system. The present example is intentionally simple for clarity; the deterministic governed reasoning stack has been validated across a broader test suite including replay equivalence, mutation sensitivity, and enforcement correctness.
+
+%==================================================================
+\section{Limitations}\label{sec:limitations}
+%==================================================================
+
+\begin{enumerate}
+    \item \textbf{System closure.} The crystallisation mechanism depends on the constraint structure being well-defined and complete. In open systems with unknown or evolving constraints, the functional $F$ may not be fully specified.
+
+    \item \textbf{No claim about all physical systems.} The analysis applies to systems satisfying the structural assumptions of Section~\ref{sec:constraints}. Whether quantum measurement satisfies these assumptions is an empirical question, not a conclusion of this paper.
+
+    \item \textbf{Parameterisation incomplete.} The weights $\alpha$, $\beta$, $\gamma$ and the rate $\lambda$ are free parameters. Their values are not derived from the structural analysis and must be determined empirically for each system.
+
+    \item \textbf{ARIA is not a physics experiment.} The demonstration shows that the mechanism works as described in a computational system. It does not constitute evidence that the mechanism operates in nature.
+
+    \item \textbf{Triplet closure is a structural observation.} The argument that three constraint classes are sufficient for discrete selection is presented as a structural observation under generic conditions, not as a rigorous theorem with fully specified regularity assumptions.
+
+    \item \textbf{Phenomenological formulation.} The density-matrix evolution equation introduced in Section~\ref{sec:regimes} is not derived from a microscopic model and should be interpreted as an effective representation of the proposed dynamics.
+\end{enumerate}
+
+%==================================================================
+\section{Conclusion}
+%==================================================================
+
+The central proposal of this paper is that definite selection can be understood as the closure of constraints rather than as a primitive collapse postulate.
+
+The crystallisation framework provides a mechanistic account of this process: an unresolved configuration evolves under gradient flow on a closure functional until reaching a stable attractor. Triplet closure---the joint action of internal, boundary, and observational constraints---is sufficient for discrete resolution, while any pair alone is generically not.
+
+The regime structure governed by $\Delta = \lambda/\Gamma$ interpolates between standard decoherence and constraint-dominated selection, providing a testable parameter that determines whether crystallisation effects are accessible.
+
+The ARIA demonstration shows that the mechanism can be instantiated as described in a concrete system: given fixed inputs, constraint-driven selection produces identical candidates and identical final outputs, verified by a cryptographic proof pack. This allows independent verification of the selection process without reliance on the original runtime system.
+
+Whether this mechanism is realised in physical systems remains an empirical question. The framework provides a concrete, testable, and falsifiable basis for investigating it.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

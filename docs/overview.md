@@ -4,9 +4,9 @@ This document describes how the crystallisation framework is organised for prese
 
 The materials in this repository are intended to present a testable framework; they do not assume correctness of the model and are structured to enable independent evaluation.
 
-## Structure: 1 + 3
+## Structure: 1 + 4
 
-This research programme is presented as **one flagship paper** supported by **three companion papers** and a **supplementary layer**. This is not a collection of independent publications — it is one coherent narrative with structured depth.
+This research programme is presented as **one flagship paper** supported by **four companion papers** and a **supplementary layer**. This is not a collection of independent publications — it is one coherent narrative with structured depth.
 
 ---
 
@@ -63,6 +63,19 @@ This research programme is presented as **one flagship paper** supported by **th
 
 ---
 
+## Companion Paper D — Mechanism + Demonstration
+
+**"Crystallisation as a Selection Mechanism: Triplet Closure, Regime Structure, and a Deterministic Demonstration"**
+`papers/mechanism/crystallisation-mechanism.tex`
+
+- **Role**: Formalises the triplet closure result and demonstrates the mechanism in a concrete system. Makes three logically independent contributions: structural (triplet closure), phenomenological (regime structure), and demonstrative (ARIA proof pack).
+- **Content**: Constraint space formalism, crystallisation mechanism, triplet closure (three constraint classes sufficient, two not), regime structure (Delta = lambda/Gamma), observable consequences, ARIA governed reasoning demonstration with cryptographic proof pack, limitations.
+- **Audience**: Researchers evaluating the mechanism's structural grounding and wanting to see it operate in a verifiable system.
+- **Claim level**: Structural mechanism + phenomenological conjecture + concrete demonstration. Claims are explicitly separated and should be evaluated independently.
+- **Status**: Prepared for review.
+
+---
+
 ## Supplementary Layer
 
 `papers/supplementary/`
@@ -83,7 +96,8 @@ Not standalone papers. Reference material:
 1. **Flagship first** — main preprint on arXiv + website + GitHub
 2. **Experimental second** — shows testability and falsifiability
 3. **Inevitability third** — shows the functional form is structurally natural
-4. **Formalism fourth** — for readers wanting full mathematical depth
+4. **Mechanism fourth** — triplet closure + ARIA demonstration
+5. **Formalism fifth** — for readers wanting full mathematical depth
 
 Supplementary published alongside as downloadable references.
 
