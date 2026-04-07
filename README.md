@@ -44,7 +44,7 @@ In this framework, what is conventionally treated as "collapse" is modelled as c
 
 ## Papers
 
-The research programme follows a **1 + 4** structure: one flagship paper supported by four companion papers and a supplementary layer. The flagship paper stands alone; everything else provides depth.
+The research programme follows a **1 + 6** structure: one flagship paper supported by six companion papers and a supplementary layer. The flagship paper stands alone; everything else provides depth.
 
 ### Flagship
 
@@ -76,6 +76,18 @@ Argues that the crystallisation functional F = alphaR + betaE - gammaQ is not ar
 
 Formalises **triplet closure**: three classes of constraint (internal, boundary, observational) are jointly sufficient for discrete state resolution under generic conditions, whereas any pair alone generically is not. Defines a regime structure governed by Delta = lambda/Gamma. Demonstrates the mechanism in the **ARIA governed reasoning system** — a deterministic pipeline that resolves a canonical request through three candidates to a single output, producing a cryptographically verifiable proof pack. Includes the full [proof-pack artifacts](papers/mechanism/demo/) for independent verification.
 
+### Companion E — Particles, Geometry, and Mass
+
+**[Particles, Geometry, and Mass from Deterministic Field Closure](papers/master-mass/master-mass.pdf)** ([LaTeX source](papers/master-mass/master-mass.tex))
+
+Develops a structural theory of particles and mass within the closure framework. Particles are identified with stable closure classes characterised by discrete shell support, winding number, and symmetry sector. Five assignment rules uniquely determine the electron and proton. A three-order mass law with zero fitted continuous parameters yields the rational exponent 1265/81 and a predicted proton-to-electron ratio of ~1835.8, in structural agreement with the observed value at the 2×10⁻⁴ level. Includes formal no-go for naive lepton assignments and precise diagnosis of the missing winding layer.
+
+### Companion F — Lepton Generations
+
+**[Lepton Generations and the Missing Mass Operator in Deterministic Field Closure](papers/lepton-generations/lepton-generations.pdf)** ([LaTeX source](papers/lepton-generations/lepton-generations.tex))
+
+Companion to Paper E. Proves a formal no-go theorem establishing that shell-support extension cannot produce muon or tau mass ratios. Identifies the required winding-dependent boundary excitation operator f(w) = phi^N (w-1)^(1/phi), where the exponent 1/phi is consistent with hydrogen-like spectral scaling in a space of effective dimension phi, and the coefficient phi^N is the unique phi-integer-power matching the muon mass. Predicts the muon-to-electron ratio to 0.5% and the tau-to-electron ratio to 3.7% with zero fitted continuous parameters.
+
 ### Supplementary Material
 
 Reference documents (not standalone papers):
@@ -100,6 +112,8 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── master-mass/            Companion E: particles, geometry, and mass
+│   ├── lepton-generations/     Companion F: lepton generations + winding operator
 │   └── supplementary/          Registries + platform mapping sheets
 ├── src/vfd/crystallisation/    Reference implementation
 │   ├── operator.py             Core crystallisation operator

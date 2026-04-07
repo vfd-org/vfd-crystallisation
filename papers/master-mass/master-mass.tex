@@ -1,0 +1,393 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Scal}{\mathcal{S}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\phig}{\varphi}
+
+\title{Particles, Geometry, and Mass from Deterministic Field Closure}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+We develop a structural theory of particles and mass within the deterministic crystallisation framework. Particles are identified with stable closure classes --- equivalence classes of bounded field configurations on a $\phig$-structured manifold, characterised by discrete shell support, winding number, and symmetry sector. Five explicit assignment rules constrain admissible closure classes and uniquely determine the electron as the minimal boundary closure ($\{1\}$) and the proton as the minimal interior composite ($\{2,3,4\}$). A combinatorial class invariant yields $\Delta C = 15$ with zero fitted continuous parameters. Metric-induced class energies show that additive composition is insufficient for mass, requiring a nonlinear law. A closure-graph analysis then yields a three-order mass law,
+\[
+\frac{m_p}{m_e} = \phig^{\;\Delta C \;+\; \frac{|E|}{|V|} \;-\; \mathrm{Var}(\deg)\,\frac{|E|}{|V|^2}} = \phig^{1265/81},
+\]
+where $|E|$ and $|V|$ denote the edge and vertex counts of the closure graph. The first-order graph term is derived within the present framework from the per-vertex normalised trace of the closure-graph Laplacian, and the second-order term from degree variance, with a self-consistent normalisation uniquely selected within the tested power-law family. This gives $m_p/m_e \approx 1835.8$, in structural agreement with the observed value $1836.15$ at the $\sim\!2 \times 10^{-4}$ relative level. The agreement is structural rather than metrological: the experimental ratio is known to much higher precision than the framework currently predicts. The neutron-proton mass splitting is compatible with the architecture at the correct scale but not yet derived. Heavier lepton masses (muon, tau) are not reproduced under the current rule set, identifying lepton-generation structure as the primary limitation. The treatment is presented as a falsifiable structural hypothesis and a proof of structural viability for the baryon-lepton mass hierarchy, not as a first-principles derivation or a general mass theory.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The Standard Model classifies particles by quantum numbers and predicts their interactions, but particle masses are free parameters. The question of why there exist discrete particle types with specific mass hierarchies remains open.
+
+A companion paper \citep{Smart2026} introduced the crystallisation operator: a deterministic mechanism for state selection in which unresolved configurations converge to stable attractors of a closure functional. The present paper asks two questions: what are those attractors, and what mass do they carry?
+
+We develop a structural theory in which particles are \textit{closure classes} --- discrete equivalence classes of bounded field configurations on a $\phig$-structured manifold --- and mass emerges from the geometric and graph-theoretic structure of these classes. The development proceeds through six layers:
+
+\begin{enumerate}
+    \item Closure classes as particle identities (Sections~\ref{sec:philosophy}--\ref{sec:invariant}).
+    \item Manifold geometry and class energy (Sections~\ref{sec:manifold}--\ref{sec:metric}).
+    \item The nonlinear mass-map problem (Section~\ref{sec:nonlinear}).
+    \item Structural bounds on the mass ratio (Section~\ref{sec:bracketing}).
+    \item First-order graph composition (Sections~\ref{sec:graph}--\ref{sec:graphrule}).
+    \item Second-order degree-variance refinement (Section~\ref{sec:secondorder}).
+\end{enumerate}
+
+Each layer is derived from the preceding one within the present framework, with zero fitted continuous parameters. The absence of fitted continuous parameters does not imply absence of structural assumptions; the framework relies on a discrete set of structural choices whose physical justification remains part of the programme (see Section~\ref{sec:assumptions}).
+
+%==================================================================
+\section{Particles as Solutions to Constraint Systems}\label{sec:philosophy}
+%==================================================================
+
+We propose that particles are stable solutions of constraint systems. A particle exists because a specific combination of constraints --- closure, boundedness, symmetry, topology, stability --- admits a stable bounded field configuration. The discreteness of the particle spectrum reflects the discreteness of admissible constraint solutions.
+
+%==================================================================
+\section{Closure Classes}\label{sec:classes}
+%==================================================================
+
+\begin{definition}[Closure Class]\label{def:class}
+A closure class $\Acal_{S,w,\sigma}$ is the set of all bounded, normalisable field configurations on $\Mcal$ with shell support $S$, winding number $w$, and symmetry sector $\sigma$, satisfying exact phase closure and stability.
+\end{definition}
+
+The closure class is the particle identity. The labels $(S, w, \sigma)$ are the structural analogue of quantum numbers.
+
+%==================================================================
+\section{Scope and Structural Assumptions}\label{sec:assumptions}
+%==================================================================
+
+The framework rests on the following structural assumptions, which are not derived from the Standard Model:
+
+\begin{enumerate}
+    \item The $\phig$-structured manifold $\Mcal$ with nested shells at scales $\phig^{-n}$ is a modelling assumption. The choice of $\phig$ is motivated by its unique self-similar nesting property ($\phig^{-1} = \phig - 1$); the framework does not claim $\phig$ is the only possible geometric substrate. Whether this structure is realised in nature is an empirical question.
+    \item Assignment rules R1--R5 (Section~\ref{sec:rules}) are structural constraints motivated by the closure framework, not derived from a fundamental Lagrangian.
+    \item The closure-graph construction and its Laplacian are exact given the shell assignments, but the shell assignments themselves rest on R1--R5.
+    \item The self-consistent normalisation of the second-order term is selected within a tested family, not derived from a deeper axiom.
+\end{enumerate}
+
+The framework should therefore be understood as a \textit{candidate geometric substrate} for particle classification and mass, not as an established physical theory. Its value lies in producing a mass law with zero fitted continuous parameters with strong structural agreement from a small number of explicit assumptions.
+
+%==================================================================
+\section{Assignment Rules and Class Enumeration}\label{sec:rules}
+%==================================================================
+
+Five rules constrain admissible closure classes:
+
+\begin{definition}[R1--R5]
+\textbf{R1} (Minimal Support): minimal charged closure occupies the smallest shell set; composites require $|S| \geq 3$; shell~1 reserved for minimal charged.
+\textbf{R2} (Boundary/Interior): shell~1 is boundary; baryons occupy interior only, starting at shell~2.
+\textbf{R3} (Complexity Threshold): $C(\Acal) \geq -1$ for leptons, $C(\Acal) \geq 5$ for baryons.
+\textbf{R4} (Symmetry/Topology): contiguous shells; winding restrictions per sector.
+\textbf{R5} (Connectivity): all shells form a connected subgraph.
+\end{definition}
+
+\begin{table}[ht]
+\centering
+\caption{Closure-class admissibility under R1--R5.}
+\label{tab:assignments}
+\begin{tabular}{@{}llccl@{}}
+\toprule
+Candidate & Shells & $C$ & All Pass? & Rejection \\
+\midrule
+Electron & $\{1\}$ & $-1$ & \textbf{Yes} & --- \\
+Electron (ext.) & $\{1,2\}$ & $-2$ & No & Fails R1, R2, R3 \\
+Baryon (low) & $\{1,2,3\}$ & $-1$ & No & Fails R1, R2, R3 \\
+Proton & $\{2,3,4\}$ & $14$ & \textbf{Yes} & --- \\
+Baryon (high) & $\{3,4,5\}$ & $47$ & No & Fails R2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proposition}[Unique Minimality]
+Under R1--R5, the electron assignment $\{1\}$ and proton assignment $\{2,3,4\}$ are uniquely determined as the minimal admissible classes in their respective sectors.
+\end{proposition}
+
+The neutron shares the proton's shell support $\{2,3,4\}$ in the baryon-neutral symmetry sector (R4).
+
+%==================================================================
+\section{Combinatorial Class Invariant}\label{sec:invariant}
+%==================================================================
+
+\begin{definition}[Combinatorial Complexity]
+$C(\Acal) = \prod_{i} n_i - \sum_{i} n_i - 1$ for shell support $\{n_1, \ldots, n_s\}$.
+\end{definition}
+
+\begin{theorem}[Inter-Class Difference]\label{thm:deltaC}
+$\Delta C = C(\Acal_p) - C(\Acal_e) = 14 - (-1) = 15$. This is a fixed integer determined by R1--R5 with zero fitted continuous parameters.
+\end{theorem}
+
+%==================================================================
+\section{$\phig$-Structured Manifold Geometry}\label{sec:manifold}
+%==================================================================
+
+The manifold $\Mcal$ consists of nested shells at scales $r_n = r_0\, \phig^{-n}$. A field configuration is:
+\begin{equation}
+    \Psi(\mathbf{x}, t) = \sum_{n \in S} a_n\, \phig^{-n}\, e^{i(\omega_n t + \theta_n)}\, \chi_n(\mathbf{x})
+\end{equation}
+
+%==================================================================
+\section{Metric, Measure, and Class Energy}\label{sec:metric}
+%==================================================================
+
+The minimal radial metric assigns spectral weight $\lambda(n) = \phig^{2n}$ to shell $n$. The class energy under additive summation is $E_{\mathrm{sum}}(\Acal) = \sum_{n \in S} \phig^{2n}$, giving $E_p / E_e \approx 27.4$.
+
+\begin{remark}[Diagnostic Result]
+The additive class-energy ratio is of order $10^1$, while the observed mass ratio is of order $10^3$. A nonlinear composition law is required.
+\end{remark}
+
+%==================================================================
+\section{The Nonlinear Mass-Map Problem}\label{sec:nonlinear}
+%==================================================================
+
+Seven candidate nonlinear map families were evaluated. Two produce phi-integer-power ratios with zero fitted continuous parameters:
+
+\textbf{Combinatorial map}: $m_p/m_e = \phig^{15} \approx 1364$.
+
+\textbf{Multiplicative spectral product}: $m_p/m_e = \phig^{16} \approx 2207$.
+
+%==================================================================
+\section{Structural Bounds}\label{sec:bracketing}
+%==================================================================
+
+\begin{proposition}[Bracketing]\label{prop:bracket}
+$\phig^{15} < m_p/m_e < \phig^{16}$. Both bounds are derived within the framework with zero fitted continuous parameters. The observed ratio corresponds to $\phig^{15.618}$, lying strictly between.
+\end{proposition}
+
+%==================================================================
+\section{Closure-Graph Formulation}\label{sec:graph}
+%==================================================================
+
+The shell support $S$ induces a \textit{closure graph} $G(S)$: vertices are occupied shells, edges are adjacency links between consecutive shells. We write $|V|$ and $|E|$ for the vertex and edge counts of $G$ (not to be confused with the energy functional $E_{\mathrm{sum}}$ of Section~\ref{sec:metric}). For the electron: $|V| = 1$, $|E| = 0$. For the proton: $|V| = 3$, $|E| = 2$.
+
+The edge-to-vertex ratio $|E|/|V|$ equals $\operatorname{tr}(L)/(2|V|)$, where $L$ is the unnormalised graph Laplacian. This is an exact operator identity.
+
+%==================================================================
+\section{First-Order Graph Composition}\label{sec:graphrule}
+%==================================================================
+
+The mass of a closure class factorises into independent structural sectors. Since the combinatorial invariant $C$ (depending on shell \textit{indices}) and the graph term $|E|/|V|$ (depending on shell \textit{adjacency}) act on independent structural aspects of the closure class, their contributions multiply at the mass level:
+\begin{equation}
+    m(\Acal) = \Lambda\, \phig^{C(\Acal)} \cdot \phig^{|E(\Acal)|/|V(\Acal)|}
+\end{equation}
+
+The exponents add because independent factors multiply. This yields the first-order law:
+\begin{equation}\label{eq:first_order}
+    \frac{m_p}{m_e} = \phig^{\Delta C + \Delta(|E|/|V|)} = \phig^{15 + 2/3} = \phig^{47/3} \approx 1880 \quad (\text{error: } 2.4\%)
+\end{equation}
+
+%==================================================================
+\section{Second-Order Degree-Variance Refinement}\label{sec:secondorder}
+%==================================================================
+
+\subsection{Source}
+
+The first-order graph term uses the \textit{first moment} (mean) of the degree distribution. The leading second-order correction considered here uses the \textit{second central moment} (variance):
+\[
+\delta_2(\Acal) = -\frac{\mathrm{Var}(\deg(\Acal))\;\cdot\;|E(\Acal)|}{|V(\Acal)|^2}
+\]
+
+The negative sign is consistent with the interpretation that degree heterogeneity (irregular connectivity) reduces effective coupling. The electron ($\mathrm{Var} = 0$) receives no correction. The proton ($\deg = [1,2,1]$, $\mathrm{Var} = 2/9$) receives $\delta_2 = -(2/9)(2/9) = -4/81$.
+
+\subsection{Normalisation}
+
+Within the tested power-law family $N = |V|^a |E|^b$, the normalisation $|V|^2/|E|$ is the unique choice that preserves the self-consistent order-by-order structure and yields sub-$1\%$ agreement. It equals $|V|/g_1$, where $g_1 = |E|/|V|$ is the first-order graph term. This is the \textit{self-consistent normalisation}: each order of the expansion is normalised relative to the previous order.
+
+\subsection{Three-Order Mass Law}
+
+\begin{proposition}[Three-Order Mass Law]\label{prop:threeorder}
+Within the present framework, the mass ratio between proton and electron closure classes is:
+\begin{equation}\label{eq:three_order}
+    \frac{m_p}{m_e} = \phig^{\,\Delta C \;+\; \Delta(|E|/|V|) \;-\; \Delta\!\left(\mathrm{Var}(\deg)\,\frac{|E|}{|V|^2}\right)} = \phig^{\,15 \;+\; 2/3 \;-\; 4/81} = \phig^{1265/81}
+\end{equation}
+where $1265/81$ is in lowest terms ($\gcd(1265,81) = 1$). Numerically:
+\[
+\phig^{1265/81} \approx 1835.8 \qquad (\text{observed: } 1836.15, \quad \text{relative error: } 2 \times 10^{-4})
+\]
+No continuous parameters are fitted. The result depends on the discrete structural choices detailed in Section~\ref{sec:assumptions}.
+\end{proposition}
+
+\begin{table}[ht]
+\centering
+\caption{Three-order mass law: cumulative accuracy.}
+\label{tab:results}
+\begin{tabular}{@{}llccl@{}}
+\toprule
+Order & Term & Exponent & Predicted $m_p/m_e$ & Error \\
+\midrule
+0th & $\phig^{\Delta C}$ & 15 & 1364 & 25.7\% \\
+1st & $+\;\Delta(|E|/|V|)$ & $15 + 2/3 = 47/3$ & 1880 & 2.4\% \\
+\textbf{2nd} & $\boldsymbol{-\;\Delta(\mathrm{Var}(\deg)\,|E|/|V|^2)}$ & $\boldsymbol{47/3 - 4/81 = 1265/81}$ & $\boldsymbol{1835.8}$ & $\boldsymbol{2 \times 10^{-4}}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==================================================================
+\section{Operator Origin and Factorisation}\label{sec:operator}
+%==================================================================
+
+The three-order law arises from a single structural principle: \textit{mass factorises over independent closure-class sectors}.
+
+\begin{itemize}
+    \item \textbf{Set sector} ($\phig^C$): depends on shell \textit{indices} (which shells). Derived from shell-support combinatorics.
+    \item \textbf{Graph sector} ($\phig^{|E|/|V|}$): depends on shell \textit{adjacency} (how connected). Derived within the framework from $\operatorname{tr}(L)/(2|V|)$.
+    \item \textbf{Variance sector} ($\phig^{-\mathrm{Var}(\deg)|E|/|V|^2}$): depends on degree \textit{heterogeneity}. Self-consistently normalised by the first-order graph term. Structurally selected within the tested power-law family.
+\end{itemize}
+
+These sectors act on independent aspects of the closure class at leading order. Independent sectors multiply at the mass level, yielding additive exponents. Subleading sector couplings may exist but are not included in the present treatment. The factorised form is:
+\begin{equation}
+    m(\Acal) = \Lambda \;\cdot\; \phig^{C(\Acal)} \;\cdot\; \phig^{\operatorname{tr}(L_\Acal)/(2|V_\Acal|)} \;\cdot\; \phig^{-\mathrm{Var}(\deg_\Acal)\,|E_\Acal|/|V_\Acal|^2}
+\end{equation}
+
+%==================================================================
+\section{Status Summary}\label{sec:status}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Result status map.}
+\label{tab:status}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Result & Type & Parameters & Status \\
+\midrule
+Closure-class definition & Structural & 0 & Established \\
+Assignment rules R1--R5 & Structural & 0 & Established \\
+Unique minimality of $\{1\}$ and $\{2,3,4\}$ & Derived within framework & 0 & Established \\
+$\Delta C = 15$ & Derived & 0 & Established \\
+Additive energy insufficient & Diagnostic & 0 & Established \\
+Bounds $\phig^{15}$--$\phig^{16}$ & Derived within framework & 0 & Established \\
+Graph Laplacian term $\operatorname{tr}(L)/(2|V|)$ & Derived within framework & 0 & Established \\
+Degree-variance source & Derived within framework & 0 & Established \\
+Normalisation $|V|^2/|E|$ & Structurally selected & 0 & Unique within tested family \\
+Three-order exponent $1265/81$ & Derived within framework & 0 & Established within framework \\
+Ratio $\approx 1835.8$ & Derived within framework & 0 & $2 \times 10^{-4}$ structural agreement \\
+Deeper axiomatic justification & Open & --- & Structurally motivated \\
+Neutron-proton splitting & Validation & --- & Compatible (correct scale, not derived) \\
+Muon/tau generations & Validation & --- & Not reproduced; rule extension needed \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==================================================================
+\section{First Validation Extensions}\label{sec:validation}
+%==================================================================
+
+\subsection{Neutron-Proton Splitting}
+
+The neutron and proton share the closure class $\{2,3,4\}$ and are therefore identical at all three orders of the mass law. The observed neutron-proton mass difference $\Delta m_{np} = 1.293\,\mathrm{MeV}/c^2$ ($m_n/m_p = 1.00138$) corresponds to an exponent correction $\delta_\sigma \approx 0.00286$. This is of the correct order of magnitude for a third-order or symmetry-sector correction within the existing architecture: candidate structural quantities at this scale include $\mathrm{Var}(\deg)/|V|^3 \approx 0.008$ and $1/C^2 \approx 0.005$. The framework naturally accommodates a correction of this magnitude as an additional multiplicative factor $\phig^{\delta_\sigma}$, entering through the distinction between charged and neutral baryon symmetry sectors. However, no specific correction form has been derived; the splitting is \textit{compatible with} the framework but \textit{not yet derived from} it.
+
+\subsection{Heavier Lepton Tests}
+
+The muon and tau were tested as tentative closure classes under extensions of R1--R5. The assignment $\mu \to \{1,2\}$ violates R3 ($C = -2 < -1$) and yields $m_\mu/m_e \approx 0.8$, orders of magnitude below the observed $206.8$. The assignment $\tau \to \{1,2,3\}$ satisfies R3 ($C = -1$) but yields $m_\tau/m_e \approx 1.3$, far from the observed $3477$.
+
+Both failures arise from the same structural issue: the current shell-support model assigns small or negative combinatorial complexity to multi-shell leptonic states, producing mass ratios near unity rather than the observed $10^2$--$10^3$ hierarchy. The lepton generation problem requires either an extension of the rule set (e.g.\ generation-dependent winding, higher-dimensional shell structure, or an entirely different assignment mechanism for heavier leptons) or a fundamental revision of how leptonic mass scales with shell support.
+
+\subsection{Scope of Current Predictive Reach}
+
+\begin{table}[ht]
+\centering
+\caption{Validation results under the current framework.}
+\label{tab:validation}
+\begin{tabular}{@{}llccl@{}}
+\toprule
+Ratio & Assignment & Predicted & Observed & Verdict \\
+\midrule
+$m_p/m_e$ & $\{2,3,4\}$ vs $\{1\}$ & 1835.8 & 1836.15 & Structural agreement ($2 \times 10^{-4}$) \\
+$m_n/m_p$ & same class + $\delta_\sigma$ & (compatible) & 1.00138 & Compatible at correct scale \\
+$m_\mu/m_e$ & $\{1,2\}$ vs $\{1\}$ & 0.8 & 206.8 & Fails (rule violation; wrong scale) \\
+$m_\tau/m_e$ & $\{1,2,3\}$ vs $\{1\}$ & 1.3 & 3477 & Fails (wrong scale) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The proton-to-electron ratio is the framework's strongest result. The neutron-proton splitting is compatible but not derived. The muon and tau are not reproduced, representing a genuine limitation that constrains the scope of the current claim. The present result should be interpreted as a proof of structural viability for the baryon-lepton mass hierarchy, not as a general mass theory. Broader validation --- particularly extension to lepton generations --- is required to exclude the possibility of structural coincidence in the proton-to-electron case.
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\textbf{Derived within the framework:}
+\begin{itemize}
+    \item combinatorial invariant $\Delta C = 15$
+    \item graph Laplacian term $\operatorname{tr}(L)/(2|V|)$
+    \item degree-variance source for the second-order term
+\end{itemize}
+
+\textbf{Structurally selected within a tested family:}
+\begin{itemize}
+    \item self-consistent normalisation $|V|^2/|E|$ (unique within the power-law family $|V|^a |E|^b$)
+\end{itemize}
+
+\textbf{Validated:}
+\begin{itemize}
+    \item neutron-proton splitting: compatible at the correct scale (not derived)
+\end{itemize}
+
+\textbf{Not reproduced:}
+\begin{itemize}
+    \item muon and tau masses: current rule set does not generate heavier lepton generations
+\end{itemize}
+
+\textbf{Open:}
+\begin{itemize}
+    \item deeper axiomatic justification of the self-consistency normalisation principle
+    \item derivation (not just compatibility) of neutron-proton splitting
+    \item extension of rule set for lepton generations
+    \item physical realisation of the $\phig$-manifold
+\end{itemize}
+
+\textbf{What this paper does not claim:} First-principles mass derivation in the strong physics sense. The normalisation principle is structurally selected, not axiomatically derived. The $\phig$-structured manifold is a modelling assumption. The framework does not replace the Standard Model.
+
+The agreement obtained here is structural rather than metrological: the predicted ratio is accurate at the $\sim\!10^{-4}$ relative level, whereas the experimental ratio $m_p/m_e = 1836.15267343(11)$ is known to a relative precision of $\sim\!6 \times 10^{-11}$. The framework does not approach experimental precision; it provides structural agreement at a level that is not attributable to adjustment of a fitted continuous parameter, but does not yet constitute a rigorous derivation.
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+Particles correspond to stable closure classes on a $\phig$-structured manifold. Five assignment rules uniquely determine the electron and proton as minimal admissible classes within the framework, yielding the combinatorial invariant $\Delta C = 15$ with zero fitted continuous parameters. Metric-induced energies show that mass cannot arise from additive shell energy alone and instead requires nonlinear composition. The resulting mass law factorises into three structural sectors: a combinatorial sector $\phig^C$, a graph-connectivity sector $\phig^{|E|/|V|}$, and a second-order degree-variance refinement $\phig^{-\mathrm{Var}(\deg)\,|E|/|V|^2}$. For the proton-to-electron pair this yields the rational exponent $1265/81$ and a predicted ratio $m_p/m_e \approx 1835.8$, in structural agreement with the observed value at the $\sim\!2 \times 10^{-4}$ level.
+
+The leading law is established within the present framework through second order. First validation tests show that the neutron-proton splitting is compatible with the architecture at the correct scale, but heavier lepton masses (muon, tau) are not reproduced under the current rule set, identifying lepton-generation structure as the primary open problem. What remains is not the existence of the leading law, but the deeper axiomatic justification of the second-order normalisation, the derivation of neutron-proton splitting, and the extension of the rule set to accommodate lepton generations. The framework is falsifiable: the muon and tau failures already constrain the scope of the current claim, and broader validation is required before the proton-to-electron success can be considered more than structural viability.
+
+%==================================================================
+\appendix
+\section{Discarded Metric and Map Families}\label{app:discarded}
+
+Five metric families were evaluated. Best additive ratio: $\sim\!376$ under weighted energy. Seven nonlinear map families were tested; only the multiplicative product (exponent 16) and combinatorial map (exponent 15) remain viable as bounds. Twelve graph rules were tested; only the edge-to-vertex ratio produces an exponent in the correct range.
+
+\section{Normalisation Selection within the Power-Law Family}\label{app:uniqueness}
+
+Within the power-law family $N = |V|^a |E|^b$, the normalisation $|V|^2/|E|$ (corresponding to $a = 2$, $b = -1$) is the unique choice within the tested family that both preserves the self-consistent order structure and achieves sub-$1\%$ agreement. The next-best alternative ($|V|^2$, corresponding to $a = 2$, $b = 0$) gives $1.17\%$ error. The selected normalisation equals $|V|/g_1$, where $g_1 = |E|/|V|$ is the first-order graph term, establishing a self-referential structure in which each order of the expansion is normalised by the previous one.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

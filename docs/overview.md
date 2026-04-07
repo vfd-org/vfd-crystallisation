@@ -4,9 +4,9 @@ This document describes how the crystallisation framework is organised for prese
 
 The materials in this repository are intended to present a testable framework; they do not assume correctness of the model and are structured to enable independent evaluation.
 
-## Structure: 1 + 4
+## Structure: 1 + 6
 
-This research programme is presented as **one flagship paper** supported by **four companion papers** and a **supplementary layer**. This is not a collection of independent publications — it is one coherent narrative with structured depth.
+This research programme is presented as **one flagship paper** supported by **six companion papers** and a **supplementary layer**. This is not a collection of independent publications — it is one coherent narrative with structured depth.
 
 ---
 
@@ -76,6 +76,32 @@ This research programme is presented as **one flagship paper** supported by **fo
 
 ---
 
+## Companion Paper E — Particles, Geometry, and Mass
+
+**"Particles, Geometry, and Mass from Deterministic Field Closure"**
+`papers/master-mass/master-mass.tex`
+
+- **Role**: Develops a structural theory of particles and mass. Derives a three-order zero-parameter mass law for the proton-to-electron ratio from closure-class structure, graph Laplacian, and degree-variance refinement. Includes validation tests and explicit diagnosis of the missing winding layer for lepton generations.
+- **Content**: Closure classes, assignment rules, combinatorial invariant, phi-manifold geometry, nonlinear mass-map problem, structural bounds, graph-derived composition, degree-variance refinement, validation extensions, scope limitations.
+- **Audience**: Researchers evaluating whether closure-class structure can produce quantitative mass predictions.
+- **Claim level**: Three-order mass law derived within framework. Structural agreement at 2×10⁻⁴ for proton/electron. Muon/tau not reproduced (formal no-go). The result is a proof of structural viability, not a general mass theory.
+- **Status**: Prepared for review.
+
+---
+
+## Companion Paper F — Lepton Generations
+
+**"Lepton Generations and the Missing Mass Operator in Deterministic Field Closure"**
+`papers/lepton-generations/lepton-generations.tex`
+
+- **Role**: Companion to Paper E. Proves the formal no-go for shell-extension leptons and identifies the constrained winding operator required for lepton generations.
+- **Content**: No-go theorem, winding/boundary excitation operator, conditional derivation of 1/phi exponent via spectral scaling, structurally motivated coefficient phi^5, muon and tau predictions, unified law form.
+- **Audience**: Researchers evaluating whether the mass framework extends beyond the baryon-lepton hierarchy to lepton generations.
+- **Claim level**: No-go fully derived. Operator form constrained with zero fitted continuous parameters. Exponent conditionally derived (requires spectral-dimension assumption). Coefficient structurally motivated. Muon to 0.5%, tau to 3.7%.
+- **Status**: Prepared for review. Released as a deliberate companion to Paper E.
+
+---
+
 ## Supplementary Layer
 
 `papers/supplementary/`
@@ -97,7 +123,8 @@ Not standalone papers. Reference material:
 2. **Experimental second** — shows testability and falsifiability
 3. **Inevitability third** — shows the functional form is structurally natural
 4. **Mechanism fourth** — triplet closure + ARIA demonstration
-5. **Formalism fifth** — for readers wanting full mathematical depth
+5. **Mass pair (E + F) fifth** — particles/geometry/mass + lepton generations (simultaneous)
+6. **Formalism sixth** — for readers wanting full mathematical depth
 
 Supplementary published alongside as downloadable references.
 
