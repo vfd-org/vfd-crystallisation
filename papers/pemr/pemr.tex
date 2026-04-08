@@ -1,0 +1,864 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\phig}{\varphi}
+\newcommand{\dseff}{d_s^{\mathrm{eff}}}
+
+\title{A $\phig$-Scaled Geometric Ansatz for the Proton--Electron Mass Ratio}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+We present a structured geometric ansatz for the proton--electron mass ratio within a $\phig$-scaled shell framework ($\phig = (1+\sqrt{5})/2$). The paper's strongest exact claim is that the leading proton--electron closure exponent, $\Delta C = 15$, coincides with a Laplacian eigenvalue of the 600-cell vertex graph (multiplicity 16) --- an exact spectral fact verifiable by diagonalising a $120 \times 120$ integer matrix. The electron's $\Delta C = 0$ coincides with the zero eigenvalue.
+
+The remaining fractional correction is modelled by a low-order spectral moment truncation: the exponent $1265/81 = 15 + 2/3 - 4/81$ is organised by the cumulant expansion of $\ln Z(t)$ on the closure graph, where $|E|/|V|$ and $\mathrm{Var}(\deg)$ are the first two cumulant coefficients. This truncation is a modelling step: the cumulants are canonical spectral quantities, but finitely many cumulants do not uniquely determine the spectral gap.
+
+The result:
+\[
+\frac{m_p}{m_e} = \phig^{1265/81} \approx 1835.8
+\]
+agrees with the experimental value $1836.15$ at the $2 \times 10^{-4}$ level with zero fitted continuous parameters. The construction rests on explicit modelling assumptions --- a $\phig$-scaled shell manifold, assignment rules, a shell-dimension model, and a normalisation choice --- all stated and classified by epistemic status. This paper does not claim a first-principles derivation, a Standard Model replacement, or a complete mass theory.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The proton-to-electron mass ratio $\mu_{pe} = m_p/m_e \approx 1836.15$ is one of the fundamental dimensionless constants of nature. In the Standard Model, both masses are free parameters set by Yukawa couplings to the Higgs field~\citep{Weinberg1967, Higgs1964}; their ratio is measured, not predicted~\citep{Workman2022}. Lattice QCD can compute the proton mass from the strong coupling and quark masses~\citep{Durr2008}, but the electron mass remains an input. The question of whether $\mu_{pe}$ can be derived from geometric or structural principles, rather than fitted to experiment, remains open~\citep{Uzan2003}.
+
+A precedent exists for deriving mass ratios from algebraic structure. Zamolodchikov~\citep{Zamolodchikov1989} predicted that the ratio of the first two particle masses in the scaling limit of the Ising field theory perturbed by a magnetic field equals $\phig = (1+\sqrt{5})/2$, a consequence of the $E_8$ exceptional Lie algebra. This prediction was confirmed experimentally by Coldea et al.~\citep{Coldea2010}, who measured excitation energies in cobalt niobate (CoNb$_2$O$_6$) near a quantum critical point and obtained $m_2/m_1 = 1.618 \pm 0.03$. The algebraic route in that case is: $E_8$ symmetry $\to$ $\phig$ as a mass ratio.
+
+The present paper explores an analogous algebraic chain in a different physical context. The $E_8$ root system projects onto the vertices of the 600-cell via the standard Coxeter projection~\citep{Coxeter1973}. The 600-cell's Laplacian spectrum contains the eigenvalue $\lambda = 15$ with multiplicity 16, which coincides exactly with the closure invariant $\Delta C = 15$ that governs the leading-order mass ratio. The construction assigns the electron and proton to specific geometric configurations on a nested shell manifold scaled by this polytope's characteristic ratio, then computes their mass ratio from the combinatorial, graph-theoretic, and statistical properties of those configurations. The result is:
+\begin{equation}\label{eq:main}
+    \frac{m_p}{m_e} = \phig^{1265/81} \approx 1835.8
+\end{equation}
+
+The exponent $1265/81$ is a rational number in lowest terms ($\gcd(1265, 81) = 1$), composed of three contributions with explicit origins. No continuous parameters are fitted to the experimental value; the result depends on five discrete structural postulates.
+
+The paper's strongest exact claim is that $\Delta C = 15$ coincides with a 600-cell Laplacian eigenvalue; the remaining fractional correction ($2/3 - 4/81$) is modelled by a low-order spectral moment truncation.
+
+The paper is organised as a self-contained construction accessible to readers outside the broader framework. Section~\ref{sec:prelim} defines the mathematical ingredients. Section~\ref{sec:model} constructs the electron and proton as geometric objects. Section~\ref{sec:derivation} derives the mass ratio step by step. Section~\ref{sec:numerical} evaluates the result numerically. Section~\ref{sec:robustness} tests its sensitivity to the structural choices. Section~\ref{sec:limits} classifies the result's epistemic status. Section~\ref{sec:conclusion} summarises.
+
+%==================================================================
+\section{Mathematical Preliminaries}\label{sec:prelim}
+%==================================================================
+
+\subsection{The golden ratio}
+
+The golden ratio $\phig = (1+\sqrt{5})/2 \approx 1.61803$ is the unique positive solution of $x^2 = x + 1$. It satisfies $\phig^{-1} = \phig - 1$, giving a self-similar nesting property: a shell at scale $\phig^{-n}$ nests into a shell at scale $\phig^{-(n-1)}$ with ratio $\phig$.
+
+\subsection{The $E_8$--600-cell connection}
+
+The $E_8$ root system is an eight-dimensional lattice with 240 roots. Under the Coxeter projection from $\mathbb{R}^8$ to $\mathbb{R}^4$, the 240 roots of $E_8$ project onto the 120 vertices of the 600-cell (with each vertex receiving two roots)~\citep{Coxeter1973}. This projection is standard mathematics, not a conjecture of the present framework.
+
+The relevance is that $\phig$ appears as a mass ratio in $E_8$-symmetric physical systems (the Zamolodchikov--Coldea chain~\citep{Zamolodchikov1989, Coldea2010}), and the same $E_8$ projects onto the 600-cell, whose vertex geometry is governed by $\phig$. The present paper uses this projection as part of the mathematical motivation for a $\phig$-scaled shell construction. The physical systems are different (condensed matter vs.\ particle physics); the algebraic structure provides motivation, not proof.
+
+\textsc{Status: standard mathematics} (Coxeter projection). The physical interpretation is the framework's contribution.
+
+\subsection{Methodological precedents}
+
+Two methodological precedents are relevant. First, the effective spectral dimension of a graph can be extracted from the heat-kernel trace of its Laplacian. This method is established in quantum gravity, where Ambj{\o}rn, Jurkiewicz, and Loll~\citep{Ambjorn2005} use it to characterise the scale-dependent spectral dimension in causal dynamical triangulations. The present paper applies the same method to the 600-cell vertex graph. Second, the broader paradigm of extracting physical quantities from graph combinatorics has precedent in Penrose's spin networks~\citep{Penrose1971}, where graph invariants determine angular momentum quantum numbers. The present paper applies graph invariants to mass, which is a different physical quantity; the methodological parallel is noted, not claimed as support for the specific construction.
+
+\textsc{Status:} Heat-kernel spectral dimension extraction is an established method. The application to mass ratios is new to this framework.
+
+\subsection{Graph roles in the construction}
+
+Three distinct but related graphs appear in the paper:
+
+\begin{itemize}
+    \item \textbf{Ambient shell graph} $P_5$: the path graph on 5 vertices (one per shell). Fixes the shell geometry and the native $\phig$-spectral scale via $\lambda_1(P_5) = \phig^{-2}$ (Section~\ref{sec:masslaw}).
+    \item \textbf{Support graph} $G(S)$: the induced subgraph of $P_5$ on the shells occupied by a particle. Defines particle-specific local invariants ($|E|/|V|$, $\mathrm{Var}(\deg)$). For the proton, $G(\{2,3,4\}) = P_3$.
+    \item \textbf{600-cell vertex graph} $G_V$: the $120$-vertex, degree-$12$ graph of the 600-cell. Provides the global polytope spectral anchoring, including $\lambda = 15 = \Delta C$.
+\end{itemize}
+
+These are three layers of the same geometric model, not interchangeable objects. The ambient graph and support graph are used in the mass-law derivation; the 600-cell graph provides the spectral context.
+
+\subsection{Claim-status map}
+
+\begin{table}[ht]
+\centering
+\caption{Epistemic status of each key statement in the paper.}
+\label{tab:claimmap}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Statement & Status & Basis \\
+\midrule
+$C(S) = \prod n_i - \sum n_i - 1$ given shell model & Theorem within model & Prop.~\ref{prop:uniqueness} \\
+$\lambda_1(P_5) = \phig^{-2}$ & Exact theorem & Path-graph spectrum \\
+$\lambda = 15$ in 600-cell Laplacian & Exact computation & Direct diagonalisation \\
+$\Delta C = 15$ & Exact arithmetic & From shell assignments \\
+$|E|/|V|$, $\mathrm{Var}(\deg)$ as cumulant coefficients & Standard identity & Chung 1997 \\
+Additive exponent structure & Motivated by cumulants & Low-order expansion of $\ln Z(t)$ \\
+Three-term exponent yields $m_p/m_e \approx 1835.8$ & Effective ansatz & Truncation + model step \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Shell manifold}
+
+We posit a manifold $\mathcal{M}$ consisting of nested spherical shells at scales $r_n = r_0\, \phig^{-n}$ for $n = 1, 2, 3, \ldots$ The shell index $n$ labels discrete structural levels. A field configuration occupies a subset $S \subseteq \{1, 2, 3, \ldots\}$ of shells, called its \textit{shell support}.
+
+\textsc{Status: geometrically constrained.} The $\phig$-scaled shell manifold is a construction choice, but the scaling constant $\phig$ is not freely chosen: the 600-cell's vertex coordinates are expressible in terms of $\phig$~\citep{Coxeter1973}, and $\phig$ appears in the spectral gap of the shell path graph by algebraic theorem (Section~\ref{sec:masslaw}). The shell manifold inherits $\phig$ from this polytope's geometry.
+
+\subsection{Mass as spectral gap and the exponential law}\label{sec:masslaw}
+
+The exponential form $m \propto \phig^{\mathcal{E}}$ is not an arbitrary ansatz but follows from spectral theory on the $\phig$-scaled shell geometry.
+
+\textbf{Step 1: Mass as spectral gap.} On any compact geometry, the mass of an excitation is identified with the spectral gap $\lambda_1$ of the Laplacian~\citep{Wilson1974}. This is the standard definition used in lattice gauge theory, condensed matter physics, and is the subject of the Clay Millennium Prize problem on Yang--Mills mass gap~\citep{JaffeWitten2000}. Formally, the heat-kernel trace extracts the spectral gap:
+
+\begin{proposition}[Spectral gap extraction]\label{prop:spectralgap}
+Let $G$ be a connected graph on $|V|$ vertices with graph Laplacian $L$ having eigenvalues $0 = \lambda_0 < \lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_{|V|-1}$. Let $m_1$ denote the multiplicity of $\lambda_1$. Define $Z(t) = \mathrm{Tr}(e^{-tL})$.
+
+\textbf{(i)} $Z(t) - 1 = m_1\, e^{-\lambda_1 t}\,[1 + R(t)]$, where $0 \leq R(t) \leq \frac{|V| - 1 - m_1}{m_1}\, e^{-(\lambda_2 - \lambda_1)t}$.
+
+\textbf{(ii)} $\lambda_1 = -\lim_{t \to \infty} \frac{1}{t}\, \ln(Z(t) - 1)$.
+
+\textbf{(iii)} The convergence rate satisfies $\left|-\frac{1}{t}\ln(Z(t)-1) - \lambda_1\right| \leq \frac{|V|-1}{m_1\, t}\, e^{-(\lambda_2 - \lambda_1)t}$, which vanishes as $O(e^{-(\lambda_2 - \lambda_1)t}/t)$.
+\end{proposition}
+
+\begin{proof}
+(i): $Z(t) - 1 = \sum_{i \geq 1} e^{-\lambda_i t}$. Factor out $e^{-\lambda_1 t}$ from all terms; the $m_1$ terms with $\lambda_i = \lambda_1$ contribute $m_1$, and the remainder is $R(t)$, bounded by $(|V|-1-m_1)/m_1$ times $e^{-(\lambda_2 - \lambda_1)t}$. (ii): Take the logarithm of (i) and divide by $t$; since $m_1 R(t) \to 0$ exponentially, the limit is $\lambda_1$. (iii): Use $\ln(1+x) \leq x$ for $x > 0$.
+\end{proof}
+
+\textsc{Status:} Theorem (standard finite-dimensional spectral theory). No approximation. No modelling input.
+
+\begin{remark}[Regime separation]\label{rem:regimes}
+The heat kernel $Z(t)$ encodes spectral information differently in two regimes, and the present framework uses both.
+
+\textbf{Large-$t$ regime} ($t \gg 1/\lambda_1$): $Z(t) - 1 \to m_1 e^{-\lambda_1 t}$. This isolates the spectral gap and defines the mass (Proposition~\ref{prop:spectralgap}). The extraction is exact in the limit and exponentially convergent.
+
+\textbf{Small-$t$ regime} ($t \ll 1/\lambda_1$): The Taylor expansion $\ln Z(t) = \ln|V| - (2|E|/|V|)\,t + [\mathrm{Var}(\deg)/2 + |E|/|V|]\,t^2 - \cdots$ provides geometric invariants of the graph: mean degree, degree variance. These are the discrete Seeley--DeWitt coefficients~\citep{Kac1966, Gilkey1984, Chung1997}.
+
+\textbf{What connects the two regimes:} Both describe the same analytic function $Z(t)$. The small-$t$ coefficients are moments of the eigenvalue distribution, which constrain --- but do not uniquely determine --- $\lambda_1$. The moment bounds~\citep{Chung1997} $\bar{d}^2 / ((|V|-1)\, d_{\max}) \leq \lambda_1 \leq 2|E|/(|V|-1)$ show that $|E|/|V|$ controls both bounds on $\lambda_1$.
+
+\textbf{What the three-order mass law does:} It uses small-$t$ graph invariants ($C(S)$, $|E|/|V|$, $\mathrm{Var}(\deg)$) as an effective parameterisation of the spectral gap that the large-$t$ limit defines. This is a spectral moment parameterisation --- stronger than an unconstrained fit (the invariants are canonical spectral quantities) but weaker than a theorem (the moments constrain but do not determine $\lambda_1$ uniquely). The observed $2 \times 10^{-4}$ accuracy suggests this parameterisation is efficient, but this efficiency has not been proven from first principles.
+\end{remark}
+
+\textbf{Step 2: The golden ratio appears in the spectral gap by theorem.}
+
+The proton's shell-support graph $G(\{2,3,4\})$ is a path on 3 vertices, which is a subgraph of the 5-shell path graph $P_5$. The eigenvalues of the path graph $P_N$ are $\lambda_k = 2 - 2\cos(k\pi/N)$ for $k = 0, 1, \ldots, N-1$ (a standard result of algebraic graph theory~\citep{Chung1997}). For $N = 5$:
+\begin{equation}\label{eq:spectralgap}
+    \lambda_1(P_5) = 2 - 2\cos(\pi/5) = 2 - \phig = \phig^{-2}
+\end{equation}
+using the identity $\cos(\pi/5) = \phig/2$. The golden ratio appears in the spectral gap of the shell path graph by algebraic theorem --- not by construction, fitting, or numerical coincidence. This means that $\phig$-power scaling is native to the spectral structure of the closure graph.
+
+\begin{definition}[Ambient and support graphs]\label{def:ambient}
+The $\phig$-manifold with $N = 5$ shells defines an \textit{ambient closure graph} $G_{\mathrm{amb}} = P_5$ (the path graph on 5 vertices, one per shell). The spectral gap of the ambient graph is $\lambda_1(P_5) = \phig^{-2}$. This fixes the native spectral scale of the shell manifold.
+
+A particle with shell support $S \subseteq \{1, \ldots, 5\}$ occupies a \textit{support subgraph} $G(S)$, the induced subgraph of $G_{\mathrm{amb}}$ on the vertices corresponding to $S$. For connected supports, $G(S) = P_{|S|}$. Examples: electron $S = \{1\}$, $G(S) =$ single vertex (reference particle); proton $S = \{2,3,4\}$, $G(S) = P_3$ (spectral gap $\lambda_1 = 1$); full support $S = \{1,\ldots,5\}$, $G(S) = P_5$ (spectral gap $\lambda_1 = \phig^{-2}$).
+
+The mass exponent is computed from the support subgraph $G(S)$, not the ambient graph. The ambient graph provides the geometric context (the native $\phig$-scale); the support graph provides the particle-specific spectral structure.
+\end{definition}
+
+\textbf{Step 3: $\phig$-scaling $\to$ $\phig$-eigenvalues (general).} On a domain at scale $\phig^{-k}$, Weyl's asymptotic law~\citep{Weyl1912} gives Laplacian eigenvalues scaling as $\phig^{2k}$ (inversely with the square of the domain size). The mass gap on shell $k$ therefore scales as $\phig^{k}$. Equation~\eqref{eq:spectralgap} confirms this: the spectral gap of the 5-shell path graph is exactly $\phig^{-2}$, a $\phig$-power.
+
+\textbf{Step 4: Tensor product $\to$ heat-kernel factorisation.} For a composite system on shells $S$, the Laplacian on $\mathcal{H}_{n_1} \otimes \cdots \otimes \mathcal{H}_{n_s}$ is additive (a standard result of spectral theory on tensor products). Therefore the heat-kernel trace factorises multiplicatively:
+\begin{equation}
+    Z_S(t) = \prod_{j=1}^{s} Z_{n_j}(t)
+\end{equation}
+
+\textbf{Step 5: Factorisation + $\phig$-scaling $\to$ exponential mass law.} Since each $Z_k(t) \sim n_k \cdot e^{-\phig^{2k}\, t}$ at leading order, the composite $Z_S(t)$ involves $\prod n_k$ as a prefactor. The effective mass read from the partition-function decay gives:
+\begin{equation}
+    \ln(m_S / m_{\mathrm{ref}}) \propto C(S) \cdot \ln \phig
+\end{equation}
+at leading order, where $C(S) = \prod n_i - \sum n_i - 1$ is the connected-composite state count (Section~\ref{sec:invariant}). The exponential form $m/m_e = \phig^{C(S) + \text{corrections}}$ is therefore a consequence of spectral theory on $\phig$-scaled geometry with tensor-product composition.
+
+\textbf{Step 6: Why the correction terms add --- the heat-kernel cumulant expansion.}
+
+The heat-kernel trace has the short-time expansion~\citep{Gilkey1984, Kac1966}:
+\begin{equation}
+    Z(t) = \mathrm{Tr}(e^{-tL}) = |V| - \mathrm{tr}(L)\, t + \tfrac{1}{2}\mathrm{tr}(L^2)\, t^2 - \cdots
+\end{equation}
+Taking the logarithm gives the cumulant expansion:
+\begin{equation}
+    \ln Z(t) = \ln |V| + b_1\, t + b_2\, t^2 + \cdots
+\end{equation}
+where the coefficients $b_n$ are the cumulants of the Laplacian spectrum. The first three are determined by standard graph identities~\citep{Chung1997}:
+
+\begin{table}[ht]
+\centering
+\caption{Cumulant coefficients of the heat-kernel expansion and their graph-theoretic content.}
+\label{tab:cumulants}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Coefficient & Formula & Graph invariant & Role in mass law \\
+\midrule
+$b_0$ & $\ln |V|$ & State count & 0th order: $C(S)$ \\
+$b_1$ & $-\mathrm{tr}(L)/|V| = -2|E|/|V|$ & Mean connectivity & 1st order: $|E|/|V|$ \\
+$b_2$ & $\mathrm{Var}(\deg)/2 + |E|/|V|$ & Degree heterogeneity & 2nd order: $\mathrm{Var}(\deg)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The key identities are theorems of spectral graph theory~\citep{Chung1997}: $\mathrm{tr}(L) = 2|E|$ (sum of degrees); $\mathrm{tr}(L^2) = \sum d_i^2 + 2|E|$ (degree squares plus edges).
+
+The corrections add in the exponent because $b_1, b_2, \ldots$ are the Taylor/cumulant coefficients of $\ln Z(t)$. Coefficients of a Taylor series add by the definition of Taylor series. This is calculus, not a physical assumption.
+
+The structure is the discrete analogue of the Seeley--DeWitt expansion on a Riemannian manifold~\citep{Gilkey1984}, where the heat-kernel coefficients $a_0, a_1, a_2, \ldots$ encode volume, curvature, and curvature-squared respectively. On a graph: $a_0 = |V|$ (volume), $a_1 = 2|E|/|V|$ (mean degree $=$ discrete curvature), $a_2$ involves $\mathrm{Var}(\deg)$ (curvature heterogeneity). The three-order mass law is therefore the discrete Kac expansion~\citep{Kac1966} on the closure graph.
+
+\textbf{Step 7: Why $\phig$ and not another base.}
+
+\begin{table}[ht]
+\centering
+\caption{Base comparison for $m_p/m_e = b^x$: only $\phig$ produces a structurally decomposable exponent.}
+\label{tab:basecheck}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+Base $b$ & Exponent $x = \log_b(1836)$ & Nearest structural integer & Fractional residual \\
+\midrule
+$\phig$ & 15.617 & 15 $= \Delta C$ & 0.617 (graph corrections $2/3 - 4/81$) \\
+$e$ & 7.515 & 8 & $-0.485$ (no interpretation) \\
+$2$ & 10.843 & 11 & $-0.158$ (no interpretation) \\
+$\pi$ & 6.565 & 7 & $-0.435$ (no interpretation) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Only $\phig$ produces an exponent whose integer part ($15 = \Delta C$) has a structural origin in the state-counting invariant and whose fractional part ($0.617 \approx 2/3 - 4/81$) decomposes into graph-theoretic corrections. This is a consistency check, not a derivation: it confirms that $\phig$ is the unique base in which the exponent factorises into computable graph-theoretic quantities.
+
+\textsc{Epistemic summary:} Steps 1--2 are theorems (spectral gap extraction, path-graph eigenvalue formula). Step 2 proves $\phig$ is native to the spectral gap of the shell graph. Steps 3--4 are standard results (Weyl's law, tensor-product Laplacian additivity). Step 5 applies these to the $\phig$-shell geometry, which is a modelling assumption. Step 6 identifies the correction terms as cumulant coefficients of the heat-kernel expansion (standard spectral theory). The exponential form, the appearance of $\phig$, and the additivity of corrections are all derived; the specific geometry on which they act is postulated.
+
+\subsection{Graph Laplacian}
+
+Given a shell support $S$ with consecutive integer elements, the \textit{shell-support graph} $G(S)$ has one vertex per occupied shell and one edge between each pair of consecutive shells. The unnormalised graph Laplacian is $L = D - A$, where $A$ is the adjacency matrix and $D$ the degree matrix. For a simple unweighted graph, $\mathrm{tr}(L) = 2|E|$, so the per-vertex normalised trace equals $|E|/|V|$.
+
+\textsc{Status: standard mathematical definition.}
+
+\subsection{Combinatorial invariant}\label{sec:invariant}
+
+\textsc{Shell-model assumption:} We assign shell $k$ a $k$-dimensional Hilbert space $\mathcal{H}_k$: one ground state $|0\rangle_k$ and $k - 1$ excited modes. This assignment is motivated by Kaluza--Klein mode counting on a compact space at scale $\phig^{-k}$~\citep{Polchinski1998}, where the number of standing modes scales with the compactification index. It is a modelling assumption of the present framework.
+
+Given this assignment, each $\mathcal{H}_k$ admits the standard spectral decomposition~\citep{ReedSimon1978}:
+\begin{equation}
+    \mathcal{H}_k = \mathrm{span}\{|0\rangle_k\} \;\oplus\; \mathcal{H}_k^{\mathrm{exc}}, \qquad \dim(\mathcal{H}_k^{\mathrm{exc}}) = k - 1
+\end{equation}
+This decomposition is a theorem of Hilbert-space theory (not a modelling choice), given the dimension assignment above.
+
+For a multi-shell system on support $S = \{n_1, \ldots, n_s\}$, the composite Hilbert space is $\mathcal{H} = \bigotimes_{j=1}^{s} \mathcal{H}_{n_j}$, with $\dim(\mathcal{H}) = \prod_j n_j$ --- the standard axiom for composing quantum systems~\citep{NielsenChuang2000}. Using the spectral decomposition of each factor, $\mathcal{H}$ partitions into three mutually orthogonal subspaces:
+
+\begin{definition}[Canonical three-way partition]\label{def:partition}
+\begin{align}
+    V_{\mathrm{vac}} &= |0\rangle_{n_1} \otimes \cdots \otimes |0\rangle_{n_s} && \dim = 1 \\
+    V_{\mathrm{single}} &= \bigoplus_{j=1}^{s} \left( |0\rangle^{\otimes (j-1)} \otimes \mathcal{H}_{n_j}^{\mathrm{exc}} \otimes |0\rangle^{\otimes (s-j)} \right) && \dim = \sum_j (n_j - 1) \\
+    V_{\mathrm{conn}} &= V_{\mathrm{vac}}^{\perp} \cap V_{\mathrm{single}}^{\perp} && \dim = \prod_j n_j - 1 - \sum_j(n_j - 1)
+\end{align}
+\end{definition}
+
+The $s$ summands in $V_{\mathrm{single}}$ are mutually orthogonal (they differ in which tensor factor is excited), so their dimensions add. The three subspaces are exhaustive and orthogonal:
+
+\begin{table}[ht]
+\centering
+\caption{Orthogonal decomposition of the composite Hilbert space.}
+\label{tab:statecount}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Subspace & Definition & Dimension & Status \\
+\midrule
+$V_{\mathrm{vac}}$ & All factors in $|0\rangle$ & $1$ & Spectral theorem \\
+$V_{\mathrm{single}}$ & Exactly one factor excited & $\sum(n_j - 1)$ & Orthogonal decomposition theorem \\
+$V_{\mathrm{conn}}$ & Orthogonal complement & $\prod n_j - \sum n_j + |S| - 1$ & Forced as complement \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Check: $1 + \sum(n_j - 1) + [\prod n_j - \sum n_j + |S| - 1] = \prod n_j = \dim(\mathcal{H})$. Exhaustive.
+
+$V_{\mathrm{conn}}$ contains the states where two or more shells are simultaneously excited. The decomposition into vacuum, single-excitation, and multi-excitation subspaces is analogous to the linked-cluster decomposition in quantum field theory~\citep{Weinberg1995}, where only connected diagrams contribute to the logarithm of the partition function. An analogous partition appears in Fock-space theory~\citep{FetterWalecka1971}. These are methodological parallels, not claims of physical identity.
+
+Finally, each shell contributes one internal degree of freedom (its phase / labelling), giving a per-shell redundancy of $|S|$. Removing this:
+\begin{equation}\label{eq:invariant}
+    C(S) = \dim(V_{\mathrm{conn}}) - |S| = \prod_i n_i - \sum_i n_i - 1
+\end{equation}
+
+The subtraction decomposes as follows: from the tensor-product dimension $\prod n_i$, subtract the vacuum ($1$) and single-excitation sector ($\sum(n_i - 1)$) to obtain $\dim(V_{\mathrm{conn}})$, then subtract the per-shell redundancy ($|S|$). Together these give $\prod n_i - 1 - \sum(n_i - 1) - |S| = \prod n_i - \sum n_i - 1$.
+
+\begin{remark}[Concrete example: the proton]
+For $S = \{2, 3, 4\}$: total configurations $= 2 \times 3 \times 4 = 24$. Vacuum $= 1$. Single excitations $= (2{-}1) + (3{-}1) + (4{-}1) = 6$. Connected composites $= 24 - 1 - 6 = 17$. Per-shell redundancy $= 3$. Therefore $C(\{2,3,4\}) = 17 - 3 = 14$. Every number is a count of something physical.
+\end{remark}
+
+\begin{proposition}[Uniqueness of $C$]\label{prop:uniqueness}
+$C(S) = \prod n_i - \sum n_i - 1$ is the unique function satisfying:
+\begin{enumerate}
+    \item \textbf{Symmetry:} $C$ is symmetric in the shell indices.
+    \item \textbf{Single-shell democracy:} $C(\{k\}) = -1$ for all $k$ (a single shell has no interaction partner, so no connected composites exist).
+    \item \textbf{Tensor extension:} $C(S \cup \{k\}) = k \cdot C(S) + (k-1) \cdot \Sigma(S) - 1$, where $\Sigma(S) = \sum_{i \in S} n_i$. This encodes how adding a new $k$-state subsystem grows the connected-composite count.
+    \item \textbf{Empty set:} $C(\emptyset) = 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+By induction on $|S|$. Base cases: $C(\emptyset) = 0$ by (4); $C(\{k\}) = k - k - 1 = -1$ by (2). Inductive step: assume $C(S) = \prod n_i - \sum n_i - 1$ for $|S| = m$. Then (3) gives $C(S \cup \{k\}) = k(\prod n_i - \sum n_i - 1) + (k{-}1)\sum n_i - 1 = k\prod n_i - \sum n_i - k - 1 = \prod_{S \cup \{k\}} n_i - \sum_{S \cup \{k\}} n_i - 1$.
+\end{proof}
+
+Given the shell-dimension assignment and the excitation-space decomposition above, the formula $C(S) = \prod n_i - \sum n_i - 1$ is uniquely determined (Proposition~\ref{prop:uniqueness}).
+
+\textsc{Epistemic summary for this section:}
+\begin{itemize}
+    \item \textbf{Modelling assumption:} shell $k$ carries a $k$-dimensional Hilbert space (motivated by Kaluza--Klein counting).
+    \item \textbf{Theorem:} given this assumption, the three-way partition into vacuum, single-excitation, and connected subspaces follows from the orthogonal decomposition of tensor-product Hilbert spaces~\citep{ReedSimon1978, NielsenChuang2000}.
+    \item \textbf{Theorem:} the function $C(S) = \prod - \sum - 1$ is the unique solution to axioms 1--4 (Proposition~\ref{prop:uniqueness}).
+    \item \textbf{Analogy (not proof):} the decomposition is analogous to the linked-cluster structure in QFT~\citep{Weinberg1995} and Fock space~\citep{FetterWalecka1971}.
+\end{itemize}
+
+%==================================================================
+\section{Geometric Model of Leptonic and Baryonic Mass}\label{sec:model}
+%==================================================================
+
+\subsection{Assignment rules}
+
+Five rules constrain which shell supports correspond to physical particles:
+
+\begin{definition}[R1--R5]\label{def:rules}
+\textbf{R1} (Minimal Support): the minimal charged closure occupies the smallest shell set; composites require $|S| \geq 3$; shell~1 is reserved for the minimal charged particle.
+\textbf{R2} (Boundary/Interior): shell~1 is boundary; baryons occupy interior shells only, starting at shell~2.
+\textbf{R3} (Complexity Threshold): $C(S) \geq -1$ for leptons, $C(S) \geq 5$ for baryons.
+\textbf{R4} (Contiguity): shells in $S$ must be contiguous; winding restrictions apply per sector.
+\textbf{R5} (Connectivity): all shells form a connected subgraph.
+\end{definition}
+
+\textsc{Status: geometric construction choice.} The rules are structural postulates. They are not derived from a Lagrangian or action principle. Their motivation is as follows: R1 (minimal support) encodes the principle that the simplest configuration is preferred; R2 (boundary/interior) distinguishes leptons from baryons by geometric location, analogous to the boundary/bulk distinction in condensed matter and holographic theories; R3 (complexity threshold) prevents trivial assignments; R4 (contiguity) ensures spatial coherence; R5 (connectivity) excludes fragmented configurations. Each rule excludes specific candidates (Table~\ref{tab:candidates}) and the combined effect is to select $\{1\}$ and $\{2,3,4\}$ uniquely.
+
+\subsection{The electron}
+
+Under R1--R5, the electron is the minimal boundary configuration:
+\[
+S_e = \{1\}, \quad C(S_e) = 1 - 1 - 1 = -1
+\]
+Shell~1 is the boundary shell. The electron occupies it alone. Its shell-support graph is a single vertex: $|V| = 1$, $|E| = 0$, degree sequence $[0]$, $\mathrm{Var}(\deg) = 0$.
+
+\subsection{The proton}
+
+Under R1--R5, the proton is the minimal interior three-shell composite:
+\[
+S_p = \{2, 3, 4\}, \quad C(S_p) = 2 \cdot 3 \cdot 4 - (2+3+4) - 1 = 24 - 9 - 1 = 14
+\]
+R2 excludes shell~1 for baryons. R1 requires $|S| \geq 3$. R4 requires contiguity. R5 requires connectivity. The smallest admissible baryon support is therefore $\{2, 3, 4\}$.
+
+Its shell-support graph is a path on 3 vertices: $|V| = 3$, $|E| = 2$, degree sequence $[1, 2, 1]$, $\mathrm{Var}(\deg) = 2/9$.
+
+\begin{table}[ht]
+\centering
+\caption{Admissibility of candidate shell supports under R1--R5.}
+\label{tab:candidates}
+\begin{tabular}{@{}llccl@{}}
+\toprule
+Candidate & Shells & $C$ & Admissible? & Reason \\
+\midrule
+Electron & $\{1\}$ & $-1$ & Yes & Minimal boundary \\
+Electron (ext.) & $\{1,2\}$ & $-2$ & No & Fails R1, R3 \\
+Low baryon & $\{1,2,3\}$ & $-1$ & No & Fails R1, R2 \\
+\textbf{Proton} & $\{2,3,4\}$ & $14$ & \textbf{Yes} & Minimal interior \\
+High baryon & $\{3,4,5\}$ & $47$ & No & Fails R2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textsc{Status:} The unique minimality of $\{1\}$ and $\{2,3,4\}$ is \textit{derived} from R1--R5. The rules themselves are postulated.
+
+%==================================================================
+\section{Derivation of the Mass Ratio}\label{sec:derivation}
+%==================================================================
+
+The derivation proceeds in three orders. Each order introduces one new graph-theoretic quantity.
+
+\subsection{Mass law and factorisation}
+
+Section~\ref{sec:masslaw} derives the exponential form and identifies the correction terms as cumulant coefficients of the heat-kernel expansion on the closure graph. The full three-order law is:
+\begin{equation}
+    m(S) = \Lambda \cdot \phig^{C(S)} \cdot \phig^{|E(S)|/|V(S)|} \cdot \phig^{-\mathrm{Var}(\deg(S))\, |E(S)|/|V(S)|^2}
+\end{equation}
+where $\Lambda$ is a common scale factor that cancels in the ratio. The three exponent terms correspond to the first three cumulant coefficients of $\ln Z(t)$ (Table~\ref{tab:cumulants}): the state count $C(S)$, the mean connectivity $|E|/|V|$, and the degree heterogeneity involving $\mathrm{Var}(\deg)$. The terms add in the exponent because they are Taylor coefficients of a logarithm --- this is the definition of the cumulant expansion, not a physical assumption.
+
+\textsc{Status:} The additive exponent structure follows from the cumulant expansion of $\ln Z(t)$ (Section~\ref{sec:masslaw}). The three terms are the first three cumulant coefficients --- canonical spectral quantities, not free parameters. Their use as a mass-law truncation is a spectral moment parameterisation: systematic and controlled, but not a proof that three moments suffice exactly.
+
+\subsection{Zeroth order: combinatorial invariant}
+
+The inter-class invariant difference is:
+\begin{equation}
+    \Delta C = C(S_p) - C(S_e) = 14 - (-1) = 15
+\end{equation}
+
+This gives the zeroth-order mass ratio:
+\[
+\phig^{15} = 1364 \quad (\text{error: } 25.7\%)
+\]
+
+\textsc{Status: derived from R1--R5 and the invariant definition.}
+
+\subsection{First order: graph density}
+
+The edge-to-vertex ratio of the shell-support graph equals $\mathrm{tr}(L)/(2|V|)$, an exact operator identity. For the proton graph: $|E|/|V| = 2/3$. For the electron: $|E|/|V| = 0/1 = 0$.
+
+The first-order correction to the exponent is:
+\begin{equation}
+    \Delta(|E|/|V|) = 2/3 - 0 = 2/3
+\end{equation}
+
+Cumulative first-order result:
+\begin{equation}
+    \phig^{15 + 2/3} = \phig^{47/3} \approx 1880 \quad (\text{error: } 2.4\%)
+\end{equation}
+
+\textsc{Status: derived from the shell assignments and the graph Laplacian identity.}
+
+\subsection{Second order: degree-variance correction}
+
+The degree sequence of the proton graph is $[1, 2, 1]$ with variance $\mathrm{Var}(\deg) = 2/9$. The electron graph has a single vertex with $\mathrm{Var}(\deg) = 0$.
+
+The second-order correction uses the degree variance normalised by $|E|/|V|^2$:
+\begin{equation}
+    \delta_2(S) = -\frac{\mathrm{Var}(\deg(S)) \cdot |E(S)|}{|V(S)|^2}
+\end{equation}
+
+For the proton: $\delta_2 = -(2/9)(2/9) = -4/81$. For the electron: $\delta_2 = 0$.
+
+The normalisation $|V|^2/|E|$ is selected from the power-law family $|V|^a |E|^b$ by a self-consistency criterion: each order of the expansion is normalised by the previous. Within the tested family, this is the unique member satisfying this criterion that also produces sub-$1\%$ agreement. However, the choice of the power-law family itself, and the self-consistency criterion, are modelling decisions rather than derivations.
+
+\textsc{Status:} The degree-variance source term (second central moment of the degree distribution) is derived from the graph. The normalisation is a residual model choice: motivated by self-consistency, selected within a tested family, but not uniquely determined by a prior axiom.
+
+\subsection{Three-order result}
+
+Combining all three orders:
+\begin{equation}\label{eq:threeorder}
+    \frac{m_p}{m_e} = \phig^{\,\Delta C \;+\; \Delta(|E|/|V|) \;-\; \Delta(\mathrm{Var}(\deg)\,|E|/|V|^2)} = \phig^{\,15 \;+\; 2/3 \;-\; 4/81}
+\end{equation}
+
+The arithmetic:
+\[
+15 + \frac{2}{3} - \frac{4}{81} = \frac{1215 + 54 - 4}{81} = \frac{1265}{81}
+\]
+with $\gcd(1265, 81) = 1$ (since $1265 = 5 \times 11 \times 23$ and $81 = 3^4$).
+
+%==================================================================
+\section{Numerical Evaluation}\label{sec:numerical}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Three-order mass law: cumulative numerical evaluation.}
+\label{tab:numerical}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Order & Exponent & Symbolic & Computed $m_p/m_e$ & Expt.\ value & Rel.\ error \\
+\midrule
+0th & $\Delta C = 15$ & $\phig^{15}$ & 1364 & 1836.15 & $25.7\%$ \\
+1st & $15 + 2/3 = 47/3$ & $\phig^{47/3}$ & 1880 & 1836.15 & $2.4\%$ \\
+\textbf{2nd} & $\boldsymbol{47/3 - 4/81 = 1265/81}$ & $\boldsymbol{\phig^{1265/81}}$ & $\boldsymbol{1835.8}$ & $\boldsymbol{1836.15}$ & $\boldsymbol{2 \times 10^{-4}}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The experimental value $m_p/m_e = 1836.15267343(11)$~\citep{Workman2022} is known to a relative precision of $\sim\!6 \times 10^{-11}$. The framework reproduces the ratio at the $2 \times 10^{-4}$ level. The agreement is structural, not metrological: the framework does not approach experimental precision.
+
+To be explicit about the absence of fitting: the exponent $1265/81$ is determined entirely by the shell assignments $\{1\}$ and $\{2,3,4\}$ and by elementary graph properties (vertex count, edge count, degree sequence). No parameter is adjusted to improve agreement with $1836.15$. The value $1835.8$ is not the output of an optimisation; it is the output of a fixed arithmetic chain applied to a fixed graph. Changing the experimental value would not change the prediction.
+
+The exponent $1265/81 \approx 15.6173$ may be compared to the empirical exponent $\log_\phig(1836.15) \approx 15.6178$, differing by $\sim\!5 \times 10^{-4}$ in the exponent.
+
+%==================================================================
+\section{Robustness and Sensitivity Analysis}\label{sec:robustness}
+%==================================================================
+
+\subsection{Sensitivity to shell assignments}
+
+The derivation depends on $S_e = \{1\}$ and $S_p = \{2,3,4\}$. If the proton were instead assigned $\{3,4,5\}$:
+\[
+C(\{3,4,5\}) = 60 - 12 - 1 = 47, \quad \Delta C = 48
+\]
+giving $\phig^{48} \sim 10^{10}$, far outside the observed range. The assignment $\{2,3,4\}$ is not one of many near-matches; it is uniquely selected by R1--R5 within the tested candidate space.
+
+\subsection{Sensitivity to the combinatorial invariant}
+
+The invariant $C(S) = \prod n_i - \sum n_i - 1$ is the unique function satisfying the four composition axioms of Proposition~\ref{prop:uniqueness}, given the shell-dimension model. However, if the shell-dimension assignment were changed, $C$ would change accordingly. For comparison, simple alternative invariants yield qualitatively different results:
+
+\begin{table}[ht]
+\centering
+\caption{Alternative invariants and their zeroth-order mass ratios.}
+\label{tab:alternatives}
+\begin{tabular}{@{}lccl@{}}
+\toprule
+Invariant & $\Delta C$ & $\phig^{\Delta C}$ & Status \\
+\midrule
+$\prod n_i - \sum n_i - 1$ (used) & 15 & 1364 & Brackets observed value \\
+$\prod n_i - \sum n_i$ & 16 & 2207 & Upper bound \\
+$\prod n_i$ & 23 & $\sim 10^5$ & Too large \\
+$\sum n_i$ & 8 & 47 & Too small \\
+$|S|$ only & 2 & 2.6 & Trivial \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Only the chosen invariant and the variant $\prod - \sum$ produce zeroth-order exponents in the observed bracket $[\phig^{15}, \phig^{16}]$. The $-1$ offset is the difference between the two; it is part of the postulate.
+
+\subsection{Sensitivity to the normalisation}
+
+The second-order normalisation $|V|^2/|E|$ is selected from the power-law family $|V|^a |E|^b$. The next-best alternative ($|V|^2$, i.e.\ $b = 0$) gives:
+\[
+\delta_2 = -(2/9)(1/9) = -2/81, \quad \text{exponent} = 15 + 2/3 - 2/81 = 1267/81, \quad \phig^{1267/81} \approx 1857 \quad (1.17\% \text{ error})
+\]
+Within the tested family, the selected normalisation is the only member satisfying the stated self-consistency criterion and yielding agreement at the sub-$1\%$ level. The self-consistency criterion is defined independently of the numerical outcome; however, the choice of family ($|V|^a |E|^b$) is itself a modelling decision. This is one of the framework's residual model choices.
+
+\subsection{Sensitivity to higher-order cumulants}
+
+The three-order law uses the first three cumulant coefficients of $\ln Z(t)$. The fourth and higher cumulants are truncated. The observed $2 \times 10^{-4}$ discrepancy between the three-order value ($1835.8$) and the experimental value ($1836.15$) is consistent with a small higher-order correction, but the magnitude of omitted terms has not been bounded from first principles. The discrepancy could also arise from the shell-dimension model, the support assignment, or the normalisation convention. Determining the source of the residual is a target for future work.
+
+\subsection{Summary of sensitivities}
+
+\begin{table}[ht]
+\centering
+\caption{Effect of varying each modelling input.}
+\label{tab:sensitivity}
+\begin{tabular}{@{}llcl@{}}
+\toprule
+Variation & Changed quantity & Result & Verdict \\
+\midrule
+Proton $\to \{3,4,5\}$ & $\Delta C = 48$ & $\phig^{48} \sim 10^{10}$ & Catastrophic failure \\
+Remove $-1$ from $C$ & $\Delta C = 16$ & $\phig^{16} = 2207$ & $20\%$ error, sign inconsistency \\
+Alt.\ normalisation $|V|^2$ & exponent $1267/81$ & $1857$ & $1.17\%$ error \\
+Truncate at 1st order & exponent $47/3$ & $1880$ & $2.4\%$ error \\
+Truncate at 0th order & exponent $15$ & $1364$ & $25.7\%$ error \\
+Base $e$ instead of $\phig$ & $e^{7.515}$ & $1836$ & No structural decomposition \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The result is not robust to arbitrary changes in the postulates: alternative shell assignments, invariant definitions, and bases produce values far from the target. This fragility is a feature, not a bug --- it means the construction is tightly constrained rather than loosely accommodating. The result is a specific consequence of specific postulates, not a generic output of a flexible framework.
+
+%==================================================================
+\section{Spectral Connection to the 600-Cell}\label{sec:uniqueness}
+%==================================================================
+
+A central question for any $\phig$-scaled framework is: \textit{why $\phig$, and why the 600-cell?} We present a direct spectral connection between the mass law and the polytope.
+
+\subsection{$\Delta C$ coincides with a Laplacian eigenvalue}
+
+The graph Laplacian of the 600-cell vertex adjacency graph (120 vertices, each of degree 12) has a discrete spectrum. Direct diagonalisation of the $120 \times 120$ integer matrix yields the eigenvalue $\lambda = 15$ with multiplicity 16. The closure invariant difference between proton and electron is $\Delta C = 15$. The numerical equality $\Delta C = \lambda$ is exact and independently verifiable.
+
+For the supports examined in this paper:
+
+\begin{table}[ht]
+\centering
+\caption{Closure invariants and 600-cell Laplacian eigenvalues.}
+\label{tab:eigenvalues}
+\begin{tabular}{@{}llccl@{}}
+\toprule
+Particle / support & $\Delta C$ & 600-cell eigenvalue? & Multiplicity & Status \\
+\midrule
+Electron (any single shell) & 0 & Yes ($\lambda_0 = 0$) & 1 & Theorem \\
+Proton $\{2,3,4\}$ & 15 & Yes ($\lambda = 15$) & 16 & Theorem \\
+Support $\{1,2,3,4\}$ & 14 & Yes ($\lambda = 14$) & 36 & Theorem \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+An exhaustive scan of all contiguous supports up to shell 5 under R1--R5:
+
+\begin{table}[ht]
+\centering
+\caption{All admissible and near-admissible supports up to shell 5: $\Delta C$ vs.\ 600-cell Laplacian spectrum.}
+\label{tab:finitescan}
+\begin{tabular}{@{}llcccl@{}}
+\toprule
+Support & $C$ & $\Delta C$ & Admissible? & In 600-cell spectrum? & Multiplicity \\
+\midrule
+$\{1\}$ & $-1$ & 0 & Yes & Yes ($\lambda_0$) & 1 \\
+$\{1,2\}$ & $-2$ & $-1$ & No & --- & --- \\
+$\{1,2,3\}$ & $-1$ & 0 & No & Yes ($\lambda_0$) & 1 \\
+$\{2,3,4\}$ & 14 & 15 & Yes & Yes & 16 \\
+$\{1,2,3,4\}$ & 13 & 14 & No & Yes & 36 \\
+$\{3,4,5\}$ & 47 & 48 & No & No & --- \\
+$\{2,3,4,5\}$ & 104 & 105 & No & No & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For each admissible support, $\Delta C$ coincides with a 600-cell Laplacian eigenvalue. We interpret this as evidence of a spectral realisation of the closure invariant in the 600-cell geometry. Whether this coincidence is structurally forced (e.g.\ by $H_4$ representation theory) or accidental remains an open question. The computation is exact: the Laplacian is an integer matrix with integer eigenvalues, requiring no numerical precision beyond exact arithmetic.
+
+\textsc{Status: theorem.} The eigenvalues and the closure invariants are both verifiable by direct computation. No fitting or windowing is involved.
+
+\subsection{Additional $\phig$-connections of the 600-cell}
+
+The 600-cell is connected to $\phig$ through multiple independent channels:
+
+\begin{enumerate}
+    \item \textbf{Vertex coordinates:} The 120 vertices of the 600-cell are expressible in terms of $\phig$~\citep{Coxeter1973}, including permutations of $(0, 0, \pm 1, \pm \phig)$.
+    \item \textbf{$E_8$ projection:} Under the Coxeter projection from $\mathbb{R}^8$ to $\mathbb{R}^4$, the 240 roots of $E_8$ project onto the 120 vertices of the 600-cell.
+    \item \textbf{Spectral gap of the shell graph:} The 5-shell path graph $P_5$ has spectral gap $\lambda_1 = 2 - \phig = \phig^{-2}$ (Eq.~\eqref{eq:spectralgap}).
+    \item \textbf{Distance classes:} The vertex graph of the 600-cell has five distance classes ($N = 5$), matching the shell count.
+    \item \textbf{Eigenvalue $\lambda = 15$:} The Laplacian eigenvalue 15 equals $\Delta C$, embedding the closure invariant directly in the polytope spectrum.
+\end{enumerate}
+
+\textsc{Note on a retracted claim.} An earlier analysis reported the effective spectral dimension of the 600-cell vertex graph as $\dseff \approx 1.637$, near $\phig$. A more careful analysis with finer time resolution shows that $\dseff(t)$ does not plateau near $\phig$; the earlier value was an artifact of coarse windowing across mixed regimes. The $\dseff \approx \phig$ claim for the 600-cell vertex graph is retracted. The F4 Fibonacci hierarchical construction~\citep{SmartIII}, which converges toward $\dseff \approx 1.63$ at $V = 4960$ with proper plateau detection across multiple scales, remains independent of this retraction.
+
+%==================================================================
+\section{Interpretation and Limits}\label{sec:limits}
+%==================================================================
+
+\subsection{Status classification}
+
+The result falls into \textbf{State B: semi-derived}. This means the mathematical chain from postulates to numerical result is exact and contains no fitted parameters, but the postulates themselves are structural modelling choices rather than consequences of accepted fundamental theory. This is comparable to a lattice model in condensed matter physics: the lattice structure is postulated, but once fixed, the predictions follow without adjustment. In the present case, the postulates are the $\phig$-scaled shell geometry, the assignment rules, the shell-dimension model, and the normalisation convention. The mathematical manipulations connecting them to $\phig^{1265/81}$ use only standard spectral and graph-theoretic identities.
+
+\begin{table}[ht]
+\centering
+\caption{Assumption status for each ingredient.}
+\label{tab:assumptions}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Ingredient & Role in derivation & Status \\
+\midrule
+$\phig$-scaled shell manifold & Defines shell structure & Geometrically constrained ($\phig$ in 600-cell coordinates and spectral gap) \\
+Assignment rules R1--R5 & Determine $S_e$ and $S_p$ & Geometric construction choice \\
+Combinatorial invariant $C(S)$ & Provides $\Delta C = 15$ & Unique given shell-dimension model + 4 axioms (Prop.~\ref{prop:uniqueness}) \\
+Shell-support graph (1 vertex/shell) & Defines $|E|$, $|V|$, $\deg$ & Geometric construction choice \\
+$\lambda_1(P_5) = \phig^{-2}$ & $\phig$ in spectral gap & Theorem: $2 - 2\cos(\pi/5) = 2 - \phig$ \\
+Exponential law + corrections & $m \propto \phig^{C + |E|/|V| - \ldots}$ & Spectral moment parameterisation (cumulant expansion) \\
+Self-consistent normalisation & Selects $|V|^2/|E|$ & Structurally selected \\
+\midrule
+Unique minimality of $\{1\}$, $\{2,3,4\}$ & Follows from above & Derived \\
+$\Delta C = 15$ & Arithmetic & Derived \\
+Graph Laplacian identity & $|E|/|V| = \mathrm{tr}(L)/(2|V|)$ & Standard mathematics \\
+Degree variance $2/9$ & From degree sequence $[1,2,1]$ & Derived \\
+Exponent $1265/81$ & Composition of above & Derived \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{What has been shown}
+
+Given the modelling inputs, the proton-to-electron mass ratio reduces to three rational numbers from elementary graph theory: $15$ (how many connected multi-shell configurations exist), $2/3$ (how densely the proton's shells are connected), and $-4/81$ (how uneven that connectivity is). Their sum $1265/81$ is exact arithmetic, not a numerical approximation. The resulting $\phig^{1265/81} \approx 1835.8$ agrees with $1836.15$ at the $2 \times 10^{-4}$ level without any parameter having been adjusted to improve the match.
+
+\subsection{What this paper does not claim}
+
+\begin{itemize}
+    \item \textbf{Not a first-principles derivation.} The postulates (shell manifold, assignment rules, factorisation ansatz, normalisation choice) are not derived from accepted fundamental physics. The polytope uniqueness result constrains the scaling constant but does not derive the full construction.
+    \item \textbf{Not a Standard Model replacement.} The framework does not reproduce the Standard Model's dynamical content, gauge structure, or renormalisation group.
+    \item \textbf{Not a complete mass theory.} The framework does not reproduce muon, tau, or quark masses under the same rule set; these require additional structure~\citep{SmartII}.
+    \item \textbf{Not a metrological prediction.} The $2 \times 10^{-4}$ discrepancy from experiment is orders of magnitude larger than experimental precision. The result is structural agreement, not high-precision prediction.
+    \item \textbf{Not a physical identification.} The electron and proton constructions are structural models assigned to shell supports. They are not wavefunctions, quantum field configurations, or microstructural descriptions of actual particles.
+    \item \textbf{Higher-order corrections are truncated.} The heat-kernel cumulant expansion (Section~\ref{sec:masslaw}) has infinitely many terms; the present paper uses only the first three. The contribution of the fourth and higher cumulants is not bounded. The $2 \times 10^{-4}$ discrepancy from experiment may originate in these omitted higher-order terms.
+    \item \textbf{The normalisation is a residual model choice.} The selection of $|V|^2/|E|$ from the power-law family is motivated but not uniquely determined by a prior axiom.
+\end{itemize}
+
+\subsection{Mathematical context and methodological precedents}
+
+The framework's ingredients can be classified by the strength of their external support.
+
+\textbf{A. Direct mathematical inputs} (used in the derivation):
+\begin{itemize}
+    \item Coxeter projection: $E_8 \to$ 600-cell~\citep{Coxeter1973} (standard mathematics).
+    \item Graph Laplacian identity: $|E|/|V| = \mathrm{tr}(L)/(2|V|)$ (exact for simple graphs).
+    \item Tensor-product composition and orthogonal decomposition~\citep{NielsenChuang2000, ReedSimon1978}.
+    \item Heat-kernel spectral dimension extraction~\citep{Ambjorn2005} (established method).
+\end{itemize}
+
+\textbf{B. Motivating precedents} (support the approach but do not prove the construction):
+\begin{itemize}
+    \item Zamolodchikov~\citep{Zamolodchikov1989} predicted $\phig$ as a mass ratio in $E_8$ integrable field theory; Coldea et al.~\citep{Coldea2010} confirmed this experimentally. This establishes that $\phig$ can appear as a mass ratio in an $E_8$-symmetric physical system. The present paper's system is different; the algebraic structure is analogous.
+    \item The 600-cell's connection to icosahedral symmetry and quasicrystals~\citep{Shechtman1984} provides independent physical motivation for studying this polytope.
+    \item The proton-to-electron mass ratio is a recognised unexplained constant~\citep{Uzan2003}.
+\end{itemize}
+
+\textbf{C. Structural analogies only} (noted for context, not claimed as evidence):
+\begin{itemize}
+    \item The linked-cluster decomposition in QFT~\citep{Weinberg1995} mirrors the vacuum / single-excitation / connected partition used here.
+    \item Graph combinatorics determining physical quantities in spin networks~\citep{Penrose1971} provides a methodological parallel for graph-to-physics reasoning.
+\end{itemize}
+
+The weakest remaining link is the factorisation ansatz (the assumption that the three sectors contribute independently at leading order). The normalisation choice $|V|^2/|E|$ is a residual model selection within a tested family (Section~\ref{sec:robustness}).
+
+\subsection{Comparison to other approaches}
+
+In the Standard Model, the proton mass is computable from QCD~\citep{Durr2008} but the electron mass is a free parameter, so their ratio is not predicted. The present framework computes the ratio from geometric structure but does not reproduce the individual masses or their absolute scale ($\Lambda$ cancels). The two approaches are complementary rather than competitive: the Standard Model computes absolute masses from fitted parameters; the present framework computes a dimensionless ratio from structural postulates.
+
+%==================================================================
+\section{Reproducibility}\label{sec:reproducibility}
+%==================================================================
+
+Every claim in this paper reduces to a computation that can be independently verified:
+
+\begin{enumerate}
+    \item \textbf{Mass ratio.} The exponent $1265/81 = 15 + 2/3 - 4/81$ can be verified by hand. The numerical evaluation $\phig^{1265/81} \approx 1835.8$ requires only a pocket calculator.
+
+    \item \textbf{600-cell eigenvalue $\lambda = 15$.} The vertex adjacency graph of the 600-cell is a standard mathematical object with 120 vertices and 720 edges. Its $120 \times 120$ Laplacian can be constructed and diagonalised with any numerical linear algebra library. Verifying that $\lambda = 15$ appears in the spectrum with multiplicity 16 is a direct computation.
+
+    \item \textbf{Shell assignments.} Verifying that $\{1\}$ and $\{2,3,4\}$ are the unique minimal admissible supports under R1--R5 is an exhaustive check over a small finite set (Table~\ref{tab:candidates}).
+\end{enumerate}
+
+No step requires proprietary data, specialised hardware, or access to experimental facilities. The entire derivation chain is auditable from definitions to final numerical value.
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+Under explicit structural postulates, the proton-to-electron mass ratio is recovered as $\phig^{1265/81} \approx 1835.8$. The exponent decomposes into three terms --- a combinatorial invariant ($15$), a graph density ($2/3$), and a degree-variance correction ($-4/81$) --- each with a traceable graph-theoretic origin. No continuous parameters are fitted. The result agrees with experiment at the $2 \times 10^{-4}$ level.
+
+The construction is classified as a structured geometric ansatz (State~B): the mathematical chain from postulates to result is exact, but the postulates are modelling choices. The choice of $\phig$ is constrained by its presence in the 600-cell's vertex coordinates, spectral gap ($\lambda_1(P_5) = \phig^{-2}$), and $E_8$ projection~\citep{Coxeter1973}. The closure invariant $\Delta C = 15$ coincides with a 600-cell Laplacian eigenvalue (Section~\ref{sec:uniqueness}). The combinatorial invariant is the unique solution to four composition axioms given a shell-dimension model (Proposition~\ref{prop:uniqueness}); the Zamolodchikov--Coldea precedent~\citep{Zamolodchikov1989, Coldea2010} provides independent motivation for $\phig$ appearing in mass-ratio contexts. The additive exponent structure follows from the cumulant expansion of $\ln Z(t)$ on the closure graph (Section~\ref{sec:masslaw}), with the three terms being the first three cumulant coefficients --- canonical spectral quantities, not free parameters. The derivation reduces to four explicit modelling inputs: (1) the 600-cell as geometric substrate, whose Laplacian contains $\Delta C = 15$ as an eigenvalue; (2) a shell-dimension model assigning $k$ modes to shell $k$; (3) mass identification with the spectral gap; and (4) a normalisation convention for the second-order correction. Once the modelling inputs are fixed, the intermediate steps --- the closure invariant, vacuum subtraction, cumulant expansion, and graph-invariant identities --- use standard spectral/graph-theoretic identities. The three-term exponent is a low-order spectral moment truncation of $\ln Z(t)$, not a closed theorem for $\lambda_1$. Higher-order cumulant corrections are truncated; the source of the $2 \times 10^{-4}$ residual is an open question.
+
+The most immediate extensions of this work are: (i) determining whether the coincidence $\Delta C = \lambda_{600}$ is forced by $H_4$ representation theory or is accidental; (ii) extending the construction to the neutron-proton splitting, where the framework predicts a correction of order $\phig^{0.003}$; (iii) testing whether the winding extension to muon and tau masses~\citep{SmartII}, conditional on the F4 spectral conjecture, survives with the corrected spectral analysis; and (iv) bounding the fourth cumulant to determine whether the $2 \times 10^{-4}$ residual has a spectral origin.
+
+%==================================================================
+\appendix
+\section{Full Symbolic Derivation}\label{app:derivation}
+%==================================================================
+
+\noindent\textbf{Step 1.} Define the combinatorial invariant:
+\[
+C(S) = \prod_{i \in S} i - \sum_{i \in S} i - 1
+\]
+
+\noindent\textbf{Step 2.} Compute for electron and proton:
+\begin{align}
+C(\{1\}) &= 1 - 1 - 1 = -1 \\
+C(\{2,3,4\}) &= 24 - 9 - 1 = 14
+\end{align}
+\[
+\Delta C = 14 - (-1) = 15
+\]
+
+\noindent\textbf{Step 3.} Construct shell-support graphs:
+\begin{align}
+G(\{1\}): &\quad |V| = 1, \; |E| = 0, \; \deg = [0] \\
+G(\{2,3,4\}): &\quad |V| = 3, \; |E| = 2, \; \deg = [1,2,1]
+\end{align}
+
+\noindent\textbf{Step 4.} Compute graph density (first-order term):
+\[
+\Delta(|E|/|V|) = 2/3 - 0 = 2/3
+\]
+Operator identity: $|E|/|V| = \mathrm{tr}(L)/(2|V|)$.
+
+\noindent\textbf{Step 5.} Compute degree variance (second-order source):
+
+Mean degree: $\bar{d} = (1+2+1)/3 = 4/3$.
+
+Variance:
+\[
+\mathrm{Var}(\deg) = \frac{(1{-}4/3)^2 + (2{-}4/3)^2 + (1{-}4/3)^2}{3} = \frac{1/9 + 4/9 + 1/9}{3} = \frac{6/9}{3} = \frac{2}{9}
+\]
+
+\noindent\textbf{Step 6.} Compute second-order correction:
+\[
+\delta_2 = -\mathrm{Var}(\deg) \cdot \frac{|E|}{|V|^2} = -\frac{2}{9} \cdot \frac{2}{9} = -\frac{4}{81}
+\]
+
+\noindent\textbf{Step 7.} Compose the exponent:
+\[
+15 + \frac{2}{3} - \frac{4}{81} = \frac{1215}{81} + \frac{54}{81} - \frac{4}{81} = \frac{1265}{81}
+\]
+
+\noindent\textbf{Step 8.} Evaluate:
+\[
+\phig^{1265/81} = e^{(1265/81) \ln \phig} = e^{15.6173 \times 0.48121} = e^{7.5146} \approx 1835.8
+\]
+
+%==================================================================
+\section{Alternative Formulas Considered and Rejected}\label{app:rejected}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Candidate mass-ratio formulas evaluated within the framework.}
+\label{tab:rejected}
+\begin{tabular}{@{}llccl@{}}
+\toprule
+Route & Formula & Value & Error & Rejection reason \\
+\midrule
+Additive energy & $E_p/E_e = \sum \phig^{2n}$ & 27.4 & $98.5\%$ & Wrong order of magnitude \\
+Combinatorial only & $\phig^{15}$ & 1364 & $25.7\%$ & Missing graph correction \\
+Spectral product & $\phig^{16}$ & 2207 & $20.2\%$ & Upper bound only \\
+First-order only & $\phig^{47/3}$ & 1880 & $2.4\%$ & Missing variance correction \\
+Alt.\ normalisation & $\phig^{1267/81}$ & 1857 & $1.17\%$ & Worse normalisation choice \\
+\textbf{Three-order law} & $\boldsymbol{\phig^{1265/81}}$ & $\boldsymbol{1835.8}$ & $\boldsymbol{0.02\%}$ & \textbf{Selected} \\
+600-cell vertex count & $120 \times 15.3$ & 1836 & $\sim 0\%$ & No structural derivation \\
+600-cell combinatorics & $720/120 \times \phig^{12.8}$ & various & various & Ad hoc \\
+$H_4$ group order & $14400/\phig^5$ & $\sim 1298$ & $29\%$ & Wrong range \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Among formulas arising naturally within the framework, only the three-order law achieves sub-$1\%$ agreement. The 600-cell-based candidates were tested but do not arise from the shell-support construction; they would require a separate geometric argument not yet available.
+
+%==================================================================
+\section{Adversarial Review}\label{app:adversarial}
+%==================================================================
+
+\begin{enumerate}
+    \item \textbf{Objection: The shell assignments are chosen to fit the answer.}
+
+    \textit{Response:} The assignments are determined by R1--R5, not by the mass ratio. R1--R5 are postulated for structural reasons (minimal support, boundary/interior distinction, complexity threshold, contiguity, connectivity). The mass ratio is a \textit{consequence} of these rules, not their motivation. However, the rules themselves are not derived from a deeper theory, so the objection that the framework's axioms were designed with the answer in view cannot be fully excluded until the rules are independently justified.
+
+    \item \textbf{Objection: The combinatorial invariant is arbitrary.}
+
+    \textit{Response:} Given the shell-dimension assignment ($\dim \mathcal{H}_k = k$), $C(S)$ is the unique function satisfying four composition axioms (Proposition~\ref{prop:uniqueness}). The formula itself is therefore not arbitrary; but the upstream assumption that shell $k$ carries exactly $k$ states is a modelling choice motivated by Kaluza--Klein counting. The objection reduces to whether the shell-dimension model is justified, not whether the formula is arbitrary given that model.
+
+    \item \textbf{Objection: The $-1$ in the invariant is tuned.}
+
+    \textit{Response:} Within the shell model, the $-1$ is the vacuum subtraction: the removal of the all-ground-state configuration from the interacting-state count. It is required by axiom~2 of Proposition~\ref{prop:uniqueness} (single-shell democracy: $C(\{k\}) = -1$ for all $k$). Without it, $\Delta C = 16$ and the zeroth-order estimate $\phig^{16} = 2207$ would start above the target, requiring a negative net graph correction inconsistent with the positive graph density. The $-1$ is therefore both axiomatically required and structurally necessary within the model.
+
+    \item \textbf{Objection: The additive exponent structure is unjustified.}
+
+    \textit{Response:} The three terms are the first three cumulant coefficients of $\ln Z(t)$ on the closure graph (Section~\ref{sec:masslaw}, Table~\ref{tab:cumulants}). The cumulant expansion organises them additively. However, using only three cumulants as an effective mass law is a truncation choice: finitely many cumulants do not uniquely determine $\lambda_1$. The observed $2 \times 10^{-4}$ accuracy suggests the truncation is efficient, but this efficiency is not proven from first principles.
+
+    \item \textbf{Objection: The same Laplacian yields many moments --- why these three and not others?}
+
+    \textit{Response:} The three quantities used ($C(S)$, $|E|/|V|$, $\mathrm{Var}(\deg)$) are the first three canonical low-order spectral descriptors of the graph Laplacian, each with direct graph-theoretic meaning (state count, mean connectivity, connectivity heterogeneity). They are the natural leading terms of the cumulant expansion, not selected post hoc. However, the decision to truncate at three terms rather than four or more is a modelling choice, and the specific normalisation of the third term is a residual model selection.
+
+    \item \textbf{Objection: The normalisation was chosen to match the answer.}
+
+    \textit{Response:} Partially valid. The normalisation $|V|^2/|E|$ was selected by a pre-defined self-consistency criterion within a pre-defined power-law family. It was not selected by minimising error against the experimental value. However, the choice of the power-law family and the self-consistency criterion are themselves modelling decisions. This is acknowledged as a residual model choice (Section~\ref{sec:limits}). The normalisation is the least well-justified step in the derivation chain.
+
+    \item \textbf{Objection: The framework cannot reproduce muon or tau masses.}
+
+    \textit{Response:} Correct. The current rule set fails for heavier leptons. This is a genuine limitation, documented in detail in~\citep{SmartII}. The proton-electron result should be evaluated on its own terms, not as a claim to a complete mass theory.
+
+    \item \textbf{Objection: The agreement could be coincidental.}
+
+    \textit{Response:} This cannot be excluded on the basis of the present paper alone. The significance of the result lies not in an informal probability estimate but in the compactness and structured origin of the expression: the exponent arises from a specific derivation chain with identifiable graph-theoretic steps, not from a search over free parameters. Whether this structure reflects a genuine geometric relationship or a coincidence is an open question that can only be resolved by extending the framework to additional mass ratios or by independent derivation of the postulates.
+
+    \item \textbf{Objection: Why $\phig$ and not some other base?}
+
+    \textit{Response:} Three independent results constrain $\phig$: (i) the spectral gap of the 5-shell path graph is exactly $\lambda_1 = 2 - \phig = \phig^{-2}$ (Eq.~\eqref{eq:spectralgap}), proving $\phig$ is native to the closure graph's spectrum by algebraic theorem; (ii) the 600-cell's vertex coordinates are expressible in terms of $\phig$, and its Laplacian contains $\Delta C = 15$ as an eigenvalue (Section~\ref{sec:uniqueness}); (iii) $\phig$ is the unique base in which the mass exponent decomposes into structurally interpretable graph-theoretic terms (Table~\ref{tab:basecheck}). The choice of $\phig$ is therefore not free but triply constrained.
+
+    \item \textbf{Objection: The electron and proton are not real geometric objects.}
+
+    \textit{Response:} Correct. They are structural models, not physical descriptions. The paper claims a structural correspondence, not a physical identification.
+
+    \item \textbf{Objection: This cannot be tested experimentally.}
+
+    \textit{Response:} The mass ratio is already measured to $10^{-11}$ precision. The framework's value of $1835.8$ is already falsified at the metrological level; it is presented as structural agreement, not metrological prediction. A testable prediction would require the framework to produce a quantity not already known to higher precision. The neutron-proton splitting and lepton mass ratios are potential tests, but these require extensions not yet completed.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textbf{Resolved or substantially addressed:} 3 ($-1$ required by axiom 2), 6 (muon/tau limitation acknowledged), 8 (why $\phig$ --- spectral gap + eigenvalue + base uniqueness), 9 (structural vs physical acknowledged).
+
+\noindent\textbf{Partially resolved:} 2 (invariant unique given shell-dimension model, but model is assumed), 4 (additive structure organised by cumulant expansion, but truncation is a model choice), 5 (normalisation selected by criterion, but criterion is a model choice), 11 (truncation non-uniqueness: natural leading terms, but stopping at three is a choice).
+
+\noindent\textbf{Unresolved:} 1 (axiom design), 7 (coincidence), 10 (testability). These represent the framework's current proof obligations.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

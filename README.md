@@ -76,17 +76,33 @@ Argues that the crystallisation functional F = alphaR + betaE - gammaQ is not ar
 
 Formalises **triplet closure**: three classes of constraint (internal, boundary, observational) are jointly sufficient for discrete state resolution under generic conditions, whereas any pair alone generically is not. Defines a regime structure governed by Delta = lambda/Gamma. Demonstrates the mechanism in the **ARIA governed reasoning system** — a deterministic pipeline that resolves a canonical request through three candidates to a single output, producing a cryptographically verifiable proof pack. Includes the full [proof-pack artifacts](papers/mechanism/demo/) for independent verification.
 
-### Companion E — Particles, Geometry, and Mass
+### Mass Programme — Papers I–IV
 
-**[Particles, Geometry, and Mass from Deterministic Field Closure](papers/master-mass/master-mass.pdf)** ([LaTeX source](papers/master-mass/master-mass.tex))
+The mass programme develops a geometric ansatz for particle mass ratios from closure geometry and the 600-cell. **Paper IV is the primary publication-facing paper**; Papers I–III provide the internal development.
 
-Develops a structural theory of particles and mass within the closure framework. Particles are identified with stable closure classes characterised by discrete shell support, winding number, and symmetry sector. Five assignment rules uniquely determine the electron and proton. A three-order mass law with zero fitted continuous parameters yields the rational exponent 1265/81 and a predicted proton-to-electron ratio of ~1835.8, in structural agreement with the observed value at the 2×10⁻⁴ level. Includes formal no-go for naive lepton assignments and precise diagnosis of the missing winding layer.
+#### Paper IV (Bridge Paper) — Proton–Electron Mass Ratio
 
-### Companion F — Lepton Generations
+**[A φ-Scaled Geometric Ansatz for the Proton–Electron Mass Ratio](papers/pemr/pemr.tex)**
 
-**[Lepton Generations and the Missing Mass Operator in Deterministic Field Closure](papers/lepton-generations/lepton-generations.pdf)** ([LaTeX source](papers/lepton-generations/lepton-generations.tex))
+The standalone bridge paper. Presents a structured geometric ansatz recovering m_p/m_e = φ^(1265/81) ≈ 1835.8 (experimental: 1836.15, discrepancy 2×10⁻⁴) with zero fitted continuous parameters. The leading exponent ΔC = 15 coincides exactly with a Laplacian eigenvalue of the 600-cell vertex graph (multiplicity 16). The correction terms are organised by the heat-kernel cumulant expansion. Includes the Zamolodchikov–Coldea E₈ precedent, spectral gap theorem λ₁(P₅) = φ⁻², sensitivity analysis, reproducibility section, and a 12-objection adversarial review. Externally readable without prior VFD context.
 
-Companion to Paper E. Proves a formal no-go theorem establishing that shell-support extension cannot produce muon or tau mass ratios. Identifies the required winding-dependent boundary excitation operator f(w) = phi^N (w-1)^(1/phi), where the exponent 1/phi is consistent with hydrogen-like spectral scaling in a space of effective dimension phi, and the coefficient phi^N is the unique phi-integer-power matching the muon mass. Predicts the muon-to-electron ratio to 0.5% and the tau-to-electron ratio to 3.7% with zero fitted continuous parameters.
+#### Paper I (Internal) — Closure Geometry and Mass
+
+**[Proton-to-Electron Mass Ratio from Closure Geometry and Graph Invariants](papers/master-mass/master-mass.tex)**
+
+The internal mass paper. Develops closure classes, assignment rules R1–R5, the combinatorial invariant, graph Laplacian term, degree-variance correction, and three-order mass law. Includes validation extensions (neutron compatible, muon/tau fail) and forward reference to the 600-cell spectral work.
+
+#### Paper II (Internal) — Lepton Generations
+
+**[Lepton Generations and the Missing Mass Operator in Deterministic Field Closure](papers/lepton-generations/lepton-generations.tex)**
+
+Proves a formal no-go theorem for shell-extension leptons. Identifies the winding operator f(w) = φ⁵(w−1)^(1/φ) as a conditional extension. F4 Fibonacci construction provides primary numerical evidence for d_s ≈ φ. The 600-cell eigenvalue λ = 15 = ΔC provides a theorem-level spectral anchor. Predicts muon to 0.5%, tau to 3.7%. An earlier claim that the 600-cell vertex graph has d_s ≈ 1.637 has been retracted.
+
+#### Paper III (Internal) — Spectral Structure
+
+**[Spectral Structure of the 600-Cell Vertex Graph: Eigenvalue Connections and the F4 Fibonacci Extension](papers/spectral-dimension/spectral-dimension.tex)**
+
+Reports two spectral results: (1) the 600-cell Laplacian eigenvalue λ = 15 = ΔC (theorem); (2) F4 convergence toward d_s ≈ φ (numerical, R² = 0.996). Includes explicit retraction of the earlier d_s ≈ 1.637 claim for the 600-cell vertex graph, with explanation of the windowing artifact.
 
 ### Supplementary Material
 
@@ -112,8 +128,10 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
-│   ├── master-mass/            Companion E: particles, geometry, and mass
-│   ├── lepton-generations/     Companion F: lepton generations + winding operator
+│   ├── pemr/                   Paper IV: bridge paper (proton-electron mass ratio)
+│   ├── master-mass/            Paper I: closure geometry and mass (internal)
+│   ├── lepton-generations/     Paper II: lepton generations + winding operator (internal)
+│   ├── spectral-dimension/     Paper III: 600-cell eigenvalue + F4 spectral (internal)
 │   └── supplementary/          Registries + platform mapping sheets
 ├── src/vfd/crystallisation/    Reference implementation
 │   ├── operator.py             Core crystallisation operator
