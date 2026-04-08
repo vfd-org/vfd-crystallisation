@@ -94,9 +94,9 @@ The internal mass paper. Develops closure classes, assignment rules R1–R5, the
 
 #### Paper II (Internal) — Lepton Generations
 
-**[Lepton Generations and the Missing Mass Operator in Deterministic Field Closure](papers/lepton-generations/lepton-generations.tex)**
+**[Lepton Generations and the Missing Mass Operator in Deterministic Field Closure](papers/lepton-generations/Lepton_Generations_the_Missing_Mass_Operator_in_Deterministic_Field_Closure.pdf)** ([LaTeX source](papers/lepton-generations/lepton-generations.tex))
 
-Proves a formal no-go theorem for shell-extension leptons. Identifies the winding operator f(w) = φ⁵(w−1)^(1/φ) as a conditional extension. F4 Fibonacci construction provides primary numerical evidence for d_s ≈ φ. The 600-cell eigenvalue λ = 15 = ΔC provides a theorem-level spectral anchor. Predicts muon to 0.5%, tau to 3.7%. An earlier claim that the 600-cell vertex graph has d_s ≈ 1.637 has been retracted.
+Proves a formal no-go theorem for shell-extension leptons. Proposes a conditional winding operator f(w) = φ⁵(w−1)^(1/φ), valid if ds = φ. Predicts muon to 0.5%, tau to 3.7% with zero fitted parameters. The 600-cell eigenvalue correspondence and F4 numerical motivation are treated as external support, summarised from Paper III. The earlier 600-cell ds ≈ 1.637 claim has been retracted.
 
 #### Paper III (Internal) — Spectral Structure
 
