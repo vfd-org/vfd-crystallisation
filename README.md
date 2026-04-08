@@ -1,6 +1,6 @@
-# VFD Crystallisation Operator
+# VFD: Crystallisation, Closure Geometry, and Deterministic Selection
 
-**A testable, constraint-driven model of state resolution formulated as an alternative to probabilistic wavefunction collapse.**
+**A testable, constraint-driven model of state resolution and geometric mass structure.**
 
 ---
 
@@ -13,6 +13,34 @@ This repository presents the **crystallisation operator**: a framework in which 
 The framework is compatible with standard open quantum system evolution (recovering Lindblad dynamics when the crystallisation coupling is zero) and yields predictions that are quantitatively distinct from decoherence, GRW-style stochastic collapse, and Penrose objective reduction.
 
 This repository presents a testable research framework and supporting reference implementation. It does not assume correctness of the model and is structured to enable independent evaluation.
+
+---
+
+## Research Scope
+
+This repository contains two connected research tracks within the broader VFD programme:
+
+1. **Crystallisation dynamics** — a deterministic, constraint-driven selection framework proposed as an alternative to probabilistic collapse in open quantum systems.
+2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–IV and anchored by Paper IV as the primary external-facing mass paper.
+
+These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure.
+
+---
+
+## Recommended Reading Order
+
+### For the crystallisation programme
+1. Flagship paper (crystallisation dynamics)
+2. Companion B (experimental framework)
+3. Companion A (mathematical formalism)
+4. Companion D (mechanism + ARIA demo)
+5. Companion C (structural inevitability)
+
+### For the mass programme
+1. **Paper IV** (primary external-facing mass paper — start here)
+2. Paper III (spectral support and retraction)
+3. Paper II (no-go theorem + conditional winding operator)
+4. Paper I (internal mass-development paper)
 
 ---
 
@@ -44,7 +72,7 @@ In this framework, what is conventionally treated as "collapse" is modelled as c
 
 ## Papers
 
-The research programme follows a **1 + 6** structure: one flagship paper supported by six companion papers and a supplementary layer. The flagship paper stands alone; everything else provides depth.
+The crystallisation programme follows a **1 + 4** structure: one flagship paper supported by four companion papers and a supplementary layer. The mass programme adds Papers I–IV (see below). The flagship paper stands alone; everything else provides depth.
 
 ### Flagship
 
@@ -76,9 +104,9 @@ Argues that the crystallisation functional F = alphaR + betaE - gammaQ is not ar
 
 Formalises **triplet closure**: three classes of constraint (internal, boundary, observational) are jointly sufficient for discrete state resolution under generic conditions, whereas any pair alone generically is not. Defines a regime structure governed by Delta = lambda/Gamma. Demonstrates the mechanism in the **ARIA governed reasoning system** — a deterministic pipeline that resolves a canonical request through three candidates to a single output, producing a cryptographically verifiable proof pack. Includes the full [proof-pack artifacts](papers/mechanism/demo/) for independent verification.
 
-### Mass Programme — Papers I–IV
+### Mass Programme (Geometric Closure Papers I–IV)
 
-The mass programme develops a geometric ansatz for particle mass ratios from closure geometry and the 600-cell. **Paper IV is the primary publication-facing paper**; Papers I–III provide the internal development.
+The repository also contains a separate but related mass programme, which applies closure geometry and spectral structure to particle mass ratios. **Paper IV is the primary publication-facing paper**; Papers I–III document the internal development. **Recommended reading order for the mass programme:** start with Paper IV.
 
 #### Paper IV (Bridge Paper) — Proton–Electron Mass Ratio
 
@@ -96,13 +124,13 @@ The internal mass paper. Develops closure classes, assignment rules R1–R5, the
 
 **[Lepton Generations and the Missing Mass Operator in Deterministic Field Closure](papers/lepton-generations/Lepton_Generations_the_Missing_Mass_Operator_in_Deterministic_Field_Closure.pdf)** ([LaTeX source](papers/lepton-generations/lepton-generations.tex))
 
-Proves a formal no-go theorem for shell-extension leptons. Proposes a conditional winding operator f(w) = φ⁵(w−1)^(1/φ), valid if ds = φ. Predicts muon to 0.5%, tau to 3.7% with zero fitted parameters. The 600-cell eigenvalue correspondence and F4 numerical motivation are treated as external support, summarised from Paper III. The earlier 600-cell ds ≈ 1.637 claim has been retracted.
+Proves a formal no-go theorem for shell-extension leptons. Proposes a conditional winding operator f(w) = φ⁵(w−1)^(1/φ), valid only if the relevant effective spectral dimension is identified with d_s = φ. Predicts the muon to 0.5% and the tau to 3.7% with zero fitted continuous parameters. The 600-cell eigenvalue correspondence and F4 numerical motivation are treated only as external support, summarised from Paper III.
 
 #### Paper III (Internal) — Spectral Structure
 
 **[Spectral Structure of the 600-Cell Vertex Graph: Eigenvalue Connections and the F4 Fibonacci Extension](papers/spectral-dimension/Spectral_Structure_of_the_600_Cell_Vertex_Graph.pdf)** ([LaTeX source](papers/spectral-dimension/spectral-dimension.tex))
 
-Reports two spectral results: (1) the 600-cell Laplacian eigenvalue λ = 15 = ΔC (theorem); (2) F4 convergence toward d_s ≈ φ (numerical, R² = 0.996). Includes explicit retraction of the earlier d_s ≈ 1.637 claim for the 600-cell vertex graph, with explanation of the windowing artifact.
+Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence λ = 15 = ΔC; (2) numerical F4 convergence toward d_s ≈ φ (R² = 0.996). Includes explicit retraction of the earlier d_s ≈ 1.637 claim for the 600-cell vertex graph, with explanation of the windowing artifact.
 
 ### Supplementary Material
 
