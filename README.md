@@ -116,7 +116,7 @@ The standalone bridge paper. Presents a structured geometric ansatz recovering m
 
 #### Paper I (Internal) — Closure Geometry and Mass
 
-**[Proton-to-Electron Mass Ratio from Closure Geometry and Graph Invariants](papers/master-mass/master-mass.tex)**
+**[Proton-to-Electron Mass Ratio from Closure Geometry and Graph Invariants](papers/master-mass/Proton_to_Electron_Mass_Ratio_from_Closure_Geometry_and_Graph_Invariants.pdf)** ([LaTeX source](papers/master-mass/master-mass.tex))
 
 The internal mass paper. Develops closure classes, assignment rules R1–R5, the combinatorial invariant, graph Laplacian term, degree-variance correction, and three-order mass law. Includes validation extensions (neutron compatible, muon/tau fail) and forward reference to the 600-cell spectral work.
 
