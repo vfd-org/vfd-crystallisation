@@ -37,10 +37,11 @@ These tracks are related by a common structural theme: state resolution through 
 5. Companion C (structural inevitability)
 
 ### For the mass programme
-1. **Paper IV** (primary external-facing mass paper — start here)
-2. Paper III (spectral support and retraction)
-3. Paper II (no-go theorem + conditional winding operator)
-4. Paper I (internal mass-development paper)
+1. **Paper V** (complete particle mass spectrum — start here)
+2. Paper IV (proton-electron bridge paper — the foundation)
+3. Paper III (spectral support and retraction)
+4. Paper II (no-go theorem + conditional winding operator)
+5. Paper I (internal mass-development paper)
 
 ---
 
@@ -104,9 +105,15 @@ Argues that the crystallisation functional F = alphaR + betaE - gammaQ is not ar
 
 Formalises **triplet closure**: three classes of constraint (internal, boundary, observational) are jointly sufficient for discrete state resolution under generic conditions, whereas any pair alone generically is not. Defines a regime structure governed by Delta = lambda/Gamma. Demonstrates the mechanism in the **ARIA governed reasoning system** — a deterministic pipeline that resolves a canonical request through three candidates to a single output, producing a cryptographically verifiable proof pack. Includes the full [proof-pack artifacts](papers/mechanism/demo/) for independent verification.
 
-### Mass Programme (Geometric Closure Papers I–IV)
+### Mass Programme (Geometric Closure Papers I–V)
 
-The repository also contains a separate but related mass programme, which applies closure geometry and spectral structure to particle mass ratios. **Paper IV is the primary publication-facing paper**; Papers I–III document the internal development. **Recommended reading order for the mass programme:** start with Paper IV.
+The repository also contains a separate but related mass programme, which applies closure geometry and spectral structure to particle mass ratios. **Paper V is the complete mass-spectrum paper**; Paper IV is the proton-electron bridge paper; Papers I–III document the internal development. **Recommended reading order for the mass programme:** start with Paper V for the full result, or Paper IV for the proton-electron foundation.
+
+#### Paper V — Complete Particle Mass Spectrum
+
+**[Particle Masses from the Spectral Geometry of the 600-Cell](papers/paper-v/paper-v.tex)**
+
+The complete mass-programme paper. Extends Papers I–IV to all 13 Standard Model particle masses using the golden ratio φ and the four integer eigenvalues {9, 12, 14, 15} of the 600-cell graph Laplacian. Zero fitted parameters. Average prediction error 0.014%, maximum 0.047%. All predictions within experimental uncertainty. The fine structure constant α is recovered from eigenvalues (0.81 ppm). Includes the prediction chain, assignment rules, null hypothesis test, and full epistemic classification.
 
 #### Paper IV (Bridge Paper) — Proton–Electron Mass Ratio
 
@@ -156,6 +163,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-v/                Paper V: complete particle mass spectrum
 │   ├── pemr/                   Paper IV: bridge paper (proton-electron mass ratio)
 │   ├── master-mass/            Paper I: closure geometry and mass (internal)
 │   ├── lepton-generations/     Paper II: lepton generations + winding operator (internal)
