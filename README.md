@@ -82,7 +82,7 @@ The mass programme develops a geometric ansatz for particle mass ratios from clo
 
 #### Paper IV (Bridge Paper) — Proton–Electron Mass Ratio
 
-**[A φ-Scaled Geometric Ansatz for the Proton–Electron Mass Ratio](papers/pemr/pemr.tex)**
+**[A φ-Scaled Geometric Ansatz for the Proton–Electron Mass Ratio](papers/pemr/A_phi_Scaled_Geometric_Ansatz_for_the_Proton_Electron_Mass_Ratio.pdf)** ([LaTeX source](papers/pemr/pemr.tex))
 
 The standalone bridge paper. Presents a structured geometric ansatz recovering m_p/m_e = φ^(1265/81) ≈ 1835.8 (experimental: 1836.15, discrepancy 2×10⁻⁴) with zero fitted continuous parameters. The leading exponent ΔC = 15 coincides exactly with a Laplacian eigenvalue of the 600-cell vertex graph (multiplicity 16). The correction terms are organised by the heat-kernel cumulant expansion. Includes the Zamolodchikov–Coldea E₈ precedent, spectral gap theorem λ₁(P₅) = φ⁻², sensitivity analysis, reproducibility section, and a 12-objection adversarial review. Externally readable without prior VFD context.
 
