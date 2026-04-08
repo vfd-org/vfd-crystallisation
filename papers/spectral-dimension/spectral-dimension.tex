@@ -35,28 +35,46 @@
 \noindent\textbf{Status:} Preprint (not peer-reviewed)
 
 \begin{abstract}
-We report two spectral results connecting the 600-cell to the closure-class mass programme. First, the graph Laplacian of the 600-cell vertex adjacency graph ($|V| = 120$, degree 12) has eigenvalue $\lambda = 15$ with multiplicity 16. This equals $\Delta C = 15$, the closure invariant difference between proton and electron, embedding the mass law's leading-order exponent directly in the polytope spectrum. This is a theorem-level connection, verifiable by diagonalising the $120 \times 120$ Laplacian. Second, the F4 Fibonacci hierarchical extension of the $\phig$-manifold --- a construction in which shell $k$ contains $F(k{+}2)$ sub-cells --- produces an effective spectral dimension converging toward $\phig$ from above: $\dseff^{HK} = 1.635$ at $V = 4960$, with empirical $1/V$ extrapolation giving $\ds(\infty) = 1.628$ ($R^2 = 0.996$). Among all tested control constructions, F4 is the only one exhibiting this convergence. An earlier claim that the 600-cell vertex graph itself has effective spectral dimension $\dseff \approx 1.637$--$1.642$ near $\phig$ has been retracted: finer-resolution analysis shows this was an artifact of coarse time-windowing across mixed spectral regimes.
+We report a precise spectral correspondence between the 600-cell and the closure-class mass programme. The graph Laplacian of the 600-cell vertex adjacency graph ($|V| = 120$, degree 12) contains the eigenvalue $\lambda = 15$ with multiplicity 16. This equals $\Delta C = 15$, the closure invariant difference between proton and electron, placing the leading-order mass exponent in exact correspondence with a point in the polytope spectrum. This result is directly reproducible by diagonalising the finite Laplacian matrix.
+
+An earlier claim that the 600-cell vertex graph itself has effective spectral dimension $\dseff \approx \phig$ is retracted: refined analysis shows that this was an artifact of coarse time-windowing across mixed spectral regimes.
+
+Separately, we study an F4 Fibonacci hierarchical extension of the $\phig$-manifold. In this family, the effective spectral dimension decreases toward $\phig$ from above, with $\dseff^{HK} = 1.635$ at $V = 4960$ and empirical extrapolation $\ds(\infty) = 1.628$. We present this as numerical motivation for a conjectural $\ds = \phig$ identification in the extended construction, not as a theorem for the 600-cell itself.
 \end{abstract}
 
 %==================================================================
 \section{Introduction}\label{sec:intro}
 %==================================================================
 
-This paper presents two spectral results relevant to the closure-class mass programme~\citep{SmartI, SmartII}. The programme requires a spectral connection between the 600-cell geometry and the golden ratio $\phig$. An earlier version of this paper reported that the effective spectral dimension of the 600-cell vertex graph lies near $\phig$; that claim is retracted here with explanation (Section~\ref{sec:retraction}).
+This paper presents spectral results relevant to the closure-class mass programme~\citep{SmartI, SmartII}. The programme requires a spectral connection between the 600-cell geometry and the golden ratio $\phig$. An earlier version of this paper reported that the effective spectral dimension of the 600-cell vertex graph lies near $\phig$; that claim is retracted here with explanation (Section~\ref{sec:retraction}).
 
 What survives and what is new:
 
 \begin{enumerate}
-    \item \textbf{Eigenvalue connection (theorem).} The 600-cell Laplacian has eigenvalue $\lambda = 15$ with multiplicity 16. This equals $\Delta C = 15$, the closure invariant that governs the leading-order proton-to-electron mass ratio. The mass exponent is not merely a combinatorial quantity: it is a specific point in the polytope spectrum. (Section~\ref{sec:eigenvalue}.)
+    \item \textbf{Eigenvalue correspondence (exact computation).} The 600-cell Laplacian has eigenvalue $\lambda = 15$ with multiplicity 16. This equals $\Delta C = 15$, the closure invariant that governs the leading-order proton-to-electron mass ratio. The mass exponent is therefore in exact numerical correspondence with a specific point in the polytope spectrum. (Section~\ref{sec:eigenvalue}.)
 
-    \item \textbf{F4 spectral dimension (numerical).} The F4 Fibonacci hierarchical construction produces $\dseff \to \phig$ as graph size increases, with $\dseff = 1.635$ at $V = 4960$. This is independent of the 600-cell spectral-dimension measurement and provides the primary numerical evidence for the conjectural identification $\ds = \phig$ used in the lepton winding operator. (Section~\ref{sec:F4}.)
+    \item \textbf{F4 spectral dimension (numerical, exploratory).} The F4 Fibonacci hierarchical construction produces effective spectral dimensions approaching $\phig$ as graph size increases, with $\dseff = 1.635$ at $V = 4960$. This is independent of the 600-cell spectral-dimension measurement and provides numerical motivation for a conjectural identification $\ds = \phig$ in the extended hierarchical construction. (Section~\ref{sec:F4}.)
 
     \item \textbf{Retraction of the 600-cell $\dseff \approx \phig$ claim.} The earlier measurement was an artifact of coarse time-windowing. Finer analysis shows $\dseff(t)$ crosses $\phig$ at specific times but does not plateau there. (Section~\ref{sec:retraction}.)
 \end{enumerate}
 
+\subsection*{Epistemic status and scope}
+
+This paper contains three distinct levels of claim:
+
+\begin{enumerate}
+    \item \textbf{Exact finite-graph result.} The occurrence of $\lambda = 15$ in the 600-cell Laplacian spectrum is an exact computational fact.
+    \item \textbf{Retraction.} The earlier claim that the 600-cell vertex graph has $\dseff \approx \phig$ is withdrawn.
+    \item \textbf{Exploratory extension.} The F4 Fibonacci hierarchical construction exhibits numerical convergence of effective spectral dimension toward $\phig$, but this remains conjectural and distinct from the 600-cell result.
+\end{enumerate}
+
+The paper does not claim that the 600-cell spectral dimension equals $\phig$, nor that the F4 convergence is analytically proven. Its purpose is to isolate a valid exact spectral correspondence, document the correction of an earlier claim, and present a separate numerical extension.
+
 %==================================================================
 \section{The 600-Cell Laplacian Eigenvalue $\lambda = 15$}\label{sec:eigenvalue}
 %==================================================================
+
+We now connect the combinatorial invariant governing the mass exponent to the spectral structure of the 600-cell.
 
 \subsection{The 600-cell vertex graph}
 
@@ -66,15 +84,15 @@ The 600-cell is the regular $H_4$ polytope with 120 vertices, 720 edges, 1200 tr
 
 The graph Laplacian $L = D - A$ of $G_V$ has distinct eigenvalues. Direct diagonalisation yields the eigenvalue $\lambda = 15$ with multiplicity 16.
 
-\begin{proposition}[Spectral embedding of $\Delta C$]\label{prop:eigenvalue}
-The graph Laplacian of the 600-cell vertex adjacency graph has eigenvalue $\lambda = 15$. The closure invariant difference between proton and electron closure classes is $\Delta C = C(\{2,3,4\}) - C(\{1\}) = 14 - (-1) = 15$. Therefore $\Delta C$ is an eigenvalue of the 600-cell Laplacian.
+\begin{proposition}[Spectral correspondence of $\Delta C$]\label{prop:eigenvalue}
+The graph Laplacian of the 600-cell vertex adjacency graph has eigenvalue $\lambda = 15$. The closure invariant difference between proton and electron closure classes is $\Delta C = C(\{2,3,4\}) - C(\{1\}) = 14 - (-1) = 15$. Therefore $\Delta C$ coincides with an eigenvalue of the 600-cell Laplacian.
 \end{proposition}
 
-\textsc{Status: theorem.} Both the eigenvalue and the invariant difference are verifiable by direct computation. The connection requires no statistical estimation, windowing, or modelling.
+\textsc{Status: exact computation.} The eigenvalue $\lambda = 15$ is obtained by direct diagonalisation of the finite 600-cell Laplacian, and $\Delta C = 15$ is exact arithmetic. Their equality is an exact correspondence between independently computed quantities. This correspondence is an observed numerical equality; its structural origin (e.g.\ via $H_4$ representation theory) remains to be established. No statistical estimation or windowing is involved.
 
 \subsection{Significance}
 
-The mass law's leading-order term $\phig^{\Delta C} = \phig^{15}$ is not merely a combinatorial formula: the exponent $15$ is a specific eigenvalue of the Laplacian of the geometry that defines the framework. This provides a direct spectral link between the mass law and the polytope, independent of the effective spectral dimension.
+The mass law's leading-order term $\phig^{\Delta C} = \phig^{15}$ is not merely a combinatorial formula: the exponent $15$ is in exact numerical correspondence with a specific eigenvalue of the Laplacian of the geometry that defines the framework. This provides a direct spectral link between the mass law and the polytope, independent of the effective spectral dimension.
 
 \subsection{Additional $\phig$-connections}
 
@@ -87,8 +105,32 @@ The 600-cell is connected to $\phig$ through multiple channels:
 \end{itemize}
 
 %==================================================================
+\section{Clarification and Retraction of the Earlier 600-Cell $\dseff \approx \phig$ Claim}\label{sec:retraction}
+%==================================================================
+
+An earlier version of this paper reported that the effective spectral dimension of the 600-cell vertex graph lies in the interval $\dseff \approx 1.637$--$1.642$, near $\phig \approx 1.618$. This claim is retracted.
+
+\subsection{What went wrong}
+
+A more careful analysis with finer time resolution (10,000 time points vs.\ the original coarser grid) reveals that $\dseff(t)$ on the 600-cell vertex graph does not plateau near $\phig$. The function $\dseff(t)$ crosses $\phig$ at two specific times ($t \approx 0.074$ and $t \approx 0.98$) but the stable plateau is at $\dseff \approx 3.6$, consistent with $2 + \phig \approx 3.618$. The earlier reported value of $\approx 1.637$ was the median of a mixed distribution across spectral regimes --- an artifact of the time-windowing methodology, not a genuine plateau.
+
+\subsection{What survives}
+
+\begin{itemize}
+    \item The eigenvalue connection $\lambda = 15 = \Delta C$ (Section~\ref{sec:eigenvalue}) is an exact computation, unaffected by the spectral dimension retraction.
+    \item The spectral gap $\lambda_1(P_5) = \phig^{-2}$ on the 5-shell path graph is an algebraic identity, unaffected.
+    \item The F4 construction (Section~\ref{sec:F4}) is entirely independent of the 600-cell spectral dimension measurement. Its convergence toward $\phig$ is established by proper plateau detection at each graph size.
+\end{itemize}
+
+\subsection{Lessons}
+
+The retraction illustrates the importance of fine-grained plateau detection in heat-kernel spectral dimension estimation on finite graphs. Coarse time-windowing can produce apparent plateaux that are artifacts of mixing across spectral regimes. The F4 analysis avoids this by using scale-dependent plateau detection across a family of increasing graph sizes.
+
+%==================================================================
 \section{F4 Fibonacci Hierarchical Extension}\label{sec:F4}
 %==================================================================
+
+The F4 construction is not the 600-cell vertex graph; it is a separate hierarchical extension introduced to test whether $\phig$-structured shell organisation produces effective spectral dimensions approaching $\phig$ under controlled scaling.
 
 \subsection{Construction}
 
@@ -151,28 +193,6 @@ $\dseff(G_F(5,b)) \to \phig$ as $b \to \infty$.
 \textsc{Status: conjectured.} Supported by monotone convergence from above, HK--RW agreement, control separation, and perturbation robustness. Not proven analytically.
 
 %==================================================================
-\section{Retraction of the 600-Cell $\dseff \approx \phig$ Claim}\label{sec:retraction}
-%==================================================================
-
-An earlier version of this paper reported that the effective spectral dimension of the 600-cell vertex graph lies in the interval $\dseff \approx 1.637$--$1.642$, near $\phig \approx 1.618$. This claim is retracted.
-
-\subsection{What went wrong}
-
-A more careful analysis with finer time resolution (10,000 time points vs.\ the original coarser grid) reveals that $\dseff(t)$ on the 600-cell vertex graph does not plateau near $\phig$. The function $\dseff(t)$ crosses $\phig$ at two specific times ($t \approx 0.074$ and $t \approx 0.98$) but the stable plateau is at $\dseff \approx 3.6$, consistent with $2 + \phig \approx 3.618$. The earlier reported value of $\approx 1.637$ was the median of a mixed distribution across spectral regimes --- an artifact of the time-windowing methodology, not a genuine plateau.
-
-\subsection{What survives}
-
-\begin{itemize}
-    \item The F4 construction (Section~\ref{sec:F4}) is entirely independent of the 600-cell spectral dimension measurement. Its convergence toward $\phig$ is established by proper plateau detection at each graph size.
-    \item The eigenvalue connection $\lambda = 15 = \Delta C$ (Section~\ref{sec:eigenvalue}) is a theorem, unaffected by the spectral dimension retraction.
-    \item The spectral gap $\lambda_1(P_5) = \phig^{-2}$ on the 5-shell path graph is an algebraic identity, unaffected.
-\end{itemize}
-
-\subsection{Lessons}
-
-The retraction illustrates the importance of fine-grained plateau detection in heat-kernel spectral dimension estimation on finite graphs. Coarse time-windowing can produce apparent plateaux that are artifacts of mixing across spectral regimes. The F4 analysis avoids this by using scale-dependent plateau detection across a family of increasing graph sizes.
-
-%==================================================================
 \section{Bridge to the Mass Programme}\label{sec:bridge}
 %==================================================================
 
@@ -181,13 +201,13 @@ The programme linkage after the retraction:
 \begin{tabular}{@{}ll@{}}
 Paper~I & proton/electron mass law (derived within framework) \\
 Paper~II & no-go + conditional winding bridge \\
-Paper~III (this paper) & eigenvalue $\lambda = 15 = \Delta C$ (theorem) \\
- & F4 spectral dimension $\to \phig$ (numerical) \\
+Paper~III (this paper) & eigenvalue $\lambda = 15 = \Delta C$ (exact computation) \\
+ & F4 spectral dimension $\to \phig$ (numerical, exploratory) \\
  & 600-cell $\dseff \approx \phig$ (retracted) \\
 \end{tabular}
 \end{center}
 
-The spectral identification $\ds = \phig$ required by Paper~II's winding operator now rests on the F4 evidence alone, not on the 600-cell. The 600-cell contributes to the mass programme through the eigenvalue connection and through the structural presence of $\phig$ in its geometry, not through its effective spectral dimension.
+The spectral identification $\ds = \phig$ required by Paper~II's winding operator now rests on the F4 evidence alone, not on the 600-cell. The 600-cell contributes to the mass programme through the eigenvalue correspondence and through the structural presence of $\phig$ in its geometry, not through its effective spectral dimension.
 
 %==================================================================
 \section{Claim Status}\label{sec:status}
@@ -201,9 +221,9 @@ The spectral identification $\ds = \phig$ required by Paper~II's winding operato
 \toprule
 Claim & Status & Basis \\
 \midrule
-$\lambda = 15$ is a 600-cell eigenvalue & \textsc{theorem} & Laplacian diagonalisation \\
-$\Delta C = 15$ & \textsc{theorem} & Arithmetic from closure invariant \\
-$\lambda_1(P_5) = \phig^{-2}$ & \textsc{theorem} & $2 - 2\cos(\pi/5) = 2 - \phig$ \\
+$\lambda = 15$ is a 600-cell eigenvalue & \textsc{exact computation} & Laplacian diagonalisation \\
+$\Delta C = 15$ & \textsc{exact arithmetic} & Closure invariant definition \\
+$\lambda_1(P_5) = \phig^{-2}$ & \textsc{exact computation} & $2 - 2\cos(\pi/5) = 2 - \phig$ \\
 F4: $\dseff \to \phig$ & \textsc{conjectured} & Numerical convergence ($R^2 = 0.996$) \\
 F4: perturbation robust & \textsc{numerical observation} & $\Delta \dseff < 0.002$ at $20\%$ \\
 600-cell $\dseff \approx \phig$ & \textsc{retracted} & Windowing artifact \\
@@ -227,9 +247,9 @@ $\ds = \phig$ (exact) & \textsc{open} & No analytic proof \\
 \section{Conclusion}\label{sec:conclusion}
 %==================================================================
 
-The 600-cell connects to the mass programme through a theorem-level spectral link: its Laplacian eigenvalue $\lambda = 15$ equals the closure invariant difference $\Delta C = 15$ that governs the leading-order proton-to-electron mass ratio. This connection is exact and requires no numerical estimation.
+The 600-cell connects to the mass programme through an exact spectral correspondence: its Laplacian eigenvalue $\lambda = 15$ coincides with the closure invariant difference $\Delta C = 15$ that governs the leading-order proton-to-electron mass ratio. This correspondence is exact and requires no numerical estimation; its structural origin remains to be established.
 
-The F4 Fibonacci hierarchical extension provides independent numerical evidence that a $\phig$-structured geometry produces $\dseff \to \phig$, supporting the conjectural spectral identification used in the lepton winding operator. An earlier claim that the 600-cell vertex graph itself has $\dseff \approx \phig$ has been retracted: the reported value was an artifact of coarse time-windowing. The retraction does not affect the eigenvalue theorem, the F4 convergence, or the spectral gap identity $\lambda_1(P_5) = \phig^{-2}$.
+The F4 Fibonacci hierarchical extension provides independent numerical evidence that a $\phig$-structured geometry produces effective spectral dimensions approaching $\phig$, supporting the conjectural spectral identification used in the lepton winding operator. An earlier claim that the 600-cell vertex graph itself has $\dseff \approx \phig$ has been retracted: the reported value was an artifact of coarse time-windowing. The retraction does not affect the eigenvalue correspondence, the F4 convergence, or the spectral gap identity $\lambda_1(P_5) = \phig^{-2}$.
 
 %==================================================================
 \bibliographystyle{plainnat}
