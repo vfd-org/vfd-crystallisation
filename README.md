@@ -100,7 +100,7 @@ Proves a formal no-go theorem for shell-extension leptons. Identifies the windin
 
 #### Paper III (Internal) — Spectral Structure
 
-**[Spectral Structure of the 600-Cell Vertex Graph: Eigenvalue Connections and the F4 Fibonacci Extension](papers/spectral-dimension/spectral-dimension.tex)**
+**[Spectral Structure of the 600-Cell Vertex Graph: Eigenvalue Connections and the F4 Fibonacci Extension](papers/spectral-dimension/Spectral_Structure_of_the_600_Cell_Vertex_Graph.pdf)** ([LaTeX source](papers/spectral-dimension/spectral-dimension.tex))
 
 Reports two spectral results: (1) the 600-cell Laplacian eigenvalue λ = 15 = ΔC (theorem); (2) F4 convergence toward d_s ≈ φ (numerical, R² = 0.996). Includes explicit retraction of the earlier d_s ≈ 1.637 claim for the 600-cell vertex graph, with explanation of the windowing artifact.
 
