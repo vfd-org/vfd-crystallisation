@@ -1,0 +1,267 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\phig}{\varphi}
+
+\title{Geometry of Energy on a $\phig$-Structured Manifold:\\Metric, Measure, and Class-Energy Map}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+A companion paper established that particles correspond to stable closure classes on a $\phig$-structured manifold, characterised by discrete shell support, winding, and symmetry labels. That paper identified the manifold metric as the primary missing structure needed for mass derivation. The present paper addresses this gap by constructing five candidate metric families on the $\phig$-shell hierarchy, deriving the induced measure, spectral operator, and class-energy map for each, and evaluating the resulting energy ratios for electron and proton closure classes. The metric-induced ratios are of order $10^1$ to $10^2$, substantially below the observed mass ratio $m_p/m_e \approx 1836$. This discrepancy identifies the class-energy-to-mass map as the primary remaining open problem: the relationship between geometric shell energy and physical mass must be strongly nonlinear to produce ratios of order $10^3$ from shell-energy differences of order $10^1$. The paper is presented as a diagnostic contribution, not as a mass derivation.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}
+%==================================================================
+
+Paper I \citep{Smart2026} established the crystallisation operator: a deterministic mechanism for state selection. Paper II defined closure classes as the structural identity of particles, with discrete labels (shell support, winding, symmetry) and a combinatorial invariant $\Delta C = 15$ between proton and electron classes, derived from five explicit assignment rules.
+
+Paper II identified the manifold metric as the primary missing structure for mass derivation. Without the metric, the energy functional is undefined and the class-energy map remains a modelling assumption rather than a derived quantity.
+
+This paper constructs the metric. Specifically, it defines five candidate metric families on the $\phig$-structured shell hierarchy, derives the induced measure and spectral operator for each, computes the resulting class-energy ratios, and assesses whether the geometry is sufficient for mass derivation.
+
+\paragraph{Scope.} This paper establishes the geometric foundation. It does not derive exact particle masses. Its contribution is diagnostic: it identifies what the geometry does and does not determine about mass.
+
+%==================================================================
+\section{Why Paper II Is Insufficient for Mass}\label{sec:gap}
+%==================================================================
+
+Paper II's combinatorial invariant $C(\Acal) = \prod n_i - \sum n_i - 1$ is a pure integer attached to the shell support. It carries no dimensional information and does not depend on the geometry of the manifold.
+
+The assumption ``mass scales as $\phig^C$'' in Paper II was a modelling hypothesis, not a derived result. It produces $m_p/m_e \sim \phig^{15} \approx 1364$, which is in the correct range but is not grounded in the manifold's geometric structure. A proper mass derivation requires:
+\begin{enumerate}
+    \item A metric on $\Mcal$ that assigns geometric weight to each shell.
+    \item A measure induced by that metric, determining normalisation.
+    \item A spectral operator (Laplacian or equivalent) whose eigenvalues give energy scales.
+    \item A class-energy map connecting closure-class structure to energy/mass.
+\end{enumerate}
+
+This paper provides items 1--3 and evaluates item 4.
+
+%==================================================================
+\section{The $\phig$-Shell Hierarchy}\label{sec:shells}
+%==================================================================
+
+The manifold $\Mcal$ consists of $N$ nested shells at radial scales $r_n = r_0\, \phig^{-n}$ for $n = 1, \ldots, N$, where $\phig = (1+\sqrt{5})/2$ is the golden ratio. The self-similar nesting $\phig^{-1} = \phig - 1$ ensures each shell relates to its neighbours through the same ratio.
+
+A shell $n$ is characterised by:
+\begin{itemize}
+    \item its radial position $r_n = r_0\, \phig^{-n}$,
+    \item a metric weight $w(n)$ determining its geometric ``cost,''
+    \item a measure $\mu(n)$ determining its ``size,''
+    \item a spectral weight $\lambda(n)$ from the natural differential operator.
+\end{itemize}
+
+All three quantities ($w$, $\mu$, $\lambda$) must be derived from a single metric. They are not independent.
+
+%==================================================================
+\section{Candidate Metric Families}\label{sec:metrics}
+%==================================================================
+
+\subsection{MF1: Pure Radial $\phig$-Metric}
+
+The minimal metric: shell weight determined solely by radial position.
+\begin{equation}
+    w(n) = \phig^{2n}, \qquad \mu(n) = \phig^{-2n}, \qquad \lambda(n) = \phig^{2n}
+\end{equation}
+
+\textit{Origin:} Derived. The line element $ds^2 \sim \phig^{2n}\, dn^2$ on the shell coordinate $n$ gives $w(n) = \phig^{2n}$. The measure (volume element) is the inverse: $\mu(n) = \phig^{-2n}$. The Laplacian eigenvalue scales as the metric weight.
+
+\textit{Status:} Minimal and structurally clean. No additional postulates.
+
+\subsection{MF2: Boundary/Interior Metric}
+
+Shell~1 (the boundary) carries a distinct weight reflecting its coupling to the exterior:
+\begin{equation}
+    w(1) = \phig^3, \qquad w(n \geq 2) = \phig^{2n}
+\end{equation}
+with corresponding measure and spectral weight.
+
+\textit{Origin:} Postulated. The boundary shell acquires an extra factor of $\phig$ from its exterior coupling. The interior shells follow the radial metric.
+
+\subsection{MF3: Surface Multiplicity Metric}
+
+Each shell $n$ has internal degeneracy proportional to $n^2$ (analogous to angular-momentum degeneracy on spherical surfaces):
+\begin{equation}
+    w(n) = n^2\, \phig^{2n}
+\end{equation}
+
+\textit{Origin:} Derived from surface-area scaling. The $n^2$ factor counts internal modes per shell.
+
+\subsection{MF4: Adjacent-Shell Interaction Metric}
+
+MF1 augmented with nearest-neighbour coupling:
+\begin{equation}
+    K(n, n{+}1) = \phig^{2n+1}
+\end{equation}
+
+\textit{Origin:} Derived. The coupling is the geometric mean of adjacent shell weights: $K = \sqrt{w(n) \cdot w(n{+}1)} = \phig^{(2n + 2n+2)/2} = \phig^{2n+1}$.
+
+\subsection{MF5: Harmonic (Triangular) $\phig$-Metric}
+
+Shell weight accumulates during closure traversal:
+\begin{equation}
+    w(n) = \phig^{n(n+1)/2}
+\end{equation}
+where $n(n{+}1)/2$ is the $n$-th triangular number.
+
+\textit{Origin:} Derived from accumulated $\phig$-exponent during a closure cycle traversal in which each shell adds $n$ to the total.
+
+%==================================================================
+\section{Class-Energy Map}\label{sec:energy}
+%==================================================================
+
+For a closure class $\Acal$ with shell support $S$, the class energy under metric $w$, measure $\mu$, and spectral weight $\lambda$ is computed in three ways:
+
+\textbf{Spectral sum:}
+\begin{equation}
+    E_{\mathrm{sum}}(\Acal) = \sum_{n \in S} \lambda(n)
+\end{equation}
+
+\textbf{Energy density:}
+\begin{equation}
+    E_{\mathrm{dens}}(\Acal) = \frac{\sum_{n \in S} \lambda(n) + \sum_{\langle n,m \rangle} K(n,m)}{\sum_{n \in S} \mu(n)}
+\end{equation}
+
+\textbf{Weighted energy:}
+\begin{equation}
+    E_{\mathrm{wt}}(\Acal) = \sum_{n \in S} w(n) \cdot \lambda(n)
+\end{equation}
+
+Mass ratios are formed as $m_p / m_e = E(\Acal_p) / E(\Acal_e)$, with the calibration constant cancelling.
+
+%==================================================================
+\section{Results}\label{sec:results}
+%==================================================================
+
+Table~\ref{tab:results} shows the class-energy ratios for the strongest energy convention under each metric family, applied to electron ($\{1\}$) and proton ($\{2,3,4\}$) closure classes.
+
+\begin{table}[ht]
+\centering
+\caption{Best class-energy ratios under each metric family.}
+\label{tab:results}
+\begin{tabular}{@{}llccl@{}}
+\toprule
+Metric & Energy Type & $E_p/E_e$ & Error & Origin \\
+\midrule
+MF1 & $E_{\mathrm{wt}}$ & 375.8 & 79.5\% & Derived \\
+MF5 & $E_{\mathrm{dens}}$ & 184.9 & 89.9\% & Derived \\
+MF5 & $E_{\mathrm{sum}}$ & 89.7 & 95.1\% & Derived \\
+MF4 & $E_{\mathrm{dens}}$ & 73.2 & 96.0\% & Derived \\
+MF1 & $E_{\mathrm{dens}}$ & 47.0 & 97.4\% & Derived \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The highest ratio achieved is $375.8$ (MF1, weighted energy), which is $79.5\%$ below the observed value of $1836.15$. No metric family and no energy convention produces a ratio within an order of magnitude of the observed mass ratio.
+
+%==================================================================
+\section{Diagnostic Interpretation}\label{sec:diagnostic}
+%==================================================================
+
+The results reveal a fundamental structural gap:
+
+\textbf{The metric-induced class-energy ratios are of order $10^1$--$10^2$, while the observed mass ratio is of order $10^3$.}
+
+This means the relationship between geometric shell energy and physical mass cannot be a simple sum, average, or weighted sum of spectral eigenvalues. To produce a ratio of order $10^3$ from shell-energy differences of order $10^1$--$10^2$, the class-energy-to-mass map must be \textit{strongly nonlinear} --- exponential, multiplicative over shells, or involving a structural amplification mechanism not present in additive shell-energy sums.
+
+\subsection{Why Paper II's $\phig^{15}$ Was Different}
+
+Paper II's combinatorial invariant $\Delta C = 15$ produced $\phig^{15} \approx 1364$ because it assumed mass scales as $\phig^C$ --- an \textit{exponential} function of the combinatorial complexity. The present analysis shows that the metric-derived energy is an \textit{additive} function of shell spectral weights. The discrepancy between additive and exponential scaling is exactly the gap that a class-energy-to-mass map must bridge.
+
+\subsection{What Is Missing}
+
+The missing mathematical object is a map $\mathcal{E}: E_{\mathrm{class}} \to m$ that transforms the metric-derived class energy into mass. This map must:
+\begin{enumerate}
+    \item be structurally motivated (not fitted),
+    \item produce ratios of order $10^3$ from energy differences of order $10^1$--$10^2$,
+    \item reduce to the combinatorial exponent $\phig^{\Delta C}$ in a suitable limit,
+    \item be derivable from the manifold geometry or the closure dynamics.
+\end{enumerate}
+
+Candidate forms include:
+\begin{itemize}
+    \item $m \sim \exp(\beta E_{\mathrm{class}})$ for a geometric $\beta$,
+    \item $m \sim \prod_{n \in S} \lambda(n)$ (multiplicative rather than additive),
+    \item $m \sim \phig^{f(E_{\mathrm{class}})}$ for a class-dependent function $f$.
+\end{itemize}
+
+Determining this map is the primary open problem.
+
+%==================================================================
+\section{Discussion}\label{sec:discussion}
+%==================================================================
+
+\subsection{What This Paper Establishes}
+
+\begin{itemize}
+    \item Five explicit metric families on the $\phig$-manifold, ranging from minimal (MF1) to interaction-aware (MF4) to accumulated-harmonic (MF5).
+    \item Derived measure and spectral operators for each metric.
+    \item A quantitative class-energy evaluation for electron and proton.
+    \item A precise diagnosis: the additive class-energy ratio is $10^1$--$10^2$, not $10^3$.
+\end{itemize}
+
+\subsection{What This Paper Does Not Establish}
+
+\begin{itemize}
+    \item The class-energy-to-mass map. This is the critical next step.
+    \item Exact mass values or ratios.
+    \item The correct metric family (all five are structurally motivated; the choice requires either additional physical input or empirical guidance).
+\end{itemize}
+
+\subsection{Relation to Papers I and II}
+
+Paper I provides the selection dynamics. Paper II provides the class structure. This paper provides the geometric foundation. Together, they establish three of the four required layers:
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Layer & Paper & Status \\
+\midrule
+Selection dynamics & Paper I & Established \\
+Class structure & Paper II & Established \\
+Manifold geometry & Paper III (this paper) & Established \\
+Class-energy-to-mass map & (future work) & Open \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==================================================================
+\section{Conclusion}
+%==================================================================
+
+Five candidate metric families on the $\phig$-structured manifold have been constructed, each with derived measure and spectral operator. The resulting class-energy ratios for electron and proton closure classes are of order $10^1$--$10^2$, identifying a structural gap of approximately one order of magnitude between metric-derived energy ratios and the observed mass ratio. This gap is not a correction to be patched; it identifies the class-energy-to-mass map as the primary remaining mathematical object needed for exact mass derivation. The paper establishes the geometric layer and precisely diagnoses what remains open.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

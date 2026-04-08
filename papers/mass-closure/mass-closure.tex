@@ -1,0 +1,360 @@
+\documentclass[12pt]{article}
+
+% --- Packages ---
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+% --- Theorem Environments ---
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{corollary}[theorem]{Corollary}
+
+% --- Macros ---
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Scal}{\mathcal{S}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\phig}{\varphi}
+\newcommand{\Psif}{\Psi}
+
+% --- Title ---
+\title{Particles as Closure Classes:\\Discrete Structure from Deterministic Field Closure}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+We propose that distinct particle types correspond to distinct stable closure classes within the deterministic crystallisation framework. A closure class is an equivalence class of bounded field configurations on a $\phig$-structured manifold, characterised by discrete labels --- shell support, winding number, and symmetry sector --- that are preserved under admissible deformations. Five structural rules constrain which closure classes are admissible. Under these rules, a discrete set of stable particle-like states emerges: a minimal boundary closure (identified with the electron), a composite interior closure (identified with the proton), and a neutral partner (identified with the neutron). We define a combinatorial class invariant $C(\Acal) = \prod n_i - \sum n_i - 1$ that is fixed by the shell support and prove that the inter-class difference $\Delta C$ between proton and electron classes equals $15$ --- a pure integer determined by the assignment rules with zero free parameters. The paper does not derive exact masses or mass ratios; it establishes the structural layer from which such derivations would proceed. The framework is presented as a falsifiable classification scheme, not as a replacement for the Standard Model.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The Standard Model classifies particles by quantum numbers --- spin, charge, colour, flavour --- and predicts their interactions with extraordinary precision. However, the masses of fundamental particles are not predicted by the theory; they are free parameters fitted to experiment. The question of \textit{why} there exist discrete particle types with specific mass hierarchies remains open.
+
+This paper addresses the classification question within the deterministic crystallisation framework introduced in \citet{Smart2026}. That framework established a mechanism for state selection: unresolved configurations evolve under gradient flow on a closure functional until reaching stable attractors. The present paper asks: what are those attractors, structurally?
+
+We propose that distinct particle types correspond to distinct \textit{closure classes} --- equivalence classes of bounded field configurations that are stable under the closure dynamics and characterised by discrete structural labels. The discrete nature of the particle spectrum then reflects the discrete nature of the admissible closure classes, rather than an externally imposed quantisation condition.
+
+\paragraph{Scope.} This paper defines closure classes, formalises the rules that constrain them, identifies the invariants they carry, and maps three specific classes to the electron, proton, and neutron. It does \textit{not} derive exact masses or mass ratios. Mass is associated with closure-class structure, but its quantitative derivation requires specifying the manifold metric and class-energy map, which are identified as open problems.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+    \item A formal definition of closure classes as structural particle identities.
+    \item Five explicit assignment rules constraining admissible classes.
+    \item A combinatorial class invariant $C$ with proven properties.
+    \item Rule-based identification of electron, proton, and neutron classes.
+    \item Clear separation of what is derived from what remains open.
+\end{enumerate}
+
+%==================================================================
+\section{Particles as Solutions to Constraint Systems}\label{sec:philosophy}
+%==================================================================
+
+In the standard formulation, particles are defined by their transformation properties under symmetry groups. Mass, spin, and charge label irreducible representations. This is a classification by symmetry.
+
+We propose an alternative perspective: particles are \textit{stable solutions of constraint systems}. A particle exists because a specific combination of constraints --- closure, boundary, symmetry, topology --- admits a stable bounded field configuration. Different constraint combinations produce different particles. The discreteness of the particle spectrum reflects the discreteness of admissible constraint solutions, not an external quantisation.
+
+This perspective is analogous to how discrete energy levels in quantum mechanics arise from boundary conditions rather than from imposed quantisation: the Bohr-Sommerfeld conditions, the hydrogen atom spectrum, and standing-wave modes all produce discrete spectra from continuous dynamics subject to constraints.
+
+In the present framework, the constraints are:
+\begin{itemize}
+    \item \textbf{Closure:} the field configuration must return to itself after one complete geometric cycle on the manifold.
+    \item \textbf{Boundedness:} the configuration must be spatially bounded and normalisable.
+    \item \textbf{Symmetry:} the configuration must belong to a definite symmetry sector (charged, neutral, leptonic, baryonic).
+    \item \textbf{Topology:} the configuration's winding number and connectivity must be consistent with the manifold structure.
+    \item \textbf{Stability:} the configuration must be a stable minimum of the closure functional under allowed deformations.
+\end{itemize}
+
+A particle, in this framework, is a closure class: an equivalence class of configurations satisfying all five constraint types simultaneously.
+
+%==================================================================
+\section{The $\phig$-Structured Manifold}\label{sec:manifold}
+%==================================================================
+
+The field configurations are defined on a geometric manifold $\Mcal$ whose scale hierarchy is governed by the golden ratio $\phig = (1+\sqrt{5})/2$. The manifold supports a discrete set of nested shells at scales $\phig^{-n}$ for $n = 1, 2, \ldots, N$.
+
+The self-similar nesting property $\phig^{-1} = \phig - 1$ ensures that each shell relates to its neighbours through the same ratio, producing a recursively self-consistent scale hierarchy without external tuning.
+
+A bounded field configuration on $\Mcal$ is expanded as:
+\begin{equation}\label{eq:field}
+    \Psif(\mathbf{x}, t) = \sum_{n \in S} a_n\, \phig^{-n}\, e^{i(\omega_n t + \theta_n)}\, \chi_n(\mathbf{x})
+\end{equation}
+where $S \subseteq \{1, \ldots, N\}$ is the \textit{shell support} (the set of occupied shells), $a_n \geq 0$ are mode amplitudes, $\omega_n$ are harmonic frequencies, $\theta_n$ are phase offsets, and $\chi_n(\mathbf{x})$ are orthonormal geometric basis modes.
+
+%==================================================================
+\section{Closure Classes}\label{sec:classes}
+%==================================================================
+
+\begin{definition}[Closure Class]\label{def:class}
+A \textit{closure class} $\Acal_{S,w,\sigma}$ is the set of all bounded, normalisable field configurations on $\Mcal$ with:
+\begin{itemize}
+    \item shell support $S$ (a specific set of occupied shell indices),
+    \item winding number $w$ (a topological label),
+    \item symmetry sector $\sigma$ (charged-lepton, baryon, baryon-neutral, etc.),
+\end{itemize}
+that satisfy exact phase closure ($D[\Psif] = 0$) and are stable minima of the stability functional $\Scal[\Psif]$ under deformations preserving $S$, $w$, and $\sigma$.
+\end{definition}
+
+Two configurations belong to the same closure class if they share the same discrete labels $(S, w, \sigma)$ and are connected by a continuous deformation that preserves closure, stability, and all discrete labels.
+
+\begin{remark}
+The closure class is the particle identity. Different amplitudes and phases within the same class correspond to different states of the same particle (analogous to different energy eigenstates sharing quantum numbers). The class labels $(S, w, \sigma)$ are the structural analogue of quantum numbers.
+\end{remark}
+
+%==================================================================
+\section{Assignment Rules}\label{sec:rules}
+%==================================================================
+
+Five structural rules constrain which closure classes are admissible. Each rule has a specific physical motivation within the closure framework.
+
+\begin{definition}[R1 --- Minimal Support]\label{def:R1}
+The minimal charged closure class occupies the smallest admissible shell set. Composite (baryonic) classes require shell support of size $|S| \geq 3$. Shell~1 is reserved for the minimal charged closure.
+\end{definition}
+
+\textit{Motivation:} The simplest stable charged configuration occupies the fewest possible modes. Baryonic states, being composites, require richer internal structure.
+
+\begin{definition}[R2 --- Boundary/Interior Separation]\label{def:R2}
+Shell~1 is the boundary shell. Baryonic composites must not include the boundary shell; they occupy interior shells only. The first admissible interior composite begins at shell~2.
+\end{definition}
+
+\textit{Motivation:} Boundary and interior modes couple differently to the exterior. The electron, as the lightest charged particle, occupies the boundary. Baryons are interior composites.
+
+\begin{definition}[R3 --- Complexity Threshold]\label{def:R3}
+Define the combinatorial complexity $C(\Acal) = \prod_{n \in S} n - \sum_{n \in S} n - 1$. Leptonic classes require $C \geq -1$. Baryonic classes require $C \geq 5$.
+\end{definition}
+
+\textit{Motivation:} Composite stability requires sufficient closure complexity. The threshold $C \geq 5$ is the minimal value that excludes all single-shell and two-shell supports while admitting three-shell composites starting at shell~2.
+
+\begin{definition}[R4 --- Symmetry/Topology Compatibility]\label{def:R4}
+Shell support must be contiguous (consecutive integers). Charged leptons admit winding $w = 1$ only. Baryonic classes admit $w \in \{1, 2, 3\}$. Neutral partners share the shell support of their charged counterpart and differ by symmetry label.
+\end{definition}
+
+\textit{Motivation:} Contiguity ensures closure-graph connectivity. Winding restrictions follow from the topological constraints of each symmetry sector.
+
+\begin{definition}[R5 --- Adjacency Connectivity]\label{def:R5}
+All occupied shells must form a connected subgraph under the shell adjacency relation (consecutive integers). Disconnected supports are inadmissible.
+\end{definition}
+
+\textit{Motivation:} A disconnected shell support cannot form a single coherent closure cycle.
+
+%==================================================================
+\section{Class Enumeration and Selection}\label{sec:enumeration}
+%==================================================================
+
+Rules R1--R5 are applied to all candidate shell supports within $\{1, \ldots, 5\}$. The results are shown in Table~\ref{tab:assignments}.
+
+\begin{table}[ht]
+\centering
+\caption{Closure-class admissibility under rules R1--R5.}
+\label{tab:assignments}
+\begin{tabular}{@{}llccccccl@{}}
+\toprule
+Candidate & Shells & $C$ & R1 & R2 & R3 & R4 & R5 & Admissible? \\
+\midrule
+Electron & $\{1\}$ & $-1$ & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \textbf{Yes} \\
+Electron (ext.) & $\{1,2\}$ & $-2$ & $\times$ & $\times$ & $\times$ & \checkmark & \checkmark & No \\
+Baryon (low) & $\{1,2,3\}$ & $-1$ & $\times$ & $\times$ & $\times$ & \checkmark & \checkmark & No \\
+Proton & $\{2,3,4\}$ & $14$ & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \textbf{Yes} \\
+Baryon (high) & $\{3,4,5\}$ & $47$ & \checkmark & $\times$ & \checkmark & \checkmark & \checkmark & No \\
+Baryon (wide) & $\{2,3,4,5\}$ & $105$ & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & Yes$^*$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent $^*$Admissible but not the ground-state baryon (heavier composite).
+
+\begin{proposition}[Electron Minimality]\label{prop:electron}
+Under rules R1--R5, the unique minimal admissible charged-lepton closure class has shell support $S_e = \{1\}$.
+\end{proposition}
+
+\textit{Proof.} R1 requires the minimal charged class to occupy the smallest admissible set. Single-shell supports $\{n\}$ for $n > 1$ fail R2 (leptonic closure must include the boundary shell). The two-shell support $\{1,2\}$ fails R1 (not minimal) and R3 ($C = -2 < -1$). Therefore $S_e = \{1\}$ is the unique minimal admissible support. $\square$
+
+\begin{proposition}[Proton Minimality]\label{prop:proton}
+Under rules R1--R5, the unique minimal admissible baryonic closure class has shell support $S_p = \{2,3,4\}$.
+\end{proposition}
+
+\textit{Proof.} R1 requires $|S| \geq 3$. R2 requires $1 \notin S$ and $\min(S) = 2$ (first non-boundary shell). R5 requires contiguity. The smallest contiguous support of size $\geq 3$ starting at shell~2 is $\{2,3,4\}$. The alternative $\{3,4,5\}$ satisfies R1, R3, R4, R5 but fails R2 (skips available interior shell~2 without justification). Therefore $S_p = \{2,3,4\}$ is the unique minimal admissible baryon. $\square$
+
+\begin{proposition}[Neutron Assignment]\label{prop:neutron}
+Under rule R4, the neutron shares the shell support $S_n = \{2,3,4\}$ of the proton and belongs to the baryon-neutral symmetry sector.
+\end{proposition}
+
+%==================================================================
+\section{Combinatorial Class Invariant}\label{sec:invariant}
+%==================================================================
+
+\begin{definition}[Combinatorial Complexity]\label{def:C}
+For a closure class $\Acal_{S,w,\sigma}$ with shell support $S = \{n_1, \ldots, n_s\}$:
+\begin{equation}\label{eq:C}
+    C(\Acal) = \prod_{i=1}^{s} n_i \;-\; \sum_{i=1}^{s} n_i \;-\; 1
+\end{equation}
+\end{definition}
+
+$C$ is a pure integer determined entirely by the shell support. It measures the excess of multiplicative complexity (product) over additive complexity (sum).
+
+\begin{proposition}[Properties of $C$]\label{prop:C_properties}
+\begin{enumerate}
+    \item $C$ is invariant under admissible deformations (which preserve $S$).
+    \item For single-shell supports $\{n\}$: $C = n - n - 1 = -1$ for all $n$.
+    \item $C$ increases with shell support size and with shell index values.
+    \item $C(\Acal_e) = -1$, \quad $C(\Acal_p) = 14$, \quad $C(\Acal_{2,3,4,5}) = 105$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) follows from the definition, since $C$ depends only on $S$. (2)--(4) are direct computation. $\square$
+\end{proof}
+
+\begin{theorem}[Inter-Class Difference]\label{thm:deltaC}
+The combinatorial complexity difference between the proton and electron closure classes is:
+\begin{equation}\label{eq:deltaC}
+    \Delta C = C(\Acal_p) - C(\Acal_e) = 14 - (-1) = 15
+\end{equation}
+This is a fixed integer determined by the assignment rules R1--R5 with zero free parameters.
+\end{theorem}
+
+\begin{proof}
+By Propositions~\ref{prop:electron} and~\ref{prop:proton}, $S_e = \{1\}$ and $S_p = \{2,3,4\}$ are uniquely determined. By Definition~\ref{def:C}: $C(\Acal_e) = 1 - 1 - 1 = -1$ and $C(\Acal_p) = 24 - 9 - 1 = 14$. Therefore $\Delta C = 15$. $\square$
+\end{proof}
+
+%==================================================================
+\section{Hierarchy Emergence}\label{sec:hierarchy}
+%==================================================================
+
+The assignment rules produce a natural hierarchy among closure classes:
+
+\textbf{Leptons are minimal.} The electron occupies the smallest possible shell set ($|S| = 1$) at the boundary of the manifold. It has the lowest combinatorial complexity ($C = -1$).
+
+\textbf{Baryons are composite.} The proton requires three shells in the interior ($|S| = 3$, starting at shell~2). It has substantially higher combinatorial complexity ($C = 14$).
+
+\textbf{Heavier composites exist.} The class $\{2,3,4,5\}$ with $C = 105$ is admissible and represents a heavier baryon-like state. Further classes at higher shell indices or larger supports produce yet higher complexity.
+
+This hierarchy is not imposed; it emerges from the constraint rules. The separation between leptons and baryons reflects the structural difference between boundary-minimal and interior-composite closure classes.
+
+\begin{corollary}[Discrete Particle Types]
+Under rules R1--R5 on a finite shell set $\{1, \ldots, N\}$, the number of admissible closure classes is finite. The particle spectrum is therefore discrete.
+\end{corollary}
+
+%==================================================================
+\section{Mass as a Class Property}\label{sec:mass}
+%==================================================================
+
+Within the closure framework, mass is associated with the energy scale of a stable closure class. The general form is:
+\begin{equation}
+    m_k c^2 = \Lambda\, E[\Psif_k^\star]
+\end{equation}
+where $\Psif_k^\star$ is the stable representative of class $k$, $E$ is the energy functional on $\Mcal$, and $\Lambda$ is a universal calibration constant.
+
+Mass ratios depend on the energy functional:
+\begin{equation}
+    \frac{m_i}{m_j} = \frac{E[\Psif_i^\star]}{E[\Psif_j^\star]}
+\end{equation}
+with $\Lambda$ cancelling. The ratio is determined by the closure-class structure and the manifold geometry.
+
+The combinatorial invariant $\Delta C = 15$ constrains the ratio. If mass scales exponentially with $C$ on a $\phig$-manifold, the base prediction is $m_p/m_e \sim \phig^{15} \approx 1364$, which reproduces the correct order of magnitude and hierarchy of the observed ratio $1836.15$.
+
+\begin{remark}[Open Problem]
+Derivation of exact mass values requires specification of the Riemannian metric on $\Mcal$, which determines the energy functional $E$ and its dependence on closure-class structure. This metric is not specified in the present paper and is identified as the primary open problem for future work. The manifold metric would determine: (i) the energy scaling exponent, (ii) any inter-shell coupling corrections, (iii) the boundary/interior weighting, and (iv) the energy normalization convention.
+\end{remark}
+
+%==================================================================
+\section{Relation to the Crystallisation Framework}\label{sec:relation}
+%==================================================================
+
+The crystallisation paper \citep{Smart2026} established:
+\begin{itemize}
+    \item A closure functional $F[\Phi] = \alpha R + \beta E - \gamma Q$ selecting stable configurations.
+    \item Gradient-flow dynamics producing deterministic convergence to attractors.
+    \item Triplet closure: three constraint classes are sufficient for discrete resolution.
+\end{itemize}
+
+The present paper identifies \textit{what} those attractors are: closure classes characterised by discrete structural labels. The crystallisation mechanism explains \textit{how} a configuration resolves to a specific class; this paper defines the classes themselves.
+
+Together, the two papers provide:
+\begin{itemize}
+    \item Paper I: the dynamics of selection (crystallisation operator).
+    \item Paper II: the structure of what is selected (closure classes as particles).
+\end{itemize}
+
+%==================================================================
+\section{Predictions and Falsifiability}\label{sec:predictions}
+%==================================================================
+
+The closure-class framework generates falsifiable predictions:
+
+\begin{enumerate}
+    \item \textbf{Discrete spectrum.} Particles correspond to discrete closure classes, not to a continuum. The existence of a stable particle with properties incompatible with any admissible closure class would challenge the framework.
+
+    \item \textbf{Hierarchical structure.} Leptons are structurally simpler than baryons (lower $C$, fewer shells). Discovery of a baryon lighter than all leptons, or a lepton requiring composite structure, would be inconsistent.
+
+    \item \textbf{Combinatorial invariants.} The invariant $\Delta C = 15$ between proton and electron classes is a fixed prediction. If future mass derivation from this framework yields a ratio inconsistent with $\Delta C = 15$, the assignment rules must be revised.
+
+    \item \textbf{Neutral partners.} The neutron shares shell support with the proton and differs by symmetry sector. The neutron-proton mass difference must arise from a symmetry-sector or torsional correction, not from a different shell assignment.
+\end{enumerate}
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What This Paper Establishes}
+
+\begin{itemize}
+    \item A formal definition of particles as closure classes on a $\phig$-structured manifold.
+    \item Five explicit, testable assignment rules (R1--R5).
+    \item Unique minimal assignments for electron ($\{1\}$) and proton ($\{2,3,4\}$).
+    \item A combinatorial invariant $C$ with proven inter-class difference $\Delta C = 15$.
+    \item A natural lepton/baryon hierarchy emerging from constraint structure.
+\end{itemize}
+
+\subsection{What This Paper Does Not Establish}
+
+\begin{itemize}
+    \item Exact mass values or mass ratios. The mass derivation depends on the manifold metric, which is unspecified.
+    \item The neutron-proton mass difference. This requires a correction sensitive to the symmetry sector.
+    \item Full Standard Model particle content. Only electron, proton, and neutron are classified.
+    \item The physical realisation of the $\phig$-manifold. Whether this geometric structure exists in nature is an empirical question.
+\end{itemize}
+
+\subsection{Relation to Other Approaches}
+
+The closure-class concept is complementary to the Standard Model classification by symmetry groups. Where the Standard Model classifies particles by representation labels under $SU(3) \times SU(2) \times U(1)$, the present framework classifies them by closure-class labels $(S, w, \sigma)$ on a geometric manifold. Whether these two classification schemes can be connected is an open question.
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+We have proposed that particles correspond to stable closure classes --- discrete equivalence classes of bounded field configurations on a $\phig$-structured manifold. Five structural rules constrain which closure classes are admissible, producing unique minimal assignments for the electron and proton. A combinatorial invariant $\Delta C = 15$ between these classes is derived with zero free parameters and constrains the mass hierarchy to the correct order of magnitude.
+
+The paper establishes the classification layer; the quantitative mass derivation remains open and requires specification of the manifold metric. The framework is presented as a structural hypothesis: particles are not primitive entities but stable solutions of constraint systems, and the discreteness of the particle spectrum reflects the discreteness of admissible closure classes.
+
+%==================================================================
+\appendix
+\section{Numerical Observations}\label{app:numerics}
+
+The combinatorial invariant $\Delta C = 15$ suggests a base mass ratio of $\phig^{15} \approx 1364$, which is $25.7\%$ below the observed $m_p/m_e = 1836.15$. A numerical search identified $\phig^{14+\phig} \approx 1836.44$ (error $0.015\%$), which decomposes as $\phig^{15} \cdot \phig^{1/\phig}$. The factor $\phig^{1/\phig}$ can be interpreted as a self-referential closure correction but is not derivable from the current formalism. The most plausible formal source --- the spectral radius of the linearized closure operator --- requires the Jacobian of $\Ccal$, which is not defined in the present paper. This observation is recorded for future investigation but does not form part of the paper's claimed results.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
