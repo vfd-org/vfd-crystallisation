@@ -43,6 +43,9 @@ These tracks are related by a common structural theme: state resolution through 
 4. Paper II (no-go theorem + conditional winding operator)
 5. Paper I (internal mass-development paper)
 
+### For the conceptual bridge (Dirac → Crystallisation)
+1. Bridge paper (selection architecture on Dirac solution space)
+
 ---
 
 ## Core Idea
@@ -141,9 +144,9 @@ Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence �
 
 ### Bridge Paper — From Dirac to Crystallisation
 
-**[From Dirac Solutions to Physical Reality: A Crystallisation-Based Selection Architecture](papers/bridge-paper/bridge-paper.tex)**
+**[From Dirac Solutions to Physical Reality: A Crystallisation-Based Selection Architecture](papers/bridge-paper/From_Dirac_Solutions_to_Physical_Reality_A_Crystallisation_Based_Selection_Architecture.pdf)** ([LaTeX source](papers/bridge-paper/bridge-paper.tex))
 
-Bridge paper connecting the Dirac equation to the crystallisation framework. Identifies the missing selection mechanism in standard QM, defines the crystallisation operator as a deterministic constraint-based selector over the Dirac solution space, and interprets particle stability, antiparticles, and annihilation within this framework. Extends rather than replaces the Dirac equation. Includes comparison to Copenhagen, GRW, and pilot-wave interpretations.
+Conceptual bridge paper connecting the Dirac equation to the crystallisation framework. The Dirac equation defines admissible relativistic quantum states but does not specify a selection mechanism; this paper proposes crystallisation as a deterministic, constraint-based selection architecture acting over a restricted admissible domain via a projected relaxation flow. Defines a schematic constraint functional, interprets candidate stable state classes, antiparticles, and (heuristically) annihilation within the framework. Extends rather than replaces Dirac/QM. Includes comparison to Copenhagen, GRW, and pilot-wave interpretations. The functional is schematic and not uniquely derived; Lorentz covariance, Born-rule recovery, and the operational protocol for F remain open.
 
 ### Supplementary Material
 
@@ -169,6 +172,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── bridge-paper/           Dirac → Crystallisation bridge paper
 │   ├── paper-v/                Paper V: complete particle mass spectrum
 │   ├── pemr/                   Paper IV: bridge paper (proton-electron mass ratio)
 │   ├── master-mass/            Paper I: closure geometry and mass (internal)
