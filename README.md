@@ -114,7 +114,7 @@ The repository also contains a separate but related mass programme, which applie
 
 #### Paper V — Complete Particle Mass Spectrum
 
-**[Toward a Spectral-Geometric Particle-Mass Model from the 600-Cell](papers/paper-v/Toward_a_Spectral_Geometric_Mass_Framework_from_the_600_Cell.pdf)** ([LaTeX source](papers/paper-v/paper-v.tex))
+**[Toward a Spectral-Geometric Particle-Mass Model from the 600-Cell](papers/paper-v/Toward_a_Spectral_Geometric_Particle_Mass_Model_from_the_600_Cell.pdf)** ([LaTeX source](papers/paper-v/paper-v.tex))
 
 Extends Papers I–IV to a broader spectral-geometric mass framework using the golden ratio φ and the four integer eigenvalues {9, 12, 14, 15} of the 600-cell graph Laplacian. Under explicit framework postulates and structural assignments, yields high-accuracy mass values across 13 non-reference particles (average 0.014%). Also yields a high-precision numerical correspondence for the fine structure constant (0.81 ppm). Includes 6 exact graph theorems, the prediction chain, assignment rules, and full epistemic classification separating exact computations from model assignments and numerical correspondences.
 
@@ -144,7 +144,7 @@ Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence �
 
 #### Paper VI — Electroweak Sector
 
-**[Electroweak Structure as a Boundary Projection of φ-Structured Geometry](papers/paper-vi/paper-vi.tex)**
+**[Electroweak Structure as a Boundary Projection of φ-Structured Geometry](papers/paper-vi/Electroweak_Structure_as_a_Boundary_Projection_of_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-vi/paper-vi.tex))
 
 Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
 
