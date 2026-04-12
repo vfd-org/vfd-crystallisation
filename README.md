@@ -142,6 +142,12 @@ Proves a formal no-go theorem for shell-extension leptons. Proposes a conditiona
 
 Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence λ = 15 = ΔC; (2) numerical F4 convergence toward d_s ≈ φ (R² = 0.996). Includes explicit retraction of the earlier d_s ≈ 1.637 claim for the 600-cell vertex graph, with explanation of the windowing artifact.
 
+#### Paper VI — Electroweak Sector
+
+**[Electroweak Structure as a Boundary Projection of φ-Structured Geometry](papers/paper-vi/paper-vi.tex)**
+
+Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
+
 ### Bridge Paper — From Dirac to Crystallisation
 
 **[From Dirac Solutions to Physical Reality: A Crystallisation-Based Selection Architecture](papers/bridge-paper/From_Dirac_Solutions_to_Physical_Reality_A_Crystallisation_Based_Selection_Architecture.pdf)** ([LaTeX source](papers/bridge-paper/bridge-paper.tex))
@@ -172,6 +178,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-vi/               Paper VI: electroweak sector reinterpretation
 │   ├── bridge-paper/           Dirac → Crystallisation bridge paper
 │   ├── paper-v/                Paper V: complete particle mass spectrum
 │   ├── pemr/                   Paper IV: bridge paper (proton-electron mass ratio)

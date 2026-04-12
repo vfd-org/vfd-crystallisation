@@ -1,0 +1,338 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Tcal}{\mathcal{T}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\phig}{\varphi}
+
+\title{Electroweak Structure as a Boundary Projection\\of $\phig$-Structured Geometry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+We extend the crystallisation and projection framework of the preceding papers to the electroweak sector of the Standard Model. Within the VFD formalism, observables arise as boundary-compatible projections of an underlying $\phig$-structured geometric manifold. We show that electroweak gauge structure, boson masses, and mixing relations admit a geometric reinterpretation in terms of torsional mode constraints and closure defects within this manifold.
+
+Gauge symmetry is reinterpreted as invariance under classes of torsional transformations that preserve projection compatibility. Mass is reinterpreted as a geometric closure residual: the photon corresponds to a perfectly closed mode ($\Delta = 0$), while the $W$ and $Z$ bosons correspond to modes with incomplete closure ($\Delta > 0$). The electroweak mixing angle $\theta_W$ is interpreted as a projection-induced rotation between orthogonal torsional basis modes. The Standard Model relation $m_W = m_Z \cos\theta_W$ is structurally preserved under this identification.
+
+This paper does not claim a full derivation of all gauge sectors or exact numerical values. It establishes the electroweak interaction as a concrete instance of how structured physical law can emerge from underlying geometric constraints, and provides a bridge toward broader force-sector interpretation within the $\phig$-structured framework.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The Standard Model of particle physics provides an extraordinarily precise description of electroweak phenomena. Recent measurements of the $W$ boson mass achieve precision at the $10^{-4}$ level~\citep{CMS2024}. The electroweak sector exhibits a unified $\mathrm{SU}(2)_L \times \mathrm{U}(1)_Y$ gauge structure, incorporates both massless and massive gauge bosons, and is constrained by the Weinberg mixing angle $\theta_W$. Despite this empirical success, the origin of gauge structure, mass generation, and mixing relations remains fundamentally unexplained within the Standard Model itself --- they are built in, not derived.
+
+In the preceding papers~\citep{SmartBridge, SmartV}, we introduced a projection-based framework in which physical observables arise from compatibility constraints between an underlying $\phig$-structured geometric manifold and the conditions of measurement. The crystallisation operator provides a deterministic selection mechanism over admissible state spaces.
+
+The central question that follows is: \textit{how do specific interaction structures arise from these general compatibility and projection principles?}
+
+The present paper addresses this question for the electroweak sector as a first test case. The electroweak interaction is uniquely suited to this role: it exhibits a unified gauge structure, incorporates both massless and massive gauge bosons, and is constrained by high-precision experimental measurements. Any candidate underlying framework must reproduce its structure with high fidelity.
+
+\subsection*{Scope and epistemic status}
+
+This paper presents a geometric \textit{reinterpretation} of the electroweak sector, not a first-principles derivation. The Standard Model's empirical content is treated as correct; the paper asks whether the $\phig$-structured projection framework can accommodate that content as emergent structure. Specific numerical values (masses, mixing angle) are not derived but shown to be structurally compatible. The paper clearly separates definitions, derived structural relations, and interpretive proposals.
+
+%==================================================================
+\section{Projection Framework Recap}\label{sec:projection}
+%==================================================================
+
+We briefly recapitulate the projection framework developed in the preceding papers.
+
+\begin{definition}[Underlying manifold]\label{def:manifold}
+Let $\Mcal_\phig$ denote a $\phig$-structured geometric manifold encoding the full dynamical state of the system. The manifold carries a nested shell structure at scales $r_n = r_0\, \phig^{-n}$ and admits a discrete spectral characterisation through its graph Laplacian.
+\end{definition}
+
+\begin{definition}[Projection operator]\label{def:projection}
+The projection operator $\Pcal$ maps the underlying manifold to observables:
+\begin{equation}
+    \Pcal : \Mcal_\phig \to \mathcal{O}
+\end{equation}
+where $\mathcal{O}$ is the space of boundary-compatible observable configurations. Observables are those configurations that satisfy the compatibility constraints imposed by the measurement context.
+\end{definition}
+
+\begin{definition}[Compatibility functional]\label{def:compatibility}
+The compatibility functional measures how well a state $\psi$ satisfies the closure and stability requirements:
+\begin{equation}\label{eq:compatibility}
+    C(\psi) = \exp\!\left(-a_1\, |D(\psi)|\right) \cdot \exp\!\left(-a_2\, \mathrm{Var}(\psi)\right)
+\end{equation}
+where $D(\psi)$ is the closure defect (deviation from exact constraint satisfaction) and $\mathrm{Var}(\psi)$ measures structural instability. The coefficients $a_1, a_2 > 0$ are structural parameters.
+\end{definition}
+
+The crystallisation operator selects states that extremise the compatibility functional within a restricted admissible domain, as defined in the bridge paper~\citep{SmartBridge}.
+
+%==================================================================
+\section{Gauge Structure as Torsional Invariance}\label{sec:gauge}
+%==================================================================
+
+\subsection{Torsional transformations}
+
+We interpret gauge symmetry as invariance under torsional transformations of the internal state.
+
+\begin{definition}[Torsional operator]\label{def:torsion}
+Let $\mathfrak{g}$ be a finite-dimensional Lie algebra and let $G \in \mathfrak{g}$ be a generator. The torsional operator $\Tcal_\theta$ acts on the internal state $\psi \in V$ (where $V$ is a finite-dimensional representation space) as:
+\begin{equation}\label{eq:torsion}
+    \Tcal_\theta : \psi \mapsto e^{i\theta G}\, \psi
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Gauge invariance as projection invariance]\label{prop:gauge}
+A torsional transformation $\Tcal_\theta$ is a gauge symmetry if and only if it preserves projection compatibility:
+\begin{equation}\label{eq:gaugeinv}
+    \Pcal(\Tcal_\theta\, \psi) = \Pcal(\psi) \qquad \forall\, \psi \in \mathcal{S}_{\mathrm{adm}}
+\end{equation}
+\end{proposition}
+
+\textsc{Interpretation:} Gauge invariance is reinterpreted as the statement that certain classes of internal torsional transformations leave boundary-observable structure invariant. The gauge group is the group of such transformations.
+
+\subsection{Mapping to the Standard Model gauge structure}
+
+Within this framework, the electroweak gauge group $\mathrm{SU}(2)_L \times \mathrm{U}(1)_Y$ is interpreted as follows:
+
+\begin{table}[ht]
+\centering
+\caption{Mapping between Standard Model gauge structure and VFD torsional interpretation.}
+\label{tab:gaugemap}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Standard Model & VFD geometric interpretation \\
+\midrule
+$\mathrm{SU}(2)_L$ & Internal torsional doublet symmetry on $V \cong \mathbb{C}^2$ \\
+$\mathrm{U}(1)_Y$ & Phase-preserving global rotation (hypercharge) \\
+Gauge invariance & Projection invariance under $\Tcal_\theta$ \\
+Gauge bosons & Torsional connection modes \\
+Gauge coupling constants & Torsional curvature parameters \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textsc{Status:} This mapping is a structural reinterpretation, not a derivation. The Standard Model gauge group is accommodated within the torsional framework; it is not predicted uniquely by it.
+
+%==================================================================
+\section{Electroweak Mode Decomposition}\label{sec:ewmodes}
+%==================================================================
+
+We consider the internal state space $V \cong \mathbb{C}^2$, on which $\mathrm{SU}(2)_L$ acts as a doublet representation. A state $\psi \in V$ is written:
+\begin{equation}
+    \psi = \begin{pmatrix} \psi_1 \\ \psi_2 \end{pmatrix}
+\end{equation}
+
+The $\mathrm{SU}(2)_L$ generators are the Pauli matrices $\tau^a = \sigma^a/2$, and $\mathrm{U}(1)_Y$ is generated by the hypercharge operator $Y/2$.
+
+The neutral gauge fields $W^3$ (the third $\mathrm{SU}(2)$ component) and $B$ (the $\mathrm{U}(1)$ field) are orthogonal torsional modes in the VFD interpretation. The physical mass eigenstates are obtained by rotation:
+\begin{align}
+    Z &= \cos\theta_W\, W^3 - \sin\theta_W\, B \label{eq:Zdef} \\
+    A &= \sin\theta_W\, W^3 + \cos\theta_W\, B \label{eq:Adef}
+\end{align}
+where $\theta_W$ is the Weinberg mixing angle.
+
+\begin{remark}[Geometric interpretation of mixing]
+The mixing angle $\theta_W$ is interpreted within the VFD framework as a projection-induced rotation between orthogonal torsional basis modes. The physical mass eigenstates $Z$ and $A$ are the modes that diagonalise the closure-defect operator (Section~\ref{sec:mass}) in the torsional subspace.
+\end{remark}
+
+%==================================================================
+\section{Mass as Closure Residual}\label{sec:mass}
+%==================================================================
+
+This is the core interpretive section of the paper.
+
+\subsection{The closure operator}
+
+\begin{definition}[Closure operator]\label{def:closure}
+Let $\Ccal : \mathcal{S}_{\mathrm{adm}} \to \mathcal{S}_{\mathrm{adm}}$ be a contraction mapping that sends each state toward the nearest configuration satisfying all constraint conditions exactly. The closure of $\psi$ is $\Ccal(\psi)$: the fully closed configuration closest to $\psi$ in the relevant norm.
+\end{definition}
+
+\subsection{The closure defect}
+
+\begin{definition}[Closure defect]\label{def:defect}
+The closure defect of a state $\psi$ is:
+\begin{equation}\label{eq:defect}
+    \Delta(\psi) = \|\psi - \Ccal(\psi)\|
+\end{equation}
+where $\|\cdot\|$ is the norm on $\mathcal{S}_{\mathrm{adm}}$ (e.g.\ the $L^2$ norm on the internal state space).
+\end{definition}
+
+\subsection{Mass as closure residual}
+
+\begin{proposition}[Mass--defect relation]\label{prop:mass}
+Within the VFD framework, the mass of a gauge boson mode is proportional to its closure defect:
+\begin{equation}\label{eq:massdefect}
+    m = \kappa\, \Delta(\psi)
+\end{equation}
+where $\kappa > 0$ is an unspecified proportionality constant. States with perfect closure ($\Delta = 0$) are massless; states with incomplete closure ($\Delta > 0$) are massive.
+\end{proposition}
+
+\begin{table}[ht]
+\centering
+\caption{Closure interpretation of electroweak boson masses.}
+\label{tab:massclosure}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Particle & Closure status & Mass \\
+\midrule
+Photon ($A$) & Perfect closure: $\Delta_A = 0$ & $m_A = 0$ \\
+$Z$ boson & Incomplete closure: $\Delta_Z > 0$ & $m_Z > 0$ \\
+$W^\pm$ bosons & Incomplete closure: $\Delta_W > 0$ & $m_W > 0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textsc{Status:} The mass--defect relation is a structural proposal within the framework. The proportionality constant $\kappa$ is not derived. The claim is that the \textit{structure} of mass generation (massless photon, massive $W/Z$) is accommodated by the closure-defect interpretation, not that the specific mass values are computed from it.
+
+%==================================================================
+\section{Electroweak Mass Relations}\label{sec:massrelation}
+%==================================================================
+
+The Standard Model relation between electroweak boson masses is:
+\begin{equation}\label{eq:mwmz}
+    m_W = m_Z \cos\theta_W
+\end{equation}
+
+Within the closure-defect interpretation, this becomes:
+\begin{equation}\label{eq:defectratio}
+    \frac{m_W}{m_Z} = \frac{\Delta_W}{\Delta_Z} = \cos\theta_W
+\end{equation}
+
+\begin{remark}[Geometric interpretation]
+The Weinberg angle encodes the geometric ratio between torsional closure defects under projection. The $W$ and $Z$ bosons have different closure defects because they correspond to different linear combinations of the torsional basis modes $W^3$ and $B$, and the closure operator acts differently on each combination.
+\end{remark}
+
+\subsection{Experimental compatibility}
+
+Experimental values~\citep{Workman2022}:
+\begin{itemize}
+    \item $m_W \approx 80.38$ GeV
+    \item $m_Z \approx 91.19$ GeV
+\end{itemize}
+
+yielding $\cos\theta_W \approx m_W/m_Z \approx 0.881$, consistent with the independently measured Weinberg angle.
+
+The VFD framework is structurally compatible with this relation: the closure-defect ratio $\Delta_W/\Delta_Z$ plays the same structural role as $\cos\theta_W$. The framework does not independently derive the numerical value of $\theta_W$; it provides a geometric context in which the relation~\eqref{eq:mwmz} is naturally accommodated.
+
+%==================================================================
+\section{Higgs Mechanism as Closure Stabilisation}\label{sec:higgs}
+%==================================================================
+
+In the Standard Model, mass generation proceeds through spontaneous symmetry breaking: the Higgs field acquires a vacuum expectation value (VEV), breaking the electroweak symmetry and giving mass to the $W$ and $Z$ bosons while leaving the photon massless.
+
+Within the VFD framework, this mechanism is reinterpreted as \textit{closure stabilisation}: the system selects a preferred closure configuration that breaks the torsional symmetry.
+
+\begin{definition}[Closure stabilisation potential]\label{def:potential}
+Define a potential over closure configurations:
+\begin{equation}\label{eq:potential}
+    V(\psi) = \lambda\, \big(C(\psi) - C_0\big)^2
+\end{equation}
+where $C(\psi)$ is the compatibility functional~\eqref{eq:compatibility}, $C_0$ is a preferred closure value, and $\lambda > 0$ is a stabilisation parameter.
+\end{definition}
+
+Mass arises when the system settles at a closure configuration where:
+\begin{equation}
+    \frac{\partial V}{\partial \psi} \neq 0
+\end{equation}
+i.e.\ when the preferred closure state does not coincide with a torsionally symmetric configuration.
+
+\begin{remark}[Interpretation]
+The Higgs VEV corresponds to the preferred closure configuration $C_0$. Symmetry breaking corresponds to the selection of a stable projection that distinguishes between torsional modes. This is structurally analogous to the standard Higgs mechanism but reframed in terms of closure geometry rather than a scalar field potential.
+
+This is an interpretive reframing, not an independent derivation. The VFD framework accommodates the Higgs mechanism's structural role; it does not replace or predict the Higgs boson independently.
+\end{remark}
+
+%==================================================================
+\section{Notation and Symbol Table}\label{sec:symbols}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Symbol definitions used in this paper.}
+\label{tab:symbols}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Symbol & Definition & Section \\
+\midrule
+$\Mcal_\phig$ & $\phig$-structured geometric manifold & \ref{sec:projection} \\
+$\Pcal$ & Projection operator ($\Mcal_\phig \to \mathcal{O}$) & \ref{sec:projection} \\
+$C(\psi)$ & Compatibility functional & \ref{sec:projection} \\
+$D(\psi)$ & Closure defect (in compatibility) & \ref{sec:projection} \\
+$\Tcal_\theta$ & Torsional operator ($e^{i\theta G}$) & \ref{sec:gauge} \\
+$G$ & Lie algebra generator & \ref{sec:gauge} \\
+$\Ccal$ & Closure operator (contraction mapping) & \ref{sec:mass} \\
+$\Delta(\psi)$ & Closure defect ($\|\psi - \Ccal(\psi)\|$) & \ref{sec:mass} \\
+$\kappa$ & Mass--defect proportionality constant & \ref{sec:mass} \\
+$\theta_W$ & Weinberg mixing angle & \ref{sec:ewmodes} \\
+$C_0$ & Preferred closure value & \ref{sec:higgs} \\
+$\lambda$ & Stabilisation parameter & \ref{sec:higgs} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==================================================================
+\section{Generalisation to Other Interactions}\label{sec:generalisation}
+%==================================================================
+
+The electroweak sector represents one class of closure constraint within the $\phig$-structured manifold. The framework suggests that other fundamental interactions may admit analogous geometric interpretations:
+
+\begin{itemize}
+    \item \textbf{Strong interaction:} multi-node closure constraints enforcing global confinement. Colour confinement would correspond to the topological requirement that quark supports form connected configurations on the manifold (as explored for the 600-cell in~\citep{SmartV}).
+    \item \textbf{Gravitational interaction:} curvature of the projection manifold itself, with coherence gradients generating effective gravitational coupling.
+\end{itemize}
+
+\begin{remark}
+These are schematic proposals, not derivations. The present paper establishes only the electroweak sector as a concrete instance of force emergence from $\phig$-structured geometric constraints. Extension to additional sectors is left for future work.
+\end{remark}
+
+%==================================================================
+\section{Limitations}\label{sec:limits}
+%==================================================================
+
+\begin{itemize}
+    \item \textbf{This is a reinterpretation, not a derivation.} The electroweak gauge group $\mathrm{SU}(2)_L \times \mathrm{U}(1)_Y$ is accommodated within the torsional framework but is not predicted uniquely by it.
+    \item \textbf{No numerical values are derived.} The masses $m_W$, $m_Z$, the mixing angle $\theta_W$, and the Higgs VEV are not computed from the framework. Only structural relations are shown to be compatible.
+    \item \textbf{The closure operator is schematic.} $\Ccal$ is defined at the structural level; a fully specified, Lorentz-covariant construction remains to be developed.
+    \item \textbf{The proportionality constant $\kappa$ is not determined.} The mass--defect relation $m = \kappa\Delta$ is structural; the scale is not fixed.
+    \item \textbf{QCD and gravity are not derived.} These are flagged as future extensions, not results of this paper.
+    \item \textbf{Compatibility with radiative corrections is not established.} The framework addresses tree-level structure; loop-level consistency with precision electroweak measurements remains open.
+    \item \textbf{This does not replace the Standard Model.} The paper provides a geometric context for electroweak structure, not a substitute for the Standard Model's dynamical content.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+We have shown that the electroweak sector of the Standard Model admits a geometric reinterpretation within the $\phig$-structured projection framework. Gauge symmetry is reinterpreted as torsional invariance under projection; mass is reinterpreted as a closure residual; and the Weinberg mixing angle is reinterpreted as a projection-induced rotation between torsional basis modes.
+
+The Standard Model relation $m_W = m_Z \cos\theta_W$ is structurally preserved under the closure-defect identification. The Higgs mechanism is reinterpreted as closure stabilisation: the selection of a preferred closure configuration that breaks torsional symmetry.
+
+This framework preserves the empirical content of the Standard Model while providing a geometric context for its structure. It does not derive specific numerical values or replace the Standard Model's dynamical formalism. The electroweak sector serves as a minimal non-trivial realisation of force emergence within the projection framework.
+
+Extension to the strong interaction (as confinement from connected closure constraints) and gravitational interaction (as projection-manifold curvature) is left for future work.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
