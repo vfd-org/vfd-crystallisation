@@ -114,7 +114,7 @@ The repository also contains a separate but related mass programme, which applie
 
 #### Paper V — Complete Particle Mass Spectrum
 
-**[Toward a Spectral-Geometric Mass Framework from the 600-Cell](papers/paper-v/Toward_a_Spectral_Geometric_Mass_Framework_from_the_600_Cell.pdf)** ([LaTeX source](papers/paper-v/paper-v.tex))
+**[Toward a Spectral-Geometric Particle-Mass Model from the 600-Cell](papers/paper-v/Toward_a_Spectral_Geometric_Mass_Framework_from_the_600_Cell.pdf)** ([LaTeX source](papers/paper-v/paper-v.tex))
 
 Extends Papers I–IV to a broader spectral-geometric mass framework using the golden ratio φ and the four integer eigenvalues {9, 12, 14, 15} of the 600-cell graph Laplacian. Under explicit framework postulates and structural assignments, yields high-accuracy mass values across 13 non-reference particles (average 0.014%). Also yields a high-precision numerical correspondence for the fine structure constant (0.81 ppm). Includes 6 exact graph theorems, the prediction chain, assignment rules, and full epistemic classification separating exact computations from model assignments and numerical correspondences.
 
