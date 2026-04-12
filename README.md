@@ -139,6 +139,12 @@ Proves a formal no-go theorem for shell-extension leptons. Proposes a conditiona
 
 Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence λ = 15 = ΔC; (2) numerical F4 convergence toward d_s ≈ φ (R² = 0.996). Includes explicit retraction of the earlier d_s ≈ 1.637 claim for the 600-cell vertex graph, with explanation of the windowing artifact.
 
+### Bridge Paper — From Dirac to Crystallisation
+
+**[From Dirac Solutions to Physical Reality: Crystallisation as the Selection Mechanism](papers/bridge-paper/bridge-paper.tex)**
+
+Bridge paper connecting the Dirac equation to the crystallisation framework. Identifies the missing selection mechanism in standard QM, defines the crystallisation operator as a deterministic constraint-based selector over the Dirac solution space, and interprets particle stability, antiparticles, and annihilation within this framework. Extends rather than replaces the Dirac equation. Includes comparison to Copenhagen, GRW, and pilot-wave interpretations.
+
 ### Supplementary Material
 
 Reference documents (not standalone papers):

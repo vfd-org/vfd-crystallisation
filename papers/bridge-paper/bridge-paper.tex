@@ -1,0 +1,322 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{From Dirac Solutions to Physical Reality:\\Crystallisation as the Selection Mechanism}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+The Dirac equation defines the space of admissible relativistic quantum states --- including particle and antiparticle branches, spin degrees of freedom, and momentum modes --- but does not specify the mechanism by which a single physical state is realised from this space. Standard quantum mechanics assigns transition probabilities via the Born rule, yet provides no dynamical operator that selects the outcome.
+
+We propose \textit{crystallisation} as a deterministic, constraint-based selection mechanism acting over the Dirac solution space. Crystallisation is defined as convergence toward the state that maximises a constraint functional $F(\psi)$ encoding coherence, resonance alignment, and stability. The selected state $\psi^* = \arg\max_{\psi \in \mathcal{S}} F(\psi)$ is determined by the geometry of the constraint landscape, not by stochastic projection.
+
+Within this framework, stable particles correspond to local maxima of $F$; antiparticles are symmetry-related extrema on distinct solution branches; and annihilation is reinterpreted as a transition to a configuration of higher global coherence. The proposal extends rather than replaces the Dirac equation and standard quantum mechanics. Its functional form is not uniquely derived and requires further empirical grounding; it is presented as a structured candidate mechanism, not a complete theory.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The Dirac equation~\citep{Dirac1928} is a cornerstone of relativistic quantum mechanics. Its successes include the natural emergence of electron spin, the prediction of antiparticles~\citep{Anderson1933}, and the correct fine-structure spectrum of hydrogen. Combined with quantum field theory, it provides the foundation for the Standard Model's treatment of fermionic matter.
+
+The equation defines a precise mathematical space of admissible states: solutions to the relativistic wave equation satisfying specific boundary conditions, symmetry requirements, and normalisability constraints. This solution space contains particle and antiparticle branches, multiple spin orientations, and a continuum of momentum modes. All are equally valid solutions of the equation.
+
+Yet the Dirac equation, like the Schr\"odinger equation before it, does not answer a fundamental question: \textit{given the space of admissible states, what determines which state is physically realised?}
+
+Standard quantum mechanics addresses this through the Born rule: the probability of observing state $|\psi_i\rangle$ is $P(\psi_i) = |\langle\psi_i|\psi\rangle|^2$. This assigns probabilities to outcomes but does not provide a physical mechanism for the transition from superposition to definite outcome --- the quantum measurement problem~\citep{Schlosshauer2005}.
+
+The present paper proposes a candidate resolution: a deterministic selection mechanism, termed \textit{crystallisation}, that acts over the solution space of the Dirac equation. The mechanism is defined by a constraint functional whose extrema correspond to physically realised states. The proposal extends rather than replaces the Dirac framework; it adds a selection layer to the existing mathematical structure without modifying the equation itself.
+
+\subsection*{Scope and epistemic status}
+
+This paper is a bridge paper: it introduces a formal definition and physical interpretation of crystallisation in the context of relativistic quantum mechanics, but does not derive the complete functional form from first principles. The constraint functional is proposed, not uniquely determined. The paper should be read as a structured candidate mechanism with testable implications, not as a finished theory.
+
+%==================================================================
+\section{The Dirac Solution Space}\label{sec:dirac}
+%==================================================================
+
+\subsection{The equation}
+
+The Dirac equation for a free fermion of mass $m$ is:
+\begin{equation}\label{eq:dirac}
+    (i\gamma^\mu \partial_\mu - m)\psi = 0
+\end{equation}
+where $\gamma^\mu$ are the Dirac gamma matrices satisfying $\{\gamma^\mu, \gamma^\nu\} = 2g^{\mu\nu}$, and $\psi$ is a four-component spinor field.
+
+\subsection{The solution space}
+
+The set of all solutions forms the Dirac solution space:
+\begin{equation}\label{eq:solspace}
+    \mathcal{S} = \left\{ \psi \;\middle|\; (i\gamma^\mu \partial_\mu - m)\psi = 0 \right\}
+\end{equation}
+
+This space has the following structure:
+\begin{itemize}
+    \item \textbf{Particle branch:} positive-energy solutions $\psi^{(+)}$ with $E > 0$.
+    \item \textbf{Antiparticle branch:} negative-energy solutions $\psi^{(-)}$ (reinterpreted via charge conjugation as positive-energy antiparticles).
+    \item \textbf{Spin degrees of freedom:} each energy-momentum mode carries two spin orientations.
+    \item \textbf{Momentum continuum:} solutions exist for all momenta $\mathbf{p}$ satisfying $E^2 = |\mathbf{p}|^2 + m^2$.
+\end{itemize}
+
+Multiple valid solutions exist simultaneously. The equation constrains admissible states but does not specify a unique realised state.
+
+\begin{remark}
+In quantum field theory, the solution space is promoted to an operator algebra, and states are vectors in Fock space. The selection problem persists: the formalism defines what \textit{can} happen but not which specific outcome \textit{does} happen in a given measurement.
+\end{remark}
+
+%==================================================================
+\section{The Missing Selection Mechanism}\label{sec:gap}
+%==================================================================
+
+\subsection{The selection problem}
+
+Standard quantum mechanics provides the Born rule for outcome probabilities:
+\begin{equation}
+    P(\psi_i) = |\langle\psi_i|\psi\rangle|^2
+\end{equation}
+
+This assigns a probability distribution over $\mathcal{S}$, but no physical operator performs the selection:
+\begin{equation}
+    O_{\text{select}} : \mathcal{S} \to \psi^* \quad \text{(not provided by the formalism)}
+\end{equation}
+
+\begin{definition}[Selection Problem]
+Given the solution space $\mathcal{S}$ of Eq.~\eqref{eq:solspace}, the selection problem asks: what determines the physically realised state $\psi^*$?
+\end{definition}
+
+\subsection{Existing approaches}
+
+Several interpretations address this gap:
+\begin{itemize}
+    \item \textbf{Copenhagen interpretation:} collapse is axiomatic; no mechanism is provided~\citep{vonNeumann1932}.
+    \item \textbf{Many-worlds:} all outcomes are realised; selection is illusory~\citep{Everett1957}.
+    \item \textbf{GRW / objective collapse:} stochastic collapse terms are added to the dynamics~\citep{GRW1986}.
+    \item \textbf{Pilot wave:} deterministic guidance equation selects trajectories~\citep{Bohm1952}.
+\end{itemize}
+
+Each addresses the problem differently; none provides a constraint-based deterministic selection mechanism acting over the full solution space.
+
+%==================================================================
+\section{Crystallisation: Definition}\label{sec:crystallisation}
+%==================================================================
+
+\subsection{The selection operator}
+
+We define the crystallisation operator as a deterministic map from the solution space to a selected state:
+
+\begin{definition}[Crystallisation operator]\label{def:crystal}
+The crystallisation operator $\mathcal{C}$ acts on the Dirac solution space $\mathcal{S}$ and selects the state that maximises a constraint functional $F$:
+\begin{equation}\label{eq:crystal}
+    \psi^* = \mathcal{C}(\mathcal{S}) = \arg\max_{\psi \in \mathcal{S}} F(\psi)
+\end{equation}
+\end{definition}
+
+The selected state $\psi^*$ is determined by the geometry of the constraint landscape, not by stochastic projection. The selection is deterministic given $F$ and $\mathcal{S}$.
+
+\subsection{Constraint functional structure}
+
+The constraint functional $F$ encodes the physical requirements for a realised state:
+\begin{equation}\label{eq:functional}
+    F(\psi) = \alpha\, C(\psi) - \beta\, H(\psi) + \gamma\, R(\psi) - \delta\, V(\psi)
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $C(\psi)$: \textbf{coherence measure} --- quantifies internal phase alignment and structural consistency of the state.
+    \item $H(\psi)$: \textbf{entropy / disorder} --- measures the degree of internal decoherence or information loss.
+    \item $R(\psi)$: \textbf{resonance alignment} --- measures how well the state aligns with the constraint geometry of the underlying space.
+    \item $V(\psi)$: \textbf{instability / variance} --- penalises fluctuations and structural fragility.
+\end{itemize}
+
+The coefficients $\alpha, \beta, \gamma, \delta > 0$ are structural parameters. The functional favours states that are coherent, low-entropy, resonantly aligned, and stable.
+
+\subsection{Example coherence form}
+
+A concrete realisation of the coherence measure:
+\begin{equation}\label{eq:coherence}
+    C(\psi) = \exp\!\left(-\alpha\, |D(\psi)|\right) \cdot \exp\!\left(-\beta\, \mathrm{Var}(\psi)\right)
+\end{equation}
+where $D(\psi)$ is the deviation of $\psi$ from the constraint manifold and $\mathrm{Var}(\psi)$ is the variance of the state's structural components. States close to the constraint manifold with low internal variance have high coherence.
+
+\subsection{The deterministic selection operator}
+
+The crystallisation operator is:
+\begin{equation}
+    \mathcal{C} : \mathcal{S} \to \psi^*, \qquad \mathcal{C}(\mathcal{S}) = \arg\max_{\psi \in \mathcal{S}} F(\psi)
+\end{equation}
+
+This provides the missing selection mechanism: a deterministic, constraint-based operator that resolves the superposition of admissible states into a definite physical configuration.
+
+\textsc{Status:} The crystallisation operator is a formal definition. Its constraint functional $F$ is proposed, not uniquely derived. The specific forms of $C$, $H$, $R$, $V$ and their coefficients are structural proposals requiring further empirical and theoretical grounding.
+
+%==================================================================
+\section{Physical Interpretation}\label{sec:physics}
+%==================================================================
+
+\subsection{Particle stability}
+
+Within the crystallisation framework, stable particles correspond to local maxima of $F$ over the solution space $\mathcal{S}$. A state $\psi^*$ is stable if:
+\begin{equation}
+    \frac{\delta^2 F}{\delta\psi^2}\bigg|_{\psi^*} < 0 \quad \text{(negative definite)}
+\end{equation}
+
+The set of stable particles is the set of attractor states --- configurations to which nearby states converge under constraint-driven evolution. The discreteness of the observed particle spectrum corresponds to the discrete set of local maxima of $F$.
+
+\subsection{Antiparticles}
+
+The Dirac solution space $\mathcal{S}$ contains both particle ($E > 0$) and antiparticle ($E < 0$, reinterpreted) branches. In the crystallisation framework, antiparticles correspond to symmetry-related extrema of $F$ on the conjugate solution branch:
+\begin{equation}
+    \psi^*_{\text{particle}} = \arg\max_{\psi \in \mathcal{S}^{(+)}} F(\psi), \qquad
+    \psi^*_{\text{anti}} = \arg\max_{\psi \in \mathcal{S}^{(-)}} F(\psi)
+\end{equation}
+
+If $F$ respects the CPT symmetry of the Dirac equation, then particle and antiparticle extrema are related by charge conjugation: $F(\psi) = F(\mathcal{C}_{\text{CPT}}\psi)$. The particle-antiparticle distinction is a structural feature of the solution space, not an additional postulate.
+
+\subsection{Annihilation}
+
+Annihilation is reinterpreted as a transition between constraint-landscape configurations:
+\begin{equation}
+    (\psi_1, \psi_2) \to \psi_{\text{lower}}
+\end{equation}
+where $\psi_1$ and $\psi_2$ are a particle-antiparticle pair and $\psi_{\text{lower}}$ is a configuration of higher global coherence (typically radiation modes). The transition occurs because the combined system $(\psi_1, \psi_2)$ is not a local maximum of $F$ over the joint state space; the crystallisation dynamics drives it toward the nearest attractor, which is a lower-energy, higher-coherence configuration.
+
+%==================================================================
+\section{Relation to Standard Quantum Mechanics}\label{sec:relation}
+%==================================================================
+
+The crystallisation proposal extends rather than replaces the standard framework:
+
+\begin{table}[ht]
+\centering
+\caption{Comparison of standard QM and the crystallisation framework.}
+\label{tab:comparison}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Standard QM & Crystallisation framework \\
+\midrule
+Collapse as axiom & Collapse as emergent convergence \\
+Probability as fundamental & Probability as epistemic (from incomplete $F$ knowledge) \\
+Measurement as primitive & Measurement as constraint interaction \\
+State selection unspecified & State selection by $\arg\max F$ \\
+Indeterminism fundamental & Determinism at the selection level \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Dirac equation remains the governing equation for admissible states. The crystallisation operator adds a selection layer; it does not modify the dynamics of $\mathcal{S}$.
+
+In the limit where $F$ is unknown or inaccessible, the Born rule emerges as the natural statistical description: if the observer cannot evaluate $F$, the best available prediction for outcomes is the squared-amplitude distribution. Crystallisation is therefore compatible with standard predictions while providing a candidate underlying mechanism.
+
+%==================================================================
+\section{Geometric Structure}\label{sec:geometry}
+%==================================================================
+
+The constraint functional $F$ defines a landscape over $\mathcal{S}$. The topology of this landscape determines the structure of physically realised states:
+
+\begin{itemize}
+    \item \textbf{Constraint manifold:} the subspace of $\mathcal{S}$ where $D(\psi) = 0$ (all constraints exactly satisfied). Physically realised states lie on or near this manifold.
+    \item \textbf{Attractor basins:} regions of $\mathcal{S}$ that flow toward a specific local maximum of $F$ under gradient ascent. Each basin corresponds to a distinct particle type.
+    \item \textbf{Basin boundaries:} separatrices between attractor basins. Transitions between basins correspond to particle creation, annihilation, or decay.
+\end{itemize}
+
+The number of attractor basins, their relative depths, and the structure of the separatrices are determined by $F$ and the symmetries of $\mathcal{S}$. In principle, the discrete particle spectrum follows from the discrete set of local maxima.
+
+A deeper geometric analysis --- connecting $F$ to specific symmetry structures such as polytope geometry --- is developed in companion work but is beyond the scope of the present paper.
+
+%==================================================================
+\section{Testable Implications}\label{sec:testable}
+%==================================================================
+
+The crystallisation framework generates several testable implications that distinguish it from axiomatic collapse and stochastic-collapse models:
+
+\begin{enumerate}
+    \item \textbf{Preferred states.} Physically realised states correspond to extrema of a measurable coherence functional. If $F$ can be characterised experimentally, preferred states should exhibit higher coherence measures than generic superpositions.
+
+    \item \textbf{Stability spectra.} The set of stable particles is the set of local maxima of $F$. The stability spectrum (which particles exist and which do not) is linked to the constraint geometry rather than to arbitrary parameter choices.
+
+    \item \textbf{Deterministic selection signatures.} If selection is deterministic given $F$, then in principle, repeated preparations of identical constraint conditions should yield identical outcomes --- not a statistical distribution. This is distinct from the predictions of stochastic-collapse models (GRW), which predict irreducible randomness.
+
+    \item \textbf{Transition-time structure.} The crystallisation dynamics implies a finite transition time from superposition to definite state, governed by the gradient structure of $F$. This timescale is derived from the functional, not postulated.
+
+    \item \textbf{Connection to mass structure.} If the constraint functional $F$ is related to the spectral geometry of the underlying space, then the mass ratios of stable particles should be computable from the constraint landscape. Companion work~\citep{SmartIV, SmartV} explores this direction.
+\end{enumerate}
+
+%==================================================================
+\section{Limitations}\label{sec:limits}
+%==================================================================
+
+\begin{itemize}
+    \item \textbf{The functional form of $F$ is not uniquely derived.} The constraint functional is proposed as a structured candidate, not derived from a unique principle. Multiple functionals could produce similar selection behaviour. Identifying the correct $F$ requires further theoretical and empirical work.
+
+    \item \textbf{The coefficients $\alpha, \beta, \gamma, \delta$ are not determined.} The relative weighting of coherence, entropy, resonance, and stability contributions is a structural choice within the framework.
+
+    \item \textbf{Compatibility with QFT is not fully established.} The present paper works at the level of the Dirac equation. Extension to the full quantum field theory formalism (operator algebras, renormalisation, gauge invariance) remains to be developed.
+
+    \item \textbf{The emergence of the Born rule is conjectured, not proven.} The claim that Born-rule statistics emerge from incomplete knowledge of $F$ is a structural argument, not a mathematical theorem.
+
+    \item \textbf{This is not a replacement for the Standard Model.} The crystallisation framework addresses the selection mechanism, not the dynamical content of the Standard Model. It is an additional layer, not a substitute.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The Dirac equation defines the space of admissible relativistic quantum states. Standard quantum mechanics assigns probabilities to outcomes within this space but does not provide a physical mechanism for the selection of a definite state. We have proposed crystallisation --- a deterministic, constraint-based selection operator --- as a candidate resolution.
+
+The crystallisation operator $\mathcal{C}(\mathcal{S}) = \arg\max F(\psi)$ selects the state that maximises a constraint functional encoding coherence, resonance alignment, and stability. Within this framework: stable particles are local maxima of $F$; antiparticles are symmetry-related extrema on conjugate solution branches; and annihilation is a transition to a configuration of higher global coherence.
+
+The proposal extends rather than replaces the Dirac equation and standard quantum mechanics. It adds a selection mechanism to the existing mathematical structure. The functional form of $F$ is not uniquely derived, and the framework requires further empirical grounding. It is presented as a structured candidate mechanism with testable implications --- not as a finished theory, but as a formal starting point for a constraint-based approach to the measurement problem.
+
+%==================================================================
+\appendix
+\section{Comparison to Collapse Interpretations}\label{app:comparison}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Crystallisation compared to existing interpretations.}
+\label{tab:interpretations}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Feature & Copenhagen & GRW & Crystallisation \\
+\midrule
+Selection mechanism & Axiomatic & Stochastic & Deterministic ($\arg\max F$) \\
+Randomness & Fundamental & Fundamental & Epistemic (from unknown $F$) \\
+Collapse dynamics & Instantaneous & Finite rate & Gradient flow on $F$ \\
+Preferred basis & Unspecified & Position & Extrema of $F$ \\
+Testable & No & Yes (rate) & Yes (coherence, timescale) \\
+Extends Dirac & Adds axiom & Adds noise & Adds constraint layer \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The key distinction is that crystallisation provides a \textit{deterministic} selection mechanism grounded in a constraint functional, whereas Copenhagen provides no mechanism and GRW provides a stochastic one. All three are compatible with the Dirac equation as the governing equation for admissible states.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
