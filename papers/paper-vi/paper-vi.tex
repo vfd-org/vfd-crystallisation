@@ -79,9 +79,9 @@ where $\mathcal{O}$ is the space of boundary-compatible observable configuration
 \begin{definition}[Compatibility functional]\label{def:compatibility}
 The compatibility functional measures how well a state $\psi$ satisfies the closure and stability requirements:
 \begin{equation}\label{eq:compatibility}
-    C(\psi) = \exp\!\left(-a_1\, |D(\psi)|\right) \cdot \exp\!\left(-a_2\, \mathrm{Var}(\psi)\right)
+    C(\psi) = \exp\!\left(-a_1\, |d(\psi)|\right) \cdot \exp\!\left(-a_2\, \mathrm{Var}(\psi)\right)
 \end{equation}
-where $D(\psi)$ is the closure defect (deviation from exact constraint satisfaction) and $\mathrm{Var}(\psi)$ measures structural instability. The coefficients $a_1, a_2 > 0$ are structural parameters.
+where $d(\psi)$ is the local compatibility defect (deviation from exact constraint satisfaction) and $\mathrm{Var}(\psi)$ measures structural instability. The coefficients $a_1, a_2 > 0$ are structural parameters.
 \end{definition}
 
 The crystallisation operator selects states that extremise the compatibility functional within a restricted admissible domain, as defined in the bridge paper~\citep{SmartBridge}.
@@ -126,7 +126,7 @@ $\mathrm{SU}(2)_L$ & Internal torsional doublet symmetry on $V \cong \mathbb{C}^
 $\mathrm{U}(1)_Y$ & Phase-preserving global rotation (hypercharge) \\
 Gauge invariance & Projection invariance under $\Tcal_\theta$ \\
 Gauge bosons & Torsional connection modes \\
-Gauge coupling constants & Torsional curvature parameters \\
+Gauge coupling constants & Torsional curvature parameters (heuristic identification) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -152,7 +152,7 @@ The neutral gauge fields $W^3$ (the third $\mathrm{SU}(2)$ component) and $B$ (t
 where $\theta_W$ is the Weinberg mixing angle.
 
 \begin{remark}[Geometric interpretation of mixing]
-The mixing angle $\theta_W$ is interpreted within the VFD framework as a projection-induced rotation between orthogonal torsional basis modes. The physical mass eigenstates $Z$ and $A$ are the modes that diagonalise the closure-defect operator (Section~\ref{sec:mass}) in the torsional subspace.
+The mixing angle $\theta_W$ is interpreted within the VFD framework as a projection-induced rotation between orthogonal torsional basis modes. The physical mass eigenstates $Z$ and $A$ are the linear combinations that diagonalise the closure-residual structure (Section~\ref{sec:mass}) in the torsional subspace.
 \end{remark}
 
 %==================================================================
@@ -161,31 +161,55 @@ The mixing angle $\theta_W$ is interpreted within the VFD framework as a project
 
 This is the core interpretive section of the paper.
 
-\subsection{The closure operator}
+\subsection{Closed states and the closure operator}
 
-\begin{definition}[Closure operator]\label{def:closure}
-Let $\Ccal : \mathcal{S}_{\mathrm{adm}} \to \mathcal{S}_{\mathrm{adm}}$ be a contraction mapping that sends each state toward the nearest configuration satisfying all constraint conditions exactly. The closure of $\psi$ is $\Ccal(\psi)$: the fully closed configuration closest to $\psi$ in the relevant norm.
+\begin{definition}[Closed states]\label{def:closed}
+Let $\mathcal{S}_{\mathrm{adm}}$ be the admissible state space equipped with a norm $\|\cdot\|$ (e.g.\ the $L^2$ norm on the internal representation space $V$). Define the subset of \textit{exactly closed states}:
+\begin{equation}
+    \mathcal{S}_{\mathrm{cl}} = \left\{\psi \in \mathcal{S}_{\mathrm{adm}} \;\middle|\; \text{all constraint conditions are exactly satisfied}\right\}
+\end{equation}
 \end{definition}
 
-\subsection{The closure defect}
+\begin{definition}[Closure operator]\label{def:closure}
+The closure operator $\Ccal : \mathcal{S}_{\mathrm{adm}} \to \mathcal{S}_{\mathrm{cl}}$ is the metric projection onto the closed subset:
+\begin{equation}
+    \Ccal(\psi) = \arg\inf_{\phi \in \mathcal{S}_{\mathrm{cl}}} \|\psi - \phi\|
+\end{equation}
+provided the infimum is attained. If $\mathcal{S}_{\mathrm{cl}}$ is closed and convex (or if $\mathcal{S}_{\mathrm{adm}}$ is finite-dimensional), the projection exists and is unique.
+\end{definition}
 
-\begin{definition}[Closure defect]\label{def:defect}
-The closure defect of a state $\psi$ is:
+\textsc{Status:} The closure operator is defined at the structural level. The specific constraint conditions defining $\mathcal{S}_{\mathrm{cl}}$, and the conditions under which the projection exists and is unique in the relevant physical setting, are not fully specified in this paper.
+
+\subsection{Notation: local defect vs global closure residual}
+
+Two related but distinct quantities appear in this paper:
+\begin{itemize}
+    \item $d(\psi)$: the \textit{local compatibility defect} used inside the compatibility functional $C(\psi)$ (Eq.~\ref{eq:compatibility}). This measures how far $\psi$ deviates from local constraint satisfaction.
+    \item $\Delta(\psi)$: the \textit{global closure residual}, defined below, measuring the distance from $\psi$ to its closest fully closed configuration.
+\end{itemize}
+These are conceptually related (both measure constraint deviation) but operationally distinct: $d(\psi)$ is a local structural diagnostic, while $\Delta(\psi)$ is a global metric quantity tied to mass.
+
+\subsection{The closure residual}
+
+\begin{definition}[Closure residual]\label{def:defect}
+The closure residual of a state $\psi$ is:
 \begin{equation}\label{eq:defect}
     \Delta(\psi) = \|\psi - \Ccal(\psi)\|
 \end{equation}
-where $\|\cdot\|$ is the norm on $\mathcal{S}_{\mathrm{adm}}$ (e.g.\ the $L^2$ norm on the internal state space).
+States in $\mathcal{S}_{\mathrm{cl}}$ have $\Delta = 0$; states outside $\mathcal{S}_{\mathrm{cl}}$ have $\Delta > 0$.
 \end{definition}
 
-\subsection{Mass as closure residual}
+\subsection{Mass--residual identification}
 
-\begin{proposition}[Mass--defect relation]\label{prop:mass}
-Within the VFD framework, the mass of a gauge boson mode is proportional to its closure defect:
+\begin{remark}[Structural postulate: mass--residual identification]\label{rem:mass}
+Within the VFD framework, we postulate that the mass of a gauge boson mode is monotonically related to its closure residual:
 \begin{equation}\label{eq:massdefect}
     m = \kappa\, \Delta(\psi)
 \end{equation}
 where $\kappa > 0$ is an unspecified proportionality constant. States with perfect closure ($\Delta = 0$) are massless; states with incomplete closure ($\Delta > 0$) are massive.
-\end{proposition}
+\end{remark}
+
+The mass--residual identification should be understood as a structural postulate within the present framework. It captures the distinction between massless and massive electroweak modes, but does not yet furnish a full dynamical derivation of boson mass values or radiative corrections.
 
 \begin{table}[ht]
 \centering
@@ -250,16 +274,16 @@ Define a potential over closure configurations:
 where $C(\psi)$ is the compatibility functional~\eqref{eq:compatibility}, $C_0$ is a preferred closure value, and $\lambda > 0$ is a stabilisation parameter.
 \end{definition}
 
-Mass arises when the system settles at a closure configuration where:
+The system stabilises around a preferred closure configuration $\psi_0$ satisfying $\partial V / \partial\psi\big|_{\psi_0} = 0$. Effective masses arise from the curvature of the stabilisation potential around this configuration:
 \begin{equation}
-    \frac{\partial V}{\partial \psi} \neq 0
+    m_{\mathrm{eff}}^2 \propto \frac{\partial^2 V}{\partial\psi^2}\bigg|_{\psi_0}
 \end{equation}
-i.e.\ when the preferred closure state does not coincide with a torsionally symmetric configuration.
+Modes along which the curvature is nonzero acquire mass; modes along which the curvature vanishes remain massless. Symmetry breaking occurs when the preferred closure state $\psi_0$ does not coincide with a torsionally symmetric configuration.
 
 \begin{remark}[Interpretation]
-The Higgs VEV corresponds to the preferred closure configuration $C_0$. Symmetry breaking corresponds to the selection of a stable projection that distinguishes between torsional modes. This is structurally analogous to the standard Higgs mechanism but reframed in terms of closure geometry rather than a scalar field potential.
+The Higgs VEV corresponds to the preferred closure configuration $C_0$. Symmetry breaking corresponds to the selection of a stable projection that distinguishes between torsional modes: some torsional directions acquire positive curvature (massive bosons), while the direction corresponding to the unbroken $\mathrm{U}(1)_{\mathrm{em}}$ retains zero curvature (massless photon).
 
-This is an interpretive reframing, not an independent derivation. The VFD framework accommodates the Higgs mechanism's structural role; it does not replace or predict the Higgs boson independently.
+This is a structural reinterpretation, not an independent derivation. The VFD framework accommodates the Higgs mechanism's structural role; it does not replace or predict the Higgs boson independently.
 \end{remark}
 
 %==================================================================
@@ -277,11 +301,11 @@ Symbol & Definition & Section \\
 $\Mcal_\phig$ & $\phig$-structured geometric manifold & \ref{sec:projection} \\
 $\Pcal$ & Projection operator ($\Mcal_\phig \to \mathcal{O}$) & \ref{sec:projection} \\
 $C(\psi)$ & Compatibility functional & \ref{sec:projection} \\
-$D(\psi)$ & Closure defect (in compatibility) & \ref{sec:projection} \\
+$d(\psi)$ & Local compatibility defect & \ref{sec:projection} \\
 $\Tcal_\theta$ & Torsional operator ($e^{i\theta G}$) & \ref{sec:gauge} \\
 $G$ & Lie algebra generator & \ref{sec:gauge} \\
 $\Ccal$ & Closure operator (contraction mapping) & \ref{sec:mass} \\
-$\Delta(\psi)$ & Closure defect ($\|\psi - \Ccal(\psi)\|$) & \ref{sec:mass} \\
+$\Delta(\psi)$ & Global closure residual ($\|\psi - \Ccal(\psi)\|$) & \ref{sec:mass} \\
 $\kappa$ & Mass--defect proportionality constant & \ref{sec:mass} \\
 $\theta_W$ & Weinberg mixing angle & \ref{sec:ewmodes} \\
 $C_0$ & Preferred closure value & \ref{sec:higgs} \\
