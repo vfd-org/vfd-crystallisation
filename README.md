@@ -148,6 +148,12 @@ Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence �
 
 Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
 
+#### Paper XI — Standard Model Correspondence
+
+**[A Correspondence Between Constraint-Manifold Geometry and Standard Model Structure](papers/paper-xi/paper-xi.tex)**
+
+Translation layer between the constraint framework and the Standard Model. Systematic mapping table: admissible states ↔ Hilbert space, constraint manifold ↔ physical states, projection invariance ↔ gauge symmetry, closure residual ↔ mass, connectivity ↔ confinement, manifold curvature ↔ gravity (analogue). Each correspondence classified as structural, analogical, or open. Covers mass, electroweak, strong, and gravity sectors. Explicitly lists what the framework lacks (Lagrangian, renormalisation, scattering, spacetime). Does not derive or replace the Standard Model — provides a legibility bridge.
+
 #### Paper X — Gravitational Analogy from Constraint-Manifold Curvature
 
 **[Gravitational Analogy from Constraint-Manifold Curvature in φ-Structured Geometry](papers/paper-x/Gravitational_Analogy_from_Constraint_Manifold_Curvature_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-x/paper-x.tex))
@@ -202,6 +208,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xi/               Paper XI: Standard Model correspondence / translation layer
 │   ├── paper-x/                Paper X: gravitational analogy from constraint-manifold curvature
 │   ├── paper-ix/               Paper IX: continuous limit and constraint-manifold geometry
 │   ├── paper-viii/             Paper VIII: confinement as closure constraint
