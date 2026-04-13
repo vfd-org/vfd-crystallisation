@@ -78,13 +78,13 @@ Let $V$ be a finite-dimensional inner-product space over $\mathbb{C}$, equipped 
 \begin{definition}[Admissible domain]\label{def:admissible}
 The admissible state space is:
 \begin{equation}
-    \Sadm = \left\{\psi \in V \;\middle|\; \|\psi\| = 1,\; E(\psi) < \infty,\; \psi \text{ satisfies boundary conditions}\right\}
+    \Sadm = \left\{\psi \in V \;\middle|\; \|\psi\| = 1,\; \psi \text{ satisfies the boundary conditions of the physical context}\right\}
 \end{equation}
-where $E(\psi)$ is an energy functional and the boundary conditions are determined by the physical context. $\Sadm$ is a closed subset of the unit sphere in $V$.
+$\Sadm$ is a closed subset of the unit sphere in $V$.
 \end{definition}
 
 \begin{remark}
-In the finite-dimensional setting relevant to the 600-cell ($V \cong \mathbb{C}^{120}$ or a subspace thereof), $\Sadm$ is compact. This guarantees existence of nearest points and convergence of iterative projections under mild regularity conditions.
+In the finite-dimensional setting relevant to the 600-cell ($V \cong \mathbb{C}^{120}$ or a subspace thereof), $\Sadm$ is compact. This guarantees existence of nearest points. Convergence properties of iterative projections depend on additional regularity conditions discussed in Section~\ref{sec:dynamics}.
 \end{remark}
 
 %==================================================================
@@ -128,14 +128,14 @@ The connectivity constraint provides the framework's interpretation of confineme
 Projection constraints ensure compatibility with the observable sector.
 
 \begin{definition}[Projection constraint set]\label{def:projection}
-A state $\psi$ satisfies the projection constraints if:
+A state $\psi$ satisfies the projection constraints if it is invariant under all admissible torsional deformations that preserve observable content:
 \begin{equation}
-    \Pcal(\Ccal(\psi)) = \Pcal(\psi)
+    \Pcal(\Tcal_\theta\, \psi) = \Pcal(\psi) \quad \Longrightarrow \quad \psi \text{ and } \Tcal_\theta\psi \text{ are projection-equivalent}
 \end{equation}
-where $\Pcal$ is the projection operator from the underlying manifold to observables (Paper~VI~\citep{SmartVI}). This ensures that the closure process does not alter the observable content of the state.
+where $\Pcal$ is the projection operator from the underlying manifold to observables (Paper~VI~\citep{SmartVI}), and $\Tcal_\theta$ are the torsional operators of Section~3 of Paper~VI. A closed state must be compatible with this equivalence structure: its observable content must be well-defined under the projection.
 \end{definition}
 
-This constraint connects the closure framework to the gauge-invariance interpretation of Paper~VI: torsional transformations that preserve projection compatibility are gauge symmetries.
+This constraint connects the closure framework to the gauge-invariance interpretation of Paper~VI: torsional transformations that preserve projection compatibility are gauge symmetries. The closure operator $\Ccal$ (defined in Section~\ref{sec:operator}) is then required to respect this structure: $\Pcal(\Ccal(\psi)) = \Pcal(\psi)$ for all $\psi \in \Sadm$. This is a \textit{property} of the closure operator, not part of the definition of the constraint class.
 
 %==================================================================
 \section{The Closed State Set}\label{sec:closed}
@@ -187,18 +187,13 @@ The closure process is modelled as iterative projection:
     \psi_{n+1} = \Ccal(\psi_n)
 \end{equation}
 
-If $\Ccal$ is a metric projection onto a closed set, then for any $\psi_0 \in \Sadm$:
-\begin{itemize}
-    \item $\|\psi_{n+1} - \psi^*\| \leq \|\psi_n - \psi^*\|$ for any $\psi^* \in \Scl$ (non-expansiveness).
-    \item If $\psi_0 \in \Scl$, then $\psi_1 = \psi_0$ (idempotence).
-    \item The sequence $\{\psi_n\}$ converges to a point in $\Scl$ (in finite dimensions, by compactness).
-\end{itemize}
+In the finite-dimensional setting, existence of nearest closed states is guaranteed by compactness. The projection is idempotent: if $\psi_0 \in \Scl$, then $\psi_1 = \psi_0$. For convex $\Scl$, the projection is also non-expansive ($\|\psi_{n+1} - \psi^*\| \leq \|\psi_n - \psi^*\|$ for $\psi^* \in \Scl$) and the sequence converges. For non-convex $\Scl$, global convergence and uniqueness of limiting states require additional regularity assumptions on the geometry of $\Scl$. In the present paper, the iterative scheme is treated as a framework-level model of constraint relaxation rather than a fully proved global convergence theorem.
 
 \subsection{Interpretation}
 
 The iterative projection models the physical process by which an unconstrained configuration resolves into a closure-compatible state. Each iteration step enforces the constraint structure; convergence corresponds to the system reaching a stable, fully constrained configuration.
 
-This is the operator-level formalisation of the crystallisation process introduced in the bridge paper~\citep{SmartBridge}: the relaxation flow $d\psi/dt = \Pi_{\Sadm}\nabla F(\psi)$ is discretised as the iterative projection~\eqref{eq:iteration}.
+This iterative scheme may be viewed as a discrete analogue of the relaxation processes discussed in earlier work~\citep{SmartBridge}, though no continuous-time evolution law is assumed in the present paper.
 
 %==================================================================
 \section{Variational Formulation}\label{sec:variational}
@@ -230,7 +225,7 @@ A state $\psi^* \in \Sadm$ is closure-stable if it is a local minimiser of $\Fca
 subject to the constraint that $\psi^* \in \Scl$ (i.e.\ $\Fcal(\psi^*) = 0$).
 \end{definition}
 
-States with $\Fcal(\psi) = 0$ are exactly closed. States with $\Fcal(\psi) > 0$ violate at least one constraint class and carry a nonzero closure residual.
+The functional is designed so that $\Fcal(\psi) = 0$ if and only if $\psi \in \Scl$: zero functional value characterises exactly closed states. States with $\Fcal(\psi) > 0$ violate at least one constraint class and carry a nonzero closure residual.
 
 \subsection{Relation to the closure operator}
 
@@ -290,12 +285,12 @@ where $\kappa > 0$ is an unspecified proportionality constant. States in $\Scl$ 
 \section{Link to Projection}\label{sec:projection}
 %==================================================================
 
-The projection-compatibility condition connects the closure framework to the gauge interpretation of Paper~VI~\citep{SmartVI}:
+A key requirement on the closure operator is that it preserves observable content:
 \begin{equation}\label{eq:projcompat}
     \Pcal(\Ccal(\psi)) = \Pcal(\psi)
 \end{equation}
 
-This states that the closure process does not alter the observable content of the state. Torsional transformations $\Tcal_\theta$ that satisfy $\Pcal(\Tcal_\theta\psi) = \Pcal(\psi)$ are gauge symmetries; the closure operator respects this structure by construction (Class~III constraints).
+This is a \textit{property} that the closure operator must satisfy, following from the Class~III constraints (Section~\ref{sec:constraints}): since closed states are projection-compatible by definition, and $\Ccal$ maps into $\Scl$, the observable content is preserved.
 
 \textsc{Interpretation:} Gauge invariance emerges as invariance of observables under closure-compatible torsional transformations. The closure operator provides the formal substrate for this identification.
 
@@ -327,7 +322,7 @@ At each stage, the admissible set is reduced. The final closed set $\Scl$ is a s
 
 \subsection{Non-arbitrariness}
 
-The constraint structure is not arbitrary: it follows from the spectral and combinatorial properties of the $\phig$-structured geometry (eigenvalue structure, shell populations, reflection coefficients, Hopf-fiber spectrum). The constraints are \textit{derived from the graph} in the sense that they express specific combinatorial and spectral conditions; they are \textit{not derived from first principles} in the sense that the choice to impose these particular conditions remains a framework-level modelling decision.
+The constraint structure is not arbitrary: it is motivated and structured by the spectral and combinatorial properties of the $\phig$-structured geometry (eigenvalue structure, shell populations, reflection coefficients, Hopf-fiber spectrum). The constraints express specific combinatorial and spectral conditions drawn from the graph; they are not derived from first principles in the sense that the choice to impose these particular conditions remains a framework-level modelling decision.
 
 %==================================================================
 \section{Generalisation}\label{sec:generalisation}
