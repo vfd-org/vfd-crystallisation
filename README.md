@@ -150,7 +150,7 @@ Extends the projection framework to the electroweak sector. Gauge symmetry reint
 
 #### Paper VII — Closure Dynamics and Constraints
 
-**[Closure Dynamics and Constraint Operators in φ-Structured Geometry](papers/paper-vii/paper-vii.tex)**
+**[Closure Dynamics and Constraint Operators in φ-Structured Geometry](papers/paper-vii/Closure_Dynamics_and_Constraint_Operators_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-vii/paper-vii.tex))
 
 Formalises the closure operator that Papers V–VI assumed at a schematic level. Defines the admissible state space, three constraint classes (local, multi-node, projection), the closed state set, and the closure operator as metric projection. Introduces a variational formulation with closure functional. Proves existence in finite dimensions, addresses non-uniqueness via variational selection. Connects to mass (closure residual) and gauge structure (projection compatibility). Demonstrates non-arbitrariness of constraints. Mathematical framework paper — defines the machinery, not new predictions.
 
