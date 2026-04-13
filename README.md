@@ -192,7 +192,7 @@ Multi-state interaction. Total closure functional F_tot = ΣF(ψ_i) + F_int(Ψ).
 
 #### Paper XIV — Stochastic Closure Dynamics (Quantisation Layer)
 
-**[Quantisation as Stochastic Closure Dynamics in φ-Structured Geometry](papers/paper-xiv/paper-xiv.tex)**
+**[Quantisation as Stochastic Closure Dynamics in φ-Structured Geometry](papers/paper-xiv/Quantisation_as_Stochastic_Closure_Dynamics_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-xiv/paper-xiv.tex))
 
 Stochastic extension of deterministic closure dynamics. Langevin equation dψ = -∇F dt + σ dW on the closure landscape. Fokker-Planck equation with full derivation. Stationary distribution P ∝ exp(-2F/σ²) — proved, concentrates on M_cl. Local Gaussian approximation → excitation spectra from Hessian eigenvalues. Kramers barrier-crossing → transition rates. Onsager-Machlup path integral. Measurement as stochastic basin selection. Full QM comparison table (11 rows). Main theorem with 5 results. Does NOT claim QM equivalence — no unitarity, no interference, no Born rule derivation. Structural probabilistic layer from closure functional + noise.
 
