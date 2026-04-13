@@ -1,0 +1,561 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Scl}{\mathcal{S}_{\mathrm{cl}}}
+\newcommand{\phig}{\varphi}
+
+\title{The Dissipative Obstruction:\\Why Kolmogorov-Type Closure Generators Cannot Be Unitary\\and the Structure of Admissible Extensions}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Paper~XVI derived the closure evolution equation and identified a structural gap between it and the Schr\"odinger equation: the kinetic term is real diffusion rather than imaginary propagation. The present paper proves that this gap is not an artefact of a particular derivation but a structural obstruction: any generator constructed from a real stochastic process with a complexified potential is dissipative in the natural weighted inner product and therefore cannot generate a unitary group. This \textit{dissipative obstruction theorem} holds in the natural weighted inner product and is independent of the choice of imaginary potential.
+
+Having established what closure dynamics \textit{cannot} do alone, the paper analyses three candidate routes that could break the obstruction: (A)~a Hamiltonian lift introducing conjugate momentum and conservative dynamics, (B)~a Nelson-type time-reversal pairing of the forward and backward closure processes, and (C)~a dual-generator decomposition that separates dissipative and reversible sectors. Each route is analysed for the quadratic closure functional. The paper identifies the \textit{minimal structural extension}: the closure framework must be supplemented with a reversible (conservative) dynamical component --- either a conjugate momentum, a time-reversed process, or a reversible generator sector --- to convert the real kinetic term into an imaginary one.
+
+The paper does not claim Schr\"odinger recovery. It claims something more precise: a proved obstruction, a classification of candidate extensions, and the identification of the minimal new ingredient required.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The VFD closure programme has constructed a layered dynamical framework:
+\begin{itemize}
+    \item Paper~XII~\citep{SmartXII}: deterministic gradient flow,
+    \item Paper~XIV~\citep{SmartXIV}: stochastic closure dynamics with Boltzmann equilibrium,
+    \item Paper~XV~\citep{SmartXV}: phase-augmented amplitudes and interference,
+    \item Paper~XVI~\citep{SmartXVI}: the closure evolution equation and structural identification.
+\end{itemize}
+
+Paper~XVI derived the closure evolution equation:
+\begin{equation}\label{eq:closure_evo}
+    \partial_t \Psi = \frac{\sigma^2}{2}\Delta\Psi - \nabla\Fcal\cdot\nabla\Psi + \frac{i}{\sigma^2}\Fcal\,\Psi
+\end{equation}
+and identified the structural gap to the Schr\"odinger equation: the kinetic term $\frac{\sigma^2}{2}\Delta$ is \textit{real diffusion} (dissipative), whereas Schr\"odinger requires \textit{imaginary propagation} $-\frac{\hbar^2}{2m}\Delta$ in the generator (equivalently, $+\frac{i\hbar}{2m}\Delta$ after dividing by $i\hbar$).
+
+Paper~XVI left open the question: is this gap an artefact of the derivation, or a structural feature of the framework?
+
+\subsection*{The problems this paper addresses}
+
+\begin{enumerate}
+    \item[(P8)] \textbf{The dissipative-obstruction problem.} Is the real kinetic term a necessary consequence of the closure construction, or can it be modified?
+
+    \item[(P9)] \textbf{The minimal-extension problem.} If closure dynamics alone cannot produce unitary evolution, what is the smallest structural addition that enables it?
+\end{enumerate}
+
+\subsection*{Scope and epistemic status}
+
+This paper proves a no-go result (the dissipative obstruction) and analyses candidate extensions. It does not claim Schr\"odinger recovery. Where results are proved, they are stated as theorems or propositions; where routes are exploratory, that status is explicit.
+
+\begin{remark}[Scope of extension analysis]
+The analysis identifies classes of extensions capable of overcoming the dissipative obstruction. It does not determine which extension is physically realised, nor does it establish uniqueness. The purpose is structural classification, not selection.
+\end{remark}
+
+%==================================================================
+\section{The Kinetic-Term Gap}\label{sec:gap}
+%==================================================================
+
+The closure evolution equation~\eqref{eq:closure_evo} has generator:
+\begin{equation}
+    \Lcal = \underbrace{\frac{\sigma^2}{2}\Delta - \nabla\Fcal\cdot\nabla}_{L_{\mathrm{BK}}} + \frac{i}{\sigma^2}\Fcal
+\end{equation}
+where $L_{\mathrm{BK}}$ is the backward Kolmogorov generator of the Langevin equation $d\psi = -\nabla\Fcal\,dt + \sigma\,dW$.
+
+The Schr\"odinger generator (after writing $i\hbar\partial_t\psi = \hat{H}\psi$ as $\partial_t\psi = -\frac{i}{\hbar}\hat{H}\psi$) is:
+\begin{equation}
+    \Lcal_S = -\frac{i}{\hbar}\hat{H} = \frac{i\hbar}{2m}\Delta - \frac{i}{\hbar}V
+\end{equation}
+
+\begin{table}[ht]
+\centering
+\caption{Generator comparison: closure vs Schr\"odinger.}
+\label{tab:generators}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Component & Closure generator $\Lcal$ & Schr\"odinger generator $\Lcal_S$ \\
+\midrule
+Kinetic & $+\frac{\sigma^2}{2}\Delta$ (real, positive) & $+\frac{i\hbar}{2m}\Delta$ (imaginary) \\
+Drift & $-\nabla\Fcal\cdot\nabla$ & Absent \\
+Potential & $+\frac{i}{\sigma^2}\Fcal$ (imaginary) & $-\frac{i}{\hbar}V$ (imaginary) \\
+Adjointness & Dissipative & Skew-adjoint (unitary) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The potential terms are both imaginary and structurally similar. The kinetic terms are fundamentally different: real vs.\ imaginary. The drift term in the closure generator has no Schr\"odinger counterpart (though it can be eliminated by the substitution of Paper~XVI, Proposition~2).
+
+%==================================================================
+\section{The Dissipative Obstruction}\label{sec:nogo}
+%==================================================================
+
+We now prove that the kinetic-term gap is a structural consequence of the closure construction, not an artefact.
+
+\subsection{Setup}
+
+Define the weighted inner product associated with the Paper~XIV stationary distribution $P_{\mathrm{st}} = Z^{-1}e^{-2\Fcal/\sigma^2}$:
+\begin{equation}\label{eq:innerproduct}
+    \langle \Psi_1, \Psi_2 \rangle_w = \int \Psi_1^*\, \Psi_2\, e^{-2\Fcal/\sigma^2}\, d\psi
+\end{equation}
+
+This is the natural inner product for the closure framework: the stationary state $\Psi_{\mathrm{st}} \propto e^{-\Fcal/\sigma^2}$ has unit norm in this space.
+
+\subsection{The obstruction theorem}
+
+\begin{theorem}[Dissipative obstruction]\label{thm:nogo}
+Let $\Fcal \in C^2(\Sadm)$ with $|\nabla\Fcal|$ growing at most polynomially, and let $M: \Sadm \to \mathbb{R}$ be any bounded measurable function. The generator:
+\begin{equation}
+    \Lcal = \frac{\sigma^2}{2}\Delta - \nabla\Fcal\cdot\nabla + i\,M
+\end{equation}
+is dissipative in $L^2(e^{-2\Fcal/\sigma^2})$: for all $\Psi \in C_c^\infty(\Sadm)$ (or more generally, any domain of smooth functions with sufficient decay for the integrations by parts below to be valid),
+\begin{equation}\label{eq:dissipation}
+    2\,\mathrm{Re}\langle \Lcal\Psi, \Psi\rangle_w = -\sigma^2 \int |\nabla\Psi|^2\, e^{-2\Fcal/\sigma^2}\, d\psi \;\leq\; 0
+\end{equation}
+Equality holds if and only if $\nabla\Psi = 0$ almost everywhere. In particular, $\Lcal$ is dissipative in the natural weighted inner product, cannot be skew-adjoint, and hence cannot define unitary evolution on that space --- regardless of the choice of imaginary potential $iM$.
+\end{theorem}
+
+\begin{remark}[Domain sufficiency]
+For the purposes of the obstruction result, the smooth compactly supported domain $C_c^\infty(\Sadm)$ is sufficient: the sign-definite dissipation identity~\eqref{eq:dissipation} already shows that the generator cannot be skew-adjoint on any closure of this domain. A maximal closed-operator extension or Lumer--Phillips construction is not needed for the paper's main conclusion.
+\end{remark}
+
+\begin{proof}
+Compute:
+\begin{align}
+    &\langle \Lcal\Psi, \Psi\rangle_w + \langle \Psi, \Lcal\Psi\rangle_w \notag \\
+    &= \int \left[(\Lcal\Psi)^*\Psi + \Psi^*(\Lcal\Psi)\right] e^{-2\Fcal/\sigma^2}\, d\psi
+\end{align}
+
+\textbf{Step 1: The imaginary potential cancels.}
+\begin{equation}
+    (iM\Psi)^*\Psi + \Psi^*(iM\Psi) = -iM|\Psi|^2 + iM|\Psi|^2 = 0
+\end{equation}
+The choice of $M$ is irrelevant to the dissipation rate. This is the key structural point: \textit{no imaginary potential, however chosen, affects whether the generator is dissipative.}
+
+\textbf{Step 2: The Laplacian term.} Write $w = e^{-2\Fcal/\sigma^2}$. Integrating by parts (boundary terms vanish by the decay assumption):
+\begin{align}
+    \frac{\sigma^2}{2}\int (\Delta\Psi^*)\Psi\, w\, d\psi
+    &= -\frac{\sigma^2}{2}\int \nabla\Psi^* \cdot \nabla(\Psi\, w)\, d\psi \notag \\
+    &= -\frac{\sigma^2}{2}\int |\nabla\Psi|^2 w\, d\psi + \int \nabla\Psi^* \cdot \Psi\, \nabla\Fcal\, w\, d\psi
+\end{align}
+using $\nabla w = -(2\nabla\Fcal/\sigma^2)\,w$. Adding the conjugate term:
+\begin{equation}
+    \frac{\sigma^2}{2}\int \left[(\Delta\Psi^*)\Psi + \Psi^*(\Delta\Psi)\right] w = -\sigma^2\!\int |\nabla\Psi|^2 w + \int \nabla|\Psi|^2\cdot\nabla\Fcal\, w
+\end{equation}
+
+\textbf{Step 3: The drift term.}
+\begin{equation}
+    -\int \nabla\Fcal\cdot\nabla|\Psi|^2\, w\, d\psi
+\end{equation}
+
+\textbf{Step 4: Combine.} The $\nabla|\Psi|^2\cdot\nabla\Fcal$ terms from Steps~2 and~3 cancel exactly, leaving:
+\begin{equation}
+    2\,\mathrm{Re}\langle \Lcal\Psi, \Psi\rangle_w = -\sigma^2 \int |\nabla\Psi|^2\, w\, d\psi \leq 0 \qedhere
+\end{equation}
+\end{proof}
+
+\begin{remark}[Interpretation]
+The theorem states that the backward Kolmogorov generator --- which arises from any real-valued Langevin process --- is inherently dissipative in the equilibrium-weighted inner product, and that \textit{adding an imaginary potential does not change this}. Paper~XV's complexification (and any extension of it involving different choices of $M$) produces phase rotation and interference, but cannot convert the dissipative kinetic term into an oscillatory one.
+
+The key point is that the obstruction sits in the \textbf{kinetic sector}, not the phase sector. Changing $M$ modifies only the imaginary (phase-generating) part of the generator; the real (kinetic/dissipative) part is untouched. Phase complexification alone cannot repair dissipative kinetics.
+\end{remark}
+
+\subsection{Equivalence in the drift-free frame}
+
+Paper~XVI introduced the substitution $\Psi = e^{\Fcal/\sigma^2}\Phi$, giving the drift-free generator:
+\begin{equation}
+    \tilde{\Lcal} = \frac{\sigma^2}{2}\Delta + W(\psi), \qquad W = -V_{\mathrm{W}} + iM
+\end{equation}
+where $V_{\mathrm{W}} = |\nabla\Fcal|^2/(2\sigma^2) - \Delta\Fcal/2$ is the Witten potential. Since the substitution is an isometry between $L^2(e^{-2\Fcal/\sigma^2})$ and $L^2(d\psi)$, the obstruction takes the equivalent form:
+
+\begin{corollary}[Drift-free form of the obstruction]\label{cor:driftfree}
+In the standard $L^2(d\psi)$ inner product:
+\begin{equation}\label{eq:witten_dissipation}
+    2\,\mathrm{Re}\langle \tilde{\Lcal}\Phi, \Phi\rangle = -2\langle H_{\mathrm{W}}\Phi, \Phi\rangle \leq 0
+\end{equation}
+where $H_{\mathrm{W}} = -(\sigma^2/2)\Delta + V_{\mathrm{W}}$ is the non-negative Witten Hamiltonian.
+\end{corollary}
+
+\begin{proof}
+The imaginary part $iM$ of $\tilde{\Lcal}$ cancels in $\mathrm{Re}\langle\tilde{\Lcal}\Phi,\Phi\rangle$ (same argument as Theorem~\ref{thm:nogo}, Step~1). The real part is $\mathrm{Re}(\tilde{\Lcal}) = (\sigma^2/2)\Delta - V_{\mathrm{W}} = -H_{\mathrm{W}}$, so $2\,\mathrm{Re}\langle \tilde{\Lcal}\Phi,\Phi\rangle = -2\langle H_{\mathrm{W}}\Phi,\Phi\rangle$.
+
+It remains to show $H_{\mathrm{W}} \geq 0$. By integration by parts:
+\begin{equation}
+    \langle H_{\mathrm{W}}\Phi,\Phi\rangle = \frac{\sigma^2}{2}\int|\nabla\Phi|^2\,d\psi + \int V_{\mathrm{W}}|\Phi|^2\,d\psi
+\end{equation}
+Expanding and completing the square (using $V_{\mathrm{W}} = |\nabla\Fcal|^2/(2\sigma^2) - \Delta\Fcal/2$ and integrating the cross-term by parts):
+\begin{equation}
+    \langle H_{\mathrm{W}}\Phi,\Phi\rangle = \frac{\sigma^2}{2}\int\left|\nabla\Phi + \frac{\nabla\Fcal}{\sigma^2}\Phi\right|^2 d\psi \;\geq\; 0
+\end{equation}
+This is the Witten factorisation $H_{\mathrm{W}} = Q^\dagger Q$ with supercharge $Q = (\sigma/\sqrt{2})(\nabla + \nabla\Fcal/\sigma^2)$, valid under the same regularity assumptions as Theorem~\ref{thm:nogo}.
+\end{proof}
+
+\begin{remark}
+The change of frame removes the explicit drift but does not alter the obstruction: dissipation reappears as positivity of the Witten Hamiltonian. The dissipation rate $\langle H_{\mathrm{W}}\Phi,\Phi\rangle$ vanishes only for the ground state $\Phi_0 \propto e^{-\Fcal/\sigma^2}$ (the Paper~XIV equilibrium). All other states dissipate. This is the same physical content in a different mathematical frame: the closure framework drives all configurations toward equilibrium, which is dissipative, not unitary.
+\end{remark}
+
+\subsection{What the obstruction rules out}
+
+The dissipative obstruction applies to \textit{any} generator of the form $L_{\mathrm{BK}} + iM$, where $L_{\mathrm{BK}}$ comes from a real Langevin process and $M$ is any real-valued function. It rules out:
+
+\begin{itemize}
+    \item choosing a different imaginary potential (the obstruction is $M$-independent),
+    \item choosing a different closure functional $\Fcal$ (the obstruction holds for any $C^2$ functional),
+    \item choosing a different noise amplitude $\sigma$ (the dissipation rate scales as $\sigma^2$, but remains strictly negative for $\sigma > 0$).
+\end{itemize}
+
+It does \textit{not} rule out:
+\begin{itemize}
+    \item extending the state space beyond $\Sadm$ (e.g.\ adding conjugate variables),
+    \item modifying the stochastic process itself (e.g.\ pairing forward and backward processes),
+    \item changing the generator structure to include a reversible (non-dissipative) kinetic component.
+\end{itemize}
+
+%==================================================================
+\section{Candidate Routes Past the Obstruction}\label{sec:routes}
+%==================================================================
+
+The obstruction theorem identifies the precise structural feature responsible: the backward Kolmogorov generator is dissipative. To produce unitary dynamics, the framework must be extended so that the kinetic term becomes imaginary (skew-adjoint) rather than real (self-adjoint and non-positive). Three candidate routes are analysed.
+
+\subsection{Route A: Hamiltonian lift}\label{sec:routeA}
+
+\subsubsection*{Diagnosis}
+
+The closure dynamics $\dot{\psi} = -\nabla\Fcal$ is first-order and dissipative: it has no inertia, no conjugate momentum, and no conserved energy. The Schr\"odinger equation arises from quantising a \textit{Hamiltonian} (conservative, second-order) system. The obstruction exists because the closure framework lacks the conservative sector.
+
+\subsubsection*{Extension}
+
+Introduce a conjugate momentum $p$ and an extended state space $T^*\Sadm = \{(\psi, p)\}$. Define a closure Hamiltonian:
+\begin{equation}\label{eq:hamiltonian}
+    H_{\mathrm{cl}}(\psi, p) = \frac{p^2}{2m_{\mathrm{eff}}} + V_{\mathrm{cl}}(\psi)
+\end{equation}
+where $V_{\mathrm{cl}}(\psi)$ is a potential derived from the closure functional (a natural candidate is $V_{\mathrm{cl}} = \Fcal/\sigma^2$ or $V_{\mathrm{cl}} = V_{\mathrm{W}}$).
+
+Hamilton's equations give conservative dynamics:
+\begin{equation}
+    \dot{\psi} = \frac{p}{m_{\mathrm{eff}}}, \qquad \dot{p} = -\nabla V_{\mathrm{cl}}(\psi)
+\end{equation}
+
+This is second-order, conservative, and energy-preserving. Standard canonical quantisation then yields:
+\begin{equation}\label{eq:schrodinger_from_lift}
+    i\hbar_{\mathrm{eff}}\,\partial_t\Psi = \left(-\frac{\hbar_{\mathrm{eff}}^2}{2m_{\mathrm{eff}}}\Delta + V_{\mathrm{cl}}\right)\Psi
+\end{equation}
+which is the Schr\"odinger equation with effective parameters.
+
+\subsubsection*{Assessment}
+
+The Hamiltonian lift produces Schr\"odinger dynamics by construction, but at a significant structural cost:
+\begin{itemize}
+    \item A new degree of freedom $p$ is introduced (not present in Papers~XII--XVI).
+    \item The dynamics changes from first-order dissipative to second-order conservative.
+    \item The relationship between the Hamiltonian potential $V_{\mathrm{cl}}$ and the closure functional $\Fcal$ is an additional ansatz.
+    \item The effective parameters $m_{\mathrm{eff}}$ and $\hbar_{\mathrm{eff}}$ are not determined by the existing framework.
+\end{itemize}
+
+\textbf{Status:} Route~A is a sufficient extension by construction: it produces Schr\"odinger evolution but does so by adding new ontology (conjugate momentum, Hamiltonian structure) that is not present in or derivable from Papers~XII--XVI. Neither the momentum variable nor the effective parameters $m_{\mathrm{eff}}$, $\hbar_{\mathrm{eff}}$ are determined by the existing closure framework. Route~A therefore demonstrates sufficiency of one conservative extension class, but not necessity and not derivability from the present programme.
+
+\subsection{Route B: Nelson-type time-reversal pairing}\label{sec:routeB}
+
+\subsubsection*{Diagnosis}
+
+Nelson's stochastic mechanics derives the Schr\"odinger equation from a \textit{pair} of stochastic processes: the forward process and its time-reversal. The imaginary kinetic term emerges from the antisymmetric combination of forward and backward drifts. The closure framework has the forward process (Paper~XIV) but has not used its time-reversal.
+
+\subsubsection*{Construction}
+
+The forward Langevin process is:
+\begin{equation}
+    d\psi_t = b_+(\psi_t, t)\, dt + \sigma\, dW_t^+, \qquad b_+ = -\nabla\Fcal
+\end{equation}
+
+For a probability density $\rho(\psi, t)$, the time-reversed process has backward drift:
+\begin{equation}\label{eq:backward}
+    b_-(\psi, t) = b_+(\psi, t) - \sigma^2\, \nabla\log\rho(\psi, t)
+\end{equation}
+
+Define the Nelson velocities:
+\begin{align}
+    v &= \frac{b_+ + b_-}{2} = -\nabla\Fcal - \frac{\sigma^2}{2}\nabla\log\rho \qquad \text{(current velocity)} \label{eq:current} \\
+    u &= \frac{b_+ - b_-}{2} = \frac{\sigma^2}{2}\nabla\log\rho \qquad \text{(osmotic velocity)} \label{eq:osmotic}
+\end{align}
+
+\subsubsection*{Stationary case}
+
+At the Paper~XIV equilibrium $\rho_{\mathrm{st}} \propto e^{-2\Fcal/\sigma^2}$:
+\begin{equation}
+    \nabla\log\rho_{\mathrm{st}} = -\frac{2\nabla\Fcal}{\sigma^2}
+\end{equation}
+
+The Nelson velocities become:
+\begin{align}
+    v_{\mathrm{st}} &= -\nabla\Fcal - \frac{\sigma^2}{2}\left(-\frac{2\nabla\Fcal}{\sigma^2}\right) = 0 \\
+    u_{\mathrm{st}} &= \frac{\sigma^2}{2}\left(-\frac{2\nabla\Fcal}{\sigma^2}\right) = -\nabla\Fcal
+\end{align}
+
+At stationarity the current velocity vanishes (no net probability flow) and the osmotic velocity equals the gradient-flow drift. This is consistent: the Paper~XIV equilibrium is the ground state, and ground states in Nelson mechanics have $v = 0$.
+
+\subsubsection*{The Nelson wavefunction}
+
+Define the Nelson wavefunction:
+\begin{equation}\label{eq:nelson_psi}
+    \Psi_N = \sqrt{\rho}\, e^{iS/\sigma^2}
+\end{equation}
+where $S$ is determined by $v = \nabla S/m_{\mathrm{eff}}$ (or some closure-appropriate identification). If one can show that $\Psi_N$ satisfies a Schr\"odinger-type equation, then the imaginary kinetic term arises from the combination of forward and backward processes without introducing new variables.
+
+\subsubsection*{Assessment}
+
+The Nelson route is structurally attractive because:
+\begin{itemize}
+    \item it uses the \textit{existing} stochastic process of Paper~XIV,
+    \item the time-reversed process is defined by the same Langevin equation (no new dynamical ingredients),
+    \item the imaginary kinetic term emerges from the antisymmetric pairing of forward and backward drifts.
+\end{itemize}
+
+However, the construction requires:
+\begin{itemize}
+    \item a physical identification of the current velocity $v$ with a gradient field $\nabla S / m_{\mathrm{eff}}$,
+    \item a dynamical equation for $S$ (or equivalently $v$),
+    \item an effective mass $m_{\mathrm{eff}}$ and effective Planck constant $\hbar_{\mathrm{eff}}$.
+\end{itemize}
+
+At stationarity, $v = 0$ and the construction yields the ground state. For non-stationary states, the Nelson construction remains to be completed within the closure framework.
+
+\textbf{Status:} Route~B is the most promising candidate route toward a \textit{derivation} rather than an extension, because it reuses the existing stochastic closure substrate and introduces no new degrees of freedom. However, it is not yet complete. At present, Route~B establishes only the stationary and structural pieces of the Nelson construction: the forward and backward drifts, the osmotic and current velocities, and the ground-state wavefunction. The unresolved step is not the forward/backward pairing itself, but the missing closure-internal dynamics for the current velocity $v$ away from equilibrium. Without that dynamical law, the non-stationary Nelson wavefunction cannot be shown to satisfy a Schr\"odinger-type equation. Completing this step is the subject of the next paper.
+
+\subsection{Route C: Dual-generator decomposition}\label{sec:routeC}
+
+\subsubsection*{Diagnosis}
+
+The closure generator is $\Lcal = -H_{\mathrm{W}} + iM$ in the drift-free frame: the real part is dissipative, the imaginary part is oscillatory. The Schr\"odinger generator is $\Lcal_S = -iH$: entirely imaginary (skew-adjoint). The mismatch is that the closure kinetic term sits in the real (dissipative) sector rather than the imaginary (reversible) sector.
+
+\subsubsection*{Decomposition}
+
+Any generator on a complex function space can be decomposed:
+\begin{equation}\label{eq:dual}
+    \Lcal = \Lcal_{\mathrm{diss}} + i\,\Lcal_{\mathrm{rev}}
+\end{equation}
+where $\Lcal_{\mathrm{diss}} = \mathrm{Re}(\Lcal)$ generates dissipation and $\Lcal_{\mathrm{rev}} = \mathrm{Im}(\Lcal)/i$ generates reversible evolution.
+
+For the closure generator (drift-free):
+\begin{align}
+    \Lcal_{\mathrm{diss}} &= -H_{\mathrm{W}} = \frac{\sigma^2}{2}\Delta - V_{\mathrm{W}} \label{eq:diss_sector}\\
+    \Lcal_{\mathrm{rev}} &= \frac{\Fcal}{\sigma^2} \label{eq:rev_sector}
+\end{align}
+
+For the Schr\"odinger generator (with $V = \Fcal/\sigma^2$):
+\begin{align}
+    \Lcal_{\mathrm{diss}}^{(S)} &= 0 \\
+    \Lcal_{\mathrm{rev}}^{(S)} &= -\hat{H}/\hbar = -\frac{\hbar}{2m}\Delta + \frac{V}{\hbar}
+\end{align}
+
+\subsubsection*{The structural mismatch}
+
+The Witten Hamiltonian $H_{\mathrm{W}}$ appears in the \textit{dissipative sector} of the closure generator, but the kinetic operator $-\frac{\hbar}{2m}\Delta$ appears in the \textit{reversible sector} of the Schr\"odinger generator. The transition from closure to Schr\"odinger requires:
+\begin{equation}\label{eq:transfer}
+    H_{\mathrm{W}} \;\xrightarrow{\text{transfer}}\; i\,H_{\mathrm{eff}}
+\end{equation}
+That is, the Witten Hamiltonian must be \textit{moved from the real to the imaginary part of the generator}.
+
+\begin{remark}
+This transfer is precisely the ``second complexification'' identified in Paper~XVI (Table~2). The dual-generator framework makes it explicit: the closure framework has placed the kinetic operator in the dissipative sector, and Schr\"odinger recovery requires relocating it to the reversible sector.
+\end{remark}
+
+\subsubsection*{Assessment}
+
+The dual-generator decomposition is conceptually clarifying but does not by itself provide a mechanism for the transfer~\eqref{eq:transfer}. It identifies \textit{what} must happen but not \textit{how}. The transfer would require either:
+\begin{itemize}
+    \item a physical principle that selects the reversible generator over the dissipative one (Route~A provides this via Hamiltonian mechanics),
+    \item a mathematical construction that automatically produces the imaginary kinetic term (Route~B provides this via forward-backward pairing).
+\end{itemize}
+
+\textbf{Status:} Structural classification only. Route~C is best understood as a bookkeeping framework: it identifies where the kinetic operator sits (dissipative sector) and where it must move (reversible sector), but not how to move it. Routes~A and~B supply candidate mechanisms; Route~C supplies the diagnostic language in which to describe them.
+
+%==================================================================
+\section{The Minimal Extension Principle}\label{sec:minimal}
+%==================================================================
+
+The three routes share a common structural feature:
+
+\begin{remark}[Structural principle: minimal extension]\label{rem:minimal}
+The dissipative obstruction (Theorem~\ref{thm:nogo}) indicates that overcoming the dissipative kinetic sector requires supplementing the closure framework with a \textbf{reversible dynamical component}: a structure that generates conservative (non-dissipative) evolution in the kinetic sector. Three candidate instantiations have been identified:
+\begin{enumerate}
+    \item a conjugate momentum variable with Hamiltonian dynamics (Route~A),
+    \item a time-reversed stochastic process paired with the forward process (Route~B),
+    \item a reversible generator sector that replaces the dissipative kinetic term (Route~C).
+\end{enumerate}
+Each instantiation is intended to supply the reversible structure needed to convert the real kinetic operator $(\sigma^2/2)\Delta$ into an imaginary one. Route~A achieves this by construction; Routes~B and~C indicate how it could be achieved but are not yet completed.
+
+The paper identifies the minimal \textit{category} of missing structure --- reversible dynamics in the kinetic sector --- not a uniquely determined completion. Other structural routes not considered here may exist. The specific instantiation (which route, with which parameters) is not determined by the closure framework alone.
+\end{remark}
+
+\begin{remark}[What the extension is not]
+The minimal extension is not:
+\begin{itemize}
+    \item a change of imaginary potential (ruled out by Theorem~\ref{thm:nogo}),
+    \item a change of inner product or norm (the obstruction is proved in the natural weighted space and the equivalent drift-free form confirms it is frame-independent, Corollary~\ref{cor:driftfree}),
+    \item a Wick rotation (the formal substitutions $t \to -i\tau$ or $\sigma^2 \to -\tilde{\sigma}^2$ from Paper~XVI are algebraic, not dynamical extensions).
+\end{itemize}
+\end{remark}
+
+%==================================================================
+\section{Worked Example: Quadratic Closure Functional}\label{sec:example}
+%==================================================================
+
+\begin{example}[Quadratic example]\label{ex:quadratic}
+Consider $\Fcal(\psi) = \frac{1}{2}k\psi^2$ in one dimension.
+
+\subsection*{Dissipative obstruction}
+
+The Witten potential is $V_{\mathrm{W}} = k^2\psi^2/(2\sigma^2) - k/2$, and the Witten Hamiltonian is:
+\begin{equation}
+    H_{\mathrm{W}} = -\frac{\sigma^2}{2}\partial_\psi^2 + \frac{k^2\psi^2}{2\sigma^2} - \frac{k}{2}
+\end{equation}
+This is a shifted harmonic oscillator with spectrum $E_n = nk$ for $n = 0, 1, 2, \ldots$ The ground state ($n=0$, $E_0 = 0$) is $\Phi_0 \propto e^{-k\psi^2/(2\sigma^2)}$, which is the Paper~XIV equilibrium.
+
+The dissipation rate for any state $\Phi = \sum_n c_n \phi_n$ (where $\phi_n$ are eigenstates) is:
+\begin{equation}
+    2\,\mathrm{Re}\langle\tilde{\Lcal}\Phi,\Phi\rangle = -2\sum_n |c_n|^2 E_n = -2k\sum_{n \geq 1} n|c_n|^2
+\end{equation}
+This vanishes only for $\Phi = c_0\phi_0$ (the ground state). All excited states dissipate at rate proportional to their Witten energy.
+
+\subsection*{Route A: Hamiltonian lift}
+
+With $V_{\mathrm{cl}} = k\psi^2/(2\sigma^2)$, the lifted Hamiltonian is:
+\begin{equation}
+    H_{\mathrm{cl}} = \frac{p^2}{2m_{\mathrm{eff}}} + \frac{k\psi^2}{2\sigma^2}
+\end{equation}
+Quantisation yields the harmonic-oscillator Schr\"odinger equation:
+\begin{equation}
+    i\hbar_{\mathrm{eff}}\partial_t\Psi = -\frac{\hbar_{\mathrm{eff}}^2}{2m_{\mathrm{eff}}}\partial_\psi^2\Psi + \frac{k\psi^2}{2\sigma^2}\Psi
+\end{equation}
+with frequency $\omega = \sqrt{k/(m_{\mathrm{eff}}\sigma^2)}$ and energy levels $E_n = \hbar_{\mathrm{eff}}\omega(n + \frac{1}{2})$.
+
+\subsection*{Route B: Nelson construction at stationarity}
+
+At equilibrium, $\rho_{\mathrm{st}} = Z^{-1}e^{-k\psi^2/\sigma^2}$. The osmotic velocity is $u = -k\psi$, the current velocity is $v = 0$. The Nelson wavefunction is:
+\begin{equation}
+    \Psi_N = \sqrt{\rho_{\mathrm{st}}}\, e^{i \cdot 0} = Z^{-1/2}\, e^{-k\psi^2/(2\sigma^2)}
+\end{equation}
+which is real and positive --- the ground state of the harmonic oscillator (consistent with $v = 0$).
+
+\subsection*{Comparison}
+
+\begin{table}[ht]
+\centering
+\caption{Quadratic example across the three frameworks.}
+\label{tab:quadratic}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Feature & Closure (XVI) & Hamiltonian lift & Nelson pairing \\
+\midrule
+Kinetic term & $+\frac{\sigma^2}{2}\partial^2$ (real) & $-\frac{\hbar_{\mathrm{eff}}^2}{2m_{\mathrm{eff}}}\partial^2$ (real, neg.) & Implicit in pairing \\
+Generator type & Dissipative & Skew-adjoint & Skew-adjoint (if completed) \\
+Ground state & $e^{-k\psi^2/(2\sigma^2)}$ & $e^{-k\psi^2/(2\sigma^2)}$ & $e^{-k\psi^2/(2\sigma^2)}$ \\
+Excited states & Dissipate to ground & Oscillate & Oscillate (if completed) \\
+New ingredients & None & $p$, $m_{\mathrm{eff}}$, $\hbar_{\mathrm{eff}}$ & $v$ dynamics \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All three frameworks share the same ground state. They differ in how excited states evolve: the closure framework dissipates them toward the ground state, while the Hamiltonian and Nelson routes produce oscillatory dynamics. The ground-state coincidence is a consistency check across the frameworks, not yet a derivation of common dynamics.
+\end{example}
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is proved}
+
+\begin{itemize}
+    \item \textbf{The dissipative obstruction} (Theorem~\ref{thm:nogo}): any generator of the form $L_{\mathrm{BK}} + iM$ is dissipative in $L^2(P_{\mathrm{st}})$, independent of the imaginary potential. This is a proved structural result.
+    \item \textbf{The drift-free equivalence} (Corollary~\ref{cor:driftfree}): the obstruction is equivalent to $-H_{\mathrm{W}}$ being the real part of the drift-free generator, with $H_{\mathrm{W}} \geq 0$.
+    \item \textbf{The ground-state coincidence}: all three routes produce the same ground state $\propto e^{-\Fcal/\sigma^2}$, confirming that the Paper~XIV equilibrium is a universal fixed point.
+\end{itemize}
+
+\subsection{What is identified but not derived}
+
+\begin{itemize}
+    \item \textbf{The minimal extension principle} (Remark~\ref{rem:minimal}): the obstruction analysis indicates that a reversible dynamical component is needed, with three candidate instantiations. The specific instantiation is not determined.
+    \item \textbf{Route A} (Hamiltonian lift): works by construction, but introduces new degrees of freedom and undetermined parameters.
+    \item \textbf{Route B} (Nelson pairing): the most promising for a derivation, but requires a dynamical equation for the current velocity that is not yet available within the closure framework.
+    \item \textbf{Route C} (dual-generator): identifies the structural mismatch but does not provide a mechanism.
+\end{itemize}
+
+\subsection{What is not achieved}
+
+\begin{itemize}
+    \item \textbf{No Schr\"odinger recovery.} None of the three routes is completed to the point of deriving the Schr\"odinger equation from closure dynamics alone.
+    \item \textbf{No determination of effective parameters.} The values of $m_{\mathrm{eff}}$ and $\hbar_{\mathrm{eff}}$ are not fixed by the analysis.
+    \item \textbf{No Hilbert-space construction.} The state space remains $\Sadm$ (or $T^*\Sadm$ for Route~A), not a Hilbert space with axiomatically defined inner product.
+\end{itemize}
+
+\subsection{Open questions}
+
+\begin{itemize}
+    \item Can Route~B be completed? Specifically, can the closure framework supply a dynamical equation for the current velocity $v$ that, combined with the osmotic velocity $u = (\sigma^2/2)\nabla\log\rho$, produces a Schr\"odinger-type equation for $\Psi_N = \sqrt{\rho}\,e^{iS/\sigma^2}$?
+    \item Is there a physical principle within the closure framework that selects one of the three routes?
+    \item Can the effective parameters $m_{\mathrm{eff}}$ and $\hbar_{\mathrm{eff}}$ be related to closure-geometric quantities?
+    \item Does the supersymmetric structure of $H_{\mathrm{W}}$ provide additional constraints on the extension?
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+Paper~XVII closes one line of attack and opens a narrower one.
+
+\textbf{Proved boundary.} The dissipative obstruction theorem (Theorem~\ref{thm:nogo}) establishes that any generator of the form $L_{\mathrm{BK}} + iM$ --- where $L_{\mathrm{BK}}$ is a backward Kolmogorov generator from a real Langevin process and $M$ is any real-valued function --- is dissipative in the equilibrium-weighted inner product. The obstruction sits in the kinetic sector: the real part of the generator produces contraction regardless of the imaginary potential. This applies to all of Papers~XIV--XVI: the complexification ansatz of Paper~XV produces phase and interference, but the resulting dynamics remains necessarily dissipative.
+
+\textbf{Search-space reduction.} Future work should stop trying to fix the unitarity problem by altering only the phase or potential sector. No choice of imaginary potential $M$ --- however sophisticated --- can overcome the kinetic dissipation. The search must instead target a reversible kinetic construction. Three candidate routes are classified:
+\begin{itemize}
+    \item Route~A (Hamiltonian lift): sufficient extension by construction, but introduces new ontology not derivable from the existing programme.
+    \item Route~B (Nelson-type pairing): best candidate for a derivation, since it reuses the existing stochastic closure substrate. Incomplete: the non-stationary dynamical law for the current velocity $v$ is missing.
+    \item Route~C (dual-generator decomposition): diagnostic framework that identifies where the kinetic operator must move, but provides no mechanism.
+\end{itemize}
+
+\textbf{Still open.} Which extension is physically correct; whether Route~B can be completed; the values of $m_{\mathrm{eff}}$ and $\hbar_{\mathrm{eff}}$; and whether the resulting dynamics yields full Schr\"odinger evolution or only an approximation.
+
+\textbf{The programme arc} is now:
+\begin{itemize}
+    \item Papers~XII--XIV: dissipative closure dynamics,
+    \item Paper~XV: phase and interference (first complexification),
+    \item Paper~XVI: evolution equation and structural gap identification,
+    \item Paper~XVII: proved obstruction and minimal extension classification.
+\end{itemize}
+
+Among the candidate routes, the forward/backward paired-process route is the most natural continuation because it preserves the existing closure stochastic substrate. Paper~XVIII should therefore test whether that route yields a genuine Schr\"odinger-type evolution or exposes the final missing ingredient.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

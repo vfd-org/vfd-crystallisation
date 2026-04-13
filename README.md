@@ -18,12 +18,13 @@ This repository presents a testable research framework and supporting reference 
 
 ## Research Scope
 
-This repository contains two connected research tracks within the broader VFD programme:
+This repository contains three connected research tracks within the broader VFD programme:
 
 1. **Crystallisation dynamics** — a deterministic, constraint-driven selection framework proposed as an alternative to probabilistic collapse in open quantum systems.
-2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–IV and anchored by Paper IV as the primary external-facing mass paper.
+2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–V and anchored by Paper IV as the primary external-facing mass paper.
+3. **The quantum recovery programme** — a sequence (Papers XV–XXI) showing that Schrödinger-type evolution emerges as the equilibrium tangent limit of a nonlinear closure-paired dynamics, without postulating quantum axioms.
 
-These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure.
+These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme asks whether quantum dynamics itself can arise from the closure framework.
 
 ---
 
@@ -42,6 +43,14 @@ These tracks are related by a common structural theme: state resolution through 
 3. Paper III (spectral support and retraction)
 4. Paper II (no-go theorem + conditional winding operator)
 5. Paper I (internal mass-development paper)
+
+### For the quantum recovery programme
+1. **Paper XXI** (synthesis — start here for the overview)
+2. Paper XVII (dissipative obstruction — the core no-go result)
+3. Paper XVIII (Nelson pairing — the mechanism)
+4. Paper XIX (residual classification)
+5. Paper XX (nonlinear quantum structure)
+6. Papers XV–XVI (phase/interference and evolution equation — background)
 
 ### For the conceptual bridge (Dirac → Crystallisation)
 1. Bridge paper (selection architecture on Dirac solution space)
@@ -190,17 +199,57 @@ Minimal dynamics. Gradient flow of closure functional with monotonic descent. Cl
 
 Multi-state interaction. Total closure functional F_tot = ΣF(ψ_i) + F_int(Ψ). Four interaction components: proximity, alignment, compatibility, binding. Coupled gradient flow. Interaction as basin deformation. Binding as joint attractor formation. Scattering-like basin transitions. Conservative Lagrangian extension. Structural interaction layer — no S-matrix, no QFT.
 
-#### Paper XV — Phase-Coherent Closure Dynamics (Interference)
-
-**[Phase-Coherent Closure Dynamics and the Emergence of Interference](papers/paper-xv/paper-xv.tex)**
-
-Extends Papers XII–XIV from dissipative/real-valued dynamics to phase-bearing dynamics capable of interference. Phase-augmented state space Ψ = (ψ, θ). Three candidate formulations: (A) complexified gradient flow, (B) Hamiltonian lift, (C) path-integral phase weighting. Interference demonstrated: paths with different accumulated phases produce constructive/destructive effects (proved). Double-well worked example. Crystallisation extended to phase-coherent selection. Born-like |A|² structure as formulation feature (not derived as physical law). Classical limit reduces to Paper XII gradient flow. Does NOT claim QM equivalence — no unitarity, no Schrödinger equation, no Hilbert space. Phase-rotation frequency Ω not uniquely derived. First phase-bearing layer of the closure programme.
-
 #### Paper XIV — Stochastic Closure Dynamics (Quantisation Layer)
 
 **[Quantisation as Stochastic Closure Dynamics in φ-Structured Geometry](papers/paper-xiv/Quantisation_as_Stochastic_Closure_Dynamics_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-xiv/paper-xiv.tex))
 
 Stochastic extension of deterministic closure dynamics. Langevin equation dψ = -∇F dt + σ dW on the closure landscape. Fokker-Planck equation with full derivation. Stationary distribution P ∝ exp(-2F/σ²) — proved, concentrates on M_cl. Local Gaussian approximation → excitation spectra from Hessian eigenvalues. Kramers barrier-crossing → transition rates. Onsager-Machlup path integral. Measurement as stochastic basin selection. Full QM comparison table (11 rows). Main theorem with 5 results. Does NOT claim QM equivalence — no unitarity, no interference, no Born rule derivation. Structural probabilistic layer from closure functional + noise.
+
+### Quantum Recovery Programme (Papers XV–XXI)
+
+The following sequence extends the closure dynamics of Papers XII–XIV toward quantum structure. Starting from dissipative gradient-flow dynamics, the programme constructs a layered route to Schrödinger-type evolution — not by postulating quantum axioms, but by deriving quantum structure from the closure framework. The central result is that the Schrödinger equation emerges as the equilibrium tangent limit of an exact nonlinear closure-paired dynamics.
+
+#### Paper XV — Phase-Coherent Closure Dynamics
+
+**[Phase-Coherent Closure Dynamics and the Emergence of Interference](papers/paper-xv/Phase_Coherent_Closure_Dynamics_and_the_Emergence_of_Interference.pdf)** ([LaTeX source](papers/paper-xv/paper-xv.tex))
+
+Extends Papers XII–XIV from dissipative/real-valued dynamics to phase-bearing dynamics. Introduces a complexified Onsager–Machlup action as a minimal ansatz; phase-rotation frequency Ω = F/σ² and amplitude A = exp(−F/σ²) are fixed by internal consistency with Paper XIV. Interference proved (Proposition 5). Double-well worked example. Born-like |A|² structure as formulation feature (not derived as physical law). Does NOT claim QM equivalence. First phase-bearing layer of the closure programme.
+
+#### Paper XVI — Closure Evolution Equation
+
+**[Toward Unitary Closure Dynamics: Oscillatory Limits of the Complexified Closure Path Integral](papers/paper-xvi/Toward_Unitary_Closure_Dynamics_Oscillatory_Limits_of_the_Complexified_Closure_Path_Integral.pdf)** ([LaTeX source](papers/paper-xvi/paper-xvi.tex))
+
+Derives the differential evolution equation generated by Paper XV's complexified path integral: ∂_tΨ = (σ²/2)ΔΨ − ∇F·∇Ψ + (i/σ²)FΨ. Identifies the structural gap: the kinetic term is real diffusion, not imaginary propagation. Drift-free form reveals operator structure as Euclidean QM plus imaginary potential. WKB transport regime with local modulus preservation. Identifies two-step complexification route toward Schrödinger form (formal).
+
+#### Paper XVII — Dissipative Obstruction Theorem
+
+**[The Dissipative Obstruction: Why Kolmogorov-Type Closure Generators Cannot Be Unitary and the Structure of Admissible Extensions](papers/paper-xvii/The_Dissipative_Obstruction_Why_Kolmogorov_Type_Closure_Generators_Cannot_Be_Unitary_and_the_Structure_of_Admissible_Extensions.pdf)** ([LaTeX source](papers/paper-xvii/paper-xvii.tex))
+
+Proves that any generator L_BK + iM (backward Kolmogorov plus any imaginary potential) is dissipative in the equilibrium-weighted inner product — regardless of the choice of M. The obstruction sits in the kinetic sector: phase complexification alone cannot produce unitary evolution. Classifies three candidate routes past the obstruction: Hamiltonian lift (sufficient by construction), Nelson-type pairing (best derivation candidate), dual-generator decomposition (classificatory). Identifies Route B as the most natural continuation.
+
+#### Paper XVIII — Nelson Pairing and Schrödinger Recovery
+
+**[Nelson Pairing for Closure Dynamics: Schrödinger-Type Evolution from Forward and Backward Closure Processes](papers/paper-xviii/Nelson_Pairing_for_Closure_Dynamics_Schrodinger_Type_Evolution_from_Forward_and_Backward_Closure_Processes.pdf)** ([LaTeX source](papers/paper-xviii/paper-xviii.tex))
+
+Carries out Route B from Paper XVII. Pairs the forward closure Langevin process with its time-reversal. Derives: exact continuity equation, automatically irrotational phase function (structural consequence of closure gradient drift), exact closure Madelung pair, exact nonlinear Schrödinger-type wave equation with imaginary kinetic term. At the Paper XIV equilibrium, the nonlinear potential evaluates exactly to give the Schrödinger equation with Witten Hamiltonian H_W; near equilibrium, this persists to leading order. Evades the XVII obstruction because the paired dynamics is not of the L_BK + iM form.
+
+#### Paper XIX — Closure Residual Classification
+
+**[The Closure Residual: Nonlinear Remainder Beyond the Witten-Hamiltonian Regime](papers/paper-xix/The_Closure_Residual_Nonlinear_Remainder_Beyond_the_Witten_Hamiltonian_Regime.pdf)** ([LaTeX source](papers/paper-xix/paper-xix.tex))
+
+Isolates and classifies the nonlinear residual δU_rel = σ²(Δ|Ψ|/|Ψ| − ΔR_st/R_st) — the sole remaining discrepancy between the paired-process dynamics and linear Schrödinger. Proves: equilibrium vanishing, phase invariance, locality, amplitude homogeneity, near-equilibrium O(ε) scaling, exact L² norm conservation. Gauge non-removability by phase or linear-unitary transforms. Defines a residual-strength parameter Ξ classifying dynamics into linear Schrödinger, mixed, and nonlinear closure regimes.
+
+#### Paper XX — Nonlinear Quantum Structure
+
+**[The Closure Residual and Nonlinear Quantum Structure: Equilibrium Quantum Limit and Modulus-Curvature Nonlinearity](papers/paper-xx/The_Closure_Residual_and_Nonlinear_Quantum_Structure.pdf)** ([LaTeX source](papers/paper-xx/paper-xx.tex))
+
+Places the closure residual into nonlinear Schrödinger structure. Defines the closure nonlinear operator N_cl and proves phase covariance, amplitude homogeneity, and equilibrium vanishing. Shows the linear Schrödinger equation is the Fréchet tangent dynamics at equilibrium — not the full closure dynamics, but the distinguished equilibrium tangent limit. Compares structurally with Madelung quantum potential and modulus-curvature NLS classes. The closure equation is a derived member of this class, with coefficient σ² and equilibrium subtraction 2V_W both fixed by the closure geometry, not introduced phenomenologically.
+
+#### Paper XXI — Structural Synthesis
+
+**[From Closure Dynamics to Quantum Structure: A Structural Synthesis of the Dissipative-to-Schrödinger Programme](papers/paper-xxi/From_Closure_Dynamics_to_Quantum_Structure.pdf)** ([LaTeX source](papers/paper-xxi/paper-xxi.tex))
+
+Bridge/synthesis paper for the full XV–XX sequence. Summarises the five-stage construction: closure evolution equation → dissipative obstruction → Nelson pairing → residual isolation → structural classification. Central result: the Schrödinger equation appears as the distinguished equilibrium tangent sector of an exact nonlinear closure-paired dynamics. Explicitly states what is and is not established. Does not claim full quantum mechanics, measurement theory, or experimental predictions. Identifies the physical status of the nonlinear residual as the defining open question.
 
 ### Bridge Paper — From Dirac to Crystallisation
 
@@ -232,6 +281,12 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xxi/              Paper XXI: structural synthesis (dissipative → Schrödinger)
+│   ├── paper-xx/               Paper XX: nonlinear quantum structure
+│   ├── paper-xix/              Paper XIX: closure residual classification
+│   ├── paper-xviii/            Paper XVIII: Nelson pairing and Schrödinger recovery
+│   ├── paper-xvii/             Paper XVII: dissipative obstruction theorem
+│   ├── paper-xvi/              Paper XVI: closure evolution equation
 │   ├── paper-xv/               Paper XV: phase-coherent dynamics (interference)
 │   ├── paper-xiv/              Paper XIV: stochastic closure dynamics (quantisation)
 │   ├── paper-xiii/             Paper XIII: interaction dynamics and basin transitions
@@ -318,8 +373,10 @@ This repository makes claims at three levels, which should be evaluated independ
 | **Structural** | Constraint-driven selection arises naturally in systems with constraints, cost, and coherence | Inevitability paper, Mechanism paper |
 | **Phenomenological** | The crystallisation dynamics yields testable deviations from standard QM in specific regimes | Flagship, Experimental companion |
 | **Demonstrative** | The mechanism can be concretely instantiated and independently verified | ARIA demonstration + proof pack |
+| **Quantum recovery** | Schrödinger-type dynamics emerges as the equilibrium tangent limit of a nonlinear closure-paired dynamics | Papers XVII–XXI |
+| **No-go** | Single-generator Kolmogorov-type closure dynamics cannot be unitary (proved) | Paper XVII |
 
-The framework does not claim to replace quantum mechanics. It proposes a testable extension and provides the tools to evaluate it.
+The framework does not claim to replace quantum mechanics. It proposes a testable extension and provides the tools to evaluate it. The quantum recovery programme (Papers XV–XXI) establishes a mathematical pathway from dissipative closure dynamics to Schrödinger-type evolution but does not claim full quantum mechanics, measurement theory, or experimental predictions from the nonlinear residual.
 
 ---
 

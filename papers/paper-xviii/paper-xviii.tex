@@ -1,0 +1,533 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\VW}{V_{\mathrm{W}}}
+
+\title{Nelson Pairing for Closure Dynamics:\\Schr\"odinger-Type Evolution\\from Forward and Backward Closure Processes}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Paper~XVII proved that generators of the form $L_{\mathrm{BK}} + iM$ --- the backward Kolmogorov generator plus any imaginary potential --- are necessarily dissipative and cannot produce unitary evolution. It identified the Nelson-type forward/backward pairing as the most promising route past this obstruction. The present paper carries out that construction within the closure framework.
+
+Starting from the forward closure Langevin process and its time-reversal, the current and osmotic velocities are defined and shown to produce an exact continuity equation. Because the closure drift is a gradient, the current velocity is automatically irrotational, and a phase function $S$ is determined without additional assumptions. The closure Madelung pair is derived: the continuity equation plus a modified Hamilton--Jacobi equation with an explicit quantum-potential-like term.
+
+Recombining $\rho$ and $S$ into a Nelson wavefunction $\Psi_N = \sqrt{\rho}\,e^{iS/\sigma^2}$, the paper derives the \textit{closure-Nelson wave equation}: a nonlinear Schr\"odinger equation in which the potential depends on the state through $\Delta|\Psi_N|/|\Psi_N|$. The central result is two-tiered: at the Paper~XIV equilibrium, the nonlinear potential evaluates exactly so that the wave equation reduces to a Schr\"odinger equation with Witten Hamiltonian; for perturbations around equilibrium, this linear Schr\"odinger dynamics persists to leading order.
+
+This constitutes the first paired-process derivation of Schr\"odinger-type dynamics in the equilibrium and near-equilibrium regime within the closure framework: the imaginary kinetic term, absent in the single-generator framework of Papers~XV--XVII, emerges from the pairing of forward and backward processes. The remaining open problem is no longer the kinetic sector but the nonlinear state-dependent potential away from equilibrium. The resulting nonlinear correction is not interpreted here as a modification of quantum mechanics, but as a structurally derived residual whose physical status is deferred to subsequent work.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Paper~XVII~\citep{SmartXVII} proved the dissipative obstruction: any generator of the form $L_{\mathrm{BK}} + iM$, where $L_{\mathrm{BK}}$ is the backward Kolmogorov generator from the closure Langevin process, is dissipative in the equilibrium-weighted inner product regardless of the imaginary potential $iM$. This ruled out the single-generator approach of Papers~XV--XVI~\citep{SmartXV, SmartXVI} as a route to unitary evolution.
+
+Paper~XVII classified three candidate routes past the obstruction and identified Route~B --- the Nelson-type forward/backward pairing --- as the most promising, because it uses the existing stochastic closure process and its time-reversal without introducing new canonical variables.
+
+The present paper carries out this construction.
+
+\subsection*{The problem}
+
+The goal is not to assume Schr\"odinger structure, but to determine whether it \textit{emerges} from the paired forward/backward closure processes. Specifically:
+
+\begin{enumerate}
+    \item[(P10)] \textbf{The current-velocity problem.} Can the closure framework supply a non-stationary dynamical equation for the current velocity $v$?
+    \item[(P11)] \textbf{The Schr\"odinger-recovery problem.} Does the Nelson wavefunction $\Psi_N = \sqrt{\rho}\,e^{iS/\sigma^2}$ satisfy a Schr\"odinger-type equation?
+\end{enumerate}
+
+\subsection*{Scope and epistemic status}
+
+This paper derives the closure-Nelson wave equation and identifies the regime in which it reduces to the Schr\"odinger equation. Where results are derived, they are stated as propositions; where they depend on approximations (linearisation near equilibrium), that status is explicit. More precisely, the paper derives an exact nonlinear closure-Nelson wave equation and identifies the regime in which its leading-order dynamics reduces to the linear Schr\"odinger equation.
+
+%==================================================================
+\section{Forward and Backward Closure Processes}\label{sec:processes}
+%==================================================================
+
+\subsection{The forward process}
+
+The closure Langevin process of Paper~XIV~\citep{SmartXIV} is:
+\begin{equation}\label{eq:forward}
+    d\psi_t = b_+(\psi_t)\, dt + \sigma\, dW_t^+, \qquad b_+ = -\nabla\Fcal
+\end{equation}
+where $\Fcal \in C^2(\Sadm)$ is the closure functional and $\sigma > 0$ is the noise amplitude. The probability density $\rho(\psi, t)$ satisfies the forward Fokker--Planck equation:
+\begin{equation}\label{eq:FP}
+    \partial_t \rho = \nabla\cdot(\rho\,\nabla\Fcal) + \frac{\sigma^2}{2}\Delta\rho
+\end{equation}
+
+The stationary distribution is $\rho_{\mathrm{st}} = Z^{-1}\exp(-2\Fcal/\sigma^2)$.
+
+\subsection{The backward process}
+
+The time-reversed diffusion has backward drift:
+\begin{equation}\label{eq:backward_drift}
+    b_-(\psi, t) = b_+(\psi) - \sigma^2\,\nabla\log\rho(\psi,t) = -\nabla\Fcal - \sigma^2\,\nabla\log\rho
+\end{equation}
+
+\subsection{Nelson velocities}
+
+Define:
+\begin{align}
+    v &= \frac{b_+ + b_-}{2} = -\nabla\Fcal - \frac{\sigma^2}{2}\nabla\log\rho \qquad \text{(current velocity)} \label{eq:v} \\
+    u &= \frac{b_+ - b_-}{2} = \frac{\sigma^2}{2}\nabla\log\rho \qquad \text{(osmotic velocity)} \label{eq:u}
+\end{align}
+
+The current velocity represents the net probabilistic flow; the osmotic velocity represents the diffusive spreading.
+
+\begin{remark}[Stationarity check]\label{rem:stationary}
+At the Paper~XIV equilibrium $\rho = \rho_{\mathrm{st}}$: $\nabla\log\rho_{\mathrm{st}} = -2\nabla\Fcal/\sigma^2$, giving $v_{\mathrm{st}} = 0$ and $u_{\mathrm{st}} = -\nabla\Fcal$. The vanishing current velocity at equilibrium is consistent with the ground-state condition in Nelson mechanics.
+\end{remark}
+
+%==================================================================
+\section{Continuity Equation}\label{sec:continuity}
+%==================================================================
+
+\begin{proposition}[Continuity equation]\label{prop:continuity}
+The probability density $\rho$ and current velocity $v$ satisfy:
+\begin{equation}\label{eq:continuity}
+    \partial_t\rho + \nabla\cdot(\rho\, v) = 0
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+From~\eqref{eq:v}, $\rho\, v = -\rho\,\nabla\Fcal - (\sigma^2/2)\nabla\rho$, so:
+\begin{equation}
+    \nabla\cdot(\rho\, v) = -\nabla\cdot(\rho\,\nabla\Fcal) - \frac{\sigma^2}{2}\Delta\rho
+\end{equation}
+Comparing with the Fokker--Planck equation~\eqref{eq:FP}: $\partial_t\rho = \nabla\cdot(\rho\,\nabla\Fcal) + (\sigma^2/2)\Delta\rho = -\nabla\cdot(\rho\,v)$.
+\end{proof}
+
+This is the first Madelung equation. It is exact and requires no approximation. It is also the first place where the paired-process construction departs structurally from the single-generator framework of Paper~XVI: the current velocity $v$ involves both forward and backward drifts, not just the forward drift $b_+$.
+
+%==================================================================
+\section{Phase Function and Irrotationality}\label{sec:phase}
+%==================================================================
+
+\begin{proposition}[Irrotational current velocity]\label{prop:irrotational}
+The current velocity $v$ defined in~\eqref{eq:v} is a gradient field:
+\begin{equation}\label{eq:v_gradient}
+    v = \nabla S, \qquad S(\psi,t) = -\Fcal(\psi) - \frac{\sigma^2}{2}\log\rho(\psi,t)
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Both $-\nabla\Fcal$ and $-(\sigma^2/2)\nabla\log\rho$ are gradients, so their sum is a gradient. The phase function $S$ is determined (up to a spatially constant, time-dependent function) by $\nabla S = v$.
+\end{proof}
+
+\begin{remark}
+Irrotationality is not an assumption --- it is a consequence of the closure framework, in which both the drift $b_+ = -\nabla\Fcal$ and the density correction $\nabla\log\rho$ are gradient fields. Because irrotationality is inherited from the gradient structure of both the closure drift and the density correction, no separate phase ansatz is needed: the phase function $S$ is forced by the closure geometry. This is a structural advantage of the closure framework over generic stochastic processes, where $v$ need not be irrotational.
+\end{remark}
+
+Writing $R = \sqrt{\rho}$, the phase can be expressed as:
+\begin{equation}\label{eq:S}
+    S = -\Fcal - \sigma^2\log R
+\end{equation}
+
+%==================================================================
+\section{The Closure Madelung Equations}\label{sec:madelung}
+%==================================================================
+
+We now derive the second Madelung equation from the Fokker--Planck dynamics.
+
+\begin{proposition}[Closure Madelung pair]\label{prop:madelung}
+The pair $(\rho, S)$ satisfies:
+\begin{align}
+    \partial_t\rho + \nabla\cdot(\rho\,\nabla S) &= 0 \label{eq:M1} \\[4pt]
+    \partial_t S + \frac{|\nabla S|^2}{2} - \sigma^2 \VW + \frac{\sigma^4}{2}\frac{\Delta\sqrt{\rho}}{\sqrt{\rho}} &= 0 \label{eq:M2}
+\end{align}
+where $\VW = |\nabla\Fcal|^2/(2\sigma^2) - \Delta\Fcal/2$ is the Witten potential of Paper~XVI.
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:M1} is Proposition~\ref{prop:continuity} with $v = \nabla S$.
+
+For~\eqref{eq:M2}: from $S = -\Fcal - \sigma^2\log R$ with $R = \sqrt{\rho}$, the time derivative is $\partial_t S = -\sigma^2\partial_t\log R = -(\sigma^2/2)\partial_t\log\rho$. From the Fokker--Planck:
+\begin{equation}
+    \frac{\partial_t\rho}{\rho} = \Delta\Fcal + \nabla\Fcal\cdot\nabla\log\rho + \frac{\sigma^2}{2}(\Delta\log\rho + |\nabla\log\rho|^2)
+\end{equation}
+
+Using $\nabla\log\rho = 2\nabla\log R$ and $\Delta\log\rho = 2\Delta\log R$:
+\begin{equation}
+    \partial_t S = -\frac{\sigma^2}{2}\Delta\Fcal - \sigma^2\nabla\Fcal\cdot\nabla\log R - \frac{\sigma^4}{2}\Delta\log R - \sigma^4|\nabla\log R|^2
+\end{equation}
+
+The kinetic term is $|v|^2/2 = |\nabla\Fcal|^2/2 + \sigma^2\nabla\Fcal\cdot\nabla\log R + (\sigma^4/2)|\nabla\log R|^2$.
+
+Adding, and using $\Delta\log R + |\nabla\log R|^2 = \Delta R/R$:
+\begin{align}
+    \partial_t S + \frac{|v|^2}{2} &= \frac{|\nabla\Fcal|^2}{2} - \frac{\sigma^2}{2}\Delta\Fcal - \frac{\sigma^4}{2}\frac{\Delta R}{R} \notag \\
+    &= \sigma^2 \VW - \frac{\sigma^4}{2}\frac{\Delta\sqrt{\rho}}{\sqrt{\rho}}
+\end{align}
+Rearranging gives~\eqref{eq:M2}.
+\end{proof}
+
+\subsection{Comparison with the Schr\"odinger Madelung equations}
+
+The standard Schr\"odinger equation $i\hbar\partial_t\psi = -(\hbar^2/2m)\Delta\psi + V\psi$ is equivalent to the Madelung pair:
+\begin{align}
+    \partial_t\rho + \nabla\cdot(\rho\,\nabla S/m) &= 0 \label{eq:SM1}\\
+    \partial_t S + \frac{|\nabla S|^2}{2m} + V - \frac{\hbar^2}{2m}\frac{\Delta\sqrt\rho}{\sqrt\rho} &= 0 \label{eq:SM2}
+\end{align}
+
+The closure Madelung equation~\eqref{eq:M2} has the same structure as~\eqref{eq:SM2} with:
+\begin{itemize}
+    \item effective mass $m_{\mathrm{eff}} = 1$ (from $|v|^2/2$ rather than $|v|^2/(2m)$),
+    \item effective potential $V_{\mathrm{eff}} = -\sigma^2\VW$ (with opposite sign to the usual convention),
+    \item quantum potential $Q = +(\sigma^4/2)\Delta\sqrt\rho/\sqrt\rho$ (with \textbf{opposite sign} to the Schr\"odinger convention).
+\end{itemize}
+
+The sign reversal of the quantum potential is the key structural difference between the closure Madelung system and the standard Schr\"odinger Madelung system. However, this should not be read as a failure of the pairing construction. Rather, it identifies the precise way in which the closure-paired dynamics differs from exact linear quantum mechanics away from equilibrium: the sign discrepancy is absorbed into a nonlinear state-dependent potential in the recombined wave equation (Section~\ref{sec:wave}), and vanishes entirely in the near-equilibrium linearisation (Section~\ref{sec:linear}).
+
+%==================================================================
+\section{The Closure-Nelson Wave Equation}\label{sec:wave}
+%==================================================================
+
+Recombining $\rho$ and $S$ into the Nelson wavefunction:
+\begin{equation}\label{eq:nelson_psi}
+    \Psi_N = \sqrt{\rho}\, e^{iS/\sigma^2}
+\end{equation}
+
+\begin{proposition}[Closure-Nelson wave equation]\label{prop:wave}
+The Madelung pair~\eqref{eq:M1}--\eqref{eq:M2} is equivalent to the nonlinear wave equation:
+\begin{equation}\label{eq:closure_schrodinger}
+    \boxed{i\sigma^2\,\partial_t\Psi_N = -\frac{\sigma^4}{2}\Delta\Psi_N + U[\Psi_N]\,\Psi_N}
+\end{equation}
+where the state-dependent potential is:
+\begin{equation}\label{eq:U}
+    U[\Psi_N] = -\sigma^2\VW + \sigma^4\frac{\Delta|\Psi_N|}{|\Psi_N|}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The standard Madelung correspondence states that $i\sigma^2\partial_t\Psi = -(\sigma^4/2)\Delta\Psi + U\Psi$ with $\Psi = Re^{iS/\sigma^2}$ is equivalent to:
+\begin{align}
+    &\partial_t\rho + \nabla\cdot(\rho\,\nabla S) = 0 \\
+    &\partial_t S + \frac{|\nabla S|^2}{2} + U - \frac{\sigma^4}{2}\frac{\Delta R}{R} = 0
+\end{align}
+Comparing the second equation with~\eqref{eq:M2}:
+\begin{equation}
+    U - \frac{\sigma^4}{2}\frac{\Delta R}{R} = -\sigma^2\VW + \frac{\sigma^4}{2}\frac{\Delta R}{R}
+\end{equation}
+Solving: $U = -\sigma^2\VW + \sigma^4\Delta R/R = -\sigma^2\VW + \sigma^4\Delta|\Psi_N|/|\Psi_N|$.
+\end{proof}
+
+\begin{remark}[Nature of the equation]
+Equation~\eqref{eq:closure_schrodinger} is a \textit{nonlinear} Schr\"odinger equation: the potential $U$ depends on the state $\Psi_N$ through $\Delta|\Psi_N|/|\Psi_N|$. It has the correct kinetic structure ($-(\sigma^4/2)\Delta$ with the imaginary prefactor $i\sigma^2$) but a state-dependent potential. The nonlinearity enters through the quantum-potential sign reversal identified in Section~\ref{sec:madelung}.
+
+The paired-process construction has therefore succeeded in generating the missing imaginary kinetic structure that was impossible in the single-generator setting of Papers~XVI--XVII. What remains is not the kinetic problem but the residual state dependence of the effective potential.
+\end{remark}
+
+\begin{remark}[Why this evades the XVII obstruction]\label{rem:obstruction}
+Paper~XVII ruled out unitarity for generators of the single-process Kolmogorov form $L_{\mathrm{BK}} + iM$. The present construction does not modify that form; it leaves it behind. The forward/backward pairing produces a different composite dynamics: the current velocity $v = (b_+ + b_-)/2$ involves both forward and backward drifts, and the resulting kinetic structure is no longer governed by a single dissipative Kolmogorov generator. The imaginary kinetic term $-(\sigma^4/2)\Delta$ therefore emerges from the pairing structure itself, not from any modification of a single Kolmogorov generator, and is consistent with the obstruction theorem of Paper~XVII.
+\end{remark}
+
+%==================================================================
+\section{Near-Equilibrium Linearisation}\label{sec:linear}
+%==================================================================
+
+The nonlinear potential $U[\Psi_N]$ simplifies dramatically near the Paper~XIV equilibrium.
+
+\begin{proposition}[Equilibrium and near-equilibrium Schr\"odinger regime]\label{prop:linearisation}
+The closure-Nelson wave equation~\eqref{eq:closure_schrodinger} admits a Schr\"odinger regime in two stages:
+\begin{enumerate}
+    \item \textbf{Exact at equilibrium.} At $\rho = \rho_{\mathrm{st}}$, the nonlinear potential evaluates to the constant:
+    \begin{equation}\label{eq:U_stationary}
+        U[\Psi_{\mathrm{st}}] = \sigma^2\VW
+    \end{equation}
+    and the wave equation reduces exactly to $i\sigma^2\partial_t\Psi = \sigma^2 H_{\mathrm{W}}\Psi$.
+
+    \item \textbf{Leading-order near equilibrium.} For perturbations $\Psi = \Psi_{\mathrm{st}}(1 + \varepsilon\eta)$ with $\varepsilon \ll 1$, the nonlinear correction is $O(\varepsilon)$, and the wave equation linearises, to leading order in $\varepsilon$, to:
+    \begin{equation}\label{eq:linearised}
+        \boxed{i\,\partial_t\Psi = H_{\mathrm{W}}\,\Psi}
+    \end{equation}
+    where $H_{\mathrm{W}} = -(\sigma^2/2)\Delta + \VW$ is the non-negative Witten Hamiltonian of Paper~XVI.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+At stationarity, $R_{\mathrm{st}} = \sqrt{\rho_{\mathrm{st}}} \propto e^{-\Fcal/\sigma^2}$, so:
+\begin{equation}
+    \frac{\Delta R_{\mathrm{st}}}{R_{\mathrm{st}}} = \frac{|\nabla\Fcal|^2}{\sigma^4} - \frac{\Delta\Fcal}{\sigma^2} = \frac{2\VW}{\sigma^2}
+\end{equation}
+Substituting into~\eqref{eq:U}: $U[\Psi_{\mathrm{st}}] = -\sigma^2\VW + \sigma^4 \cdot 2\VW/\sigma^2 = \sigma^2\VW$.
+
+The full wave equation~\eqref{eq:closure_schrodinger} at stationarity is:
+\begin{equation}
+    i\sigma^2\partial_t\Psi = -\frac{\sigma^4}{2}\Delta\Psi + \sigma^2\VW\,\Psi = \sigma^2\!\left(-\frac{\sigma^2}{2}\Delta + \VW\right)\!\Psi = \sigma^2 H_{\mathrm{W}}\Psi
+\end{equation}
+Dividing by $\sigma^2$ gives $i\partial_t\Psi = H_{\mathrm{W}}\Psi$.
+
+For the linearisation: write $\Psi = \Psi_{\mathrm{st}}(1 + \varepsilon\eta)$ for small perturbation $\eta$. Then $|\Psi| = R_{\mathrm{st}}(1 + \varepsilon\,\mathrm{Re}(\eta)) + O(\varepsilon^2)$, and:
+\begin{equation}
+    \frac{\Delta|\Psi|}{|\Psi|} = \frac{\Delta R_{\mathrm{st}}}{R_{\mathrm{st}}} + O(\varepsilon) = \frac{2\VW}{\sigma^2} + O(\varepsilon)
+\end{equation}
+So $U = \sigma^2\VW + O(\varepsilon)$, and the linearised equation is $i\partial_t\Psi = H_{\mathrm{W}}\Psi$ to leading order.
+\end{proof}
+
+Thus the exact equilibrium state furnishes not only the ground state of the closure dynamics, but also the base point around which linear quantum evolution emerges.
+
+\begin{remark}[Interpretation]
+The Witten Hamiltonian $H_{\mathrm{W}}$ appeared in Paper~XVI as the \textit{real part} of the drift-free generator, where it produced dissipation. Here, via the Nelson pairing, it reappears as the \textit{quantum Hamiltonian} governing oscillatory dynamics. The same operator that drives dissipation in the single-process framework drives oscillation in the paired-process framework.
+\end{remark}
+
+\begin{remark}[On the non-triviality of the linear limit]
+It is true that any nonlinear dynamical system admits a linearisation at a fixed point. The non-trivial result here is not the existence of a linearisation, but the specific structure of that linearisation: the linearised generator is exactly the Witten Hamiltonian $H_{\mathrm{W}}$, which is derived from the closure functional $\Fcal$ and the noise scale $\sigma$ rather than chosen or postulated. The content is therefore not merely that a linear regime exists, but that it reproduces a specific quantum Hamiltonian determined by the closure geometry.
+\end{remark}
+
+\begin{remark}[Effective parameters]\label{rem:parameters}
+Within this normalisation, the linearised equation $i\partial_t\Psi = H_{\mathrm{W}}\Psi$ may be written in Schr\"odinger form with effective parameters:
+\begin{itemize}
+    \item $\hbar_{\mathrm{eff}} = 1$ in these units (or $\sigma^2$ before the division),
+    \item effective mass $m_{\mathrm{eff}} = 1/\sigma^2$ (from $-(\sigma^2/2)\Delta = -\hbar_{\mathrm{eff}}^2/(2m_{\mathrm{eff}})\Delta$),
+    \item effective potential $\VW = |\nabla\Fcal|^2/(2\sigma^2) - \Delta\Fcal/2$.
+\end{itemize}
+These are read off from the closure functional $\Fcal$ and the noise scale $\sigma$; no additional postulates are needed within the linearised regime.
+\end{remark}
+
+%==================================================================
+\section{Worked Example: Quadratic Closure Functional}\label{sec:example}
+%==================================================================
+
+\begin{example}[Quadratic closure]\label{ex:quadratic}
+Let $\Fcal(\psi) = \frac{1}{2}k\psi^2$ in one dimension.
+
+\subsection*{Nelson velocities}
+
+$b_+ = -k\psi$, $\rho_{\mathrm{st}} = Z^{-1}e^{-k\psi^2/\sigma^2}$, $\nabla\log\rho_{\mathrm{st}} = -2k\psi/\sigma^2$.
+
+At stationarity: $v = 0$, $u = -k\psi$. The phase $S = -k\psi^2/2 - \sigma^2\log R_{\mathrm{st}} = 0$ (constant, since $R_{\mathrm{st}} = Z^{-1/2}e^{-k\psi^2/(2\sigma^2)}$ and $-k\psi^2/2 - \sigma^2(-k\psi^2/(2\sigma^2)) = 0$).
+
+\subsection*{Witten potential and Hamiltonian}
+
+$\VW = k^2\psi^2/(2\sigma^2) - k/2$. The Witten Hamiltonian is:
+\begin{equation}
+    H_{\mathrm{W}} = -\frac{\sigma^2}{2}\partial_\psi^2 + \frac{k^2\psi^2}{2\sigma^2} - \frac{k}{2}
+\end{equation}
+This is a shifted quantum harmonic oscillator with spectrum $E_n = nk$, $n = 0, 1, 2, \ldots$
+
+\subsection*{Linearised Schr\"odinger dynamics}
+
+The linearised equation $i\partial_t\Psi = H_{\mathrm{W}}\Psi$ has eigenstates $\phi_n$ satisfying $H_{\mathrm{W}}\phi_n = nk\,\phi_n$. The ground state $\phi_0 \propto e^{-k\psi^2/(2\sigma^2)}$ is stationary. Excited states oscillate:
+\begin{equation}
+    \Psi_n(t) = e^{-inkt}\phi_n
+\end{equation}
+with fundamental frequency $\omega = k$. The energy gap is $\Delta E = k$ --- determined entirely by the closure functional.
+
+\subsection*{Comparison with Paper~XVII}
+
+In Paper~XVII's dissipative framework, the same excited states $\phi_n$ dissipate to the ground state at rate $2nk$. In the Nelson-paired framework, they oscillate with frequency $nk$. The Witten Hamiltonian governs both: dissipation rate $= 2E_n$, oscillation frequency $= E_n$.
+
+\begin{table}[ht]
+\centering
+\caption{Quadratic example: dissipative vs.\ oscillatory dynamics.}
+\label{tab:comparison}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Feature & Paper XVII (single process) & Paper XVIII (paired processes) \\
+\midrule
+Generator & $-H_{\mathrm{W}} + iM$ & $iH_{\mathrm{W}}$ (linearised) \\
+Ground state & $e^{-k\psi^2/(2\sigma^2)}$, stable & $e^{-k\psi^2/(2\sigma^2)}$, stable \\
+Excited states & Dissipate at rate $2nk$ & Oscillate at frequency $nk$ \\
+Norm & Decreasing & Preserved (linearised) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The quadratic example shows the programme transition in its cleanest form: the same Witten operator that appears as a dissipation generator in the single-process framework (Paper~XVII) becomes the oscillation generator in the paired-process linearised regime.
+\end{example}
+
+%==================================================================
+\section{Conditions for Exact Schr\"odinger Recovery}\label{sec:conditions}
+%==================================================================
+
+The closure-Nelson wave equation~\eqref{eq:closure_schrodinger} is exactly Schr\"odinger (i.e.\ the potential $U$ is state-independent) if and only if:
+\begin{equation}
+    \sigma^4\frac{\Delta|\Psi_N|}{|\Psi_N|} = \text{function of $\psi$ only, independent of $t$}
+\end{equation}
+
+This is a strong condition. In the present framework, the physically relevant instance occurs in the near-equilibrium regime: for small perturbations $\Psi = \Psi_{\mathrm{st}}(1 + \varepsilon\eta)$, the nonlinear term is $O(\varepsilon)$ and the linearised dynamics is exactly Schr\"odinger (Proposition~\ref{prop:linearisation}). For generic non-equilibrium states, the nonlinear correction is present. The correction can be characterised as:
+\begin{equation}
+    \delta U = \sigma^4\left(\frac{\Delta|\Psi_N|}{|\Psi_N|} - \frac{\Delta R_{\mathrm{st}}}{R_{\mathrm{st}}}\right) = \sigma^4\left(\frac{\Delta R}{R} - \frac{2\VW}{\sigma^2}\right)
+\end{equation}
+This vanishes when $R$ has the same curvature structure as $R_{\mathrm{st}}$ --- i.e.\ when the density profile is close to the equilibrium Gaussian (in the quadratic case) or more generally when $\rho$ is close to $\rho_{\mathrm{st}}$. Accordingly, the generic paired closure dynamics is nonlinear, while exact linear Schr\"odinger evolution appears as a distinguished regime selected by equilibrium structure or special modulus profiles.
+
+%==================================================================
+\section{Interpretation of the Nonlinear Residual}\label{sec:residual}
+%==================================================================
+
+The closure-Nelson wave equation~\eqref{eq:closure_schrodinger} differs from the linear Schr\"odinger equation by the state-dependent term:
+\begin{equation}\label{eq:residual}
+    \delta U[\Psi_N] = \sigma^4 \frac{\Delta|\Psi_N|}{|\Psi_N|}
+\end{equation}
+
+This term vanishes at equilibrium and is small for perturbations around $\rho_{\mathrm{st}}$, but is generically nonzero for non-equilibrium states.
+
+\subsection*{Structural origin}
+
+The residual term arises from the same quantity that produces the quantum potential in the Madelung formulation:
+\begin{equation}
+    Q = \frac{\hbar^2}{2m}\frac{\Delta\sqrt{\rho}}{\sqrt{\rho}}
+\end{equation}
+
+In standard quantum mechanics, $Q$ appears with a sign that cancels nonlinearity when recombined into the Schr\"odinger equation. In the closure framework, the sign inherited from the dissipative forward process leads to a non-cancelling contribution, producing the residual $\delta U$.
+
+\subsection*{What the residual measures}
+
+The residual encodes the deviation of the density profile from the equilibrium structure:
+\begin{equation}
+    \delta U = \sigma^4 \left(\frac{\Delta R}{R} - \frac{\Delta R_{\mathrm{st}}}{R_{\mathrm{st}}}\right)
+\end{equation}
+
+Thus:
+\begin{itemize}
+    \item $\delta U = 0$ for equilibrium density profiles,
+    \item $\delta U \neq 0$ for non-equilibrium configurations,
+    \item the magnitude of $\delta U$ encodes the curvature deviation of $\rho$ from $\rho_{\mathrm{st}}$.
+\end{itemize}
+
+\subsection*{Status}
+
+At this stage, the residual term is identified as a structural consequence of the closure pairing, not interpreted as a modification of quantum mechanics. Whether it represents:
+\begin{itemize}
+    \item a physical nonlinear correction to linear quantum mechanics,
+    \item a gauge artefact removable by transformation,
+    \item or a structurally meaningful quantity with independent physical content,
+\end{itemize}
+remains an open question and is deferred to subsequent work. In this sense, the residual is best understood at present as the closure-sector remainder after linear quantum behaviour has been recovered, rather than as a defect of the paired construction.
+
+%==================================================================
+\section{Reconciliation with Papers~XV--XVII}\label{sec:reconciliation}
+%==================================================================
+
+\subsection{Paper~XV: phase and interference}
+
+Paper~XV introduced the complexified path integral with amplitude $\mathcal{A} = e^{-S/\sigma^2 + i\Theta/\sigma^2}$. The Nelson wavefunction $\Psi_N = \sqrt\rho\, e^{iS/\sigma^2}$ is a different object: it is constructed from the density and phase of the paired processes, not from the path-integral amplitude. However, at equilibrium both reduce to $\Psi \propto e^{-\Fcal/\sigma^2}$ (the same ground state), and both produce the squared-modulus probability structure $P = |\Psi|^2 = \rho$.
+
+\subsection{Paper~XVI: evolution equation}
+
+The closure evolution equation of Paper~XVI, $\partial_t\Psi = ({\sigma^2}/{2})\Delta\Psi - \nabla\Fcal\cdot\nabla\Psi + (i/\sigma^2)\Fcal\Psi$, governs the single forward process. The Nelson wave equation~\eqref{eq:closure_schrodinger} governs the paired forward-backward system. They share the same equilibrium state but have different generator structures: the former is dissipative (Paper~XVII), the latter is oscillatory (in the linearised regime).
+
+\subsection{Paper~XVII: dissipative obstruction}
+
+The obstruction theorem applies to generators of the single-process form $L_{\mathrm{BK}} + iM$. The Nelson construction evades it by not using a single Kolmogorov generator: the current velocity $v = (b_+ + b_-)/2$ involves both forward and backward drifts, and the resulting dynamics is not of the $L_{\mathrm{BK}} + iM$ form. The imaginary kinetic term emerges from the pairing, not from a modification of the single-process generator. In this sense, XVIII should be read not as a contradiction of XVII, but as the constructive completion of the route XVII left open.
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is derived}
+
+\textbf{Exact results:}
+\begin{itemize}
+    \item The continuity equation for the current velocity $v$ (Proposition~\ref{prop:continuity}).
+    \item Irrotationality of $v$ and the existence of the phase function $S$ (Proposition~\ref{prop:irrotational}), a structural consequence of the closure gradient drift.
+    \item The closure Madelung pair (Proposition~\ref{prop:madelung}).
+    \item The closure-Nelson wave equation~\eqref{eq:closure_schrodinger} (Proposition~\ref{prop:wave}): exact, but nonlinear.
+\end{itemize}
+
+\textbf{Exact but regime-specific:}
+\begin{itemize}
+    \item At exact equilibrium, $U[\Psi_{\mathrm{st}}] = \sigma^2\VW$ and the wave equation is exactly the Schr\"odinger equation with the Witten Hamiltonian (Proposition~\ref{prop:linearisation}, stage~1).
+\end{itemize}
+
+\textbf{Leading-order / approximate:}
+\begin{itemize}
+    \item Near-equilibrium linearisation to $i\partial_t\Psi = H_{\mathrm{W}}\Psi$, valid to leading order in perturbations around $\rho_{\mathrm{st}}$ (Proposition~\ref{prop:linearisation}, stage~2).
+    \item The effective parameters $m_{\mathrm{eff}} = 1/\sigma^2$ and $V_{\mathrm{eff}} = \VW$ are read off within the linearised regime (Remark~\ref{rem:parameters}).
+\end{itemize}
+
+\subsection{What is conditional}
+
+\begin{itemize}
+    \item Exact Schr\"odinger form holds at equilibrium, and the near-equilibrium linearisation is valid to leading order for sufficiently small perturbations. Away from equilibrium, the exact closure-Nelson dynamics remains nonlinear through the correction $\sigma^4\Delta|\Psi|/|\Psi|$.
+    \item The linearisation requires the perturbation $\varepsilon\eta$ to be small relative to $\Psi_{\mathrm{st}}$. The range of validity is not quantified.
+    \item The identification $\hbar_{\mathrm{eff}} = \sigma^2$ (before unit absorption) is a structural correspondence within this construction, not a derived physical identification.
+\end{itemize}
+
+\subsection{What is not achieved}
+
+\begin{itemize}
+    \item \textbf{No exact global Schr\"odinger recovery.} The full closure-Nelson equation is nonlinear; the Schr\"odinger equation is linear.
+    \item \textbf{No Hilbert-space axioms.} The construction produces a wave equation, not a full quantum-mechanical framework with measurement postulates.
+    \item \textbf{No physical derivation of the backward process.} The time-reversed process is defined mathematically; whether it has independent physical content within the closure programme is not addressed.
+    \item \textbf{The quantum-potential sign reversal.} The closure Madelung equation has the quantum potential with the opposite sign to standard quantum mechanics. This is absorbed into the nonlinear potential $U$ but represents a genuine structural difference.
+    \item \textbf{No exact identification with standard quantum mechanics away from equilibrium.} The paired closure dynamics agrees with linear Schr\"odinger evolution only in the equilibrium and near-equilibrium regime.
+\end{itemize}
+
+\subsection{Open questions}
+
+\begin{itemize}
+    \item Can the nonlinear correction be absorbed by a redefinition or gauge transformation?
+    \item Does the nonlinear Schr\"odinger equation~\eqref{eq:closure_schrodinger} have additional conserved quantities?
+    \item Can the range of validity of the linearisation be characterised (e.g.\ in terms of R\'enyi divergence from equilibrium)?
+    \item Is there a variational principle for the closure Madelung pair that would select the dynamics independently of the Nelson construction?
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+Paper~XVIII changes the location of the remaining problem in the VFD quantum-recovery programme.
+
+\textbf{Exact results.} Starting from the forward closure Langevin process (Paper~XIV) and its time-reversal, the Nelson pairing produces:
+\begin{enumerate}
+    \item an exact continuity equation for the current velocity,
+    \item an automatically irrotational phase function (forced by the closure gradient structure),
+    \item an exact closure Madelung pair with a quantum-potential-like term,
+    \item a nonlinear Schr\"odinger-type wave equation~\eqref{eq:closure_schrodinger} with the correct imaginary kinetic structure.
+\end{enumerate}
+
+\textbf{Equilibrium Schr\"odinger recovery.} At the Paper~XIV equilibrium, the nonlinear potential evaluates exactly to $\sigma^2\VW$, and the wave equation becomes exactly the Schr\"odinger equation with the Witten Hamiltonian:
+\begin{equation}
+    i\,\partial_t\Psi = H_{\mathrm{W}}\Psi = \left(-\frac{\sigma^2}{2}\Delta + \VW\right)\Psi
+\end{equation}
+The Witten Hamiltonian --- which appeared in Paper~XVI as the dissipative real part of the drift-free generator --- now reappears as the quantum Hamiltonian governing oscillatory dynamics. For perturbations around equilibrium, this Schr\"odinger equation persists to leading order.
+
+\textbf{What remains.} The closure-Nelson construction resolves the kinetic-sector obstruction identified in Paper~XVII: the imaginary kinetic term emerges from the forward/backward pairing. The remaining discrepancy is confined to the potential sector: a residual state-dependent term $\sigma^4\Delta|\Psi|/|\Psi|$ (Section~\ref{sec:residual}) that vanishes at equilibrium and is small for near-equilibrium perturbations.
+
+This shifts the problem from the existence of quantum dynamics to the interpretation of this residual term. The closure framework therefore reproduces standard linear quantum mechanics in a well-defined equilibrium-centred regime while yielding a controlled, structurally derived deviation away from that regime. Determining the nature of this deviation --- whether it is a physical nonlinear correction, a gauge artefact, or a structurally meaningful quantity --- is the next stage of the programme.
+
+\textbf{Programme arc.}
+\begin{itemize}
+    \item Papers~XII--XIV: dissipative closure dynamics,
+    \item Paper~XV: phase and interference,
+    \item Paper~XVI: evolution equation and structural gap,
+    \item Paper~XVII: dissipative obstruction theorem,
+    \item Paper~XVIII: Nelson pairing, near-equilibrium Schr\"odinger recovery, and identification of the nonlinear residual as the next open problem.
+\end{itemize}
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

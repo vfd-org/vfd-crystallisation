@@ -40,9 +40,9 @@
 \begin{abstract}
 Paper~XIV introduced stochastic closure dynamics, producing a probabilistic layer over the closure landscape. However, that layer is dissipative and real-valued: it lacks phase, interference, and the oscillatory structure characteristic of quantum mechanics. The present paper extends the closure framework by augmenting the state space with a phase variable, introducing candidate dynamical formulations that incorporate phase evolution alongside closure descent, and demonstrating that interference arises naturally when multiple closure-compatible paths contribute to the transition amplitude between configurations.
 
-Three candidate formulations are developed and compared: (A) a complexified gradient flow combining closure descent with phase rotation, (B) a Hamiltonian lift embedding closure dynamics in a conservative phase space, and (C) a path-integral formulation with explicit phase weighting. A worked double-well example demonstrates that path-dependent phase accumulation produces constructive and destructive interference in the transition amplitude. Crystallisation is extended to phase-coherent selection: the realised state is the configuration that maximises both closure compatibility and phase coherence.
+Three candidate formulations are developed and compared: (A) a separated configuration-phase gradient flow, (B) a Hamiltonian lift (noted as a future direction), and (C) a path-integral formulation based on a complexified Onsager--Machlup action. The complexification is the paper's central ansatz: it is the minimal extension of Paper~XIV's real path functional that introduces phase using only existing closure quantities. Once the complexification ansatz and the squared-modulus probability structure are adopted, the phase-rotation frequency and amplitude are fixed by internal consistency with Paper~XIV --- no additional phase-specific parameters are introduced. A worked double-well example demonstrates that path-dependent phase accumulation produces constructive and destructive interference in the transition amplitude. Crystallisation is extended to phase-coherent selection: the realised state is the configuration that maximises both closure compatibility and phase coherence.
 
-The paper does not claim equivalence with quantum mechanics. It establishes the first phase-bearing dynamical layer within the closure framework, demonstrates that interference is a structural consequence of phase-augmented closure dynamics, and identifies the conditions under which the system reduces to the dissipative gradient flow of Paper~XII in the classical limit.
+The paper does not claim equivalence with quantum mechanics. It establishes the first phase-bearing dynamical layer within the closure framework and the first recovery step at the level of interference structure, and identifies the conditions under which the system reduces to the dissipative gradient flow of Paper~XII in the classical limit.
 \end{abstract}
 
 %==================================================================
@@ -62,6 +62,15 @@ These are the features that distinguish quantum from classical probabilistic beh
 \subsection*{Scope and epistemic status}
 
 This paper introduces \textit{candidate formulations} for phase-coherent closure dynamics. It does not claim equivalence with quantum mechanics, does not postulate Hilbert-space axioms, and does not derive the Schr\"odinger equation. The phase structure is introduced as a minimal extension of the closure dynamics; whether it can reproduce the full structure of quantum mechanics is an open question.
+
+The paper resolves four specific deficiencies of the Paper~XII--XIV framework:
+\begin{enumerate}
+    \item[(P1)] \textbf{The missing-phase problem.} Paper~XIV's stochastic dynamics is probabilistic but not quantum: it has real path weights, no phase variables, and no interference. The present paper introduces a phase-bearing amplitude consistent with the Paper~XIV stationary measure.
+    \item[(P2)] \textbf{The interference problem.} Once a complexified closure path functional is adopted, interference follows structurally from the complex amplitude sum --- without importing quantum-mechanical axioms.
+    \item[(P3)] \textbf{The amplitude-construction problem.} The amplitude is not arbitrary: it is fixed by consistency with the stationary distribution of Paper~XIV as $A(\psi) = \sqrt{P_{\mathrm{st}}(\psi)}$.
+    \item[(P4)] \textbf{Phase-coherent crystallisation.} Crystallisation is extended from purely real stochastic settling into attractor basins to include phase stability.
+\end{enumerate}
+These are real advances within the VFD programme. They constitute the first genuine QM-recovery step at the level of amplitude, phase, and interference. What remains open --- unitarity, Hilbert space, and the Schr\"odinger equation --- is discussed in Section~\ref{sec:discussion}.
 
 %==================================================================
 \section{Limitations of Stochastic Closure Dynamics}\label{sec:limitations_XIV}
@@ -99,7 +108,12 @@ Equivalently, one may write the augmented state in polar form:
 \begin{equation}\label{eq:polar}
     \Psi = A(\psi)\, e^{i\theta}
 \end{equation}
-where $A(\psi) \geq 0$ is an amplitude derived from the closure structure (a natural candidate is $A(\psi) = e^{-\Fcal(\psi)/\sigma^2}$, consistent with the stationary distribution of Paper~XIV).
+
+The amplitude $A(\psi)$ is not a free choice: once the squared-modulus probability structure $P = |\Psi|^2 = A^2$ is adopted, consistency with the stochastic dynamics of Paper~XIV fixes it. The stationary distribution derived there is $P_{\mathrm{st}}(\psi) \propto \exp(-2\Fcal(\psi)/\sigma^2)$. Consistency then requires:
+\begin{equation}\label{eq:amplitude}
+    A(\psi) = \sqrt{P_{\mathrm{st}}(\psi)} = \mathcal{N}\, \exp\!\left(-\frac{\Fcal(\psi)}{\sigma^2}\right)
+\end{equation}
+where $\mathcal{N}$ is a normalisation constant. This is the natural amplitude consistent with the squared-modulus structure and the Paper~XIV equilibrium; it is fixed once those two ingredients are accepted. On the closure manifold ($\Fcal = 0$), $A = \mathcal{N}$ is maximal; far from closure, the amplitude is exponentially suppressed.
 
 \begin{remark}
 The phase variable $\theta$ is not postulated as a quantum-mechanical phase. It is introduced as a structural degree of freedom on the closure landscape. Whether it can be identified with the quantum phase is an open question.
@@ -109,59 +123,61 @@ The phase variable $\theta$ is not postulated as a quantum-mechanical phase. It 
 \section{Candidate Dynamical Formulations}\label{sec:formulations}
 %==================================================================
 
-We develop and compare three candidate formulations for phase-coherent closure dynamics. Each extends the base gradient flow of Paper~XII by incorporating phase evolution.
+We develop three candidate formulations for phase-coherent closure dynamics. The primary formalism of this paper is \textbf{Formulation~C} (path-integral phase weighting), which directly produces interference. Formulations~A and~B provide complementary differential-equation and conservative perspectives, respectively; they are presented as supporting intuition and possible future directions, not as the paper's main result.
 
-\subsection{Formulation A: Complexified gradient flow}
+\subsection{Formulation A: Separated configuration-phase flow (supporting)}
 
-The simplest phase extension combines closure descent with phase rotation:
-\begin{equation}\label{eq:formA}
-    \dot{\Psi} = -\nabla\Fcal(\psi)\, \Psi + i\, \Omega(\psi)\, \Psi
-\end{equation}
-where $\Omega(\psi) \geq 0$ is a \textit{phase-rotation frequency} determined by the closure structure. The real part drives the system toward closure; the imaginary part rotates the phase.
-
-\textbf{Candidate for $\Omega$:} A natural choice is $\Omega(\psi) = \Fcal(\psi)$ or $\Omega(\psi) = \mathrm{tr}(H(\psi))$ (trace of the Hessian), so that the phase rotation rate is determined by the local closure structure. On $\Mcl$ (where $\Fcal = 0$), the phase rotation vanishes or is governed by the Hessian alone.
-
-\textbf{Properties:}
-\begin{itemize}
-    \item reduces to Paper~XII gradient flow when $\Omega = 0$ (or when phase is ignored),
-    \item the modulus $|\Psi|$ evolves as $d|\Psi|/dt = -\nabla\Fcal \cdot |\Psi|$ (dissipative, as before),
-    \item the phase evolves as $\dot{\theta} = \Omega(\psi)$ (non-dissipative rotation).
-\end{itemize}
-
-\subsection{Formulation B: Hamiltonian lift}
-
-A conservative formulation embeds closure dynamics in a canonical phase space:
-\begin{equation}\label{eq:HamiltonianB}
-    \Hcal(\psi, \theta) = \Fcal(\psi) + \Phi(\psi, \theta)
-\end{equation}
-with canonical equations:
+The simplest differential-equation extension separates the evolution of configuration and phase:
 \begin{align}
-    \dot{\psi} &= \frac{\partial \Hcal}{\partial \theta} = \frac{\partial \Phi}{\partial \theta} \label{eq:canpsi} \\
-    \dot{\theta} &= -\frac{\partial \Hcal}{\partial \psi} = -\nabla\Fcal(\psi) - \frac{\partial \Phi}{\partial \psi} \label{eq:cantheta}
+    \dot{\psi} &= -\nabla\Fcal(\psi) \label{eq:formApsi} \\
+    \dot{\theta} &= \Omega(\psi) \label{eq:formAtheta}
 \end{align}
+where $\Omega(\psi) \geq 0$ is a \textit{phase-rotation frequency} determined by the closure structure. The augmented state $\Psi(t) = A(\psi(t))\, e^{i\theta(t)}$ then evolves with dissipative amplitude dynamics and non-dissipative phase rotation.
 
-\textbf{Candidate for $\Phi$:} If $\Phi = p \cdot \theta$ (where $p$ is a conjugate momentum), the system becomes a standard Hamiltonian system with $\Fcal$ as the potential energy. If $\Phi = 0$, the equations degenerate and the system is not fully canonical.
+\textbf{Determination of $\Omega$:} Within the complexified-action ansatz adopted in Formulation~C (Section~\ref{sec:formC}), the frequency is fixed: $\Omega(\psi) = \Fcal(\psi)/\sigma^2$. This is the natural choice consistent with: (i) using only the existing closure functional, (ii) vanishing phase rotation on $\Mcl$ (where $\Fcal = 0$), and (iii) the path-integral structure. An alternative, $\Omega(\psi) = \alpha\, \mathrm{tr}(H(\psi))$ (Hessian trace), governs $\Omega$ by landscape curvature rather than height and does not vanish at closure minima; it is noted as a possible extension but is not adopted here.
 
 \textbf{Properties:}
 \begin{itemize}
-    \item energy $\Hcal$ is conserved (no dissipation),
-    \item phase evolves according to the closure gradient,
-    \item provides a natural bridge to the Lagrangian formulation of Paper~XII.
+    \item reduces to Paper~XII gradient flow when $\Omega = 0$ or when phase is ignored,
+    \item the configuration $\psi$ evolves independently of $\theta$ (one-way coupling),
+    \item the phase accumulates along trajectories: $\theta(T) = \theta(0) + \int_0^T \Omega(\psi(t))\, dt$.
 \end{itemize}
 
-\textbf{Limitation:} The Hamiltonian lift requires a careful definition of the conjugate structure between $\psi$ and $\theta$, which is not uniquely determined in the present paper.
+\textbf{Role:} Formulation~A provides the differential-equation intuition for how phase accumulates along closure trajectories. The interference structure, however, is most naturally expressed in the path-integral language of Formulation~C.
 
-\subsection{Formulation C: Path-integral phase weighting}
+\subsection{Formulation B: Hamiltonian lift (heuristic / future direction)}
 
-The most direct route to interference modifies the Onsager--Machlup path functional of Paper~XIV by adding an explicit phase:
-\begin{equation}\label{eq:formC}
-    \mathcal{A}[\psi(\cdot)] = \exp\!\left(-\frac{S[\psi]}{\sigma^2}\right) \cdot \exp\!\left(i\, \Theta[\psi(\cdot)]\right)
+A conservative formulation would embed closure dynamics in a canonical phase space with $(\psi, \theta)$ as conjugate-like variables. This would require defining a Hamiltonian $\Hcal(\psi, \theta)$ and a proper symplectic structure on the augmented state space.
+
+\begin{remark}
+In the present paper, the canonical conjugate structure between $\psi$ and $\theta$ is not uniquely determined. A proper Hamiltonian lift would require specifying: (i) the symplectic form on $\tilde{\mathcal{S}}_{\mathrm{adm}}$, (ii) the relationship between $\theta$ and a conjugate momentum, and (iii) conditions for energy conservation. This formulation is noted as a possible conservative extension for future work but is not developed further here.
+\end{remark}
+
+\subsection{Formulation C: Path-integral phase weighting}\label{sec:formC}
+
+The Onsager--Machlup path functional of Paper~XIV assigns a real weight $\exp(-S[\psi]/\sigma^2)$ to each path. We propose the following \textbf{minimal complexification ansatz}: extend the real action to a complex-valued action whose real part is the Onsager--Machlup action (dissipative) and whose imaginary part is the time-integrated closure functional (oscillatory). This is the simplest extension that introduces phase while remaining entirely in terms of existing closure quantities ($\Fcal$ and $\sigma$):
+\begin{equation}\label{eq:complexaction}
+    S_{\mathbb{C}}[\psi(\cdot)] = \underbrace{\int_0^T \|\dot{\psi} + \nabla\Fcal(\psi)\|^2\, dt}_{S[\psi]\;\text{(Onsager--Machlup)}} \;-\; i\underbrace{\int_0^T \Fcal(\psi(t))\, dt}_{\Fcal_{\mathrm{path}}[\psi]\;\text{(closure phase)}}
 \end{equation}
-where:
-\begin{itemize}
-    \item $S[\psi] = \int_0^T \|\dot{\psi} + \nabla\Fcal(\psi)\|^2\, dt$ is the Onsager--Machlup action (real, positive),
-    \item $\Theta[\psi(\cdot)] = \int_0^T \Omega(\psi(t))\, dt$ is the accumulated phase along the path.
-\end{itemize}
+
+The path amplitude is then:
+\begin{equation}\label{eq:formC}
+    \mathcal{A}[\psi(\cdot)] = \exp\!\left(-\frac{S_{\mathbb{C}}[\psi]}{\sigma^2}\right) = \exp\!\left(-\frac{S[\psi]}{\sigma^2}\right) \cdot \exp\!\left(\frac{i\, \Fcal_{\mathrm{path}}[\psi]}{\sigma^2}\right)
+\end{equation}
+
+Given this ansatz, the phase-rotation frequency that was a free parameter in Formulation~A is now fixed:
+\begin{equation}\label{eq:omega_derived}
+    \Omega(\psi) = \frac{\Fcal(\psi)}{\sigma^2}
+\end{equation}
+
+The accumulated phase along a path is:
+\begin{equation}
+    \Theta[\psi(\cdot)] = \int_0^T \Omega(\psi(t))\, dt = \frac{1}{\sigma^2}\int_0^T \Fcal(\psi(t))\, dt
+\end{equation}
+
+\begin{remark}[Motivation for the complexification]
+The complexified action~\eqref{eq:complexaction} is chosen as the simplest extension of Paper~XIV's real path functional that: (i) produces a complex-valued amplitude, (ii) uses only the existing closure functional $\Fcal$ (no new ingredients), (iii) assigns $\Omega = 0$ on the closure manifold (where $\Fcal = 0$, so closed states carry no phase rotation), and (iv) assigns faster phase rotation to states further from closure. Other complexifications are conceivable (e.g.\ using Hessian eigenvalues or higher-order closure invariants as the imaginary part); the present choice is the most economical. The resulting structure is analogous to the relationship between Euclidean and Lorentzian path integrals: the real part damps non-classical paths, the imaginary part generates oscillation.
+\end{remark}
 
 The total amplitude for reaching configuration $\psi_f$ from $\psi_i$ is:
 \begin{equation}\label{eq:totalamp}
@@ -192,9 +208,10 @@ Feature & Formulation A & Formulation B & Formulation C \\
 \midrule
 Phase evolution & Explicit & Canonical & Path-accumulated \\
 Dissipation & Yes (modulus) & No (conservative) & Mixed \\
+$\Omega$ status & From C & Undetermined & Fixed by ansatz \\
 Interference & Indirect & Indirect & Direct \\
 Path-integral form & Not natural & Via action & Native \\
-Classical limit & $\Omega \to 0$ & $\hbar_{\mathrm{eff}} \to 0$ & $\Theta \to 0$ \\
+Classical limit & $\sigma \to 0$ & Not developed & $\sigma \to 0$ (stat.\ phase) \\
 Complexity & Low & Medium & Medium \\
 \bottomrule
 \end{tabular}
@@ -231,7 +248,11 @@ If two paths $\gamma_1, \gamma_2$ from $\psi_i$ to $\psi_f$ have different accum
 That is, the transition probability exhibits interference.
 \end{proposition}
 
-This is the central result of the paper: \textit{interference arises as a structural consequence of phase-augmented closure dynamics whenever the phase-rotation frequency $\Omega$ is path-dependent}.
+\begin{remark}[On the role of interference]
+The interference structure identified here follows from the adoption of complex amplitudes with phase. In this sense, it is not an independent derivation of interference, but a demonstration that the closure-complexified amplitude framework reproduces the standard interference mechanism once complex structure is introduced. The non-trivial content lies in the compatibility of this structure with the closure dynamics --- in particular, the determination of $\Omega$ and $A$ from existing closure quantities --- rather than in the existence of interference itself.
+\end{remark}
+
+This is the central result of the paper: \textit{interference arises as a structural consequence of phase-augmented closure dynamics whenever distinct paths accumulate different phases}. Note that closure dynamics alone (Paper~XII) do not produce interference --- it is the phase extension that introduces the oscillatory structure.
 
 %==================================================================
 \section{Worked Example: Double-Well System}\label{sec:example}
@@ -244,16 +265,19 @@ Consider a one-dimensional closure functional with two symmetric minima:
 \end{equation}
 with minima at $\psi = \pm a$ and a barrier at $\psi = 0$ of height $\Delta\Fcal = \lambda a^4$.
 
-Two paths connect $\psi_i = -a$ to $\psi_f = +a$:
+In a higher-dimensional admissible state space (which is the generic case for multi-field closure configurations), two topologically distinct paths connect $\psi_i = -a$ to $\psi_f = +a$:
 \begin{itemize}
     \item $\gamma_+$: passes over the barrier through $\psi = 0$ (direct crossing),
-    \item $\gamma_-$: wraps around through a longer route in state space (if the topology permits).
+    \item $\gamma_-$: traverses a longer route through the enlarged state space, avoiding the barrier peak.
 \end{itemize}
+(In a strictly one-dimensional configuration space only $\gamma_+$ exists; multiple paths require at least two configuration dimensions. The example should be understood as the one-dimensional projection of a higher-dimensional system.)
 
-Each path accumulates a different phase:
+With the frequency $\Omega(\psi) = \Fcal(\psi)/\sigma^2$ fixed by the complexified-action ansatz, each path accumulates a different phase:
 \begin{equation}
-    \Theta_\pm = \int_{\gamma_\pm} \Omega(\psi(t))\, dt
+    \Theta_\pm = \frac{1}{\sigma^2}\int_{\gamma_\pm} \Fcal(\psi(t))\, dt = \frac{\lambda}{\sigma^2}\int_{\gamma_\pm} (\psi(t)^2 - a^2)^2\, dt
 \end{equation}
+
+The direct crossing $\gamma_+$ passes through the barrier peak ($\Fcal = \lambda a^4$) and accumulates a large phase; the longer route $\gamma_-$ (if topologically available) spends more time but at lower $\Fcal$. Generically $\Theta_+ \neq \Theta_-$ whenever the time-integrated closure cost differs between paths.
 
 The transition amplitude is:
 \begin{equation}
@@ -265,10 +289,11 @@ The probability exhibits interference:
     P = e^{-2S_+/\sigma^2} + e^{-2S_-/\sigma^2} + 2\, e^{-(S_+ + S_-)/\sigma^2}\, \cos(\Theta_+ - \Theta_-)
 \end{equation}
 
-When $\Theta_+ - \Theta_- = 0$: constructive interference (maximum probability).\\
-When $\Theta_+ - \Theta_- = \pi$: destructive interference (minimum probability).
+When $\Theta_+ - \Theta_- = 0$: constructive interference (maximum $P$).\\
+When $\Theta_+ - \Theta_- = \pi$: destructive interference (minimum $P$).\\
+When $\Theta_+ - \Theta_- = \pi/2$: the interference term vanishes, recovering the incoherent sum.
 
-This demonstrates that the phase-augmented closure dynamics produces non-classical probability structure from the closure landscape alone.
+No additional phase-specific parameters are introduced beyond the existing closure functional $\Fcal$ and the stochastic scale $\sigma$: $\Omega$ is fixed once the complexified-action ansatz~\eqref{eq:complexaction} is adopted, and the interference pattern is then determined entirely by the closure landscape.
 \end{example}
 
 %==================================================================
@@ -296,33 +321,40 @@ The transition probability~\eqref{eq:probability}:
 \begin{equation}
     P(\psi_i \to \psi_f) = \left|\sum_{\text{paths}} \mathcal{A}[\psi(\cdot)]\right|^2
 \end{equation}
-has the form of a squared modulus of a sum of complex amplitudes. This is structurally identical to the Born rule applied to a sum of quantum amplitudes.
+has the same squared-modulus form as the Born rule applied to a sum of quantum amplitudes, although the underlying path weights differ from the standard quantum case because a real damping factor $e^{-S/\sigma^2}$ is retained alongside the phase.
 
 \begin{remark}[Born-like structure]
-The squared-modulus form arises naturally from the path-integral formulation~C: it is a consequence of the complex-valued amplitude structure, not a postulate. However, the identification of this structure with the quantum-mechanical Born rule requires:
+The squared-modulus form $P = |\mathcal{A}|^2$ arises as a structural consequence of the complex-valued amplitude~\eqref{eq:formC}. Within the adopted formulation, $\Omega = \Fcal/\sigma^2$ ties the phase scale directly to the closure functional, which plays an energy-like role in the closure dynamics. However, the closure path integral differs from the quantum path integral in retaining the real damping factor $e^{-S/\sigma^2}$. For the squared-modulus structure to approach the quantum Born rule, two conditions would need to hold:
 \begin{itemize}
-    \item that the phase-rotation frequency $\Omega$ be related to a physical energy or Hamiltonian,
-    \item that the damping factor $e^{-S/\sigma^2}$ be negligible or factorable for the relevant paths,
-    \item that the sum over paths be dominated by the classical path plus fluctuations.
+    \item the damping factor $e^{-S/\sigma^2}$ must be negligible or factorable for the relevant paths (i.e.\ the system must be near the oscillatory regime),
+    \item the sum over paths must be dominated by the classical path plus Gaussian fluctuations (stationary-phase approximation).
 \end{itemize}
-These conditions are not established in the present paper. The squared-modulus structure is a structural feature of the formulation, not yet a derived physical law.
+These conditions define the regime where the closure probability structure would approach quantum Born-rule behaviour. Outside this regime, the framework predicts a modified probability structure with residual damping --- a potentially testable distinction.
 \end{remark}
 
 %==================================================================
 \section{Classical Limit}\label{sec:classical}
 %==================================================================
 
-The phase-augmented dynamics reduces to the dissipative gradient flow of Paper~XII in the following limits:
+With $\Omega = \Fcal/\sigma^2$ fixed by the complexified-action ansatz, the parameter $\sigma^2$ simultaneously controls both dissipative damping and phase oscillation frequency. The classical limit is the regime where interference effects become negligible. There are two clean limits:
 
 \begin{enumerate}
-    \item \textbf{Phase-free limit ($\Omega \to 0$):} the phase variable becomes static ($\dot{\theta} = 0$), all path phases are equal ($\Theta_1 = \Theta_2$), interference vanishes, and the dynamics reduces to $\dot{\psi} = -\nabla\Fcal(\psi)$.
+    \item \textbf{Single-path dominance ($\sigma \to 0$):} The damping factor $\exp(-S/\sigma^2)$ becomes sharply peaked around the path of minimum action $\gamma^*$. All other paths are exponentially suppressed. The sum over paths collapses:
+    \begin{equation}
+        \mathcal{A}(\psi_i \to \psi_f) \;\xrightarrow{\sigma \to 0}\; \exp\!\left(-\frac{S[\gamma^*]}{\sigma^2} + \frac{i\, \Fcal_{\mathrm{path}}[\gamma^*]}{\sigma^2}\right)
+    \end{equation}
+    Since only one path contributes, there is no multi-path interference. The probability becomes $P \propto \exp(-2S[\gamma^*]/\sigma^2)$, and the configuration dynamics is dominated by the gradient-flow solution $\dot{\psi} = -\nabla\Fcal(\psi)$ of Paper~XII.
 
-    \item \textbf{Decoherence limit ($\sigma \to \infty$):} the damping factor $e^{-S/\sigma^2} \to 1$ for all paths, the amplitude becomes pure phase, and in the presence of environmental noise the phase differences average out, destroying interference.
+    This is the direct analogue of the $\hbar \to 0$ stationary-phase limit in quantum mechanics, where the Feynman path integral is dominated by the classical trajectory.
 
-    \item \textbf{Single-path dominance ($\sigma \to 0$):} only the path of minimum action contributes, the sum over paths collapses to a single term, and the dynamics becomes deterministic gradient flow.
+    \item \textbf{Decoherence regime (environmental coupling):} If additional noise sources (beyond the $\sigma$-controlled stochastic term) introduce random phase kicks $\delta\theta$, then the ensemble average over phase fluctuations gives:
+    \begin{equation}
+        \langle \cos(\Theta_1 - \Theta_2 + \delta\theta) \rangle_{\delta\theta} \;\to\; 0
+    \end{equation}
+    The interference term averages to zero, leaving only the incoherent sum $P = \sum |\mathcal{A}_k|^2$. This recovers the real-valued path-probability structure of Paper~XIV.
 \end{enumerate}
 
-In each limit, the system reduces to the classical closure dynamics of Paper~XII. The phase-coherent structure is an extension, not a replacement.
+In both limits, the system reduces to previously established dynamics: gradient flow (Paper~XII) or stochastic occupation (Paper~XIV). The phase-coherent structure is an extension that operates between these limits.
 
 %==================================================================
 \section{Relation to Quantum Mechanics}\label{sec:QM}
@@ -336,14 +368,13 @@ In each limit, the system reduces to the classical closure dynamics of Paper~XII
 \toprule
 Quantum mechanics & Phase-coherent closure dynamics \\
 \midrule
-Hilbert space & $\tilde{\mathcal{S}}_{\mathrm{adm}} = \Sadm \times S^1$ \\
-Wavefunction $\psi(x)$ & Augmented state $\Psi = A(\psi)e^{i\theta}$ \\
-Hamiltonian $\hat{H}$ & Closure functional $\Fcal$ + phase frequency $\Omega$ \\
-Schr\"odinger equation & Formulation A / B (candidate, not derived) \\
-Path integral $e^{iS/\hbar}$ & $e^{-S/\sigma^2 + i\Theta}$ (damped + phase) \\
+Hilbert state space & Augmented admissible space $\tilde{\mathcal{S}}_{\mathrm{adm}} = \Sadm \times S^1$ (not a Hilbert space) \\
+Wavefunction $\psi(x)$ & Closure amplitude-phase state $\Psi = A(\psi)e^{i\theta}$ \\
+Hamiltonian $\hat{H}$ & Closure functional $\Fcal$ in an energy-like role \\
+Schr\"odinger equation & No established analogue; Formulations A/B are candidate directions \\
+Path integral $e^{iS/\hbar}$ & $e^{(-S + i\Fcal_{\mathrm{path}})/\sigma^2}$ (Eq.~\ref{eq:formC}) \\
 Interference & Demonstrated (Prop.~\ref{prop:interference}) \\
-Born rule $|\psi|^2$ & $|\mathcal{A}|^2$ (structural, not derived as physical law) \\
-$\hbar$ & $\sigma$ (noise) + $\Omega$ (phase rotation) \\
+Born rule $|\psi|^2$ & $|\mathcal{A}|^2$ (same form, not derived as physical law) \\
 Superposition & Multi-path amplitude sum \\
 Collapse & Phase-coherent crystallisation \\
 Unitarity & Not present (dissipative component retained) \\
@@ -353,49 +384,71 @@ Unitarity & Not present (dissipative component retained) \\
 
 \textsc{Status:} The right column contains structural analogues within the phase-coherent closure framework. Interference is demonstrated; the Born-like structure is a feature of the formulation; unitarity is absent. No equivalence with quantum mechanics is claimed.
 
+\begin{remark}[Partial formal analogy: $\sigma^2$ and $\hbar$]\label{rem:hbar}
+In quantum mechanics, the Feynman path integral assigns $\exp(iS/\hbar)$ to each path, and the classical limit is $\hbar \to 0$ (stationary phase). In the closure framework, the complexified amplitude~\eqref{eq:formC} assigns $\exp((-S + i\Fcal_{\mathrm{path}})/\sigma^2)$, and the classical limit is $\sigma^2 \to 0$ (single-path dominance, Section~\ref{sec:classical}). Within the adopted formulation, $\sigma^2$ occupies part of the formal role that $\hbar$ occupies in the quantum path integral: it controls both the width of the path-probability distribution and the scale of phase oscillation. This is a structural analogy internal to the formulation, not a physical identification. In particular, the closure path integral retains a real damping factor that has no counterpart in the standard Feynman integral, so the correspondence is partial. Whether $\sigma^2$ can be physically identified with $\hbar$ --- and under what conditions the damping factor becomes negligible, completing the analogy --- is an open question.
+\end{remark}
+
 %==================================================================
 \section{Discussion and Limitations}\label{sec:discussion}
 %==================================================================
 
 \subsection{What is achieved}
 
+\textbf{Entry ansatz.} The complexified action~\eqref{eq:complexaction} is proposed as the minimal extension of Paper~XIV's real path functional that introduces phase using only existing closure quantities. This is the paper's central assumption.
+
+\textbf{Derived within the adopted formulation:}
 \begin{itemize}
-    \item Phase has been introduced into the closure framework as a structural degree of freedom.
-    \item Three candidate dynamical formulations have been defined and compared.
-    \item Interference has been demonstrated as a structural consequence of path-dependent phase accumulation.
-    \item Crystallisation has been extended to include phase coherence.
-    \item The classical limit reduces to Paper~XII gradient flow.
+    \item The amplitude $A(\psi) = \exp(-\Fcal/\sigma^2)$ is fixed by consistency with the Paper~XIV stationary distribution and the squared-modulus probability structure (Section~\ref{sec:phase}).
+    \item The phase-rotation frequency $\Omega(\psi) = \Fcal(\psi)/\sigma^2$ follows immediately from the complexified action (Eq.~\ref{eq:omega_derived}).
+    \item Interference is proved (Proposition~\ref{prop:interference}): whenever distinct paths accumulate different phases, the transition probability departs from the incoherent sum.
+    \item The classical limit ($\sigma \to 0$) recovers single-path dominance via stationary phase; the decoherence regime recovers Paper~XIV's incoherent probabilities.
+    \item Crystallisation is extended to phase-coherent selection (Definition~\ref{def:phasecrystal}).
+\end{itemize}
+
+\textbf{Structural correspondences (not physical identifications):}
+\begin{itemize}
+    \item The squared-modulus probability form $P = |\mathcal{A}|^2$ is structurally analogous to the Born rule.
+    \item $\sigma^2$ occupies part of the formal role of $\hbar$ (Remark~\ref{rem:hbar}), but the analogy is partial: a real damping factor is retained.
 \end{itemize}
 
 \subsection{What is not achieved}
 
 \begin{itemize}
-    \item \textbf{No equivalence with QM.} The framework shares structural features with quantum mechanics but is not equivalent: unitarity is absent, the damping factor is retained, and the Born rule is not derived.
-    \item \textbf{$\Omega$ is not uniquely determined.} The phase-rotation frequency is a structural input, not derived from first principles.
-    \item \textbf{The path-integral sum is formal.} The sum over paths is defined structurally but not computed for realistic systems.
+    \item \textbf{No full QM equivalence.} The framework shares structural features with quantum mechanics but is not equivalent: unitarity is absent, the damping factor is retained, and the Born rule is a structural feature of the formulation, not derived as a physical law.
+    \item \textbf{No uniqueness proof for the complexification.} The ansatz~\eqref{eq:complexaction} is the simplest complexification using existing quantities, but it is not the only possibility. Alternative imaginary terms (e.g.\ Hessian-based) are conceivable.
     \item \textbf{No Schr\"odinger equation.} No differential equation equivalent to the Schr\"odinger equation is derived.
     \item \textbf{No Hilbert-space structure.} The augmented state space is $\Sadm \times S^1$, not a Hilbert space.
+    \item \textbf{No physical identification of $\sigma^2$.} The partial formal analogy with $\hbar$ does not constitute a physical identification.
     \item \textbf{The double-well example is schematic.} It demonstrates the mechanism but does not compute numerical predictions for a physical system.
 \end{itemize}
 
 \subsection{Open questions}
 
 \begin{itemize}
-    \item Can $\Omega$ be derived from the closure structure (e.g.\ from the Hessian eigenvalues)?
-    \item Can the damping factor $e^{-S/\sigma^2}$ be absorbed into a redefined measure, leaving a purely oscillatory path integral?
-    \item Is there a Wick rotation connecting the damped closure dynamics to an oscillatory quantum dynamics?
-    \item Can the augmented state space be promoted to a Hilbert space with a suitable inner product?
+    \item Can the damping factor $e^{-S/\sigma^2}$ be absorbed into a redefined path measure, leaving a purely oscillatory integral? This would be the analogue of passing from the Euclidean to the Lorentzian path integral.
+    \item Is there a Wick rotation $\sigma^2 \to i\sigma^2$ that maps the damped closure dynamics to an oscillatory quantum dynamics, and if so, under what regularity conditions does it converge?
+    \item Can the augmented state space $\Sadm \times S^1$ be promoted to a Hilbert space with a suitable inner product, and does the path-integral amplitude then define a unitary propagator?
+    \item Are there alternative derivations of $\Omega$ (e.g.\ from Hessian eigenvalues) that remain consistent with the complexified action but give different physical predictions?
 \end{itemize}
 
 %==================================================================
 \section{Conclusion}\label{sec:conclusion}
 %==================================================================
 
-The closure framework, previously dissipative and real-valued, now admits a phase-coherent extension. Phase is introduced as a structural degree of freedom; candidate dynamical formulations combine closure descent with phase rotation; and interference arises as a structural consequence of path-dependent phase accumulation in the path-integral formulation.
+This paper solves the missing-phase problem of the VFD closure programme. Papers~XII--XIV established deterministic, interacting, and stochastic dynamics on the closure landscape, but that dynamics was dissipative and real-valued: it lacked phase, interference, and the oscillatory structure characteristic of quantum mechanics.
 
-The double-well example demonstrates constructive and destructive interference from the closure landscape alone, without quantum-mechanical postulates. Crystallisation is extended to phase-coherent selection, and the classical limit reduces to the gradient flow of Paper~XII.
+The complexified-action ansatz~\eqref{eq:complexaction} resolves this gap. It is the simplest extension of Paper~XIV's real path functional that introduces phase using only existing closure quantities --- no additional phase-specific parameters. Once that ansatz is adopted, the main consequences follow:
+\begin{itemize}
+    \item the amplitude is fixed at $A(\psi) = \exp(-\Fcal/\sigma^2)$ by consistency with Paper~XIV;
+    \item the phase-rotation frequency is fixed at $\Omega = \Fcal/\sigma^2$;
+    \item interference arises structurally (Proposition~\ref{prop:interference});
+    \item the transition probability takes the squared-modulus form $P = |\mathcal{A}|^2$;
+    \item crystallisation is extended to include phase coherence.
+\end{itemize}
 
-This paper does not claim quantum mechanics. It claims something narrower but still significant: that the closure framework, augmented with phase, produces interference --- the signature feature that distinguishes quantum from classical probability. Whether this phase structure can be developed into a full recovery of quantum mechanics, or whether it represents a genuinely distinct probabilistic framework, is the central open question for the programme.
+This constitutes the first genuine QM-recovery step within the VFD framework at the level of amplitude, phase, and interference --- all from the existing closure structure once a single minimal complexification ansatz is added.
+
+What the paper does not claim is full quantum mechanics. Unitarity is absent, the Schr\"odinger equation is not derived, Hilbert-space structure is not established, and the partial formal analogy between $\sigma^2$ and $\hbar$ is not a physical identification. These are targets for subsequent work. The present paper establishes the phase-bearing foundation on which such extensions can be built.
 
 %==================================================================
 \bibliographystyle{plainnat}

@@ -1,0 +1,488 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\VW}{V_{\mathrm{W}}}
+\newcommand{\HW}{H_{\mathrm{W}}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Rst}{R_{\mathrm{st}}}
+\newcommand{\dUrel}{\delta U_{\mathrm{rel}}}
+
+\title{The Closure Residual:\\Nonlinear Remainder\\Beyond the Witten-Hamiltonian Regime}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Paper~XVIII derived an exact nonlinear closure-Nelson wave equation and showed that the nonlinear residual vanishes exactly at the Paper~XIV equilibrium, so that the wave equation reduces to the Schr\"odinger equation with Witten Hamiltonian $\HW$; for perturbations around equilibrium, this linear Schr\"odinger dynamics persists to leading order. The remaining discrepancy away from equilibrium is a state-dependent nonlinear term with coefficient $\sigma^2$ in the Schr\"odinger-normalised form.
+
+The present paper studies this \textit{closure residual} directly. Rewriting the dynamics in equilibrium-centred normal form $i\partial_t\Psi = \HW\Psi + \dUrel[\Psi]\Psi$, the residual is shown to vanish exactly at the Paper~XIV equilibrium and to measure curvature deviation of the probability amplitude from equilibrium structure. Structural properties are derived: global phase invariance, modulus-only dependence, locality, and near-equilibrium smallness. The full nonlinear equation is shown to conserve the $L^2$ norm exactly, confirming that probability is preserved even in the nonlinear regime. A gauge analysis establishes that the residual cannot be removed by phase redefinition or linear unitary transformation, and that amplitude-based absorption changes the physical content of the theory.
+
+A dimensionless residual-strength parameter $\Xi$ is defined, providing a regime classifier for the dynamics: a linear Schr\"odinger regime ($\Xi \ll 1$), a mixed regime ($\Xi \sim 1$), and a nonlinear closure-dominated regime ($\Xi \gg 1$). A quadratic worked example demonstrates each regime explicitly.
+
+The paper does not interpret the residual as a modification of quantum mechanics. It establishes it as a mathematically well-defined object --- the closure-sector remainder after linear quantum behaviour has been recovered --- whose physical interpretation is deferred to subsequent work.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Paper~XVIII~\citep{SmartXVIII} established that forward/backward pairing of closure stochastic processes produces a nonlinear Schr\"odinger-type wave equation:
+\begin{equation}\label{eq:XVIII}
+    i\sigma^2\partial_t\Psi = -\frac{\sigma^4}{2}\Delta\Psi + \left(-\sigma^2\VW + \sigma^4\frac{\Delta|\Psi|}{|\Psi|}\right)\Psi
+\end{equation}
+where $\VW = |\nabla\Fcal|^2/(2\sigma^2) - \Delta\Fcal/2$ is the Witten potential. At the Paper~XIV~\citep{SmartXIV} equilibrium and to leading order near equilibrium, this reduces to the linear Schr\"odinger equation $i\partial_t\Psi = \HW\Psi$ with Witten Hamiltonian $\HW = -(\sigma^2/2)\Delta + \VW$.
+
+The sole remaining obstruction to global linear Schr\"odinger dynamics is the state-dependent term $\sigma^4\Delta|\Psi|/|\Psi|$ (or equivalently $\sigma^2\Delta|\Psi|/|\Psi|$ after normalisation to Schr\"odinger form). Paper~XVIII identified this as a structurally derived residual rather than a defect of the construction. The present paper takes the next step: it isolates, classifies, and analyses this residual mathematically.
+
+\subsection*{Scope}
+
+This paper does not interpret the residual as new physics. It establishes the residual's mathematical properties so that subsequent work can determine its physical status. The paper answers: \textit{what kind of object is the residual, and when does it matter?}
+
+%==================================================================
+\section{Equilibrium-Centred Normal Form}\label{sec:normalform}
+%==================================================================
+
+Define the stationary amplitude $\Rst = \sqrt{\rho_{\mathrm{st}}} \propto e^{-\Fcal/\sigma^2}$, where $\rho_{\mathrm{st}} = Z^{-1}e^{-2\Fcal/\sigma^2}$ is the Paper~XIV equilibrium density. The key identity (derived in Paper~XVIII) is:
+\begin{equation}\label{eq:equil_identity}
+    \frac{\Delta\Rst}{\Rst} = \frac{|\nabla\Fcal|^2}{\sigma^4} - \frac{\Delta\Fcal}{\sigma^2} = \frac{2\VW}{\sigma^2}
+\end{equation}
+
+Dividing~\eqref{eq:XVIII} by $\sigma^2$ and using~\eqref{eq:equil_identity}, the closure-Nelson wave equation takes the \textit{equilibrium-centred normal form}:
+
+\begin{equation}\label{eq:normalform}
+    \boxed{i\,\partial_t\Psi = \HW\Psi + \dUrel[\Psi]\,\Psi}
+\end{equation}
+
+where the \textit{closure residual} is:
+\begin{equation}\label{eq:residual}
+    \boxed{\dUrel[\Psi] = \sigma^2\left(\frac{\Delta|\Psi|}{|\Psi|} - \frac{\Delta\Rst}{\Rst}\right)}
+\end{equation}
+
+\begin{remark}
+This form separates the dynamics into two components: the linear Witten-Hamiltonian evolution $\HW\Psi$ (which is exact Schr\"odinger), and the nonlinear closure residual $\dUrel[\Psi]\Psi$ (which vanishes at equilibrium). The residual measures how far the current amplitude profile deviates from the equilibrium curvature structure. The coefficient $\sigma^2$ results from dividing Paper~XVIII's wave equation (which has coefficient $\sigma^4$ in the undivided form $i\sigma^2\partial_t\Psi = \ldots$) by $\sigma^2$ to obtain the Schr\"odinger-normalised form.
+\end{remark}
+
+%==================================================================
+\section{Structural Properties of the Residual}\label{sec:structure}
+%==================================================================
+
+\begin{proposition}[Equilibrium vanishing]\label{prop:vanishing}
+$\dUrel[\Psi_{\mathrm{st}}] = 0$, where $\Psi_{\mathrm{st}} = \Rst$ is the equilibrium amplitude.
+\end{proposition}
+
+\begin{proof}
+Direct substitution: $|\Psi_{\mathrm{st}}| = \Rst$, so $\Delta|\Psi_{\mathrm{st}}|/|\Psi_{\mathrm{st}}| = \Delta\Rst/\Rst$, and the difference vanishes.
+\end{proof}
+
+\begin{proposition}[Phase invariance]\label{prop:phase}
+$\dUrel[e^{i\theta}\Psi] = \dUrel[\Psi]$ for any constant $\theta \in \mathbb{R}$. More generally, $\dUrel[\Psi]$ depends only on $|\Psi|$ and its spatial derivatives, not on the phase of $\Psi$.
+\end{proposition}
+
+\begin{proof}
+$|e^{i\theta}\Psi| = |\Psi|$, so $\Delta|e^{i\theta}\Psi|/|e^{i\theta}\Psi| = \Delta|\Psi|/|\Psi|$.
+\end{proof}
+
+\begin{proposition}[Locality]\label{prop:locality}
+On any open set where $|\Psi| > 0$, $\dUrel[\Psi](\psi)$ depends only on $|\Psi|$, $\nabla|\Psi|$, and $\Delta|\Psi|$ evaluated at $\psi$. It is a local functional of the modulus.
+\end{proposition}
+
+\begin{proof}
+On $\{|\Psi| > 0\}$: $\Delta|\Psi|/|\Psi| = \Delta\log|\Psi| + |\nabla\log|\Psi||^2$, which involves only local derivatives of $|\Psi|$.
+\end{proof}
+
+\begin{proposition}[Near-equilibrium scaling]\label{prop:scaling}
+For $\Psi = \Psi_{\mathrm{st}}(1 + \varepsilon\eta)$ with $\varepsilon \ll 1$ and $\eta$ smooth:
+\begin{equation}
+    \dUrel[\Psi] = O(\varepsilon)
+\end{equation}
+More precisely, to leading order:
+\begin{equation}\label{eq:linearised_residual}
+    \dUrel[\Psi] = \varepsilon\sigma^2\left(\Delta\mathrm{Re}(\eta) + 2\nabla\log\Rst\cdot\nabla\mathrm{Re}(\eta)\right) + O(\varepsilon^2)
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Write $R = |\Psi| = \Rst(1 + \varepsilon\,\mathrm{Re}(\eta)) + O(\varepsilon^2)$. Then:
+\begin{align}
+    \frac{\Delta R}{R} &= \frac{\Delta\Rst}{\Rst} + \varepsilon\left(\Delta\mathrm{Re}(\eta) + 2\nabla\log\Rst\cdot\nabla\mathrm{Re}(\eta)\right) + O(\varepsilon^2)
+\end{align}
+Subtracting $\Delta\Rst/\Rst$ gives~\eqref{eq:linearised_residual}.
+\end{proof}
+
+\begin{proposition}[Characterisation of vanishing]\label{prop:vanishing_class}
+$\dUrel[\Psi] = 0$ if and only if $|\Psi|$ satisfies:
+\begin{equation}
+    \frac{\Delta|\Psi|}{|\Psi|} = \frac{\Delta\Rst}{\Rst} = \frac{2\VW}{\sigma^2}
+\end{equation}
+That is, the residual vanishes precisely for states whose amplitude has the same curvature-to-amplitude ratio as the equilibrium profile.
+\end{proposition}
+
+\begin{proof}
+Direct from definition~\eqref{eq:residual}.
+\end{proof}
+
+%==================================================================
+\section{Conservation Laws}\label{sec:conservation}
+%==================================================================
+
+\begin{proposition}[Norm conservation]\label{prop:norm}
+The full nonlinear equation~\eqref{eq:normalform} preserves the $L^2$ norm:
+\begin{equation}
+    \frac{d}{dt}\int|\Psi|^2\,d\psi = 0
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Write~\eqref{eq:normalform} as $i\partial_t\Psi = \HW\Psi + \dUrel\Psi$. Then:
+\begin{align}
+    \frac{d}{dt}\int|\Psi|^2 &= 2\,\mathrm{Re}\int\Psi^*\,\partial_t\Psi\,d\psi \notag \\
+    &= 2\,\mathrm{Re}\int\Psi^*\left(-i\HW\Psi - i\,\dUrel\Psi\right)d\psi
+\end{align}
+For the Witten term: $\mathrm{Re}\int\Psi^*(-i\HW\Psi) = -\mathrm{Im}\langle\Psi, \HW\Psi\rangle = 0$ since $\HW$ is self-adjoint and $\langle\Psi,\HW\Psi\rangle$ is real.
+
+For the residual term: $\mathrm{Re}\int\Psi^*(-i\,\dUrel\Psi) = -\mathrm{Im}\int\dUrel\,|\Psi|^2 = 0$ since $\dUrel[\Psi]$ is \textit{real-valued} (it depends only on modulus derivatives via~\eqref{eq:residual}).
+\end{proof}
+
+\begin{remark}[Physical significance]
+Norm conservation holds \textit{exactly} for the full nonlinear equation, not just in the linearised regime. Probability is preserved even when the residual is large. This is because $\dUrel$ acts as a real multiplicative potential: it rotates the phase of $\Psi$ but does not drain or amplify its modulus. The closure-Nelson dynamics is therefore probability-conserving in all regimes.
+\end{remark}
+
+\begin{remark}[On unitarity vs.\ norm conservation]
+The closure dynamics preserves the $L^2$ norm but is not generated by a skew-adjoint operator. In this sense it is norm-preserving but not unitary in the standard quantum-mechanical sense: the generator $\HW + \dUrel[\Psi]$ is self-adjoint only in the linearised regime where $\dUrel \to 0$.
+\end{remark}
+
+\subsection*{Continuity equation}
+
+Since the norm is conserved, the density $\rho = |\Psi|^2$ satisfies a continuity equation. Writing $\Psi = R\,e^{iS/\sigma^2}$, the Madelung decomposition gives:
+\begin{equation}
+    \partial_t\rho + \nabla\cdot(\rho\,\nabla S) = 0
+\end{equation}
+which is exact for the full nonlinear equation (inherited from Paper~XVIII's Madelung pair).
+
+\subsection*{Energy functional}
+
+Define the candidate energy:
+\begin{equation}\label{eq:energy}
+    E[\Psi] = \langle\Psi, \HW\Psi\rangle = \int\left(\frac{\sigma^2}{2}|\nabla\Psi|^2 + \VW|\Psi|^2\right)d\psi
+\end{equation}
+
+\begin{proposition}[Energy non-conservation]\label{prop:energy}
+The Witten energy $E[\Psi]$ is \textbf{not} conserved by the full nonlinear dynamics. Its time derivative is:
+\begin{equation}
+    \frac{dE}{dt} = -2\,\mathrm{Im}\int\dUrel[\Psi]\,\Psi^*\,\HW\Psi\,d\psi
+\end{equation}
+which vanishes at equilibrium and to leading order near equilibrium, but is generically nonzero.
+\end{proposition}
+
+\begin{proof}
+$dE/dt = 2\,\mathrm{Re}\langle\partial_t\Psi, \HW\Psi\rangle = 2\,\mathrm{Re}\langle -i\HW\Psi - i\dUrel\Psi, \HW\Psi\rangle$. The first term gives $-2\,\mathrm{Im}\langle\HW\Psi, \HW\Psi\rangle = 0$ (since $\HW$ is self-adjoint). The second gives $-2\,\mathrm{Im}\langle\dUrel\Psi, \HW\Psi\rangle = -2\,\mathrm{Im}\int\dUrel[\Psi]\,\Psi^*\,\HW\Psi\,d\psi$, which is generically nonzero since $\dUrel$ is real but $\Psi^*\HW\Psi$ is generally complex.
+\end{proof}
+
+\begin{remark}
+The functional $E[\Psi] = \langle\Psi, \HW\Psi\rangle$ is the \textit{linear} Witten energy --- the energy of the linearised Schr\"odinger regime. It is not necessarily the conserved energy of the full nonlinear theory. Norm is conserved but linear Witten energy is not: the nonlinearity exchanges energy between the Witten-Hamiltonian sector and the residual sector. Whether a modified energy functional incorporating the residual exists and is conserved remains open.
+\end{remark}
+
+%==================================================================
+\section{Gauge and Removability Analysis}\label{sec:gauge}
+%==================================================================
+
+We test whether the residual can be absorbed by admissible transformations.
+
+\subsection{Phase redefinition}
+
+\begin{proposition}[Non-removability by phase]\label{prop:phase_gauge}
+No transformation $\Psi \to \Psi\,e^{iG(|\Psi|)}$ with $G$ depending only on $|\Psi|$ can remove $\dUrel$.
+\end{proposition}
+
+\begin{proof}
+Under $\Psi \to \Psi\,e^{iG}$, the modulus $|\Psi|$ is unchanged, so $\dUrel[\Psi\,e^{iG}] = \dUrel[\Psi]$. The residual is phase-invariant (Proposition~\ref{prop:phase}).
+\end{proof}
+
+\subsection{Linear unitary transformation}
+
+\begin{proposition}[Non-removability by linear unitary]\label{prop:unitary_gauge}
+No time-independent unitary transformation $\Psi \to U\Psi$ (with $U$ a fixed linear operator) can remove $\dUrel$ from the equation.
+\end{proposition}
+
+\begin{proof}
+Under $\Psi \to U\Psi$, the equation transforms as $i\partial_t(U\Psi) = U\HW U^\dagger(U\Psi) + \dUrel[U\Psi](U\Psi)$. The residual $\dUrel[U\Psi] = \sigma^2(\Delta|U\Psi|/|U\Psi| - \Delta\Rst/\Rst)$ depends on $|U\Psi|$, which generically differs from $|\Psi|$ for non-trivial $U$. The residual is modified but not eliminated.
+\end{proof}
+
+\subsection{Equilibrium-amplitude factorisation}
+
+The substitution $\Psi = \Rst\,\Phi$ (used in Paper~XVI to eliminate the drift) transforms the equation. Since $|\Psi| = \Rst|\Phi|$:
+\begin{equation}
+    \frac{\Delta|\Psi|}{|\Psi|} = \frac{\Delta(\Rst|\Phi|)}{\Rst|\Phi|}
+\end{equation}
+
+Expanding: $\Delta(\Rst|\Phi|) = |\Phi|\Delta\Rst + 2\nabla\Rst\cdot\nabla|\Phi| + \Rst\Delta|\Phi|$, so:
+\begin{equation}
+    \frac{\Delta|\Psi|}{|\Psi|} = \frac{\Delta\Rst}{\Rst} + \frac{2\nabla\log\Rst\cdot\nabla|\Phi|}{|\Phi|} + \frac{\Delta|\Phi|}{|\Phi|}
+\end{equation}
+
+The residual becomes:
+\begin{equation}\label{eq:residual_phi}
+    \dUrel = \sigma^2\left(\frac{2\nabla\log\Rst\cdot\nabla|\Phi|}{|\Phi|} + \frac{\Delta|\Phi|}{|\Phi|}\right)
+\end{equation}
+
+\begin{remark}
+The equilibrium piece $\Delta\Rst/\Rst$ cancels exactly, but the residual is not eliminated: it is re-expressed in terms of $|\Phi|$ and its derivatives. The residual vanishes if and only if $|\Phi|$ is constant (i.e.\ $|\Psi| \propto \Rst$). The factorisation simplifies the residual's dependence but does not remove it.
+\end{remark}
+
+\subsection{Summary of removability}
+
+\begin{table}[ht]
+\centering
+\caption{Removability of the closure residual under candidate transformations.}
+\label{tab:removability}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Transformation & Effect on $\dUrel$ & Removable? \\
+\midrule
+Global phase $e^{i\theta}$ & Invariant & No \\
+Phase redefinition $e^{iG(|\Psi|)}$ & Invariant & No \\
+Linear unitary $U$ & Modified, not eliminated & No \\
+Equilibrium factorisation $\Rst\Phi$ & Re-expressed in $|\Phi|$ & No \\
+Nonlinear amplitude transform & May absorb, changes theory & Open \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The residual is robust under all transformations that preserve the physical content of the theory. It can only be absorbed by transformations that alter the equation's structure.
+
+\begin{proposition}[Homogeneity under amplitude rescaling]\label{prop:homogeneity}
+For any constant $\lambda > 0$:
+\begin{equation}
+    \dUrel[\lambda\Psi] = \dUrel[\Psi]
+\end{equation}
+Thus the residual depends on the shape of the modulus profile, not on its overall normalisation.
+\end{proposition}
+
+\begin{proof}
+Since $|\lambda\Psi| = \lambda|\Psi|$, $\Delta|\lambda\Psi|/|\lambda\Psi| = \Delta|\Psi|/|\Psi|$. The equilibrium term is unchanged, so $\dUrel[\lambda\Psi] = \dUrel[\Psi]$.
+\end{proof}
+
+%==================================================================
+\section{Residual Strength and Dynamical Regimes}\label{sec:regimes}
+%==================================================================
+
+Define the dimensionless \textit{residual-strength parameter}:
+\begin{equation}\label{eq:Xi}
+    \Xi[\Psi](\psi) = \frac{|\dUrel[\Psi](\psi)|}{|\VW(\psi)| + \sigma^2|\Delta\Psi/\Psi|/2}
+\end{equation}
+as a pointwise ratio of the residual magnitude to the characteristic scale of the Witten-Hamiltonian terms.
+
+Three regimes:
+
+\begin{table}[ht]
+\centering
+\caption{Dynamical regimes classified by residual strength.}
+\label{tab:regimes}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Regime & Condition & Dynamics \\
+\midrule
+Linear Schr\"odinger & $\Xi \ll 1$ & $i\partial_t\Psi \approx \HW\Psi$ \\
+Mixed & $\Xi \sim 1$ & Witten + residual compete \\
+Nonlinear closure & $\Xi \gg 1$ & Residual dominates \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}
+The linear Schr\"odinger regime contains the equilibrium ($\Xi = 0$) and its perturbative neighbourhood. The nonlinear closure regime corresponds to configurations whose density profiles differ strongly from $\rho_{\mathrm{st}}$ --- for instance, highly localised or rapidly oscillating amplitude profiles. The mixed regime is the transitional zone where both components contribute comparably. This pointwise quantity is defined on regions where $|\Psi| > 0$; global (integrated) versions and treatment near nodal sets are left for future work.
+\end{remark}
+
+%==================================================================
+\section{Worked Example: Quadratic Closure Functional}\label{sec:example}
+%==================================================================
+
+\begin{example}[Quadratic closure]\label{ex:quadratic}
+Let $\Fcal(\psi) = \frac{1}{2}k\psi^2$ in one dimension.
+
+\subsection*{Equilibrium structure}
+
+$\Rst = \mathcal{N}\,e^{-k\psi^2/(2\sigma^2)}$, $\VW = k^2\psi^2/(2\sigma^2) - k/2$, and $\Delta\Rst/\Rst = 2\VW/\sigma^2 = k^2\psi^2/\sigma^4 - k/\sigma^2$.
+
+The Witten Hamiltonian has spectrum $E_n = nk$ with eigenstates $\phi_n$.
+
+\subsection*{Residual for Witten eigenstates}
+
+For $\Psi = \phi_n$ (an eigenstate of $\HW$), $|\Psi| = |\phi_n|$, and:
+\begin{equation}
+    \dUrel[\phi_n] = \sigma^2\left(\frac{\Delta|\phi_n|}{|\phi_n|} - \frac{k^2\psi^2}{\sigma^4} + \frac{k}{\sigma^2}\right)
+\end{equation}
+
+For the ground state $\phi_0 \propto e^{-k\psi^2/(2\sigma^2)} = \Rst$: $\dUrel[\phi_0] = 0$. $\checkmark$
+
+For the first excited state $\phi_1 \propto \psi\,e^{-k\psi^2/(2\sigma^2)}$: $|\phi_1| = |\psi|\,\mathcal{N}\,e^{-k\psi^2/(2\sigma^2)}$, and one computes (away from $\psi = 0$):
+\begin{equation}
+    \frac{\Delta|\phi_1|}{|\phi_1|} = \frac{k^2\psi^2}{\sigma^4} - \frac{3k}{\sigma^2} + \frac{2}{\psi^2}
+\end{equation}
+
+So: $\dUrel[\phi_1] = \sigma^2(2/\psi^2 - 2k/\sigma^2) = 2\sigma^2/\psi^2 - 2k$.
+
+The residual diverges as $\psi \to 0$ (where $|\phi_1|$ has a node) and is negative for large $|\psi|$. The nodal divergence is expected whenever $\Delta|\Psi|/|\Psi|$ is evaluated at zeros of $|\Psi|$; the expression is understood on regions where $|\Psi| > 0$, and nodal sets require separate treatment. The residual is nonzero for excited eigenstates --- confirming that only the ground state lies exactly in the Schr\"odinger regime.
+
+\subsection*{Residual for a shifted Gaussian}
+
+Consider a Gaussian shifted from equilibrium: $|\Psi| = \mathcal{N}\,e^{-k(\psi - a)^2/(2\sigma^2)}$ for some displacement $a > 0$. Then:
+\begin{equation}
+    \frac{\Delta|\Psi|}{|\Psi|} = \frac{k^2(\psi-a)^2}{\sigma^4} - \frac{k}{\sigma^2}
+\end{equation}
+
+The residual is:
+\begin{equation}
+    \dUrel = \sigma^2\left(\frac{k^2(\psi-a)^2}{\sigma^4} - \frac{k}{\sigma^2} - \frac{k^2\psi^2}{\sigma^4} + \frac{k}{\sigma^2}\right) = \frac{k^2}{\sigma^2}\left[(\psi-a)^2 - \psi^2\right] = \frac{k^2(-2a\psi + a^2)}{\sigma^2}
+\end{equation}
+
+This is a linear function of $\psi$ (plus a constant) --- nonzero, but finite and smooth. The residual strength grows linearly with displacement $a$, confirming that near-equilibrium perturbations produce small residuals.
+
+\subsection*{Regime summary}
+
+\begin{table}[ht]
+\centering
+\caption{Residual behaviour for different states in the quadratic model.}
+\label{tab:states}
+\begin{tabular}{@{}lll@{}}
+\toprule
+State & $\dUrel$ & Regime \\
+\midrule
+Ground state $\phi_0$ & $0$ & Exact Schr\"odinger \\
+Shifted Gaussian (small $a$) & $O(a)$ & Linear Schr\"odinger \\
+First excited state $\phi_1$ & Diverges at nodes & Nonlinear closure \\
+Highly localised state & Large & Nonlinear closure \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{example}
+
+%==================================================================
+\section{Interpretation}\label{sec:interpretation}
+%==================================================================
+
+The closure residual $\dUrel[\Psi]$ has been shown to be:
+\begin{itemize}
+    \item zero at equilibrium (Proposition~\ref{prop:vanishing}),
+    \item phase-invariant (Proposition~\ref{prop:phase}),
+    \item local and modulus-dependent (Proposition~\ref{prop:locality}),
+    \item small near equilibrium (Proposition~\ref{prop:scaling}),
+    \item not removable by phase, unitary, or equilibrium-factorisation transformations (Section~\ref{sec:gauge}),
+    \item probability-conserving (Proposition~\ref{prop:norm}).
+\end{itemize}
+
+These properties establish the residual as a mathematically well-defined, robust, non-trivial remainder relative to linear Schr\"odinger dynamics. It encodes the curvature mismatch between the actual amplitude profile and the equilibrium amplitude profile.
+
+\begin{remark}[On the role of the residual]
+The residual should not be interpreted as a failure to recover Schr\"odinger dynamics. Rather, it is the exact remainder that distinguishes the full nonlinear closure dynamics from its equilibrium tangent limit. Its presence is therefore expected: it encodes the deviation of the system from the equilibrium regime in which linear quantum behaviour is recovered.
+\end{remark}
+
+\subsection*{What the residual is not}
+
+\begin{itemize}
+    \item It is not a numerical artefact: it is an exact consequence of the closure-Nelson pairing.
+    \item It is not a gauge-removable quantity: it survives all standard transformations.
+    \item It is not a defect of the construction: it is the closure-sector remainder after linear quantum behaviour has been recovered.
+\end{itemize}
+
+\subsection*{What the residual may be}
+
+Three interpretive possibilities remain open:
+\begin{enumerate}
+    \item \textbf{A physical nonlinear correction.} The residual may represent a genuine departure from linear quantum mechanics in regimes far from closure equilibrium.
+    \item \textbf{An effective-theory artefact.} The residual may be an artefact of the closure approximation that would vanish in a more complete framework.
+    \item \textbf{A structurally meaningful quantity.} The residual may encode physical information about the closure landscape that is not captured by the linearised Schr\"odinger dynamics.
+\end{enumerate}
+
+Determining which of these holds requires further analysis --- in particular, whether the residual produces observable consequences or can be constrained by known experimental bounds. This is deferred to subsequent work.
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{Exact results}
+
+\begin{itemize}
+    \item The equilibrium-centred normal form~\eqref{eq:normalform} is exact.
+    \item The structural properties (Propositions~\ref{prop:vanishing}--\ref{prop:vanishing_class}) are proved.
+    \item Norm conservation (Proposition~\ref{prop:norm}) holds for the full nonlinear equation.
+    \item The gauge non-removability results (Propositions~\ref{prop:phase_gauge}--\ref{prop:unitary_gauge}) are proved.
+    \item The residual for the quadratic example is computed explicitly.
+\end{itemize}
+
+\subsection{Regime-specific results}
+
+\begin{itemize}
+    \item The near-equilibrium scaling $\dUrel = O(\varepsilon)$ (Proposition~\ref{prop:scaling}) quantifies smallness.
+    \item The residual-strength parameter $\Xi$ classifies regimes but is defined pointwise; a global (integral) version would be more robust.
+\end{itemize}
+
+\subsection{Open questions}
+
+\begin{itemize}
+    \item Does a modified energy functional (incorporating the residual) exist that is conserved?
+    \item Can the residual be bounded in terms of a distance from equilibrium (e.g.\ relative entropy)?
+    \item Does the nonlinear equation have special solutions not present in the linear theory?
+    \item Can the residual be constrained by existing experimental bounds on nonlinear quantum mechanics?
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+Paper~XIX isolates and classifies the closure residual --- the sole remaining discrepancy within the closure-Nelson formulation between the paired-process dynamics and the linear Schr\"odinger equation.
+
+\textbf{What is established.} The residual $\dUrel[\Psi] = \sigma^2(\Delta|\Psi|/|\Psi| - \Delta\Rst/\Rst)$ is:
+\begin{itemize}
+    \item exactly zero at equilibrium,
+    \item perturbatively small near equilibrium,
+    \item phase-invariant, local, and modulus-dependent,
+    \item not removable by standard gauge transformations,
+    \item probability-conserving in all regimes.
+\end{itemize}
+
+\textbf{What this means for the programme.} Paper~XVIII solved the kinetic problem: the imaginary kinetic term emerges from the forward/backward pairing. Paper~XIX classifies the remaining nonlinear residual and shows it is a robust, non-trivial structural quantity. The dynamics is approximately linear Schr\"odinger in the equilibrium-centred regime ($\Xi \ll 1$) and genuinely nonlinear when the residual is not negligible.
+
+\textbf{Programme arc.}
+\begin{itemize}
+    \item Papers~XII--XIV: dissipative closure dynamics,
+    \item Paper~XV: phase and interference,
+    \item Paper~XVI: evolution equation and structural gap,
+    \item Paper~XVII: dissipative obstruction theorem,
+    \item Paper~XVIII: Nelson pairing and near-equilibrium Schr\"odinger recovery,
+    \item Paper~XIX: classification of the closure residual.
+\end{itemize}
+
+The next stage is to determine the physical status of the residual: whether it is an observable nonlinear correction, an effective-theory artefact, or a structural signature of the closure landscape. That determination will decide whether the closure framework extends, modifies, or exactly recovers standard quantum mechanics.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
