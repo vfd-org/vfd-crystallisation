@@ -150,13 +150,13 @@ Extends the projection framework to the electroweak sector. Gauge symmetry reint
 
 #### Paper XIII — Interaction Dynamics
 
-**[Interaction Dynamics and Basin Transitions in Constraint-Manifold Evolution](papers/paper-xiii/paper-xiii.tex)**
+**[Interaction Dynamics and Basin Transitions in Constraint-Manifold Evolution](papers/paper-xiii/Interaction_Dynamics_and_Basin_Transitions_in_Constraint_Manifold_Evolution.pdf)** ([LaTeX source](papers/paper-xiii/paper-xiii.tex))
 
 Extends single-state dynamics (Paper XII) to multi-state interaction. Total closure functional F_tot = ΣF(ψ_i) + F_int(Ψ) with four interaction components: proximity, alignment, compatibility, binding. Coupled gradient flow with monotonic descent. Interaction as basin deformation. Binding as joint attractor formation (F_tot < ΣF). Scattering-like processes as basin-crossing transitions. Four transition channels: preserving, crossing, fusion, repulsion. Three worked examples. Conservative Lagrangian extension. No S-matrix, no QFT, no gauge-boson exchange — structural interaction layer only.
 
 #### Paper XII — Closure Dynamics
 
-**[Closure Dynamics: A Variational and Gradient Formulation of Constraint-Manifold Evolution](papers/paper-xii/paper-xii.tex)**
+**[Closure Dynamics: A Variational and Gradient Formulation of Constraint-Manifold Evolution](papers/paper-xii/Closure_Dynamics_A_Variational_and_Gradient_Formulation_of_Constraint_Manifold_Evolution.pdf)** ([LaTeX source](papers/paper-xii/paper-xii.tex))
 
 Introduces minimal dynamics into the closure framework. States evolve via gradient flow of the closure functional: F decreases monotonically, closure-stable states are attractors, disconnected configurations are dynamically unstable (confinement). Conservative Lagrangian extension with second-order Euler-Lagrange equation. Two modes of motion: transverse (toward M_cl, associated with mass) and tangential (along M_cl, associated with geometry). Evolution parameter t is auxiliary, not physical time. No relativistic invariance, no QFT, no scattering. The formal transition from structural framework to one that admits evolution.
 
