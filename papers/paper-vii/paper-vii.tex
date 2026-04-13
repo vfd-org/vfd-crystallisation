@@ -1,0 +1,374 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Tcal}{\mathcal{T}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Scl}{\mathcal{S}_{\mathrm{cl}}}
+\newcommand{\phig}{\varphi}
+
+\title{Closure Dynamics and Constraint Operators\\in $\phig$-Structured Geometry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Previous work in this programme introduced closure as a structural concept governing mass residuals and projection compatibility, but did not provide a self-contained operator-level formulation. The present paper addresses this gap by defining the closure operator, the closed state set, and the constraint classes in explicit mathematical terms.
+
+We define an admissible state space $\Sadm$ equipped with a norm, a closed state subset $\Scl$ characterised by three classes of constraint (local, multi-node, and projection), and a closure operator $\Ccal$ as metric projection onto $\Scl$. A variational formulation is introduced in which the closure functional $\Fcal(\psi)$ encodes the weighted constraint violation, and closure-stable states correspond to fixed points of the iterative projection $\psi_{n+1} = \Ccal(\psi_n)$.
+
+The formulation connects to the mass programme (Paper~V) through the closure residual $\Delta(\psi) = \|\psi - \Ccal(\psi)\|$, and to the electroweak reinterpretation (Paper~VI) through the projection-compatibility condition $\Pcal(\Ccal(\psi)) = \Pcal(\psi)$. We demonstrate that closure constraints restrict the admissible solution space in a non-trivial way: generic states do not satisfy closure, and the constraint structure is not arbitrary but follows from the spectral and combinatorial properties of the underlying $\phig$-structured geometry.
+
+The closure operator, constraint weights, and the full dynamical content are not uniquely derived from first principles in this paper. The formulation is presented as a mathematical framework within which the structural claims of the preceding papers can be made precise.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Papers~V and~VI~\citep{SmartV, SmartVI} introduced closure as a structural concept: mass arises as a closure residual, and gauge symmetry corresponds to projection-compatible torsional invariance. In both papers, the closure operator $\Ccal$ was invoked but not formally defined beyond a schematic level.
+
+The present paper provides the missing operator-level and constraint-level formulation. Its purpose is to make the closure concept mathematically explicit: to define the spaces, the constraints, the operator, and the dynamics in terms that can be checked for internal consistency and used as a foundation for further development.
+
+\subsection*{Scope and epistemic status}
+
+This paper defines a \textit{constraint framework}, not a complete physical theory. The closure operator is constructed as a mathematical object with specified domain, codomain, and convergence properties. The constraint classes are defined explicitly and connected to the spectral properties of the $\phig$-structured geometry. The framework is not derived from first principles; it is proposed as the formal substrate within which the structural claims of Papers~V--VI can be made rigorous.
+
+The paper does not introduce new particle predictions, derive forces, or claim to replace quantum field theory. It provides the mathematical machinery that the preceding papers assumed.
+
+%==================================================================
+\section{Admissible State Space}\label{sec:admissible}
+%==================================================================
+
+\begin{definition}[State space]\label{def:statespace}
+Let $V$ be a finite-dimensional inner-product space over $\mathbb{C}$, equipped with the norm $\|\psi\| = \sqrt{\langle\psi,\psi\rangle}$. In the context of the $\phig$-structured framework, elements of $V$ encode:
+\begin{itemize}
+    \item shell-support configurations (which shells are occupied),
+    \item torsional mode amplitudes (internal phase structure),
+    \item spectral weight distributions (eigenvalue projections).
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Admissible domain]\label{def:admissible}
+The admissible state space is:
+\begin{equation}
+    \Sadm = \left\{\psi \in V \;\middle|\; \|\psi\| = 1,\; E(\psi) < \infty,\; \psi \text{ satisfies boundary conditions}\right\}
+\end{equation}
+where $E(\psi)$ is an energy functional and the boundary conditions are determined by the physical context. $\Sadm$ is a closed subset of the unit sphere in $V$.
+\end{definition}
+
+\begin{remark}
+In the finite-dimensional setting relevant to the 600-cell ($V \cong \mathbb{C}^{120}$ or a subspace thereof), $\Sadm$ is compact. This guarantees existence of nearest points and convergence of iterative projections under mild regularity conditions.
+\end{remark}
+
+%==================================================================
+\section{Constraint Classes}\label{sec:constraints}
+%==================================================================
+
+We define three classes of closure constraint, each corresponding to a different structural requirement within the $\phig$-structured geometry.
+
+\subsection{Class I: Local constraints}
+
+Local constraints are conditions on individual shells or vertices.
+
+\begin{definition}[Local constraint set]\label{def:local}
+A state $\psi$ satisfies the local constraints if, for each occupied shell $k$:
+\begin{enumerate}
+    \item \textbf{Adjacency consistency:} the shell-support graph $G(S)$ is connected.
+    \item \textbf{Spectral compatibility:} the eigenvalue projection of $\psi$ onto the Laplacian eigenspaces is consistent with the shell occupation pattern.
+    \item \textbf{Phase matching:} the internal phase structure across adjacent shells satisfies a standing-wave consistency condition.
+\end{enumerate}
+\end{definition}
+
+These constraints are the operator-level formulations of the assignment rules R1--R5 from Paper~I~\citep{SmartI} and the standing-wave condition from Paper~V~\citep{SmartV}.
+
+\subsection{Class II: Multi-node constraints}
+
+Multi-node constraints govern the composite structure of multi-shell states.
+
+\begin{definition}[Multi-node constraint set]\label{def:multinode}
+A state $\psi$ with shell support $S$ satisfies the multi-node constraints if:
+\begin{enumerate}
+    \item \textbf{Connectivity:} the support subgraph $G(S)$ is connected (no isolated shell gaps).
+    \item \textbf{Composite stability:} the closure invariant $C(S) = \prod_{k \in S} k - \sum_{k \in S} k - 1$ lies within the admissible range for the particle sector.
+    \item \textbf{Winding consistency:} the winding number $w$ is compatible with the Hopf-fiber structure at the occupied shells.
+\end{enumerate}
+\end{definition}
+
+The connectivity constraint provides the framework's interpretation of confinement: quarks with disconnected supports (e.g.\ $\{2,4\}$) must bind into connected composites (e.g.\ the proton on $\{2,3,4\}$).
+
+\subsection{Class III: Projection constraints}
+
+Projection constraints ensure compatibility with the observable sector.
+
+\begin{definition}[Projection constraint set]\label{def:projection}
+A state $\psi$ satisfies the projection constraints if:
+\begin{equation}
+    \Pcal(\Ccal(\psi)) = \Pcal(\psi)
+\end{equation}
+where $\Pcal$ is the projection operator from the underlying manifold to observables (Paper~VI~\citep{SmartVI}). This ensures that the closure process does not alter the observable content of the state.
+\end{definition}
+
+This constraint connects the closure framework to the gauge-invariance interpretation of Paper~VI: torsional transformations that preserve projection compatibility are gauge symmetries.
+
+%==================================================================
+\section{The Closed State Set}\label{sec:closed}
+%==================================================================
+
+\begin{definition}[Closed state set]\label{def:closedset}
+The closed state set is the intersection of all three constraint classes:
+\begin{equation}
+    \Scl = \left\{\psi \in \Sadm \;\middle|\; \psi \text{ satisfies Class I, II, and III constraints}\right\}
+\end{equation}
+\end{definition}
+
+\begin{remark}[Non-convexity]
+$\Scl$ is not assumed to be convex. The constraint structure (connectivity, composite stability, winding consistency) generically produces a non-convex subset of $\Sadm$. This means the metric projection may not be unique in general; see Section~\ref{sec:operator} for the treatment of this issue.
+\end{remark}
+
+\begin{remark}[Non-emptiness]
+$\Scl$ is non-empty: the electron configuration ($S = \{1\}$, $w = 1$) and the proton configuration ($S = \{2,3,4\}$, $w = 1$) are explicit members, verified in Papers~I and~IV~\citep{SmartI, SmartIV}.
+\end{remark}
+
+%==================================================================
+\section{The Closure Operator}\label{sec:operator}
+%==================================================================
+
+\begin{definition}[Closure operator]\label{def:closure}
+The closure operator $\Ccal : \Sadm \to \Scl$ is defined, where well-posed, as a metric projection:
+\begin{equation}\label{eq:closure}
+    \Ccal(\psi) \in \arg\inf_{\phi \in \Scl} \|\psi - \phi\|
+\end{equation}
+provided the infimum is attained.
+\end{definition}
+
+\textbf{Existence.} In the finite-dimensional setting ($V \cong \mathbb{C}^n$), $\Sadm$ is compact and $\Scl \subseteq \Sadm$ is closed (as an intersection of closed constraint sets). The infimum is therefore attained: a nearest closed state exists for every $\psi \in \Sadm$.
+
+\textbf{Uniqueness.} Uniqueness of $\Ccal(\psi)$ is not guaranteed in general because $\Scl$ may be non-convex. When multiple nearest closed states exist, the closure operator selects from among them. In the present framework, the variational formulation (Section~\ref{sec:variational}) provides a secondary selection criterion.
+
+\textbf{Continuity.} If $\Scl$ is a finite union of smooth submanifolds of $\Sadm$ (as is the case for the discrete shell-support structure), the closure operator is continuous except possibly at equidistant points between distinct components of $\Scl$.
+
+\textsc{Status:} The closure operator is a well-defined mathematical object in the finite-dimensional setting. Its extension to infinite-dimensional state spaces (relevant for a full field-theoretic formulation) requires additional functional-analytic conditions and is deferred.
+
+%==================================================================
+\section{Closure Dynamics}\label{sec:dynamics}
+%==================================================================
+
+\subsection{Iterative projection}
+
+The closure process is modelled as iterative projection:
+\begin{equation}\label{eq:iteration}
+    \psi_{n+1} = \Ccal(\psi_n)
+\end{equation}
+
+If $\Ccal$ is a metric projection onto a closed set, then for any $\psi_0 \in \Sadm$:
+\begin{itemize}
+    \item $\|\psi_{n+1} - \psi^*\| \leq \|\psi_n - \psi^*\|$ for any $\psi^* \in \Scl$ (non-expansiveness).
+    \item If $\psi_0 \in \Scl$, then $\psi_1 = \psi_0$ (idempotence).
+    \item The sequence $\{\psi_n\}$ converges to a point in $\Scl$ (in finite dimensions, by compactness).
+\end{itemize}
+
+\subsection{Interpretation}
+
+The iterative projection models the physical process by which an unconstrained configuration resolves into a closure-compatible state. Each iteration step enforces the constraint structure; convergence corresponds to the system reaching a stable, fully constrained configuration.
+
+This is the operator-level formalisation of the crystallisation process introduced in the bridge paper~\citep{SmartBridge}: the relaxation flow $d\psi/dt = \Pi_{\Sadm}\nabla F(\psi)$ is discretised as the iterative projection~\eqref{eq:iteration}.
+
+%==================================================================
+\section{Variational Formulation}\label{sec:variational}
+%==================================================================
+
+\subsection{The closure functional}
+
+We introduce a closure functional $\Fcal : \Sadm \to \mathbb{R}_{\geq 0}$ that measures the total constraint violation:
+\begin{equation}\label{eq:functional}
+    \Fcal(\psi) = w_1\, d(\psi) + w_2\, \mathrm{Var}(\psi) + w_3\, \Tcal(\psi)
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $d(\psi) \geq 0$: \textbf{local compatibility defect} --- measures violation of Class~I constraints (adjacency, spectral compatibility, phase matching).
+    \item $\mathrm{Var}(\psi) \geq 0$: \textbf{structural instability} --- measures the variance of the state's spectral components across shells.
+    \item $\Tcal(\psi) \geq 0$: \textbf{torsional mismatch} --- measures violation of Class~III projection constraints and torsional consistency.
+\end{itemize}
+
+The weights $w_1, w_2, w_3 > 0$ are structural parameters. Their values are not uniquely determined in this paper.
+
+\subsection{Closure-stable states as minimisers}
+
+\begin{definition}[Closure-stable state]\label{def:stable}
+A state $\psi^* \in \Sadm$ is closure-stable if it is a local minimiser of $\Fcal$:
+\begin{equation}
+    \psi^* \in \arg\min_{\psi \in \Sadm} \Fcal(\psi)
+\end{equation}
+subject to the constraint that $\psi^* \in \Scl$ (i.e.\ $\Fcal(\psi^*) = 0$).
+\end{definition}
+
+States with $\Fcal(\psi) = 0$ are exactly closed. States with $\Fcal(\psi) > 0$ violate at least one constraint class and carry a nonzero closure residual.
+
+\subsection{Relation to the closure operator}
+
+The variational formulation provides a secondary selection criterion when the metric projection is non-unique: among the nearest closed states, select the one that minimises $\Fcal$ in a neighbourhood. More precisely, the closure operator with variational selection is:
+\begin{equation}
+    \Ccal_{\mathrm{var}}(\psi) = \arg\min_{\phi \in \arg\inf_{\chi \in \Scl} \|\psi - \chi\|} \Fcal(\phi)
+\end{equation}
+
+This resolves the non-uniqueness issue noted in Section~\ref{sec:operator}.
+
+%==================================================================
+\section{Stability and Attractors}\label{sec:attractors}
+%==================================================================
+
+\begin{definition}[Fixed point]\label{def:fixedpoint}
+A state $\psi^* \in \Sadm$ is a fixed point of the closure operator if:
+\begin{equation}
+    \Ccal(\psi^*) = \psi^*
+\end{equation}
+\end{definition}
+
+The set of fixed points is exactly $\Scl$: states that already satisfy all closure constraints are mapped to themselves.
+
+\begin{definition}[Attractor basin]\label{def:basin}
+The attractor basin of a fixed point $\psi^* \in \Scl$ is:
+\begin{equation}
+    B(\psi^*) = \left\{\psi_0 \in \Sadm \;\middle|\; \lim_{n \to \infty} \Ccal^n(\psi_0) = \psi^*\right\}
+\end{equation}
+\end{definition}
+
+\begin{remark}[Physical interpretation]
+Within the framework, distinct attractor basins correspond to distinct stable realised state classes. Candidate particle states are fixed points of $\Ccal$; the basin structure determines which initial configurations resolve to which particle type. The discreteness of the particle spectrum corresponds to the discrete set of attractor basins.
+\end{remark}
+
+%==================================================================
+\section{Link to Mass}\label{sec:mass}
+%==================================================================
+
+The closure residual connects the operator formulation to the mass framework of Paper~V~\citep{SmartV}.
+
+\begin{definition}[Closure residual]\label{def:residual}
+For $\psi \in \Sadm$, the closure residual is:
+\begin{equation}
+    \Delta(\psi) = \|\psi - \Ccal(\psi)\|
+\end{equation}
+\end{definition}
+
+The mass--residual postulate (Paper~V, Paper~VI) is:
+\begin{equation}
+    m = \kappa\, \Delta(\psi)
+\end{equation}
+where $\kappa > 0$ is an unspecified proportionality constant. States in $\Scl$ have $\Delta = 0$ and are massless in this identification; states outside $\Scl$ carry mass proportional to their distance from the closed set.
+
+\textsc{Status:} The mass--residual relation is a structural postulate of the framework, not derived from the closure operator alone.
+
+%==================================================================
+\section{Link to Projection}\label{sec:projection}
+%==================================================================
+
+The projection-compatibility condition connects the closure framework to the gauge interpretation of Paper~VI~\citep{SmartVI}:
+\begin{equation}\label{eq:projcompat}
+    \Pcal(\Ccal(\psi)) = \Pcal(\psi)
+\end{equation}
+
+This states that the closure process does not alter the observable content of the state. Torsional transformations $\Tcal_\theta$ that satisfy $\Pcal(\Tcal_\theta\psi) = \Pcal(\psi)$ are gauge symmetries; the closure operator respects this structure by construction (Class~III constraints).
+
+\textsc{Interpretation:} Gauge invariance emerges as invariance of observables under closure-compatible torsional transformations. The closure operator provides the formal substrate for this identification.
+
+%==================================================================
+\section{Constraint-Induced Non-Arbitrariness}\label{sec:nonarbitrary}
+%==================================================================
+
+A critical requirement for the framework is that the closure constraints are non-trivial: they must exclude generic states and select a structured subset.
+
+\subsection{Generic states fail closure}
+
+\begin{example}[Random state]\label{ex:random}
+A randomly chosen normalised state $\psi \in \Sadm$ generically violates closure:
+\begin{itemize}
+    \item \textbf{Class I failure:} a random shell-support pattern is unlikely to be connected or spectrally compatible.
+    \item \textbf{Class II failure:} a random composite structure is unlikely to satisfy the closure-invariant bounds.
+    \item \textbf{Class III failure:} a random torsional configuration is unlikely to preserve projection compatibility.
+\end{itemize}
+\end{example}
+
+\subsection{Constraint filtering}
+
+The constraint classes act as successive filters on $\Sadm$:
+\begin{equation}
+    \Sadm \xrightarrow{\text{Class I}} \Sadm^{(1)} \xrightarrow{\text{Class II}} \Sadm^{(2)} \xrightarrow{\text{Class III}} \Scl
+\end{equation}
+
+At each stage, the admissible set is reduced. The final closed set $\Scl$ is a small, structured subset of $\Sadm$. For the 600-cell with $N = 5$ shells, exhaustive enumeration (Papers~I and~IV) shows that only a handful of shell-support configurations pass all constraint classes --- the electron $\{1\}$ and the proton $\{2,3,4\}$ being the minimal examples.
+
+\subsection{Non-arbitrariness}
+
+The constraint structure is not arbitrary: it follows from the spectral and combinatorial properties of the $\phig$-structured geometry (eigenvalue structure, shell populations, reflection coefficients, Hopf-fiber spectrum). The constraints are \textit{derived from the graph} in the sense that they express specific combinatorial and spectral conditions; they are \textit{not derived from first principles} in the sense that the choice to impose these particular conditions remains a framework-level modelling decision.
+
+%==================================================================
+\section{Generalisation}\label{sec:generalisation}
+%==================================================================
+
+The closure-constraint framework suggests analogous formulations for other interaction sectors:
+
+\begin{itemize}
+    \item \textbf{Strong interaction:} confinement as a multi-node closure constraint. Quarks with disconnected supports are not in $\Scl$; they must bind into connected composites to satisfy Class~II constraints. This is a geometric formulation of confinement.
+    \item \textbf{Gravitational interaction:} curvature of the constraint manifold $\Scl$ itself. Coherence gradients across the manifold would generate effective gravitational coupling.
+\end{itemize}
+
+\begin{remark}
+These are schematic proposals. The present paper formalises only the constraint framework; force-sector derivations are deferred to future work.
+\end{remark}
+
+%==================================================================
+\section{Limitations}\label{sec:limits}
+%==================================================================
+
+\begin{itemize}
+    \item \textbf{The closure constraints are not derived from first principles.} They are motivated by the spectral and combinatorial properties of the 600-cell, but the decision to impose these particular conditions is a framework-level modelling choice.
+    \item \textbf{The constraint weights $w_1, w_2, w_3$ are not uniquely fixed.} The variational formulation provides structure but does not determine the relative importance of each constraint class.
+    \item \textbf{The dynamics are iterative projection, not a full physical evolution.} The iterative scheme $\psi_{n+1} = \Ccal(\psi_n)$ models constraint satisfaction but is not a Hamiltonian or Lagrangian dynamics.
+    \item \textbf{Extension to infinite-dimensional state spaces is not established.} The present formulation works in the finite-dimensional setting; functional-analytic extensions are deferred.
+    \item \textbf{The relation to QFT is not established.} The closure framework operates at the level of state-space geometry, not at the level of quantum field operators.
+    \item \textbf{The mass--residual relation remains a postulate.} It is not derived from the closure operator; it is a structural identification connecting the operator formalism to the mass programme.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The closure operator, previously invoked at a schematic level in Papers~V and~VI, is now defined as a metric projection onto a closed state set characterised by three classes of constraint: local (adjacency, spectral compatibility, phase matching), multi-node (connectivity, composite stability, winding consistency), and projection (observable compatibility). The variational formulation provides a secondary selection criterion and resolves non-uniqueness.
+
+The framework connects to the mass programme through the closure residual $\Delta(\psi) = \|\psi - \Ccal(\psi)\|$ and to the electroweak reinterpretation through the projection-compatibility condition $\Pcal(\Ccal(\psi)) = \Pcal(\psi)$. Closure constraints are non-trivial: they exclude generic states and select a structured subset determined by the spectral and combinatorial properties of the $\phig$-structured geometry.
+
+The formulation is presented as a mathematical framework, not a complete physical theory. The constraint classes are motivated by graph-theoretic structure but are not uniquely derived from first principles. The framework provides the formal substrate within which the structural claims of the preceding papers can be made precise and within which further development --- including force-sector derivations and dynamical extensions --- can proceed on a defined mathematical footing.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

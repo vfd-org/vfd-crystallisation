@@ -148,6 +148,12 @@ Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence �
 
 Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
 
+#### Paper VII — Closure Dynamics and Constraints
+
+**[Closure Dynamics and Constraint Operators in φ-Structured Geometry](papers/paper-vii/paper-vii.tex)**
+
+Formalises the closure operator that Papers V–VI assumed at a schematic level. Defines the admissible state space, three constraint classes (local, multi-node, projection), the closed state set, and the closure operator as metric projection. Introduces a variational formulation with closure functional. Proves existence in finite dimensions, addresses non-uniqueness via variational selection. Connects to mass (closure residual) and gauge structure (projection compatibility). Demonstrates non-arbitrariness of constraints. Mathematical framework paper — defines the machinery, not new predictions.
+
 ### Bridge Paper — From Dirac to Crystallisation
 
 **[From Dirac Solutions to Physical Reality: A Crystallisation-Based Selection Architecture](papers/bridge-paper/From_Dirac_Solutions_to_Physical_Reality_A_Crystallisation_Based_Selection_Architecture.pdf)** ([LaTeX source](papers/bridge-paper/bridge-paper.tex))
@@ -178,6 +184,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-vii/              Paper VII: closure dynamics and constraint operators
 │   ├── paper-vi/               Paper VI: electroweak sector reinterpretation
 │   ├── bridge-paper/           Dirac → Crystallisation bridge paper
 │   ├── paper-v/                Paper V: complete particle mass spectrum
