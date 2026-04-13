@@ -148,6 +148,12 @@ Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence �
 
 Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
 
+#### Paper IX — Continuous Limit and Constraint-Manifold Geometry
+
+**[From Discrete Closure to Continuous Geometry in φ-Structured Constraint Systems](papers/paper-ix/paper-ix.tex)**
+
+Constructs the continuous limit of the discrete closure framework. The closed state set becomes a constraint manifold M_cl; the closure operator becomes metric projection onto this manifold. Defines the induced Riemannian metric, characterises curvature from constraint interaction, and connects mass (distance from manifold), confinement (manifold topology), and gauge symmetry (orbit structure) to geometric language. Formal construction, not rigorous convergence theorem. No spacetime identification, no gravitational derivation, no dynamical equations.
+
 #### Paper VIII — Confinement as Closure Constraint
 
 **[Confinement as a Multi-Node Closure Constraint in φ-Structured Geometry](papers/paper-viii/paper-viii.tex)**
@@ -190,6 +196,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-ix/               Paper IX: continuous limit and constraint-manifold geometry
 │   ├── paper-viii/             Paper VIII: confinement as closure constraint
 │   ├── paper-vii/              Paper VII: closure dynamics and constraint operators
 │   ├── paper-vi/               Paper VI: electroweak sector reinterpretation

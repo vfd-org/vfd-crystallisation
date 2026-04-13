@@ -1,0 +1,322 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Scl}{\mathcal{S}_{\mathrm{cl}}}
+\newcommand{\phig}{\varphi}
+
+\title{From Discrete Closure to Continuous Geometry\\in $\phig$-Structured Constraint Systems}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Papers~V--VIII developed a discrete closure framework on the $\phig$-structured geometry: mass as closure residual, gauge symmetry as torsional projection invariance, and confinement as a connectivity constraint. The present paper constructs a continuous limit of this framework, in which the closed state set $\Scl$ becomes a constraint manifold $\Mcl$ and the closure operator $\Ccal$ is reinterpreted as a metric projection onto this manifold.
+
+We define a sequence of discrete state spaces indexed by shell resolution, introduce a continuous state-field limit, and characterise the constraint manifold as the zero set of the closure functional. The ambient inner product induces a metric on $\Mcl$, and the closure operator becomes nearest-point projection in this metric. Curvature of $\Mcl$ --- arising from the nonlinear interaction of constraint classes --- is identified as a potential geometric quantity, though no identification with spacetime curvature or gravitational dynamics is attempted.
+
+The paper provides the geometric substrate connecting the discrete closure framework to continuous-geometric language. It does not derive general relativity, define a spacetime metric, or introduce field dynamics. It establishes the formal pathway from discrete constraints to continuous geometry within which such extensions could, in principle, be pursued.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The closure framework developed in Papers~V--VIII~\citep{SmartV, SmartVII, SmartVIII} operates on a discrete $\phig$-structured geometry: a finite-dimensional state space with shell supports, torsional modes, and spectral structure inherited from the 600-cell vertex graph. The closure operator, constraint classes, and variational formulation are all defined in this discrete setting.
+
+The present paper asks: \textit{does this discrete framework admit a continuous limit, and if so, what geometric structure does it carry?}
+
+We construct a continuous limit in which:
+\begin{itemize}
+    \item the discrete state space $\Sadm$ becomes a function space over a continuous domain,
+    \item the closed state set $\Scl$ becomes a constraint manifold $\Mcl$,
+    \item the closure operator $\Ccal$ becomes metric projection onto $\Mcl$.
+\end{itemize}
+
+This provides a geometric reinterpretation of the closure framework: closure is projection onto a manifold, mass is distance from the manifold, and the constraint structure induces geometric properties (metric, curvature) on the manifold itself.
+
+\subsection*{Scope and epistemic status}
+
+This paper constructs a continuous-limit framework, not a continuous-limit theorem. The limit is defined formally and its properties are characterised at the structural level; rigorous functional-analytic convergence proofs are not provided. The paper does not derive general relativity, define a physical spacetime metric, or introduce dynamical field equations. It establishes the geometric substrate --- the constraint manifold and its projection structure --- within which such extensions could in principle be pursued.
+
+%==================================================================
+\section{Discrete Framework Recap}\label{sec:recap}
+%==================================================================
+
+We briefly restate the discrete framework of Papers~VII--VIII~\citep{SmartVII, SmartVIII}:
+
+\begin{itemize}
+    \item \textbf{State space:} $V \cong \mathbb{C}^n$, finite-dimensional, equipped with inner product $\langle\cdot,\cdot\rangle$ and norm $\|\cdot\|$.
+    \item \textbf{Admissible domain:} $\Sadm \subset V$, the normalised states satisfying boundary conditions.
+    \item \textbf{Closed state set:} $\Scl = \{\psi \in \Sadm \mid \Fcal(\psi) = 0\}$, characterised by three constraint classes (local, multi-node, projection).
+    \item \textbf{Closure operator:} $\Ccal(\psi) \in \arg\inf_{\phi \in \Scl} \|\psi - \phi\|$, metric projection onto $\Scl$.
+    \item \textbf{Closure residual:} $\Delta(\psi) = \|\psi - \Ccal(\psi)\|$, with mass postulated as $m = \kappa\Delta$.
+\end{itemize}
+
+All of this is finite-dimensional: $V$ has dimension determined by the shell count and internal degrees of freedom of the 600-cell geometry.
+
+%==================================================================
+\section{Continuous Limit Construction}\label{sec:limit}
+%==================================================================
+
+\subsection{Sequence of discretisations}
+
+We define a sequence of discrete state spaces indexed by a resolution parameter $N$:
+\begin{equation}
+    V^{(N)} \subset V^{(N+1)} \subset \cdots \subset V_\infty
+\end{equation}
+
+At resolution $N$, the state space $V^{(N)}$ has $N$ shells with $\phig$-scaled spacing. As $N$ increases:
+\begin{itemize}
+    \item shells become denser (finer radial resolution),
+    \item the shell-support graph $G^{(N)}$ refines,
+    \item the discrete Laplacian $L^{(N)}$ approximates a continuous operator.
+\end{itemize}
+
+The physical framework (Papers~V--VIII) uses $N = 5$. The continuous limit corresponds to $N \to \infty$.
+
+\subsection{Field representation}
+
+At finite $N$, a state $\psi^{(N)} \in V^{(N)}$ assigns amplitudes to a finite set of shells. In the continuous limit, the state becomes a field:
+\begin{equation}
+    \psi^{(N)} \to \psi(x), \qquad x \in \Omega \subset \mathbb{R}^d
+\end{equation}
+where $\Omega$ is the continuous domain replacing the discrete shell set, and $d$ is the effective spatial dimension of the manifold.
+
+The discrete inner product $\langle\psi^{(N)}, \phi^{(N)}\rangle_{V^{(N)}}$ converges (in the appropriate sense) to the $L^2$ inner product:
+\begin{equation}
+    \langle\psi, \phi\rangle = \int_\Omega \overline{\psi(x)}\, \phi(x)\, d\mu(x)
+\end{equation}
+where $\mu$ is a measure on $\Omega$ inherited from the $\phig$-scaled geometry.
+
+\subsection{Limit statement}
+
+\begin{remark}[Continuous limit]
+The discrete state space admits a formal continuous limit under refinement of shell resolution. The limit state space is a function space $V_\infty = L^2(\Omega, \mu)$ equipped with the $L^2$ norm. The discrete closure constraints, closure operator, and variational functional extend formally to this setting.
+
+This is a structural definition of the continuous limit, not a rigorous convergence theorem. The conditions under which the discrete eigenvalues, eigenvectors, and projection operators converge to their continuous counterparts are not established in this paper.
+\end{remark}
+
+%==================================================================
+\section{The Constraint Manifold}\label{sec:manifold}
+%==================================================================
+
+\subsection{Definition}
+
+In the continuous limit, the closed state set becomes a constraint manifold:
+
+\begin{definition}[Constraint manifold]\label{def:manifold}
+The constraint manifold $\Mcl$ is the subset of the admissible state space satisfying all closure constraints:
+\begin{equation}
+    \Mcl = \left\{\psi \in \Sadm \;\middle|\; \Fcal(\psi) = 0\right\}
+\end{equation}
+where $\Fcal$ is the closure functional (Paper~VII). In the continuous limit, $\Mcl$ is a subset of $V_\infty = L^2(\Omega, \mu)$.
+\end{definition}
+
+\subsection{Local vs global structure}
+
+The constraint manifold inherits both local and global structure from the constraint classes:
+
+\begin{itemize}
+    \item \textbf{Local constraints} (Class~I: adjacency, spectral compatibility, phase matching) impose local conditions on $\psi(x)$ and its derivatives. These define the local geometry of $\Mcl$.
+    \item \textbf{Global constraints} (Class~II: connectivity, composite stability) impose topological conditions on the support of $\psi$. These determine the global topology of $\Mcl$ --- including its connected components and the separation between composite classes.
+    \item \textbf{Projection constraints} (Class~III: observable equivalence) define equivalence classes on $\Mcl$ under torsional deformations.
+\end{itemize}
+
+\subsection{Regularity}
+
+$\Mcl$ is not assumed to be a smooth manifold everywhere. In general it may be:
+\begin{itemize}
+    \item a \textit{stratified space}: smooth in generic regions, with lower-dimensional singular strata where constraint surfaces intersect non-transversally.
+    \item \textit{non-convex}: the connectivity and composite-stability constraints generically produce non-convex subsets.
+    \item \textit{disconnected}: distinct composite classes (single-node, two-node, three-node) may correspond to distinct connected components of $\Mcl$.
+\end{itemize}
+
+\begin{remark}
+The stratified structure of $\Mcl$ is a natural consequence of constraint interaction: different constraint classes may be active or inactive in different regions of the admissible space, producing strata of varying dimension. A full characterisation of this stratification is beyond the scope of the present paper.
+\end{remark}
+
+%==================================================================
+\section{Metric Structure}\label{sec:metric}
+%==================================================================
+
+\subsection{Ambient metric}
+
+The ambient state space carries the inner product metric:
+\begin{equation}
+    d(\psi_1, \psi_2) = \|\psi_1 - \psi_2\|
+\end{equation}
+
+This metric measures the distance between any two states in $\Sadm$ (or $V_\infty$ in the continuous limit).
+
+\subsection{Induced metric on the constraint manifold}
+
+Where $\Mcl$ is smooth, the ambient inner product restricts to define a Riemannian metric on $\Mcl$:
+\begin{equation}
+    g_{\Mcl}(\xi, \eta)\big|_\psi = \langle\xi, \eta\rangle, \qquad \xi, \eta \in T_\psi \Mcl
+\end{equation}
+where $T_\psi \Mcl$ is the tangent space to $\Mcl$ at $\psi$.
+
+This induced metric is not imposed externally; it is inherited from the structure of the ambient state space. The geometry of $\Mcl$ --- including geodesics, curvature, and volume --- is determined by the constraint structure.
+
+\begin{remark}
+At singular strata of $\Mcl$, the tangent space may not be well-defined. The induced metric applies only on the smooth strata. A full metric-geometric characterisation of the singular regions is deferred.
+\end{remark}
+
+%==================================================================
+\section{Closure as Geometric Projection}\label{sec:projection}
+%==================================================================
+
+\subsection{Projection onto the constraint manifold}
+
+In the continuous-limit setting, the closure operator becomes metric projection onto $\Mcl$:
+\begin{equation}\label{eq:projection}
+    \Ccal(\psi) \in \arg\inf_{\phi \in \Mcl} \|\psi - \phi\|
+\end{equation}
+
+This is the geometric reinterpretation of closure: the closure of a state is its nearest point on the constraint manifold.
+
+\subsection{Projection properties}
+
+\begin{itemize}
+    \item \textbf{Existence:} in finite dimensions, guaranteed by compactness of $\Mcl$. In the continuous limit, requires closedness of $\Mcl$ in $V_\infty$ and appropriate compactness or weak-convergence conditions.
+    \item \textbf{Uniqueness:} not guaranteed for non-convex $\Mcl$. Variational selection (Paper~VII) provides a secondary criterion.
+    \item \textbf{Regularity:} the projection map is continuous away from the cut locus (the set of points equidistant to distinct components of $\Mcl$).
+\end{itemize}
+
+\subsection{Geometric interpretation}
+
+Closure is:
+\begin{itemize}
+    \item \textbf{constraint satisfaction:} the projected state satisfies all closure constraints exactly.
+    \item \textbf{distance minimisation:} the projected state is the nearest admissible closed configuration.
+    \item \textbf{geometric projection:} the closure operator is the orthogonal projection onto the constraint manifold in the ambient metric.
+\end{itemize}
+
+The closure residual $\Delta(\psi) = \|\psi - \Ccal(\psi)\|$ is the distance from $\psi$ to the constraint manifold. In this geometric language, mass (postulated as $m = \kappa\Delta$) is distance from the manifold.
+
+%==================================================================
+\section{Curvature of the Constraint Manifold}\label{sec:curvature}
+%==================================================================
+
+\subsection{Curvature from constraint interaction}
+
+Where $\Mcl$ is smooth, its curvature is determined by how the tangent space varies along the manifold. This curvature arises from the nonlinear interaction of the constraint classes: different constraints pull the manifold in different directions, and their combined effect produces a curved surface in the ambient state space.
+
+\begin{definition}[Constraint curvature (heuristic)]\label{def:curvature}
+The curvature of $\Mcl$ at a smooth point $\psi \in \Mcl$ is characterised by the second fundamental form:
+\begin{equation}
+    \mathrm{II}(\xi, \eta) = -\langle d\hat{n}(\xi), \eta\rangle
+\end{equation}
+where $\hat{n}$ is the unit normal to $\Mcl$ at $\psi$ and $\xi, \eta \in T_\psi \Mcl$. The principal curvatures are the eigenvalues of the shape operator associated with $\mathrm{II}$.
+\end{definition}
+
+\begin{remark}
+This curvature is not imposed externally or postulated. It is a geometric consequence of the constraint structure: the constraints define $\Mcl$, and the embedding of $\Mcl$ in the ambient space determines its curvature. In regions where constraints interact nonlinearly, the manifold curves; in regions where constraints are locally linear, the manifold is flat.
+\end{remark}
+
+\subsection{Constraint curvature and physical structure}
+
+Different regions of $\Mcl$ carry different curvature, reflecting the varying interaction of constraint classes:
+\begin{itemize}
+    \item \textbf{High curvature:} regions where multiple constraint classes are simultaneously active and interact nonlinearly. These correspond to states near constraint boundaries or transitions between composite classes.
+    \item \textbf{Low curvature:} regions deep inside a single constraint class, where the manifold is approximately flat. These correspond to stable configurations well within an attractor basin.
+\end{itemize}
+
+This curvature structure is intrinsic to $\Mcl$ and does not require an external spacetime. Whether it can be related to physical spacetime curvature or gravitational dynamics is an open question addressed briefly in Section~\ref{sec:gravity}.
+
+%==================================================================
+\section{Physical Interpretation Links}\label{sec:physics}
+%==================================================================
+
+The continuous-limit framework provides a unified geometric language for the physical structures of Papers~V--VIII:
+
+\subsection{Mass}
+
+The mass--residual postulate (Papers~V, VII) becomes:
+\begin{equation}
+    m = \kappa\, \Delta(\psi) = \kappa\, d(\psi, \Mcl)
+\end{equation}
+Mass is the distance from the state to the constraint manifold. Massless states lie on $\Mcl$; massive states lie off it.
+
+\subsection{Confinement}
+
+Confinement (Paper~VIII) corresponds to the topology of $\Mcl$: disconnected configurations lie in regions of $\Sadm$ that are separated from $\Mcl$ by a nonzero gap penalty. The connectivity constraint determines which connected components of $\Mcl$ are accessible.
+
+\subsection{Electroweak structure}
+
+The torsional projection invariance of Paper~VI corresponds to the symmetry structure of $\Mcl$: gauge-equivalent states lie on the same orbit of the torsional group action on $\Mcl$.
+
+%==================================================================
+\section{Toward Gravity}\label{sec:gravity}
+%==================================================================
+
+The curvature of the constraint manifold $\Mcl$ provides a potential geometric quantity that could, in principle, be related to gravitational interaction. In the standard geometric picture, gravity is curvature of spacetime; in the present framework, curvature arises from constraint interaction on the state-space manifold.
+
+\begin{remark}
+This observation is purely structural. The present paper does not:
+\begin{itemize}
+    \item identify $\Mcl$ with physical spacetime,
+    \item derive the Einstein field equations,
+    \item compute gravitational coupling constants,
+    \item establish a correspondence between constraint curvature and spacetime curvature.
+\end{itemize}
+The remark is included to indicate a possible direction for future work, not to claim a result.
+\end{remark}
+
+%==================================================================
+\section{Limitations}\label{sec:limits}
+%==================================================================
+
+\begin{itemize}
+    \item \textbf{The continuous limit is a formal construction, not a rigorous theorem.} Convergence of discrete eigenvalues, eigenvectors, and projection operators to their continuous counterparts is not proven.
+    \item \textbf{The manifold structure of $\Mcl$ is not fully characterised.} Smoothness, stratification, and topological properties are described at the structural level, not computed.
+    \item \textbf{Curvature is characterised heuristically.} The second fundamental form is defined where $\Mcl$ is smooth, but a full curvature analysis is not provided.
+    \item \textbf{No spacetime identification.} $\Mcl$ is a constraint manifold in state space, not a spacetime manifold. The relationship, if any, to physical spacetime is not established.
+    \item \textbf{No dynamical equations.} The continuous-limit framework is static (constraint-based). No evolution equations, Lagrangians, or Hamiltonians are introduced.
+    \item \textbf{No gravitational derivation.} The curvature observation is structural and speculative. No gravitational dynamics are derived.
+    \item \textbf{The measure $\mu$ is not uniquely specified.} The $L^2$ measure on $\Omega$ is inherited from the $\phig$-scaling but is not derived from a unique principle.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The discrete closure framework of Papers~V--VIII admits a formal continuous limit in which the closed state set $\Scl$ becomes a constraint manifold $\Mcl$, and the closure operator becomes metric projection onto this manifold. The ambient inner product induces a Riemannian metric on $\Mcl$ (where smooth), and the constraint structure determines the manifold's curvature through the interaction of constraint classes.
+
+In this geometric language: mass is distance from the constraint manifold; confinement is the topology of the manifold; gauge symmetry is the orbit structure of torsional transformations on the manifold; and curvature arises from constraint interaction. These are geometric restatements of the structural results of Papers~V--VIII, now expressed in the language of manifold geometry.
+
+The construction is a formal framework, not a rigorous convergence theorem. The manifold structure, curvature properties, and dynamical content are characterised at the structural level. Extension to dynamical equations, spacetime identification, and gravitational coupling is left for future work. The present paper establishes the geometric substrate --- the constraint manifold and its projection structure --- within which such extensions could in principle be pursued.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
