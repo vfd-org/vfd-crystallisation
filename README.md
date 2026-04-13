@@ -150,7 +150,7 @@ Extends the projection framework to the electroweak sector. Gauge symmetry reint
 
 #### Paper XI — Standard Model Correspondence
 
-**[A Correspondence Between Constraint-Manifold Geometry and Standard Model Structure](papers/paper-xi/paper-xi.tex)**
+**[A Correspondence Between Constraint-Manifold Geometry and Standard Model Structure](papers/paper-xi/A_Correspondence_Between_Constraint_Manifold_Geometry_and_Standard_Model_Structure.pdf)** ([LaTeX source](papers/paper-xi/paper-xi.tex))
 
 Translation layer between the constraint framework and the Standard Model. Systematic mapping table: admissible states ↔ Hilbert space, constraint manifold ↔ physical states, projection invariance ↔ gauge symmetry, closure residual ↔ mass, connectivity ↔ confinement, manifold curvature ↔ gravity (analogue). Each correspondence classified as structural, analogical, or open. Covers mass, electroweak, strong, and gravity sectors. Explicitly lists what the framework lacks (Lagrangian, renormalisation, scattering, spacetime). Does not derive or replace the Standard Model — provides a legibility bridge.
 
