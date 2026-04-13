@@ -148,6 +148,12 @@ Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence �
 
 Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
 
+#### Paper VIII — Confinement as Closure Constraint
+
+**[Confinement as a Multi-Node Closure Constraint in φ-Structured Geometry](papers/paper-viii/paper-viii.tex)**
+
+Extends the closure framework (Paper VII) to composite multi-node systems. Confinement reinterpreted as connectivity constraint: disconnected shell supports are excluded from the closed state set by the gap penalty. Proton {2,3,4} is closure-stable; quark-like {2,4} is not. Introduces composite closure functional with gap-penalty term. Emergent composite classes (single/two/three-node) from connectivity + 5-shell geometry. Threefold baryon structure as structural parallel to colour — SU(3) not derived. Compatible with observed hadronic structure; no dynamics, scattering, or lattice comparison.
+
 #### Paper VII — Closure Dynamics and Constraints
 
 **[Closure Dynamics and Constraint Operators in φ-Structured Geometry](papers/paper-vii/Closure_Dynamics_and_Constraint_Operators_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-vii/paper-vii.tex))
@@ -184,6 +190,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-viii/             Paper VIII: confinement as closure constraint
 │   ├── paper-vii/              Paper VII: closure dynamics and constraint operators
 │   ├── paper-vi/               Paper VI: electroweak sector reinterpretation
 │   ├── bridge-paper/           Dirac → Crystallisation bridge paper
