@@ -148,6 +148,12 @@ Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence �
 
 Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
 
+#### Paper X — Gravitational Analogy from Constraint-Manifold Curvature
+
+**[Gravitational Analogy from Constraint-Manifold Curvature in φ-Structured Geometry](papers/paper-x/paper-x.tex)**
+
+Develops the first gravity-facing interpretation of the closure framework. Curvature of the constraint manifold M_cl proposed as structural analogue of gravitational influence. Defines geodesic-like constrained motion, geodesic deviation as tidal analogue, local flatness as inertial-frame analogue. Effective potential combining closure residual and curvature. Full GR comparison table. Does NOT derive Einstein equations, identify M_cl with spacetime, compute Newton constant, or claim a completed gravity theory. Structural analogy — pathway, not destination.
+
 #### Paper IX — Continuous Limit and Constraint-Manifold Geometry
 
 **[From Discrete Closure to Continuous Geometry in φ-Structured Constraint Systems](papers/paper-ix/paper-ix.tex)**
@@ -196,6 +202,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-x/                Paper X: gravitational analogy from constraint-manifold curvature
 │   ├── paper-ix/               Paper IX: continuous limit and constraint-manifold geometry
 │   ├── paper-viii/             Paper VIII: confinement as closure constraint
 │   ├── paper-vii/              Paper VII: closure dynamics and constraint operators
