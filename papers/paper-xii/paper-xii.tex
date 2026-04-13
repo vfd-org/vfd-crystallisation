@@ -1,0 +1,298 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Scl}{\mathcal{S}_{\mathrm{cl}}}
+\newcommand{\phig}{\varphi}
+
+\title{Closure Dynamics:\\A Variational and Gradient Formulation\\of Constraint-Manifold Evolution}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Papers~V--XI developed a structural constraint framework for particle mass, gauge structure, confinement, continuous geometry, and a gravitational analogy, but did not include a time-evolution law. The present paper introduces minimal dynamics into the closure framework by defining state evolution as gradient flow of the closure functional $\Fcal$.
+
+Under this evolution, the closure functional decreases monotonically along trajectories, closure-stable states ($\Fcal = 0$) are fixed points, and distinct attractor basins correspond to distinct particle classes. Disconnected configurations are dynamically unstable: they flow toward connected composites, providing a dynamical interpretation of confinement. A conservative variational extension (Lagrangian formulation) is introduced as a second-order generalisation.
+
+The evolution parameter $t$ is not identified with physical time. No relativistic invariance, quantum field theory, scattering amplitudes, or coupling constants are derived. The paper establishes the minimal dynamical layer consistent with the closure-constraint structure, providing the formal transition from a purely structural framework to one that admits evolution.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The preceding papers in this programme~\citep{SmartV, SmartVII, SmartVIII, SmartIX, SmartX, SmartXI} developed a constraint-based framework in which physical states correspond to the closed state set $\Scl$, mass is the closure residual, and the constraint manifold $\Mcl$ carries geometric structure. Throughout that development, the framework was purely structural: it specified \textit{which} states are admissible and \textit{what} properties they carry, but not \textit{how} states evolve.
+
+The present paper fills this gap by introducing a minimal evolution law. The dynamics is defined as gradient flow of the closure functional: states evolve in the direction that most rapidly reduces constraint violation. This is the simplest dynamical extension consistent with the closure structure, and it produces the expected behaviour: closure-stable states are attractors, disconnected configurations are unstable, and the constraint manifold governs the geometry of admissible motion.
+
+\subsection*{Scope and epistemic status}
+
+This paper introduces \textit{minimal dynamics}: a gradient-flow evolution law and its variational extension. It does not introduce:
+\begin{itemize}
+    \item physical time (the evolution parameter $t$ is auxiliary),
+    \item relativistic invariance or Lorentz covariance,
+    \item quantum field theory or operator-valued dynamics,
+    \item scattering amplitudes, decay rates, or coupling constants.
+\end{itemize}
+
+The dynamics is presented as the simplest evolution law compatible with the closure structure. Whether it can be extended to a full physical dynamics is an open question.
+
+%==================================================================
+\section{Time-Dependent State Space}\label{sec:timedep}
+%==================================================================
+
+We extend the admissible state space to include a time parameter:
+\begin{equation}\label{eq:timedep}
+    \psi = \psi(t), \qquad t \in \mathbb{R}
+\end{equation}
+where $\psi(t) \in \Sadm$ for all $t$. The state traces a curve in the admissible domain as the evolution parameter advances.
+
+\begin{remark}[Status of $t$]
+The parameter $t$ is introduced as an auxiliary evolution parameter governing relaxation within the constraint framework. It is not identified with physical coordinate time, proper time, or any relativistic time parameter. The identification of $t$ with a physical quantity would require additional structure (e.g.\ a metric signature or Lorentz group action) not present in this paper.
+\end{remark}
+
+%==================================================================
+\section{Gradient Flow Dynamics}\label{sec:gradflow}
+%==================================================================
+
+\subsection{The evolution law}
+
+We define the evolution of states as gradient flow of the closure functional $\Fcal$:
+\begin{equation}\label{eq:gradientflow}
+    \frac{d\psi}{dt} = -\nabla \Fcal(\psi)
+\end{equation}
+where $\nabla \Fcal$ is the gradient of $\Fcal$ with respect to the inner product on the state space $V$.
+
+\subsection{Constrained evolution}
+
+Since $\psi(t)$ must remain in $\Sadm$ (e.g.\ normalised), the flow is projected onto the admissible domain:
+\begin{equation}\label{eq:projectedflow}
+    \frac{d\psi}{dt} = -\Pi_{\Sadm}\!\left(\nabla \Fcal(\psi)\right)
+\end{equation}
+where $\Pi_{\Sadm}$ denotes projection onto the tangent space of $\Sadm$ at $\psi$.
+
+\subsection{Monotonic decrease}
+
+\begin{proposition}[Monotonic descent]\label{prop:descent}
+Along trajectories of the projected gradient flow~\eqref{eq:projectedflow}, the closure functional decreases monotonically:
+\begin{equation}
+    \frac{d\Fcal}{dt} = \langle \nabla\Fcal, \dot{\psi} \rangle = -\|\Pi_{\Sadm}(\nabla\Fcal)\|^2 \leq 0
+\end{equation}
+Equality holds if and only if $\Pi_{\Sadm}(\nabla\Fcal(\psi)) = 0$, i.e.\ at a constrained critical point.
+\end{proposition}
+
+\begin{proof}
+By the chain rule, $d\Fcal/dt = \langle\nabla\Fcal, d\psi/dt\rangle$. Substituting~\eqref{eq:projectedflow}: $d\Fcal/dt = -\langle\nabla\Fcal, \Pi_{\Sadm}(\nabla\Fcal)\rangle$. Since $\Pi_{\Sadm}$ is an orthogonal projection, $\langle\nabla\Fcal, \Pi_{\Sadm}(\nabla\Fcal)\rangle = \|\Pi_{\Sadm}(\nabla\Fcal)\|^2 \geq 0$.
+\end{proof}
+
+\subsection{Interpretation}
+
+The gradient flow drives the system toward lower values of $\Fcal$:
+\begin{itemize}
+    \item $\Fcal(\psi)$ decreases monotonically along trajectories.
+    \item States with $\Fcal(\psi) = 0$ --- i.e.\ states in $\Scl$ --- are fixed points.
+    \item The flow represents constraint relaxation: the system evolves in the direction of steepest descent toward closure satisfaction.
+\end{itemize}
+
+This is the simplest dynamics consistent with the closure structure: it uses only $\Fcal$ and the inner product, introduces no additional parameters, and automatically identifies $\Scl$ as the set of attractors.
+
+%==================================================================
+\section{Fixed Points and Stability}\label{sec:fixedpoints}
+%==================================================================
+
+\begin{definition}[Dynamical fixed point]\label{def:fixedpoint}
+A state $\psi^* \in \Sadm$ is a fixed point of the gradient-flow dynamics if:
+\begin{equation}
+    \Pi_{\Sadm}\!\left(\nabla\Fcal(\psi^*)\right) = 0
+\end{equation}
+\end{definition}
+
+All states in $\Scl$ satisfy $\Fcal(\psi^*) = 0$ and are therefore fixed points: the gradient vanishes at the global minimum of $\Fcal$ on $\Sadm$.
+
+\subsection{Local stability}
+
+The stability of a fixed point is determined by the constrained Hessian:
+\begin{equation}\label{eq:hessian}
+    H(\psi) = \Pi_{\Sadm}\!\left(\nabla^2 \Fcal(\psi)\right)\big|_{T_\psi \Sadm}
+\end{equation}
+restricted to the tangent space of $\Sadm$ at $\psi$.
+
+\begin{remark}[Stability criterion]
+A fixed point $\psi^*$ is a stable attractor if $H(\psi^*)$ is positive semi-definite on $T_{\psi^*} \Sadm$: all nearby perturbations within the admissible domain are driven back toward $\psi^*$ by the flow. Saddle points of $\Fcal$ (with indefinite Hessian) are unstable fixed points.
+\end{remark}
+
+%==================================================================
+\section{Attractor Structure}\label{sec:attractors}
+%==================================================================
+
+\begin{definition}[Attractor basin]\label{def:basin}
+The attractor basin of a stable fixed point $\psi^* \in \Scl$ is:
+\begin{equation}
+    B(\psi^*) = \left\{\psi_0 \in \Sadm \;\middle|\; \lim_{t \to \infty} \psi(t; \psi_0) = \psi^*\right\}
+\end{equation}
+where $\psi(t; \psi_0)$ is the trajectory of the gradient flow starting from $\psi_0$.
+\end{definition}
+
+Within the framework, distinct attractor basins provide the dynamical analogue of distinct particle classes: initial configurations in basin $B(\psi^*)$ relax toward the closure-stable state $\psi^*$. The particle type is determined by which attractor the initial configuration flows toward.
+
+\begin{remark}
+The attractor-basin structure depends on the global geometry of $\Fcal$ on $\Sadm$. In general, the basin boundaries are the stable manifolds of saddle points. A full characterisation of the basin structure for the 600-cell closure functional is beyond the scope of the present paper.
+\end{remark}
+
+%==================================================================
+\section{Mass and Dynamics}\label{sec:mass}
+%==================================================================
+
+Mass is defined as the closure residual (Papers~V, VII):
+\begin{equation}
+    m = \kappa\, d(\psi, \Mcl)
+\end{equation}
+
+Under gradient flow, this acquires a dynamical interpretation:
+
+\begin{itemize}
+    \item \textbf{Relaxation toward closure:} states with $\Fcal > 0$ evolve toward $\Mcl$. The closure residual $\Delta(\psi) = d(\psi, \Mcl)$ decreases along trajectories (since $\Fcal$ decreases and $\Delta$ is related to $\Fcal$).
+    \item \textbf{Massive states are displaced:} states off $\Mcl$ carry mass and are not fixed points of the flow unless they are saddle configurations.
+    \item \textbf{Motion on $\Mcl$:} once a trajectory reaches $\Mcl$ (where $\Fcal = 0$), the gradient vanishes and the state is stationary under the dissipative gradient flow. Motion along $\Mcl$ requires the conservative (Lagrangian) extension of Section~\ref{sec:lagrangian}.
+\end{itemize}
+
+%==================================================================
+\section{Confinement in Dynamics}\label{sec:confinement}
+%==================================================================
+
+Disconnected configurations (Paper~VIII) have $\Fcal > 0$ due to the gap penalty $\Xi > 0$. Under gradient flow:
+
+\begin{itemize}
+    \item disconnected states are \textit{not} fixed points (they have $\nabla\Fcal \neq 0$),
+    \item they flow toward configurations with lower $\Fcal$,
+    \item the flow drives them toward connected composites (where $\Xi = 0$),
+    \item they cannot stabilise independently.
+\end{itemize}
+
+This provides a \textit{dynamical interpretation of confinement}: disconnected quark-like states are unstable under closure dynamics. They are not held together by a force; they are driven toward connected composites by the gradient of the constraint functional.
+
+\begin{remark}
+This dynamical confinement is a consequence of the gradient-flow structure and the gap penalty in $\Fcal$. It does not invoke a non-Abelian gauge field, a confining potential, or colour flux tubes. It is a structural result within the closure framework.
+\end{remark}
+
+%==================================================================
+\section{Variational / Lagrangian Extension}\label{sec:lagrangian}
+%==================================================================
+
+The gradient flow~\eqref{eq:gradientflow} is a first-order, dissipative dynamics: it drives the system toward fixed points but does not describe oscillatory or conservative motion. To extend the framework to conservative dynamics, we introduce a Lagrangian formulation.
+
+\subsection{The closure Lagrangian}
+
+\begin{definition}[Closure Lagrangian]\label{def:lagrangian}
+The closure Lagrangian is:
+\begin{equation}\label{eq:lagrangian}
+    \Lcal(\psi, \dot{\psi}) = \frac{1}{2}\|\dot{\psi}\|^2 - \Fcal(\psi)
+\end{equation}
+where $\|\dot{\psi}\|^2 = \langle\dot{\psi}, \dot{\psi}\rangle$ is the kinetic term and $\Fcal(\psi)$ plays the role of the potential.
+\end{definition}
+
+\subsection{The action and equations of motion}
+
+The action is:
+\begin{equation}\label{eq:action}
+    S[\psi] = \int_{t_1}^{t_2} \Lcal(\psi, \dot{\psi})\, dt
+\end{equation}
+
+Stationarity of the action ($\delta S = 0$) yields the Euler--Lagrange equation:
+\begin{equation}\label{eq:EL}
+    \ddot{\psi} = -\nabla\Fcal(\psi)
+\end{equation}
+
+This is a second-order dynamical system in which $\Fcal$ acts as a potential energy landscape. States oscillate around minima of $\Fcal$ (closure-stable configurations) rather than dissipating toward them.
+
+\subsection{Constrained Lagrangian dynamics}
+
+For evolution constrained to $\Sadm$, the equations of motion become:
+\begin{equation}\label{eq:constrainedEL}
+    \Pi_{\Sadm}\!\left(\ddot{\psi}\right) = -\Pi_{\Sadm}\!\left(\nabla\Fcal(\psi)\right)
+\end{equation}
+with the constraint that $\psi(t) \in \Sadm$ enforced throughout.
+
+\subsection{Interpretation}
+
+\begin{itemize}
+    \item \textbf{Gradient flow} (first-order): dissipative relaxation toward closure. Models constraint satisfaction.
+    \item \textbf{Lagrangian dynamics} (second-order): conservative motion on the $\Fcal$ landscape. Models evolution within and around closure-stable configurations.
+\end{itemize}
+
+Both formulations share the same fixed points ($\Scl$) and the same stability structure (determined by $H(\psi)$). They differ in their dynamical character: the gradient flow is irreversible; the Lagrangian dynamics is time-reversible.
+
+\begin{remark}
+The Lagrangian~\eqref{eq:lagrangian} is the simplest conservative extension of the closure structure. It uses only $\Fcal$ and the inner product, introduces no additional parameters, and reduces to the gradient flow in the overdamped limit ($\ddot{\psi} \to 0$). Whether a more physical Lagrangian (incorporating, e.g., gauge coupling or relativistic structure) can be constructed from the closure framework is an open question.
+\end{remark}
+
+%==================================================================
+\section{Two Modes of Motion}\label{sec:modes}
+%==================================================================
+
+The dynamics defined in this paper produces two distinct modes of motion:
+
+\begin{enumerate}
+    \item \textbf{Transverse motion} (toward/away from $\Mcl$): evolution in the direction normal to the constraint manifold. Under gradient flow, this is relaxation toward closure. Under the Lagrangian, it is oscillation around $\Mcl$. This mode is associated with mass ($\Delta > 0$) and closure residual.
+
+    \item \textbf{Tangential motion} (along $\Mcl$): evolution within the constraint manifold. Under the Lagrangian, states on $\Mcl$ can move along geodesic-like paths (Paper~X~\citep{SmartX}). Under gradient flow, tangential motion does not occur (the gradient vanishes on $\Mcl$).
+\end{enumerate}
+
+The separation into transverse and tangential modes provides a dynamical counterpart to the structural distinction between mass (distance from $\Mcl$) and geometry (motion on $\Mcl$).
+
+%==================================================================
+\section{Limitations}\label{sec:limits}
+%==================================================================
+
+\begin{itemize}
+    \item \textbf{The evolution parameter $t$ is not physical time.} It is an auxiliary parameter. Identification with physical time requires additional structure (metric signature, Lorentz covariance) not present here.
+    \item \textbf{No relativistic invariance.} The dynamics is defined on a state space with Euclidean inner product, not on a Lorentzian manifold.
+    \item \textbf{No quantum dynamics.} The evolution is classical (deterministic gradient flow or Lagrangian mechanics). Quantisation is not addressed.
+    \item \textbf{No scattering or decay.} The dynamics describes relaxation and oscillation around attractors, not scattering processes between states.
+    \item \textbf{No coupling constants derived.} The mass parameter $\kappa$ and the closure-functional weights remain structural parameters.
+    \item \textbf{The Lagrangian is minimal.} It is the simplest conservative extension; more physical Lagrangians may be needed.
+    \item \textbf{Basin structure not fully characterised.} The global attractor-basin geometry depends on $\Fcal$ and is not computed here.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The closure framework, previously purely structural, now admits a minimal dynamical extension. States evolve via gradient flow of the closure functional: $\Fcal$ decreases monotonically, closure-stable states are attractors, and disconnected configurations are dynamically unstable (confinement). A conservative Lagrangian extension provides second-order dynamics with oscillatory motion around closure-stable configurations.
+
+The dynamics separates into two modes: transverse (toward/away from $\Mcl$, associated with mass) and tangential (along $\Mcl$, associated with geometry). This decomposition connects the dynamical evolution to the structural properties established in Papers~V--X.
+
+The evolution parameter $t$ is not identified with physical time, and no relativistic or quantum structure is introduced. The paper establishes the formal transition from a constraint-based structural framework to one that admits evolution, providing the foundation on which more physical dynamics (gauge coupling, quantisation, scattering) could in principle be built.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

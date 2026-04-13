@@ -148,6 +148,12 @@ Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence �
 
 Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
 
+#### Paper XII — Closure Dynamics
+
+**[Closure Dynamics: A Variational and Gradient Formulation of Constraint-Manifold Evolution](papers/paper-xii/paper-xii.tex)**
+
+Introduces minimal dynamics into the closure framework. States evolve via gradient flow of the closure functional: F decreases monotonically, closure-stable states are attractors, disconnected configurations are dynamically unstable (confinement). Conservative Lagrangian extension with second-order Euler-Lagrange equation. Two modes of motion: transverse (toward M_cl, associated with mass) and tangential (along M_cl, associated with geometry). Evolution parameter t is auxiliary, not physical time. No relativistic invariance, no QFT, no scattering. The formal transition from structural framework to one that admits evolution.
+
 #### Paper XI — Standard Model Correspondence
 
 **[A Correspondence Between Constraint-Manifold Geometry and Standard Model Structure](papers/paper-xi/A_Correspondence_Between_Constraint_Manifold_Geometry_and_Standard_Model_Structure.pdf)** ([LaTeX source](papers/paper-xi/paper-xi.tex))
@@ -208,6 +214,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xii/              Paper XII: closure dynamics (gradient flow + Lagrangian)
 │   ├── paper-xi/               Paper XI: Standard Model correspondence / translation layer
 │   ├── paper-x/                Paper X: gravitational analogy from constraint-manifold curvature
 │   ├── paper-ix/               Paper IX: continuous limit and constraint-manifold geometry
