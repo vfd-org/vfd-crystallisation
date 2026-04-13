@@ -58,7 +58,7 @@ The present paper provides the missing operator-level and constraint-level formu
 
 \subsection*{Scope and epistemic status}
 
-This paper defines a \textit{constraint framework}, not a complete physical theory. The closure operator is constructed as a mathematical object with specified domain, codomain, and convergence properties. The constraint classes are defined explicitly and connected to the spectral properties of the $\phig$-structured geometry. The framework is not derived from first principles; it is proposed as the formal substrate within which the structural claims of Papers~V--VI can be made rigorous.
+This paper defines a \textit{constraint framework}, not a complete physical theory. The closure operator is constructed as a mathematical object with specified domain, codomain, and iterative-relaxation properties. The constraint classes are defined explicitly and connected to the spectral properties of the $\phig$-structured geometry. The framework is not derived from first principles; it is proposed as the formal substrate within which the structural claims of Papers~V--VI can be made rigorous.
 
 The paper does not introduce new particle predictions, derive forces, or claim to replace quantum field theory. It provides the mathematical machinery that the preceding papers assumed.
 
@@ -128,11 +128,11 @@ The connectivity constraint provides the framework's interpretation of confineme
 Projection constraints ensure compatibility with the observable sector.
 
 \begin{definition}[Projection constraint set]\label{def:projection}
-A state $\psi$ satisfies the projection constraints if it is invariant under all admissible torsional deformations that preserve observable content:
+A state $\psi$ satisfies the projection constraints if its observable content is constant on the equivalence class
 \begin{equation}
-    \Pcal(\Tcal_\theta\, \psi) = \Pcal(\psi) \quad \Longrightarrow \quad \psi \text{ and } \Tcal_\theta\psi \text{ are projection-equivalent}
+    [\psi]_{\mathrm{proj}} = \left\{\Tcal_\theta \psi \in \Sadm \;\middle|\; \Pcal(\Tcal_\theta \psi) = \Pcal(\psi)\right\}
 \end{equation}
-where $\Pcal$ is the projection operator from the underlying manifold to observables (Paper~VI~\citep{SmartVI}), and $\Tcal_\theta$ are the torsional operators of Section~3 of Paper~VI. A closed state must be compatible with this equivalence structure: its observable content must be well-defined under the projection.
+where $\Pcal$ is the projection operator from the underlying manifold to observables (Paper~VI~\citep{SmartVI}), and $\Tcal_\theta$ are the torsional operators of Section~3 of Paper~VI. In other words, admissible torsional deformations that preserve projection do not alter the observable identity of the state.
 \end{definition}
 
 This constraint connects the closure framework to the gauge-invariance interpretation of Paper~VI: torsional transformations that preserve projection compatibility are gauge symmetries. The closure operator $\Ccal$ (defined in Section~\ref{sec:operator}) is then required to respect this structure: $\Pcal(\Ccal(\psi)) = \Pcal(\psi)$ for all $\psi \in \Sadm$. This is a \textit{property} of the closure operator, not part of the definition of the constraint class.
@@ -172,7 +172,7 @@ provided the infimum is attained.
 
 \textbf{Uniqueness.} Uniqueness of $\Ccal(\psi)$ is not guaranteed in general because $\Scl$ may be non-convex. When multiple nearest closed states exist, the closure operator selects from among them. In the present framework, the variational formulation (Section~\ref{sec:variational}) provides a secondary selection criterion.
 
-\textbf{Continuity.} If $\Scl$ is a finite union of smooth submanifolds of $\Sadm$ (as is the case for the discrete shell-support structure), the closure operator is continuous except possibly at equidistant points between distinct components of $\Scl$.
+\textbf{Regularity.} Away from points that are equidistant to distinct components of $\Scl$, the closure operator is expected to vary continuously under mild geometric regularity assumptions on the components of $\Scl$. A full regularity analysis is beyond the scope of the present paper.
 
 \textsc{Status:} The closure operator is a well-defined mathematical object in the finite-dimensional setting. Its extension to infinite-dimensional state spaces (relevant for a full field-theoretic formulation) requires additional functional-analytic conditions and is deferred.
 
@@ -203,14 +203,14 @@ This iterative scheme may be viewed as a discrete analogue of the relaxation pro
 
 We introduce a closure functional $\Fcal : \Sadm \to \mathbb{R}_{\geq 0}$ that measures the total constraint violation:
 \begin{equation}\label{eq:functional}
-    \Fcal(\psi) = w_1\, d(\psi) + w_2\, \mathrm{Var}(\psi) + w_3\, \Tcal(\psi)
+    \Fcal(\psi) = w_1\, d(\psi) + w_2\, \mathrm{Var}(\psi) + w_3\, \tau(\psi)
 \end{equation}
 
 where:
 \begin{itemize}
     \item $d(\psi) \geq 0$: \textbf{local compatibility defect} --- measures violation of Class~I constraints (adjacency, spectral compatibility, phase matching).
     \item $\mathrm{Var}(\psi) \geq 0$: \textbf{structural instability} --- measures the variance of the state's spectral components across shells.
-    \item $\Tcal(\psi) \geq 0$: \textbf{torsional mismatch} --- measures violation of Class~III projection constraints and torsional consistency.
+    \item $\tau(\psi) \geq 0$: \textbf{torsional mismatch} --- measures violation of Class~III projection constraints and torsional consistency.
 \end{itemize}
 
 The weights $w_1, w_2, w_3 > 0$ are structural parameters. Their values are not uniquely determined in this paper.
@@ -218,11 +218,7 @@ The weights $w_1, w_2, w_3 > 0$ are structural parameters. Their values are not 
 \subsection{Closure-stable states as minimisers}
 
 \begin{definition}[Closure-stable state]\label{def:stable}
-A state $\psi^* \in \Sadm$ is closure-stable if it is a local minimiser of $\Fcal$:
-\begin{equation}
-    \psi^* \in \arg\min_{\psi \in \Sadm} \Fcal(\psi)
-\end{equation}
-subject to the constraint that $\psi^* \in \Scl$ (i.e.\ $\Fcal(\psi^*) = 0$).
+A state $\psi^* \in \Sadm$ is closure-stable if it is a local minimiser of $\Fcal$ and satisfies $\Fcal(\psi^*) = 0$.
 \end{definition}
 
 The functional is designed so that $\Fcal(\psi) = 0$ if and only if $\psi \in \Scl$: zero functional value characterises exactly closed states. States with $\Fcal(\psi) > 0$ violate at least one constraint class and carry a nonzero closure residual.
@@ -257,7 +253,7 @@ The attractor basin of a fixed point $\psi^* \in \Scl$ is:
 \end{definition}
 
 \begin{remark}[Physical interpretation]
-Within the framework, distinct attractor basins correspond to distinct stable realised state classes. Candidate particle states are fixed points of $\Ccal$; the basin structure determines which initial configurations resolve to which particle type. The discreteness of the particle spectrum corresponds to the discrete set of attractor basins.
+Within the framework, distinct attractor basins correspond to distinct stable realised state classes. Candidate particle states are fixed points of $\Ccal$; the basin structure provides the framework-level notion of which initial configurations are associated with which stable state type, whenever the iterative relaxation converges. The discreteness of the particle spectrum corresponds to the discrete set of attractor basins.
 \end{remark}
 
 %==================================================================
