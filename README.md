@@ -108,87 +108,87 @@ Argues that the crystallisation functional F = alphaR + betaE - gammaQ is not ar
 
 Formalises **triplet closure**: three classes of constraint (internal, boundary, observational) are jointly sufficient for discrete state resolution under generic conditions, whereas any pair alone generically is not. Defines a regime structure governed by Delta = lambda/Gamma. Demonstrates the mechanism in the **ARIA governed reasoning system** — a deterministic pipeline that resolves a canonical request through three candidates to a single output, producing a cryptographically verifiable proof pack. Includes the full [proof-pack artifacts](papers/mechanism/demo/) for independent verification.
 
-### Mass Programme (Geometric Closure Papers I–V)
+### Mass and Constraint-Manifold Programme (Papers I–XIII)
 
-The repository also contains a separate but related mass programme, which applies closure geometry and spectral structure to particle mass ratios. **Paper V is the complete mass-spectrum paper**; Paper IV is the proton-electron bridge paper; Papers I–III document the internal development. **Recommended reading order for the mass programme:** start with Paper V for the full result, or Paper IV for the proton-electron foundation.
-
-#### Paper V — Complete Particle Mass Spectrum
-
-**[Toward a Spectral-Geometric Particle-Mass Model from the 600-Cell](papers/paper-v/Toward_a_Spectral_Geometric_Particle_Mass_Model_from_the_600_Cell.pdf)** ([LaTeX source](papers/paper-v/paper-v.tex))
-
-Extends Papers I–IV to a broader spectral-geometric mass framework using the golden ratio φ and the four integer eigenvalues {9, 12, 14, 15} of the 600-cell graph Laplacian. Under explicit framework postulates and structural assignments, yields high-accuracy mass values across 13 non-reference particles (average 0.014%). Also yields a high-precision numerical correspondence for the fine structure constant (0.81 ppm). Includes 6 exact graph theorems, the prediction chain, assignment rules, and full epistemic classification separating exact computations from model assignments and numerical correspondences.
-
-#### Paper IV (Bridge Paper) — Proton–Electron Mass Ratio
-
-**[A φ-Scaled Geometric Ansatz for the Proton–Electron Mass Ratio](papers/pemr/A_phi_Scaled_Geometric_Ansatz_for_the_Proton_Electron_Mass_Ratio.pdf)** ([LaTeX source](papers/pemr/pemr.tex))
-
-The standalone bridge paper. Presents a structured geometric ansatz recovering m_p/m_e = φ^(1265/81) ≈ 1835.8 (experimental: 1836.15, discrepancy 2×10⁻⁴) with zero fitted continuous parameters. The leading exponent ΔC = 15 coincides exactly with a Laplacian eigenvalue of the 600-cell vertex graph (multiplicity 16). The correction terms are organised by the heat-kernel cumulant expansion. Includes the Zamolodchikov–Coldea E₈ precedent, spectral gap theorem λ₁(P₅) = φ⁻², sensitivity analysis, reproducibility section, and a 12-objection adversarial review. Externally readable without prior VFD context.
+The repository contains a comprehensive constraint-geometry programme applying closure structure and spectral geometry to particle mass, force sectors, continuous geometry, dynamics, and interaction. The papers are listed below in sequential reading order.
 
 #### Paper I (Internal) — Closure Geometry and Mass
 
 **[Proton-to-Electron Mass Ratio from Closure Geometry and Graph Invariants](papers/master-mass/Proton_to_Electron_Mass_Ratio_from_Closure_Geometry_and_Graph_Invariants.pdf)** ([LaTeX source](papers/master-mass/master-mass.tex))
 
-The internal mass paper. Develops closure classes, assignment rules R1–R5, the combinatorial invariant, graph Laplacian term, degree-variance correction, and three-order mass law. Includes validation extensions (neutron compatible, muon/tau fail) and forward reference to the 600-cell spectral work.
+Internal development paper. Develops closure classes, assignment rules R1–R5, the combinatorial invariant, graph Laplacian term, degree-variance correction, and three-order mass law. Includes validation extensions (neutron compatible, muon/tau fail).
 
 #### Paper II (Internal) — Lepton Generations
 
 **[Lepton Generations and the Missing Mass Operator in Deterministic Field Closure](papers/lepton-generations/Lepton_Generations_the_Missing_Mass_Operator_in_Deterministic_Field_Closure.pdf)** ([LaTeX source](papers/lepton-generations/lepton-generations.tex))
 
-Proves a formal no-go theorem for shell-extension leptons. Proposes a conditional winding operator f(w) = φ⁵(w−1)^(1/φ), valid only if the relevant effective spectral dimension is identified with d_s = φ. Predicts the muon to 0.5% and the tau to 3.7% with zero fitted continuous parameters. The 600-cell eigenvalue correspondence and F4 numerical motivation are treated only as external support, summarised from Paper III.
+No-go theorem for shell-extension leptons. Conditional winding operator f(w) = φ⁵(w−1)^(1/φ). Predicts muon to 0.5%, tau to 3.7%. 600-cell eigenvalue and F4 as external support from Paper III.
 
 #### Paper III (Internal) — Spectral Structure
 
 **[Spectral Structure of the 600-Cell Vertex Graph: Eigenvalue Connections and the F4 Fibonacci Extension](papers/spectral-dimension/Spectral_Structure_of_the_600_Cell_Vertex_Graph.pdf)** ([LaTeX source](papers/spectral-dimension/spectral-dimension.tex))
 
-Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence λ = 15 = ΔC; (2) numerical F4 convergence toward d_s ≈ φ (R² = 0.996). Includes explicit retraction of the earlier d_s ≈ 1.637 claim for the 600-cell vertex graph, with explanation of the windowing artifact.
+Exact 600-cell eigenvalue correspondence λ = 15 = ΔC. F4 convergence toward d_s ≈ φ (R² = 0.996). Includes retraction of earlier d_s ≈ 1.637 claim.
+
+#### Paper IV — Proton–Electron Mass Ratio (Bridge Paper)
+
+**[A φ-Scaled Geometric Ansatz for the Proton–Electron Mass Ratio](papers/pemr/A_phi_Scaled_Geometric_Ansatz_for_the_Proton_Electron_Mass_Ratio.pdf)** ([LaTeX source](papers/pemr/pemr.tex))
+
+Standalone bridge paper. m_p/m_e = φ^(1265/81) ≈ 1835.8 with zero fitted parameters. ΔC = 15 as 600-cell Laplacian eigenvalue. Heat-kernel cumulant expansion. Zamolodchikov–Coldea E₈ precedent. Sensitivity analysis and 12-objection adversarial review. Externally readable.
+
+#### Paper V — Particle-Mass Model
+
+**[Toward a Spectral-Geometric Particle-Mass Model from the 600-Cell](papers/paper-v/Toward_a_Spectral_Geometric_Particle_Mass_Model_from_the_600_Cell.pdf)** ([LaTeX source](papers/paper-v/paper-v.tex))
+
+Complete mass-spectrum extension. 13 non-reference particles from 600-cell eigenvalues {9, 12, 14, 15}. Average 0.014%. Fine structure constant (0.81 ppm). 6 exact graph theorems, correspondence chain, assignment rules, full epistemic classification.
 
 #### Paper VI — Electroweak Sector
 
 **[Electroweak Structure as a Boundary Projection of φ-Structured Geometry](papers/paper-vi/Electroweak_Structure_as_a_Boundary_Projection_of_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-vi/paper-vi.tex))
 
-Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
+Electroweak reinterpretation. Gauge symmetry as torsional projection invariance. Mass as closure residual. Weinberg angle as projection rotation. m_W = m_Z cos(θ_W) preserved. Higgs as closure stabilisation. Reinterpretation, not derivation.
 
-#### Paper XIII — Interaction Dynamics
+#### Paper VII — Closure Operators and Constraints
 
-**[Interaction Dynamics and Basin Transitions in Constraint-Manifold Evolution](papers/paper-xiii/Interaction_Dynamics_and_Basin_Transitions_in_Constraint_Manifold_Evolution.pdf)** ([LaTeX source](papers/paper-xiii/paper-xiii.tex))
+**[Closure Dynamics and Constraint Operators in φ-Structured Geometry](papers/paper-vii/Closure_Dynamics_and_Constraint_Operators_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-vii/paper-vii.tex))
 
-Extends single-state dynamics (Paper XII) to multi-state interaction. Total closure functional F_tot = ΣF(ψ_i) + F_int(Ψ) with four interaction components: proximity, alignment, compatibility, binding. Coupled gradient flow with monotonic descent. Interaction as basin deformation. Binding as joint attractor formation (F_tot < ΣF). Scattering-like processes as basin-crossing transitions. Four transition channels: preserving, crossing, fusion, repulsion. Three worked examples. Conservative Lagrangian extension. No S-matrix, no QFT, no gauge-boson exchange — structural interaction layer only.
+Formalises the closure operator. Three constraint classes (local, multi-node, projection). Closed state set. Metric projection. Variational formulation. Connects to mass (closure residual) and gauge (projection compatibility). Mathematical machinery paper.
 
-#### Paper XII — Closure Dynamics
+#### Paper VIII — Confinement
 
-**[Closure Dynamics: A Variational and Gradient Formulation of Constraint-Manifold Evolution](papers/paper-xii/Closure_Dynamics_A_Variational_and_Gradient_Formulation_of_Constraint_Manifold_Evolution.pdf)** ([LaTeX source](papers/paper-xii/paper-xii.tex))
+**[Confinement as a Multi-Node Closure Constraint in φ-Structured Geometry](papers/paper-viii/Confinement_as_a_Multi_Node_Closure_Constraint_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-viii/paper-viii.tex))
 
-Introduces minimal dynamics into the closure framework. States evolve via gradient flow of the closure functional: F decreases monotonically, closure-stable states are attractors, disconnected configurations are dynamically unstable (confinement). Conservative Lagrangian extension with second-order Euler-Lagrange equation. Two modes of motion: transverse (toward M_cl, associated with mass) and tangential (along M_cl, associated with geometry). Evolution parameter t is auxiliary, not physical time. No relativistic invariance, no QFT, no scattering. The formal transition from structural framework to one that admits evolution.
+Confinement as connectivity constraint. Disconnected supports excluded by gap penalty. Proton {2,3,4} closure-stable; quark-like {2,4} is not. Composite closure functional with gap-penalty term. Emergent composite classes. Threefold baryon structure as colour analogue — SU(3) not derived.
+
+#### Paper IX — Continuous Geometry
+
+**[From Discrete Closure to Continuous Geometry in φ-Structured Constraint Systems](papers/paper-ix/From_Discrete_Closure_to_Continuous_Geometry_in_phi_Structured_Constraint_Systems.pdf)** ([LaTeX source](papers/paper-ix/paper-ix.tex))
+
+Continuous limit of the discrete closure framework. Closed state set represented as constraint manifold M_cl. Induced Riemannian metric. Curvature from constraint interaction. Mass as distance from manifold, confinement as topology, gauge as orbit structure. Formal construction, not convergence theorem.
+
+#### Paper X — Gravitational Analogy
+
+**[Gravitational Analogy from Constraint-Manifold Curvature in φ-Structured Geometry](papers/paper-x/Gravitational_Analogy_from_Constraint_Manifold_Curvature_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-x/paper-x.tex))
+
+Gravity-facing interpretation. Curvature of M_cl as structural analogue of gravitational geometry. Geodesic-like constrained motion on smooth strata. Geodesic deviation as tidal analogue. Local flatness as inertial-frame analogue. Full GR comparison table. Does NOT derive Einstein equations or identify M_cl with spacetime. Structural analogy — pathway, not destination.
 
 #### Paper XI — Standard Model Correspondence
 
 **[A Correspondence Between Constraint-Manifold Geometry and Standard Model Structure](papers/paper-xi/A_Correspondence_Between_Constraint_Manifold_Geometry_and_Standard_Model_Structure.pdf)** ([LaTeX source](papers/paper-xi/paper-xi.tex))
 
-Translation layer between the constraint framework and the Standard Model. Systematic mapping table: admissible states ↔ Hilbert space, constraint manifold ↔ physical states, projection invariance ↔ gauge symmetry, closure residual ↔ mass, connectivity ↔ confinement, manifold curvature ↔ gravity (analogue). Each correspondence classified as structural, analogical, or open. Covers mass, electroweak, strong, and gravity sectors. Explicitly lists what the framework lacks (Lagrangian, renormalisation, scattering, spacetime). Does not derive or replace the Standard Model — provides a legibility bridge.
+Translation layer. Systematic mapping table (18 rows): admissible states ↔ Hilbert space, constraint manifold ↔ physical states, projection invariance ↔ gauge symmetry, closure residual ↔ mass, connectivity ↔ confinement, curvature ↔ gravity (analogue). Each classified as structural, analogical, or open. Does not derive or replace the Standard Model.
 
-#### Paper X — Gravitational Analogy from Constraint-Manifold Curvature
+#### Paper XII — Closure Dynamics
 
-**[Gravitational Analogy from Constraint-Manifold Curvature in φ-Structured Geometry](papers/paper-x/Gravitational_Analogy_from_Constraint_Manifold_Curvature_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-x/paper-x.tex))
+**[Closure Dynamics: A Variational and Gradient Formulation of Constraint-Manifold Evolution](papers/paper-xii/Closure_Dynamics_A_Variational_and_Gradient_Formulation_of_Constraint_Manifold_Evolution.pdf)** ([LaTeX source](papers/paper-xii/paper-xii.tex))
 
-Develops the first gravity-facing interpretation of the closure framework. Curvature of the constraint manifold M_cl proposed as structural analogue of gravitational influence. Defines geodesic-like constrained motion, geodesic deviation as tidal analogue, local flatness as inertial-frame analogue. Effective potential combining closure residual and curvature. Full GR comparison table. Does NOT derive Einstein equations, identify M_cl with spacetime, compute Newton constant, or claim a completed gravity theory. Structural analogy — pathway, not destination.
+Minimal dynamics. Gradient flow of closure functional with monotonic descent. Closure-stable states as attractors. Lagrangian extension. Two modes: transverse (mass) and tangential (geometry). Evolution parameter t is auxiliary, not physical time.
 
-#### Paper IX — Continuous Limit and Constraint-Manifold Geometry
+#### Paper XIII — Interaction Dynamics
 
-**[From Discrete Closure to Continuous Geometry in φ-Structured Constraint Systems](papers/paper-ix/From_Discrete_Closure_to_Continuous_Geometry_in_phi_Structured_Constraint_Systems.pdf)** ([LaTeX source](papers/paper-ix/paper-ix.tex))
+**[Interaction Dynamics and Basin Transitions in Constraint-Manifold Evolution](papers/paper-xiii/Interaction_Dynamics_and_Basin_Transitions_in_Constraint_Manifold_Evolution.pdf)** ([LaTeX source](papers/paper-xiii/paper-xiii.tex))
 
-Constructs the continuous limit of the discrete closure framework. The closed state set becomes a constraint manifold M_cl; the closure operator becomes metric projection onto this manifold. Defines the induced Riemannian metric, characterises curvature from constraint interaction, and connects mass (distance from manifold), confinement (manifold topology), and gauge symmetry (orbit structure) to geometric language. Formal construction, not rigorous convergence theorem. No spacetime identification, no gravitational derivation, no dynamical equations.
-
-#### Paper VIII — Confinement as Closure Constraint
-
-**[Confinement as a Multi-Node Closure Constraint in φ-Structured Geometry](papers/paper-viii/Confinement_as_a_Multi_Node_Closure_Constraint_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-viii/paper-viii.tex))
-
-Extends the closure framework (Paper VII) to composite multi-node systems. Confinement reinterpreted as connectivity constraint: disconnected shell supports are excluded from the closed state set by the gap penalty. Proton {2,3,4} is closure-stable; quark-like {2,4} is not. Introduces composite closure functional with gap-penalty term. Emergent composite classes (single/two/three-node) from connectivity + 5-shell geometry. Threefold baryon structure as structural parallel to colour — SU(3) not derived. Compatible with observed hadronic structure; no dynamics, scattering, or lattice comparison.
-
-#### Paper VII — Closure Dynamics and Constraints
-
-**[Closure Dynamics and Constraint Operators in φ-Structured Geometry](papers/paper-vii/Closure_Dynamics_and_Constraint_Operators_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-vii/paper-vii.tex))
-
-Formalises the closure operator that Papers V–VI assumed at a schematic level. Defines the admissible state space, three constraint classes (local, multi-node, projection), the closed state set, and the closure operator as metric projection. Introduces a variational formulation with closure functional. Proves existence in finite dimensions, addresses non-uniqueness via variational selection. Connects to mass (closure residual) and gauge structure (projection compatibility). Demonstrates non-arbitrariness of constraints. Mathematical framework paper — defines the machinery, not new predictions.
+Multi-state interaction. Total closure functional F_tot = ΣF(ψ_i) + F_int(Ψ). Four interaction components: proximity, alignment, compatibility, binding. Coupled gradient flow. Interaction as basin deformation. Binding as joint attractor formation. Scattering-like basin transitions. Conservative Lagrangian extension. Structural interaction layer — no S-matrix, no QFT.
 
 ### Bridge Paper — From Dirac to Crystallisation
 
