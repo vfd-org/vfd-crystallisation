@@ -297,7 +297,7 @@ Within the present framework, measurement is reinterpreted as the process by whi
 
 \subsection{Solution multiplicity in relativistic wave equations}
 
-A structural feature relevant to the present discussion appears already at the level of relativistic wave equations. The Dirac equation admits multiple solutions corresponding to different energy branches and spinor configurations. These solutions are not uniquely selected by the equation itself; additional conditions (boundary conditions, physical constraints, or quantisation procedures) are required to identify physically realised states. More generally, linear field equations define a solution space $\mathcal{S}_{\mathrm{sol}}$ with $|\mathcal{S}_{\mathrm{sol}}| \gg 1$, while physical realisation selects a restricted subset. This establishes a structural pattern: equations define admissible solutions, but do not uniquely determine realised states.
+A structural feature relevant to the present discussion appears already at the level of relativistic wave equations. The Dirac equation admits a multi-branch solution structure (e.g.\ positive and negative energy solutions, spinor degrees of freedom), reflecting that the equation defines a space of admissible solutions rather than a unique realised state. These solutions are not uniquely selected by the equation itself; additional conditions (boundary conditions, physical constraints, or quantisation procedures) are required to identify physically realised states. More generally, linear field equations define a solution space $\mathcal{S}_{\mathrm{sol}}$ with $|\mathcal{S}_{\mathrm{sol}}| \gg 1$, while physical realisation selects a restricted subset. This establishes a structural pattern: equations define admissible solutions, but do not uniquely determine realised states.
 
 \subsection{Observational underdetermination in relativistic cosmology}
 
@@ -322,7 +322,7 @@ Let $\Sadm$ denote the admissible state space of the closure framework, and let
 \begin{equation}
     \mathcal{E} : \Sadm \to \mathcal{O}
 \end{equation}
-be the observation map into the space of observational data $\mathcal{O}$. Define the observational equivalence class for a given observation $\mathcal{O}_0$:
+be the observation map into the space of observational data $\mathcal{O}$, where $\mathcal{O}$ denotes the space of observational data accessible to an observer (e.g.\ field values along a worldline, or equivalence classes of measurement outcomes). Define the observational equivalence class for a given observation $\mathcal{O}_0$:
 \begin{equation}
     S = \left\{\psi \in \Sadm \;\middle|\; \mathcal{E}(\psi) = \mathcal{O}_0\right\}
 \end{equation}
@@ -342,13 +342,14 @@ The physically realised states are then given by:
 \begin{equation}
     \psi^* = \arg\min_{\psi \in S}\, \Fcal(\psi)
 \end{equation}
+when the minimum exists; in general, one may obtain a finite set of minimisers corresponding to distinct closure-compatible configurations.
 
 This defines a selection mechanism:
 \begin{equation}
     S \longrightarrow S \cap \Scl
 \end{equation}
 
-In contrast to observational inference, which leaves $S$ underdetermined, the closure constraint reduces the admissible set by imposing global consistency conditions on the $\phig$-structured geometry. This process --- selection by minimisation of $\Fcal$ --- is referred to as \textit{crystallisation}. Within the stochastic dynamics developed in this paper, crystallisation is the dynamical realisation of this selection principle: trajectories explore the observationally admissible set and are biased toward closure-compatible states by the gradient structure of $\Fcal$.
+In contrast to observational inference, which leaves $S$ underdetermined, the closure constraint reduces the admissible set by imposing global consistency conditions on the $\phig$-structured geometry. This process --- selection by minimisation of $\Fcal$ --- is referred to as \textit{crystallisation}. Within the stochastic dynamics developed in this paper, crystallisation is the dynamical realisation of this selection principle: trajectories explore the observationally admissible set and are statistically biased toward closure-compatible states through the drift term $-\nabla\Fcal$, which concentrates probability near the constraint manifold.
 
 \subsection{Interpretation}
 
@@ -359,7 +360,7 @@ The significance of this connection is twofold:
 \end{enumerate}
 
 \begin{remark}
-Manchak's result identifies the limitation; the closure framework proposes a mechanism that operates beyond that limitation. This is a structural observation, not a claim to have solved the problem of observational underdetermination in full generality.
+Manchak's result identifies the limitation; the closure framework proposes a mechanism that operates beyond that limitation. This is a structural observation, not a claim to have solved the problem of observational underdetermination in full generality. The stochastic dynamics developed in this paper provides a natural mechanism for exploring the observational equivalence class $S$: rather than selecting deterministically among admissible states, the system samples $S$ according to the induced probability distribution, with closure constraints biasing the selection toward $\Scl$.
 \end{remark}
 
 %==================================================================
@@ -398,7 +399,7 @@ Superposition principle & Not postulated \\
 \begin{theorem}[Stochastic closure quantisation]\label{thm:main}
 Let $\Fcal : \Sadm \to \mathbb{R}_{\geq 0}$ be a smooth closure functional with $\Fcal^{-1}(0) = \Mcl$ and $\Sadm$ compact. Let $\sigma > 0$ and let $\psi_t$ solve the It\^o SDE~\eqref{eq:langevin}. Then:
 \begin{enumerate}
-    \item \textbf{Stationary distribution:} The process admits a stationary distribution $P_{\mathrm{st}}(\psi) \propto \exp(-2\Fcal(\psi)/\sigma^2)$, unique under standard irreducibility conditions.
+    \item \textbf{Stationary distribution:} The process admits a stationary distribution $P_{\mathrm{st}}(\psi) \propto \exp(-2\Fcal(\psi)/\sigma^2)$, unique under standard irreducibility and non-degeneracy conditions for the induced diffusion.
     \item \textbf{Concentration:} $P_{\mathrm{st}}$ concentrates on $\Mcl$ as $\sigma \to 0$.
     \item \textbf{Local spectra:} At each local minimum $\psi_0 \in \Mcl$, the local distribution is approximately Gaussian with covariance $(\sigma^2/2)H(\psi_0)^{-1}$, defining an excitation spectrum from the Hessian eigenvalues.
     \item \textbf{Transition rates:} Kramers-type barrier crossing gives inter-basin transition rates $k \sim \exp(-2\Delta\Fcal/\sigma^2)$.
