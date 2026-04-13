@@ -117,7 +117,7 @@ The proximity term measures how close states are in the ambient state space:
 \begin{equation}\label{eq:prox}
     I_{\mathrm{prox}}(\Psi) = \sum_{i < j} f\!\left(\|\psi_i - \psi_j\|\right)
 \end{equation}
-where $f$ is a monotone function (e.g.\ $f(r) = e^{-r^2/\sigma^2}$ for a localised interaction, or $f(r) = r^2$ for a long-range harmonic coupling). States that are closer in the ambient space interact more strongly.
+where $f$ is a monotone function (e.g.\ $f(r) = e^{-r^2/\sigma^2}$ for a localised interaction, or $f(r) = r^2$ for a long-range harmonic coupling). States that are closer in the ambient space interact more strongly. The sign and shape of $f$ determine whether proximity acts effectively as an attractive or repulsive contribution within the total interaction landscape; the present paper uses it only as a generic structural coupling term.
 
 \subsection{Alignment term}
 
@@ -137,11 +137,11 @@ where $\Gamma$ is small for compatible state pairs and large for incompatible on
 
 \subsection{Binding term}
 
-The binding term rewards jointly connected configurations:
+The binding term rewards jointly connected configurations by penalising residual gaps in the union of supports:
 \begin{equation}\label{eq:bind}
-    I_{\mathrm{bind}}(\Psi) = -\mu\, \Xi_{\mathrm{joint}}(\Psi)
+    I_{\mathrm{bind}}(\Psi) = \Xi_{\mathrm{joint}}(\Psi)
 \end{equation}
-where $\Xi_{\mathrm{joint}}$ is the gap penalty of the union of supports (Paper~VIII~\citep{SmartVIII}), and $\mu > 0$ controls binding strength. The negative sign means that jointly connected configurations \textit{lower} the total closure cost, favouring composite formation.
+where $\Xi_{\mathrm{joint}}$ is the gap penalty of the union of supports (Paper~VIII~\citep{SmartVIII}). Connected composite configurations have $\Xi_{\mathrm{joint}} = 0$, while disconnected unions have $\Xi_{\mathrm{joint}} > 0$. Through the positive weight $\lambda_4$, disconnected joint configurations therefore raise the total closure cost, while connected composites are favoured relative to them.
 
 \begin{remark}[Ansatz status]
 The decomposition~\eqref{eq:Fint} and the specific forms of $I_{\mathrm{prox}}$, $I_{\mathrm{align}}$, $I_{\mathrm{comp}}$, $I_{\mathrm{bind}}$ are minimal structural ansätze. They are not derived from a gauge principle or uniquely determined by the closure structure. Their role is to define the interaction architecture; a more fundamental derivation of $\Fint$ is left for future work.
@@ -176,7 +176,7 @@ Along trajectories of the coupled projected gradient flow~\eqref{eq:coupledflow}
 \end{proposition}
 
 \begin{proof}
-Identical to the single-state case (Proposition~1 of Paper~XII): $d\Ftot/dt = \langle\nabla\Ftot, d\Psi/dt\rangle = -\|\Pi(\nabla\Ftot)\|^2 \leq 0$.
+Identical to the single-state case (Proposition~1 of Paper~XII): $d\Ftot/dt = \langle\nabla\Ftot, d\Psi/dt\rangle = -\|\Pi(\nabla\Ftot)\|^2 \leq 0$. Here $\Pi_{\Sadm^{(n)}}$ is the orthogonal projection onto the tangent space of the admissible product domain with respect to the product inner product.
 \end{proof}
 
 This ensures the interacting system is mathematically stable in the same sense as the single-state dynamics: the total closure cost never increases along trajectories.
@@ -225,7 +225,7 @@ A multi-state configuration $\Psi^* = (\psi_1^*, \ldots, \psi_n^*)$ is a bound c
 When this condition holds, the interaction term $\Fint$ lowers the total closure cost, creating a joint attractor basin not present in the uncoupled system. The bound configuration is more closure-compatible than the separated states: it is a composite that is ``cheaper'' to close than its parts.
 
 \begin{remark}
-This is the framework's structural analogue of binding energy: the difference $\sum\Fcal(\psi_i) - \Ftot(\Psi^*)$ measures how much the interaction lowers the total closure cost. In nuclear physics, the analogous quantity is the mass defect.
+This quantity plays the role of a structural binding measure within the framework: the difference $\sum\Fcal(\psi_i) - \Ftot(\Psi^*)$ quantifies how much the interaction lowers the total closure cost relative to the separated configuration.
 \end{remark}
 
 %==================================================================
@@ -272,7 +272,7 @@ Which channel is realised depends on the initial configuration, the strength and
 %==================================================================
 
 \begin{example}[Disconnected quark-like + complementary support]\label{ex:binding}
-Consider a state $\psi_1$ with disconnected support $\{2,4\}$ (quark-like, $\Xi > 0$) and a state $\psi_2$ with support $\{3\}$. Individually, $\psi_1$ is not closure-stable. Under the coupled dynamics with the binding term active, the joint configuration $\Psi = (\psi_1, \psi_2)$ can evolve toward a connected composite on $\{2,3,4\}$ with $\Ftot(\Psi^*) < \Fcal(\psi_1) + \Fcal(\psi_2)$. This models the formation of a baryon-like bound state from disconnected components.
+Consider a state $\psi_1$ with disconnected support $\{2,4\}$ (quark-like, $\Xi > 0$) and a state $\psi_2$ with support $\{3\}$. Individually, $\psi_1$ is not closure-stable. Under the coupled dynamics with the binding term active, the joint configuration $\Psi = (\psi_1, \psi_2)$ can evolve toward a connected composite on $\{2,3,4\}$ with $\Ftot(\Psi^*) < \Fcal(\psi_1) + \Fcal(\psi_2)$. This models, within the present framework, the formation of a connected baryon-like composite from initially disconnected components.
 \end{example}
 
 \begin{example}[Compatible aligned pair]\label{ex:aligned}
@@ -356,7 +356,7 @@ The closure framework, previously restricted to single-state dynamics (Paper~XII
 
 Interaction is interpreted as deformation of the closure landscape: the presence of one state modifies the effective basin structure experienced by another. Binding corresponds to the formation of joint attractors whose closure cost is lower than the separated configuration. Scattering-like processes are basin-crossing or basin-preserving transitions within the coupled dynamics.
 
-This is not yet a scattering theory, a quantum field theory, or a dynamical model of gauge-boson exchange. It is the first structural interaction layer within the closure framework: the minimal extension that allows multiple states to influence one another's evolution. From this layer, extensions toward quantised dynamics, scattering amplitudes, and gauge coupling could in principle be pursued.
+This paper therefore marks the transition from single-state closure dynamics to interacting closure dynamics. The framework still does not provide quantum scattering theory, gauge-field mediation, or relativistic collision physics, but it now possesses the minimal structural machinery required for such questions to be posed internally. In that sense, Paper~XIII establishes the interaction layer without which the programme could not advance beyond isolated attractors.
 
 %==================================================================
 \bibliographystyle{plainnat}
