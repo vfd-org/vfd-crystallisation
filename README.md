@@ -150,19 +150,19 @@ Extends the projection framework to the electroweak sector. Gauge symmetry reint
 
 #### Paper X — Gravitational Analogy from Constraint-Manifold Curvature
 
-**[Gravitational Analogy from Constraint-Manifold Curvature in φ-Structured Geometry](papers/paper-x/paper-x.tex)**
+**[Gravitational Analogy from Constraint-Manifold Curvature in φ-Structured Geometry](papers/paper-x/Gravitational_Analogy_from_Constraint_Manifold_Curvature_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-x/paper-x.tex))
 
 Develops the first gravity-facing interpretation of the closure framework. Curvature of the constraint manifold M_cl proposed as structural analogue of gravitational influence. Defines geodesic-like constrained motion, geodesic deviation as tidal analogue, local flatness as inertial-frame analogue. Effective potential combining closure residual and curvature. Full GR comparison table. Does NOT derive Einstein equations, identify M_cl with spacetime, compute Newton constant, or claim a completed gravity theory. Structural analogy — pathway, not destination.
 
 #### Paper IX — Continuous Limit and Constraint-Manifold Geometry
 
-**[From Discrete Closure to Continuous Geometry in φ-Structured Constraint Systems](papers/paper-ix/paper-ix.tex)**
+**[From Discrete Closure to Continuous Geometry in φ-Structured Constraint Systems](papers/paper-ix/From_Discrete_Closure_to_Continuous_Geometry_in_phi_Structured_Constraint_Systems.pdf)** ([LaTeX source](papers/paper-ix/paper-ix.tex))
 
 Constructs the continuous limit of the discrete closure framework. The closed state set becomes a constraint manifold M_cl; the closure operator becomes metric projection onto this manifold. Defines the induced Riemannian metric, characterises curvature from constraint interaction, and connects mass (distance from manifold), confinement (manifold topology), and gauge symmetry (orbit structure) to geometric language. Formal construction, not rigorous convergence theorem. No spacetime identification, no gravitational derivation, no dynamical equations.
 
 #### Paper VIII — Confinement as Closure Constraint
 
-**[Confinement as a Multi-Node Closure Constraint in φ-Structured Geometry](papers/paper-viii/paper-viii.tex)**
+**[Confinement as a Multi-Node Closure Constraint in φ-Structured Geometry](papers/paper-viii/Confinement_as_a_Multi_Node_Closure_Constraint_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-viii/paper-viii.tex))
 
 Extends the closure framework (Paper VII) to composite multi-node systems. Confinement reinterpreted as connectivity constraint: disconnected shell supports are excluded from the closed state set by the gap penalty. Proton {2,3,4} is closure-stable; quark-like {2,4} is not. Introduces composite closure functional with gap-penalty term. Emergent composite classes (single/two/three-node) from connectivity + 5-shell geometry. Threefold baryon structure as structural parallel to colour — SU(3) not derived. Compatible with observed hadronic structure; no dynamics, scattering, or lattice comparison.
 
