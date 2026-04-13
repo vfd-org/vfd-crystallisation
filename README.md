@@ -148,6 +148,12 @@ Reports two spectral results: (1) the exact 600-cell eigenvalue correspondence �
 
 Extends the projection framework to the electroweak sector. Gauge symmetry reinterpreted as torsional invariance under projection; mass as closure residual (photon = perfect closure, W/Z = incomplete closure); Weinberg angle as projection-induced rotation. Structurally preserves m_W = m_Z cos(θ_W). Higgs mechanism reinterpreted as closure stabilisation. Reinterpretation, not derivation — accommodates Standard Model structure within the φ-geometry, does not replace it. QCD and gravity flagged as future extensions.
 
+#### Paper XIII — Interaction Dynamics
+
+**[Interaction Dynamics and Basin Transitions in Constraint-Manifold Evolution](papers/paper-xiii/paper-xiii.tex)**
+
+Extends single-state dynamics (Paper XII) to multi-state interaction. Total closure functional F_tot = ΣF(ψ_i) + F_int(Ψ) with four interaction components: proximity, alignment, compatibility, binding. Coupled gradient flow with monotonic descent. Interaction as basin deformation. Binding as joint attractor formation (F_tot < ΣF). Scattering-like processes as basin-crossing transitions. Four transition channels: preserving, crossing, fusion, repulsion. Three worked examples. Conservative Lagrangian extension. No S-matrix, no QFT, no gauge-boson exchange — structural interaction layer only.
+
 #### Paper XII — Closure Dynamics
 
 **[Closure Dynamics: A Variational and Gradient Formulation of Constraint-Manifold Evolution](papers/paper-xii/paper-xii.tex)**
@@ -214,6 +220,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xiii/             Paper XIII: interaction dynamics and basin transitions
 │   ├── paper-xii/              Paper XII: closure dynamics (gradient flow + Lagrangian)
 │   ├── paper-xi/               Paper XI: Standard Model correspondence / translation layer
 │   ├── paper-x/                Paper X: gravitational analogy from constraint-manifold curvature

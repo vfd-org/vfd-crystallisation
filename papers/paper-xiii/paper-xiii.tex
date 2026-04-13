@@ -1,0 +1,365 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Scl}{\mathcal{S}_{\mathrm{cl}}}
+\newcommand{\Fint}{\Fcal_{\mathrm{int}}}
+\newcommand{\Ftot}{\Fcal_{\mathrm{tot}}}
+\newcommand{\phig}{\varphi}
+
+\title{Interaction Dynamics and Basin Transitions\\in Constraint-Manifold Evolution}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Paper~XII~\citep{SmartXII} introduced minimal dynamics for single-state evolution within the closure framework. The present paper extends this to multi-state interaction dynamics by defining a total closure functional on product configurations that includes an explicit interaction term. Each state evolves under both its own closure pressure and the mutual influence of other states, through a coupled projected gradient flow.
+
+Interaction is interpreted as deformation of the closure landscape: the presence of one state modifies the effective basin structure experienced by another. Binding corresponds to the formation of a joint attractor whose total closure cost is lower than the separated configuration. Scattering-like processes are represented as basin-crossing or basin-preserving transitions within the coupled dynamics. A conservative Lagrangian extension provides second-order coupled evolution.
+
+The interaction functional is introduced as a minimal structural ansatz with proximity, alignment, compatibility, and binding components. Its specific form is not uniquely derived; it is the simplest multi-state extension consistent with the closure-constraint structure. The paper does not provide scattering amplitudes, cross-sections, or a quantum field theory. It establishes the structural interaction layer from which such extensions could in principle be pursued.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Paper~XII~\citep{SmartXII} introduced gradient-flow dynamics for a single state evolving on the closure functional $\Fcal$. Under that evolution, closure-stable states are attractors, the functional decreases monotonically, and disconnected configurations are dynamically unstable. However, the single-state framework cannot address interaction: how one admissible state influences the evolution of another.
+
+Physical theories require interacting configurations. The Standard Model describes interactions through gauge-boson exchange and Lagrangian coupling terms. The present paper introduces a structural interaction layer within the closure framework that serves an analogous (though formally different) role.
+
+The central idea is straightforward: when multiple states are present, the closure landscape depends on the joint configuration. Each state evolves under its own closure pressure \textit{and} the mutual influence mediated by an interaction functional. This coupled evolution defines the framework's notion of interaction.
+
+The present paper introduces a structural interaction layer within the closure framework. It does not yet provide a quantum scattering theory; rather, it defines how multiple admissible states jointly modify the closure landscape and thereby influence one another's evolution.
+
+\subsection*{Scope and epistemic status}
+
+This paper extends the minimal dynamics of Paper~XII to multi-state systems. The interaction functional is a structural ansatz: it is not derived from a gauge principle or uniquely determined by the closure structure. The paper defines the interaction architecture and its dynamical consequences, not a complete interacting quantum theory.
+
+%==================================================================
+\section{Multi-State Admissible Space}\label{sec:multistate}
+%==================================================================
+
+We extend the single-state admissible domain $\Sadm$ to an $n$-state configuration space:
+\begin{equation}\label{eq:productspace}
+    \Sadm^{(n)} = \underbrace{\Sadm \times \Sadm \times \cdots \times \Sadm}_{n}
+\end{equation}
+with elements:
+\begin{equation}
+    \Psi = (\psi_1, \psi_2, \ldots, \psi_n)
+\end{equation}
+where each $\psi_i \in \Sadm$.
+
+The product space is equipped with the natural product inner product:
+\begin{equation}
+    \langle\Psi, \Phi\rangle = \sum_{i=1}^n \langle\psi_i, \phi_i\rangle
+\end{equation}
+and corresponding norm $\|\Psi\|^2 = \sum_{i=1}^n \|\psi_i\|^2$.
+
+This is the minimal setting in which interaction between distinct states can be defined.
+
+%==================================================================
+\section{The Total Closure Functional}\label{sec:total}
+%==================================================================
+
+For a multi-state configuration $\Psi = (\psi_1, \ldots, \psi_n)$, the total closure functional is:
+\begin{equation}\label{eq:Ftotal}
+    \Ftot(\Psi) = \sum_{i=1}^n \Fcal(\psi_i) + \Fint(\Psi)
+\end{equation}
+where:
+\begin{itemize}
+    \item $\Fcal(\psi_i)$ is the single-state closure functional from Paper~XII (intrinsic closure cost of each state),
+    \item $\Fint(\Psi)$ is the interaction functional (mutual influence between states).
+\end{itemize}
+
+Without the interaction term, the total functional is separable: each state evolves independently. The interaction functional $\Fint$ couples the evolution and is the source of all multi-state phenomena in the framework.
+
+%==================================================================
+\section{The Interaction Functional}\label{sec:interaction}
+%==================================================================
+
+The interaction functional is introduced as a structural deformation term on the joint closure landscape. At the present level of development, it is a minimal ansatz composed of four structurally motivated components:
+\begin{equation}\label{eq:Fint}
+    \Fint(\Psi) = \lambda_1\, I_{\mathrm{prox}}(\Psi) + \lambda_2\, I_{\mathrm{align}}(\Psi) + \lambda_3\, I_{\mathrm{comp}}(\Psi) + \lambda_4\, I_{\mathrm{bind}}(\Psi)
+\end{equation}
+where $\lambda_i > 0$ are structural weights, not derived in this paper.
+
+\subsection{Proximity term}
+
+The proximity term measures how close states are in the ambient state space:
+\begin{equation}\label{eq:prox}
+    I_{\mathrm{prox}}(\Psi) = \sum_{i < j} f\!\left(\|\psi_i - \psi_j\|\right)
+\end{equation}
+where $f$ is a monotone function (e.g.\ $f(r) = e^{-r^2/\sigma^2}$ for a localised interaction, or $f(r) = r^2$ for a long-range harmonic coupling). States that are closer in the ambient space interact more strongly.
+
+\subsection{Alignment term}
+
+The alignment term measures torsional or phase compatibility between states:
+\begin{equation}\label{eq:align}
+    I_{\mathrm{align}}(\Psi) = \sum_{i < j} \left(1 - \mathcal{A}(\psi_i, \psi_j)\right)
+\end{equation}
+where $\mathcal{A}(\psi_i, \psi_j) \in [0, 1]$ is an alignment functional measuring phase or torsional compatibility. Perfectly aligned states have $\mathcal{A} = 1$ (zero alignment cost); maximally misaligned states have $\mathcal{A} = 0$ (maximum cost).
+
+\subsection{Compatibility term}
+
+The compatibility term distinguishes cooperative from incompatible configurations:
+\begin{equation}\label{eq:comp}
+    I_{\mathrm{comp}}(\Psi) = \sum_{i < j} \Gamma(\psi_i, \psi_j)
+\end{equation}
+where $\Gamma$ is small for compatible state pairs and large for incompatible ones. Compatibility is determined by the constraint-class structure: states whose supports, winding numbers, and torsional configurations are mutually consistent have low $\Gamma$.
+
+\subsection{Binding term}
+
+The binding term rewards jointly connected configurations:
+\begin{equation}\label{eq:bind}
+    I_{\mathrm{bind}}(\Psi) = -\mu\, \Xi_{\mathrm{joint}}(\Psi)
+\end{equation}
+where $\Xi_{\mathrm{joint}}$ is the gap penalty of the union of supports (Paper~VIII~\citep{SmartVIII}), and $\mu > 0$ controls binding strength. The negative sign means that jointly connected configurations \textit{lower} the total closure cost, favouring composite formation.
+
+\begin{remark}[Ansatz status]
+The decomposition~\eqref{eq:Fint} and the specific forms of $I_{\mathrm{prox}}$, $I_{\mathrm{align}}$, $I_{\mathrm{comp}}$, $I_{\mathrm{bind}}$ are minimal structural ansätze. They are not derived from a gauge principle or uniquely determined by the closure structure. Their role is to define the interaction architecture; a more fundamental derivation of $\Fint$ is left for future work.
+\end{remark}
+
+%==================================================================
+\section{Coupled Gradient Dynamics}\label{sec:coupled}
+%==================================================================
+
+The multi-state evolution is defined by gradient flow of the total closure functional:
+\begin{equation}\label{eq:coupledflow}
+    \frac{d\Psi}{dt} = -\Pi_{\Sadm^{(n)}}\!\left(\nabla\Ftot(\Psi)\right)
+\end{equation}
+
+Componentwise, each state evolves under both its intrinsic closure pressure and the interaction gradient:
+\begin{equation}\label{eq:componentflow}
+    \frac{d\psi_i}{dt} = -\Pi_{\Sadm}\!\left(\nabla_{\psi_i}\Fcal(\psi_i) + \nabla_{\psi_i}\Fint(\Psi)\right)
+\end{equation}
+for $i = 1, \ldots, n$.
+
+The first term drives $\psi_i$ toward its own closure; the second term encodes the influence of all other states on $\psi_i$'s evolution. Without the interaction term, the evolution is decoupled and reduces to $n$ independent copies of Paper~XII dynamics.
+
+%==================================================================
+\section{Monotonic Descent}\label{sec:descent}
+%==================================================================
+
+\begin{proposition}[Multi-state monotonic descent]\label{prop:descent}
+Along trajectories of the coupled projected gradient flow~\eqref{eq:coupledflow}, the total closure functional decreases monotonically:
+\begin{equation}
+    \frac{d\Ftot}{dt} = -\left\|\Pi_{\Sadm^{(n)}}\!\left(\nabla\Ftot(\Psi)\right)\right\|^2 \leq 0
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Identical to the single-state case (Proposition~1 of Paper~XII): $d\Ftot/dt = \langle\nabla\Ftot, d\Psi/dt\rangle = -\|\Pi(\nabla\Ftot)\|^2 \leq 0$.
+\end{proof}
+
+This ensures the interacting system is mathematically stable in the same sense as the single-state dynamics: the total closure cost never increases along trajectories.
+
+%==================================================================
+\section{Basin Deformation and Interaction}\label{sec:basins}
+%==================================================================
+
+\subsection{Interaction as landscape deformation}
+
+Without interaction ($\Fint = 0$), the total closure landscape is a sum of independent single-state landscapes. Each state has its own attractor basins, determined by $\Fcal(\psi_i)$ alone.
+
+With interaction ($\Fint \neq 0$), the joint landscape $\Ftot(\Psi)$ differs from the sum of individual landscapes. The attractor basins of the coupled system are \textit{not} simply the product of the individual basins; they are deformed by $\Fint$.
+
+\begin{remark}[Interaction as basin deformation]
+Interaction is interpreted within the present framework as a modification of one state's effective closure landscape by the presence of another. The interaction term $\Fint$ deforms the basin structure of the joint dynamical system, potentially:
+\begin{itemize}
+    \item shifting attractor positions,
+    \item merging or splitting basins,
+    \item lowering or raising barriers between basins,
+    \item creating new joint attractors not present in the uncoupled system.
+\end{itemize}
+\end{remark}
+
+\subsection{Interaction types}
+
+Different components of $\Fint$ produce different basin deformations:
+\begin{itemize}
+    \item \textbf{Proximity:} states that are close in state space experience stronger mutual landscape modification.
+    \item \textbf{Alignment:} torsionally compatible states have lower interaction cost, favouring aligned configurations.
+    \item \textbf{Compatibility:} incompatible state pairs raise barriers; compatible pairs lower them.
+    \item \textbf{Binding:} the binding term creates new joint minima for connected composite configurations.
+\end{itemize}
+
+%==================================================================
+\section{Binding as Joint Basin Formation}\label{sec:binding}
+%==================================================================
+
+\begin{definition}[Bound configuration]\label{def:bound}
+A multi-state configuration $\Psi^* = (\psi_1^*, \ldots, \psi_n^*)$ is a bound configuration if it is closure-stable under the total functional and energetically preferred over the separated configuration:
+\begin{equation}\label{eq:binding}
+    \Ftot(\Psi^*) < \sum_{i=1}^n \Fcal(\psi_i^*)
+\end{equation}
+\end{definition}
+
+When this condition holds, the interaction term $\Fint$ lowers the total closure cost, creating a joint attractor basin not present in the uncoupled system. The bound configuration is more closure-compatible than the separated states: it is a composite that is ``cheaper'' to close than its parts.
+
+\begin{remark}
+This is the framework's structural analogue of binding energy: the difference $\sum\Fcal(\psi_i) - \Ftot(\Psi^*)$ measures how much the interaction lowers the total closure cost. In nuclear physics, the analogous quantity is the mass defect.
+\end{remark}
+
+%==================================================================
+\section{Scattering-Like Processes}\label{sec:scattering}
+%==================================================================
+
+A scattering-like process within the present framework is a trajectory in $\Sadm^{(n)}$ in which:
+\begin{enumerate}
+    \item two or more states approach (the interaction term becomes significant),
+    \item the trajectory passes through a transient interaction region (where $\Fint$ is non-negligible),
+    \item the final configuration exits into the same or different attractor basins.
+\end{enumerate}
+
+\begin{remark}[Terminology]
+The term ``scattering-like'' is used to indicate structural analogy with scattering processes in particle physics. The present framework does not provide scattering amplitudes, cross-sections, differential rates, or S-matrix elements. ``Scattering-like'' refers only to basin-crossing or basin-preserving transitions within the coupled closure dynamics.
+\end{remark}
+
+%==================================================================
+\section{Transition Channels}\label{sec:channels}
+%==================================================================
+
+The coupled dynamics admits several structurally distinct interaction outcomes:
+
+\begin{table}[ht]
+\centering
+\caption{Structural interaction outcomes.}
+\label{tab:channels}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Channel & Description & Basin structure \\
+\midrule
+Basin-preserving & States interact transiently, return to original basins & No basin change \\
+Basin-transition & One or more states end in different attractors & Basin crossing \\
+Binding / fusion & A new joint attractor is formed & Basin merger \\
+Repulsive separation & Interaction raises closure cost, states diverge & Basin repulsion \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Which channel is realised depends on the initial configuration, the strength and form of $\Fint$, and the global basin structure of $\Ftot$.
+
+%==================================================================
+\section{Worked Examples}\label{sec:examples}
+%==================================================================
+
+\begin{example}[Disconnected quark-like + complementary support]\label{ex:binding}
+Consider a state $\psi_1$ with disconnected support $\{2,4\}$ (quark-like, $\Xi > 0$) and a state $\psi_2$ with support $\{3\}$. Individually, $\psi_1$ is not closure-stable. Under the coupled dynamics with the binding term active, the joint configuration $\Psi = (\psi_1, \psi_2)$ can evolve toward a connected composite on $\{2,3,4\}$ with $\Ftot(\Psi^*) < \Fcal(\psi_1) + \Fcal(\psi_2)$. This models the formation of a baryon-like bound state from disconnected components.
+\end{example}
+
+\begin{example}[Compatible aligned pair]\label{ex:aligned}
+Two closure-stable states $\psi_1, \psi_2 \in \Scl$ with high torsional alignment ($\mathcal{A} \approx 1$) and compatible supports interact with low $\Fint$. The total closure cost is slightly below the sum: $\Ftot(\Psi^*) \lesssim \Fcal(\psi_1) + \Fcal(\psi_2)$. A weakly bound joint attractor forms, modelling a loosely bound composite.
+\end{example}
+
+\begin{example}[Incompatible pair]\label{ex:repulsive}
+Two states with incompatible torsional configurations ($\mathcal{A} \approx 0$) and high compatibility penalty ($\Gamma$ large) have $\Fint > 0$, raising the total closure cost above the separated sum. No joint attractor forms; the interaction is repulsive in the closure-landscape sense.
+\end{example}
+
+%==================================================================
+\section{Conservative Extension}\label{sec:lagrangian}
+%==================================================================
+
+As in Paper~XII, a conservative extension is obtained by introducing a multi-state Lagrangian:
+\begin{equation}\label{eq:lagrangian}
+    \Lcal_{\mathrm{tot}}(\Psi, \dot{\Psi}) = \frac{1}{2}\|\dot{\Psi}\|^2 - \Ftot(\Psi)
+\end{equation}
+with action:
+\begin{equation}
+    S[\Psi] = \int_{t_1}^{t_2} \Lcal_{\mathrm{tot}}(\Psi, \dot{\Psi})\, dt
+\end{equation}
+
+The Euler--Lagrange equations are:
+\begin{equation}\label{eq:EL}
+    \ddot{\Psi} = -\nabla\Ftot(\Psi)
+\end{equation}
+
+Under the conservative dynamics, multi-state configurations oscillate around joint attractors rather than dissipating toward them. Scattering-like processes become time-reversible trajectories through the interaction region.
+
+\begin{remark}
+The multi-state Lagrangian is the simplest conservative extension compatible with $\Ftot$. As in Paper~XII, the kinetic term is the standard quadratic form on the product space; it is not claimed to be unique.
+\end{remark}
+
+%==================================================================
+\section{Physical Interpretation}\label{sec:interpretation}
+%==================================================================
+
+The interaction framework admits the following structural translations:
+
+\begin{table}[ht]
+\centering
+\caption{Physics correspondence for the interaction layer.}
+\label{tab:physics}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Physical concept & Framework counterpart \\
+\midrule
+Interaction / coupling & Deformation of closure landscape by $\Fint$ \\
+Binding energy & $\sum\Fcal(\psi_i) - \Ftot(\Psi^*)$ \\
+Bound state & Joint attractor of coupled dynamics \\
+Scattering event & Basin-crossing trajectory (scattering-like) \\
+Repulsion & Interaction raising total closure cost \\
+Gauge-boson exchange & Not derived (open) \\
+Cross-section / amplitude & Not computable (open) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textsc{Status:} These translations are structural correspondences within the framework. They do not claim equivalence with the dynamical content of quantum field theory.
+
+%==================================================================
+\section{Limitations}\label{sec:limits}
+%==================================================================
+
+\begin{itemize}
+    \item \textbf{No S-matrix or scattering amplitudes.} The framework does not produce cross-sections, differential rates, or matrix elements.
+    \item \textbf{No relativistic collision kinematics.} The evolution parameter $t$ is auxiliary; Lorentz-invariant scattering is not defined.
+    \item \textbf{No quantisation.} The dynamics is classical (deterministic gradient flow or Lagrangian mechanics).
+    \item \textbf{The interaction functional is a minimal ansatz.} It is not derived from a gauge principle or uniquely determined by the closure structure.
+    \item \textbf{The structural weights $\lambda_i$ are not fixed.} They are structural parameters of the interaction ansatz.
+    \item \textbf{No derivation of gauge-boson exchange.} The interaction term $\Fint$ is a direct state-state coupling, not mediated by an exchange particle.
+    \item \textbf{Worked examples are schematic.} They illustrate the structural possibilities without numerical computation.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The closure framework, previously restricted to single-state dynamics (Paper~XII), now supports multi-state interaction through a total closure functional $\Ftot = \sum\Fcal(\psi_i) + \Fint(\Psi)$. Each state evolves under both its own closure pressure and the mutual influence of other states. The total functional decreases monotonically under coupled gradient flow, ensuring mathematical stability.
+
+Interaction is interpreted as deformation of the closure landscape: the presence of one state modifies the effective basin structure experienced by another. Binding corresponds to the formation of joint attractors whose closure cost is lower than the separated configuration. Scattering-like processes are basin-crossing or basin-preserving transitions within the coupled dynamics.
+
+This is not yet a scattering theory, a quantum field theory, or a dynamical model of gauge-boson exchange. It is the first structural interaction layer within the closure framework: the minimal extension that allows multiple states to influence one another's evolution. From this layer, extensions toward quantised dynamics, scattering amplitudes, and gauge coupling could in principle be pursued.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
