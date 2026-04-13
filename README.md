@@ -190,6 +190,12 @@ Minimal dynamics. Gradient flow of closure functional with monotonic descent. Cl
 
 Multi-state interaction. Total closure functional F_tot = ΣF(ψ_i) + F_int(Ψ). Four interaction components: proximity, alignment, compatibility, binding. Coupled gradient flow. Interaction as basin deformation. Binding as joint attractor formation. Scattering-like basin transitions. Conservative Lagrangian extension. Structural interaction layer — no S-matrix, no QFT.
 
+#### Paper XV — Phase-Coherent Closure Dynamics (Interference)
+
+**[Phase-Coherent Closure Dynamics and the Emergence of Interference](papers/paper-xv/paper-xv.tex)**
+
+Extends Papers XII–XIV from dissipative/real-valued dynamics to phase-bearing dynamics capable of interference. Phase-augmented state space Ψ = (ψ, θ). Three candidate formulations: (A) complexified gradient flow, (B) Hamiltonian lift, (C) path-integral phase weighting. Interference demonstrated: paths with different accumulated phases produce constructive/destructive effects (proved). Double-well worked example. Crystallisation extended to phase-coherent selection. Born-like |A|² structure as formulation feature (not derived as physical law). Classical limit reduces to Paper XII gradient flow. Does NOT claim QM equivalence — no unitarity, no Schrödinger equation, no Hilbert space. Phase-rotation frequency Ω not uniquely derived. First phase-bearing layer of the closure programme.
+
 #### Paper XIV — Stochastic Closure Dynamics (Quantisation Layer)
 
 **[Quantisation as Stochastic Closure Dynamics in φ-Structured Geometry](papers/paper-xiv/Quantisation_as_Stochastic_Closure_Dynamics_in_phi_Structured_Geometry.pdf)** ([LaTeX source](papers/paper-xiv/paper-xiv.tex))
@@ -226,6 +232,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xv/               Paper XV: phase-coherent dynamics (interference)
 │   ├── paper-xiv/              Paper XIV: stochastic closure dynamics (quantisation)
 │   ├── paper-xiii/             Paper XIII: interaction dynamics and basin transitions
 │   ├── paper-xii/              Paper XII: closure dynamics (gradient flow + Lagrangian)
