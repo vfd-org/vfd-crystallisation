@@ -1,0 +1,407 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Scl}{\mathcal{S}_{\mathrm{cl}}}
+\newcommand{\Ftot}{\Fcal_{\mathrm{tot}}}
+\newcommand{\phig}{\varphi}
+
+\title{Quantisation as Stochastic Closure Dynamics\\in $\phig$-Structured Geometry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Papers~XII and~XIII introduced deterministic closure dynamics: gradient flow and coupled evolution on the closure functional $\Fcal$. The present paper extends this to a stochastic setting by adding a noise term to the closure dynamics, producing a Langevin-type equation on the admissible state space. The resulting stochastic closure dynamics admits a Fokker--Planck description whose stationary distribution is a Boltzmann-like measure $P(\psi) \propto \exp(-2\Fcal(\psi)/\sigma^2)$ concentrated on the constraint manifold $\Mcl$.
+
+This stationary distribution provides a probabilistic structure over the closure landscape without postulating quantum axioms: transition rates between attractor basins follow Kramers-type barrier-crossing estimates, local excitation spectra emerge from the Hessian of $\Fcal$ at closure-stable states, and the path-integral formulation connects to the Onsager--Machlup functional. Measurement is reinterpreted as stochastic basin selection under the noise-driven dynamics.
+
+The paper does not claim equivalence with quantum mechanics, does not introduce Hilbert-space axioms, and does not derive the Schr\"odinger equation. It establishes a stochastic extension of the closure framework that produces probabilistic, spectral, and transition-rate structure from the closure functional alone.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The closure framework developed in Papers~V--XIII~\citep{SmartV, SmartIX, SmartXII, SmartXIII} provides a constraint-based architecture for particle mass, gauge structure, confinement, continuous geometry, a gravitational analogy, and interacting multi-state dynamics. The dynamics introduced in Papers~XII--XIII is deterministic: states evolve via gradient flow of the closure functional $\Fcal$, converging to closure-stable attractors.
+
+However, deterministic gradient flow cannot account for:
+\begin{itemize}
+    \item probabilistic measurement outcomes,
+    \item thermal or quantum fluctuations around stable states,
+    \item spontaneous transitions between attractor basins,
+    \item the spectral structure of excitations at a given attractor.
+\end{itemize}
+
+The present paper addresses these by extending the deterministic dynamics to a stochastic setting. The extension is minimal: a noise term is added to the gradient flow, producing a Langevin equation on $\Sadm$. The resulting stochastic process admits a Fokker--Planck description, a stationary Boltzmann-like distribution, barrier-crossing transition rates, and a path-integral formulation --- all derived from $\Fcal$ and a single noise parameter $\sigma$.
+
+\subsection*{Scope and epistemic status}
+
+This paper introduces stochastic dynamics into the closure framework. It does not claim equivalence with quantum mechanics, does not postulate Hilbert-space axioms (Born rule, superposition principle, unitary evolution), and does not derive the Schr\"odinger equation. The probabilistic structure arises from the noise-driven exploration of the closure landscape, not from quantum-mechanical postulates. Whether this stochastic structure can be related to standard quantum mechanics is an open question addressed in the discussion but not resolved here.
+
+%==================================================================
+\section{Preliminaries}\label{sec:prelim}
+%==================================================================
+
+\subsection{State space}
+
+The admissible state space is $\Sadm \subset V$, where $V$ is a finite-dimensional inner-product space (or, in the continuous-limit formalism of Paper~IX, a model space $V_\infty = L^2(\Omega, \mu)$). For the present paper, we work in the finite-dimensional setting where standard stochastic analysis applies.
+
+\subsection{Closure functional}
+
+The closure functional $\Fcal : \Sadm \to \mathbb{R}_{\geq 0}$ satisfies:
+\begin{itemize}
+    \item $\Fcal(\psi) \geq 0$ for all $\psi \in \Sadm$,
+    \item $\Fcal(\psi) = 0$ if and only if $\psi \in \Scl$ (the closed state set),
+    \item $\Fcal$ is smooth on the interior of $\Sadm$ (assumed for the present paper),
+    \item $\Fcal$ is bounded below (by zero) but not necessarily convex.
+\end{itemize}
+
+The constraint manifold is $\Mcl = \{\psi \in \Sadm \mid \Fcal(\psi) = 0\}$. The closure functional decomposes as $\Fcal(\psi) = w_1 d(\psi) + w_2 \mathrm{Var}(\psi) + w_3 \tau(\psi)$ (Paper~VII), where $d$ is the local compatibility defect, $\mathrm{Var}$ is structural instability, and $\tau$ is torsional mismatch.
+
+%==================================================================
+\section{Deterministic Closure Dynamics}\label{sec:deterministic}
+%==================================================================
+
+The deterministic gradient-flow dynamics of Paper~XII is:
+\begin{equation}\label{eq:detflow}
+    \frac{d\psi}{dt} = -\nabla\Fcal(\psi)
+\end{equation}
+
+\begin{proposition}[Monotonic descent]\label{prop:descent}
+Along trajectories of~\eqref{eq:detflow}:
+\begin{equation}
+    \frac{d\Fcal}{dt} = -\|\nabla\Fcal(\psi)\|^2 \leq 0
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$d\Fcal/dt = \langle\nabla\Fcal, d\psi/dt\rangle = -\|\nabla\Fcal\|^2$.
+\end{proof}
+
+Under this dynamics, every trajectory converges to a critical point of $\Fcal$. Stable attractors are local minima with $\Fcal = 0$ (closure-stable states). The dynamics is deterministic: given an initial condition, the trajectory is uniquely determined.
+
+%==================================================================
+\section{Stochastic Closure Dynamics}\label{sec:stochastic}
+%==================================================================
+
+\subsection{The Langevin equation}
+
+We extend the deterministic flow by adding a noise term:
+
+\begin{definition}[Stochastic closure dynamics]\label{def:SCD}
+The stochastic closure dynamics on $\Sadm$ is defined by the It\^o stochastic differential equation:
+\begin{equation}\label{eq:langevin}
+    d\psi_t = -\nabla\Fcal(\psi_t)\, dt + \sigma\, dW_t
+\end{equation}
+where:
+\begin{itemize}
+    \item $\psi_t \in \Sadm$ is the state at time $t$,
+    \item $\nabla\Fcal(\psi_t)$ is the gradient of the closure functional (drift term),
+    \item $\sigma > 0$ is the noise amplitude (a single structural parameter),
+    \item $W_t$ is a standard Wiener process on $V$ (Brownian motion with $\mathbb{E}[dW_t] = 0$ and $\mathbb{E}[dW_t\, dW_t^T] = I\, dt$).
+\end{itemize}
+\end{definition}
+
+The drift term $-\nabla\Fcal$ drives the state toward closure (as in Paper~XII). The noise term $\sigma\, dW_t$ introduces stochastic fluctuations that allow the state to explore the closure landscape, escape shallow local minima, and undergo spontaneous transitions between attractor basins.
+
+\subsection{Interpretation of $\sigma$}
+
+The noise amplitude $\sigma$ controls the balance between deterministic relaxation and stochastic exploration:
+\begin{itemize}
+    \item $\sigma \to 0$: the stochastic dynamics reduces to the deterministic gradient flow of Paper~XII.
+    \item $\sigma$ small: the state fluctuates near closure-stable configurations, with rare transitions between basins.
+    \item $\sigma$ large: the state explores the full closure landscape freely.
+\end{itemize}
+
+The physical interpretation of $\sigma$ within the framework is not fixed in this paper. It may be related to a fundamental scale of the $\phig$-structured geometry, or it may be an effective parameter encoding unresolved environmental or sub-structural degrees of freedom.
+
+\begin{remark}
+The stochastic extension is the simplest probabilistic generalisation of the deterministic closure dynamics. It uses only $\Fcal$, the inner product, and one additional parameter $\sigma$. No quantum-mechanical postulates are introduced.
+\end{remark}
+
+%==================================================================
+\section{Fokker--Planck Equation}\label{sec:FP}
+%==================================================================
+
+The probability density $P(\psi, t)$ of the stochastic process~\eqref{eq:langevin} evolves according to the Fokker--Planck equation:
+
+\begin{proposition}[Fokker--Planck equation for stochastic closure dynamics]\label{prop:FP}
+The probability density $P(\psi, t)$ satisfies:
+\begin{equation}\label{eq:FP}
+    \frac{\partial P}{\partial t} = \nabla \cdot \left(P\, \nabla\Fcal\right) + \frac{\sigma^2}{2}\, \Delta P
+\end{equation}
+where $\nabla \cdot$ is the divergence, $\Delta$ is the Laplacian on $V$, and all operators act on the state-space variable $\psi$.
+\end{proposition}
+
+\begin{proof}
+This is the standard Fokker--Planck equation associated with the It\^o SDE~\eqref{eq:langevin} with drift $b(\psi) = -\nabla\Fcal(\psi)$ and diffusion coefficient $D = \sigma^2/2$. See e.g.\ Risken~\citep{Risken1989} or Gardiner~\citep{Gardiner2009}.
+\end{proof}
+
+The first term $\nabla \cdot (P\nabla\Fcal)$ describes the probability flux due to the deterministic drift toward closure. The second term $(\sigma^2/2)\Delta P$ describes diffusive spreading due to noise.
+
+%==================================================================
+\section{Stationary Distribution}\label{sec:stationary}
+%==================================================================
+
+\begin{theorem}[Stationary distribution of stochastic closure dynamics]\label{thm:stationary}
+If $\Fcal$ is smooth and bounded below on $\Sadm$, and if the state space is compact or appropriate boundary conditions hold, then the Fokker--Planck equation~\eqref{eq:FP} has a unique stationary distribution:
+\begin{equation}\label{eq:stationary}
+    P_{\mathrm{st}}(\psi) = \frac{1}{Z}\, \exp\!\left(-\frac{2\Fcal(\psi)}{\sigma^2}\right)
+\end{equation}
+where $Z = \int_{\Sadm} \exp(-2\Fcal(\psi)/\sigma^2)\, d\psi$ is the normalisation constant.
+\end{theorem}
+
+\begin{proof}
+We verify that $P_{\mathrm{st}}$ satisfies $\partial P/\partial t = 0$ in Eq.~\eqref{eq:FP}. Compute:
+\begin{align}
+    \nabla P_{\mathrm{st}} &= -\frac{2}{Z\sigma^2}\, \nabla\Fcal\, e^{-2\Fcal/\sigma^2} = -\frac{2}{\sigma^2}\, P_{\mathrm{st}}\, \nabla\Fcal \\
+    \nabla \cdot (P_{\mathrm{st}}\, \nabla\Fcal) &= P_{\mathrm{st}}\, \Delta\Fcal + \nabla P_{\mathrm{st}} \cdot \nabla\Fcal = P_{\mathrm{st}}\, \Delta\Fcal - \frac{2}{\sigma^2}\, P_{\mathrm{st}}\, \|\nabla\Fcal\|^2 \\
+    \frac{\sigma^2}{2}\, \Delta P_{\mathrm{st}} &= \frac{\sigma^2}{2}\left(-\frac{2}{\sigma^2}\, P_{\mathrm{st}}\, \Delta\Fcal + \frac{4}{\sigma^4}\, P_{\mathrm{st}}\, \|\nabla\Fcal\|^2\right) \\
+    &= -P_{\mathrm{st}}\, \Delta\Fcal + \frac{2}{\sigma^2}\, P_{\mathrm{st}}\, \|\nabla\Fcal\|^2
+\end{align}
+Summing: $\nabla \cdot (P_{\mathrm{st}}\nabla\Fcal) + (\sigma^2/2)\Delta P_{\mathrm{st}} = 0$. Hence $P_{\mathrm{st}}$ is stationary. Uniqueness follows from the compactness of $\Sadm$ (finite-dimensional setting) and the smoothness of $\Fcal$.
+\end{proof}
+
+\begin{remark}[Concentration on $\Mcl$]
+Since $\Fcal(\psi) \geq 0$ with equality on $\Mcl$, the stationary distribution is maximised on $\Mcl$ and decays exponentially away from it. In the limit $\sigma \to 0$, $P_{\mathrm{st}}$ concentrates on $\Mcl$: closure-stable states dominate the stationary measure. For finite $\sigma$, states near $\Mcl$ are exponentially more probable than states far from it.
+\end{remark}
+
+%==================================================================
+\section{Local Structure and Emergent Excitation Spectra}\label{sec:local}
+%==================================================================
+
+\subsection{Quadratic expansion near a closure-stable state}
+
+Let $\psi_0 \in \Mcl$ be a local minimum of $\Fcal$ with $\Fcal(\psi_0) = 0$. Expanding to second order:
+\begin{equation}\label{eq:quadratic}
+    \Fcal(\psi) \approx \frac{1}{2}(\psi - \psi_0)^T H(\psi_0)\, (\psi - \psi_0)
+\end{equation}
+where $H(\psi_0) = \nabla^2\Fcal(\psi_0)$ is the Hessian at the minimum.
+
+\subsection{Local Gaussian distribution}
+
+Substituting~\eqref{eq:quadratic} into the stationary distribution~\eqref{eq:stationary}:
+\begin{equation}\label{eq:gaussian}
+    P_{\mathrm{st}}(\psi) \approx \frac{1}{Z_{\mathrm{loc}}}\, \exp\!\left(-\frac{1}{\sigma^2}(\psi - \psi_0)^T H(\psi_0)\, (\psi - \psi_0)\right)
+\end{equation}
+
+This is a multivariate Gaussian centred on $\psi_0$ with covariance matrix $\Sigma = (\sigma^2/2)\, H(\psi_0)^{-1}$ (provided $H$ is positive definite).
+
+\subsection{Excitation spectrum from the Hessian}
+
+The eigenvalues $\{h_k\}$ of $H(\psi_0)$ define a spectrum of excitation scales:
+\begin{itemize}
+    \item \textbf{Large $h_k$:} tightly confined modes (small fluctuations, high ``stiffness'').
+    \item \textbf{Small $h_k$:} loosely confined modes (large fluctuations, soft directions).
+    \item \textbf{Zero eigenvalues:} flat directions corresponding to symmetries or marginal modes.
+\end{itemize}
+
+\begin{remark}[Emergent spectral structure]
+The Hessian eigenvalues at each closure-stable state define a local excitation spectrum without postulating quantum energy levels. The spectrum arises from the curvature of the closure functional at the attractor, not from a Hamiltonian operator. Whether this spectrum can be related to observed particle excitation spectra is an open question.
+\end{remark}
+
+%==================================================================
+\section{Transition Dynamics}\label{sec:transitions}
+%==================================================================
+
+\subsection{Kramers-type barrier crossing}
+
+For two closure-stable states $\psi_A, \psi_B \in \Mcl$ separated by a barrier of height $\Delta\Fcal = \Fcal(\psi_{\mathrm{saddle}})$ (the closure-functional value at the intervening saddle point), the transition rate from basin $A$ to basin $B$ follows a Kramers-type estimate:
+
+\begin{proposition}[Transition rate]\label{prop:kramers}
+The transition rate from attractor basin $A$ to basin $B$ scales as:
+\begin{equation}\label{eq:kramers}
+    k_{A \to B} \sim \exp\!\left(-\frac{2\Delta\Fcal}{\sigma^2}\right)
+\end{equation}
+where $\Delta\Fcal = \Fcal(\psi_{\mathrm{saddle}}) - \Fcal(\psi_A)$ is the barrier height.
+\end{proposition}
+
+This is the standard Kramers result for noise-activated escape from a potential well, applied here to the closure landscape. The derivation follows from large-deviation theory for the SDE~\eqref{eq:langevin}; see Freidlin and Wentzell~\citep{FreidlinWentzell1998}.
+
+\subsection{Interpretation}
+
+Transitions between attractor basins correspond, within the framework, to changes in particle type or state class. The transition rate is exponentially suppressed for high barriers (stable particles) and enhanced for low barriers (unstable or short-lived configurations). This provides a structural analogue of decay rates without introducing quantum-mechanical decay theory.
+
+%==================================================================
+\section{Path-Integral Formulation}\label{sec:pathintegral}
+%==================================================================
+
+The probability of a specific trajectory $\psi(t)$ under the stochastic dynamics~\eqref{eq:langevin} is given by the Onsager--Machlup functional:
+
+\begin{proposition}[Path probability]\label{prop:path}
+The probability weight of a trajectory $\{\psi(t)\}_{t \in [0,T]}$ is:
+\begin{equation}\label{eq:pathintegral}
+    \mathbb{P}[\psi(\cdot)] \propto \exp\!\left(-\frac{1}{\sigma^2}\int_0^T \left\|\dot{\psi}(t) + \nabla\Fcal(\psi(t))\right\|^2 dt\right)
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+This is the standard Onsager--Machlup action for the SDE~\eqref{eq:langevin}. The integrand measures the deviation of the actual trajectory from the deterministic drift $-\nabla\Fcal$. Trajectories that closely follow the gradient flow are exponentially more probable than those that deviate.
+\end{proof}
+
+\begin{remark}[Most probable paths]
+The most probable trajectory between two states $\psi_A$ and $\psi_B$ minimises the Onsager--Machlup action~\eqref{eq:pathintegral}. This provides a variational principle for the dominant transition pathway --- the closure-framework analogue of an instanton or tunnelling path.
+\end{remark}
+
+%==================================================================
+\section{Measurement as Stochastic Basin Selection}\label{sec:measurement}
+%==================================================================
+
+\begin{definition}[Basin of attraction]\label{def:basin}
+The basin of attraction of a closure-stable state $\psi^* \in \Mcl$ under the deterministic flow is:
+\begin{equation}
+    B(\psi^*) = \left\{\psi_0 \in \Sadm \;\middle|\; \lim_{t \to \infty} \psi(t; \psi_0) = \psi^*\right\}
+\end{equation}
+\end{definition}
+
+Under the stochastic dynamics, the state does not converge to a single attractor but fluctuates among basins. The probability of finding the system in basin $B(\psi^*)$ at stationarity is:
+\begin{equation}
+    \mathrm{Prob}(B(\psi^*)) = \int_{B(\psi^*)} P_{\mathrm{st}}(\psi)\, d\psi
+\end{equation}
+
+\begin{remark}[Measurement interpretation]
+Within the present framework, measurement is reinterpreted as the process by which a stochastic trajectory is observed to be in a particular attractor basin at a given time. The outcome is probabilistic (determined by $P_{\mathrm{st}}$ and the basin structure), without postulating collapse or the Born rule. Whether this stochastic-basin picture can reproduce the statistical predictions of quantum mechanics is an open question.
+\end{remark}
+
+%==================================================================
+\section{Relation to Quantum Mechanics}\label{sec:QM}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Structural comparison: quantum mechanics vs stochastic closure dynamics.}
+\label{tab:QM}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Quantum mechanics & Stochastic closure dynamics \\
+\midrule
+Hilbert space & Admissible state space $\Sadm$ \\
+Hamiltonian $\hat{H}$ & Closure functional $\Fcal$ \\
+Schr\"odinger equation & Langevin / Fokker--Planck equation \\
+Energy eigenvalues & Hessian eigenvalues of $\Fcal$ at attractors \\
+Born rule probabilities & Stationary distribution $P_{\mathrm{st}}$ \\
+Quantum tunnelling & Kramers-type barrier crossing \\
+Path integral ($e^{iS/\hbar}$) & Onsager--Machlup ($e^{-\text{action}/\sigma^2}$) \\
+Measurement / collapse & Stochastic basin selection \\
+$\hbar$ & $\sigma$ (noise amplitude) \\
+Unitary evolution & Not present (dissipative + stochastic) \\
+Superposition principle & Not postulated \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textsc{Status:} The entries in the right column are structural analogues within the stochastic closure framework. They share formal similarities with quantum mechanics but differ in fundamental ways: the dynamics is dissipative (not unitary), the path integral is real-valued (not oscillatory), and the probabilistic structure arises from noise (not from quantum axioms). No equivalence with quantum mechanics is claimed.
+
+%==================================================================
+\section{Main Result}\label{sec:theorem}
+%==================================================================
+
+\begin{theorem}[Stochastic closure quantisation]\label{thm:main}
+Let $\Fcal : \Sadm \to \mathbb{R}_{\geq 0}$ be a smooth closure functional with $\Fcal^{-1}(0) = \Mcl$ and $\Sadm$ compact. Let $\sigma > 0$ and let $\psi_t$ solve the It\^o SDE~\eqref{eq:langevin}. Then:
+\begin{enumerate}
+    \item \textbf{Stationary distribution:} The process admits a unique stationary distribution $P_{\mathrm{st}}(\psi) \propto \exp(-2\Fcal(\psi)/\sigma^2)$.
+    \item \textbf{Concentration:} $P_{\mathrm{st}}$ concentrates on $\Mcl$ as $\sigma \to 0$.
+    \item \textbf{Local spectra:} At each local minimum $\psi_0 \in \Mcl$, the local distribution is approximately Gaussian with covariance $(\sigma^2/2)H(\psi_0)^{-1}$, defining an excitation spectrum from the Hessian eigenvalues.
+    \item \textbf{Transition rates:} Kramers-type barrier crossing gives inter-basin transition rates $k \sim \exp(-2\Delta\Fcal/\sigma^2)$.
+    \item \textbf{Path integral:} The trajectory probability is given by the Onsager--Machlup functional~\eqref{eq:pathintegral}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Items (1) and (2) follow from Section~\ref{sec:stationary}. Item (3) follows from Section~\ref{sec:local}. Item (4) follows from Kramers theory (Section~\ref{sec:transitions}). Item (5) is the standard Onsager--Machlup result for the SDE~\eqref{eq:langevin}.
+\end{proof}
+
+%==================================================================
+\section{Physical Interpretation}\label{sec:physics}
+%==================================================================
+
+The stochastic closure dynamics connects to the structural properties established in Papers~V--XIII:
+
+\begin{itemize}
+    \item \textbf{Mass:} The closure residual $\Delta(\psi) = d(\psi, \Mcl)$ controls how far a state sits from the high-probability region. Massive states (large $\Delta$) are exponentially suppressed in the stationary distribution.
+    \item \textbf{Stability:} Closure-stable states (local minima of $\Fcal$) are probability maxima of $P_{\mathrm{st}}$. Deeper minima (larger Hessian eigenvalues) correspond to more tightly localised, more stable configurations.
+    \item \textbf{Interaction:} In the multi-state setting (Paper~XIII), the total closure functional $\Ftot$ replaces $\Fcal$ in the SDE. The interaction term $\Fcal_{\mathrm{int}}$ modifies the barrier heights and basin structure, producing state-dependent transition rates.
+    \item \textbf{Excitation:} The Hessian eigenvalues at each attractor define a spectrum of fluctuation modes. These are structural analogues of excitation energies, arising from the curvature of the closure landscape rather than from a Hamiltonian.
+\end{itemize}
+
+%==================================================================
+\section{Discussion}\label{sec:discussion}
+%==================================================================
+
+The stochastic closure dynamics produces several features that are structurally analogous to quantum phenomena:
+
+\begin{itemize}
+    \item A probabilistic distribution over states (analogous to the Born rule).
+    \item Discrete excitation spectra at stable configurations (analogous to energy levels).
+    \item Exponentially suppressed transitions (analogous to tunnelling).
+    \item A path-integral formulation (analogous to the Feynman path integral).
+\end{itemize}
+
+However, the analogy is limited:
+
+\begin{itemize}
+    \item The dynamics is dissipative, not unitary. There is no conservation of probability current in the quantum sense.
+    \item The path integral is real-valued ($e^{-S/\sigma^2}$), not oscillatory ($e^{iS/\hbar}$). Interference effects do not arise in the present formulation.
+    \item The superposition principle is not a feature of the stochastic dynamics.
+    \item The noise parameter $\sigma$ is not identified with $\hbar$.
+\end{itemize}
+
+Whether these differences can be bridged --- for example, by Wick rotation, by complexification of the noise, or by a more fundamental reformulation --- is an open question that the present paper does not resolve.
+
+%==================================================================
+\section{Limitations}\label{sec:limits}
+%==================================================================
+
+\begin{itemize}
+    \item \textbf{No equivalence with quantum mechanics.} The stochastic closure dynamics shares structural features with QM but is not equivalent to it. Unitary evolution, interference, and the superposition principle are absent.
+    \item \textbf{$\sigma$ is not identified with $\hbar$.} The noise amplitude is a structural parameter of the framework, not identified with Planck's constant.
+    \item \textbf{The dynamics is dissipative.} Probability is not conserved in the quantum-mechanical sense; the Fokker--Planck equation describes diffusion, not Schr\"odinger evolution.
+    \item \textbf{No interference.} The real-valued path integral does not produce interference effects.
+    \item \textbf{No derivation of the Born rule.} The stationary distribution provides a probabilistic structure, but its relationship to the Born rule is analogical, not proven.
+    \item \textbf{Finite-dimensional setting.} The stochastic analysis applies in the finite-dimensional approximation; extension to infinite-dimensional state spaces requires additional functional-analytic conditions.
+    \item \textbf{The closure functional $\Fcal$ is not uniquely derived.} The stochastic dynamics inherits all the modelling assumptions of Papers~VII--XIII.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The closure framework, previously deterministic, now admits a stochastic extension in which noise-driven exploration of the closure landscape produces probabilistic, spectral, and transition-rate structure. The stationary distribution $P_{\mathrm{st}}(\psi) \propto \exp(-2\Fcal/\sigma^2)$ concentrates on the constraint manifold, excitation spectra emerge from the Hessian of $\Fcal$ at attractors, and inter-basin transition rates follow Kramers-type barrier crossing.
+
+This stochastic layer provides the closure framework's analogue of quantisation: it introduces probability without postulating quantum axioms, produces discrete spectral structure from continuous dynamics, and defines transition rates from the geometry of the closure landscape. The analogy with quantum mechanics is structural but limited: unitarity, interference, and the superposition principle are absent in the present formulation.
+
+The central open question is whether the stochastic closure dynamics can be related to standard quantum mechanics --- either as an effective description, as a pre-quantum substrate, or as a genuinely distinct probabilistic framework. The present paper establishes the stochastic layer; the question of its physical interpretation remains for future work.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
