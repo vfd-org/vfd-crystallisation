@@ -1,0 +1,428 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\HW}{H_{\mathrm{W}}}
+\newcommand{\Rst}{R_{\mathrm{st}}}
+
+\title{Quantum and Gravitational Structure\\from a Common Event-Order Geometry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+The VFD programme has developed two independent structural tracks from the same geometric substrate: a \textit{quantum track} (Papers~XV--XXII) in which Schr\"odinger-type evolution emerges as the equilibrium tangent limit of nonlinear closure-paired dynamics on the 600-cell, and a \textit{gravitational track} (Papers~XXIII--XXVII) in which temporal ordering, observer kinematics, metric separation, curvature, and source-driven field dynamics emerge from the event-order structure of the dual 600-cell system.
+
+The present paper shows that these two tracks are not independent constructions but two projections of a single underlying event-order geometry. Both tracks share the same foundational objects: admissible overlap events on the dual 600-cell, the closure functional~$\Fcal$, and the transition graph~$\Gcal$. The quantum track arises when multiple admissible configurations coexist (superposition regime), while the gravitational track arises when event ordering dominates and accessibility geometry organises at large scale.
+
+A structural correspondence table maps objects across both tracks: path integrals correspond to geodesics, the closure functional to the source field, the Witten Hamiltonian to the graph Laplacian, and norm conservation to source balance. A regime-transition principle is formulated: the quantum-to-gravitational crossover corresponds to the passage from multiplicity of admissible configurations to constraint-dominated ordering.
+
+The paper does not derive the Einstein equations from quantum mechanics or vice versa. It establishes a structural bridge: both tracks emerge from the same geometry, viewed under different organisational constraints.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Two apparently distinct physical regimes --- quantum behaviour and gravitational structure --- have resisted unification within the standard framework for nearly a century. This paper does not resolve that problem. It shows something more specific: that within the VFD closure programme, the mathematical structures underlying quantum dynamics and gravitational geometry \textit{share a common origin in the same event-order geometry}.
+
+\subsection*{The two tracks}
+
+The VFD programme has constructed two tracks independently:
+
+\begin{enumerate}
+    \item \textbf{Quantum track} (Papers~XV--XXII). Starting from the stochastic closure dynamics of Paper~XIV~\citep{SmartXIV}, this track constructs phase-coherent dynamics~\citep{SmartXV}, proves a dissipative obstruction~\citep{SmartXVII}, resolves it via Nelson pairing~\citep{SmartXVIII}, classifies the nonlinear residual~\citep{SmartXIX}, synthesises the result~\citep{SmartXXI}, and connects it to the 600-cell spectral structure~\citep{SmartXXII}. The central result: the Schr\"odinger equation emerges as the equilibrium tangent limit of nonlinear closure-paired dynamics.
+
+    \item \textbf{Gravitational track} (Papers~XXIII--XXVII). Starting from the dual 600-cell phase-overlap structure identified in Paper~XXII, this track derives emergent time~\citep{SmartXXIII}, observer kinematics~\citep{SmartXXIV}, metric separation~\citep{SmartXXV}, curvature~\citep{SmartXXVI}, and source-driven field dynamics~\citep{SmartXXVII}. The central result: a complete scaffold for gravitational structure from event-order geometry, without assuming spacetime.
+\end{enumerate}
+
+\subsection*{Central observation}
+
+Both tracks were constructed from the same geometric substrate. This paper makes that observation explicit and asks: is this an accident of presentation, or a structural necessity?
+
+\subsection*{Scope}
+
+This paper maps the shared structures, identifies the regime boundary, and formulates a unification principle. It does not derive the Einstein equations from quantum mechanics, does not produce a theory of quantum gravity, and does not claim to resolve the measurement problem. It establishes a structural bridge between two tracks that were built independently from the same geometry.
+
+%==================================================================
+\section{The Shared Substrate}\label{sec:substrate}
+%==================================================================
+
+Both tracks begin from the same three objects, all defined in the preceding papers.
+
+\subsection{The dual 600-cell system}
+
+Paper~XXII~\citep{SmartXXII} established that the $E_8$ root system contains two conjugate copies of the 600-cell (240 roots $\to$ 120 vertex pairs, 2:1 double cover via the Coxeter projection with exponents $(1,7)$). The quantum track uses the \textit{spectral structure} of the 600-cell graph (eigenvalues, representations, closure functional). The gravitational track uses the \textit{overlap structure} of the dual system (admissible events from relative phase rotation).
+
+\begin{remark}[Same geometry, different access]
+The dual 600-cell is not two separate objects. It is one geometric system. The two tracks access different aspects of this system: spectral data (quantum) and event-order data (gravitational).
+\end{remark}
+
+\subsection{The closure functional}
+
+The $H_4$-invariant closure functional
+\begin{equation}\label{eq:F}
+    \Fcal[\Phi] = \sum_i \log\Bigl(1 + e^{\beta(\Phi_i - \mu)}\Bigr)
+\end{equation}
+was constructed explicitly in Paper~XXII on the 120-vertex 600-cell graph. In the quantum track, $\Fcal$ drives the stochastic dynamics: the stationary distribution $P \propto e^{-2\Fcal/\sigma^2}$ (Paper~XIV~\citep{SmartXIV}), the Nelson pairing pairs forward/backward processes under $\Fcal$-gradient drift (Paper~XVIII~\citep{SmartXVIII}), and the Witten Hamiltonian $\HW = -(\sigma^2/2)\Delta + V_{\mathrm{W}}$ with $V_{\mathrm{W}} = \tfrac{1}{2}|\nabla \Fcal|^2 - \tfrac{\sigma^2}{2}\Delta\Fcal$ governs the equilibrium tangent dynamics.
+
+In the gravitational track, $\Fcal$ determines which vertex configurations are admissible: an overlap event is admissible when the local closure residual falls below threshold. The source field $S(e)$ of Paper~XXVII~\citep{SmartXXVII} measures deviation from uniform closure, and the field equation $\Delta_\Gcal u = S - \bar{S}$ describes how this deviation organises the accessibility geometry.
+
+\begin{remark}
+The same functional $\Fcal$ appears in both tracks. In the quantum track it is the potential energy of the stochastic dynamics. In the gravitational track it determines which events exist and how they are distributed. This is not a coincidence --- it is a consequence of both tracks being projections of the same geometric system.
+\end{remark}
+
+\subsection{The transition graph}
+
+The event set $\Ecal$ carries a natural graph structure $\Gcal = (\Ecal, E_H)$ where edges connect events that are related by admissible transitions (Paper~XXIII~\citep{SmartXXIII}). In the quantum track, the graph Laplacian $\Delta_\Gcal$ appears in the Witten Hamiltonian (as the kinetic operator). In the gravitational track, the same $\Delta_\Gcal$ appears in the field equation (as the operator relating source to potential).
+
+\begin{definition}[Shared substrate]\label{def:substrate}
+The \textit{shared substrate} of the VFD programme is the triple $(\Ecal, \Fcal, \Gcal)$: the event set, the closure functional, and the transition graph, all derived from the dual 600-cell system.
+\end{definition}
+
+%==================================================================
+\section{The Quantum Regime}\label{sec:quantum}
+%==================================================================
+
+The quantum track is characterised by the following structural features, all established in the preceding papers.
+
+\subsection{Multiplicity of admissible configurations}
+
+When the relative phase parameter $\theta$ admits multiple overlapping configurations simultaneously, the system exhibits \textit{superposition}: the closure functional has multiple comparable minima, and the stochastic dynamics explores all of them. This is the regime in which Paper~XV's interference~\citep{SmartXV} and Paper~XVIII's Nelson pairing~\citep{SmartXVIII} operate.
+
+\subsection{Phase structure and interference}
+
+In this regime, the complexified Onsager--Machlup action of Paper~XV assigns phase-rotation frequency $\Omega = \Fcal/\sigma^2$ and amplitude $A = e^{-\Fcal/\sigma^2}$ to each path. Paths between the same endpoints carry different phases and interfere. This is the structural origin of quantum-type behaviour within the closure framework.
+
+\subsection{Unitary-type evolution}
+
+At the Paper~XIV equilibrium, the paired forward/backward process yields the Schr\"odinger equation with Witten Hamiltonian $\HW$ (Paper~XVIII). The evolution is norm-conserving (Paper~XIX~\citep{SmartXIX}). Away from equilibrium, the dynamics is nonlinear, with a modulus-curvature residual $\delta U_{\mathrm{rel}}$ that is gauge-invariant and perturbatively small near equilibrium.
+
+\subsection{Summary}
+
+\begin{quote}
+The quantum regime is characterised by: multiplicity of admissible configurations, path-level phase structure producing interference, and norm-conserving evolution governed by the closure functional through the Witten Hamiltonian.
+\end{quote}
+
+%==================================================================
+\section{The Gravitational Regime}\label{sec:gravitational}
+%==================================================================
+
+The gravitational track is characterised by the following structural features, all established in Papers~XXIII--XXVII.
+
+\subsection{Event ordering}
+
+When the birth-angle parameter $\theta$ induces a strict partial order on admissible events (Paper~XXIII~\citep{SmartXXIII}), the system acquires a temporal structure. Events are no longer simultaneously accessible; they are ordered by when they become admissible. This is the regime in which path multiplicity is resolved into sequential accessibility.
+
+\subsection{Observer frames and kinematics}
+
+Within the ordered event set, different linear extensions define different observer frames (Paper~XXIV~\citep{SmartXXIV}). Simultaneity is frame-dependent. Time dilation is exhibited. These are kinematic consequences of the ordering, not postulates.
+
+\subsection{Metric, curvature, and dynamics}
+
+The transition graph $\Gcal$ carries a natural distance structure (Paper~XXV~\citep{SmartXXV}), curvature indicators from non-uniform accessibility (Paper~XXVI~\citep{SmartXXVI}), and a source-driven field equation $\Delta_\Gcal u = S - \bar{S}$ (Paper~XXVII~\citep{SmartXXVII}). The complete chain is: source $\to$ potential $\to$ curvature $\to$ geodesic concentration.
+
+\subsection{Summary}
+
+\begin{quote}
+The gravitational regime is characterised by: constraint-driven event ordering, frame-dependent kinematics, metric separation, curvature from non-uniform accessibility, and source-driven geometric response governed by the graph Laplacian field equation.
+\end{quote}
+
+%==================================================================
+\section{Structural Correspondence}\label{sec:correspondence}
+%==================================================================
+
+The following table maps objects that play analogous structural roles in the two tracks. Each row identifies objects that arise from the same geometric substrate but serve different functions in their respective regimes.
+
+\begin{table}[ht]
+\centering
+\caption{Structural correspondence between quantum and gravitational tracks.}
+\label{tab:correspondence}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Shared object & Quantum role & Gravitational role \\
+\midrule
+Event set $\Ecal$ & Configuration space & Causal event set \\
+Closure functional $\Fcal$ & Stochastic potential & Admissibility criterion / source \\
+Graph Laplacian $\Delta_\Gcal$ & Kinetic operator in $\HW$ & Field-equation operator \\
+Paths on $\Gcal$ & Interference (sum over paths) & Geodesics (shortest paths) \\
+$\Fcal$-gradient & Drift in Nelson pairing & Source field $S(e)$ \\
+Norm conservation & $\|\Psi\|^2 = \mathrm{const}$ & $\sum(S - \bar{S}) = 0$ \\
+Equilibrium & Stationary distribution $\Rst^2$ & Vacuum (uniform $S$, flat $u$) \\
+Non-equilibrium & Nonlinear residual $\delta U_{\mathrm{rel}}$ & Curvature $K_{\mathrm{pot}} > 0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[Status of the correspondence]
+Table~\ref{tab:correspondence} is a structural map, not a derivation. It identifies objects that arise from the same substrate and play parallel roles. The correspondence is exhibited, not proved to be necessary. Whether it reflects a deeper mathematical duality is an open question.
+\end{remark}
+
+\subsection{Path structure: interference vs geodesics}
+
+This correspondence deserves elaboration because it connects the most characteristic features of each regime.
+
+In the quantum regime, the system explores all paths on $\Gcal$ between two events. Each path carries a phase $e^{i\Omega \ell}$ where $\ell$ is the path cost and $\Omega = \Fcal/\sigma^2$. The total amplitude is a sum over paths, producing interference.
+
+In the gravitational regime, the system has resolved into an ordered configuration. Propagation follows geodesics --- shortest paths on $\Gcal$ weighted by the accessibility potential $u(e)$. Geodesics concentrate toward regions of high potential gradient (Paper~XXVII).
+
+\begin{quote}
+Quantum: all paths contribute, weighted by phase.\\
+Gravitational: dominant path selected by geometric cost.
+\end{quote}
+
+The structural transition is: as constraint ordering strengthens, the path sum concentrates onto the geodesic. This is the geometric analogue of the stationary-phase (WKB) limit in standard quantum mechanics.
+
+\subsection{Operator structure: Witten Hamiltonian vs graph Laplacian}
+
+In the quantum regime, the dynamics at equilibrium is governed by the Witten Hamiltonian:
+\begin{equation}
+    \HW = -\frac{\sigma^2}{2}\Delta_\Gcal + V_{\mathrm{W}}, \qquad V_{\mathrm{W}} = \frac{1}{2}|\nabla\Fcal|^2 - \frac{\sigma^2}{2}\Delta\Fcal
+\end{equation}
+In the gravitational regime, the field equation is:
+\begin{equation}
+    \Delta_\Gcal\, u(e) = S(e) - \bar{S}
+\end{equation}
+
+Both are governed by the same operator $\Delta_\Gcal$ on the same graph. The Witten Hamiltonian adds the closure potential $V_{\mathrm{W}}$, which encodes the local curvature of the closure landscape. The field equation uses $\Delta_\Gcal$ directly, with the source $S$ playing the role that $V_{\mathrm{W}}$ plays in the quantum case: driving the system away from uniformity.
+
+\begin{remark}
+The graph Laplacian $\Delta_\Gcal$ is the shared dynamical operator. In the quantum regime it generates evolution (through $\HW$). In the gravitational regime it mediates geometric response (through the field equation). The same operator, on the same graph, in two roles.
+\end{remark}
+
+%==================================================================
+\section{Regime Transition}\label{sec:transition}
+%==================================================================
+
+The two regimes are not separated by a discontinuity. They are connected by a continuous parameter: the \textit{degree of constraint ordering} in the event set.
+
+\subsection{The ordering parameter}
+
+\begin{definition}[Constraint ordering strength]\label{def:ordering}
+For an event set $\Ecal$ with partial order $\preceq$, define the \textit{ordering fraction}:
+\begin{equation}
+    \eta = \frac{|\{(e_1, e_2) : e_1 \prec e_2\}|}{\binom{|\Ecal|}{2}}
+\end{equation}
+the fraction of event pairs that are comparable under $\preceq$.
+\end{definition}
+
+\begin{itemize}
+    \item $\eta = 0$: no ordering (antichain). All events are simultaneously admissible. Maximum path multiplicity. Pure quantum regime.
+    \item $\eta = 1$: total ordering (chain). All events are sequentially ordered. Single dominant path. Pure gravitational regime.
+    \item $0 < \eta < 1$: partial ordering. Both quantum and gravitational features coexist.
+\end{itemize}
+
+\subsection{Small-scale regime: quantum}
+
+At small scales (few events, high symmetry), the event set is weakly ordered. Many events are simultaneously admissible. The path sum is dominated by interference, and the Nelson-paired dynamics yields Schr\"odinger-type evolution. This is the regime of Papers~XV--XXI.
+
+\subsection{Large-scale regime: gravitational}
+
+At large scales (many events, constraint accumulation), the event ordering becomes strong. Most event pairs are comparable. Path multiplicity is suppressed, geodesics dominate, and the accessibility geometry acquires metric, curvature, and field-equation structure. This is the regime of Papers~XXIII--XXVII.
+
+\subsection{The crossover}
+
+\begin{proposition}[Regime characterisation]\label{prop:regime}
+For a finite event set $\Ecal$ with partial order $\preceq$ and ordering fraction $\eta$:
+\begin{enumerate}
+    \item If $\eta$ is small, the number of linear extensions of $\preceq$ is large, and the system admits many distinct observer frames and path configurations (quantum multiplicity).
+    \item If $\eta$ is close to 1, the number of linear extensions is small (approaching 1 for a total order), and the system admits essentially one frame and one dominant path class (gravitational concentration).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The number of linear extensions of a partial order is bounded above by $n!/\prod c_i$ where $c_i$ are chain lengths, and is maximised for the antichain ($n!$ extensions) and minimised for the total order (1 extension). Both bounds are standard in order theory. The correspondence between extension count and path multiplicity follows from the fact that each linear extension defines a distinct observer frame (Paper~XXIV) and a distinct temporal ordering of geodesics.
+\end{proof}
+
+\begin{remark}[Scale and ordering]
+The claim is not that ``quantum $=$ small'' and ``gravity $=$ large'' in any absolute sense. The claim is structural: as constraint ordering strengthens (by whatever mechanism), the system transitions from the regime in which quantum-type behaviour dominates to the regime in which gravitational-type structure dominates. The ordering fraction $\eta$ parameterises this transition. Whether $\eta$ correlates with physical scale is an empirical question that the framework does not answer.
+\end{remark}
+
+%==================================================================
+\section{The Unification Principle}\label{sec:unification}
+%==================================================================
+
+The preceding sections establish:
+
+\begin{enumerate}
+    \item Both tracks arise from the same substrate $(\Ecal, \Fcal, \Gcal)$.
+    \item The same objects (closure functional, graph Laplacian, paths) play parallel roles in both tracks.
+    \item The regime boundary is parameterised by the ordering fraction $\eta$.
+\end{enumerate}
+
+This motivates the following structural principle:
+
+\begin{quote}
+\textbf{Unification principle.} Quantum behaviour and gravitational structure are not separate physical domains. They are two organisational regimes of the same event-order geometry:
+\begin{itemize}
+    \item \textit{Quantum}: multiplicity of admissible configurations, path interference, norm-conserving evolution.
+    \item \textit{Gravitational}: constraint-driven event ordering, geodesic concentration, source-driven geometric response.
+\end{itemize}
+The transition between them is governed by the degree of constraint ordering in the event set.
+\end{quote}
+
+\begin{remark}[Epistemic status]
+This is a structural principle, not a theorem. It is motivated by the explicit constructions of Papers~XV--XXVII and the correspondence table of Section~\ref{sec:correspondence}. It does not constitute a proof of unification, a derivation of quantum gravity, or a replacement for either quantum mechanics or general relativity. It identifies a structural pattern within the VFD programme and proposes it as a candidate organising principle.
+\end{remark}
+
+%==================================================================
+\section{Crystallisation as the Bridge}\label{sec:crystallisation}
+%==================================================================
+
+The crystallisation operator --- the founding object of the VFD programme --- acquires a new interpretation in this context.
+
+\subsection{The crystallisation functional}
+
+The crystallisation operator $C[\Psi] = \operatorname{argmin}_\Phi \Fcal[\Phi]$ maps an unresolved configuration to the stable attractor of the closure functional. In the original formulation, this was a model of quantum state selection: the system evolves under gradient flow of $\Fcal$ until it reaches a constraint-compatible configuration.
+
+\subsection{Reinterpretation}
+
+In the unified picture, crystallisation is not merely a selection mechanism. It is the process by which the event-order geometry transitions from the quantum regime to the gravitational regime:
+
+\begin{itemize}
+    \item \textbf{Before crystallisation}: multiple admissible configurations coexist. The event set is weakly ordered. Quantum-type path interference dominates.
+    \item \textbf{During crystallisation}: the closure functional drives convergence. Constraint ordering strengthens. The ordering fraction $\eta$ increases.
+    \item \textbf{After crystallisation}: the system has settled into a strongly ordered configuration. Geodesics dominate. Metric, curvature, and field-equation structure emerge.
+\end{itemize}
+
+\begin{quote}
+Crystallisation is the geometric mechanism by which quantum multiplicity resolves into gravitational order.
+\end{quote}
+
+\begin{remark}
+This interpretation is structural, not dynamical in the sense of specifying a time-dependent process. The ``before/during/after'' language describes the logical relationship between regimes, not necessarily a temporal sequence. Whether crystallisation occurs in time, or whether time itself emerges from the crystallisation process (as Paper~XXIII suggests), is a question the framework poses but does not resolve.
+\end{remark}
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is established}
+
+\begin{itemize}
+    \item Both the quantum and gravitational tracks of the VFD programme arise from the same geometric substrate: the dual 600-cell event-order system $(\Ecal, \Fcal, \Gcal)$.
+    \item A structural correspondence maps objects across both tracks (Table~\ref{tab:correspondence}).
+    \item The regime boundary is parameterised by the ordering fraction $\eta$ (Definition~\ref{def:ordering}).
+    \item The crystallisation operator provides a structural bridge between regimes.
+    \item The graph Laplacian $\Delta_\Gcal$ serves as the shared dynamical operator in both tracks.
+    \item Path interference (quantum) and geodesic concentration (gravitational) are structural limits of the same path structure on $\Gcal$.
+\end{itemize}
+
+\subsection{What is not established}
+
+\begin{itemize}
+    \item No derivation of the Einstein equations from quantum mechanics or vice versa.
+    \item No theory of quantum gravity. The paper identifies a structural bridge, not a dynamical unification.
+    \item No continuum limit. Whether the discrete structures converge to continuous quantum field theory or general relativity is open.
+    \item No experimental predictions from the unification principle itself (though both constituent tracks make independent structural predictions).
+    \item No proof that the correspondence in Table~\ref{tab:correspondence} is unique or necessary. Alternative mappings may exist.
+    \item The ordering parameter $\eta$ is defined on finite event sets. Its behaviour in any continuum or thermodynamic limit is not analysed.
+    \item The regime characterisation (Proposition~\ref{prop:regime}) is qualitative. No sharp phase-transition threshold is identified.
+\end{itemize}
+
+\subsection{Comparison with existing approaches}
+
+\begin{table}[ht]
+\centering
+\caption{Comparison with other unification approaches.}
+\label{tab:comparison}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Approach & Starting point & Unification mechanism & Status \\
+\midrule
+String theory & Continuous strings & Extra dimensions, dualities & No unique vacuum \\
+Loop quantum gravity & Spin networks & Discrete spacetime & Classical limit open \\
+Causal set theory & Discrete partial orders & Order $\to$ geometry & QM recovery open \\
+VFD (this paper) & Closure on 600-cell & Regime transition on $\Gcal$ & Structural bridge \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}
+The VFD approach is closest in spirit to causal set theory, which also begins from discrete partial orders. The key structural difference is that VFD derives the partial order from the 600-cell overlap geometry (Paper~XXIII), whereas causal set theory takes the partial order as fundamental. Whether this difference is physically significant is an open question.
+\end{remark}
+
+%==================================================================
+\section{Programme Summary}\label{sec:programme}
+%==================================================================
+
+The VFD closure programme now comprises the following completed tracks:
+
+\begin{table}[ht]
+\centering
+\caption{Complete programme structure.}
+\label{tab:programme}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Track & Papers & Core result & Regime \\
+\midrule
+Crystallisation & Flagship + A--D & Deterministic state selection & Selection \\
+Mass / constraint & I--XIII & Particle masses from 600-cell eigenvalues & Spectral \\
+Quantum recovery & XV--XXI & Schr\"odinger as equilibrium tangent limit & Quantum \\
+Spectral bridge & XXII & Mass, gauge, constants from $\Fcal$ & Spectral--quantum \\
+GR scaffold & XXIII--XXVII & Time, metric, curvature, dynamics & Gravitational \\
+Unification & XXVIII (this paper) & Structural bridge across regimes & Both \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==================================================================
+\section{Future Directions}\label{sec:future}
+%==================================================================
+
+The structural bridge identified here opens several directions for future work:
+
+\begin{enumerate}
+    \item \textbf{Continuum limit.} Does the discrete framework converge to known continuum theories (quantum field theory, general relativity) in appropriate limits? This is the defining technical challenge.
+
+    \item \textbf{Regime-transition dynamics.} The ordering fraction $\eta$ parameterises the crossover, but the dynamics of the transition --- how constraint ordering strengthens --- is not specified. A dynamical theory of the quantum-to-gravitational crossover would substantially strengthen the framework.
+
+    \item \textbf{Coupling constant.} The gravitational field equation $\Delta_\Gcal u = S - \bar{S}$ has no coupling constant (proportionality set to 1). Identifying a Newton-constant analogue from the 600-cell spectral data is an open target.
+
+    \item \textbf{Observable signatures.} Both tracks make structural predictions independently. Whether the unification principle itself generates new, testable predictions --- beyond those of the constituent tracks --- is the key question for experimental relevance.
+\end{enumerate}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The VFD closure programme has constructed quantum and gravitational structure from the same geometric substrate: the dual 600-cell event-order system. The quantum track (Papers~XV--XXII) derives Schr\"odinger-type evolution from closure-paired dynamics. The gravitational track (Papers~XXIII--XXVII) derives temporal ordering, metric separation, curvature, and field dynamics from event-order geometry.
+
+This paper has shown that these are not independent constructions. Both tracks share the same foundational triple $(\Ecal, \Fcal, \Gcal)$. The same objects --- the closure functional, the graph Laplacian, the path structure --- play parallel roles in both regimes. The transition between quantum and gravitational behaviour corresponds to the strengthening of constraint ordering in the event set, parameterised by the ordering fraction $\eta$.
+
+The result is a structural bridge, not a theory of quantum gravity. Whether the bridge can be made dynamical, whether it converges to known physics in appropriate limits, and whether it generates new experimental predictions are the defining open questions for the next stage of the programme.
+
+What can be stated is this: within the VFD framework, the distinction between quantum and gravitational structure is not fundamental. It is a consequence of how event accessibility is organised under constraint.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
