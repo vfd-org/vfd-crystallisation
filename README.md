@@ -18,7 +18,7 @@ This repository presents a testable research framework and supporting reference 
 
 ## Research Scope
 
-This repository contains three connected research tracks within the broader VFD programme:
+This repository contains five connected research tracks within the broader VFD programme:
 
 1. **Crystallisation dynamics** — a deterministic, constraint-driven selection framework proposed as an alternative to probabilistic collapse in open quantum systems.
 2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–V and anchored by Paper IV as the primary external-facing mass paper.
@@ -57,12 +57,12 @@ These tracks are related by a common structural theme: state resolution through 
 5. Paper XX (nonlinear quantum structure)
 6. Papers XV–XVI (phase/interference and evolution equation — background)
 
-### For the general-relativity programme
-1. **Paper XXVII** (dynamics and field equations — the capstone)
-2. Paper XXVI (curvature from non-uniform geometry)
-3. Paper XXV (metric emergence — three constructions)
-4. Paper XXIV (observer frames and relativity)
-5. Paper XXIII (event structure and emergent time — the foundation)
+### For the general-relativity programme (Papers XXIII–XXVII, labelled GR-I through GR-V)
+1. **Paper XXIII / GR-I** (event structure and emergent time — the foundation)
+2. **Paper XXIV / GR-II** (observer frames and relativity)
+3. **Paper XXV / GR-III** (metric emergence — three constructions)
+4. **Paper XXVI / GR-IV** (curvature from non-uniform geometry)
+5. **Paper XXVII / GR-V** (dynamics and field equations — the capstone)
 
 ### For the conceptual bridge (Dirac → Crystallisation)
 1. Bridge paper (selection architecture on Dirac solution space)
@@ -275,37 +275,45 @@ Bridges all three programme tracks through computation. Constructs an explicit H
 
 ### General-Relativity Programme (Papers XXIII–XXVII)
 
-The following sequence derives gravitational structure from event-order geometry — the partial order on admissible overlap events defined by the crystallisation framework. Starting from the birth-angle construction, the programme builds time, observer kinematics, metric separation, curvature, and source-driven field dynamics without assuming spacetime.
+The following sequence derives gravitational structure from event-order geometry — the partial order on admissible overlap events defined by the crystallisation framework. Starting from the birth-angle construction, the programme builds time, observer kinematics, metric separation, curvature, and source-driven field dynamics without assuming spacetime. The five papers are labelled GR-I through GR-V for easy reference.
 
-#### Paper XXIII — Event Structure and the Emergence of Time
+| Label | Paper | Layer | Core construction |
+|-------|-------|-------|-------------------|
+| GR-I | XXIII | Time | Birth-angle partial order on admissible overlap events |
+| GR-II | XXIV | Observers | Linear extensions + sampling measures → frame-dependent kinematics |
+| GR-III | XXV | Metric | Three separation constructions (chain-length, observer-disagreement, transition-cost) |
+| GR-IV | XXVI | Curvature | Non-uniformity of local accessibility profiles |
+| GR-V | XXVII | Dynamics | Source-driven field equation via graph Laplacian |
 
-**[Event Structure and the Emergence of Time from Phase-Overlap Geometry](papers/paper-xxiii/paper-xxiii.tex)** (LaTeX source)
+#### Paper XXIII / GR-I — Event Structure and the Emergence of Time
+
+**[Event Structure and the Emergence of Time from Phase-Overlap Geometry](papers/paper-xxiii/Event_Structure_and_the_Emergence_of_Time_from_Phase_Overlap_Geometry.pdf)** ([LaTeX source](papers/paper-xxiii/paper-xxiii.tex))
 
 Defines admissible overlap events and the birth-angle partial order. Proves that no canonical global clock exists (non-uniqueness of linear extensions). Constructs chain time as intrinsic temporal separation. Pentagon worked example with 10 admissible events. Foundation for the GR programme.
 
-#### Paper XXIV — Observer Frames and Relativity
+#### Paper XXIV / GR-II — Observer Frames and Relativity
 
-**[Observer Frames and Relativity from Event-Order Geometry](papers/paper-xxiv/paper-xxiv.tex)** (LaTeX source)
+**[Observer Frames and Relativity from Event-Order Geometry](papers/paper-xxiv/Observer_Frames_and_Relativity_from_Event_Order_Geometry.pdf)** ([LaTeX source](papers/paper-xxiv/paper-xxiv.tex))
 
 Defines observers as linear extensions of the partial order equipped with sampling measures. Proves simultaneity relativity (two observers generically disagree on simultaneous events). Exhibits time-dilation analogue. Separates chain time from observer elapsed time. Two-observer worked example on the pentagon model.
 
-#### Paper XXV — Metric Emergence
+#### Paper XXV / GR-III — Metric Emergence
 
-**[Metric Emergence from Event-Order Geometry](papers/paper-xxv/paper-xxv.tex)** (LaTeX source)
+**[Metric Emergence from Event-Order Geometry](papers/paper-xxv/Metric_Emergence_from_Event_Order_Geometry.pdf)** ([LaTeX source](papers/paper-xxv/paper-xxv.tex))
 
 Constructs three separation measures: chain-length (directed temporal separation), observer-disagreement (sign structure from frame comparisons), and transition-cost (genuine metric on the Hasse graph, proved). Comparison table with general-relativity analogues. Pentagon model computations for all three constructions.
 
-#### Paper XXVI — Curvature from Non-Uniform Geometry
+#### Paper XXVI / GR-IV — Curvature from Non-Uniform Geometry
 
-**[Curvature from Non-Uniform Event-Order Geometry](papers/paper-xxvi/paper-xxvi.tex)** (LaTeX source)
+**[Curvature from Non-Uniform Event-Order Geometry](papers/paper-xxvi/Curvature_from_Non_Uniform_Event_Order_Geometry.pdf)** ([LaTeX source](papers/paper-xxvi/paper-xxvi.tex))
 
 Defines flatness as local uniformity of neighborhood profiles. Three curvature indicators: volume-growth distortion, branching asymmetry (undirected degree), geodesic concentration (betweenness). Flat reference model (K_{5,5}: all indicators zero) and curved bottleneck model (all indicators nonzero). Curvature as departure from local uniformity.
 
-#### Paper XXVII — Dynamics and Field Equations
+#### Paper XXVII / GR-V — Dynamics and Field Equations
 
-**[Dynamics and Field Equations from Event-Order Geometry](papers/paper-xxvii/paper-xxvii.tex)** (LaTeX source)
+**[Dynamics and Field Equations from Event-Order Geometry](papers/paper-xxvii/Dynamics_and_Field_Equations_from_Event_Order_Geometry.pdf)** ([LaTeX source](papers/paper-xxvii/paper-xxvii.tex))
 
-Capstone of the GR programme. Introduces source field S(e) from local event-density deviation. Graph-Laplacian field equation Δ_G u = S − S̄ with existence/uniqueness proved (Fredholm alternative). Global balance law and local flow conservation (discrete divergence theorem). Potential-gradient curvature K_pot. Three toy models: vacuum (flat), bottleneck (curved, geodesic concentration), perturbation (single-event geometric response). Source → curvature → geodesic bridge demonstrated explicitly. Does not derive the Einstein equations; establishes a discrete, principled analogue.
+Capstone of the GR programme. Introduces source field S(e) from local event-content deviation, with density, overlap, and geodesic-traffic candidates compared. Graph-Laplacian field equation Δ_G u = S − S̄ with existence/uniqueness proved (Fredholm alternative). Global balance law and local flow conservation (discrete divergence theorem). Potential-gradient curvature K_pot. Three toy models: vacuum (flat), bottleneck (curved, geodesic concentration), perturbation (single-event geometric response). Source → curvature → geodesic bridge demonstrated explicitly. Does not derive the Einstein equations; establishes a discrete, principled analogue.
 
 ### Bridge Paper — From Dirac to Crystallisation
 
@@ -337,11 +345,11 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
-│   ├── paper-xxvii/            Paper XXVII: dynamics and field equations (GR capstone)
-│   ├── paper-xxvi/             Paper XXVI: curvature from non-uniform geometry
-│   ├── paper-xxv/              Paper XXV: metric emergence (three constructions)
-│   ├── paper-xxiv/             Paper XXIV: observer frames and relativity
-│   ├── paper-xxiii/            Paper XXIII: event structure and emergent time
+│   ├── paper-xxvii/            Paper XXVII / GR-V:  dynamics and field equations (capstone)
+│   ├── paper-xxvi/             Paper XXVI  / GR-IV: curvature from non-uniform geometry
+│   ├── paper-xxv/              Paper XXV   / GR-III: metric emergence (three constructions)
+│   ├── paper-xxiv/             Paper XXIV  / GR-II: observer frames and relativity
+│   ├── paper-xxiii/            Paper XXIII / GR-I:  event structure and emergent time
 │   ├── paper-xxii/             Paper XXII: spectral bridge (600-cell → SM structure) + 17 scripts
 │   ├── paper-xxi/              Paper XXI: structural synthesis (dissipative → Schrödinger)
 │   ├── paper-xx/               Paper XX: nonlinear quantum structure
