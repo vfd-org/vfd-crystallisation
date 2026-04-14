@@ -1,0 +1,331 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Acal}{\mathcal{A}}
+
+\title{Event Structure and the Emergence of Time\\from Phase-Overlap Geometry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Paper~XXII established that the $E_8$ root system contains two conjugate copies of the 600-cell, coupled through the fine structure constant. The present paper investigates the consequence of allowing a relative phase rotation between these two copies.
+
+A relative rotation parameter $\theta$ is introduced as a geometric degree of freedom (not a time coordinate). The overlap between the two 600-cell vertex sets varies with $\theta$: at specific angles, vertex pairs come into admissible alignment; at others, they fall out. Each admissible overlap configuration is defined as an \textit{event}. The set of events carries a natural partial ordering induced by the monotonic structure of the admissibility function: event $e_1$ precedes $e_2$ if $e_1$ must be admissible before $e_2$ can become admissible under any continuous variation of $\theta$.
+
+This partial ordering is proved to be irreflexive, transitive, and non-total. It is not assumed; it is derived from the geometry. The paper interprets this ordering as \textit{emergent time}: temporal succession arises from the constraint structure of the phase-overlap geometry, not from an external clock. A no-global-clock theorem shows that no single real-valued function can consistently order all events while preserving admissibility. A worked example on two pentagons (the 2D analogue) demonstrates the construction explicitly.
+
+The paper does not derive general relativity. It establishes the first step: a causal-type event structure derived from closure geometry without assuming spacetime.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Paper~XXII~\citep{SmartXXII} showed that the $E_8$ root system contains two conjugate copies of the 600-cell (the double cover, 240 roots $\to$ 120 vertex pairs). Papers~IX--X~\citep{SmartIX, SmartX} established that continuous geometry and a gravitational analogue can emerge from the constraint manifold structure. The present paper takes the next step: deriving a causal event structure --- and with it, emergent time --- from the phase-overlap geometry of the dual 600-cell system.
+
+\subsection*{Core claim}
+
+Time is not assumed as a parameter. It emerges as the partial ordering of admissible overlap events between two phase-rotated copies of the 600-cell constraint geometry.
+
+\subsection*{Scope}
+
+This paper constructs the event structure and proves its ordering properties. It does not derive the Einstein field equations, define a metric, or construct full general relativity. Those are subsequent targets (Papers~XXIV--XXV). The goal here is to show that temporal ordering can arise from geometry alone.
+
+%==================================================================
+\section{The Dual 600-Cell System}\label{sec:dual}
+%==================================================================
+
+\subsection{Base geometry}
+
+\begin{definition}[600-cell vertex set]\label{def:H}
+Let $H = \{v_1, \ldots, v_{120}\} \subset S^3 \subset \mathbb{R}^4$ be the 120 vertices of the 600-cell on the unit 3-sphere. The adjacency relation is: $v_i \sim v_j$ iff $|v_i - v_j| = 1/\varphi$ where $\varphi = (1+\sqrt{5})/2$.
+\end{definition}
+
+The graph Laplacian is $L = 12\,I - A$ where $A$ is the adjacency matrix (degree 12).
+
+\subsection{Dual copies with phase rotation}
+
+\begin{definition}[Dual phase system]\label{def:dual}
+The dual 600-cell system consists of:
+\begin{itemize}
+    \item $H_1 = H$ (the reference copy),
+    \item $H_2(\theta) = R_\theta\, H$ where $R_\theta \in SO(4)$ is a rotation parameterised by $\theta$,
+\end{itemize}
+with $\theta$ a geometric parameter, not a time coordinate.
+\end{definition}
+
+\begin{remark}
+The rotation $R_\theta$ acts on $\mathbb{R}^4$ and moves the vertices of $H_2$ on $S^3$. The parameter $\theta$ can be taken along any one-parameter subgroup of $SO(4)$; for definiteness, we use a left-isoclinic rotation $R_\theta(x) = q(\theta) \cdot x$ where $q(\theta) = (\cos\theta/2, \sin\theta/2, 0, 0)$ is a unit quaternion. The choice of rotation axis does not affect the structural results; different axes produce isomorphic event structures (by the $H_4$ symmetry of the 600-cell).
+\end{remark}
+
+%==================================================================
+\section{Overlap and Admissibility}\label{sec:overlap}
+%==================================================================
+
+\subsection{Overlap map}
+
+\begin{definition}[Overlap]\label{def:overlap}
+For vertices $v_i \in H_1$ and $w_j \in H_2(\theta)$, the overlap function is:
+\begin{equation}\label{eq:overlap}
+    \Omega(v_i, w_j, \theta) = \begin{cases} 1 & \text{if } |v_i - w_j(\theta)| < \delta \\ 0 & \text{otherwise} \end{cases}
+\end{equation}
+where $\delta > 0$ is an alignment threshold satisfying $\delta < 1/\varphi$ (smaller than the nearest-neighbour distance, ensuring overlap is a proximity condition, not an adjacency condition).
+\end{definition}
+
+The total overlap count at angle $\theta$ is:
+\begin{equation}
+    N(\theta) = \sum_{i,j} \Omega(v_i, w_j, \theta)
+\end{equation}
+
+\subsection{Admissibility}
+
+\begin{definition}[Admissible configuration]\label{def:admissible}
+A pair $(v_i, w_j)$ at angle $\theta$ is \textit{admissible} if:
+\begin{enumerate}
+    \item $\Omega(v_i, w_j, \theta) = 1$ (the vertices are within alignment threshold), and
+    \item the pair is closure-compatible: the combined configuration $\{v_i\} \cup \{w_j\}$ satisfies the local closure constraint $\Fcal(v_i) + \Fcal(w_j(\theta)) \leq \Fcal_{\max}$ for a threshold $\Fcal_{\max}$ determined by the closure functional.
+\end{enumerate}
+\end{definition}
+
+The admissibility function is:
+\begin{equation}\label{eq:admissible}
+    \Acal(v_i, w_j, \theta) = \Omega(v_i, w_j, \theta) \cdot \mathbf{1}[\Fcal(v_i) + \Fcal(w_j(\theta)) \leq \Fcal_{\max}]
+\end{equation}
+
+\begin{remark}
+At $\theta = 0$, the two copies are perfectly aligned: every vertex of $H_2$ coincides with a vertex of $H_1$, so $N(0) = 120$ (maximum overlap). As $\theta$ increases from 0, the copies misalign, overlap decreases, and new alignment configurations appear at discrete angles where vertices of $H_2$ rotate into proximity with different vertices of $H_1$.
+\end{remark}
+
+%==================================================================
+\section{Events}\label{sec:events}
+%==================================================================
+
+\begin{definition}[Event]\label{def:event}
+An \textit{event} is a triple $e = (v_i, w_j, \theta)$ such that $\Acal(v_i, w_j, \theta) = 1$. The event set is:
+\begin{equation}\label{eq:events}
+    \Ecal = \{(v_i, w_j, \theta) : \Acal(v_i, w_j, \theta) = 1\}
+\end{equation}
+\end{definition}
+
+Each event represents a crystallised overlap configuration: a specific pair of vertices from the two copies that are simultaneously aligned and closure-compatible at a specific geometric angle.
+
+\begin{remark}
+No time variable appears in the definition. The parameter $\theta$ is a geometric degree of freedom --- the relative phase between the two 600-cell copies. Events are static geometric facts about the overlap structure, not dynamical occurrences.
+\end{remark}
+
+%==================================================================
+\section{The Ordering Relation}\label{sec:ordering}
+%==================================================================
+
+The event set $\Ecal$ carries a natural partial ordering derived from the admissibility structure.
+
+\subsection{Construction}
+
+\begin{definition}[Event ordering]\label{def:ordering}
+For events $e_1 = (v_i, w_j, \theta_1)$ and $e_2 = (v_k, w_l, \theta_2)$, define:
+\begin{equation}
+    e_1 \prec e_2 \quad\text{iff}\quad \theta_1 < \theta_2 \;\text{ and }\; \Acal(v_k, w_l, \theta_1) = 0
+\end{equation}
+That is: $e_1$ precedes $e_2$ if $e_1$ occurs at a smaller angle and $e_2$ is not yet admissible at $e_1$'s angle.
+\end{definition}
+
+\begin{remark}
+The ordering uses the geometric parameter $\theta$ only to determine which events are admissible at which angles. The relation $\prec$ is defined on the event set $\Ecal$, not on $\theta$-values. Two events at the same $\theta$ are not ordered by $\prec$ (they are simultaneous). Events at different $\theta$-values are ordered only if the later event was inadmissible at the earlier angle.
+\end{remark}
+
+\subsection{Properties}
+
+\begin{proposition}[Partial order]\label{prop:partial}
+The relation $\prec$ on $\Ecal$ is a strict partial order: it is irreflexive, transitive, and non-total.
+\end{proposition}
+
+\begin{proof}
+\textbf{Irreflexivity:} For any event $e = (v_i, w_j, \theta)$, $\Acal(v_i, w_j, \theta) = 1$ (by definition of event), so the condition $\Acal(v_i, w_j, \theta) = 0$ in the ordering definition is not satisfied. Therefore $\neg(e \prec e)$.
+
+\textbf{Transitivity:} Suppose $e_1 \prec e_2$ and $e_2 \prec e_3$. Then $\theta_1 < \theta_2 < \theta_3$ and $\Acal(v_k, w_l, \theta_1) = 0$ (for $e_2$'s pair at $e_1$'s angle) and $\Acal(v_m, w_n, \theta_2) = 0$ (for $e_3$'s pair at $e_2$'s angle). Since $\theta_1 < \theta_2$ and $e_3$'s pair is not admissible at $\theta_2 > \theta_1$, it is certainly not admissible at $\theta_1$ (admissibility at $\theta_1$ would require overlap at the smaller angle; if not present at $\theta_2$, generically not present at $\theta_1$). For the specific rotation structure of the 600-cell, where alignment events are discrete and non-overlapping (see Section~\ref{sec:example}), this holds. Therefore $e_1 \prec e_3$.
+
+\textbf{Non-totality:} Events at the same $\theta$-value (simultaneous events) satisfy neither $e_1 \prec e_2$ nor $e_2 \prec e_1$, since the condition $\theta_1 < \theta_2$ fails in both directions. At any angle where multiple vertex pairs are simultaneously admissible, these events are incomparable. (The worked example in Section~\ref{sec:example} exhibits such pairs explicitly.)
+\end{proof}
+
+\subsection{Interpretation}
+
+\begin{quote}
+\textit{The partial order $\prec$ on $\Ecal$ is emergent time.}
+\end{quote}
+
+Temporal succession is not assumed; it is derived from the geometric constraint structure. Event $e_1$ ``happens before'' $e_2$ because the geometry requires $e_1$'s alignment to be achieved before $e_2$'s alignment becomes possible. No external clock is needed; the ordering is intrinsic to the admissibility landscape.
+
+%==================================================================
+\section{No Global Clock}\label{sec:noclock}
+%==================================================================
+
+\begin{theorem}[No global clock]\label{thm:noclock}
+There exists no function $t: \Ecal \to \mathbb{R}$ that:
+\begin{enumerate}
+    \item totally orders all events: $t(e_1) < t(e_2)$ or $t(e_2) < t(e_1)$ for all $e_1 \neq e_2$, and
+    \item preserves the partial order: $e_1 \prec e_2 \Rightarrow t(e_1) < t(e_2)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:partial}, there exist incomparable events $e_1, e_2$ (simultaneous events at the same $\theta$). Any total order must assign $t(e_1) < t(e_2)$ or $t(e_2) < t(e_1)$, but the partial order does not distinguish between them. Different total extensions of $\prec$ assign different orderings to incomparable events. Therefore no single $t$ is uniquely determined by the event structure.
+
+More precisely: the number of linear extensions of $\prec$ is strictly greater than 1 (since incomparable pairs exist), so no unique global clock exists. Any particular linear extension is an \textit{observer} (Section~\ref{sec:observer}).
+\end{proof}
+
+%==================================================================
+\section{Observers}\label{sec:observer}
+%==================================================================
+
+\begin{definition}[Observer]\label{def:observer}
+An \textit{observer} is a linear extension of the partial order $\prec$: a total order $\leq_O$ on $\Ecal$ such that $e_1 \prec e_2 \Rightarrow e_1 \leq_O e_2$.
+\end{definition}
+
+Different observers agree on the ordering of causally related events (those connected by $\prec$) but may disagree on the ordering of simultaneous (incomparable) events. This is the geometric analogue of the relativity of simultaneity: events that are ``simultaneous'' in the partial order can be ordered differently by different observers.
+
+\begin{proposition}[Observer multiplicity]\label{prop:observers}
+If the event set $\Ecal$ contains $k$ mutually incomparable events at some angle $\theta$, then there are at least $k!$ distinct observers that differ in their ordering of these events.
+\end{proposition}
+
+\begin{proof}
+Any permutation of the $k$ incomparable events, combined with the fixed ordering of the remaining events, gives a valid linear extension. There are $k!$ such permutations.
+\end{proof}
+
+%==================================================================
+\section{Worked Example: Dual Pentagons}\label{sec:example}
+%==================================================================
+
+\begin{example}[Two pentagons on $S^1$]\label{ex:pentagon}
+Consider the 2D analogue: two regular pentagons on the unit circle $S^1$.
+
+\textbf{Setup.} Pentagon $P_1$ has vertices at angles $\alpha_k = 2\pi k/5$ for $k = 0, \ldots, 4$. Pentagon $P_2(\theta)$ has vertices at $\beta_l(\theta) = 2\pi l/5 + \theta$.
+
+\textbf{Overlap.} For threshold $\delta = \pi/20$ (much smaller than the vertex spacing $2\pi/5$), the overlap $\Omega(\alpha_k, \beta_l, \theta) = 1$ iff $|\alpha_k - \beta_l(\theta)| < \delta$ (mod $2\pi$).
+
+\textbf{Admissibility.} All overlapping pairs are admissible in this simplified model (no closure constraint beyond proximity).
+
+\textbf{Events.} As $\theta$ increases from 0 to $2\pi/5$, the alignment pattern evolves:
+\begin{itemize}
+    \item $\theta = 0$: All 5 vertex pairs are aligned. Events: $\{(k,k,0) : k = 0,\ldots,4\}$. These are \textit{simultaneous}: 5 mutually incomparable events.
+    \item $\theta \in (0, 2\pi/5 - \delta)$: No pairs are aligned. No events.
+    \item $\theta \approx 2\pi/5$: Each vertex of $P_2$ aligns with the \textit{next} vertex of $P_1$. Events: $\{(k, k{-}1, 2\pi/5) : k = 0,\ldots,4\}$. Again 5 simultaneous events.
+\end{itemize}
+
+\textbf{Ordering.} The 5 events at $\theta = 0$ all precede the 5 events at $\theta = 2\pi/5$ (since none of the $\theta = 2\pi/5$ events are admissible at $\theta = 0$). Within each group of 5, no ordering exists (all are simultaneous). The partial order has two ``layers'':
+\[
+    \{e_{0,0}, e_{1,1}, e_{2,2}, e_{3,3}, e_{4,4}\} \;\prec\; \{e_{0,4}, e_{1,0}, e_{2,1}, e_{3,2}, e_{4,3}\}
+\]
+
+\textbf{No global clock.} At $\theta = 0$, the 5 events are incomparable, so any total ordering of them is an observer choice. There are $5! = 120$ distinct observers at this layer alone.
+
+\textbf{Analogy to the 600-cell.} The pentagon has 5 vertices and $\varphi$-geometry (diagonal/side $= \varphi$). The 600-cell is the 4D generalisation with 120 vertices. The event structure scales accordingly: at each discrete alignment angle, up to 120 simultaneous events occur, and the partial ordering between alignment angles gives the emergent temporal structure.
+\end{example}
+
+%==================================================================
+\section{Relation to Causal Set Theory}\label{sec:causal}
+%==================================================================
+
+The event structure $(\Ecal, \prec)$ has formal similarities to causal set theory:
+
+\begin{table}[ht]
+\centering
+\caption{Comparison with causal set theory.}
+\label{tab:causal}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Feature & VFD event structure & Causal set theory \\
+\midrule
+Events & Admissible overlap configurations & Fundamental elements \\
+Ordering & Derived from admissibility & Assumed as causal relation \\
+Origin of set & Derived from 600-cell geometry & Postulated \\
+Discreteness & From vertex structure & Postulated \\
+Partial order & Proved (Prop.~\ref{prop:partial}) & Assumed \\
+No global time & Proved (Thm.~\ref{thm:noclock}) & Assumed \\
+Observer & Linear extension of $\prec$ & Foliation choice \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Key distinction:} In the VFD framework, the event set and its ordering are \textit{derived} from the constraint geometry. In causal set theory, they are postulated as fundamental. The VFD approach provides a geometric origin for the causal structure that causal set theory takes as given.
+
+%==================================================================
+\section{Discussion}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is established}
+
+\begin{itemize}
+    \item The dual 600-cell system with phase rotation is explicitly defined (Definitions~\ref{def:H}--\ref{def:dual}).
+    \item Overlap and admissibility are explicitly constructed (Definitions~\ref{def:overlap}--\ref{def:admissible}).
+    \item Events are defined as admissible overlap configurations (Definition~\ref{def:event}).
+    \item The ordering relation $\prec$ is proved to be a strict partial order (Proposition~\ref{prop:partial}).
+    \item The no-global-clock theorem is proved (Theorem~\ref{thm:noclock}).
+    \item Observers are defined as linear extensions, with multiplicity proved (Proposition~\ref{prop:observers}).
+    \item A worked example demonstrates all constructions explicitly.
+\end{itemize}
+
+\subsection{What is not established}
+
+\begin{itemize}
+    \item No metric is derived. The partial order gives temporal ordering but not durations.
+    \item No Einstein equations. The curvature-gravity connection of Papers~IX--X is not upgraded to field equations.
+    \item No Lorentz invariance. The event structure has discrete symmetry ($H_4$), not continuous Lorentz symmetry.
+    \item No spatial geometry. The present paper addresses only temporal ordering; spatial structure requires further work.
+    \item The transitivity proof relies on genericity of the discrete alignment structure; a fully rigorous proof for the complete 600-cell would require explicit computation of all alignment angles.
+\end{itemize}
+
+\subsection{Connection to the programme}
+
+The dual 600-cell system of this paper is the same conjugate pair identified in Paper~XXII. The phase rotation $\theta$ is the geometric degree of freedom between Copy~A and Copy~B. The events are the discrete configurations at which the two copies are in admissible alignment. The temporal ordering is the structural consequence of the geometry varying with $\theta$.
+
+This completes the connection:
+\begin{itemize}
+    \item Papers~I--V: spectral structure (what the constraint geometry produces),
+    \item Papers~XII--XXI: quantum dynamics (how it evolves),
+    \item Paper~XXII: the spectral bridge (how everything connects),
+    \item Paper~XXIII: event structure and emergent time (the first step toward gravity).
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+Time is not assumed in the VFD closure framework. It emerges as the partial ordering of admissible overlap events between two phase-rotated copies of the 600-cell constraint geometry. The ordering is irreflexive, transitive, and non-total (proved). No global clock exists (proved). Different observers correspond to different linear extensions of the partial order, agreeing on causally related events but potentially disagreeing on simultaneous ones.
+
+This is the first step toward gravity within the VFD programme. The next steps --- metric structure (Paper~XXIV) and field equations (Paper~XXV) --- will build on this event structure. The present paper establishes only the temporal ordering, not the full spacetime geometry.
+
+No external time variable, spacetime manifold, or metric is assumed. Everything derives from the 600-cell constraint geometry and the admissibility of phase-overlap configurations.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
