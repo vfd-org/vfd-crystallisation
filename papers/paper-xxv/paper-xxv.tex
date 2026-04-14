@@ -1,0 +1,394 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Gcal}{\mathcal{G}}
+
+\title{Metric Emergence from Event-Order Geometry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Papers~XXIII--XXIV derived a strict partial order on admissible overlap events and showed that observer-dependent time functions, relativity of simultaneity, and time-dilation analogues emerge from the event poset. The present paper addresses the next question: what does it mean for two events to be \textit{near or far}?
+
+Three candidate separation constructions are developed and compared. For comparable events (those related by the partial order), a \textit{chain-length separation} counts the minimum number of cover steps between them, providing an observer-independent temporal interval. For incomparable events (those not causally related), an \textit{observer-disagreement separation} measures the variance of time-difference assignments across observers, providing a structural precursor to spatial distance. A \textit{transition-cost separation} on the Hasse graph gives a unified graph-distance that applies to both cases.
+
+The chain-length separation is proved to be a well-defined pseudometric on comparable pairs. The observer-disagreement quantity is shown to distinguish incomparable events from identical ones. The transition-cost construction satisfies all metric axioms on the event set. A worked example on the dual-pentagon system demonstrates all three constructions explicitly.
+
+The paper does not derive the Lorentz metric or continuous geometry. It establishes that the event-order framework supports a nontrivial separation structure, providing a concrete route from poset to emergent metric geometry.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Paper~XXIII~\citep{SmartXXIII} derived a strict partial order $\prec$ on an event set $\Ecal$ from phase-overlap geometry. Paper~XXIV~\citep{SmartXXIV} showed that observers (linear extensions with sampling measures) produce frame-dependent time functions, relativity of simultaneity, and time-dilation analogues.
+
+These results give the event set temporal and observer structure, but not spatial or metric structure. The present paper asks: \textit{given only the event poset and its observer completions, can one define a meaningful notion of separation between events?}
+
+\subsection*{The essential distinction}
+
+Two events can be related in exactly two ways under $\prec$:
+\begin{itemize}
+    \item \textbf{Comparable} ($e_1 \prec e_2$ or $e_2 \prec e_1$): causally / temporally ordered.
+    \item \textbf{Incomparable} (neither holds): ``simultaneous'' / spacelike-separated.
+\end{itemize}
+
+Any separation construction must handle both cases, and the two cases may require different structures. The paper develops three candidates and compares them.
+
+\subsection*{Scope}
+
+This paper constructs separation quantities and proves their basic properties. It does not derive the Lorentz metric, continuous manifold structure, or the Einstein equations. It establishes that the event-order framework naturally supports emergent metric-like geometry.
+
+%==================================================================
+\section{Cover Relations and the Transition Graph}\label{sec:hasse}
+%==================================================================
+
+\begin{definition}[Cover relation]\label{def:cover}
+Event $e_1$ is \textit{covered by} $e_2$ (written $e_1 \lessdot e_2$) if $e_1 \prec e_2$ and there is no event $e$ with $e_1 \prec e \prec e_2$.
+\end{definition}
+
+\begin{definition}[Transition graph (Hasse graph)]\label{def:hasse}
+The \textit{transition graph} $\Gcal = (\Ecal, E_H)$ has vertex set $\Ecal$ and edge set
+\begin{equation}
+    E_H = \{(e_1, e_2) : e_1 \lessdot e_2\}
+\end{equation}
+This is the Hasse diagram of $(\Ecal, \prec)$, viewed as an undirected graph (ignoring edge orientation for the purpose of graph distance).
+\end{definition}
+
+\begin{remark}
+The cover relation encodes ``immediate succession'': $e_1 \lessdot e_2$ means $e_2$ is the next event after $e_1$ with no intervening event in the partial order. The transition graph captures the minimal-step accessibility structure of the event set.
+\end{remark}
+
+%==================================================================
+\section{Construction A: Chain-Length Separation}\label{sec:chain}
+%==================================================================
+
+For comparable events, the natural separation is the number of order steps between them.
+
+\begin{definition}[Chain-length separation]\label{def:dchain}
+For comparable events $e_1 \prec e_2$, define:
+\begin{equation}\label{eq:dchain}
+    d_{\mathrm{chain}}(e_1, e_2) = \min\{|C| - 1 : C \text{ is a chain from } e_1 \text{ to } e_2\}
+\end{equation}
+where $|C|$ is the number of events in $C$. For $e_1 = e_2$, set $d_{\mathrm{chain}}(e, e) = 0$.
+\end{definition}
+
+\begin{remark}
+$d_{\mathrm{chain}}(e_1, e_2) = k$ means there is a chain $e_1 = c_0 \prec c_1 \prec \cdots \prec c_k = e_2$ of length $k$, and no shorter chain exists. This is the minimum number of ``causal steps'' between $e_1$ and $e_2$.
+\end{remark}
+
+\begin{proposition}[Pseudometric on comparable pairs]\label{prop:dchain}
+On the set of comparable pairs, $d_{\mathrm{chain}}$ satisfies:
+\begin{enumerate}
+    \item \textbf{Non-negativity:} $d_{\mathrm{chain}}(e_1, e_2) \geq 0$.
+    \item \textbf{Identity:} $d_{\mathrm{chain}}(e, e) = 0$.
+    \item \textbf{Triangle inequality:} If $e_1 \prec e_2 \prec e_3$:
+    \begin{equation}
+        d_{\mathrm{chain}}(e_1, e_3) \leq d_{\mathrm{chain}}(e_1, e_2) + d_{\mathrm{chain}}(e_2, e_3)
+    \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1): Chain lengths are non-negative integers. (2): The trivial chain $\{e\}$ has $|C| - 1 = 0$. (3): Concatenating a shortest chain from $e_1$ to $e_2$ with one from $e_2$ to $e_3$ gives a chain from $e_1$ to $e_3$ of length $d_{\mathrm{chain}}(e_1, e_2) + d_{\mathrm{chain}}(e_2, e_3)$. The minimum over all chains can only be shorter.
+\end{proof}
+
+\begin{remark}
+$d_{\mathrm{chain}}$ is a pseudometric, not necessarily a metric: it is only defined for comparable pairs. Incomparable events have no chain between them, so $d_{\mathrm{chain}}$ does not apply. This separation is \textit{temporal}: it measures causal distance, not spatial distance.
+\end{remark}
+
+\begin{remark}[Longest chain as proper-time analogue]
+In causal set theory, the longest (not shortest) chain between comparable events is the analogue of proper time. Define:
+\begin{equation}
+    d_{\max}(e_1, e_2) = \max\{|C| - 1 : C \text{ is a chain from } e_1 \text{ to } e_2\}
+\end{equation}
+This also satisfies the triangle inequality (with reversed inequality: $d_{\max}(e_1, e_3) \geq d_{\max}(e_1, e_2) + d_{\max}(e_2, e_3)$ does not hold in general, but the max-chain is still a well-defined separation). In the VFD framework, whether $d_{\mathrm{chain}}$ or $d_{\max}$ better approximates physical proper time is an open question.
+\end{remark}
+
+%==================================================================
+\section{Construction B: Observer-Disagreement Separation}\label{sec:disagreement}
+%==================================================================
+
+For incomparable events, no chain exists and $d_{\mathrm{chain}}$ is undefined. A different construction is needed.
+
+\begin{definition}[Observer-disagreement separation]\label{def:dobs}
+For any two events $e_1, e_2 \in \Ecal$, let $\Ocal$ be a family of observers. Define:
+\begin{equation}\label{eq:dobs}
+    \sigma(e_1, e_2) = \mathrm{Var}_{O \in \Ocal}\!\left[t_O(e_1) - t_O(e_2)\right]
+\end{equation}
+the variance of the time-difference assignment across the observer family.
+\end{definition}
+
+\begin{proposition}[Distinguishing incomparable events]\label{prop:dobs}
+\begin{enumerate}
+    \item If $e_1 = e_2$: $\sigma(e_1, e_2) = 0$ (all observers assign the same time to the same event).
+    \item If $e_1 \prec e_2$ (comparable): $t_O(e_1) - t_O(e_2) < 0$ for all observers, so the sign is fixed; the variance may be nonzero (from measure differences) but the sign is universal.
+    \item If $e_1$ and $e_2$ are incomparable: some observers assign $t_O(e_1) < t_O(e_2)$ and others assign $t_O(e_2) < t_O(e_1)$ (by Theorem~1 of Paper~XXIV). The time difference changes sign across observers, so $\sigma(e_1, e_2) > 0$ generically.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1): $t_O(e) - t_O(e) = 0$ for all $O$, so the variance is 0. (2): $e_1 \prec e_2$ implies $t_O(e_1) < t_O(e_2)$ for all $O$; the sign is fixed, but magnitudes vary with $\mu_O$. (3): By the relativity-of-simultaneity theorem, there exist observers ordering the pair both ways, so the time difference takes both positive and negative values; the variance is strictly positive.
+\end{proof}
+
+\begin{remark}[Interpretation]
+The observer-disagreement $\sigma$ serves as a \textit{spatial-separation precursor}: it is large for events that observers strongly disagree about, and zero only for identical events. Comparable events have constrained (sign-fixed) disagreement; incomparable events have maximal (sign-varying) disagreement. This mirrors the physical intuition that timelike-separated events have a fixed ordering while spacelike-separated events do not.
+\end{remark}
+
+\begin{remark}[Metric failure]
+$\sigma$ does not satisfy the triangle inequality in general and is therefore not a metric. It is a meaningful \textit{separation measure} but not a distance function in the strict sense. Its role is to provide nontrivial structure for incomparable pairs where $d_{\mathrm{chain}}$ is undefined.
+\end{remark}
+
+%==================================================================
+\section{Construction C: Transition-Cost Metric}\label{sec:transition}
+%==================================================================
+
+The transition graph $\Gcal$ (Definition~\ref{def:hasse}) provides a unified metric that applies to both comparable and incomparable events.
+
+\begin{definition}[Transition-cost metric]\label{def:dtrans}
+For any $e_1, e_2 \in \Ecal$, define:
+\begin{equation}\label{eq:dtrans}
+    d_{\mathrm{trans}}(e_1, e_2) = \text{shortest-path length in } \Gcal \text{ between } e_1 \text{ and } e_2
+\end{equation}
+where the graph $\Gcal$ is the undirected Hasse graph with unit edge weights.
+\end{definition}
+
+\begin{theorem}[Metric on $\Ecal$]\label{thm:metric}
+If $\Gcal$ is connected, then $d_{\mathrm{trans}}$ is a metric on $\Ecal$:
+\begin{enumerate}
+    \item $d_{\mathrm{trans}}(e_1, e_2) \geq 0$, with equality iff $e_1 = e_2$.
+    \item $d_{\mathrm{trans}}(e_1, e_2) = d_{\mathrm{trans}}(e_2, e_1)$.
+    \item $d_{\mathrm{trans}}(e_1, e_3) \leq d_{\mathrm{trans}}(e_1, e_2) + d_{\mathrm{trans}}(e_2, e_3)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+These are the standard properties of shortest-path distance on a connected graph. (1): Shortest paths have non-negative length; length 0 iff $e_1 = e_2$. (2): Undirected graph, so paths are reversible. (3): Triangle inequality holds for shortest-path distance on any graph (concatenation gives an upper bound).
+\end{proof}
+
+\begin{remark}
+$d_{\mathrm{trans}}$ is the first genuine metric on the event set. Unlike $d_{\mathrm{chain}}$ (which requires comparability) and $\sigma$ (which fails the triangle inequality), $d_{\mathrm{trans}}$ applies to all pairs and satisfies all metric axioms.
+\end{remark}
+
+\begin{remark}[Comparable vs incomparable]
+For comparable events $e_1 \prec e_2$:
+\begin{equation}
+    d_{\mathrm{trans}}(e_1, e_2) = d_{\mathrm{chain}}(e_1, e_2)
+\end{equation}
+since the shortest path in the Hasse graph between comparable events follows the cover chain. For incomparable events, $d_{\mathrm{trans}}$ involves ``sideways'' steps through the graph --- paths that go up then down (or vice versa) through the partial order. These sideways paths are the structural precursor to spatial separation.
+\end{remark}
+
+%==================================================================
+\section{Temporal vs Spatial Separation}\label{sec:split}
+%==================================================================
+
+The three constructions cleanly separate into temporal and spatial-precursor components:
+
+\begin{table}[ht]
+\centering
+\caption{Separation structure by event relationship.}
+\label{tab:separation}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Event pair & $d_{\mathrm{chain}}$ & $\sigma$ & $d_{\mathrm{trans}}$ \\
+\midrule
+Comparable & Defined (causal steps) & Sign-fixed (low variance) & = $d_{\mathrm{chain}}$ \\
+Incomparable & Undefined & Sign-varying (high variance) & Sideways path \\
+\midrule
+Interpretation & Temporal interval & Spatial precursor & Unified metric \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[Analogy to Lorentzian structure]
+In Lorentzian geometry, timelike intervals are computed along causal curves, and spacelike intervals require leaving the light cone. The VFD framework exhibits a structural analogue: comparable events have chain-based (causal-curve) separation, while incomparable events require sideways (off-chain) paths in the transition graph. The transition-cost metric $d_{\mathrm{trans}}$ does not distinguish timelike from spacelike --- it is a single positive-definite distance. A signed interval $s^2 = d_{\mathrm{chain}}^2 - d_{\mathrm{sideways}}^2$ could in principle be defined but is not pursued here.
+\end{remark}
+
+%==================================================================
+\section{Observer Time vs Structural Interval}\label{sec:comparison}
+%==================================================================
+
+\begin{proposition}[Structural bound on observer time]\label{prop:bound}
+For comparable events $e_1 \prec e_2$ and any observer $O = (\leq_O, \mu_O)$:
+\begin{equation}
+    t_O(e_2) - t_O(e_1) \geq d_{\mathrm{chain}}(e_1, e_2) \cdot \min_{e \in \Ecal} \mu_O(e)
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The interval $t_O(e_2) - t_O(e_1) = \sum_{e_1 <_O e' \leq_O e_2} \mu_O(e')$ includes at least $d_{\mathrm{chain}}(e_1, e_2)$ terms (from the events in the shortest chain), each at least $\min \mu_O$.
+\end{proof}
+
+\begin{remark}
+This proposition connects observer-dependent time to observer-independent structure: the chain-length separation provides a lower bound on any observer's elapsed time, scaled by the observer's minimum sampling rate. The structural interval ``lives underneath'' all observer times.
+\end{remark}
+
+%==================================================================
+\section{Worked Example: Dual Pentagons}\label{sec:example}
+%==================================================================
+
+\begin{example}[Pentagon separation structure]\label{ex:pentagon}
+Using the dual-pentagon event set from Papers~XXIII--XXIV: 10 events in two layers.
+
+\textbf{Layer 0} ($\theta_b = 0$): events $(0,0), (1,1), (2,2), (3,3), (4,4)$.
+
+\textbf{Layer 1} ($\theta_b = 2\pi/5$): events $(0,4), (1,0), (2,1), (3,2), (4,3)$.
+
+\textbf{Partial order:} Every Layer-0 event precedes every Layer-1 event. Events within the same layer are incomparable.
+
+\textbf{Cover relations:} Every Layer-0 event covers every Layer-1 event (since there are no intermediate events). So $e \lessdot f$ for all $e$ in Layer~0 and $f$ in Layer~1.
+
+\textbf{Hasse graph:} Complete bipartite graph $K_{5,5}$ between the two layers.
+
+\subsection*{Chain-length separation (comparable pairs)}
+
+For any Layer-0 event $e$ and Layer-1 event $f$: $d_{\mathrm{chain}}(e, f) = 1$ (one cover step). All comparable pairs have the same chain-length separation.
+
+\subsection*{Observer-disagreement separation (incomparable pairs)}
+
+Within Layer~0, events $(0,0)$ and $(1,1)$ are incomparable. Using two observers from Paper~XXIV:
+\begin{itemize}
+    \item $O_1$: assigns $t_{O_1}(0,0) = 1$, $t_{O_1}(1,1) = 2$. Difference: $-1$.
+    \item $O_2$: assigns $t_{O_2}(0,0) = 10$, $t_{O_2}(1,1) = 6$. Difference: $+4$.
+\end{itemize}
+Mean difference: $(-1 + 4)/2 = 1.5$. Variance: $\sigma = ((−1−1.5)^2 + (4−1.5)^2)/2 = (6.25 + 6.25)/2 = 6.25$.
+
+So $\sigma((0,0),(1,1)) = 6.25 > 0$: the incomparable events are distinguished by observer disagreement.
+
+\subsection*{Transition-cost metric (all pairs)}
+
+The Hasse graph is $K_{5,5}$.
+\begin{itemize}
+    \item Comparable pair (different layers): $d_{\mathrm{trans}} = 1$ (direct edge).
+    \item Incomparable pair (same layer): $d_{\mathrm{trans}} = 2$ (go to any event in the other layer, then back). For example, $(0,0) \to (0,4) \to (1,1)$: path length 2.
+\end{itemize}
+
+\subsection*{Summary}
+
+\begin{table}[ht]
+\centering
+\caption{Separations in the pentagon toy model.}
+\label{tab:pentagon}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Pair type & $d_{\mathrm{chain}}$ & $\sigma$ & $d_{\mathrm{trans}}$ \\
+\midrule
+Same event & 0 & 0 & 0 \\
+Comparable (cross-layer) & 1 & $> 0$ (fixed sign) & 1 \\
+Incomparable (same layer) & undefined & $6.25$ (sign-varying) & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The transition-cost metric gives $d_{\mathrm{trans}} = 1$ for ``timelike'' (comparable) pairs and $d_{\mathrm{trans}} = 2$ for ``spacelike'' (incomparable) pairs. Incomparable events are \textit{farther} in the transition metric than comparable ones --- the sideways cost exceeds the forward cost.
+\end{example}
+
+%==================================================================
+\section{Relation to Known Frameworks}\label{sec:comparison_lit}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Comparison with causal-set and graph-metric approaches.}
+\label{tab:comparison}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Feature & VFD (this paper) & Causal set / graph theory \\
+\midrule
+Temporal separation & Min-chain length & Longest chain (proper time) \\
+Spatial precursor & Observer disagreement & Volume-based estimators \\
+Unified metric & Hasse graph distance & Graph metric on Hasse diagram \\
+Metric derivation & From event-order geometry & From assumed causal structure \\
+Signed interval & Not yet constructed & Lorentzian distance (assumed) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}
+In causal set theory, the longest chain between comparable events approximates Lorentzian proper time, and spatial distance is estimated from causal-diamond volumes. The VFD approach differs in that the event set and order are \textit{derived} from 600-cell geometry rather than postulated. The metric constructions here are structural parallels, not claimed equivalences.
+\end{remark}
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is established}
+
+\begin{itemize}
+    \item Cover relation and Hasse graph explicitly defined (Definitions~\ref{def:cover}--\ref{def:hasse}).
+    \item Chain-length separation: well-defined pseudometric on comparable pairs (Proposition~\ref{prop:dchain}).
+    \item Observer-disagreement separation: distinguishes incomparable events from identical ones (Proposition~\ref{prop:dobs}). Does not satisfy the triangle inequality (explicitly noted).
+    \item Transition-cost metric: a genuine metric on the full event set (Theorem~\ref{thm:metric}).
+    \item Structural bound relating observer time to chain length (Proposition~\ref{prop:bound}).
+    \item All constructions demonstrated on the pentagon toy model.
+\end{itemize}
+
+\subsection{What is not established}
+
+\begin{itemize}
+    \item No Lorentzian metric. The transition-cost metric is positive-definite, not Lorentzian.
+    \item No signed interval. A $ds^2 = dt^2 - dx^2$ decomposition is not derived.
+    \item No continuous manifold. All constructions are discrete (graph-based).
+    \item No Einstein equations or curvature. The metric is flat in the toy model.
+    \item The observer-disagreement quantity is not a metric (triangle inequality failure is explicit).
+    \item The Hasse graph connectivity (required for Theorem~\ref{thm:metric}) is assumed, not proved for the full 600-cell event structure.
+\end{itemize}
+
+\subsection{Metric failure modes (honest assessment)}
+
+\begin{itemize}
+    \item $d_{\mathrm{chain}}$: only defined for comparable pairs (pseudometric, not metric on full $\Ecal$).
+    \item $\sigma$: fails triangle inequality; not a metric in the formal sense.
+    \item $d_{\mathrm{trans}}$: satisfies all axioms but is positive-definite, losing the timelike/spacelike distinction that Lorentzian geometry requires.
+\end{itemize}
+
+A future construction that recovers a signed interval from the interplay of $d_{\mathrm{chain}}$ and $d_{\mathrm{trans}}$ would represent a significant step toward Lorentzian structure. The present paper provides the ingredients.
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The event-order framework of Papers~XXIII--XXIV naturally supports emergent separation structure. Three constructions are developed:
+\begin{itemize}
+    \item \textbf{Chain-length separation}: an observer-independent temporal interval for comparable events (pseudometric, proved).
+    \item \textbf{Observer-disagreement separation}: a spatial precursor for incomparable events (non-metric but nontrivial, proved).
+    \item \textbf{Transition-cost metric}: a genuine metric on the full event set from Hasse-graph shortest paths (metric axioms proved).
+\end{itemize}
+
+The structural distinction between comparable (chain-based, temporal) and incomparable (sideways, spatial-precursor) separation mirrors the timelike/spacelike distinction of Lorentzian geometry, though a signed interval is not yet derived.
+
+The event-order framework now carries: temporal ordering (Paper~XXIII), observer-dependent kinematics (Paper~XXIV), and separation geometry (this paper). What remains for the GR programme is the construction of curvature and dynamical equations on this structure.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
