@@ -23,8 +23,9 @@ This repository contains three connected research tracks within the broader VFD 
 1. **Crystallisation dynamics** — a deterministic, constraint-driven selection framework proposed as an alternative to probabilistic collapse in open quantum systems.
 2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–V and anchored by Paper IV as the primary external-facing mass paper.
 3. **The quantum recovery programme** — a sequence (Papers XV–XXI) showing that Schrödinger-type evolution emerges as the equilibrium tangent limit of a nonlinear closure-paired dynamics, without postulating quantum axioms.
+4. **The spectral bridge** — Paper XXII connects all three tracks, showing that a single closure functional on the 600-cell can coherently relate mass eigenvalues, gauge structure, fundamental constants (α⁻¹ at 0.81 ppm, sin²θ_W = 3/8), and generation structure through the φ-permeability of the 600-cell geometry and the E₈ Coxeter projection.
 
-These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme asks whether quantum dynamics itself can arise from the closure framework.
+These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; and the spectral bridge (Paper XXII) connects them through computation.
 
 ---
 
@@ -44,8 +45,11 @@ These tracks are related by a common structural theme: state resolution through 
 4. Paper II (no-go theorem + conditional winding operator)
 5. Paper I (internal mass-development paper)
 
+### For the full programme (recommended starting point)
+1. **Paper XXII** (spectral bridge — connects mass, dynamics, and gauge structure)
+
 ### For the quantum recovery programme
-1. **Paper XXI** (synthesis — start here for the overview)
+1. **Paper XXI** (synthesis — overview of Papers XV–XXI)
 2. Paper XVII (dissipative obstruction — the core no-go result)
 3. Paper XVIII (Nelson pairing — the mechanism)
 4. Paper XIX (residual classification)
@@ -251,6 +255,16 @@ Places the closure residual into nonlinear Schrödinger structure. Defines the c
 
 Bridge/synthesis paper for the full XV–XX sequence. Summarises the five-stage construction: closure evolution equation → dissipative obstruction → Nelson pairing → residual isolation → structural classification. Central result: the Schrödinger equation appears as the distinguished equilibrium tangent sector of an exact nonlinear closure-paired dynamics. Explicitly states what is and is not established. Does not claim full quantum mechanics, measurement theory, or experimental predictions. Identifies the physical status of the nonlinear residual as the defining open question.
 
+### Spectral Bridge (Paper XXII)
+
+#### Paper XXII — The Standard Model from 600-Cell Closure Geometry
+
+**[The Standard Model from 600-Cell Closure Geometry: Spectral Bridge, Structural Constants, and the φ-Permeability](papers/paper-xxii/The_Standard_Model_from_600_Cell_Closure_Geometry.pdf)** ([LaTeX source](papers/paper-xxii/paper-xxii.tex))
+
+Bridges all three programme tracks through computation. Constructs an explicit H₄-invariant closure functional on the 600-cell. Computes the complete eigenvalue-representation map (9 eigenvalues, exact algebraic forms). Discovers the integer selection principle: Paper V's mass eigenvalues {9,12,14,15} are exactly the nontrivial integer Laplacian eigenvalues. Establishes the E₈ → H₄ Coxeter projection (240 roots → 120 vertices, 2:1 double cover). Exhibits structural correspondences with α⁻¹ = 137 + π/87 (0.81 ppm) and sin²θ_W = 3/8. Identifies φ-permeability (d₂²-d₁² = 1/φ) as the central geometric mechanism. Proves exact integer/irrational sector decoupling (94 physical modes). Seventeen verification scripts reproduce every computational claim. Does not claim to derive the Standard Model from first principles; presents evidence that a single closure functional can coherently relate mass, gauge structure, constants, and generation structure.
+
+**Verification scripts** (in `papers/paper-xxii/scripts/`): 17 Python scripts covering spectral verification, Coxeter projection, coupling structure, α derivation, generation structure, φ-mass connection, SU(5) branching, UV analysis, and more. All require only `numpy` and `scipy`.
+
 ### Bridge Paper — From Dirac to Crystallisation
 
 **[From Dirac Solutions to Physical Reality: A Crystallisation-Based Selection Architecture](papers/bridge-paper/From_Dirac_Solutions_to_Physical_Reality_A_Crystallisation_Based_Selection_Architecture.pdf)** ([LaTeX source](papers/bridge-paper/bridge-paper.tex))
@@ -281,6 +295,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xxii/             Paper XXII: spectral bridge (600-cell → SM structure) + 17 scripts
 │   ├── paper-xxi/              Paper XXI: structural synthesis (dissipative → Schrödinger)
 │   ├── paper-xx/               Paper XX: nonlinear quantum structure
 │   ├── paper-xix/              Paper XIX: closure residual classification
@@ -375,6 +390,7 @@ This repository makes claims at three levels, which should be evaluated independ
 | **Demonstrative** | The mechanism can be concretely instantiated and independently verified | ARIA demonstration + proof pack |
 | **Quantum recovery** | Schrödinger-type dynamics emerges as the equilibrium tangent limit of a nonlinear closure-paired dynamics | Papers XVII–XXI |
 | **No-go** | Single-generator Kolmogorov-type closure dynamics cannot be unitary (proved) | Paper XVII |
+| **Spectral bridge** | Integer selection principle, exact sector decoupling, structural correspondences with α⁻¹ and sin²θ_W | Paper XXII |
 
 The framework does not claim to replace quantum mechanics. It proposes a testable extension and provides the tools to evaluate it. The quantum recovery programme (Papers XV–XXI) establishes a mathematical pathway from dissipative closure dynamics to Schrödinger-type evolution but does not claim full quantum mechanics, measurement theory, or experimental predictions from the nonlinear residual.
 
