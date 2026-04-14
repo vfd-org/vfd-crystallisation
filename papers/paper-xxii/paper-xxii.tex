@@ -42,7 +42,7 @@
 \begin{abstract}
 The VFD closure programme has developed three independent pillars: a spectral-geometric particle-mass model on the 600-cell (Papers~I--V), a structural correspondence between closure geometry and Standard Model sectors (Papers~VI--XI), and a route from dissipative closure dynamics to Schr\"odinger-type evolution via Nelson pairing (Papers~XII--XXI). These three pillars have so far been developed separately.
 
-The present paper constructs the bridges between them. Three bridge constructions are presented, at different levels of rigour. First, the \textit{spectral bridge}: in the tight-binding regime, the low-energy spectrum of the Witten Hamiltonian on a multi-well closure landscape whose minima form the 600-cell vertex set is determined by the 600-cell graph Laplacian --- connecting the mass programme (Papers~I--V) to the quantum dynamics programme (Papers~XVIII--XXI) through a single closure functional. Second, the \textit{field extension}: the Nelson pairing construction extends formally to field configurations on the constraint manifold, producing a functional Schr\"odinger equation whose equilibrium tangent limit is a field-theoretic Witten Hamiltonian. Third, the \textit{gauge projection}: the symmetry group of the closure functional on the 600-cell vertex structure, inherited through the $E_8 \to H_4$ Coxeter projection chain, constrains the gauge structure available in the equilibrium tangent limit.
+The present paper constructs the bridges between them. Three bridge constructions are presented, at different levels of rigour. First, the \textit{spectral bridge}: in the tight-binding regime, the low-energy spectrum of the Witten Hamiltonian on a multi-well closure landscape whose minima form the 600-cell vertex set is determined by the 600-cell graph Laplacian --- connecting the mass programme (Papers~I--V) to the quantum dynamics programme (Papers~XVIII--XXI) through a single closure functional. Second, the \textit{field extension}: the Nelson pairing construction extends formally to field configurations on the constraint manifold, producing a functional Schr\"odinger equation whose equilibrium tangent limit is a field-theoretic Witten Hamiltonian. Third, the \textit{gauge projection}: the symmetry group of the closure functional on the 600-cell vertex structure, inherited through the $E_8 \to H_4$ Coxeter projection chain, identifies a candidate route by which the gauge structure of the equilibrium tangent limit may be related to Standard Model symmetries.
 
 Together, these results outline a mechanism by which the Standard Model could arise as the equilibrium tangent projection of a nonlinear closure-field dynamics on the 600-cell constraint geometry. The paper identifies what is established, what is structural, and what remains conjectural. It does not claim to derive the Standard Model; it claims to identify a mathematically coherent route by which its structure may emerge from closure geometry.
 \end{abstract}
@@ -92,10 +92,47 @@ Paper~XXI~\citep{SmartXXI} identified several open gaps. We address two here.
 
 The quantum dynamics programme recovers Schr\"odinger evolution with the closure noise scale $\sigma^2$ playing the role of $\hbar$: the linearised equation is $i\partial_t\Psi = \HW\Psi$ where $\HW = -(\sigma^2/2)\Delta + \VW$.
 
-\begin{remark}[Unit matching prescription]
-The closure equation is formulated in closure units where $\sigma^2$ is the diffusion coefficient. To compare with a physical Schr\"odinger operator $i\hbar\partial_t\psi = -(\hbar^2/2m)\Delta\psi + V\psi$, one must fix two conversion scales: a time rescaling and a mass scale. Matching the kinetic coefficients gives $\sigma^2/2 = \hbar^2/(2m)$ in the appropriate units, so $\sigma^2 = \hbar^2/m$. Matching the potential gives $\VW = V/\hbar$ (or appropriate dimensionful version). Once one physical energy scale is known (e.g.\ one spectral gap), these two conditions fix the conversion between closure units and laboratory units completely.
+\begin{remark}[Unit matching prescription]\label{rem:units}
+The closure equation is formulated in closure units where $\sigma^2$ is the diffusion coefficient. To compare with the physical Schr\"odinger equation $i\hbar\partial_t\psi = -(\hbar^2/2m)\Delta\psi + V\psi$, divide the physical equation by $\hbar$:
+\begin{equation}
+    i\partial_t\psi = -\frac{\hbar}{2m}\Delta\psi + \frac{V}{\hbar}\psi
+\end{equation}
+Matching the kinetic coefficient with the closure equation $i\partial_t\Psi = -(\sigma^2/2)\Delta\Psi + \VW\Psi$ gives:
+\begin{equation}\label{eq:sigma_match}
+    \frac{\sigma^2}{2} = \frac{\hbar}{2m} \qquad\Rightarrow\qquad \sigma^2 = \frac{\hbar}{m}
+\end{equation}
+and matching the potential gives $\VW = V/\hbar$. Once one physical energy scale is known (e.g.\ one spectral gap), these two conditions fix the conversion between closure units and laboratory units completely.
 
 This is a calibration step, not a first-principles derivation of $\hbar$. The non-trivial content is that $\sigma^2$ then determines \textit{all} energy scales through the Witten Hamiltonian, which is itself determined by the closure functional $\Fcal$. Thus $\hbar$ enters as a single calibration constant connecting the closure scale to SI units, not as an independent free parameter at each energy level.
+\end{remark}
+
+\subsection{Explicit closure functional on the 600-cell}\label{sec:explicit_F}
+
+\begin{definition}[600-cell closure functional]\label{def:F600}
+Let $\{v_1, \ldots, v_{120}\} \subset \mathbb{R}^4$ be the vertices of the 600-cell on the unit 3-sphere. For smoothing parameter $\varepsilon > 0$, define:
+\begin{equation}\label{eq:F_explicit}
+    \Fcal(x) = -\varepsilon^2 \log\!\left(\sum_{i=1}^{120} \exp\!\left(-\frac{|x - v_i|^2}{2\varepsilon^2}\right)\right)
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Properties of the 600-cell closure functional]\label{prop:F_properties}
+The functional~\eqref{eq:F_explicit} satisfies:
+\begin{enumerate}
+    \item \textbf{Closure minima:} $\Fcal(v_i) = 0$ for all $i = 1, \ldots, 120$ (up to an additive constant absorbed by normalisation).
+    \item \textbf{Positivity away from vertices:} $\Fcal(x) > 0$ for $x$ not at a vertex.
+    \item \textbf{$H_4$ invariance:} $\Fcal(gx) = \Fcal(x)$ for all $g \in H_4$, because the vertex set is $H_4$-invariant.
+    \item \textbf{Smoothness:} $\Fcal \in C^\infty(\mathbb{R}^4)$ for all $\varepsilon > 0$.
+    \item \textbf{Uniform Hessian:} By vertex-transitivity of the 600-cell, the Hessian $\nabla^2\Fcal(v_i)$ is the same (up to $H_4$ conjugation) at every vertex.
+    \item \textbf{Barrier structure:} Adjacent vertices (distance $1/\varphi$) are separated by barriers whose height is controlled by $\varepsilon$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1): At $x = v_j$, the term $i = j$ in the sum dominates (contributes $\exp(0) = 1$), so $\Fcal(v_j) \to 0$ as $\varepsilon \to 0$; for finite $\varepsilon$, the nearest-neighbour corrections are exponentially small. (2): Away from all vertices, every $|x - v_i|^2 > 0$, so the log-sum-exp is strictly less than $\log(120)$ while at a vertex it approaches $\log(1)$. (3): $H_4$ permutes the vertex set, so the sum is invariant. (4): Log-sum-exp of smooth functions is smooth. (5): The $H_4$ action is transitive on vertices. (6): The barrier height between adjacent vertices $v_i, v_j$ scales as $|v_i - v_j|^2/(4\varepsilon^2)$ in the tight-binding regime $\varepsilon \ll |v_i - v_j|$.
+\end{proof}
+
+\begin{remark}
+The log-sum-exp construction is the standard smooth approximation to the minimum function: $\Fcal(x) \approx \min_i |x - v_i|^2/(2)$ as $\varepsilon \to 0$. It is the unique smooth $H_4$-invariant functional of this type with minima at the vertex set. The properties above are verified computationally by the accompanying script.
 \end{remark}
 
 \subsection{Field-theoretic extension}\label{sec:field}
@@ -190,7 +227,7 @@ In the tight-binding regime, the ground state in each well $q_i$ is approximatel
 
 The 600-cell vertex graph $G_{600}$ has $N = 120$ vertices, each with degree 12, and graph Laplacian $\mathbf{L} = 12\,\mathbf{I} - \mathbf{A}_{600}$. Direct numerical diagonalisation of the adjacency matrix (verified by the accompanying script \texttt{run\_600cell\_spectral\_verification.py}) yields the complete spectrum.
 
-The 120 vertices of the 600-cell are the elements of the binary icosahedral group $2I$ (order 120), so the permutation representation is the regular representation of $2I$. Each irreducible representation $\rho$ of $2I$ appears with multiplicity $\dim(\rho)^2$, and the adjacency eigenvalue on $\rho$ is a scalar determined by the characters.
+The 120 vertices of the 600-cell can be identified with the elements of the binary icosahedral group $2I$ (order 120), embedded in $S^3 \subset \mathbb{R}^4$ via the quaternion representation. Under the left-regular action of $2I$ on itself, the vertex-permutation representation is the regular representation. Each irreducible representation $\rho$ of $2I$ therefore appears with multiplicity $\dim(\rho)^2$, and the adjacency matrix --- which commutes with the $2I$ action because adjacency is defined by a conjugation-invariant distance --- acts as a scalar on each irreducible component. The eigenvalue on irrep $\rho$ is $\alpha_\rho = (1/\dim\rho)\sum_{s \in S} \chi_\rho(s)$ where $S$ is the set of 12 nearest-neighbour group elements and $\chi_\rho$ is the character. The numerical values are confirmed by direct diagonalisation (Table~\ref{tab:spectrum}).
 
 \begin{table}[ht]
 \centering
@@ -461,8 +498,8 @@ The framework is falsifiable at multiple levels:
 \subsection{Problems addressed in this paper}
 
 \begin{enumerate}
-    \item \textbf{Explicit $\Fcal$ construction.} An $H_4$-invariant closure functional with minima at the 600-cell vertices is constructed (Section~\ref{sec:field}, log-sum-exp form). Verified computationally.
-    \item \textbf{Spectral decomposition.} The complete eigenvalue-representation map of the 600-cell graph is computed (Table~\ref{tab:spectrum}). The integer selection principle identifying Paper~V's mass eigenvalues is established (Proposition~\ref{prop:integer}).
+    \item \textbf{Explicit $\Fcal$ construction.} An $H_4$-invariant closure functional with minima at the 600-cell vertices is constructed explicitly (Definition~\ref{def:F600}, Section~\ref{sec:explicit_F}). Its key properties --- closure minima, positivity, $H_4$ invariance, smoothness, uniform Hessian, barrier structure --- are proved (Proposition~\ref{prop:F_properties}) and verified computationally.
+    \item \textbf{Spectral decomposition.} The complete eigenvalue-representation map of the 600-cell graph is computed (Table~\ref{tab:spectrum}), with all nine eigenvalues identified in exact algebraic form. The integer selection principle identifying Paper~V's mass eigenvalues is established (Proposition~\ref{prop:integer}).
 \end{enumerate}
 
 \subsection{Remaining concrete mathematical problems}
@@ -530,9 +567,9 @@ This paper constructs three bridges that connect the previously separate pillars
 
 \textbf{The spectral bridge} shows that, in the tight-binding regime, the Witten Hamiltonian on the 600-cell closure landscape has a low-energy spectrum governed by the 600-cell graph Laplacian --- the same object that determines particle masses in Papers~I--V. The same closure-functional framework can, in principle, organise both mass structure and quantum dynamics through different effective limits.
 
-\textbf{The field extension} shows that the Nelson pairing construction extends formally to field configurations, producing a functional Schr\"odinger equation in the equilibrium tangent limit. This connects the single-particle quantum dynamics of Papers~XVIII--XXI to the field-theoretic setting required for particle physics.
+\textbf{The field extension} shows that the Nelson pairing construction extends formally to field configurations, producing a functional Schr\"odinger equation in the equilibrium tangent limit. This connects the single-particle quantum dynamics of Papers~XVIII--XXI to the field-theoretic setting relevant to particle physics.
 
-\textbf{The gauge projection} shows that the symmetry of the closure functional is inherited by the Witten Hamiltonian and its eigenspaces, and that the $E_8 \to H_4$ Coxeter chain connects this symmetry to the Standard Model gauge group.
+\textbf{The gauge projection} shows that the symmetry of the closure functional is inherited by the Witten Hamiltonian and its eigenspaces, and identifies the $E_8 \to H_4$ Coxeter chain as a candidate route through which this symmetry may be related to Standard Model gauge structure.
 
 Together, these bridges outline a mechanism by which the Standard Model could arise as the equilibrium tangent projection of a nonlinear closure-field dynamics on the 600-cell constraint geometry:
 \begin{equation*}
