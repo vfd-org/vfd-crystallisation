@@ -96,7 +96,7 @@ The event set $\Ecal$ is \textit{globally flat} if it is locally flat at radius 
 \end{definition}
 
 \begin{remark}
-Local flatness means that the transition graph ``looks the same'' from every event in $S$ out to radius $r$. This is the discrete analogue of local isometry in Riemannian geometry.
+Local flatness means that the transition graph has uniform volume-growth profiles from every event in $S$ out to radius $r$. This is a discrete analogue of local homogeneity in Riemannian geometry (though it is weaker than local graph isomorphism).
 \end{remark}
 
 %==================================================================
@@ -111,30 +111,26 @@ For an event $e$ at radius $r$, with a reference volume profile $V_{\mathrm{ref}
 \end{definition}
 
 \begin{remark}
-$K_{\mathrm{grow}} = 0$: event $e$ has the same local volume as the reference (flat). $K_{\mathrm{grow}} > 0$: the neighborhood is smaller than expected (positive curvature, analogous to a sphere where volumes grow slower). $K_{\mathrm{grow}} < 0$: the neighborhood is larger than expected (negative curvature).
+$K_{\mathrm{grow}} = 0$: event $e$ has the same local volume as the reference (flat). $K_{\mathrm{grow}} > 0$ indicates slower-than-reference local growth, while $K_{\mathrm{grow}} < 0$ indicates faster-than-reference local growth. These signs are heuristically analogous to positive and negative curvature, respectively, but no smooth-curvature identification is claimed here.
 \end{remark}
 
 %==================================================================
 \section{Curvature Candidate B: Branching Asymmetry}\label{sec:curv_B}
 %==================================================================
 
-\begin{definition}[Directed neighborhood]\label{def:directed}
-In the directed Hasse graph (with edges $e_1 \to e_2$ when $e_1 \lessdot e_2$), define:
-\begin{itemize}
-    \item $\mathrm{out}(e) = |\{e' : e \lessdot e'\}|$ (number of immediate successors),
-    \item $\mathrm{in}(e) = |\{e' : e' \lessdot e\}|$ (number of immediate predecessors).
-\end{itemize}
-\end{definition}
+\begin{remark}
+The directed Hasse graph (with edges $e_1 \to e_2$ when $e_1 \lessdot e_2$) also carries in-degree and out-degree information. The undirected definition above is preferred for the branching curvature indicator because it ensures the flat reference model has genuinely vanishing curvature. Directed branching asymmetry (in-degree vs out-degree) may serve as an additional causal-anisotropy indicator in future work.
+\end{remark}
 
 \begin{definition}[Branching curvature]\label{def:Kbranch}
 \begin{equation}\label{eq:Kbranch}
-    K_{\mathrm{branch}}(e) = \left|\mathrm{out}(e) - \overline{\mathrm{out}}\right| + \left|\mathrm{in}(e) - \overline{\mathrm{in}}\right|
+    K_{\mathrm{branch}}(e) = \left|\deg_{\Gcal}(e) - \overline{\deg}\right|
 \end{equation}
-where $\overline{\mathrm{out}}$ and $\overline{\mathrm{in}}$ are the mean out-degree and in-degree over $\Ecal$.
+where $\deg_{\Gcal}(e)$ is the degree of $e$ in the undirected transition graph and $\overline{\deg}$ is the mean degree over $\Ecal$.
 \end{definition}
 
 \begin{remark}
-$K_{\mathrm{branch}} = 0$: the event has exactly average branching (locally regular). $K_{\mathrm{branch}} > 0$: the event has anomalous branching --- either a bottleneck (many predecessors, few successors) or an expansion point (few predecessors, many successors). This is structural anisotropy in the event flow.
+$K_{\mathrm{branch}} = 0$: the event has exactly average connectivity (locally regular). $K_{\mathrm{branch}} > 0$: the event has anomalous connectivity --- either a bottleneck (much higher degree than average) or a peripheral event (much lower degree). This measures structural non-uniformity in event accessibility.
 \end{remark}
 
 %==================================================================
@@ -186,8 +182,8 @@ The dual-pentagon model from Papers~XXIII--XXV: 5 events in Layer~0, 5 in Layer~
 \textbf{Curvature indicators.}
 \begin{itemize}
     \item $K_{\mathrm{grow}}(e; 1) = 0$ for all $e$ (all events have the same ball size).
-    \item $K_{\mathrm{branch}}(e) = 0$ for all $e$ ($\mathrm{out} = 5$ for Layer~0, $\mathrm{in} = 5$ for Layer~1; by layer symmetry, mean equals value within each layer).
-    \item $K_{\mathrm{geo}}(e) = 0$ for all $e$ (by the symmetry of $K_{5,5}$, betweenness is uniform within each layer).
+    \item $K_{\mathrm{branch}}(e) = 0$ for all $e$ (every vertex in $K_{5,5}$ has undirected degree 5; $\overline{\deg} = 5$).
+    \item $K_{\mathrm{geo}}(e) = 0$ for all $e$ (by the vertex-transitive symmetry of $K_{5,5}$ with equal partition sizes, all vertices have equal betweenness).
 \end{itemize}
 
 \textbf{Conclusion.} The symmetric two-layer model is flat: all curvature indicators vanish. This establishes the baseline.
@@ -230,16 +226,16 @@ The profiles differ: $V_b(1) = 9 \neq V_{a_i}(1) = 2$. \textbf{Not flat.}
     \item $K_{\mathrm{grow}}(c_j; 1) = 0.28 > 0$.
 \end{itemize}
 
-\textbf{Branching curvature} ($\overline{\mathrm{out}} = (4 \times 1 + 1 \times 4 + 4 \times 0)/9 = 8/9$, $\overline{\mathrm{in}} = (4 \times 0 + 1 \times 4 + 4 \times 1)/9 = 8/9$):
+\textbf{Branching curvature.} Undirected degrees: $\deg(a_i) = 1$, $\deg(b) = 8$, $\deg(c_j) = 1$. Mean degree: $\overline{\deg} = (4 \times 1 + 1 \times 8 + 4 \times 1)/9 = 16/9 \approx 1.78$.
 \begin{itemize}
-    \item $K_{\mathrm{branch}}(a_i) = |1 - 8/9| + |0 - 8/9| = 1/9 + 8/9 = 1$.
-    \item $K_{\mathrm{branch}}(b) = |4 - 8/9| + |4 - 8/9| = 28/9 + 28/9 = 56/9 \approx 6.2$ (highest).
-    \item $K_{\mathrm{branch}}(c_j) = |0 - 8/9| + |1 - 8/9| = 8/9 + 1/9 = 1$.
+    \item $K_{\mathrm{branch}}(a_i) = |1 - 16/9| = 7/9 \approx 0.78$.
+    \item $K_{\mathrm{branch}}(b) = |8 - 16/9| = 56/9 \approx 6.2$ (highest).
+    \item $K_{\mathrm{branch}}(c_j) = |1 - 16/9| = 7/9 \approx 0.78$.
 \end{itemize}
 
 The bottleneck $b$ has by far the highest branching curvature.
 
-\textbf{Geodesic concentration.} Every shortest path between a Layer-0 event and a Layer-2 event passes through $b$. There are $4 \times 4 = 16$ such pairs, and $b$ lies on all 16 geodesics. Paths between same-layer events also pass through $b$ (e.g.\ $a_1 \to b \to a_2$ is not a geodesic since $a_1$ and $a_2$ are not adjacent; but $a_1 \to b \to c_1$ is a geodesic of length 2). In fact, every path between any two non-identical events passes through $b$ or stays within a single layer (distance 2 via $b$).
+\textbf{Geodesic concentration.} Every shortest path between a Layer-0 event and a Layer-2 event passes through $b$. There are $4 \times 4 = 16$ such pairs, and $b$ lies on all 16 geodesics. Paths between same-layer events also pass through $b$ (e.g.\ $a_1 \to b \to a_2$ is not a geodesic since $a_1$ and $a_2$ are not adjacent; but $a_1 \to b \to c_1$ is a geodesic of length 2). Every shortest path between distinct non-bottleneck events passes through $b$, since there are no within-layer edges.
 
 Betweenness: $\beta(b) \gg \beta(a_i) = \beta(c_j)$, so $K_{\mathrm{geo}}(b) \gg 0$.
 
@@ -303,7 +299,7 @@ These are structural parallels, not claimed equivalences. The VFD curvature indi
 \subsection{What is established}
 
 \begin{itemize}
-    \item Flatness defined as local neighborhood isomorphism (Definition~\ref{def:flatness}).
+    \item Flatness defined as local neighborhood-profile uniformity (Definition~\ref{def:flatness}).
     \item Three curvature indicators constructed: volume-growth, branching, geodesic concentration (Definitions~\ref{def:Kgrow}, \ref{def:Kbranch}, \ref{def:Kgeo}).
     \item Flat toy model: all indicators vanish (Example~\ref{ex:flat}).
     \item Curved toy model: all indicators nonzero, bottleneck concentrates geodesics (Example~\ref{ex:curved}).
@@ -337,7 +333,7 @@ These are structural parallels, not claimed equivalences. The VFD curvature indi
 
 The event-order framework of Papers~XXIII--XXV naturally supports a curvature precursor. Flatness is defined as local uniformity of the transition-graph neighborhood structure; curvature is defined as deviation from that uniformity. Three indicators --- volume-growth distortion, branching asymmetry, and geodesic concentration --- provide complementary measures of local geometric distortion.
 
-The flat toy model (symmetric $K_{5,5}$) has vanishing curvature. The curved toy model (asymmetric bottleneck) has nonzero curvature, with geodesics concentrating through the bottleneck in a structural analogue of gravitational free fall: motion through the event structure follows the geometry of accessibility without any imposed force.
+The flat toy model (symmetric $K_{5,5}$) has vanishing curvature. The curved toy model (asymmetric bottleneck) has nonzero curvature, with geodesics concentrating through the bottleneck in a structural analogue of gravitational free fall: geodesic propagation through the event structure follows the geometry of accessibility without any imposed force.
 
 The GR programme now carries: temporal ordering, observer-dependent kinematics, separation geometry, and curvature. What remains is the connection between event-structure distortion and matter/energy content --- the route to dynamical field equations.
 
