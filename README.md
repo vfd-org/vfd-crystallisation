@@ -323,7 +323,7 @@ Capstone of the GR programme. Introduces source field S(e) from local event-cont
 
 #### Paper XXVIII — Quantum and Gravitational Structure from a Common Event-Order Geometry
 
-**[Quantum and Gravitational Structure from a Common Event-Order Geometry](papers/paper-xxviii/paper-xxviii.tex)** (LaTeX source)
+**[Quantum and Gravitational Structure from a Common Event-Order Geometry](papers/paper-xxviii/Quantum_and_Gravitational_Structure_from_a_Common_Event_Order_Geometry.pdf)** ([LaTeX source](papers/paper-xxviii/paper-xxviii.tex))
 
 Proposes that the quantum track (Papers XV–XXII) and the gravitational track (Papers XXIII–XXVII) are two projections of a single underlying event-order geometry. Identifies the shared substrate: the triple (E, F, G) — event set, closure functional, and transition graph — all derived from the dual 600-cell system. Presents a proposed structural correspondence table mapping objects across both tracks (path integrals ↔ geodesics, Witten Hamiltonian ↔ graph Laplacian, norm conservation ↔ source balance). Defines the ordering fraction η as a candidate regime-transition parameter. Reinterprets crystallisation as the geometric bridge between quantum multiplicity and gravitational order. Does not derive quantum gravity, the Einstein equations, or a continuum limit. Establishes a structural bridge, not a dynamical unification.
 
