@@ -37,7 +37,7 @@
 \begin{abstract}
 Paper~XXIII derived a strict partial order on admissible overlap events between two phase-rotated 600-cell copies, interpreting the ordering as an emergent temporal structure. The present paper shows that this event poset carries observer-dependent structure analogous to the kinematic backbone of special relativity.
 
-An observer is defined as a linear extension of the event partial order equipped with a sampling measure over events. Different observers assign different time functions to the same event set. The paper proves: (1) relativity of simultaneity --- incomparable events can be ordered differently by different observers; (2) a time-dilation analogue --- observers with different sampling measures accumulate different elapsed times along the same event chain; (3) worldlines arise as maximal chains in the poset. A worked example on the dual-pentagon system demonstrates all constructions explicitly.
+An observer is defined as a linear extension of the event partial order equipped with a sampling measure over events. Different observers assign different time functions to the same event set. The paper proves: (1) relativity of simultaneity --- incomparable events can be ordered differently by different observers; (2) that differing observer measures yield non-unique elapsed-time assignments along shared event chains, providing a time-dilation analogue; (3) worldlines arise as maximal chains in the poset. A worked example on the dual-pentagon system demonstrates all constructions explicitly.
 
 The paper does not derive Lorentz invariance, the metric tensor, or the Einstein equations. It establishes that the kinematic phenomena of frame-dependent time and simultaneity emerge from the event-order geometry without assuming spacetime.
 \end{abstract}
@@ -117,11 +117,11 @@ If events $e_1, e_2 \in \Ecal$ are incomparable under $\prec$ (neither $e_1 \pre
 \end{theorem}
 
 \begin{proof}
-Since $e_1$ and $e_2$ are incomparable, there exist linear extensions $\leq_1$ placing $e_1$ before $e_2$, and $\leq_2$ placing $e_2$ before $e_1$ (this is a standard property of partial orders). Choose any positive measure $\mu > 0$ and set $O_1 = (\leq_1, \mu)$, $O_2 = (\leq_2, \mu)$. Then $t_{O_1}(e_1) < t_{O_1}(e_2)$ and $t_{O_2}(e_2) < t_{O_2}(e_1)$ by construction.
+Since $e_1$ and $e_2$ are incomparable, there exist linear extensions $\leq_1$ placing $e_1$ before $e_2$, and $\leq_2$ placing $e_2$ before $e_1$. (This follows from the standard extension property of finite partial orders: for any two incomparable elements, linear extensions exist placing them in either relative order.) Choose any positive measure $\mu > 0$ and set $O_1 = (\leq_1, \mu)$, $O_2 = (\leq_2, \mu)$. Then $t_{O_1}(e_1) < t_{O_1}(e_2)$ and $t_{O_2}(e_2) < t_{O_2}(e_1)$ by construction.
 \end{proof}
 
 \begin{remark}
-This is the geometric analogue of the relativity of simultaneity in special relativity: events that are spacelike-separated (incomparable in the causal order) can be ordered differently by different inertial frames (linear extensions). The VFD framework derives this from the event poset; special relativity derives it from Lorentz invariance. The structural conclusion is the same.
+This is the geometric analogue of the relativity of simultaneity in special relativity: events that are spacelike-separated (incomparable in the causal order) can be ordered differently by different inertial frames (linear extensions). The VFD framework derives this from the event poset; special relativity derives it from Lorentz invariance. The structural role is analogous.
 \end{remark}
 
 %==================================================================
@@ -136,19 +136,19 @@ For a chain $C = (e_1 \prec e_2 \prec \cdots \prec e_n) \subset \Ecal$ and obser
 \end{definition}
 
 \begin{theorem}[Time-dilation analogue]\label{thm:dilation}
-For any chain $C \subset \Ecal$ and any two observers $O_1 = (\leq, \mu_1)$, $O_2 = (\leq, \mu_2)$ sharing the same linear extension but with different sampling measures $\mu_1 \neq \mu_2$:
+Let $O_1 = (\leq, \mu_1)$ and $O_2 = (\leq, \mu_2)$ be observers sharing the same linear extension but with different sampling measures. If $\mu_1$ and $\mu_2$ differ on the set of events lying between $e_1$ and $e_n$ in the shared ordering, then:
 \begin{equation}
     \Delta t_{O_1}(C) \neq \Delta t_{O_2}(C)
 \end{equation}
-in general. Both observers agree on the ordering of events in $C$ but disagree on the elapsed time between the first and last events.
+for the chain $C = (e_1 \prec \cdots \prec e_n)$. Both observers agree on the ordering of events but disagree on the elapsed time.
 \end{theorem}
 
 \begin{proof}
-Since $O_1$ and $O_2$ share the same ordering $\leq$, the set of events summed in~\eqref{eq:elapsed} is identical. But $\mu_1 \neq \mu_2$ implies:
+Since $O_1$ and $O_2$ share the ordering $\leq$, the set $S$ of events between $e_1$ and $e_n$ is identical for both. By hypothesis, $\mu_1$ and $\mu_2$ differ on $S$, so:
 \begin{equation}
     \sum_{e' \in S} \mu_1(e') \neq \sum_{e' \in S} \mu_2(e')
 \end{equation}
-for any set $S$ on which $\mu_1$ and $\mu_2$ differ.
+giving $\Delta t_{O_1}(C) \neq \Delta t_{O_2}(C)$.
 \end{proof}
 
 \begin{remark}
@@ -164,20 +164,24 @@ The sampling measure $\mu_O$ is not yet connected to physical velocity or energy
 %==================================================================
 
 \begin{definition}[Worldline]\label{def:worldline}
-A \textit{worldline} is a maximal chain in $(\Ecal, \prec)$: a totally ordered subset $W \subset \Ecal$ such that no event outside $W$ is comparable to all events in $W$.
+A \textit{worldline} is a maximal chain in $(\Ecal, \prec)$: a totally ordered subset $W \subset \Ecal$ that cannot be extended by inclusion.
 \end{definition}
 
 \begin{remark}
-A worldline is a complete ``history'' through the event structure --- a sequence of events each following the previous in the partial order, with no gaps. Different worldlines may share some events (intersect) or be entirely disjoint.
+A worldline is a complete sequence of events each following the previous in the partial order. Different worldlines may share some events (intersect) or be entirely disjoint.
 \end{remark}
 
-\begin{proposition}[Worldline time]\label{prop:wtime}
-For an observer $O$ and a worldline $W = (e_1 \prec \cdots \prec e_n)$:
+\begin{definition}[Chain time]\label{def:chaintime}
+For an observer $O$ and a chain $W = (e_1 \prec \cdots \prec e_n)$, the \textit{chain time} (or worldline time) is:
 \begin{equation}
-    \Delta t_O(W) = \sum_{k=1}^{n} \mu_O(e_k)
+    \tau_O(W) = \sum_{k=1}^{n} \mu_O(e_k)
 \end{equation}
-This is the total ``proper time'' experienced along the worldline as measured by observer $O$.
-\end{proposition}
+This is the cumulative measure restricted to events on the chain itself.
+\end{definition}
+
+\begin{remark}
+Chain time $\tau_O(W)$ differs in general from the observer elapsed time $\Delta t_O(W) = t_O(e_n) - t_O(e_1)$, since $\Delta t_O$ includes contributions from all events between $e_1$ and $e_n$ in the observer's total ordering, not just those on the chain. The chain time $\tau_O$ is the intrinsic duration along the worldline; $\Delta t_O$ is the global clock reading.
+\end{remark}
 
 %==================================================================
 \section{Relative Velocity (Proto-Concept)}\label{sec:velocity}
@@ -186,9 +190,9 @@ This is the total ``proper time'' experienced along the worldline as measured by
 A full notion of velocity requires spatial structure, which this paper does not construct. However, a proto-concept can be defined.
 
 \begin{definition}[Relative sampling rate]\label{def:velocity}
-For two observers $O_1, O_2$ sharing the same linear extension $\leq$, their \textit{relative sampling rate} along a chain $C$ is:
+For two observers $O_1, O_2$, their \textit{relative sampling rate} along a chain $C$ is:
 \begin{equation}
-    \rho(O_1, O_2; C) = \frac{\Delta t_{O_1}(C)}{\Delta t_{O_2}(C)} = \frac{\sum_{e \in C} \mu_1(e)}{\sum_{e \in C} \mu_2(e)}
+    \rho(O_1, O_2; C) = \frac{\tau_{O_1}(C)}{\tau_{O_2}(C)} = \frac{\sum_{e \in C} \mu_1(e)}{\sum_{e \in C} \mu_2(e)}
 \end{equation}
 \end{definition}
 
@@ -222,7 +226,7 @@ Both observers agree: all $\theta_b = 0$ events precede all $\theta_b = 2\pi/5$ 
 \end{itemize}
 Same chain, different elapsed times: $\Delta t_{O_1} = 5 \neq \Delta t_{O_2} = 1$. \textit{Time dilation analogue demonstrated.}
 
-\textbf{Relative sampling rate.} $\rho(O_1, O_2; C) = 5/1 = 5$. Observer $O_2$ ``ages'' 5 times faster than $O_1$ along this chain.
+\textbf{Relative sampling rate.} $\rho(O_1, O_2; C) = 5/1 = 5$. Observer $O_1$ accumulates 5 times more elapsed time than $O_2$ along this chain.
 \end{example}
 
 %==================================================================
@@ -242,7 +246,7 @@ Ordering & Birth-angle partial order & Causal structure \\
 Observer & Linear extension + measure & Inertial frame \\
 Time function & Cumulative sampling measure & Proper time \\
 Simultaneity & Observer-dependent (proved) & Frame-dependent \\
-Time dilation & Sampling-rate differences (proved) & Velocity-dependent \\
+Time dilation & Sampling-rate differences (exhibited) & Velocity-dependent \\
 Worldline & Maximal chain in poset & Timelike curve \\
 Velocity & Proto-concept (sampling ratio) & $dx/dt$ \\
 \bottomrule
@@ -263,7 +267,7 @@ The structural analogies in Table~\ref{tab:SR} are \textit{exhibited}, not deriv
     \item Observer defined as linear extension + sampling measure (Definition~\ref{def:observer}).
     \item Observer time function constructed explicitly (Definition~\ref{def:time}, Proposition~\ref{prop:preserve}).
     \item Relativity of simultaneity proved (Theorem~\ref{thm:simultaneity}).
-    \item Time-dilation analogue proved (Theorem~\ref{thm:dilation}).
+    \item Time-dilation analogue exhibited under differing observer measures (Theorem~\ref{thm:dilation}).
     \item Worldlines defined as maximal chains (Definition~\ref{def:worldline}).
     \item Worked example demonstrates all constructions.
 \end{itemize}
@@ -290,7 +294,7 @@ The structural analogies in Table~\ref{tab:SR} are \textit{exhibited}, not deriv
 \section{Conclusion}\label{sec:conclusion}
 %==================================================================
 
-The event poset of Paper~XXIII, equipped with observer-dependent sampling measures, produces the kinematic backbone of relativistic structure: observer-dependent simultaneity, time-dilation analogues, and worldline geometry. These features are proved, not assumed. No spacetime manifold, metric, or Lorentz symmetry is postulated.
+The event poset of Paper~XXIII, equipped with observer-dependent sampling measures, supports a kinematic precursor of relativistic structure: observer-dependent simultaneity, time-dilation analogues, and worldline geometry. These features are proved, not assumed. No spacetime manifold, metric, or Lorentz symmetry is postulated.
 
 The key structural insight is that the non-uniqueness of the global clock (Paper~XXIII) is not a deficiency but a feature: it is the geometric origin of observer dependence. Different observers are different ways of completing the partial order into a total order, and different sampling measures produce different experienced durations.
 
