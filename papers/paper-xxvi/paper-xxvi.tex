@@ -1,0 +1,348 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Gcal}{\mathcal{G}}
+
+\title{Curvature from Non-Uniform Event-Order Geometry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Papers~XXIII--XXV derived event ordering, observer-dependent kinematics, and separation geometry from phase-overlap structure without assuming spacetime. The present paper addresses the next question: when is that geometry uniform, and when is it distorted?
+
+Flatness is defined as local isomorphism of event neighborhoods in the transition graph: a region is flat if nearby events have identical local accessibility profiles. Curvature is defined as deviation from this local uniformity. Three curvature candidates are constructed and compared: (A)~volume-growth distortion --- deviation of metric-ball sizes from a local reference; (B)~branching asymmetry --- non-uniformity of the directed neighborhood structure; (C)~geodesic concentration --- preferential routing of shortest paths through specific events.
+
+Two toy models are worked explicitly: a symmetric two-layer model (flat, all curvature indicators vanish) and an asymmetric three-layer model with a bottleneck (curved, all three indicators are nonzero). In the curved model, geodesics concentrate through the bottleneck, providing a free-fall analogue: motion follows the accessibility structure of the event geometry without any imposed force.
+
+The paper does not derive Einstein equations or curvature tensors. It establishes a concrete curvature precursor on the event-order framework, showing that non-uniform event accessibility produces detectable geometric distortion.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Paper~XXV~\citep{SmartXXV} established three separation constructions on the event poset: chain-length separation for comparable events, observer-disagreement for incomparable events, and a transition-cost metric on the full Hasse graph. These give the event set a metric-like geometry.
+
+The next question is: is that geometry uniform everywhere, or can it be distorted? In smooth general relativity, the answer is curvature: the Riemann tensor measures how the geometry deviates from flatness. The present paper constructs the discrete analogue: curvature as non-uniformity of local event accessibility.
+
+\subsection*{Central principle}
+
+\begin{quote}
+In VFD, curvature is the failure of local event accessibility to remain uniform.
+\end{quote}
+
+\subsection*{Scope}
+
+This paper defines flatness, constructs curvature indicators, and demonstrates them on toy models. It does not derive Einstein equations, curvature tensors, or continuous geometry. It establishes a curvature precursor on the discrete event-order framework.
+
+%==================================================================
+\section{Local Neighborhoods and Flatness}\label{sec:flat}
+%==================================================================
+
+\subsection{Metric balls}
+
+\begin{definition}[Metric ball]\label{def:ball}
+For event $e \in \Ecal$ and radius $r \geq 0$, the metric ball in the transition graph $\Gcal$ is:
+\begin{equation}
+    B_r(e) = \{e' \in \Ecal : d_{\mathrm{trans}}(e, e') \leq r\}
+\end{equation}
+The local volume is $V_e(r) = |B_r(e)|$.
+\end{definition}
+
+\subsection{Local neighborhood profile}
+
+\begin{definition}[Neighborhood profile]\label{def:profile}
+The \textit{neighborhood profile} of event $e$ is the sequence:
+\begin{equation}
+    \mathbf{V}(e) = (V_e(0), V_e(1), V_e(2), \ldots)
+\end{equation}
+\end{definition}
+
+\subsection{Flatness}
+
+\begin{definition}[Local flatness]\label{def:flatness}
+A subset $S \subset \Ecal$ is \textit{locally flat at radius $r$} if all events in $S$ have identical neighborhood profiles up to radius $r$:
+\begin{equation}
+    V_e(k) = V_{e'}(k) \quad \text{for all } e, e' \in S \text{ and all } k \leq r
+\end{equation}
+The event set $\Ecal$ is \textit{globally flat} if it is locally flat at radius $r$ for all $r \leq \mathrm{diam}(\Gcal)/2$.
+\end{definition}
+
+\begin{remark}
+Local flatness means that the transition graph ``looks the same'' from every event in $S$ out to radius $r$. This is the discrete analogue of local isometry in Riemannian geometry.
+\end{remark}
+
+%==================================================================
+\section{Curvature Candidate A: Volume-Growth Distortion}\label{sec:curv_A}
+%==================================================================
+
+\begin{definition}[Volume-growth curvature]\label{def:Kgrow}
+For an event $e$ at radius $r$, with a reference volume profile $V_{\mathrm{ref}}(r)$ (from a designated flat/symmetric region or the event-set average), define:
+\begin{equation}\label{eq:Kgrow}
+    K_{\mathrm{grow}}(e; r) = \frac{V_{\mathrm{ref}}(r) - V_e(r)}{V_{\mathrm{ref}}(r)}
+\end{equation}
+\end{definition}
+
+\begin{remark}
+$K_{\mathrm{grow}} = 0$: event $e$ has the same local volume as the reference (flat). $K_{\mathrm{grow}} > 0$: the neighborhood is smaller than expected (positive curvature, analogous to a sphere where volumes grow slower). $K_{\mathrm{grow}} < 0$: the neighborhood is larger than expected (negative curvature).
+\end{remark}
+
+%==================================================================
+\section{Curvature Candidate B: Branching Asymmetry}\label{sec:curv_B}
+%==================================================================
+
+\begin{definition}[Directed neighborhood]\label{def:directed}
+In the directed Hasse graph (with edges $e_1 \to e_2$ when $e_1 \lessdot e_2$), define:
+\begin{itemize}
+    \item $\mathrm{out}(e) = |\{e' : e \lessdot e'\}|$ (number of immediate successors),
+    \item $\mathrm{in}(e) = |\{e' : e' \lessdot e\}|$ (number of immediate predecessors).
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Branching curvature]\label{def:Kbranch}
+\begin{equation}\label{eq:Kbranch}
+    K_{\mathrm{branch}}(e) = \left|\mathrm{out}(e) - \overline{\mathrm{out}}\right| + \left|\mathrm{in}(e) - \overline{\mathrm{in}}\right|
+\end{equation}
+where $\overline{\mathrm{out}}$ and $\overline{\mathrm{in}}$ are the mean out-degree and in-degree over $\Ecal$.
+\end{definition}
+
+\begin{remark}
+$K_{\mathrm{branch}} = 0$: the event has exactly average branching (locally regular). $K_{\mathrm{branch}} > 0$: the event has anomalous branching --- either a bottleneck (many predecessors, few successors) or an expansion point (few predecessors, many successors). This is structural anisotropy in the event flow.
+\end{remark}
+
+%==================================================================
+\section{Curvature Candidate C: Geodesic Concentration}\label{sec:curv_C}
+%==================================================================
+
+\begin{definition}[Geodesic betweenness]\label{def:between}
+For event $e$, define the geodesic betweenness centrality:
+\begin{equation}\label{eq:between}
+    \beta(e) = \sum_{\substack{s,t \in \Ecal \\ s \neq e \neq t}} \frac{\sigma_{st}(e)}{\sigma_{st}}
+\end{equation}
+where $\sigma_{st}$ is the number of shortest paths from $s$ to $t$ in $\Gcal$, and $\sigma_{st}(e)$ is the number that pass through $e$.
+\end{definition}
+
+\begin{definition}[Geodesic-concentration curvature]\label{def:Kgeo}
+\begin{equation}\label{eq:Kgeo}
+    K_{\mathrm{geo}}(e) = \frac{\beta(e) - \bar{\beta}}{\bar{\beta}}
+\end{equation}
+where $\bar{\beta}$ is the mean betweenness over $\Ecal$.
+\end{definition}
+
+\begin{remark}
+$K_{\mathrm{geo}} = 0$: the event carries its fair share of geodesics (uniform routing). $K_{\mathrm{geo}} > 0$: the event is a bottleneck --- geodesics concentrate through it. This is the free-fall analogue: paths through the event structure are drawn toward high-betweenness regions, just as geodesics in GR are drawn toward massive bodies.
+\end{remark}
+
+%==================================================================
+\section{Geodesics and Free Fall}\label{sec:geodesic}
+%==================================================================
+
+\begin{definition}[Geodesic]\label{def:geodesic}
+A \textit{geodesic} between events $e_1$ and $e_2$ is a shortest path in $(\Ecal, d_{\mathrm{trans}})$.
+\end{definition}
+
+\begin{remark}
+In a flat event geometry (all curvature indicators zero), geodesics are uniformly distributed: no event carries a disproportionate share of shortest paths. In a curved event geometry (nonzero curvature indicators), geodesics concentrate through specific regions.
+
+This concentration is the structural analogue of gravitational free fall: objects (worldlines, chains) in the event structure are drawn toward regions of high accessibility, not by an imposed force, but by the geometry of the event graph itself. The ``force'' of gravity, in this picture, is the gradient of event accessibility.
+\end{remark}
+
+%==================================================================
+\section{Flat Toy Model: Symmetric Two-Layer}\label{sec:flat_toy}
+%==================================================================
+
+\begin{example}[Symmetric pentagon model]\label{ex:flat}
+The dual-pentagon model from Papers~XXIII--XXV: 5 events in Layer~0, 5 in Layer~1, with every Layer-0 event covering every Layer-1 event. The Hasse graph is $K_{5,5}$ (complete bipartite).
+
+\textbf{Neighborhood profiles.} Every Layer-0 event $e$ has: $V_e(0) = 1$, $V_e(1) = 6$ (itself + 5 Layer-1 events), $V_e(2) = 10$ (all events). By symmetry, every Layer-1 event has the same profile.
+
+\textbf{Curvature indicators.}
+\begin{itemize}
+    \item $K_{\mathrm{grow}}(e; 1) = 0$ for all $e$ (all events have the same ball size).
+    \item $K_{\mathrm{branch}}(e) = 0$ for all $e$ ($\mathrm{out} = 5$ for Layer~0, $\mathrm{in} = 5$ for Layer~1; by layer symmetry, mean equals value within each layer).
+    \item $K_{\mathrm{geo}}(e) = 0$ for all $e$ (by the symmetry of $K_{5,5}$, betweenness is uniform within each layer).
+\end{itemize}
+
+\textbf{Conclusion.} The symmetric two-layer model is flat: all curvature indicators vanish. This establishes the baseline.
+\end{example}
+
+%==================================================================
+\section{Curved Toy Model: Asymmetric Three-Layer with Bottleneck}\label{sec:curved_toy}
+%==================================================================
+
+\begin{example}[Bottleneck model]\label{ex:curved}
+Introduce a three-layer event graph:
+\begin{itemize}
+    \item \textbf{Layer 0}: 4 events $\{a_1, a_2, a_3, a_4\}$.
+    \item \textbf{Layer 1}: 1 event $\{b\}$ (the bottleneck).
+    \item \textbf{Layer 2}: 4 events $\{c_1, c_2, c_3, c_4\}$.
+\end{itemize}
+
+\textbf{Cover relations:} $a_i \lessdot b$ for all $i$, and $b \lessdot c_j$ for all $j$. No other cover relations.
+
+\textbf{Hasse graph:} A ``bowtie'' or hourglass --- all Layer-0 events connect to the single bottleneck, which connects to all Layer-2 events.
+
+\textbf{Partial order:} $a_i \prec b \prec c_j$ for all $i, j$. Within each layer, events are incomparable.
+
+\subsection*{Neighborhood profiles}
+
+\begin{itemize}
+    \item $a_i$: $V_{a_i}(0) = 1$, $V_{a_i}(1) = 2$ (itself + $b$), $V_{a_i}(2) = 6$ (itself + $b$ + 4 $c$-events).
+    \item $b$: $V_b(0) = 1$, $V_b(1) = 9$ (itself + 4 $a$'s + 4 $c$'s), $V_b(2) = 9$ (all events).
+    \item $c_j$: $V_{c_j}(0) = 1$, $V_{c_j}(1) = 2$ (itself + $b$), $V_{c_j}(2) = 6$.
+\end{itemize}
+
+The profiles differ: $V_b(1) = 9 \neq V_{a_i}(1) = 2$. \textbf{Not flat.}
+
+\subsection*{Curvature indicators}
+
+\textbf{Volume-growth curvature} (with $V_{\mathrm{ref}}(1) = \bar{V}(1) = (4 \times 2 + 1 \times 9 + 4 \times 2)/9 = 25/9 \approx 2.78$):
+\begin{itemize}
+    \item $K_{\mathrm{grow}}(a_i; 1) = (2.78 - 2)/2.78 = 0.28 > 0$ (smaller than average --- positive curvature).
+    \item $K_{\mathrm{grow}}(b; 1) = (2.78 - 9)/2.78 = -2.24 < 0$ (larger than average --- negative curvature).
+    \item $K_{\mathrm{grow}}(c_j; 1) = 0.28 > 0$.
+\end{itemize}
+
+\textbf{Branching curvature} ($\overline{\mathrm{out}} = (4 \times 1 + 1 \times 4 + 4 \times 0)/9 = 8/9$, $\overline{\mathrm{in}} = (4 \times 0 + 1 \times 4 + 4 \times 1)/9 = 8/9$):
+\begin{itemize}
+    \item $K_{\mathrm{branch}}(a_i) = |1 - 8/9| + |0 - 8/9| = 1/9 + 8/9 = 1$.
+    \item $K_{\mathrm{branch}}(b) = |4 - 8/9| + |4 - 8/9| = 28/9 + 28/9 = 56/9 \approx 6.2$ (highest).
+    \item $K_{\mathrm{branch}}(c_j) = |0 - 8/9| + |1 - 8/9| = 8/9 + 1/9 = 1$.
+\end{itemize}
+
+The bottleneck $b$ has by far the highest branching curvature.
+
+\textbf{Geodesic concentration.} Every shortest path between a Layer-0 event and a Layer-2 event passes through $b$. There are $4 \times 4 = 16$ such pairs, and $b$ lies on all 16 geodesics. Paths between same-layer events also pass through $b$ (e.g.\ $a_1 \to b \to a_2$ is not a geodesic since $a_1$ and $a_2$ are not adjacent; but $a_1 \to b \to c_1$ is a geodesic of length 2). In fact, every path between any two non-identical events passes through $b$ or stays within a single layer (distance 2 via $b$).
+
+Betweenness: $\beta(b) \gg \beta(a_i) = \beta(c_j)$, so $K_{\mathrm{geo}}(b) \gg 0$.
+
+\subsection*{Free-fall analogue}
+
+All geodesics between distinct layers pass through the bottleneck $b$. This means that any ``motion'' through the event structure from Layer~0 to Layer~2 is drawn through $b$ --- not by an imposed force, but by the geometry of accessibility. The bottleneck acts as a gravitational attractor in the event graph.
+
+\textbf{Conclusion.} The three-layer bottleneck model is curved: all curvature indicators are nonzero, and geodesics concentrate through the bottleneck. This demonstrates that non-uniform event accessibility produces detectable geometric distortion.
+\end{example}
+
+%==================================================================
+\section{Comparison of Curvature Candidates}\label{sec:compare}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Curvature indicators on the two toy models.}
+\label{tab:curvature}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Indicator & Flat model ($K_{5,5}$) & Bottleneck ($b$) & Outer events ($a_i, c_j$) \\
+\midrule
+$K_{\mathrm{grow}}$ & 0 & $-2.24$ & $+0.28$ \\
+$K_{\mathrm{branch}}$ & 0 & $6.2$ & $1.0$ \\
+$K_{\mathrm{geo}}$ & 0 & $\gg 0$ & $\approx 0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All three indicators vanish in the flat model and are nonzero in the curved model. The bottleneck event $b$ has the strongest curvature signal in all three measures. The outer events have moderate positive volume-growth curvature (their neighborhoods are smaller than average) but low geodesic concentration (paths don't preferentially pass through them).
+
+%==================================================================
+\section{Relation to Known Curvature Concepts}\label{sec:known}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Structural parallels with known curvature frameworks.}
+\label{tab:known}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Concept & VFD (this paper) & Comparison \\
+\midrule
+Flatness & Uniform neighborhood profiles & Local isometry (Riemannian) \\
+Volume curvature & Ball-size deviation & Bishop--Gromov comparison \\
+Branching curvature & Degree deviation & Ollivier Ricci curvature \\
+Geodesic curvature & Betweenness concentration & Geodesic focusing (Raychaudhuri) \\
+Free fall & Geodesic concentration & Geodesic principle in GR \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}
+These are structural parallels, not claimed equivalences. The VFD curvature indicators are discrete, graph-theoretic quantities; their continuous limits (if they exist) are not computed here. Whether they converge to smooth Ricci or scalar curvature in an appropriate refinement limit is an open question of significant interest.
+\end{remark}
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is established}
+
+\begin{itemize}
+    \item Flatness defined as local neighborhood isomorphism (Definition~\ref{def:flatness}).
+    \item Three curvature indicators constructed: volume-growth, branching, geodesic concentration (Definitions~\ref{def:Kgrow}, \ref{def:Kbranch}, \ref{def:Kgeo}).
+    \item Flat toy model: all indicators vanish (Example~\ref{ex:flat}).
+    \item Curved toy model: all indicators nonzero, bottleneck concentrates geodesics (Example~\ref{ex:curved}).
+    \item Free-fall analogue: geodesics drawn through high-accessibility regions (Section~\ref{sec:geodesic}).
+\end{itemize}
+
+\subsection{What is not established}
+
+\begin{itemize}
+    \item No Einstein equations. The relationship between curvature and matter/energy content is not derived.
+    \item No curvature tensor. The indicators are scalar quantities, not tensorial.
+    \item No continuous limit. Whether the discrete curvature converges to smooth Riemann/Ricci curvature is open.
+    \item No dynamics. How curvature evolves or responds to event-structure changes is not addressed.
+    \item The curvature indicators are defined relative to a reference profile; the choice of reference may affect the values.
+    \item The toy models are illustrative; the full 600-cell event structure is not analysed.
+\end{itemize}
+
+\subsection{Programme position}
+
+\begin{itemize}
+    \item Paper~XXIII: event ordering (derived).
+    \item Paper~XXIV: observer kinematics (derived).
+    \item Paper~XXV: separation geometry (derived).
+    \item Paper~XXVI (this paper): curvature precursor (constructed).
+    \item Future: dynamics / field equations (how matter sources curvature).
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The event-order framework of Papers~XXIII--XXV naturally supports a curvature precursor. Flatness is defined as local uniformity of the transition-graph neighborhood structure; curvature is defined as deviation from that uniformity. Three indicators --- volume-growth distortion, branching asymmetry, and geodesic concentration --- provide complementary measures of local geometric distortion.
+
+The flat toy model (symmetric $K_{5,5}$) has vanishing curvature. The curved toy model (asymmetric bottleneck) has nonzero curvature, with geodesics concentrating through the bottleneck in a structural analogue of gravitational free fall: motion through the event structure follows the geometry of accessibility without any imposed force.
+
+The GR programme now carries: temporal ordering, observer-dependent kinematics, separation geometry, and curvature. What remains is the connection between event-structure distortion and matter/energy content --- the route to dynamical field equations.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
