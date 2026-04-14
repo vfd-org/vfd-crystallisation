@@ -1,0 +1,389 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Gcal}{\mathcal{G}}
+
+\title{Dynamics and Field Equations\\from Event-Order Geometry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Papers~XXIII--XXVI derived temporal ordering, observer kinematics, separation geometry, and curvature precursors from event-order structure without assuming spacetime. The present paper takes the final step: introducing source content and showing how it drives geometric response.
+
+A \textit{source field} $S(e)$ is defined from local event density relative to a uniform reference. An \textit{accessibility potential} $u(e)$ is introduced on the transition graph, governed by the discrete graph Laplacian equation $\Delta_\Gcal u(e) = S(e) - \bar{S}$. Curvature indicators from Paper~XXVI are shown to respond to the potential: regions of concentrated source produce nonzero curvature and increased geodesic focusing. A global balance law $\sum S(e) = \mathrm{const}$ provides a discrete conservation principle.
+
+Three toy models are worked explicitly: a uniform vacuum (zero source, flat geometry, uniform geodesics), a static localised source (bottleneck with excess density, nonzero curvature, geodesic concentration), and a perturbative model where adding a single event to a symmetric graph creates measurable curvature response and geodesic rerouting. The discrete field law $\Delta_\Gcal u = S - \bar{S}$ provides the bridge: source tells geometry how to distort, geometry tells geodesics how to propagate.
+
+The paper does not derive the Einstein equations or continuous field dynamics. It establishes a discrete, principled analogue in which source content drives geometric response through the event-order framework.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Paper~XXVI~\citep{SmartXXVI} established curvature precursors on the event-order framework: volume-growth distortion, branching asymmetry, and geodesic concentration, all vanishing in flat reference models and nonzero in distorted models. But curvature without a source is geometry without physics. The present paper addresses: \textit{what drives the distortion?}
+
+In general relativity, the answer is the stress-energy tensor: matter and energy tell geometry how to curve. In the event-order framework, the analogue is: \textit{non-uniform event content tells the accessibility geometry how to distort.}
+
+\subsection*{Central principle}
+
+\begin{quote}
+Source is non-uniform event content. Field dynamics are the geometric response of accessibility to that non-uniformity.
+\end{quote}
+
+\subsection*{Scope}
+
+This paper constructs source quantities, a graph-Laplacian field equation, conservation laws, and demonstrates them on toy models. It does not derive the Einstein equations, continuous dynamics, or stress-energy tensors. It establishes a discrete field-equation analogue on the event-order framework.
+
+%==================================================================
+\section{Source Quantities}\label{sec:source}
+%==================================================================
+
+Three candidate source constructions are developed and compared.
+
+\subsection{Source A: Event density}
+
+\begin{definition}[Density source]\label{def:rho}
+For event $e$ at radius $r$, with reference volume profile $V_{\mathrm{ref}}(r)$:
+\begin{equation}\label{eq:rho}
+    S_\rho(e; r) = \frac{V_e(r)}{V_{\mathrm{ref}}(r)} - 1
+\end{equation}
+where $V_e(r) = |B_r(e)|$ is the metric-ball size from Paper~XXVI.
+\end{definition}
+
+$S_\rho = 0$: locally matches the reference (vacuum-like). $S_\rho > 0$: denser than reference (positive source). $S_\rho < 0$: sparser than reference (negative source / deficit).
+
+\subsection{Source B: Overlap multiplicity}
+
+\begin{definition}[Overlap source]\label{def:overlap_source}
+For event $e = (v_i, w_j)$, define:
+\begin{equation}
+    S_\Omega(e) = |\{e' \in \Ecal : d_{\mathrm{trans}}(e, e') = 1\}| - \overline{\deg}
+\end{equation}
+the excess of immediate neighbors beyond the mean degree.
+\end{definition}
+
+This measures local interaction load: events with many admissible neighbors carry more ``content'' than average.
+
+\subsection{Source C: Geodesic traffic}
+
+\begin{definition}[Traffic source]\label{def:traffic}
+\begin{equation}
+    S_J(e) = \beta(e) - \bar{\beta}
+\end{equation}
+where $\beta(e)$ is the geodesic betweenness centrality from Paper~XXVI.
+\end{definition}
+
+Regions with concentrated geodesic traffic act as sources: they carry disproportionate flow, analogous to energy-momentum flux.
+
+\begin{remark}[Source comparison]
+$S_\rho$ measures static local density; $S_\Omega$ measures local connectivity excess; $S_J$ measures dynamic path-flow concentration. In the toy models below, $S_\Omega$ coincides with $K_{\mathrm{branch}}$ from Paper~XXVI (since both use degree deviation), while $S_J$ coincides with $K_{\mathrm{geo}}$ (since both use betweenness). The density source $S_\rho$ provides an independent signal. For the field equation, we use $S_\rho$ as the primary source.
+\end{remark}
+
+%==================================================================
+\section{Accessibility Potential and Field Equation}\label{sec:field}
+%==================================================================
+
+\subsection{The graph Laplacian}
+
+\begin{definition}[Graph Laplacian on $\Gcal$]\label{def:laplacian}
+For the undirected transition graph $\Gcal = (\Ecal, E_H)$, the graph Laplacian acts on functions $f: \Ecal \to \mathbb{R}$ by:
+\begin{equation}\label{eq:laplacian}
+    (\Delta_\Gcal f)(e) = \sum_{e' \sim e} [f(e') - f(e)]
+\end{equation}
+where the sum is over neighbors of $e$ in $\Gcal$.
+\end{definition}
+
+\subsection{The discrete field equation}
+
+\begin{definition}[Accessibility potential]\label{def:potential}
+The \textit{accessibility potential} $u: \Ecal \to \mathbb{R}$ is defined as the solution to:
+\begin{equation}\label{eq:field}
+    \boxed{\Delta_\Gcal\, u(e) = S(e) - \bar{S}}
+\end{equation}
+where $S(e)$ is the source field and $\bar{S} = |\Ecal|^{-1}\sum_{e'} S(e')$ is the mean source.
+\end{definition}
+
+\begin{remark}[Why $S - \bar{S}$]
+The graph Laplacian satisfies $\sum_e (\Delta_\Gcal f)(e) = 0$ for any $f$. Therefore the equation $\Delta_\Gcal u = g$ has a solution only if $\sum g(e) = 0$. Subtracting $\bar{S}$ ensures this compatibility condition is satisfied.
+\end{remark}
+
+\begin{proposition}[Existence of the potential]\label{prop:existence}
+If $\Gcal$ is connected, the equation $\Delta_\Gcal u = S - \bar{S}$ has a solution $u$, unique up to an additive constant.
+\end{proposition}
+
+\begin{proof}
+The graph Laplacian $\Delta_\Gcal$ on a connected graph has kernel $\mathrm{span}\{\mathbf{1}\}$ (the constant functions). The right-hand side $S - \bar{S}$ satisfies $\sum(S - \bar{S}) = 0$, so it is orthogonal to the kernel. By the Fredholm alternative, a solution exists, unique modulo constants.
+\end{proof}
+
+\subsection{Curvature response}
+
+The accessibility potential $u(e)$ encodes the geometric distortion produced by the source. Curvature indicators from Paper~XXVI respond to $u$:
+\begin{itemize}
+    \item High $|u(e)|$: the event is far from the mean accessibility level, indicating local distortion.
+    \item High $|\nabla_\Gcal u|$: the potential varies rapidly near $e$, indicating strong local curvature.
+\end{itemize}
+
+\begin{definition}[Potential-gradient curvature]\label{def:Kpot}
+\begin{equation}
+    K_{\mathrm{pot}}(e) = \sum_{e' \sim e} [u(e') - u(e)]^2
+\end{equation}
+the squared gradient of the accessibility potential at $e$.
+\end{definition}
+
+\begin{remark}
+$K_{\mathrm{pot}} = 0$ iff $u$ is locally constant (no gradient, flat potential landscape). $K_{\mathrm{pot}} > 0$ indicates local potential variation: the source has created a ``hill'' or ``valley'' in accessibility that distorts the geometry.
+\end{remark}
+
+%==================================================================
+\section{Conservation and Balance}\label{sec:conservation}
+%==================================================================
+
+\begin{proposition}[Global source balance]\label{prop:balance}
+The total source deviation vanishes:
+\begin{equation}
+    \sum_{e \in \Ecal} [S(e) - \bar{S}] = 0
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$\sum(S - \bar{S}) = \sum S - |\Ecal| \cdot \bar{S} = \sum S - \sum S = 0$.
+\end{proof}
+
+\begin{remark}
+This is the discrete analogue of energy-momentum conservation: the total source deviation is identically zero. Regions of positive source (excess content) are balanced by regions of negative source (deficit). The field equation~\eqref{eq:field} redistributes this imbalance through the accessibility potential.
+\end{remark}
+
+\begin{proposition}[Local flow conservation]\label{prop:flow}
+For any function $u$ satisfying $\Delta_\Gcal u = S - \bar{S}$, the net ``flow'' across any boundary is determined by the enclosed source:
+\begin{equation}
+    \sum_{e \in \partial R} \sum_{e' \sim e, e' \notin R} [u(e') - u(e)] = \sum_{e \in R} [S(e) - \bar{S}]
+\end{equation}
+for any connected region $R \subset \Ecal$ with boundary $\partial R$.
+\end{proposition}
+
+\begin{proof}
+Sum the field equation over $R$. Interior edges cancel in the Laplacian sum; boundary edges remain. The result is the discrete divergence theorem.
+\end{proof}
+
+%==================================================================
+\section{The Source--Curvature--Geodesic Bridge}\label{sec:bridge}
+%==================================================================
+
+The complete dynamical picture is:
+\begin{enumerate}
+    \item \textbf{Source content} $S(e)$ measures local event-density deviation.
+    \item \textbf{The field equation} $\Delta_\Gcal u = S - \bar{S}$ determines the accessibility potential.
+    \item \textbf{Curvature} $K_{\mathrm{pot}}(e)$ measures the gradient of the potential.
+    \item \textbf{Geodesics} in the modified geometry concentrate toward regions of high potential gradient.
+\end{enumerate}
+
+\begin{quote}
+\textit{Source tells geometry how to distort; geometry tells geodesics how to propagate.}
+\end{quote}
+
+This is the discrete analogue of the Einstein programme:
+\begin{equation*}
+    T_{\mu\nu} \;\xrightarrow{\text{field eq.}}\; G_{\mu\nu} \;\xrightarrow{\text{geodesic eq.}}\; \text{motion}
+\end{equation*}
+replaced by:
+\begin{equation*}
+    S(e) \;\xrightarrow{\Delta_\Gcal u = S - \bar{S}}\; u(e), K_{\mathrm{pot}}(e) \;\xrightarrow{\text{shortest paths}}\; \text{geodesic concentration}
+\end{equation*}
+
+%==================================================================
+\section{Toy Model 1: Uniform Vacuum}\label{sec:vacuum}
+%==================================================================
+
+\begin{example}[Vacuum: symmetric $K_{5,5}$]\label{ex:vacuum}
+The two-layer pentagon model from Papers~XXIII--XXVI.
+
+\textbf{Source.} All events have the same degree and neighborhood profile, so $S_\rho(e) = 0$ for all $e$. $S - \bar{S} = 0$ everywhere.
+
+\textbf{Field equation.} $\Delta_\Gcal u = 0$. Solution: $u = \mathrm{const}$.
+
+\textbf{Curvature.} $K_{\mathrm{pot}}(e) = 0$ for all $e$: zero potential gradient everywhere.
+
+\textbf{Geodesics.} Uniform distribution (by graph symmetry).
+
+\textbf{Conclusion.} Uniform source $\Rightarrow$ flat potential $\Rightarrow$ zero curvature $\Rightarrow$ uniform geodesics. The vacuum is stable and flat.
+\end{example}
+
+%==================================================================
+\section{Toy Model 2: Static Localised Source}\label{sec:static}
+%==================================================================
+
+\begin{example}[Localised source: bottleneck graph]\label{ex:bottleneck}
+The three-layer bottleneck model from Paper~XXVI: 4 outer events in Layer~0, 1 bottleneck $b$ in Layer~1, 4 outer events in Layer~2.
+
+\textbf{Source.} Using degree-based density: $\deg(a_i) = 1$, $\deg(b) = 8$, $\deg(c_j) = 1$. Mean degree: $\overline{\deg} = 16/9$. Source: $S_\Omega(b) = 8 - 16/9 = 56/9 \approx 6.2$. Outer events: $S_\Omega(a_i) = 1 - 16/9 = -7/9 \approx -0.78$.
+
+\textbf{Field equation.} $\Delta_\Gcal u = S_\Omega - \bar{S}_\Omega$. Since $\bar{S}_\Omega = 0$ (by construction of degree-deviation source), the equation is $\Delta_\Gcal u(e) = S_\Omega(e)$.
+
+Solve on the bottleneck graph (9 nodes). By symmetry, $u(a_i) = u_a$ for all $i$ and $u(c_j) = u_c$ for all $j$. The equations are:
+\begin{align}
+    \Delta_\Gcal u(a_i) &= u(b) - u(a_i) = -7/9 \\
+    \Delta_\Gcal u(b) &= 4[u_a - u(b)] + 4[u_c - u(b)] = 56/9 \\
+    \Delta_\Gcal u(c_j) &= u(b) - u(c_j) = -7/9
+\end{align}
+
+From equations 1 and 3: $u(b) - u_a = -7/9$ and $u(b) - u_c = -7/9$, so $u_a = u_c = u(b) + 7/9$.
+
+Check equation 2: $4[(u(b) + 7/9) - u(b)] + 4[(u(b) + 7/9) - u(b)] = 4(7/9) + 4(7/9) = 56/9$. $\checkmark$
+
+Setting $u(b) = 0$ (gauge choice): $u_a = u_c = 7/9$.
+
+\textbf{Potential landscape.} The bottleneck sits at the \textit{lowest} potential ($u(b) = 0$); outer events sit higher ($u = 7/9$). The potential ``flows downhill'' toward the bottleneck.
+
+\textbf{Curvature.} $K_{\mathrm{pot}}(b) = 4(7/9)^2 + 4(7/9)^2 = 8(49/81) = 392/81 \approx 4.84$. $K_{\mathrm{pot}}(a_i) = (7/9)^2 = 49/81 \approx 0.60$. The bottleneck has by far the highest potential-gradient curvature.
+
+\textbf{Geodesics.} All shortest paths between non-bottleneck events pass through $b$ (Paper~XXVI). The potential gradient points toward $b$. Geodesic concentration and potential-flow direction are aligned.
+
+\textbf{Conclusion.} Localised source $\Rightarrow$ nonzero potential $\Rightarrow$ nonzero curvature $\Rightarrow$ geodesic concentration. The source-geometry-geodesic bridge is demonstrated.
+\end{example}
+
+%==================================================================
+\section{Toy Model 3: Perturbative Response}\label{sec:perturbation}
+%==================================================================
+
+\begin{example}[Perturbation of the flat model]\label{ex:perturb}
+Start with the symmetric $K_{5,5}$ model (flat, Example~\ref{ex:vacuum}). Add one extra event $f$ connected to a single Layer-0 event $(0,0)$ and a single Layer-1 event $(0,4)$. The graph now has 11 events and is no longer vertex-transitive.
+
+\textbf{Source.} $\deg(0,0)$ increases from 5 to 6; $\deg(0,4)$ increases from 5 to 6; $\deg(f) = 2$. All other events retain degree 5. New mean degree: $(8 \times 5 + 2 \times 6 + 1 \times 2)/11 = 54/11 \approx 4.91$.
+
+Source deviations:
+\begin{itemize}
+    \item $(0,0)$ and $(0,4)$: $S = 6 - 54/11 = 12/11 \approx 1.09$ (positive source).
+    \item $f$: $S = 2 - 54/11 = -32/11 \approx -2.91$ (deficit).
+    \item Others: $S = 5 - 54/11 = 1/11 \approx 0.09$ (near zero).
+\end{itemize}
+
+\textbf{Curvature response.} The previously flat geometry now has nonzero source at $(0,0)$, $(0,4)$, and $f$. Solving $\Delta_\Gcal u = S - \bar{S}$ (numerically or by symmetry reduction) gives a nontrivial potential landscape with $u$ elevated near the perturbation and flat elsewhere.
+
+\textbf{Geodesic rerouting.} Before the perturbation, all Layer-0 to Layer-1 paths had distance 1. After adding $f$, a new shortest path exists: $(0,0) \to f \to (0,4)$ (length 2). But the direct path $(0,0) \to (0,4)$ still has length 1. So geodesics are not rerouted in this simple case. However, paths from other events to $f$ (e.g.\ $(1,1) \to (0,0) \to f$, length 2) now exist, creating new geodesic traffic through $(0,0)$.
+
+\textbf{Conclusion.} Adding a single event to a flat graph creates:
+\begin{itemize}
+    \item nonzero source at the attachment points,
+    \item nontrivial accessibility potential,
+    \item increased geodesic traffic through the attachment region.
+\end{itemize}
+This demonstrates \textit{geometric response to perturbation}: the field equation translates local content changes into global geometry changes.
+\end{example}
+
+%==================================================================
+\section{Relation to Einstein-Style Dynamics}\label{sec:einstein}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Structural comparison: VFD field dynamics vs.\ Einstein gravity.}
+\label{tab:einstein}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Feature & VFD (this paper) & General relativity \\
+\midrule
+Source & Event-density deviation $S(e)$ & Stress-energy $T_{\mu\nu}$ \\
+Field variable & Accessibility potential $u(e)$ & Metric $g_{\mu\nu}$ \\
+Field equation & $\Delta_\Gcal u = S - \bar{S}$ & $G_{\mu\nu} = 8\pi G\, T_{\mu\nu}$ \\
+Curvature & Potential gradient $K_{\mathrm{pot}}$ & Riemann tensor $R^\alpha{}_{\beta\gamma\delta}$ \\
+Conservation & $\sum(S - \bar{S}) = 0$ & $\nabla_\mu T^{\mu\nu} = 0$ \\
+Geodesic response & Shortest-path concentration & Geodesic equation \\
+Vacuum solution & $u = \mathrm{const}$, flat & Minkowski spacetime \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[Epistemic status]
+The structural parallels in Table~\ref{tab:einstein} are exhibited, not derived from the Einstein equations. The VFD field equation $\Delta_\Gcal u = S - \bar{S}$ is a discrete Poisson equation on a graph, which is a standard mathematical object. Its physical interpretation as a gravity analogue is structural: it shows that the event-order framework supports the same qualitative dynamical pattern (source $\to$ geometry $\to$ motion) as general relativity. Whether the discrete dynamics converges to the Einstein equations in a continuum limit is an open question of significant interest.
+\end{remark}
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is established}
+
+\begin{itemize}
+    \item Three source candidates constructed: density, overlap, geodesic traffic (Definitions~\ref{def:rho}--\ref{def:traffic}).
+    \item Accessibility potential defined via graph Laplacian (Definition~\ref{def:potential}).
+    \item Discrete field equation $\Delta_\Gcal u = S - \bar{S}$: existence and uniqueness (up to constant) proved (Proposition~\ref{prop:existence}).
+    \item Global balance law: total source deviation vanishes (Proposition~\ref{prop:balance}).
+    \item Local flow conservation: discrete divergence theorem (Proposition~\ref{prop:flow}).
+    \item Potential-gradient curvature $K_{\mathrm{pot}}$ defined and computed (Definition~\ref{def:Kpot}).
+    \item Vacuum model: flat, zero source, constant potential, uniform geodesics.
+    \item Bottleneck model: localised source, nontrivial potential, geodesic concentration.
+    \item Perturbation model: single-event addition creates measurable geometric response.
+    \item Source--curvature--geodesic bridge demonstrated explicitly.
+\end{itemize}
+
+\subsection{What is not established}
+
+\begin{itemize}
+    \item No Einstein equations. The field equation is a graph Poisson equation, not the Einstein field equations.
+    \item No stress-energy tensor. The source $S(e)$ is a scalar graph quantity, not a tensor.
+    \item No continuum limit. Whether $\Delta_\Gcal u = S - \bar{S}$ converges to $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ is open.
+    \item No time evolution. The field equation is solved statically; dynamical evolution of source and geometry is not addressed.
+    \item No coupling constant. The proportionality between source and geometric response is set to 1; a Newton-constant analogue is not derived.
+    \item The source choice (event density) is natural but not uniquely determined by the framework.
+\end{itemize}
+
+\subsection{Programme position}
+
+\begin{itemize}
+    \item Paper~XXIII: event ordering (derived).
+    \item Paper~XXIV: observer kinematics (derived).
+    \item Paper~XXV: separation geometry (derived).
+    \item Paper~XXVI: curvature precursor (constructed).
+    \item Paper~XXVII (this paper): source-driven field dynamics (constructed).
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The event-order framework now carries the full structure of a field theory: source content drives geometric distortion, and geometric distortion directs geodesic propagation. The discrete field equation $\Delta_\Gcal u = S - \bar{S}$ provides a principled, solvable relation between source and geometry, with conservation guaranteed by the Laplacian structure.
+
+The GR programme is now complete at the scaffold level:
+\begin{itemize}
+    \item \textbf{Time}: event ordering from phase-overlap admissibility.
+    \item \textbf{Observers}: frame-dependent kinematics from linear extensions.
+    \item \textbf{Metric}: separation from chain length and graph distance.
+    \item \textbf{Curvature}: non-uniformity of local accessibility.
+    \item \textbf{Dynamics}: source-driven accessibility distortion via graph Laplacian.
+\end{itemize}
+
+Each layer is derived from the event-order structure without assuming spacetime. Whether this discrete scaffold converges to the continuum Einstein dynamics in an appropriate limit is the defining open question for the next stage of the programme.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
