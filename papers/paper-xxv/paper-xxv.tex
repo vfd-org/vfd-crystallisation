@@ -40,7 +40,7 @@ Papers~XXIII--XXIV derived a strict partial order on admissible overlap events a
 
 Three candidate separation constructions are developed and compared. For comparable events (those related by the partial order), a \textit{chain-length separation} counts the minimum number of cover steps between them, providing an observer-independent temporal interval. For incomparable events (those not causally related), an \textit{observer-disagreement separation} measures the variance of time-difference assignments across observers, providing a structural precursor to spatial distance. A \textit{transition-cost separation} on the Hasse graph gives a unified graph-distance that applies to both cases.
 
-The chain-length separation is proved to be a well-defined pseudometric on comparable pairs. The observer-disagreement quantity is shown to distinguish incomparable events from identical ones. The transition-cost construction satisfies all metric axioms on the event set. A worked example on the dual-pentagon system demonstrates all three constructions explicitly.
+The chain-length separation is proved to be a well-defined directed temporal separation on comparable pairs. The observer-disagreement quantity is shown to distinguish incomparable events from identical ones. When the transition graph is connected, the transition-cost construction satisfies all metric axioms on the event set. A worked example on the dual-pentagon system demonstrates all three constructions explicitly.
 
 The paper does not derive the Lorentz metric or continuous geometry. It establishes that the event-order framework supports a nontrivial separation structure, providing a concrete route from poset to emergent metric geometry.
 \end{abstract}
@@ -105,7 +105,7 @@ where $|C|$ is the number of events in $C$. For $e_1 = e_2$, set $d_{\mathrm{cha
 $d_{\mathrm{chain}}(e_1, e_2) = k$ means there is a chain $e_1 = c_0 \prec c_1 \prec \cdots \prec c_k = e_2$ of length $k$, and no shorter chain exists. This is the minimum number of ``causal steps'' between $e_1$ and $e_2$.
 \end{remark}
 
-\begin{proposition}[Pseudometric on comparable pairs]\label{prop:dchain}
+\begin{proposition}[Properties of chain-length separation]\label{prop:dchain}
 On the set of comparable pairs, $d_{\mathrm{chain}}$ satisfies:
 \begin{enumerate}
     \item \textbf{Non-negativity:} $d_{\mathrm{chain}}(e_1, e_2) \geq 0$.
@@ -122,7 +122,7 @@ On the set of comparable pairs, $d_{\mathrm{chain}}$ satisfies:
 \end{proof}
 
 \begin{remark}
-$d_{\mathrm{chain}}$ is a pseudometric, not necessarily a metric: it is only defined for comparable pairs. Incomparable events have no chain between them, so $d_{\mathrm{chain}}$ does not apply. This separation is \textit{temporal}: it measures causal distance, not spatial distance.
+$d_{\mathrm{chain}}$ is a directed separation function, not a metric: it is only defined for comparable pairs and is inherently directional (from earlier to later). Incomparable events have no chain between them, so $d_{\mathrm{chain}}$ does not apply. This separation is \textit{temporal}: it measures causal distance, not spatial distance.
 \end{remark}
 
 \begin{remark}[Longest chain as proper-time analogue]
@@ -130,7 +130,7 @@ In causal set theory, the longest (not shortest) chain between comparable events
 \begin{equation}
     d_{\max}(e_1, e_2) = \max\{|C| - 1 : C \text{ is a chain from } e_1 \text{ to } e_2\}
 \end{equation}
-This also satisfies the triangle inequality (with reversed inequality: $d_{\max}(e_1, e_3) \geq d_{\max}(e_1, e_2) + d_{\max}(e_2, e_3)$ does not hold in general, but the max-chain is still a well-defined separation). In the VFD framework, whether $d_{\mathrm{chain}}$ or $d_{\max}$ better approximates physical proper time is an open question.
+$d_{\max}$ is well-defined for comparable pairs but does not in general satisfy a metric-style triangle inequality. It is better viewed as an alternative temporal-size functional. In the VFD framework, whether $d_{\mathrm{chain}}$ (shortest) or $d_{\max}$ (longest) better approximates physical proper time is an open question; in causal set theory, the longest chain is preferred.
 \end{remark}
 
 %==================================================================
@@ -147,16 +147,21 @@ For any two events $e_1, e_2 \in \Ecal$, let $\Ocal$ be a family of observers. D
 the variance of the time-difference assignment across the observer family.
 \end{definition}
 
-\begin{proposition}[Distinguishing incomparable events]\label{prop:dobs}
+\begin{proposition}[Observer-sign structure]\label{prop:dobs}
 \begin{enumerate}
-    \item If $e_1 = e_2$: $\sigma(e_1, e_2) = 0$ (all observers assign the same time to the same event).
-    \item If $e_1 \prec e_2$ (comparable): $t_O(e_1) - t_O(e_2) < 0$ for all observers, so the sign is fixed; the variance may be nonzero (from measure differences) but the sign is universal.
-    \item If $e_1$ and $e_2$ are incomparable: some observers assign $t_O(e_1) < t_O(e_2)$ and others assign $t_O(e_2) < t_O(e_1)$ (by Theorem~1 of Paper~XXIV). The time difference changes sign across observers, so $\sigma(e_1, e_2) > 0$ generically.
+    \item If $e_1 = e_2$: $t_O(e_1) - t_O(e_2) = 0$ for all observers $O$.
+    \item If $e_1 \prec e_2$ (comparable): $t_O(e_1) - t_O(e_2) < 0$ for all observers $O$. The sign is observer-independent.
+    \item If $e_1$ and $e_2$ are incomparable: there exist observers $O_1, O_2$ such that
+    \[
+        t_{O_1}(e_1) - t_{O_1}(e_2) < 0, \qquad t_{O_2}(e_1) - t_{O_2}(e_2) > 0.
+    \]
+    The sign is observer-dependent.
 \end{enumerate}
+Consequently, the variance $\sigma(e_1, e_2)$ is zero for identical events, and generically nonzero for incomparable pairs (where the sign-changing contributions ensure positive variance).
 \end{proposition}
 
 \begin{proof}
-(1): $t_O(e) - t_O(e) = 0$ for all $O$, so the variance is 0. (2): $e_1 \prec e_2$ implies $t_O(e_1) < t_O(e_2)$ for all $O$; the sign is fixed, but magnitudes vary with $\mu_O$. (3): By the relativity-of-simultaneity theorem, there exist observers ordering the pair both ways, so the time difference takes both positive and negative values; the variance is strictly positive.
+(1): Immediate. (2): $e_1 \prec e_2$ implies $t_O(e_1) < t_O(e_2)$ for all $O$ (Proposition~1 of Paper~XXIV). (3): By the relativity-of-simultaneity theorem (Theorem~1 of Paper~XXIV), linear extensions exist placing the pair in either order.
 \end{proof}
 
 \begin{remark}[Interpretation]
@@ -199,11 +204,7 @@ $d_{\mathrm{trans}}$ is the first genuine metric on the event set. Unlike $d_{\m
 \end{remark}
 
 \begin{remark}[Comparable vs incomparable]
-For comparable events $e_1 \prec e_2$:
-\begin{equation}
-    d_{\mathrm{trans}}(e_1, e_2) = d_{\mathrm{chain}}(e_1, e_2)
-\end{equation}
-since the shortest path in the Hasse graph between comparable events follows the cover chain. For incomparable events, $d_{\mathrm{trans}}$ involves ``sideways'' steps through the graph --- paths that go up then down (or vice versa) through the partial order. These sideways paths are the structural precursor to spatial separation.
+For comparable events $e_1 \prec e_2$, the transition-cost distance satisfies $d_{\mathrm{trans}}(e_1, e_2) \leq d_{\mathrm{chain}}(e_1, e_2)$ (since any chain gives a path in the Hasse graph). In the pentagon toy model, equality holds: $d_{\mathrm{trans}} = d_{\mathrm{chain}} = 1$ for all comparable pairs. Whether equality holds in general depends on the specific Hasse-graph structure. For incomparable events, $d_{\mathrm{trans}}$ involves ``sideways'' steps through the graph --- paths that go up then down (or vice versa) through the partial order. These sideways paths are the structural precursor to spatial separation.
 \end{remark}
 
 %==================================================================
@@ -244,7 +245,7 @@ For comparable events $e_1 \prec e_2$ and any observer $O = (\leq_O, \mu_O)$:
 \end{proposition}
 
 \begin{proof}
-The interval $t_O(e_2) - t_O(e_1) = \sum_{e_1 <_O e' \leq_O e_2} \mu_O(e')$ includes at least $d_{\mathrm{chain}}(e_1, e_2)$ terms (from the events in the shortest chain), each at least $\min \mu_O$.
+Let $e_1 = c_0 \prec c_1 \prec \cdots \prec c_k = e_2$ be a shortest chain ($k = d_{\mathrm{chain}}(e_1, e_2)$). Since $\leq_O$ extends $\prec$, the observer ordering satisfies $c_0 \leq_O c_1 \leq_O \cdots \leq_O c_k$. Therefore all $k$ events $c_1, \ldots, c_k$ lie in the interval $\{e' : e_1 <_O e' \leq_O e_2\}$. Each contributes at least $\min_{e} \mu_O(e)$ to the sum.
 \end{proof}
 
 \begin{remark}
@@ -344,8 +345,8 @@ In causal set theory, the longest chain between comparable events approximates L
 
 \begin{itemize}
     \item Cover relation and Hasse graph explicitly defined (Definitions~\ref{def:cover}--\ref{def:hasse}).
-    \item Chain-length separation: well-defined pseudometric on comparable pairs (Proposition~\ref{prop:dchain}).
-    \item Observer-disagreement separation: distinguishes incomparable events from identical ones (Proposition~\ref{prop:dobs}). Does not satisfy the triangle inequality (explicitly noted).
+    \item Chain-length separation: well-defined directed temporal separation on comparable pairs (Proposition~\ref{prop:dchain}).
+    \item Observer-sign structure: comparable pairs have observer-independent sign; incomparable pairs have observer-dependent sign (Proposition~\ref{prop:dobs}). Variance $\sigma$ provides a quantitative separation measure but does not satisfy the triangle inequality (explicitly noted).
     \item Transition-cost metric: a genuine metric on the full event set (Theorem~\ref{thm:metric}).
     \item Structural bound relating observer time to chain length (Proposition~\ref{prop:bound}).
     \item All constructions demonstrated on the pentagon toy model.
@@ -378,9 +379,9 @@ A future construction that recovers a signed interval from the interplay of $d_{
 
 The event-order framework of Papers~XXIII--XXIV naturally supports emergent separation structure. Three constructions are developed:
 \begin{itemize}
-    \item \textbf{Chain-length separation}: an observer-independent temporal interval for comparable events (pseudometric, proved).
-    \item \textbf{Observer-disagreement separation}: a spatial precursor for incomparable events (non-metric but nontrivial, proved).
-    \item \textbf{Transition-cost metric}: a genuine metric on the full event set from Hasse-graph shortest paths (metric axioms proved).
+    \item \textbf{Chain-length separation}: an observer-independent directed temporal separation for comparable events (properties proved).
+    \item \textbf{Observer-disagreement separation}: a nontrivial observer-dependent separation measure for incomparable events, interpreted as a spatial precursor (sign structure proved; not a metric).
+    \item \textbf{Transition-cost metric}: a genuine metric on the full event set from Hasse-graph shortest paths (metric axioms proved, conditional on graph connectivity).
 \end{itemize}
 
 The structural distinction between comparable (chain-based, temporal) and incomparable (sideways, spatial-precursor) separation mirrors the timelike/spacelike distinction of Lorentzian geometry, though a signed interval is not yet derived.
