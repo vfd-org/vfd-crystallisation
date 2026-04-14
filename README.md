@@ -18,15 +18,16 @@ This repository presents a testable research framework and supporting reference 
 
 ## Research Scope
 
-This repository contains five connected research tracks within the broader VFD programme:
+This repository contains six connected research tracks within the broader VFD programme:
 
 1. **Crystallisation dynamics** — a deterministic, constraint-driven selection framework proposed as an alternative to probabilistic collapse in open quantum systems.
 2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–V and anchored by Paper IV as the primary external-facing mass paper.
 3. **The quantum recovery programme** — a sequence (Papers XV–XXI) showing that Schrödinger-type evolution emerges as the equilibrium tangent limit of a nonlinear closure-paired dynamics, without postulating quantum axioms.
 4. **The spectral bridge** — Paper XXII connects all three tracks, showing that a single closure functional on the 600-cell can coherently relate mass eigenvalues, gauge structure, fundamental constants (α⁻¹ at 0.81 ppm, sin²θ_W = 3/8), and generation structure through the φ-permeability of the 600-cell geometry and the E₈ Coxeter projection.
 5. **The general-relativity programme** — Papers XXIII–XXVII derive gravitational structure from event-order geometry. Starting from the birth-angle partial order on admissible overlap events, the sequence constructs time, observer kinematics, metric separation, curvature, and source-driven field dynamics without assuming spacetime.
+6. **The unification bridge** — Paper XXVIII proposes that the quantum and gravitational tracks are two projections of a single underlying event-order geometry, sharing the same substrate (event set, closure functional, transition graph). The regime boundary is parameterised by the degree of constraint ordering.
 
-These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; and the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate.
+These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate; and the unification bridge (Paper XXVIII) proposes that these two tracks admit a common structural interpretation.
 
 ---
 
@@ -63,6 +64,9 @@ These tracks are related by a common structural theme: state resolution through 
 3. **Paper XXV / GR-III** (metric emergence — three constructions)
 4. **Paper XXVI / GR-IV** (curvature from non-uniform geometry)
 5. **Paper XXVII / GR-V** (dynamics and field equations — the capstone)
+
+### For the unification bridge
+1. **Paper XXVIII** (structural bridge between quantum and gravitational tracks)
 
 ### For the conceptual bridge (Dirac → Crystallisation)
 1. Bridge paper (selection architecture on Dirac solution space)
@@ -315,6 +319,14 @@ Defines flatness as local uniformity of neighborhood profiles. Three curvature i
 
 Capstone of the GR programme. Introduces source field S(e) from local event-content deviation, with density, overlap, and geodesic-traffic candidates compared. Graph-Laplacian field equation Δ_G u = S − S̄ with existence/uniqueness proved (Fredholm alternative). Global balance law and local flow conservation (discrete divergence theorem). Potential-gradient curvature K_pot. Three toy models: vacuum (flat), bottleneck (curved, geodesic concentration), perturbation (single-event geometric response). Source → curvature → geodesic bridge demonstrated explicitly. Does not derive the Einstein equations; establishes a discrete, principled analogue.
 
+### Unification Bridge (Paper XXVIII)
+
+#### Paper XXVIII — Quantum and Gravitational Structure from a Common Event-Order Geometry
+
+**[Quantum and Gravitational Structure from a Common Event-Order Geometry](papers/paper-xxviii/paper-xxviii.tex)** (LaTeX source)
+
+Proposes that the quantum track (Papers XV–XXII) and the gravitational track (Papers XXIII–XXVII) are two projections of a single underlying event-order geometry. Identifies the shared substrate: the triple (E, F, G) — event set, closure functional, and transition graph — all derived from the dual 600-cell system. Presents a proposed structural correspondence table mapping objects across both tracks (path integrals ↔ geodesics, Witten Hamiltonian ↔ graph Laplacian, norm conservation ↔ source balance). Defines the ordering fraction η as a candidate regime-transition parameter. Reinterprets crystallisation as the geometric bridge between quantum multiplicity and gravitational order. Does not derive quantum gravity, the Einstein equations, or a continuum limit. Establishes a structural bridge, not a dynamical unification.
+
 ### Bridge Paper — From Dirac to Crystallisation
 
 **[From Dirac Solutions to Physical Reality: A Crystallisation-Based Selection Architecture](papers/bridge-paper/From_Dirac_Solutions_to_Physical_Reality_A_Crystallisation_Based_Selection_Architecture.pdf)** ([LaTeX source](papers/bridge-paper/bridge-paper.tex))
@@ -345,6 +357,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xxviii/           Paper XXVIII: unification bridge (quantum ↔ gravitational)
 │   ├── paper-xxvii/            Paper XXVII / GR-V:  dynamics and field equations (capstone)
 │   ├── paper-xxvi/             Paper XXVI  / GR-IV: curvature from non-uniform geometry
 │   ├── paper-xxv/              Paper XXV   / GR-III: metric emergence (three constructions)
@@ -447,6 +460,7 @@ This repository makes claims at three levels, which should be evaluated independ
 | **No-go** | Single-generator Kolmogorov-type closure dynamics cannot be unitary (proved) | Paper XVII |
 | **Spectral bridge** | Integer selection principle, exact sector decoupling, structural correspondences with α⁻¹ and sin²θ_W | Paper XXII |
 | **GR programme** | Time, observers, metric, curvature, and source-driven field dynamics derived from event-order geometry without assuming spacetime | Papers XXIII–XXVII |
+| **Unification bridge** | Quantum and gravitational tracks proposed as two projections of a single event-order geometry, with shared substrate and structural correspondence | Paper XXVIII |
 
 The framework does not claim to replace quantum mechanics. It proposes a testable extension and provides the tools to evaluate it. The quantum recovery programme (Papers XV–XXI) establishes a mathematical pathway from dissipative closure dynamics to Schrödinger-type evolution but does not claim full quantum mechanics, measurement theory, or experimental predictions from the nonlinear residual.
 
