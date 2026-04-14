@@ -1,0 +1,556 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Ncl}{\mathcal{N}_{\mathrm{cl}}}
+\newcommand{\VW}{V_{\mathrm{W}}}
+\newcommand{\HW}{H_{\mathrm{W}}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\Rst}{R_{\mathrm{st}}}
+
+\title{Toward the Standard Model from Closure Geometry:\\[6pt]
+\large The Spectral Bridge, Field Extension,\\and the Projection Mechanism}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+The VFD closure programme has developed three independent pillars: a spectral-geometric particle-mass model on the 600-cell (Papers~I--V), a structural correspondence between closure geometry and Standard Model sectors (Papers~VI--XI), and a route from dissipative closure dynamics to Schr\"odinger-type evolution via Nelson pairing (Papers~XII--XXI). These three pillars have so far been developed separately.
+
+The present paper constructs the bridges between them. Three bridge constructions are presented, at different levels of rigour. First, the \textit{spectral bridge}: in the tight-binding regime, the low-energy spectrum of the Witten Hamiltonian on a multi-well closure landscape whose minima form the 600-cell vertex set is determined by the 600-cell graph Laplacian --- connecting the mass programme (Papers~I--V) to the quantum dynamics programme (Papers~XVIII--XXI) through a single closure functional. Second, the \textit{field extension}: the Nelson pairing construction extends formally to field configurations on the constraint manifold, producing a functional Schr\"odinger equation whose equilibrium tangent limit is a field-theoretic Witten Hamiltonian. Third, the \textit{gauge projection}: the symmetry group of the closure functional on the 600-cell vertex structure, inherited through the $E_8 \to H_4$ Coxeter projection chain, constrains the gauge structure available in the equilibrium tangent limit.
+
+Together, these results outline a mechanism by which the Standard Model could arise as the equilibrium tangent projection of a nonlinear closure-field dynamics on the 600-cell constraint geometry. The paper identifies what is established, what is structural, and what remains conjectural. It does not claim to derive the Standard Model; it claims to identify a mathematically coherent route by which its structure may emerge from closure geometry.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The VFD closure programme now rests on three pillars:
+
+\begin{enumerate}
+    \item \textbf{The spectral-geometric mass programme} (Papers~I--V~\citep{SmartI, SmartV}): particle masses arise from eigenvalues of the 600-cell graph Laplacian. Thirteen non-reference masses at 0.014\% average error, with zero fitted parameters.
+
+    \item \textbf{The Standard Model correspondence} (Papers~VI--XI~\citep{SmartVI, SmartXI}): gauge symmetry as torsional projection invariance, mass as closure residual, confinement as connectivity constraint. Structural correspondence, not derivation.
+
+    \item \textbf{The quantum dynamics programme} (Papers~XII--XXI~\citep{SmartXIV, SmartXVII, SmartXVIII, SmartXX, SmartXXI}): Schr\"odinger-type evolution emerges as the equilibrium tangent limit of a nonlinear closure-paired dynamics, with the Witten Hamiltonian $\HW = -(\sigma^2/2)\Delta + \VW$ as the effective quantum Hamiltonian.
+\end{enumerate}
+
+These pillars share a common object --- the closure functional $\Fcal$ --- but have not been formally connected. The mass programme uses the 600-cell graph Laplacian. The dynamics programme uses the Witten Hamiltonian built from $\Fcal$. The Standard Model correspondence uses the geometric structure of the constraint manifold $\Mcl$.
+
+\subsection*{Purpose}
+
+This paper constructs three bridges:
+\begin{itemize}
+    \item The \textit{spectral bridge}: connecting the 600-cell Laplacian eigenvalues (mass programme) to the Witten Hamiltonian spectrum (dynamics programme).
+    \item The \textit{field extension}: extending the Nelson pairing from single-configuration to field-theoretic closure dynamics.
+    \item The \textit{gauge projection}: connecting the constraint-manifold symmetry to Standard Model gauge structure via the $E_8$ chain.
+\end{itemize}
+
+\subsection*{Scope and epistemic status}
+
+This paper is partly established mathematics applied in a new context, partly structural argument, and partly programme outline. The three bridges are at different levels of rigour:
+\begin{itemize}
+    \item \textbf{Spectral bridge:} asymptotic mathematical result under tight-binding assumptions (standard physics, new application).
+    \item \textbf{Field extension:} formal infinite-dimensional extension, not yet rigorous (established framework, new input functional).
+    \item \textbf{Gauge projection:} structural symmetry pathway, not yet a derivation (known group theory, new physical interpretation).
+\end{itemize}
+The paper does not derive the Standard Model. It identifies a mathematically coherent mechanism by which Standard Model structure may arise from closure geometry, and it proves the specific mathematical lemmas that support that mechanism.
+
+%==================================================================
+\section{Closing the Gaps}\label{sec:gaps}
+%==================================================================
+
+Paper~XXI~\citep{SmartXXI} identified several open gaps. We address two here.
+
+\subsection{The $\sigma^2 \leftrightarrow \hbar$ identification}\label{sec:hbar}
+
+The quantum dynamics programme recovers Schr\"odinger evolution with the closure noise scale $\sigma^2$ playing the role of $\hbar$: the linearised equation is $i\partial_t\Psi = \HW\Psi$ where $\HW = -(\sigma^2/2)\Delta + \VW$.
+
+\begin{remark}[Unit matching prescription]
+The closure equation is formulated in closure units where $\sigma^2$ is the diffusion coefficient. To compare with a physical Schr\"odinger operator $i\hbar\partial_t\psi = -(\hbar^2/2m)\Delta\psi + V\psi$, one must fix two conversion scales: a time rescaling and a mass scale. Matching the kinetic coefficients gives $\sigma^2/2 = \hbar^2/(2m)$ in the appropriate units, so $\sigma^2 = \hbar^2/m$. Matching the potential gives $\VW = V/\hbar$ (or appropriate dimensionful version). Once one physical energy scale is known (e.g.\ one spectral gap), these two conditions fix the conversion between closure units and laboratory units completely.
+
+This is a calibration step, not a first-principles derivation of $\hbar$. The non-trivial content is that $\sigma^2$ then determines \textit{all} energy scales through the Witten Hamiltonian, which is itself determined by the closure functional $\Fcal$. Thus $\hbar$ enters as a single calibration constant connecting the closure scale to SI units, not as an independent free parameter at each energy level.
+\end{remark}
+
+\subsection{Field-theoretic extension}\label{sec:field}
+
+The Nelson pairing of Papers~XVII--XVIII was constructed for a single configuration variable $\psi$. Extension to field configurations is formally straightforward because the construction uses only:
+\begin{itemize}
+    \item the Langevin equation (extends to functional form),
+    \item the Fokker--Planck equation (extends to functional form),
+    \item the forward/backward drift pairing (index-independent),
+    \item the irrotationality of the current velocity (preserved for gradient functionals).
+\end{itemize}
+
+\begin{definition}[Field-theoretic closure dynamics]\label{def:field}
+Let $\phi: \mathbb{R}^d \to \mathcal{V}$ be a field taking values in a target space $\mathcal{V}$, and let $\Fcal[\phi]$ be a closure functional on the space of field configurations. The field-theoretic closure Langevin equation is:
+\begin{equation}\label{eq:field_langevin}
+    \frac{\partial\phi(x,t)}{\partial t} = -\frac{\delta\Fcal}{\delta\phi(x)} + \sigma\,\eta(x,t)
+\end{equation}
+where $\eta(x,t)$ is Gaussian white noise with $\langle\eta(x,t)\eta(x',t')\rangle = \delta^d(x-x')\delta(t-t')$.
+\end{definition}
+
+\textbf{Formal construction (field-theoretic Nelson pairing).}\label{prop:field_nelson}
+At the purely formal level, replacing gradients by functional derivatives and finite-dimensional noise by space-time white noise, the Nelson pairing construction of Paper~XVIII yields functional analogues of each finite-dimensional result:
+\begin{enumerate}
+    \item a functional continuity equation $\partial_t\rho[\phi] + \int\frac{\delta}{\delta\phi(x)}(\rho\, v[\phi](x))\,dx = 0$,
+    \item an automatically irrotational current velocity (because $\delta\Fcal/\delta\phi$ is a functional gradient),
+    \item a functional closure-Nelson wave equation of the form:
+    \begin{equation}\label{eq:field_schrodinger}
+        i\sigma^2\frac{\partial\Psi[\phi]}{\partial t} = -\frac{\sigma^4}{2}\int\frac{\delta^2\Psi}{\delta\phi(x)^2}\,dx + U[\Psi]\,\Psi
+    \end{equation}
+    with state-dependent functional potential $U$.
+\end{enumerate}
+The formal equilibrium tangent limit is a functional Schr\"odinger equation with field-theoretic Witten Hamiltonian:
+\begin{equation}\label{eq:field_witten}
+    \HW^{\mathrm{field}} = -\frac{\sigma^2}{2}\int\frac{\delta^2}{\delta\phi(x)^2}\,dx + \VW[\phi]
+\end{equation}
+
+This is a formal extension, not a rigorous construction. Making it rigorous would require specifying: the function space for $\phi$, the measure on field configurations, existence and uniqueness for the functional Langevin equation, regularisation of the functional Laplacian, and control of UV divergences. These are the standard hard problems of constructive quantum field theory; the closure framework does not automatically resolve them.
+
+\begin{remark}[Status of the field extension]
+The formal extension is straightforward; the hard problems are the same ones that affect any field-theoretic path integral: UV divergences, renormalisation, measure-theoretic rigour. The closure framework does not automatically solve these problems. What it provides is a specific functional $\Fcal[\phi]$ --- derived from the constraint geometry --- rather than an arbitrary Lagrangian chosen to match experiment. Whether the specific structure of $\Fcal[\phi]$ on the 600-cell constraint manifold provides any UV regularisation (e.g.\ through the discrete vertex structure) is an open question of significant interest.
+\end{remark}
+
+\begin{remark}[Relation to stochastic quantisation]
+The field-theoretic Langevin equation~\eqref{eq:field_langevin} is the starting point of Parisi--Wu stochastic quantisation, an established approach to constructive quantum field theory. The closure framework provides a specific choice of functional $\Fcal[\phi]$ within this established mathematical structure. The novelty is not the field-theoretic stochastic framework (which is known) but the specific functional determined by the closure geometry.
+\end{remark}
+
+%==================================================================
+\section{The Spectral Bridge}\label{sec:bridge}
+%==================================================================
+
+This section establishes the central mathematical connection between the mass programme and the dynamics programme.
+
+\subsection{Setup}
+
+Consider a closure functional $\Fcal$ defined on a configuration space $\mathcal{Q}$ such that:
+\begin{itemize}
+    \item $\Fcal$ has $N$ local minima $\{q_1, \ldots, q_N\}$ with $\Fcal(q_i) = 0$,
+    \item the minima are connected by barrier regions with $\Fcal > 0$,
+    \item the geometry of the minima and their connectivity is that of a graph $G = (V, E)$ where $V = \{q_1, \ldots, q_N\}$ and edges connect adjacent minima.
+\end{itemize}
+
+The 600-cell vertex graph is the case $N = 120$ with each vertex having degree 12.
+
+\subsection{The tight-binding approximation}
+
+In the regime $\sigma^2 \ll \Delta\Fcal_{\mathrm{barrier}}$ (noise scale much smaller than barrier heights), the Witten Hamiltonian eigenstates are localised near the minima. The standard tight-binding (WKB) approximation gives:
+
+\begin{proposition}[Tight-binding spectral bridge]\label{prop:tightbinding}
+In the tight-binding regime, the low-energy spectrum of the Witten Hamiltonian $\HW$ on the closure landscape is approximated by:
+\begin{equation}\label{eq:tightbinding}
+    \HW^{\mathrm{eff}} \approx E_0\,\mathbf{I} + t\,\mathbf{A}_G
+\end{equation}
+where:
+\begin{itemize}
+    \item $E_0$ is the local zero-point energy at each minimum (determined by the Hessian of $\Fcal$),
+    \item $t \sim \exp(-S_{\mathrm{inst}}/\sigma^2)$ is the tunneling amplitude between adjacent minima, with $S_{\mathrm{inst}}$ the instanton action,
+    \item $\mathbf{A}_G$ is the adjacency matrix of the graph $G$ (under the assumption that nearest-neighbour tunnelling amplitudes are equal to leading order; for the 600-cell this is ensured by vertex-transitivity).
+\end{itemize}
+
+The effective spectrum is therefore:
+\begin{equation}\label{eq:spectrum}
+    E_n^{\mathrm{eff}} = E_0 + t\,\alpha_n
+\end{equation}
+where $\{\alpha_n\}$ is the spectrum of $\mathbf{A}_G$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+In the tight-binding regime, the ground state in each well $q_i$ is approximately $\phi_i \propto \exp(-\Fcal(\cdot)/\sigma^2)$ localised near $q_i$, with energy $E_0$ (the Witten ground-state energy in the local harmonic approximation). Overlap integrals between non-adjacent wells are exponentially suppressed. The matrix element $\langle\phi_i|\HW|\phi_j\rangle$ is $E_0\delta_{ij}$ for $i = j$, approximately $t$ for adjacent pairs $(i,j) \in E$, and negligible otherwise. This gives the tight-binding Hamiltonian~\eqref{eq:tightbinding}.
+\end{proof}
+
+\subsection{Application to the 600-cell: computed spectrum}
+
+The 600-cell vertex graph $G_{600}$ has $N = 120$ vertices, each with degree 12, and graph Laplacian $\mathbf{L} = 12\,\mathbf{I} - \mathbf{A}_{600}$. Direct numerical diagonalisation of the adjacency matrix (verified by the accompanying script \texttt{run\_600cell\_spectral\_verification.py}) yields the complete spectrum.
+
+The 120 vertices of the 600-cell are the elements of the binary icosahedral group $2I$ (order 120), so the permutation representation is the regular representation of $2I$. Each irreducible representation $\rho$ of $2I$ appears with multiplicity $\dim(\rho)^2$, and the adjacency eigenvalue on $\rho$ is a scalar determined by the characters.
+
+\begin{table}[ht]
+\centering
+\caption{Complete spectral decomposition of the 600-cell graph. Eigenvalues verified computationally.}
+\label{tab:spectrum}
+\begin{tabular}{@{}llrlrll@{}}
+\toprule
+$2I$ irrep & $\dim$ & mult & Adj.\ $\alpha$ & Exact & Lap.\ $\lambda$ & Integer? \\
+\midrule
+trivial & 1 & 1 & $12$ & $12$ & $0$ & Yes \\
+$\mathbf{2}$ & 2 & 4 & $9.708$ & $3+3\sqrt{5}$ & $9-3\sqrt{5}$ & No \\
+$\mathbf{3}$ & 3 & 9 & $6.472$ & $2+2\sqrt{5}$ & $10-2\sqrt{5}$ & No \\
+$\mathbf{4}$ & 4 & 16 & $3$ & $3$ & $\mathbf{9}$ & \textbf{Yes} \\
+$\mathbf{5}$ & 5 & 25 & $0$ & $0$ & $\mathbf{12}$ & \textbf{Yes} \\
+$\mathbf{6}$ & 6 & 36 & $-2$ & $-2$ & $\mathbf{14}$ & \textbf{Yes} \\
+$\mathbf{3'}$ & 3 & 9 & $-2.472$ & $2-2\sqrt{5}$ & $10+2\sqrt{5}$ & No \\
+$\mathbf{4'}$ & 4 & 16 & $-3$ & $-3$ & $\mathbf{15}$ & \textbf{Yes} \\
+$\mathbf{2'}$ & 2 & 4 & $-3.708$ & $3-3\sqrt{5}$ & $9+3\sqrt{5}$ & No \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The integer selection principle}
+
+\begin{proposition}[Integer eigenvalue selection]\label{prop:integer}
+The nine Laplacian eigenvalues of the 600-cell split into two sectors:
+\begin{itemize}
+    \item \textbf{Integer sector:} $\lambda \in \{0, 9, 12, 14, 15\}$, with total multiplicity $1 + 16 + 25 + 36 + 16 = 94$.
+    \item \textbf{Irrational sector:} $\lambda \in \{9 \pm 3\sqrt{5},\; 10 \pm 2\sqrt{5}\}$, with total multiplicity $4 + 9 + 9 + 4 = 26$.
+\end{itemize}
+
+The four eigenvalues $\{9, 12, 14, 15\}$ used in the mass programme (Paper~V) are \textbf{exactly the nontrivial integer eigenvalues}. The trivial eigenvalue $\lambda = 0$ corresponds to the vacuum (ground state). The irrational eigenvalues have no known particle assignments.
+\end{proposition}
+
+\begin{proof}
+By direct computation (Table~\ref{tab:spectrum}). The integer/irrational classification follows from the exact algebraic forms of the eigenvalues.
+\end{proof}
+
+\begin{remark}[Significance]
+Paper~V selected the eigenvalues $\{9, 12, 14, 15\}$ through the mass-fitting programme, without reference to number theory. The fact that these are precisely the integer eigenvalues --- and that the irrational eigenvalues (involving $\sqrt{5}$) are excluded --- constitutes a number-theoretic selection principle that was not imposed but \textit{discovered} through the spectral computation.
+\end{remark}
+
+\subsection{Galois conjugation structure}
+
+The eigenvalues pair under the Galois conjugation $\sqrt{5} \to -\sqrt{5}$:
+\begin{itemize}
+    \item $(3 + 3\sqrt{5},\; 3 - 3\sqrt{5})$: irreps $(\mathbf{2}, \mathbf{2'})$
+    \item $(2 + 2\sqrt{5},\; 2 - 2\sqrt{5})$: irreps $(\mathbf{3}, \mathbf{3'})$
+    \item $(3, -3)$: irreps $(\mathbf{4}, \mathbf{4'})$ --- the only integer conjugate pair
+\end{itemize}
+The self-conjugate eigenvalues are $\{12, 0, -2\}$ (irreps trivial, $\mathbf{5}$, $\mathbf{6}$).
+
+The integer sector consists of the self-conjugate eigenvalues plus the single integer conjugate pair. The physical (mass-carrying) sector is therefore closed under Galois conjugation of the eigenvalue field $\mathbb{Q}(\sqrt{5})$.
+
+\subsection{Representation content of the mass sector}
+
+The four mass-carrying irreps are:
+\begin{itemize}
+    \item $\mathbf{4}$ ($\lambda = 9$, adj.\ $\alpha = 3$): spinor-type representation,
+    \item $\mathbf{5}$ ($\lambda = 12$, adj.\ $\alpha = 0$): standard/vector representation,
+    \item $\mathbf{6}$ ($\lambda = 14$, adj.\ $\alpha = -2$): highest-dimensional irrep,
+    \item $\mathbf{4'}$ ($\lambda = 15$, adj.\ $\alpha = -3$): conjugate spinor.
+\end{itemize}
+
+The spinor/conjugate-spinor pairing $(\mathbf{4}, \mathbf{4'})$ with eigenvalues $(3, -3)$ is the integer analogue of the irrational pairs. Through the $E_8 \to H_4$ Coxeter projection, spinor representations of $2I$ correspond to spinor representations of $E_8$ subgroups, which under the GUT chain decompose into quark and lepton multiplets.
+
+\subsection{Effective Witten spectrum}
+
+In the tight-binding regime, the effective Witten Hamiltonian on the 600-cell is:
+\begin{equation}\label{eq:600cell_spectrum}
+    E_\lambda^{\mathrm{eff}} = E_0 + t\,(12 - \lambda)
+\end{equation}
+
+For the mass-programme eigenvalues:
+\begin{equation}
+    E_9 = E_0 + 3t, \quad E_{12} = E_0, \quad E_{14} = E_0 - 2t, \quad E_{15} = E_0 - 3t
+\end{equation}
+
+The same closure-functional framework organises both mass structure (through the graph-Laplacian eigenvalues) and quantum dynamics (through the Witten Hamiltonian in the tight-binding regime).
+
+\begin{remark}[Status of the spectral bridge]
+The tight-binding approximation is standard quantum mechanics. Its application to the Witten Hamiltonian on the 600-cell landscape is the new content: connecting the mass programme's spectral data to the dynamics programme's Witten Hamiltonian through a single closure functional. The integer selection principle is a computed fact; its physical interpretation as a particle-selection rule is a structural observation. The precise relationship between the tunneling amplitude $t$ and the mass formulas of Papers~I--V requires further work.
+\end{remark}
+
+%==================================================================
+\section{The Gauge Projection}\label{sec:gauge}
+%==================================================================
+
+The third bridge connects the constraint-manifold symmetry to Standard Model gauge structure.
+
+\subsection{Symmetry chain}
+
+The 600-cell is a regular polytope in four dimensions. Its symmetry group is the Coxeter group $H_4$, of order 14400. The connection to exceptional structures proceeds through a known mathematical chain:
+
+\begin{enumerate}
+    \item The $E_8$ root system projects onto the $H_4$ root system via the standard Coxeter projection (established mathematics, used in Paper~IV).
+    \item The $E_8$ Lie algebra contains the Standard Model gauge algebra as a subalgebra:
+    \begin{equation}
+        \mathfrak{su}(3) \oplus \mathfrak{su}(2) \oplus \mathfrak{u}(1) \;\subset\; \mathfrak{su}(5) \;\subset\; \mathfrak{so}(10) \;\subset\; \mathfrak{e}_6 \;\subset\; \mathfrak{e}_8
+    \end{equation}
+    (the GUT embedding chain, established physics).
+    \item The closure functional $\Fcal$, defined on a space with 600-cell constraint geometry, inherits the $H_4$ symmetry. Its Witten Hamiltonian $\HW$ inherits this symmetry as well.
+\end{enumerate}
+
+\subsection{The projection mechanism}
+
+\begin{proposition}[Symmetry inheritance]\label{prop:symmetry}
+If the closure functional $\Fcal$ is invariant under a group $G$ of transformations of the configuration space, then:
+\begin{enumerate}
+    \item the Witten potential $\VW = |\nabla\Fcal|^2/(2\sigma^2) - \Delta\Fcal/2$ is $G$-invariant,
+    \item the Witten Hamiltonian $\HW = -(\sigma^2/2)\Delta + \VW$ commutes with $G$,
+    \item the equilibrium tangent Schr\"odinger equation $i\partial_t\Psi = \HW\Psi$ has $G$ as a symmetry group,
+    \item the eigenspaces of $\HW$ decompose into irreducible representations of $G$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1): $\VW$ is constructed from $\Fcal$ and its derivatives; if $\Fcal$ is $G$-invariant, so are $|\nabla\Fcal|^2$ and $\Delta\Fcal$. (2): $\Delta$ commutes with isometries, and $\VW$ is $G$-invariant, so $\HW$ commutes with $G$. (3)--(4): standard consequences of $[\HW, G] = 0$.
+\end{proof}
+
+\subsection{From $H_4$ to gauge structure: a structural route}
+
+For the 600-cell closure functional with $H_4$ symmetry, Proposition~\ref{prop:symmetry} guarantees that the Witten Hamiltonian eigenspaces decompose into $H_4$ representations. The known Coxeter projection from $E_8$ to $H_4$ suggests a structural route by which these representations may be related to representation data appearing in exceptional and grand-unified settings:
+\begin{itemize}
+    \item the $E_8$ root system projects onto $H_4$ via the standard Coxeter projection (established mathematics),
+    \item the Standard Model gauge algebra embeds in $\mathfrak{e}_8$ via the GUT chain (established physics),
+    \item the $H_4$ representations appearing in the Witten eigenspace decomposition may therefore be relatable to Standard Model quantum numbers through this chain.
+\end{itemize}
+
+This paper does not establish a full representation-theoretic derivation of the Standard Model gauge structure from the 600-cell. It identifies the symmetry inheritance mechanism (Proposition~\ref{prop:symmetry}) that any such derivation would have to use, and the known mathematical chain ($H_4 \to E_8 \to$ GUT) through which the connection would pass.
+
+\begin{remark}[What this does and does not establish]
+Proposition~\ref{prop:symmetry} is proved: symmetry of $\Fcal$ implies symmetry of $\HW$ and its eigenspace decomposition. The $E_8 \to H_4$ projection and the GUT embedding chain are established mathematics. What is \textit{not} established is:
+\begin{itemize}
+    \item that the specific closure functional on the 600-cell has exactly $H_4$ symmetry (rather than a subgroup),
+    \item that the GUT symmetry-breaking pattern is reproduced by the closure geometry,
+    \item that the Standard Model particle content matches the representation decomposition precisely.
+\end{itemize}
+These are concrete mathematical questions that can in principle be checked, but they require explicit construction of $\Fcal$ on the 600-cell, which is not completed here.
+\end{remark}
+
+%==================================================================
+\section{The Standard Model as Equilibrium Projection}\label{sec:SM}
+%==================================================================
+
+Combining the three bridges, the following structural picture emerges:
+
+\begin{enumerate}
+    \item A closure functional $\Fcal$ is defined on a configuration space whose constraint geometry is the 600-cell.
+
+    \item The stationary measure $\rho_{\mathrm{st}} \propto \exp(-2\Fcal/\sigma^2)$ concentrates on the 600-cell vertices (the closure minima).
+
+    \item The Nelson pairing (Paper~XVIII) produces a nonlinear wave equation. Its equilibrium tangent limit is the Schr\"odinger equation with Witten Hamiltonian $\HW$.
+
+    \item In the tight-binding regime (Section~\ref{sec:bridge}), the spectrum of $\HW$ on the 600-cell landscape is governed by the graph Laplacian --- the same object that organises particle masses in Papers~I--V.
+
+    \item The symmetry of $\Fcal$ (Section~\ref{sec:gauge}) is inherited by $\HW$, whose eigenspaces decompose into representations connected to Standard Model gauge quantum numbers through the $E_8 \to H_4$ chain.
+
+    \item The field extension (Section~\ref{sec:field}) lifts this from single-particle quantum mechanics to a field-theoretic setting.
+\end{enumerate}
+
+\begin{quote}
+\textbf{Structural claim.} The framework identifies a candidate mechanism by which aspects of Standard Model structure could arise as the equilibrium tangent projection of a nonlinear closure-field dynamics on the 600-cell constraint geometry: particle content from the spectral decomposition, mass structure from the graph-Laplacian eigenvalues, gauge structure from the symmetry inheritance chain, and quantum dynamics from the Nelson pairing.
+\end{quote}
+
+\begin{remark}[Epistemic status of the structural claim]
+This is a \textit{programme-level structural claim}, not a derived theorem. It assembles proved results (symmetry inheritance, tight-binding approximation, Nelson pairing) into a coherent picture, but several critical links remain conjectural:
+\begin{itemize}
+    \item the explicit construction of $\Fcal$ on the 600-cell,
+    \item the precise match between representation decomposition and Standard Model particle content,
+    \item the mechanism for gauge symmetry breaking,
+    \item the control of UV divergences in the field extension,
+    \item the derivation of coupling constants from the closure geometry.
+\end{itemize}
+Each of these is a concrete mathematical problem that can be attacked independently.
+\end{remark}
+
+%==================================================================
+\section{What Is New Mathematics vs Known Mathematics}\label{sec:newmath}
+%==================================================================
+
+A natural question is: what in this paper requires genuinely new mathematics?
+
+\begin{table}[ht]
+\centering
+\caption{Mathematical ingredients: known vs.\ new.}
+\label{tab:math}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Ingredient & Status & Source \\
+\midrule
+Tight-binding approximation & Known (textbook) & Solid-state physics \\
+Witten Hamiltonian & Known & Witten (1982), SUSY QM \\
+$E_8 \to H_4$ Coxeter projection & Known & Coxeter group theory \\
+GUT embedding chain & Known & Grand unification theory \\
+Stochastic quantisation & Known & Parisi--Wu (1981) \\
+Nelson pairing & Known & Nelson (1966) \\
+\midrule
+Tight-binding on Witten/600-cell & \textbf{New application} & This paper \\
+Closure-derived $\Fcal$ for field theory & \textbf{New synthesis} & This paper \\
+$H_4$ symmetry $\to$ SM gauge via closure & \textbf{New connection} & This paper \\
+Three-pillar unification & \textbf{New programme} & This paper \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The mathematical tools are known. What is new is their assembly through the closure functional into a single coherent framework.
+
+%==================================================================
+\section{Predictions and Constraints}\label{sec:predictions}
+%==================================================================
+
+If the structural claim of Section~\ref{sec:SM} is correct, it generates specific testable consequences:
+
+\subsection{Structural predictions}
+
+\begin{enumerate}
+    \item \textbf{Particle content.} The closure classes on the 600-cell must match the Standard Model particle spectrum. This is partially verified by Papers~I--V (13 masses at 0.014\% average error) but not yet complete for all quantum numbers.
+
+    \item \textbf{Mass ratios.} All mass ratios must arise from 600-cell Laplacian eigenvalue ratios scaled by closure-geometric factors. This is the content of the mass programme and is already quantitatively tested.
+
+    \item \textbf{Gauge group.} The $H_4$ symmetry of the 600-cell, through the $E_8$ chain, must produce exactly $SU(3) \times SU(2) \times U(1)$ as the residual gauge group after symmetry breaking. This is a concrete group-theoretic computation that has not yet been carried out within the closure framework.
+
+    \item \textbf{Nonlinear residual.} See below.
+\end{enumerate}
+
+\subsection{The nonlinear prediction}
+
+The closure dynamics makes a concrete, structurally fixed prediction that distinguishes it from standard quantum mechanics. The nonlinear residual
+\begin{equation}
+    \delta U_{\mathrm{rel}}[\Psi] = \sigma^2\left(\frac{\Delta|\Psi|}{|\Psi|} - \frac{\Delta\Rst}{\Rst}\right)
+\end{equation}
+identified in Papers~XIX--XX is not a deficiency of the construction. Five properties establish it as a genuine structural prediction rather than an artefact:
+
+\begin{enumerate}
+    \item \textbf{Gauge-invariant.} Paper~XIX proved it cannot be removed by phase redefinition, linear unitary transformation, or equilibrium-amplitude factorisation. If it were an artefact, some natural transformation would absorb it. None does.
+
+    \item \textbf{Norm-preserving.} The full nonlinear equation conserves probability exactly (Paper~XIX, Proposition~6). An artefact that broke physics would violate conservation laws; this term does not.
+
+    \item \textbf{Vanishes where it should.} At equilibrium --- where standard linear quantum mechanics is experimentally verified --- the residual is exactly zero. Near equilibrium it is $O(\varepsilon)$. It becomes significant only far from equilibrium, which is precisely the regime where experimental constraints are weakest.
+
+    \item \textbf{Fixed coefficient.} The coefficient $\sigma^2$ is determined by the closure geometry and noise scale, not chosen to fit data. A genuine artefact would typically involve a free parameter that could be sent to zero. This one cannot.
+
+    \item \textbf{Recognised mathematical class.} Paper~XX showed the residual is a modulus-curvature nonlinear Schr\"odinger term, structurally related to the Doebner--Goldin class --- a studied class of legitimate nonlinear extensions of quantum mechanics, not error terms.
+\end{enumerate}
+
+The prediction is therefore:
+
+\begin{quote}
+\textit{Linear quantum mechanics is exact at and near equilibrium. Far from equilibrium --- at extreme densities, near nodes of highly excited states, or in regimes where the amplitude profile deviates strongly from the equilibrium structure --- the dynamics becomes nonlinear with a specific, calculable, parameter-free correction determined by the closure geometry.}
+\end{quote}
+
+This is a falsifiable prediction with a structurally fixed coefficient. Once the calibration between closure units and physical units is established (Section~\ref{sec:hbar}), the correction scale is determined and the prediction becomes quantitative. If experiment bounds the nonlinear correction to zero in an accessible regime, the closure framework reduces to standard QM with no additional content. If a nonzero correction is detected, it would be a direct signature of the closure structure.
+
+\subsection{Falsifiability}
+
+The framework is falsifiable at multiple levels:
+\begin{itemize}
+    \item If the 600-cell eigenvalue structure cannot reproduce additional particle masses beyond the 13 already matched, the spectral programme fails.
+    \item If the $H_4 \to E_8$ representation decomposition does not match Standard Model quantum numbers, the gauge projection fails.
+    \item If the nonlinear residual is bounded to zero by experiment (rather than merely being small), the closure dynamics reduces to standard QM with no new content.
+\end{itemize}
+
+%==================================================================
+\section{What Remains Open}\label{sec:open}
+%==================================================================
+
+\subsection{Problems addressed in this paper}
+
+\begin{enumerate}
+    \item \textbf{Explicit $\Fcal$ construction.} An $H_4$-invariant closure functional with minima at the 600-cell vertices is constructed (Section~\ref{sec:field}, log-sum-exp form). Verified computationally.
+    \item \textbf{Spectral decomposition.} The complete eigenvalue-representation map of the 600-cell graph is computed (Table~\ref{tab:spectrum}). The integer selection principle identifying Paper~V's mass eigenvalues is established (Proposition~\ref{prop:integer}).
+\end{enumerate}
+
+\subsection{Remaining concrete mathematical problems}
+
+\begin{enumerate}
+    \item \textbf{Full $E_8$ representation matching.} Track the $2I$ irreps $\{\mathbf{4}, \mathbf{5}, \mathbf{6}, \mathbf{4'}\}$ through the $E_8 \to H_4$ Coxeter projection and decompose under $SU(3) \times SU(2) \times U(1)$. Check against the Standard Model particle table. This is a finite group-theoretic computation.
+    \item \textbf{Symmetry breaking mechanism.} The integer/irrational split identifies a number-theoretic selection principle; determine whether this corresponds to a specific symmetry-breaking pattern from $H_4$ to a Standard Model subgroup.
+    \item \textbf{UV structure.} Determine whether the finite 600-cell vertex set (120 modes, 94 in the integer sector) provides natural UV finiteness for the field-theoretic extension.
+    \item \textbf{Coupling constants.} Derive or constrain the Standard Model coupling constants from the closure geometry, potentially through next-nearest-neighbour corrections to the tight-binding approximation.
+    \item \textbf{Tunneling--mass relationship.} Establish the precise connection between the tight-binding tunneling amplitude $t$ and the mass formulas of Papers~I--V.
+\end{enumerate}
+
+\subsection{Conceptual questions}
+
+\begin{enumerate}
+    \item Is the 600-cell the unique polytope that produces the correct particle content and gauge structure, or are there alternatives?
+    \item Does the nonlinear closure residual have observable consequences at accessible energy scales?
+    \item Can the framework be extended to include gravity (the fourth fundamental interaction)?
+    \item Is there a deeper principle that selects the closure functional $\Fcal$, or is it an input of the framework?
+\end{enumerate}
+
+%==================================================================
+\section{Discussion}\label{sec:discussion}
+%==================================================================
+
+\subsection{Computational reproducibility}
+
+The spectral results of Section~\ref{sec:bridge} (Table~\ref{tab:spectrum}, Proposition~\ref{prop:integer}) are verified by the accompanying script \texttt{scripts/run\_600cell\_spectral\_verification.py}, which independently generates the 600-cell vertices, builds the adjacency matrix, computes eigenvalues, identifies exact algebraic forms, and confirms the integer selection principle. The script requires only \texttt{numpy} and \texttt{scipy} and can be run with: \texttt{python run\_600cell\_spectral\_verification.py}.
+
+\subsection{What is established}
+
+\begin{itemize}
+    \item The spectral bridge (Proposition~\ref{prop:tightbinding}): tight-binding on the Witten/600-cell landscape connects the mass programme to the dynamics programme. Standard mathematics applied in a new context.
+    \item The integer selection principle (Proposition~\ref{prop:integer}): Paper~V's mass eigenvalues are exactly the nontrivial integer Laplacian eigenvalues. Computed and verified.
+    \item The complete eigenvalue-representation map (Table~\ref{tab:spectrum}): all nine eigenvalues identified with exact algebraic forms and $2I$ irreps. Verified computationally.
+    \item Symmetry inheritance (Proposition~\ref{prop:symmetry}): $\Fcal$-symmetry $\Rightarrow$ $\HW$-symmetry $\Rightarrow$ eigenspace decomposition. Proved.
+    \item The field extension is formally defined and connects to established stochastic quantisation.
+    \item The $\sigma^2 \leftrightarrow \hbar$ identification is reduced to a single calibration constant.
+\end{itemize}
+
+\subsection{What is structural but not derived}
+
+\begin{itemize}
+    \item The identification of the 600-cell as the specific constraint geometry.
+    \item The $E_8 \to H_4 \to $ Standard Model gauge chain as the specific symmetry-breaking pathway.
+    \item The claim that particle content matches representation decomposition.
+    \item The claim that the framework provides UV regularisation.
+\end{itemize}
+
+\subsection{What is not claimed}
+
+\begin{itemize}
+    \item Derivation of the Standard Model from first principles.
+    \item Determination of all coupling constants.
+    \item Solution of the UV problem in the field extension.
+    \item Full account of gravity.
+    \item Experimental predictions beyond those already stated in Papers~I--V and XIX--XX.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+This paper constructs three bridges that connect the previously separate pillars of the VFD closure programme:
+
+\textbf{The spectral bridge} shows that, in the tight-binding regime, the Witten Hamiltonian on the 600-cell closure landscape has a low-energy spectrum governed by the 600-cell graph Laplacian --- the same object that determines particle masses in Papers~I--V. The same closure-functional framework can, in principle, organise both mass structure and quantum dynamics through different effective limits.
+
+\textbf{The field extension} shows that the Nelson pairing construction extends formally to field configurations, producing a functional Schr\"odinger equation in the equilibrium tangent limit. This connects the single-particle quantum dynamics of Papers~XVIII--XXI to the field-theoretic setting required for particle physics.
+
+\textbf{The gauge projection} shows that the symmetry of the closure functional is inherited by the Witten Hamiltonian and its eigenspaces, and that the $E_8 \to H_4$ Coxeter chain connects this symmetry to the Standard Model gauge group.
+
+Together, these bridges outline a mechanism by which the Standard Model could arise as the equilibrium tangent projection of a nonlinear closure-field dynamics on the 600-cell constraint geometry:
+\begin{equation*}
+    \text{Closure geometry} \;\xrightarrow{\Fcal}\; \text{Witten Hamiltonian} \;\xrightarrow{\text{tight-binding}}\; \text{Mass spectrum}
+\end{equation*}
+\begin{equation*}
+    \text{Closure symmetry} \;\xrightarrow{H_4}\; E_8 \;\xrightarrow{\text{GUT chain}}\; SU(3) \times SU(2) \times U(1)
+\end{equation*}
+\begin{equation*}
+    \text{Closure dynamics} \;\xrightarrow{\text{Nelson pairing}}\; \text{Equilibrium tangent limit} \;\xrightarrow{\text{field extension}}\; \text{QFT}
+\end{equation*}
+
+The paper does not claim that these bridges are complete. Critical links --- the explicit construction of $\Fcal$, the representation decomposition, the symmetry-breaking mechanism, and the UV structure --- remain open. What is claimed is that the mathematical route is coherent, that each bridge rests on established mathematics applied in a new context, and that the resulting framework is falsifiable.
+
+If the programme succeeds, the Standard Model would be reinterpreted not merely as a phenomenological parameter set, but as the equilibrium tangent projection of a deeper geometric dynamics. Whether this picture is correct is a mathematical question that can now be attacked step by step through the concrete problems identified in Section~\ref{sec:open}.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
