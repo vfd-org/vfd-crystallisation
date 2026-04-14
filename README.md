@@ -24,8 +24,9 @@ This repository contains three connected research tracks within the broader VFD 
 2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–V and anchored by Paper IV as the primary external-facing mass paper.
 3. **The quantum recovery programme** — a sequence (Papers XV–XXI) showing that Schrödinger-type evolution emerges as the equilibrium tangent limit of a nonlinear closure-paired dynamics, without postulating quantum axioms.
 4. **The spectral bridge** — Paper XXII connects all three tracks, showing that a single closure functional on the 600-cell can coherently relate mass eigenvalues, gauge structure, fundamental constants (α⁻¹ at 0.81 ppm, sin²θ_W = 3/8), and generation structure through the φ-permeability of the 600-cell geometry and the E₈ Coxeter projection.
+5. **The general-relativity programme** — Papers XXIII–XXVII derive gravitational structure from event-order geometry. Starting from the birth-angle partial order on admissible overlap events, the sequence constructs time, observer kinematics, metric separation, curvature, and source-driven field dynamics without assuming spacetime.
 
-These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; and the spectral bridge (Paper XXII) connects them through computation.
+These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; and the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate.
 
 ---
 
@@ -55,6 +56,13 @@ These tracks are related by a common structural theme: state resolution through 
 4. Paper XIX (residual classification)
 5. Paper XX (nonlinear quantum structure)
 6. Papers XV–XVI (phase/interference and evolution equation — background)
+
+### For the general-relativity programme
+1. **Paper XXVII** (dynamics and field equations — the capstone)
+2. Paper XXVI (curvature from non-uniform geometry)
+3. Paper XXV (metric emergence — three constructions)
+4. Paper XXIV (observer frames and relativity)
+5. Paper XXIII (event structure and emergent time — the foundation)
 
 ### For the conceptual bridge (Dirac → Crystallisation)
 1. Bridge paper (selection architecture on Dirac solution space)
@@ -265,6 +273,40 @@ Bridges all three programme tracks through computation. Constructs an explicit H
 
 **Verification scripts** (in `papers/paper-xxii/scripts/`): 17 Python scripts covering spectral verification, Coxeter projection, coupling structure, α derivation, generation structure, φ-mass connection, SU(5) branching, UV analysis, and more. All require only `numpy` and `scipy`.
 
+### General-Relativity Programme (Papers XXIII–XXVII)
+
+The following sequence derives gravitational structure from event-order geometry — the partial order on admissible overlap events defined by the crystallisation framework. Starting from the birth-angle construction, the programme builds time, observer kinematics, metric separation, curvature, and source-driven field dynamics without assuming spacetime.
+
+#### Paper XXIII — Event Structure and the Emergence of Time
+
+**[Event Structure and the Emergence of Time from Phase-Overlap Geometry](papers/paper-xxiii/paper-xxiii.tex)** (LaTeX source)
+
+Defines admissible overlap events and the birth-angle partial order. Proves that no canonical global clock exists (non-uniqueness of linear extensions). Constructs chain time as intrinsic temporal separation. Pentagon worked example with 10 admissible events. Foundation for the GR programme.
+
+#### Paper XXIV — Observer Frames and Relativity
+
+**[Observer Frames and Relativity from Event-Order Geometry](papers/paper-xxiv/paper-xxiv.tex)** (LaTeX source)
+
+Defines observers as linear extensions of the partial order equipped with sampling measures. Proves simultaneity relativity (two observers generically disagree on simultaneous events). Exhibits time-dilation analogue. Separates chain time from observer elapsed time. Two-observer worked example on the pentagon model.
+
+#### Paper XXV — Metric Emergence
+
+**[Metric Emergence from Event-Order Geometry](papers/paper-xxv/paper-xxv.tex)** (LaTeX source)
+
+Constructs three separation measures: chain-length (directed temporal separation), observer-disagreement (sign structure from frame comparisons), and transition-cost (genuine metric on the Hasse graph, proved). Comparison table with general-relativity analogues. Pentagon model computations for all three constructions.
+
+#### Paper XXVI — Curvature from Non-Uniform Geometry
+
+**[Curvature from Non-Uniform Event-Order Geometry](papers/paper-xxvi/paper-xxvi.tex)** (LaTeX source)
+
+Defines flatness as local uniformity of neighborhood profiles. Three curvature indicators: volume-growth distortion, branching asymmetry (undirected degree), geodesic concentration (betweenness). Flat reference model (K_{5,5}: all indicators zero) and curved bottleneck model (all indicators nonzero). Curvature as departure from local uniformity.
+
+#### Paper XXVII — Dynamics and Field Equations
+
+**[Dynamics and Field Equations from Event-Order Geometry](papers/paper-xxvii/paper-xxvii.tex)** (LaTeX source)
+
+Capstone of the GR programme. Introduces source field S(e) from local event-density deviation. Graph-Laplacian field equation Δ_G u = S − S̄ with existence/uniqueness proved (Fredholm alternative). Global balance law and local flow conservation (discrete divergence theorem). Potential-gradient curvature K_pot. Three toy models: vacuum (flat), bottleneck (curved, geodesic concentration), perturbation (single-event geometric response). Source → curvature → geodesic bridge demonstrated explicitly. Does not derive the Einstein equations; establishes a discrete, principled analogue.
+
 ### Bridge Paper — From Dirac to Crystallisation
 
 **[From Dirac Solutions to Physical Reality: A Crystallisation-Based Selection Architecture](papers/bridge-paper/From_Dirac_Solutions_to_Physical_Reality_A_Crystallisation_Based_Selection_Architecture.pdf)** ([LaTeX source](papers/bridge-paper/bridge-paper.tex))
@@ -295,6 +337,11 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xxvii/            Paper XXVII: dynamics and field equations (GR capstone)
+│   ├── paper-xxvi/             Paper XXVI: curvature from non-uniform geometry
+│   ├── paper-xxv/              Paper XXV: metric emergence (three constructions)
+│   ├── paper-xxiv/             Paper XXIV: observer frames and relativity
+│   ├── paper-xxiii/            Paper XXIII: event structure and emergent time
 │   ├── paper-xxii/             Paper XXII: spectral bridge (600-cell → SM structure) + 17 scripts
 │   ├── paper-xxi/              Paper XXI: structural synthesis (dissipative → Schrödinger)
 │   ├── paper-xx/               Paper XX: nonlinear quantum structure
@@ -391,6 +438,7 @@ This repository makes claims at three levels, which should be evaluated independ
 | **Quantum recovery** | Schrödinger-type dynamics emerges as the equilibrium tangent limit of a nonlinear closure-paired dynamics | Papers XVII–XXI |
 | **No-go** | Single-generator Kolmogorov-type closure dynamics cannot be unitary (proved) | Paper XVII |
 | **Spectral bridge** | Integer selection principle, exact sector decoupling, structural correspondences with α⁻¹ and sin²θ_W | Paper XXII |
+| **GR programme** | Time, observers, metric, curvature, and source-driven field dynamics derived from event-order geometry without assuming spacetime | Papers XXIII–XXVII |
 
 The framework does not claim to replace quantum mechanics. It proposes a testable extension and provides the tools to evaluate it. The quantum recovery programme (Papers XV–XXI) establishes a mathematical pathway from dissipative closure dynamics to Schrödinger-type evolution but does not claim full quantum mechanics, measurement theory, or experimental predictions from the nonlinear residual.
 
