@@ -357,7 +357,7 @@ Addresses the Born-rule gap left by Paper XXIX: admissibility determines which o
 
 #### Paper XXXI — Measurement as Dynamical Sector Separation in Closure Dynamics
 
-**[Measurement as Dynamical Sector Separation in Closure Dynamics](papers/paper-xxxi/paper-xxxi.tex)** (LaTeX source)
+**[Measurement as Dynamical Sector Separation in Closure Dynamics](papers/paper-xxxi/Measurement_as_Dynamical_Sector_Separation_in_Closure_Dynamics.pdf)** ([LaTeX source](papers/paper-xxxi/paper-xxxi.tex))
 
 Justifies the key assumption of Paper XXX: that measurement produces well-separated outcome sectors. Defines measurement-type interactions as couplings that energetically favour correlated system-apparatus configurations. Shows such interactions deform the closure landscape from single-basin to multi-basin with high barriers (Proposition 1). Kramers-type transition suppression exp(-2ΔF/σ²) follows when barrier height exceeds noise strength. Cross-term suppression and outcome stability derived from the same barrier mechanism. Toy model: system with double-well potential coupled to single-well apparatus; coupling splits landscape into two separated basins with barrier proportional to coupling strength. Timescale hierarchy (separation < relaxation < observation) treated as working hypothesis. Structural comparison to standard decoherence (analogous but does not require environmental tracing). Does not claim a complete measurement solution; provides a dynamical route from interaction to sector separation.
 
