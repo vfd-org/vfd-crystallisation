@@ -347,7 +347,7 @@ Defines the observer as a bounded, dynamically stable, self-referential substruc
 
 #### Paper XXX — Probability as Constraint Geometry: Toward a Derivation of the Born Rule
 
-**[Probability as Constraint Geometry: Toward a Derivation of the Born Rule](papers/paper-xxx/paper-xxx.tex)** (LaTeX source)
+**[Probability as Constraint Geometry: Toward a Derivation of the Born Rule](papers/paper-xxx/Probability_as_Constraint_Geometry.pdf)** ([LaTeX source](papers/paper-xxx/paper-xxx.tex))
 
 Addresses the Born-rule gap left by Paper XXIX: admissibility determines which outcomes are possible, but not their relative frequencies. Develops four candidate weighting routes: basin-volume measure, stability-depth weighting, stationary-measure inheritance from the Paper XIV equilibrium distribution, and a Gleason-type argument. The strongest result (Proposition 1): at the Paper XIV equilibrium, the Nelson wavefunction satisfies |Ψ|² = ρ = P_st, so the Born measure IS the stationary measure of the closure dynamics, yielding P_i = |c_i|² under stated assumptions. Routes C (dynamical origin) and D (structural uniqueness via Gleason) are complementary. Two-basin toy model demonstrates the mechanism explicitly. Does not claim a complete derivation; identifies a candidate substrate explanation with explicit assumptions and open problems.
 
