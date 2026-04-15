@@ -1,0 +1,392 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Pst}{P_{\mathrm{st}}}
+
+\title{Measurement as Dynamical Sector Separation\\in Closure Dynamics}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Paper~XXX proposed that outcome probabilities arise as geometric weights over observer-admissible sectors, with the Born rule recovered from the stationary sector measure of the closure dynamics under three assumptions: equilibrium, well-separated sectors, and sector-supported decomposition. The present paper addresses the most critical of these: \textit{why are outcome sectors well-separated?}
+
+This paper proposes that measurement interactions dynamically reshape the closure landscape, producing multiple deep, well-separated basins corresponding to distinct outcomes. The mechanism is: system--apparatus coupling introduces an interaction term $\Fcal_{\mathrm{int}}$ into the total closure functional, deforming a single-minimum landscape into a multi-minimum landscape with high inter-basin barriers. When the barrier height satisfies $\Delta\Fcal_{ij} \gg \sigma^2$, Kramers-type transition rates between basins are exponentially suppressed, cross terms between sector-supported wavefunctions become negligible, and outcomes are dynamically stabilised.
+
+A toy model demonstrates the mechanism: a single quadratic minimum, coupled to a two-state apparatus, splits into two separated basins with barrier height proportional to the coupling strength. A timescale argument shows that sector formation can occur faster than measurement readout under generic conditions.
+
+The paper does not claim a complete solution to the measurement problem. It identifies a dynamical route by which the sector-separation assumption of Paper~XXX arises from the structure of measurement interactions, without invoking external state reduction or environmental tracing.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Paper~XXX~\citep{SmartXXX} showed that, in the equilibrium closure regime, the Born rule can be recovered from the stationary sector measure of the closure dynamics. The argument depends on three assumptions:
+
+\begin{enumerate}
+    \item The system is at or near the Paper~XIV equilibrium.
+    \item The outcome sectors are well-separated basins with negligible overlap.
+    \item The Nelson wavefunction admits a decomposition into sector-supported components.
+\end{enumerate}
+
+Assumption~1 is justified by the ergodic convergence of the stochastic closure dynamics (Paper~XIV~\citep{SmartXIV}). Assumption~3 follows from assumption~2 when the sectors are sufficiently separated. The critical assumption is therefore~2: \textit{why should outcome sectors be well-separated?}
+
+\subsection*{The gap}
+
+In standard quantum mechanics, the transition from superposition to definite outcomes is typically attributed to decoherence: interaction with the environment suppresses off-diagonal elements of the density matrix. The VFD framework does not use density matrices or environmental tracing. The question is whether the closure dynamics provides an intrinsic mechanism for sector separation.
+
+\subsection*{Proposal}
+
+This paper proposes that measurement interactions dynamically deform the closure functional, producing well-separated basins. The mechanism is geometric: the interaction term reshapes the landscape from a single broad minimum into multiple deep minima with high barriers between them. Sector separation is not assumed; it arises from the structure of the measurement coupling.
+
+\subsection*{Scope}
+
+The paper develops the formal framework, works a toy model, provides a timescale argument, and connects the result to Paper~XXX. It does not claim a complete solution to the measurement problem, does not derive decoherence from the closure framework, and does not specify the interaction functional from first principles. It identifies a dynamical route to sector separation and shows that this route justifies the assumptions of Paper~XXX under stated conditions.
+
+%==================================================================
+\section{Programme Position}\label{sec:position}
+%==================================================================
+
+The logical chain:
+
+\begin{enumerate}
+    \item \textbf{Structure}: closure geometry on the 600-cell (Papers~I--V, XXII).
+    \item \textbf{Dynamics}: stochastic closure process with stationary distribution (Paper~XIV).
+    \item \textbf{Quantum recovery}: Schr\"odinger equation as equilibrium tangent limit (Papers~XVIII--XXI).
+    \item \textbf{Observer}: constraint substructure determining admissible configurations (Paper~XXIX).
+    \item \textbf{Measurement}: dynamical sector separation via landscape deformation (\textit{this paper}).
+    \item \textbf{Probability}: stationary sector measure yields Born weighting (Paper~XXX).
+\end{enumerate}
+
+Steps 5 and 6 were reversed in the order of publication: Paper~XXX appeared first because the probability construction is logically downstream, but it depends on the sector-separation result developed here. This paper fills the gap between steps 4 and 6.
+
+%==================================================================
+\section{Formal Setup}\label{sec:setup}
+%==================================================================
+
+\subsection{Configuration space}
+
+Let $\Phi_S \in \mathcal{H}_S$ denote the system configuration and $\Phi_A \in \mathcal{H}_A$ the apparatus configuration, where $\mathcal{H}_S$ and $\mathcal{H}_A$ are the respective configuration spaces. The total configuration is $\Phi = (\Phi_S, \Phi_A) \in \mathcal{H}_S \times \mathcal{H}_A$.
+
+\subsection{Closure functional}
+
+\begin{definition}[Total closure functional]\label{def:total}
+The total closure functional for a measurement context is:
+\begin{equation}\label{eq:total}
+    \Fcal_{\mathrm{total}}[\Phi_S, \Phi_A] = \Fcal_S[\Phi_S] + \Fcal_A[\Phi_A] + \Fcal_{\mathrm{int}}[\Phi_S, \Phi_A]
+\end{equation}
+where $\Fcal_S$ is the system closure functional, $\Fcal_A$ is the apparatus closure functional, and $\Fcal_{\mathrm{int}}$ is the interaction term encoding the measurement coupling.
+\end{definition}
+
+\begin{remark}
+Before measurement, $\Fcal_{\mathrm{int}} = 0$ and the system and apparatus evolve independently. Measurement begins when the interaction is switched on ($\Fcal_{\mathrm{int}} \neq 0$). The interaction term does not destroy the closure structure; it deforms the landscape.
+\end{remark}
+
+\subsection{Stochastic dynamics}
+
+The total configuration evolves under the stochastic closure dynamics (Paper~XIV):
+\begin{equation}\label{eq:dynamics}
+    d\Phi = -\nabla \Fcal_{\mathrm{total}}\, dt + \sigma\, dW
+\end{equation}
+where $\sigma > 0$ is the noise strength and $dW$ is a Wiener process. The stationary distribution is:
+\begin{equation}\label{eq:stationary}
+    \Pst(\Phi) \propto e^{-2\Fcal_{\mathrm{total}}(\Phi)/\sigma^2}
+\end{equation}
+
+%==================================================================
+\section{Pre-Measurement Landscape}\label{sec:pre}
+%==================================================================
+
+Before the interaction is switched on ($\Fcal_{\mathrm{int}} = 0$), the total functional is separable:
+\begin{equation}
+    \Fcal_{\mathrm{total}} = \Fcal_S[\Phi_S] + \Fcal_A[\Phi_A]
+\end{equation}
+
+If the system is in a superposition-like state, $\Fcal_S$ has a single broad minimum (or multiple shallow, poorly separated minima). The apparatus $\Fcal_A$ has its own equilibrium configuration (the ``ready state''). The total landscape has a single effective basin.
+
+\begin{quote}
+Pre-measurement: single basin, no sector separation, interference present.
+\end{quote}
+
+%==================================================================
+\section{Measurement Interaction and Landscape Deformation}\label{sec:deformation}
+%==================================================================
+
+When the measurement interaction is switched on, $\Fcal_{\mathrm{int}}$ couples the system and apparatus configurations. The interaction term introduces correlations: the closure cost of the total configuration depends on the joint state of system and apparatus.
+
+\subsection{Correlation structure}
+
+A measurement interaction is characterised by the property that it energetically favours configurations in which the apparatus state is correlated with the system state. Formally:
+
+\begin{definition}[Measurement-type interaction]\label{def:measurement}
+An interaction $\Fcal_{\mathrm{int}}[\Phi_S, \Phi_A]$ is of \textit{measurement type} if:
+\begin{enumerate}
+    \item It has $N$ low-cost channels: for each system eigenstate $\Phi_S^{(i)}$, there exists a corresponding apparatus state $\Phi_A^{(i)}$ such that $\Fcal_{\mathrm{int}}[\Phi_S^{(i)}, \Phi_A^{(i)}]$ is small.
+    \item Mismatched configurations have high interaction cost: $\Fcal_{\mathrm{int}}[\Phi_S^{(i)}, \Phi_A^{(j)}] \gg \Fcal_{\mathrm{int}}[\Phi_S^{(i)}, \Phi_A^{(i)}]$ for $i \neq j$.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+This is the closure-dynamical analogue of the standard requirement that a measurement apparatus correlates its pointer states with the system's eigenstates. The VFD version is expressed in terms of the closure landscape rather than Hilbert-space operators.
+\end{remark}
+
+\subsection{Landscape deformation}
+
+The effect of a measurement-type interaction on the total closure landscape is:
+
+\begin{proposition}[Basin formation from measurement interaction]\label{prop:basins}
+If $\Fcal_{\mathrm{int}}$ is of measurement type (Definition~\ref{def:measurement}) and the mismatch cost is sufficiently large, then the total functional $\Fcal_{\mathrm{total}}$ has $N$ distinct local minima at $\Phi^{(i)*} = (\Phi_S^{(i)}, \Phi_A^{(i)})$, with inter-basin barriers:
+\begin{equation}\label{eq:barrier}
+    \Delta\Fcal_{ij} = \Fcal_{\mathrm{total}}(\text{saddle between } i,j) - \Fcal_{\mathrm{total}}(\Phi^{(i)*}) \geq \Fcal_{\mathrm{int}}[\Phi_S^{(i)}, \Phi_A^{(j)}]
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Each correlated pair $(\Phi_S^{(i)}, \Phi_A^{(i)})$ is a local minimum of $\Fcal_{\mathrm{total}}$ because the system and apparatus terms are minimised separately and the interaction cost is small. Any path from minimum $i$ to minimum $j$ must pass through a configuration where either the system or apparatus is mismatched, incurring interaction cost $\Fcal_{\mathrm{int}}[\Phi_S^{(i)}, \Phi_A^{(j)}]$ or $\Fcal_{\mathrm{int}}[\Phi_S^{(j)}, \Phi_A^{(i)}]$. The saddle-point energy is bounded below by this mismatch cost.
+\end{proof}
+
+\begin{quote}
+Measurement interaction: single basin $\to$ $N$ separated basins. The barrier height is set by the mismatch cost of the interaction.
+\end{quote}
+
+%==================================================================
+\section{Transition Suppression}\label{sec:suppression}
+%==================================================================
+
+\subsection{Kramers-type barrier crossing}
+
+Paper~XIV~\citep{SmartXIV} established that inter-basin transition rates in the stochastic closure dynamics follow Kramers-type estimates:
+\begin{equation}\label{eq:kramers}
+    \Gamma_{i \to j} \sim e^{-2\Delta\Fcal_{ij}/\sigma^2}
+\end{equation}
+
+When $\Delta\Fcal_{ij} \gg \sigma^2$, the transition rate is exponentially suppressed.
+
+\begin{definition}[Sector separation condition]\label{def:separation}
+The outcome sectors are \textit{well-separated} if:
+\begin{equation}\label{eq:separation}
+    \Delta\Fcal_{ij} \gg \sigma^2 \qquad \text{for all } i \neq j
+\end{equation}
+\end{definition}
+
+\begin{remark}
+This is not an assumption; it is a consequence of Definition~\ref{def:measurement}. When the mismatch cost of the measurement interaction is large compared to $\sigma^2$, sector separation follows from Proposition~\ref{prop:basins}.
+\end{remark}
+
+\subsection{Cross-term suppression}
+
+When sectors are well-separated, the Nelson wavefunction $\Psi = \sum_i c_i \phi_i$ (where $\phi_i$ is supported near minimum $i$) has the property that the sector-supported components have effectively disjoint supports. The cross terms satisfy:
+\begin{equation}\label{eq:cross}
+    \int_{\Phi_i} \phi_k^*\, \phi_l\, d\mu \approx 0 \qquad \text{for } k \neq l
+\end{equation}
+because the overlap between $\phi_k$ (localised near minimum $k$) and $\phi_l$ (localised near minimum $l$) is exponentially small in the barrier height:
+\begin{equation}\label{eq:overlap}
+    |\langle \phi_k | \phi_l \rangle| \lesssim e^{-\Delta\Fcal_{kl}/\sigma^2}
+\end{equation}
+
+\begin{quote}
+Interference between sectors is suppressed by the same mechanism that suppresses transitions: the barrier height.
+\end{quote}
+
+%==================================================================
+\section{Outcome Stability}\label{sec:stability}
+%==================================================================
+
+Once the system has settled into basin $i$, it remains there with high probability. The stability has two sources:
+
+\begin{enumerate}
+    \item \textbf{Barrier suppression.} The Kramers rate $\Gamma_{i \to j} \sim e^{-2\Delta\Fcal_{ij}/\sigma^2}$ is exponentially small, so spontaneous transitions out of the basin are extremely rare.
+
+    \item \textbf{Observer constraint reinforcement.} The observer $(\Ocal, \Ccal_\Ocal)$ of Paper~XXIX~\citep{SmartXXIX} provides an additional stability mechanism: the observer's coherence constraint $\Ccal_\Ocal \leq \epsilon$ may be satisfied in basin $i$ but not in the transition region between basins. The observer constraint acts as an additional barrier.
+\end{enumerate}
+
+\begin{quote}
+Classical definiteness of measurement outcomes corresponds to stable basin occupancy in the deformed closure landscape.
+\end{quote}
+
+%==================================================================
+\section{Timescale Argument}\label{sec:timescale}
+%==================================================================
+
+For the sector-separation mechanism to produce definite outcomes, the basins must form before the measurement result is read.
+
+\begin{definition}[Separation timescale]\label{def:timescale}
+The \textit{separation timescale} $\tau_{\mathrm{sep}}$ is the time required for the closure landscape to deform from a single-basin to a multi-basin configuration after the interaction $\Fcal_{\mathrm{int}}$ is switched on. Heuristically:
+\begin{equation}\label{eq:timescale}
+    \tau_{\mathrm{sep}} \sim \frac{1}{\|\nabla^2 \Fcal_{\mathrm{int}}\|}
+\end{equation}
+the inverse of the curvature scale set by the interaction.
+\end{definition}
+
+\begin{remark}[Timescale hierarchy]
+For the mechanism to work, the following hierarchy must hold:
+\begin{equation}\label{eq:hierarchy}
+    \tau_{\mathrm{sep}} \ll \tau_{\mathrm{relax}} \ll \tau_{\mathrm{obs}}
+\end{equation}
+where $\tau_{\mathrm{relax}}$ is the time for the stochastic dynamics to settle into a basin (set by the local relaxation rate of $\Fcal_{\mathrm{total}}$) and $\tau_{\mathrm{obs}}$ is the timescale on which the observer reads the outcome. The first inequality says basins form before the system relaxes into one; the second says the system has settled before the result is recorded. This hierarchy is treated as a working hypothesis for macroscopic measurement apparatus; whether it holds universally is an open question.
+\end{remark}
+
+%==================================================================
+\section{Toy Model: Coupled Double-Well Formation}\label{sec:toy}
+%==================================================================
+
+This model is illustrative. It is not derived from the full 600-cell construction, but demonstrates the landscape-deformation mechanism in the simplest possible setting.
+
+\begin{example}[System--apparatus coupling]\label{ex:toy}
+\textbf{System.} One-dimensional, with closure functional $\Fcal_S(\phi) = \alpha(\phi^2 - 1)^2$, having minima at $\phi = \pm 1$.
+
+\textbf{Apparatus.} One-dimensional, with closure functional $\Fcal_A(\chi) = \tfrac{1}{2}\kappa \chi^2$, having a single minimum at $\chi = 0$ (the ``ready state'').
+
+\textbf{Interaction.} $\Fcal_{\mathrm{int}}(\phi, \chi) = \tfrac{1}{2}\lambda(\chi - g\phi)^2$, favouring apparatus state $\chi = g\phi$ (the apparatus tracks the system).
+
+\textbf{Total functional.}
+\begin{equation}
+    \Fcal_{\mathrm{total}}(\phi, \chi) = \alpha(\phi^2 - 1)^2 + \tfrac{1}{2}\kappa \chi^2 + \tfrac{1}{2}\lambda(\chi - g\phi)^2
+\end{equation}
+
+\textbf{Pre-measurement} ($\lambda = 0$). The system has two minima at $\phi = \pm 1$; the apparatus sits at $\chi = 0$. The total landscape has two minima at $(\pm 1, 0)$, but the apparatus does not distinguish them.
+
+\textbf{Post-measurement} ($\lambda > 0$). Minimising over $\chi$ at fixed $\phi$: $\chi^* = \lambda g\phi / (\kappa + \lambda)$. The effective system functional becomes:
+\begin{equation}
+    \Fcal_{\mathrm{eff}}(\phi) = \alpha(\phi^2 - 1)^2 + \frac{\kappa\lambda g^2}{2(\kappa + \lambda)}\phi^2
+\end{equation}
+The two minima shift and the total landscape has two well-separated minima at:
+\begin{equation}
+    (\phi, \chi)^{(1)*} \approx (+1,\; +g\lambda/(\kappa+\lambda)), \qquad (\phi, \chi)^{(2)*} \approx (-1,\; -g\lambda/(\kappa+\lambda))
+\end{equation}
+
+\textbf{Barrier.} The saddle between the two minima occurs near $\phi = 0$, $\chi = 0$, with barrier height:
+\begin{equation}
+    \Delta\Fcal \approx \alpha + \frac{\kappa\lambda g^2}{2(\kappa+\lambda)} \cdot 1
+\end{equation}
+which grows with the coupling strength $\lambda$ and the tracking gain $g$.
+
+\textbf{Sector separation.} For $\Delta\Fcal \gg \sigma^2$, the transition rate between basins is $\Gamma \sim e^{-2\Delta\Fcal/\sigma^2} \approx 0$. The apparatus state $\chi$ now records the system outcome: $\chi > 0$ means ``system in $\phi = +1$ basin''; $\chi < 0$ means ``system in $\phi = -1$ basin.''
+
+\textbf{Conclusion.} The measurement interaction ($\lambda > 0$) deforms the closure landscape from a state where the apparatus is neutral into a state where the apparatus is correlated with the system and the two outcomes are dynamically separated by a high barrier.
+\end{example}
+
+%==================================================================
+\section{Connection to Paper~XXX}\label{sec:connection}
+%==================================================================
+
+Paper~XXX~\citep{SmartXXX} derived Born-like weighting $P_i = |c_i|^2$ under three assumptions. The present paper addresses the most critical:
+
+\begin{enumerate}
+    \item \textbf{Well-separated sectors} (Assumption 2 of Paper~XXX). This paper shows that measurement-type interactions (Definition~\ref{def:measurement}) produce barrier heights satisfying $\Delta\Fcal_{ij} \gg \sigma^2$ (Proposition~\ref{prop:basins}), which is the sector-separation condition (Definition~\ref{def:separation}).
+
+    \item \textbf{Sector-supported decomposition} (Assumption 3 of Paper~XXX). When sectors are well-separated, the wavefunctions $\phi_i$ localised in each basin have effectively disjoint supports (equation~\ref{eq:overlap}), so the decomposition $\Psi = \sum_i c_i \phi_i$ is valid with negligible cross terms.
+
+    \item \textbf{Equilibrium} (Assumption 1 of Paper~XXX). This paper does not address the equilibrium assumption. It remains as stated in Paper~XXX: a working hypothesis justified by the ergodic convergence of the closure dynamics.
+\end{enumerate}
+
+\begin{quote}
+The well-separated sector assumption used in Paper~XXX arises dynamically from measurement-induced deformation of the closure landscape.
+\end{quote}
+
+%==================================================================
+\section{Comparison to Standard Decoherence}\label{sec:comparison}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Structural comparison: closure sector separation vs.\ standard decoherence.}
+\label{tab:comparison}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Feature & Standard decoherence & VFD sector separation \\
+\midrule
+Mechanism & Environmental entanglement & Landscape barrier formation \\
+Interference loss & Off-diagonal density matrix decay & Cross-term suppression by barrier \\
+Pointer states & Einselection (environment-preferred) & Basin minima of $\Fcal_{\mathrm{total}}$ \\
+Outcome stability & Decoherence timescale & Kramers barrier-crossing rate \\
+Environment & Required (traced out) & Not required (intrinsic geometry) \\
+Formalism & Density matrices, partial trace & Closure functional, gradient flow \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[Structural analogy, not equivalence]
+The two frameworks are structurally analogous: both produce effective sector separation and interference suppression. The key structural difference is that standard decoherence requires tracing over environmental degrees of freedom, while closure sector separation arises from the geometry of the total closure landscape without invoking an external environment. Whether the two mechanisms are related by a deeper correspondence (e.g.\ whether environmental coupling can be recast as landscape deformation) is an open question.
+\end{remark}
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is established}
+
+\begin{itemize}
+    \item Measurement-type interactions are defined in terms of closure-landscape structure (Definition~\ref{def:measurement}).
+    \item Such interactions produce well-separated basins with high barriers (Proposition~\ref{prop:basins}).
+    \item Barrier height suppresses inter-basin transitions exponentially (Kramers estimate, equation~\ref{eq:kramers}).
+    \item Cross terms between sector-supported wavefunctions are suppressed by the same barrier mechanism (equation~\ref{eq:overlap}).
+    \item Outcome stability has two sources: barrier suppression and observer-constraint reinforcement.
+    \item A toy model demonstrates the mechanism explicitly (Example~\ref{ex:toy}).
+    \item A timescale hierarchy is identified as a working hypothesis (equation~\ref{eq:hierarchy}).
+    \item The well-separated sector assumption of Paper~XXX is justified under the stated conditions.
+\end{itemize}
+
+\subsection{What is not established}
+
+\begin{itemize}
+    \item No proof that all physically relevant measurement interactions are of measurement type (Definition~\ref{def:measurement}).
+    \item No derivation of $\Fcal_{\mathrm{int}}$ from first principles or from the 600-cell geometry.
+    \item No proof of the timescale hierarchy~\eqref{eq:hierarchy} for general measurement contexts.
+    \item No treatment of continuous-spectrum measurements or measurements with degenerate outcomes.
+    \item No full comparison to standard decoherence theory (the comparison in Table~\ref{tab:comparison} is structural, not quantitative).
+    \item No proof that the barrier mechanism is the \textit{only} route to sector separation; alternative mechanisms may exist.
+    \item The interaction functional $\Fcal_{\mathrm{int}}$ is introduced phenomenologically, not derived from the constraint structure.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+Measurement, in this framework, is not external state reduction. It is the dynamical formation of separated outcome sectors through landscape deformation. When a system couples to a measurement apparatus, the interaction term reshapes the closure functional from a single-basin to a multi-basin landscape. The barrier height between basins is set by the mismatch cost of the interaction; when this height exceeds $\sigma^2$, transitions are exponentially suppressed, cross terms vanish, and outcomes are dynamically stabilised.
+
+This result provides the missing structural justification for Paper~XXX. The well-separated sector assumption is not an unexplained postulate; it is a consequence of measurement-type interactions deforming the closure landscape. Together with Paper~XXX's stationary-measure argument, this completes a two-step route from measurement interaction to Born-like probability:
+
+\begin{enumerate}
+    \item \textbf{This paper}: measurement interaction $\to$ sector separation $\to$ stable basins.
+    \item \textbf{Paper~XXX}: stable basins $\to$ stationary sector measure $\to$ Born weighting.
+\end{enumerate}
+
+The chain is conditional: it depends on the measurement interaction being of the right type, the barrier height being sufficient, the timescale hierarchy holding, and the system being near equilibrium. These conditions are stated explicitly. A complete, assumption-free measurement theory remains an open target. What is established is a dynamical route from interaction to outcome, without invoking state reduction, environmental tracing, or primitive stochastic postulates.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
