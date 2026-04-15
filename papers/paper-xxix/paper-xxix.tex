@@ -55,7 +55,7 @@ This is a placement paper: it defines where the observer sits, what it does, and
 The observer problem appears in three guises:
 
 \begin{enumerate}
-    \item \textbf{Quantum mechanics.} The Born rule requires an observer to trigger state selection, but the formalism does not define what an observer is or how it differs from any other physical system. The measurement problem is, at root, a placement problem: the observer is invoked but not located.
+    \item \textbf{Quantum mechanics.} In standard operational quantum mechanics, definite measurement outcomes are registered relative to measurement interactions, but the formalism does not itself provide a universally agreed internal account of what an observer is or how it differs from any other physical system. The measurement problem is, at root, a placement problem: the observer is invoked but not located.
 
     \item \textbf{General relativity.} Physical quantities are defined relative to an observer's frame, but the observer is modelled as an idealised worldline with no internal structure. Frame dependence is central to the theory, yet the entity that defines the frame is structurally empty.
 
@@ -98,10 +98,10 @@ In particular:
 The relevant consequence is narrower but genuine:
 
 \begin{quote}
-An observer cannot be fully reduced to a syntactic element within a closed formal description of the system it observes, if that description is required to be both consistent and complete.
+G\"odel's theorems do not justify identifying the limits of a formal description with limits of the physical system described.
 \end{quote}
 
-This motivates placing the observer as a \textit{dynamical substructure} within the field --- not as a formal symbol within an axiomatic encoding of the field. The VFD framework, being a geometric and dynamical construction rather than a formal axiomatic system, is not subject to incompleteness in the G\"odel sense. The observer can be placed within the dynamics without encountering the self-reference limitations of formal systems.
+This motivates treating the observer as a \textit{dynamical substructure} within the field, rather than leaving it as an undefined primitive in a formal encoding. The VFD framework, being a geometric and dynamical construction rather than a formal axiomatic system, is not subject to incompleteness in the G\"odel sense. The observer can be placed within the dynamics without encountering the self-reference limitations of formal systems.
 
 %==================================================================
 \section{Observer Definition}\label{sec:definition}
@@ -123,16 +123,16 @@ An \textit{observer region} is a connected subgraph $\Ocal \subset \Gcal$ of the
 An \textit{observer} is an observer region $(\Ocal, \Ccal_\Ocal)$ satisfying:
 \begin{enumerate}
     \item \textbf{Boundedness.} $\Ocal$ is a proper subgraph of $\Gcal$: $\Ocal \subsetneq \Gcal$.
-    \item \textbf{Stability.} The constraint functional is at or near a local minimum:
+    \item \textbf{Stability.} The constraint functional is at a local minimum:
     \begin{equation}\label{eq:stability}
-        \delta \Ccal_\Ocal[\Phi]\big|_{\Phi = \Phi_0} \approx 0
+        \delta \Ccal_\Ocal[\Phi]\big|_{\Phi = \Phi_0} = 0, \qquad \delta^2 \Ccal_\Ocal[\Phi]\big|_{\Phi = \Phi_0} > 0
     \end{equation}
-    for the ambient field configuration $\Phi_0$. The observer region is dynamically stable under small perturbations.
-    \item \textbf{Self-reference.} The constraint functional $\Ccal_\Ocal$ depends on the restriction of the field to $\Ocal$ itself:
+    for the ambient field configuration $\Phi_0$. The first condition is stationarity; the second ensures genuine stability (the observer region lies in a basin of attraction, not at a saddle point).
+    \item \textbf{Self-reference with boundary coupling.} The constraint functional $\Ccal_\Ocal$ depends primarily on the restriction of the field to $\Ocal$, with secondary dependence on the boundary:
     \begin{equation}\label{eq:selfref}
-        \Ccal_\Ocal[\Phi] = \Ccal_\Ocal[\Phi|_\Ocal]
+        \Ccal_\Ocal[\Phi] = \Ccal_\Ocal\!\bigl(\Phi|_\Ocal,\; \partial_\Ocal \Phi\bigr)
     \end{equation}
-    The observer's coherence is determined by its own internal state, not by the global field configuration.
+    where $\partial_\Ocal \Phi$ denotes the field values at the boundary of $\Ocal$ (the neighbouring events in $\Gcal$). The observer's coherence is determined primarily by its own internal state, with environmental coupling entering through the boundary.
     \item \textbf{Persistence.} The observer region $\Ocal$ is stable under the event-order dynamics: it persists as a connected, coherent substructure across successive events in the partial order.
 \end{enumerate}
 \end{definition}
@@ -147,8 +147,8 @@ An observer as defined above has the following structural properties:
 
 \begin{itemize}
     \item \textbf{Coherence preservation.} The stability condition~\eqref{eq:stability} ensures that the observer maintains internal consistency. Small perturbations do not destroy the observer structure.
-    \item \textbf{Internal state coupling.} The self-reference condition~\eqref{eq:selfref} means the observer's state depends on its own configuration, not on distant field values. This is the structural basis for locality of experience.
-    \item \textbf{Sensitivity to external configuration.} Although $\Ccal_\Ocal$ depends only on $\Phi|_\Ocal$, the restriction $\Phi|_\Ocal$ is determined by the global field $\Phi$. The observer is sensitive to its environment through the boundary conditions imposed by the ambient field.
+    \item \textbf{Internal state coupling.} The self-reference condition~\eqref{eq:selfref} means the observer's coherence depends primarily on its own configuration. This is the structural basis for locality of experience.
+    \item \textbf{Sensitivity to external configuration.} The boundary term $\partial_\Ocal \Phi$ in~\eqref{eq:selfref} means the observer is sensitive to its environment through the boundary conditions imposed by the ambient field, without being globally determined.
     \item \textbf{Persistence.} The observer is not an instantaneous structure. It persists across the event ordering, maintaining coherence through successive events.
 \end{itemize}
 
@@ -161,7 +161,7 @@ The central structural role of the observer is to constrain the set of admissibl
 \begin{definition}[Observer-admissible configurations]\label{def:admissible}
 Given an observer $(\Ocal, \Ccal_\Ocal)$, the set of \textit{observer-admissible configurations} is:
 \begin{equation}\label{eq:admissible}
-    \Phi_{\mathrm{adm}}(\Ocal) = \bigl\{\, \Phi \in \mathbb{R}^\Ecal \;\big|\; \Ccal_\Ocal[\Phi|_\Ocal] \leq \epsilon \,\bigr\}
+    \Phi_{\mathrm{adm}}(\Ocal) = \bigl\{\, \Phi \in \mathbb{R}^\Ecal \;\big|\; \Ccal_\Ocal\!\bigl(\Phi|_\Ocal,\, \partial_\Ocal \Phi\bigr) \leq \epsilon \,\bigr\}
 \end{equation}
 where $\epsilon > 0$ is a coherence threshold.
 \end{definition}
@@ -172,13 +172,9 @@ The observer does not select a configuration arbitrarily. It \textit{constrains}
 The observer is not an agent that reaches into the system and picks an outcome. It is a substructure whose existence imposes a boundary condition: only configurations compatible with the observer's coherence are dynamically accessible. This is constraint, not choice.
 \end{remark}
 
-\begin{proposition}[Constraint restricts multiplicity]\label{prop:restriction}
-If the unconstrained configuration space has $N$ locally stable configurations, the observer-admissible set $\Phi_{\mathrm{adm}}(\Ocal)$ generically contains fewer than $N$ configurations. The observer reduces multiplicity by excluding configurations incompatible with its coherence.
-\end{proposition}
-
-\begin{proof}
-The unconstrained stable configurations are the local minima of the closure functional $\Fcal$. The observer constraint $\Ccal_\Ocal \leq \epsilon$ imposes an additional condition. Generically, not all minima of $\Fcal$ satisfy this condition, so $|\Phi_{\mathrm{adm}}| \leq N$ with strict inequality for generic $\Ccal_\Ocal$.
-\end{proof}
+\begin{remark}[Constraint restricts multiplicity]\label{rem:restriction}
+If the unconstrained configuration space has $N$ locally stable configurations (local minima of $\Fcal$), the observer-admissible set $\Phi_{\mathrm{adm}}(\Ocal)$ will generically contain fewer than $N$ configurations, since the additional constraint $\Ccal_\Ocal \leq \epsilon$ need not be satisfied at all minima of $\Fcal$. The observer reduces multiplicity by excluding configurations incompatible with its coherence. A precise statement requires transversality or non-degeneracy assumptions on the joint level sets of $\Fcal$ and $\Ccal_\Ocal$.
+\end{remark}
 
 %==================================================================
 \section{Recovery of Quantum Measurement}\label{sec:quantum}
@@ -268,6 +264,10 @@ Frame-dependent quantities & $\Ocal$-dependent admissible configurations \\
 \end{tabular}
 \end{table}
 
+\begin{remark}[Frames and consciousness]
+Every conscious observer defines a frame in this sense, but not every frame-defining substructure need be conscious. The structural requirements for frame definition (boundedness, persistence, induced linear extension) are necessary but not sufficient conditions for the kind of self-referential coherence discussed in Section~\ref{sec:consciousness}.
+\end{remark}
+
 %==================================================================
 \section{Integration with Crystallisation}\label{sec:crystallisation}
 %==================================================================
@@ -318,7 +318,7 @@ The observer, as defined in Section~\ref{sec:definition}, has structural propert
     \item \textbf{Sensitivity}: the observer is affected by its environment through boundary conditions.
 \end{itemize}
 
-These properties make the observer a candidate \textit{locus} for experience: a substructure within the dynamics that has the right structural features to be ``where experience happens.''
+The framework identifies these as necessary structural conditions for locatable experience: a substructure that is bounded, persistent, internally coherent, self-referential, and environmentally sensitive has the right structural features to be ``where experience happens.'' These conditions are necessary, not sufficient: they do not by themselves explain qualia or subjective unity.
 
 \subsection{What the framework does not provide}
 
@@ -332,12 +332,40 @@ These properties make the observer a candidate \textit{locus} for experience: a 
 \subsection{The placement claim}
 
 \begin{quote}
-Consciousness, whatever its ultimate explanation, can be located within the observer-constraint framework: it is associated with bounded, stable, self-referential substructures that persist within the event-order dynamics. The framework does not explain experience. It makes experience \textit{locatable} within the physics, rather than external to it.
+The framework identifies a class of necessary structural conditions for locatable experience: boundedness, persistence, internal coherence, and self-referential closure. Substructures satisfying these conditions are natural candidates for the locus of experience within the dynamics. The framework does not explain experience. It makes experience \textit{locatable} within the physics, rather than external to it.
 \end{quote}
 
 \begin{remark}[Epistemic status]
 This section identifies a structural correspondence, not a derivation. The claim is that the observer-constraint framework provides a \textit{natural locus} for experience, not that it explains experience. The distinction between ``locatable'' and ``explained'' is the boundary of this paper.
 \end{remark}
+
+%==================================================================
+\section{Minimal Toy Model}\label{sec:toy}
+%==================================================================
+
+The following example illustrates the constraint-induced outcome restriction in the simplest possible setting.
+
+\begin{example}[Two-configuration system with observer constraint]\label{ex:toy}
+Consider an event set $\Ecal$ with three events $\{e_1, e_2, e_3\}$ forming a path graph $e_1 - e_2 - e_3$. Suppose the closure functional $\Fcal$ has two locally stable configurations: $\Phi_A$ and $\Phi_B$, both satisfying $\delta \Fcal = 0$, $\delta^2 \Fcal > 0$.
+
+An observer region $\Ocal = \{e_2\}$ (the central event) carries a constraint functional:
+\begin{equation}
+    \Ccal_\Ocal(\Phi|_\Ocal, \partial_\Ocal \Phi) = \bigl|\Phi(e_2) - \tfrac{1}{2}[\Phi(e_1) + \Phi(e_3)]\bigr|^2
+\end{equation}
+This measures the deviation of the observer's field value from the mean of its neighbours: the observer is coherent when it is locally consistent with its boundary.
+
+\textbf{Setup.} Configuration $\Phi_A$ has $\Phi_A(e_1) = 1$, $\Phi_A(e_2) = 1$, $\Phi_A(e_3) = 1$ (uniform). Configuration $\Phi_B$ has $\Phi_B(e_1) = 1$, $\Phi_B(e_2) = -1$, $\Phi_B(e_3) = 1$ (sign flip at observer).
+
+\textbf{Constraint evaluation.}
+\begin{itemize}
+    \item $\Ccal_\Ocal[\Phi_A] = |1 - \tfrac{1}{2}(1+1)|^2 = 0 \leq \epsilon$. \quad Admissible.
+    \item $\Ccal_\Ocal[\Phi_B] = |-1 - \tfrac{1}{2}(1+1)|^2 = 4 > \epsilon$ \quad (for any reasonable $\epsilon < 4$). \quad Not admissible.
+\end{itemize}
+
+\textbf{Result.} Without the observer, both $\Phi_A$ and $\Phi_B$ are stable configurations. With the observer constraint, only $\Phi_A$ is admissible. The observer's coherence requirement excludes the locally inconsistent configuration.
+
+This is the minimal structural analogue of measurement-induced outcome stabilisation: the observer does not choose $\Phi_A$; its existence as a coherent substructure makes $\Phi_B$ dynamically inaccessible.
+\end{example}
 
 %==================================================================
 \section{Discussion and Limitations}\label{sec:discussion}
@@ -354,7 +382,8 @@ This section identifies a structural correspondence, not a derivation. The claim
     \item Both roles are unified as aspects of a single constraint-placement mechanism.
     \item G\"odel's theorems are correctly scoped to formal symbolic systems.
     \item Crystallisation and observer constraint are distinguished (global vs.\ local).
-    \item A structural locus for conscious experience is identified (not explained).
+    \item Necessary structural conditions for locatable experience are identified (not sufficient for explaining qualia).
+    \item A minimal toy model demonstrates constraint-induced outcome restriction (Example~\ref{ex:toy}).
 \end{itemize}
 
 \subsection{What is not established}
