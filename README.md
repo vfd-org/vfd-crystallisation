@@ -18,7 +18,7 @@ This repository presents a testable research framework and supporting reference 
 
 ## Research Scope
 
-This repository contains seven connected research tracks within the broader VFD programme:
+This repository contains eight connected research tracks within the broader VFD programme:
 
 1. **Crystallisation dynamics** — a deterministic, constraint-driven selection framework proposed as an alternative to probabilistic collapse in open quantum systems.
 2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–V and anchored by Paper IV as the primary external-facing mass paper.
@@ -27,8 +27,9 @@ This repository contains seven connected research tracks within the broader VFD 
 5. **The general-relativity programme** — Papers XXIII–XXVII derive gravitational structure from event-order geometry. Starting from the birth-angle partial order on admissible overlap events, the sequence constructs time, observer kinematics, metric separation, curvature, and source-driven field dynamics without assuming spacetime.
 6. **The unification bridge** — Paper XXVIII proposes that the quantum and gravitational tracks are two projections of a single underlying event-order geometry, sharing the same substrate (event set, closure functional, transition graph). The regime boundary is parameterised by the degree of constraint ordering.
 7. **Observer placement** — Paper XXIX defines the observer as a bounded, stable, self-referential constraint substructure within the event-order geometry. Quantum measurement is mapped to constraint-induced stabilisation; relativistic frame dependence is mapped to observer embedding. The paper also identifies a structural locus for conscious experience within the dynamics, without claiming a full theory of consciousness.
+8. **Probability and the Born rule** — Paper XXX addresses the Born-rule gap: why admissible outcomes have different probabilities and why those probabilities take the quadratic form P_i = |ψ_i|². Four candidate weighting routes are developed; the strongest shows that the Born measure is the stationary measure of the closure dynamics at equilibrium.
 
-These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate; the unification bridge (Paper XXVIII) proposes that these two tracks admit a common structural interpretation; and the observer placement paper (Paper XXIX) defines the observer's structural role across both regimes.
+These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate; the unification bridge (Paper XXVIII) proposes that these two tracks admit a common structural interpretation; the observer placement paper (Paper XXIX) defines the observer's structural role across both regimes; and the Born-rule paper (Paper XXX) proposes that outcome probabilities emerge as geometric weights from the stationary measure of the closure dynamics.
 
 ---
 
@@ -71,6 +72,9 @@ These tracks are related by a common structural theme: state resolution through 
 
 ### For observer placement
 1. **Paper XXIX** (observer as constraint substructure — bridges QM measurement, GR frames, and consciousness locus)
+
+### For probability and the Born rule
+1. **Paper XXX** (probability as constraint geometry — Born rule from stationary measure of closure dynamics)
 
 ### For the conceptual bridge (Dirac → Crystallisation)
 1. Bridge paper (selection architecture on Dirac solution space)
@@ -339,6 +343,14 @@ Proposes that the quantum track (Papers XV–XXII) and the gravitational track (
 
 Defines the observer as a bounded, dynamically stable, self-referential substructure within the event-order geometry, characterised by a constraint functional that enforces internal coherence. Quantum measurement is mapped to constraint-induced reduction of configuration multiplicity (not external collapse). Relativistic frame dependence is mapped to the observer's embedding within the event partial order. Gödel's theorems are correctly scoped to formal symbolic systems. Crystallisation and observer constraint are distinguished as global vs local mechanisms. A brief section identifies a structural locus for conscious experience (locatable, not explained). Does not derive the Born rule, a consciousness theory, or new experimental predictions. Placement paper: defines where the observer sits and what structural role it plays.
 
+### Probability and the Born Rule (Paper XXX)
+
+#### Paper XXX — Probability as Constraint Geometry: Toward a Derivation of the Born Rule
+
+**[Probability as Constraint Geometry: Toward a Derivation of the Born Rule](papers/paper-xxx/paper-xxx.tex)** (LaTeX source)
+
+Addresses the Born-rule gap left by Paper XXIX: admissibility determines which outcomes are possible, but not their relative frequencies. Develops four candidate weighting routes: basin-volume measure, stability-depth weighting, stationary-measure inheritance from the Paper XIV equilibrium distribution, and a Gleason-type argument. The strongest result (Proposition 1): at the Paper XIV equilibrium, the Nelson wavefunction satisfies |Ψ|² = ρ = P_st, so the Born measure IS the stationary measure of the closure dynamics, yielding P_i = |c_i|² under stated assumptions. Routes C (dynamical origin) and D (structural uniqueness via Gleason) are complementary. Two-basin toy model demonstrates the mechanism explicitly. Does not claim a complete derivation; identifies a candidate substrate explanation with explicit assumptions and open problems.
+
 ### Bridge Paper — From Dirac to Crystallisation
 
 **[From Dirac Solutions to Physical Reality: A Crystallisation-Based Selection Architecture](papers/bridge-paper/From_Dirac_Solutions_to_Physical_Reality_A_Crystallisation_Based_Selection_Architecture.pdf)** ([LaTeX source](papers/bridge-paper/bridge-paper.tex))
@@ -369,6 +381,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xxx/              Paper XXX: probability as constraint geometry (Born rule)
 │   ├── paper-xxix/             Paper XXIX: observer as constraint (placement across regimes)
 │   ├── paper-xxviii/           Paper XXVIII: unification bridge (quantum ↔ gravitational)
 │   ├── paper-xxvii/            Paper XXVII / GR-V:  dynamics and field equations (capstone)
@@ -475,6 +488,7 @@ This repository makes claims at three levels, which should be evaluated independ
 | **GR programme** | Time, observers, metric, curvature, and source-driven field dynamics derived from event-order geometry without assuming spacetime | Papers XXIII–XXVII |
 | **Unification bridge** | Quantum and gravitational tracks proposed as two projections of a single event-order geometry, with shared substrate and structural correspondence | Paper XXVIII |
 | **Observer placement** | Observer defined as bounded, stable, self-referential constraint substructure; QM measurement and GR frames unified as constraint mechanisms | Paper XXIX |
+| **Born rule** | Outcome probabilities proposed as geometric weights from stationary measure of closure dynamics; Born-like P_i = \|c_i\|² under equilibrium assumptions | Paper XXX |
 
 The framework does not claim to replace quantum mechanics. It proposes a testable extension and provides the tools to evaluate it. The quantum recovery programme (Papers XV–XXI) establishes a mathematical pathway from dissipative closure dynamics to Schrödinger-type evolution but does not claim full quantum mechanics, measurement theory, or experimental predictions from the nonlinear residual.
 
