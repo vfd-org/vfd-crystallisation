@@ -18,7 +18,7 @@ This repository presents a testable research framework and supporting reference 
 
 ## Research Scope
 
-This repository contains six connected research tracks within the broader VFD programme:
+This repository contains seven connected research tracks within the broader VFD programme:
 
 1. **Crystallisation dynamics** — a deterministic, constraint-driven selection framework proposed as an alternative to probabilistic collapse in open quantum systems.
 2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–V and anchored by Paper IV as the primary external-facing mass paper.
@@ -26,8 +26,9 @@ This repository contains six connected research tracks within the broader VFD pr
 4. **The spectral bridge** — Paper XXII connects all three tracks, showing that a single closure functional on the 600-cell can coherently relate mass eigenvalues, gauge structure, fundamental constants (α⁻¹ at 0.81 ppm, sin²θ_W = 3/8), and generation structure through the φ-permeability of the 600-cell geometry and the E₈ Coxeter projection.
 5. **The general-relativity programme** — Papers XXIII–XXVII derive gravitational structure from event-order geometry. Starting from the birth-angle partial order on admissible overlap events, the sequence constructs time, observer kinematics, metric separation, curvature, and source-driven field dynamics without assuming spacetime.
 6. **The unification bridge** — Paper XXVIII proposes that the quantum and gravitational tracks are two projections of a single underlying event-order geometry, sharing the same substrate (event set, closure functional, transition graph). The regime boundary is parameterised by the degree of constraint ordering.
+7. **Observer placement** — Paper XXIX defines the observer as a bounded, stable, self-referential constraint substructure within the event-order geometry. Quantum measurement is mapped to constraint-induced stabilisation; relativistic frame dependence is mapped to observer embedding. The paper also identifies a structural locus for conscious experience within the dynamics, without claiming a full theory of consciousness.
 
-These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate; and the unification bridge (Paper XXVIII) proposes that these two tracks admit a common structural interpretation.
+These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate; the unification bridge (Paper XXVIII) proposes that these two tracks admit a common structural interpretation; and the observer placement paper (Paper XXIX) defines the observer's structural role across both regimes.
 
 ---
 
@@ -67,6 +68,9 @@ These tracks are related by a common structural theme: state resolution through 
 
 ### For the unification bridge
 1. **Paper XXVIII** (structural bridge between quantum and gravitational tracks)
+
+### For observer placement
+1. **Paper XXIX** (observer as constraint substructure — bridges QM measurement, GR frames, and consciousness locus)
 
 ### For the conceptual bridge (Dirac → Crystallisation)
 1. Bridge paper (selection architecture on Dirac solution space)
@@ -327,6 +331,14 @@ Capstone of the GR programme. Introduces source field S(e) from local event-cont
 
 Proposes that the quantum track (Papers XV–XXII) and the gravitational track (Papers XXIII–XXVII) are two projections of a single underlying event-order geometry. Identifies the shared substrate: the triple (E, F, G) — event set, closure functional, and transition graph — all derived from the dual 600-cell system. Presents a proposed structural correspondence table mapping objects across both tracks (path integrals ↔ geodesics, Witten Hamiltonian ↔ graph Laplacian, norm conservation ↔ source balance). Defines the ordering fraction η as a candidate regime-transition parameter. Reinterprets crystallisation as the geometric bridge between quantum multiplicity and gravitational order. Does not derive quantum gravity, the Einstein equations, or a continuum limit. Establishes a structural bridge, not a dynamical unification.
 
+### Observer Placement (Paper XXIX)
+
+#### Paper XXIX — Observer as Constraint: A Field-Theoretic Placement Across Quantum and Relativistic Regimes
+
+**[Observer as Constraint: A Field-Theoretic Placement Across Quantum and Relativistic Regimes](papers/paper-xxix/paper-xxix.tex)** (LaTeX source)
+
+Defines the observer as a bounded, dynamically stable, self-referential substructure within the event-order geometry, characterised by a constraint functional that enforces internal coherence. Quantum measurement is mapped to constraint-induced reduction of configuration multiplicity (not external collapse). Relativistic frame dependence is mapped to the observer's embedding within the event partial order. Gödel's theorems are correctly scoped to formal symbolic systems. Crystallisation and observer constraint are distinguished as global vs local mechanisms. A brief section identifies a structural locus for conscious experience (locatable, not explained). Does not derive the Born rule, a consciousness theory, or new experimental predictions. Placement paper: defines where the observer sits and what structural role it plays.
+
 ### Bridge Paper — From Dirac to Crystallisation
 
 **[From Dirac Solutions to Physical Reality: A Crystallisation-Based Selection Architecture](papers/bridge-paper/From_Dirac_Solutions_to_Physical_Reality_A_Crystallisation_Based_Selection_Architecture.pdf)** ([LaTeX source](papers/bridge-paper/bridge-paper.tex))
@@ -357,6 +369,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xxix/             Paper XXIX: observer as constraint (placement across regimes)
 │   ├── paper-xxviii/           Paper XXVIII: unification bridge (quantum ↔ gravitational)
 │   ├── paper-xxvii/            Paper XXVII / GR-V:  dynamics and field equations (capstone)
 │   ├── paper-xxvi/             Paper XXVI  / GR-IV: curvature from non-uniform geometry
@@ -461,6 +474,7 @@ This repository makes claims at three levels, which should be evaluated independ
 | **Spectral bridge** | Integer selection principle, exact sector decoupling, structural correspondences with α⁻¹ and sin²θ_W | Paper XXII |
 | **GR programme** | Time, observers, metric, curvature, and source-driven field dynamics derived from event-order geometry without assuming spacetime | Papers XXIII–XXVII |
 | **Unification bridge** | Quantum and gravitational tracks proposed as two projections of a single event-order geometry, with shared substrate and structural correspondence | Paper XXVIII |
+| **Observer placement** | Observer defined as bounded, stable, self-referential constraint substructure; QM measurement and GR frames unified as constraint mechanisms | Paper XXIX |
 
 The framework does not claim to replace quantum mechanics. It proposes a testable extension and provides the tools to evaluate it. The quantum recovery programme (Papers XV–XXI) establishes a mathematical pathway from dissipative closure dynamics to Schrödinger-type evolution but does not claim full quantum mechanics, measurement theory, or experimental predictions from the nonlinear residual.
 
