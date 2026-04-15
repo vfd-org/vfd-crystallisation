@@ -1,0 +1,460 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\Rst}{R_{\mathrm{st}}}
+\newcommand{\Pst}{P_{\mathrm{st}}}
+
+\title{Probability as Constraint Geometry:\\[6pt]
+\large Toward a Derivation of the Born Rule from Closure Dynamics}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Paper~XXIX defined the observer as a constraint substructure within the VFD event-order framework and showed that measurement corresponds to constraint-induced reduction of admissible configurations. The present paper addresses the next gap: \textit{why do admissible outcomes have different probabilities, and why do those probabilities take the quadratic form $P_i = |\psi_i|^2$?}
+
+Admissibility alone determines which outcomes are possible; it does not determine their relative frequencies. This paper proposes that outcome probabilities arise as geometric weights over the set of observer-admissible configurations, with weights determined by the structure of the closure dynamics rather than by primitive stochastic postulates.
+
+Four candidate weighting routes are developed: basin-volume measure under the crystallisation flow, stability-depth weighting from the closure functional, stationary-measure inheritance from the Paper~XIV equilibrium distribution $\Pst \propto e^{-2\Fcal/\sigma^2}$, and a Gleason-type argument showing that quadratic weighting is the unique compatible measure once the admissible-sector geometry has Hilbert-space structure. The stationary-measure route is the strongest: at the Paper~XIV equilibrium, the Nelson wavefunction satisfies $|\Psi|^2 = \rho = \Pst$, so the Born measure \textit{is} the stationary measure of the closure dynamics. A two-basin toy model demonstrates the mechanism explicitly.
+
+The paper does not claim a complete derivation of the Born rule. It identifies a candidate substrate explanation: probability as the induced measure over observer-compatible admissible sectors, with quadratic weighting emerging from the equilibrium structure of the closure dynamics under suitable assumptions.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The Born rule --- the prescription that the probability of measuring outcome $i$ is $P_i = |\langle \phi_i | \psi \rangle|^2$ --- is one of the most empirically successful postulates in physics. It is also one of the least explained. Standard quantum mechanics introduces it as an axiom, without providing a mechanism for why measurement outcomes should be weighted by the squared modulus of the amplitude.
+
+\subsection*{The gap}
+
+The VFD programme has addressed several foundational questions in sequence:
+\begin{itemize}
+    \item Papers~XII--XIV: closure dynamics, stochastic extension, stationary distribution.
+    \item Papers~XV--XXI: quantum structure recovery (Schr\"odinger as equilibrium tangent limit).
+    \item Paper~XXII: spectral bridge connecting mass, gauge, and constants.
+    \item Papers~XXIII--XXVII: gravitational structure from event-order geometry.
+    \item Paper~XXVIII: unification bridge between quantum and gravitational tracks.
+    \item Paper~XXIX: observer placement as constraint substructure.
+\end{itemize}
+
+Paper~XXIX showed that measurement corresponds to constraint-induced reduction of admissible configurations. But admissibility is binary: a configuration is either admissible or not. This does not explain why different admissible outcomes are realised with different frequencies. The Born-rule gap remains:
+
+\begin{quote}
+Given a set of observer-admissible outcomes, what determines their relative probabilities?
+\end{quote}
+
+\subsection*{Proposal}
+
+This paper proposes that outcome probabilities are not primitive stochastic ingredients added to measurement. They are the induced measure over observer-compatible admissible configurations, with weights determined by the geometry and dynamics of constraint satisfaction.
+
+\subsection*{Scope}
+
+The paper develops four candidate routes toward quadratic weighting, works a toy model explicitly, and identifies the conditions under which the Born rule emerges. It does not claim a complete derivation. It provides a candidate substrate explanation and identifies what remains open.
+
+%==================================================================
+\section{Programme Position}\label{sec:position}
+%==================================================================
+
+The logical chain from prior papers:
+
+\begin{enumerate}
+    \item \textbf{Structure.} The 600-cell provides the geometric substrate (Papers~I--V, XXII).
+    \item \textbf{Dynamics.} Closure gradient flow and stochastic extension (Papers~XII--XIV).
+    \item \textbf{Quantum recovery.} Schr\"odinger equation as equilibrium tangent limit (Papers~XV--XXI).
+    \item \textbf{Observer.} Bounded, stable, self-referential constraint substructure (Paper~XXIX).
+    \item \textbf{Measurement.} Reduction to observer-admissible configurations (Paper~XXIX).
+    \item \textbf{Probability.} Geometric weighting over admissible sectors (\textit{this paper}).
+\end{enumerate}
+
+Step 6 is the natural continuation: once measurement is understood as admissibility reduction, the remaining task is to explain the weighting.
+
+%==================================================================
+\section{Formal Setup}\label{sec:setup}
+%==================================================================
+
+\subsection{Configuration space and admissibility}
+
+Let $\Phi$ denote the space of field configurations on the event set $\Ecal$. The closure functional $\Fcal: \Phi \to \mathbb{R}_{\geq 0}$ assigns a closure cost to each configuration.
+
+\begin{definition}[Observer-admissible configurations]\label{def:admissible}
+Given an observer $(\Ocal, \Ccal_\Ocal)$ as defined in Paper~XXIX, the admissible set is:
+\begin{equation}\label{eq:admissible}
+    \Phi_{\mathrm{adm}}(\Ocal) = \bigl\{\, \Phi \in \Phi \;\big|\; \Fcal[\Phi] \text{ locally minimal},\; \Ccal_\Ocal\!\bigl(\Phi|_\Ocal, \partial_\Ocal \Phi\bigr) \leq \epsilon \,\bigr\}
+\end{equation}
+\end{definition}
+
+\subsection{Outcome sectors}
+
+When the admissible set contains multiple locally stable configurations, we partition it into \textit{outcome sectors}:
+\begin{equation}
+    \Phi_{\mathrm{adm}}(\Ocal) = \Phi_1 \cup \Phi_2 \cup \cdots \cup \Phi_N
+\end{equation}
+where each $\Phi_i$ is a connected component of the admissible set (a basin neighbourhood of a distinct local minimum of $\Fcal$).
+
+\subsection{The probability question}
+
+Admissibility determines which sectors are possible. It does not determine their relative likelihood:
+
+\begin{equation}\label{eq:not_equal}
+    \Phi_i \in \Phi_{\mathrm{adm}}(\Ocal) \;\;\text{for all } i \quad \not\Rightarrow \quad P(\Phi_i \mid \Ocal) = \tfrac{1}{N} \;\;\text{for all } i
+\end{equation}
+
+The task is to construct a probability measure over outcome sectors from the structure of the closure dynamics.
+
+%==================================================================
+\section{Why Admissibility Alone Is Not Enough}\label{sec:gap}
+%==================================================================
+
+Consider a system with two admissible outcome sectors $\Phi_1$ and $\Phi_2$. Both satisfy the observer constraint. Both are locally stable under the closure functional. If admissibility were the whole story, the prediction would be $P_1 = P_2 = 1/2$ for any two-outcome measurement.
+
+This contradicts experiment. Quantum mechanics predicts --- and experiment confirms --- that outcome probabilities depend on the state: $P_i = |\langle \phi_i | \psi \rangle|^2$, which is generically not $1/N$.
+
+The gap is structural:
+
+\begin{quote}
+Admissibility is a binary filter. Probability requires a measure. The filter determines the support; the measure determines the weight.
+\end{quote}
+
+What is needed is a principled construction of a weight $w_i$ for each admissible sector, such that:
+\begin{equation}\label{eq:weight}
+    P(\Phi_i \mid \Ocal) = \frac{w_i(\Ocal)}{\sum_{j=1}^N w_j(\Ocal)}
+\end{equation}
+
+The remainder of this paper develops four candidate routes to $w_i$.
+
+%==================================================================
+\section{Route A: Basin-Volume Weighting}\label{sec:basin}
+%==================================================================
+
+\begin{definition}[Basin of attraction]\label{def:basin}
+For a locally stable configuration $\Phi_i^*$ (local minimum of $\Fcal$ in $\Phi_{\mathrm{adm}}$), the \textit{basin of attraction} is:
+\begin{equation}
+    B_i = \bigl\{\, \Phi \in \Phi \;\big|\; \text{gradient flow of } \Fcal \text{ starting at } \Phi \text{ converges to } \Phi_i^* \,\bigr\}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Basin-volume weight]\label{def:basin_weight}
+\begin{equation}\label{eq:basin_weight}
+    w_i^{(\mathrm{A})} = \mu(B_i \cap \Phi_{\mathrm{adm}})
+\end{equation}
+where $\mu$ is a natural measure on configuration space (e.g.\ Lebesgue measure on the finite-dimensional event set).
+\end{definition}
+
+\textbf{Interpretation.} If the system's initial configuration is drawn from a distribution that is approximately uniform over the admissible region, then the probability of ending in sector $i$ is proportional to the volume of its basin. Larger basins attract more initial conditions.
+
+\begin{remark}[Strengths and limitations]
+Basin-volume weighting is natural for classical dynamical systems. It explains why different outcomes have different probabilities without invoking randomness: the asymmetry comes from geometry. However, it does not by itself explain why the weights should be \textit{quadratic} in any amplitude. It produces a probability measure, but not necessarily the Born measure.
+\end{remark}
+
+%==================================================================
+\section{Route B: Stability-Depth Weighting}\label{sec:stability}
+%==================================================================
+
+\begin{definition}[Stability-depth weight]\label{def:stability_weight}
+\begin{equation}\label{eq:stability_weight}
+    w_i^{(\mathrm{B})} = e^{-\beta\, \Fcal[\Phi_i^*]}
+\end{equation}
+where $\Fcal[\Phi_i^*]$ is the closure-functional value at the $i$-th minimum and $\beta > 0$ is a scale parameter.
+\end{definition}
+
+\textbf{Interpretation.} Configurations with lower closure cost (deeper minima) are more heavily weighted. This is the Boltzmann-like weighting familiar from statistical mechanics: outcomes that are more constraint-compatible are more probable.
+
+\begin{remark}
+This route connects to the thermodynamic structure of the closure landscape. It produces non-equal probabilities whenever the minima have different depths. But the Boltzmann form $e^{-\beta E}$ is not the same as the Born form $|\psi|^2$ unless $\beta$ and $\Fcal$ are related to amplitude in a specific way. Route~C makes this connection explicit.
+\end{remark}
+
+%==================================================================
+\section{Route C: Stationary-Measure Inheritance}\label{sec:stationary}
+%==================================================================
+
+This is the strongest route, because it connects directly to established results from the programme.
+
+\subsection{The Paper~XIV stationary distribution}
+
+Paper~XIV~\citep{SmartXIV} established that the stochastic closure dynamics (Langevin equation $d\psi = -\nabla\Fcal\, dt + \sigma\, dW$) admits a unique stationary distribution:
+\begin{equation}\label{eq:stationary}
+    \Pst(\psi) \propto e^{-2\Fcal(\psi)/\sigma^2}
+\end{equation}
+This distribution concentrates on the closure manifold $\Mcl$ and provides the probabilistic structure of the closure landscape.
+
+\subsection{The Nelson wavefunction connection}
+
+Paper~XVIII~\citep{SmartXVIII} constructed the Nelson wavefunction $\Psi = \sqrt{\rho}\, e^{iS/\sigma^2}$ from the paired forward/backward closure processes. At the Paper~XIV equilibrium, the density $\rho$ equals $\Pst$, so:
+\begin{equation}\label{eq:born_connection}
+    |\Psi|^2 = \rho = \Pst \propto e^{-2\Fcal/\sigma^2}
+\end{equation}
+
+This is the central observation: \textit{the Born measure $|\Psi|^2$ is the stationary measure of the closure dynamics at equilibrium.}
+
+\subsection{Stationary-measure weight}
+
+\begin{definition}[Stationary-measure weight]\label{def:stationary_weight}
+\begin{equation}\label{eq:stationary_weight}
+    w_i^{(\mathrm{C})} = \int_{\Phi_i} \Pst(\Phi)\, d\mu(\Phi) = \int_{\Phi_i} |\Psi(\Phi)|^2\, d\mu(\Phi)
+\end{equation}
+the total stationary probability mass in outcome sector $\Phi_i$.
+\end{definition}
+
+\begin{proposition}[Born-like weighting from stationary measure]\label{prop:born}
+Under the following assumptions:
+\begin{enumerate}
+    \item The system is at or near the Paper~XIV equilibrium ($\rho \approx \Pst$).
+    \item The outcome sectors $\Phi_i$ are well-separated basins (negligible overlap).
+    \item The Nelson wavefunction $\Psi$ admits a decomposition $\Psi = \sum_i c_i \phi_i$ where $\phi_i$ is supported on $\Phi_i$.
+\end{enumerate}
+Then:
+\begin{equation}\label{eq:born_result}
+    P(\Phi_i \mid \Ocal) = \frac{w_i^{(\mathrm{C})}}{\sum_j w_j^{(\mathrm{C})}} = \frac{\int_{\Phi_i} |\Psi|^2\, d\mu}{\int_{\Phi_{\mathrm{adm}}} |\Psi|^2\, d\mu} = \frac{|c_i|^2 \|\phi_i\|^2}{\sum_j |c_j|^2 \|\phi_j\|^2}
+\end{equation}
+If the $\phi_i$ are normalised ($\|\phi_i\| = 1$), this reduces to:
+\begin{equation}\label{eq:born_exact}
+    P(\Phi_i \mid \Ocal) = |c_i|^2
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By assumption 3, $|\Psi|^2 = |\sum_i c_i \phi_i|^2$. By assumption 2, the sectors are well-separated, so cross terms $c_i^* c_j \phi_i^* \phi_j$ integrate to zero over any single sector $\Phi_i$. Therefore $\int_{\Phi_i} |\Psi|^2 = |c_i|^2 \|\phi_i\|^2$. The result follows by normalisation.
+\end{proof}
+
+\begin{remark}[What this does and does not establish]
+Proposition~\ref{prop:born} shows that \textit{if} the system is near equilibrium, \textit{if} outcome sectors are well-separated, and \textit{if} the wavefunction decomposes into sector-supported components, then the Born rule follows from the stationary measure of the closure dynamics. The assumptions are not trivial: they require the system to be in the regime where the Schr\"odinger approximation holds (Papers~XVIII--XXI). Whether these assumptions are satisfied in all measurement contexts is an open question.
+\end{remark}
+
+\begin{remark}[Logical status]
+The Born rule is not postulated. It emerges as a consequence of:
+\begin{enumerate}
+    \item the stationary distribution $\Pst \propto e^{-2\Fcal/\sigma^2}$ (derived in Paper~XIV),
+    \item the identification $|\Psi|^2 = \Pst$ at equilibrium (derived in Paper~XVIII),
+    \item the decomposition of $\Pst$ into outcome-sector integrals (Definition~\ref{def:stationary_weight}).
+\end{enumerate}
+The quadratic form is not imposed; it is inherited from the equilibrium structure.
+\end{remark}
+
+%==================================================================
+\section{Route D: Gleason-Type Argument}\label{sec:gleason}
+%==================================================================
+
+If the admissible-sector geometry has Hilbert-space structure, an independent argument constrains the form of the probability measure.
+
+\subsection{The Gleason bridge}
+
+Gleason's theorem~\citep{Gleason1957} states: on a Hilbert space $\mathcal{H}$ of dimension $\geq 3$, the only non-contextual, countably additive probability measure $\mu$ on the lattice of closed subspaces satisfies $\mu(P) = \mathrm{tr}(\rho P)$ for some density operator $\rho$. For a pure state $\rho = |\psi\rangle\langle\psi|$, this gives:
+\begin{equation}
+    P_i = \mathrm{tr}(|\psi\rangle\langle\psi| \cdot \Pi_i) = |\langle \phi_i | \psi \rangle|^2
+\end{equation}
+the Born rule.
+
+\subsection{Application to the VFD framework}
+
+Papers~XVIII--XXI established that the equilibrium tangent dynamics of the closure framework is the Schr\"odinger equation, which naturally lives on a Hilbert space. If the observer-admissible outcome sectors correspond to orthogonal subspaces of this effective Hilbert space, and if the probability measure over sectors is required to be non-contextual and additive, then Gleason's theorem implies the Born rule.
+
+\begin{remark}[What VFD adds to Gleason]
+Gleason's theorem assumes Hilbert-space structure and derives the Born rule. The VFD contribution is to explain \textit{why} the relevant space has Hilbert structure: because the equilibrium tangent dynamics is Schr\"odinger-type (Papers~XVIII--XXI). The Gleason argument then completes the chain: closure dynamics $\to$ Schr\"odinger structure $\to$ Hilbert space $\to$ Born rule as the unique compatible measure.
+\end{remark}
+
+\begin{remark}[Assumptions]
+This route requires: (1) the system is in the equilibrium tangent regime; (2) the outcome sectors correspond to orthogonal subspaces; (3) the dimension is $\geq 3$; (4) the probability measure is non-contextual and additive. These are the standard Gleason assumptions. Whether the VFD framework satisfies them in full generality is an open question.
+\end{remark}
+
+%==================================================================
+\section{Toy Model: Two-Basin Weighting}\label{sec:toy}
+%==================================================================
+
+This model is illustrative. It is not derived from the full 600-cell construction, but demonstrates the mechanism by which the stationary measure produces Born-like weights.
+
+\begin{example}[Two-basin model]\label{ex:two_basin}
+Consider a one-dimensional closure functional with two minima:
+\begin{equation}
+    \Fcal(\psi) = (\psi^2 - 1)^2
+\end{equation}
+This has minima at $\psi^* = \pm 1$ with $\Fcal(\pm 1) = 0$, and a maximum at $\psi = 0$ with $\Fcal(0) = 1$.
+
+\textbf{Symmetric case.} The stationary distribution is $\Pst(\psi) \propto e^{-2(\psi^2-1)^2/\sigma^2}$. By symmetry, $\int_{-\infty}^0 \Pst = \int_0^\infty \Pst = 1/2$. The two basins have equal weight: $P_1 = P_2 = 1/2$.
+
+\textbf{Asymmetric case.} Now consider a state displaced from symmetry. Define the Nelson wavefunction:
+\begin{equation}
+    \Psi(\psi) = a\, \phi_1(\psi) + b\, \phi_2(\psi)
+\end{equation}
+where $\phi_1$ is a normalised Gaussian localised near $\psi = -1$ and $\phi_2$ is localised near $\psi = +1$, with $|a|^2 + |b|^2 = 1$.
+
+The stationary-measure weights are:
+\begin{align}
+    w_1 &= \int_{-\infty}^{0} |\Psi|^2\, d\psi \approx |a|^2 \quad \text{(cross terms negligible by separation)} \\
+    w_2 &= \int_{0}^{\infty} |\Psi|^2\, d\psi \approx |b|^2
+\end{align}
+
+Therefore:
+\begin{equation}
+    P_1 = |a|^2, \qquad P_2 = |b|^2
+\end{equation}
+
+This is the Born rule for the two-outcome case.
+
+\textbf{Mechanism.} The asymmetric weighting arises not from external randomness but from the distribution of the stationary measure across basins. A state with more amplitude in basin~1 has more stationary probability mass in basin~1. The Born rule is the statement that the stationary measure decomposes according to squared amplitudes.
+\end{example}
+
+%==================================================================
+\section{Relationship to Standard Quantum Theory}\label{sec:comparison}
+%==================================================================
+
+\subsection{What is preserved}
+
+Standard quantum predictions remain unchanged at the operational level. The VFD proposal does not modify the Born rule; it seeks to explain why it has the form it does. Amplitudes remain the effective computational tool. The proposal is a \textit{substrate explanation of measurement weighting}: it identifies a dynamical mechanism (the stationary measure of closure dynamics) that produces the same probability assignments as the Born postulate.
+
+\subsection{Comparison with other approaches}
+
+\begin{table}[ht]
+\centering
+\caption{Born-rule status across interpretive frameworks.}
+\label{tab:born}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Framework & Born rule status & Mechanism \\
+\midrule
+Copenhagen & Postulated axiom & None (primitive) \\
+Many-worlds & Derived (decision/symmetry) & Branch counting / envariance \\
+Bohmian mechanics & Derived (quantum equilibrium) & Typicality of initial conditions \\
+Objective collapse & Modified / stochastic & Added stochastic law \\
+VFD (this paper) & Candidate emergence & Stationary measure of closure dynamics \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}
+The VFD route is closest in spirit to the Bohmian quantum-equilibrium approach: both derive the Born distribution from an underlying dynamical measure. The key difference is that the Bohmian approach assumes pilot-wave dynamics and derives $|\psi|^2$ as the equivariant measure, while VFD derives $|\Psi|^2$ as the stationary measure of the closure dynamics. The Bohmian approach requires a separate justification for why the universe is in quantum equilibrium; the VFD approach proposes that equilibrium is the generic long-time behaviour of the stochastic closure process.
+\end{remark}
+
+%==================================================================
+\section{Route Comparison and Synthesis}\label{sec:synthesis}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Comparison of the four weighting routes.}
+\label{tab:routes}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Route & Weight $w_i$ & Born-like? & Status \\
+\midrule
+A: Basin volume & $\mu(B_i \cap \Phi_{\mathrm{adm}})$ & Not necessarily & Natural but incomplete \\
+B: Stability depth & $e^{-\beta \Fcal[\Phi_i^*]}$ & Boltzmann, not Born & Thermodynamic analogue \\
+C: Stationary measure & $\int_{\Phi_i} |\Psi|^2\, d\mu$ & Yes (at equilibrium) & Strongest route \\
+D: Gleason bridge & $|\langle \phi_i | \psi \rangle|^2$ & Yes (by theorem) & Requires Hilbert structure \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Routes C and D are complementary:
+\begin{itemize}
+    \item Route~C provides the \textit{dynamical} origin: the stationary measure of the closure process is $|\Psi|^2$.
+    \item Route~D provides the \textit{structural} uniqueness: once Hilbert structure is present, the Born rule is the only compatible measure.
+\end{itemize}
+
+Together, they suggest: the closure dynamics produces an effective Hilbert-space structure at equilibrium (Papers~XVIII--XXI), and the Born rule is both the stationary measure of the dynamics (Route~C) and the unique compatible measure on that structure (Route~D).
+
+Routes A and B are weaker individually but illuminate why probability is geometric: it arises from the structure of basins and the depth of constraint satisfaction, not from primitive randomness.
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is established}
+
+\begin{itemize}
+    \item Admissibility alone does not determine outcome probabilities; a weighting measure is required (Section~\ref{sec:gap}).
+    \item Four candidate weighting routes are developed, with explicit constructions for each.
+    \item The stationary-measure route (Route~C) yields Born-like weighting $P_i = |c_i|^2$ under stated assumptions (Proposition~\ref{prop:born}).
+    \item The mechanism is demonstrated in a two-basin toy model (Example~\ref{ex:two_basin}).
+    \item The Gleason bridge (Route~D) provides structural uniqueness: Born weighting is the only non-contextual additive measure on Hilbert space.
+    \item Routes C and D are complementary: dynamical origin plus structural uniqueness.
+\end{itemize}
+
+\subsection{What is not established}
+
+\begin{itemize}
+    \item A complete, assumption-free derivation of the Born rule. The result depends on the equilibrium assumption, well-separated basins, and sector-supported decomposition.
+    \item Proof that the assumptions of Proposition~\ref{prop:born} hold in all measurement contexts.
+    \item Extension to continuous spectra or infinite-dimensional configuration spaces.
+    \item A concrete construction of the weight measure from 600-cell geometry (the construction is abstract).
+    \item Proof that the system reaches equilibrium in finite time for physically relevant configurations.
+    \item Treatment of decoherence and environmental interaction within the constraint framework.
+    \item The relationship between the coherence threshold $\epsilon$ and the basin structure.
+    \item Corrections to the Born rule away from equilibrium (the nonlinear residual of Paper~XIX~\citep{SmartXIX} modifies the dynamics; its effect on probabilities is not analysed).
+\end{itemize}
+
+\subsection{The equilibrium assumption}
+
+The strongest route (C) depends on the system being at or near the Paper~XIV equilibrium. This is analogous to the quantum-equilibrium hypothesis in Bohmian mechanics: both frameworks derive the Born distribution from a dynamical measure, and both require a justification for why the system is in the relevant equilibrium state. Within VFD, the justification is that the stochastic closure dynamics has $\Pst$ as its unique stationary distribution; any initial distribution converges to $\Pst$ under ergodic evolution. Whether this convergence occurs on physically relevant timescales is an open question.
+
+%==================================================================
+\section{Future Directions}\label{sec:future}
+%==================================================================
+
+\begin{enumerate}
+    \item \textbf{Concrete constraint functional.} Constructing $\Ccal_\Ocal$ and the weight measure explicitly from the 600-cell geometry would move the framework from abstract construction to computable prediction.
+
+    \item \textbf{Away-from-equilibrium corrections.} The nonlinear residual $\delta U_{\mathrm{rel}}$ (Paper~XIX) modifies the dynamics near but not at equilibrium. Its effect on outcome probabilities may produce measurable deviations from the Born rule --- a potential experimental signature.
+
+    \item \textbf{Emergence of observer structures.} Showing how observer regions satisfying the Paper~XXIX definition arise naturally from the closure dynamics would close the last gap between geometry and measurement.
+
+    \item \textbf{Decoherence integration.} The constraint framework should be compatible with decoherence as a mechanism for producing well-separated basins. Making this explicit would strengthen the assumptions of Proposition~\ref{prop:born}.
+\end{enumerate}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+In this framework, probability is not a primitive stochastic ingredient added to measurement. It is the induced measure over the set of observer-compatible admissible configurations, with weights determined by the geometry and dynamics of constraint satisfaction.
+
+The programme chain is now:
+\begin{enumerate}
+    \item \textbf{Structure}: closure geometry on the 600-cell.
+    \item \textbf{Dynamics}: stochastic closure process with stationary distribution $\Pst \propto e^{-2\Fcal/\sigma^2}$.
+    \item \textbf{Quantum recovery}: Schr\"odinger equation as equilibrium tangent limit, with $|\Psi|^2 = \Pst$.
+    \item \textbf{Observer}: constraint substructure determining admissible configurations.
+    \item \textbf{Measurement}: reduction to observer-admissible sectors.
+    \item \textbf{Probability}: stationary measure inherited by admissible sectors yields $P_i = |c_i|^2$.
+\end{enumerate}
+
+The Born rule, in this picture, is not an axiom but an emergent law: it is the unique compatible measure on the Hilbert structure produced by the equilibrium tangent dynamics, and it coincides with the stationary measure of the underlying closure process. The assumptions under which this emerges are stated explicitly, and what remains open is identified.
+
+The standard quantum predictions are not modified. What changes is the explanatory status of the Born rule: from primitive postulate to candidate consequence of constraint geometry.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
