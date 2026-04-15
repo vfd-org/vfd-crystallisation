@@ -335,7 +335,7 @@ Proposes that the quantum track (Papers XV–XXII) and the gravitational track (
 
 #### Paper XXIX — Observer as Constraint: A Field-Theoretic Placement Across Quantum and Relativistic Regimes
 
-**[Observer as Constraint: A Field-Theoretic Placement Across Quantum and Relativistic Regimes](papers/paper-xxix/paper-xxix.tex)** (LaTeX source)
+**[Observer as Constraint: A Field-Theoretic Placement Across Quantum and Relativistic Regimes](papers/paper-xxix/Observer_as_Constraint.pdf)** ([LaTeX source](papers/paper-xxix/paper-xxix.tex))
 
 Defines the observer as a bounded, dynamically stable, self-referential substructure within the event-order geometry, characterised by a constraint functional that enforces internal coherence. Quantum measurement is mapped to constraint-induced reduction of configuration multiplicity (not external collapse). Relativistic frame dependence is mapped to the observer's embedding within the event partial order. Gödel's theorems are correctly scoped to formal symbolic systems. Crystallisation and observer constraint are distinguished as global vs local mechanisms. A brief section identifies a structural locus for conscious experience (locatable, not explained). Does not derive the Born rule, a consciousness theory, or new experimental predictions. Placement paper: defines where the observer sits and what structural role it plays.
 
