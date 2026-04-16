@@ -18,7 +18,7 @@ This repository presents a testable research framework and supporting reference 
 
 ## Research Scope
 
-This repository contains ten connected research tracks within the broader VFD programme:
+This repository contains eleven connected research tracks within the broader VFD programme:
 
 1. **Crystallisation dynamics** — a deterministic, constraint-driven selection framework proposed as an alternative to probabilistic collapse in open quantum systems.
 2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–V and anchored by Paper IV as the primary external-facing mass paper.
@@ -29,9 +29,10 @@ This repository contains ten connected research tracks within the broader VFD pr
 7. **Observer placement** — Paper XXIX defines the observer as a bounded, stable, self-referential constraint substructure within the event-order geometry. Quantum measurement is mapped to constraint-induced stabilisation; relativistic frame dependence is mapped to observer embedding. The paper also identifies a structural locus for conscious experience within the dynamics, without claiming a full theory of consciousness.
 8. **Probability and the Born rule** — Paper XXX addresses the Born-rule gap: why admissible outcomes have different probabilities and why those probabilities take the quadratic form P_i = |ψ_i|². Four candidate weighting routes are developed; the strongest shows that the Born measure is the stationary measure of the closure dynamics at equilibrium.
 9. **Measurement dynamics** — Paper XXXI justifies the key assumption of Paper XXX by showing that measurement interactions dynamically deform the closure landscape, producing well-separated outcome basins with high barriers. Kramers-type transition suppression and cross-term vanishing follow from the barrier structure.
-10. **Hadron charge radii** — Paper XXXII extends the spectral programme from masses and couplings to spatial observables. Six hadron charge radii are derived within the framework from a unified principle: each radius is the heat-kernel coherence length on the geometric sub-object of the 600-cell where the particle lives. The coherence mechanism depends on particle class — baryons use the boundary resolvent on their support graph, non-strange mesons use phase coherence on the closure orbit, and strange mesons use the diffusion length on the Hopf fiber. Results at leading structural order with zero fitted parameters: proton (0.04%), neutron (1.3%), pion (0.26%), kaon (1.7%), proton magnetic (prediction), deuteron (0.10%). Includes a closed-form proton electric form factor with golden-ratio analytic structure and a 120-vertex resolvent form factor matching low-Q² data within 0.4%.
+10. **Universal measurement principle** — Paper XXXIII proposes that all VFD observables are instances of a single closure projection: the measured value is the projection of the closure geometry through an observer-admissible boundary that minimises the closure residual. Recovers masses, coupling constants, charge radii, and composite observables from one equation with no particle-specific operators or new parameters.
+11. **Hadron charge radii** — Paper XXXII extends the spectral programme from masses and couplings to spatial observables. Six hadron charge radii are derived within the framework from a unified principle: each radius is the heat-kernel coherence length on the geometric sub-object of the 600-cell where the particle lives. The coherence mechanism depends on particle class — baryons use the boundary resolvent on their support graph, non-strange mesons use phase coherence on the closure orbit, and strange mesons use the diffusion length on the Hopf fiber. Results at leading structural order with zero fitted parameters: proton (0.04%), neutron (1.3%), pion (0.26%), kaon (1.7%), proton magnetic (prediction), deuteron (0.10%). Includes a closed-form proton electric form factor with golden-ratio analytic structure and a 120-vertex resolvent form factor matching low-Q² data within 0.4%.
 
-These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate; the unification bridge (Paper XXVIII) proposes that these two tracks admit a common structural interpretation; the observer placement paper (Paper XXIX) defines the observer's structural role across both regimes; the Born-rule paper (Paper XXX) proposes that outcome probabilities emerge as geometric weights from the stationary measure of the closure dynamics; the measurement paper (Paper XXXI) justifies the sector-separation assumption through dynamical landscape deformation; and the charge-radii paper (Paper XXXII) extends the spectral programme to spatial observables, deriving six hadron charge radii from the same 600-cell geometry that produces masses and coupling constants.
+These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate; the unification bridge (Paper XXVIII) proposes that these two tracks admit a common structural interpretation; the observer placement paper (Paper XXIX) defines the observer's structural role across both regimes; the Born-rule paper (Paper XXX) proposes that outcome probabilities emerge as geometric weights from the stationary measure of the closure dynamics; the measurement paper (Paper XXXI) justifies the sector-separation assumption through dynamical landscape deformation; the universal measurement paper (Paper XXXIII) proposes a single closure-projection principle that organises all existing observables under one framework; and the charge-radii paper (Paper XXXII) extends the spectral programme to spatial observables, deriving six hadron charge radii from the same 600-cell geometry that produces masses and coupling constants.
 
 ---
 
@@ -78,6 +79,7 @@ These tracks are related by a common structural theme: state resolution through 
 ### For measurement and probability (read in this order)
 1. **Paper XXXI** (measurement as dynamical sector separation — justifies sector assumptions)
 2. **Paper XXX** (probability as constraint geometry — Born rule from stationary measure of closure dynamics)
+3. **Paper XXXIII** (universal measurement principle — closure projection organises all observables)
 
 ### For hadron charge radii
 1. **Paper XXXII** (unified spectral coherence operator — derives six charge radii from 600-cell heat kernel)
@@ -365,6 +367,14 @@ Addresses the Born-rule gap left by Paper XXIX: admissibility determines which o
 
 Justifies the key assumption of Paper XXX: that measurement produces well-separated outcome sectors. Defines measurement-type interactions as couplings that energetically favour correlated system-apparatus configurations. Shows such interactions deform the closure landscape from single-basin to multi-basin with high barriers (Proposition 1). Kramers-type transition suppression exp(-2ΔF/σ²) follows when barrier height exceeds noise strength. Cross-term suppression and outcome stability derived from the same barrier mechanism. Toy model: system with double-well potential coupled to single-well apparatus; coupling splits landscape into two separated basins with barrier proportional to coupling strength. Timescale hierarchy (separation < relaxation < observation) treated as working hypothesis. Structural comparison to standard decoherence (analogous but does not require environmental tracing). Does not claim a complete measurement solution; provides a dynamical route from interaction to sector separation.
 
+### Universal Measurement Principle (Paper XXXIII)
+
+#### Paper XXXIII — From Geometry to Observable: Measurement as Closure Projection on the 600-Cell
+
+**[From Geometry to Observable: Measurement as Closure Projection on the 600-Cell](papers/paper-xxxiii/paper-xxxiii.tex)** (LaTeX source)
+
+Proposes a universal measurement principle: the measured observable is the projection of the closure geometry through an observer-admissible boundary that minimises the closure residual. Single equation O = argmin Δ_cl(Π) over admissible projections, with no particle-specific operators, no ad hoc extraction rules, and no new fitting parameters. Recovers three classes of existing VFD observables: spectral (masses as eigenvalue projections, couplings as ratio projections), spatial (charge radii as resolvent and phase-coherence projections), and composite (deuteron as interaction-mode projection). When the minimiser is unique, outcomes are deterministic; when degenerate, probabilistic with Paper XXX stationary-measure weights. Full epistemic classification (derived/identified/open). Does not predict new observables or claim a complete resolution of the measurement problem; identifies a candidate unifying principle organising existing results.
+
 ### Hadron Charge Radii (Paper XXXII)
 
 #### Paper XXXII — Hadron Charge Radii as Spectral Coherence Lengths from 600-Cell Closure Geometry
@@ -403,6 +413,7 @@ vfd-crystallisation/
 │   ├── inevitability/          Companion C: structural inevitability argument
 │   ├── mechanism/              Companion D: triplet closure + ARIA demo
 │   │   └── demo/               ARIA proof-pack artifacts (13 JSON files)
+│   ├── paper-xxxiii/           Paper XXXIII: universal measurement principle (closure projection)
 │   ├── paper-xxxi/             Paper XXXI: measurement as dynamical sector separation
 │   ├── paper-xxx/              Paper XXX: probability as constraint geometry (Born rule)
 │   ├── paper-xxix/             Paper XXIX: observer as constraint (placement across regimes)
@@ -513,6 +524,7 @@ This repository makes claims at three levels, which should be evaluated independ
 | **Observer placement** | Observer defined as bounded, stable, self-referential constraint substructure; QM measurement and GR frames unified as constraint mechanisms | Paper XXIX |
 | **Born rule** | Outcome probabilities proposed as geometric weights from stationary measure of closure dynamics; Born-like P_i = \|c_i\|² under equilibrium assumptions | Paper XXX |
 | **Measurement dynamics** | Measurement interactions dynamically deform closure landscape into well-separated basins; justifies sector-separation assumption of Paper XXX | Paper XXXI |
+| **Universal measurement** | All observables proposed as closure projections minimising residual through observer boundary; one equation recovers masses, couplings, radii | Paper XXXIII |
 
 The framework does not claim to replace quantum mechanics. It proposes a testable extension and provides the tools to evaluate it. The quantum recovery programme (Papers XV–XXI) establishes a mathematical pathway from dissipative closure dynamics to Schrödinger-type evolution but does not claim full quantum mechanics, measurement theory, or experimental predictions from the nonlinear residual.
 
