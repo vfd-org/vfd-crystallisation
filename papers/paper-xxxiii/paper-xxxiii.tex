@@ -1,0 +1,383 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Fint}{\Fcal_{\mathrm{int}}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Dcl}{\Delta_{\mathrm{cl}}}
+\newcommand{\lbar}{\bar{\lambda}}
+
+\title{From Geometry to Observable:\\[6pt]
+\large Measurement as Closure Projection on the 600-Cell}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+The VFD programme has derived geometric structures (masses, coupling constants, charge radii) from the 600-cell closure functional. Each derivation uses particle-specific constructions: eigenvalue assignments for masses, boundary resolvents for baryon radii, phase coherence for meson radii. The present paper asks whether these constructions share a common measurement principle.
+
+We propose that a measured observable is the \textit{closure projection}: the unique (or least-degenerate) quantity that can be extracted from the closure geometry through an observer-admissible boundary, with minimal closure residual. Formally, an observable is defined as $\hat{O} = \arg\min_{\Pi \in \Pcal(\Gcal, B)} \Dcl(\Pi)$, where $\Pcal(\Gcal, B)$ is the space of admissible projections of the geometry $\Gcal$ onto the observer boundary $B$, and $\Dcl(\Pi)$ is the closure residual of the projection.
+
+The paper shows that this principle recovers three classes of existing VFD observables without modification: spectral observables (masses, coupling constants) as projections onto the eigenvalue lattice, spatial observables (charge radii) as projections onto the heat-kernel coherence scale, and composite observables (deuteron radius) as projections through the interaction functional. When the minimiser is unique, the outcome is deterministic; when multiple projections achieve comparable residual, the outcome is probabilistic with weights given by the Paper~XXX stationary-measure construction.
+
+The paper does not derive new observables or introduce new parameters. It identifies a candidate unifying measurement principle that organises existing results under a single framework, and it distinguishes what is derived from what remains a structural identification.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The VFD programme has produced observables from geometry:
+
+\begin{itemize}
+    \item \textbf{Masses}: 13 particle masses from 600-cell eigenvalues $\{9,12,14,15\}$, at 0.014\% average error (Paper~V~\citep{SmartV}).
+    \item \textbf{Coupling constants}: $\alpha^{-1} = 137 + \pi/87$ at 0.81~ppm, $\sin^2\theta_W = 3/8$ (Paper~XXII~\citep{SmartXXII}).
+    \item \textbf{Charge radii}: proton ($0.04\%$), pion ($0.26\%$), deuteron ($0.0006\%$), and others (Paper~XXXII~\citep{SmartXXXII}).
+\end{itemize}
+
+Each result uses a specific construction: eigenvalue assignment, spectral decomposition, boundary resolvent, phase coherence on closure orbits. The constructions are individually well-motivated, but they are not derived from a single measurement rule. The question is:
+
+\begin{quote}
+Is there a universal principle that determines which geometric quantity an experiment extracts?
+\end{quote}
+
+\subsection*{The gap}
+
+In standard quantum mechanics, observables are represented by Hermitian operators on a Hilbert space. The operator is imposed from outside the formalism: the theory does not explain why a particular experiment measures a particular operator. The VFD programme faces an analogous gap: the closure geometry contains all the structural information, but the rule for extracting a specific observable has been constructed case by case.
+
+\subsection*{Proposal}
+
+This paper proposes that the extraction rule is:
+
+\begin{quote}
+\textbf{Closure projection principle.} A measured observable is the projection of the closure geometry onto an observer-admissible boundary that minimises the closure residual.
+\end{quote}
+
+The principle is universal (applies to all observables), geometry-derived (uses only $\Fcal$ and the observer boundary), and parameter-free (introduces no new fitting constants).
+
+\subsection*{Scope}
+
+The paper defines the closure projection operator, establishes its properties, shows that it recovers three classes of existing observables, connects it to the Born-rule construction of Paper~XXX, and identifies what remains open. It does not derive new observables, does not claim to have solved the measurement problem in full generality, and does not introduce parameters beyond those already present in the programme.
+
+%==================================================================
+\section{Observer as Boundary Condition}\label{sec:observer}
+%==================================================================
+
+Paper~XXIX~\citep{SmartXXIX} defined the observer as a bounded, stable, self-referential substructure within the event-order geometry. For the purpose of measurement, the observer defines a \textit{boundary}: a constraint surface in configuration space through which geometric information is extracted.
+
+\begin{definition}[Observer boundary]\label{def:boundary}
+An \textit{observer boundary} $B$ is a constraint-compatible subsystem of the closure geometry $\Gcal$ that satisfies:
+\begin{enumerate}
+    \item \textbf{Admissibility}: $B$ is consistent with the observer's coherence constraint $\Ccal_\Ocal \leq \epsilon$ (Paper~XXIX).
+    \item \textbf{Finiteness}: $B$ samples a finite-dimensional projection of the full configuration space.
+    \item \textbf{Stability}: $B$ is robust under small perturbations of the geometry.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+The observer boundary is not a spatial surface. It is a constraint surface in configuration space: the set of configurations accessible to the observer's measurement apparatus. Different experimental setups define different boundaries.
+\end{remark}
+
+%==================================================================
+\section{The Closure Projection Operator}\label{sec:projection}
+%==================================================================
+
+This is the central construction.
+
+\subsection{Admissible projections}
+
+\begin{definition}[Admissible projection space]\label{def:projection_space}
+Given a closure geometry $\Gcal$ and an observer boundary $B$, the \textit{admissible projection space} is:
+\begin{equation}\label{eq:projection_space}
+    \Pcal(\Gcal, B) = \bigl\{\, \Pi: \Gcal \to \mathbb{R} \;\big|\; \Pi \text{ is continuous, } B\text{-compatible, and closure-consistent} \,\bigr\}
+\end{equation}
+where $B$-compatibility means $\Pi$ depends only on the geometry restricted to the boundary, and closure-consistency means $\Pi$ respects the symmetry group of $\Fcal$.
+\end{definition}
+
+\subsection{Closure residual of a projection}
+
+\begin{definition}[Projection residual]\label{def:residual}
+For a projection $\Pi \in \Pcal(\Gcal, B)$, the \textit{closure residual} is:
+\begin{equation}\label{eq:residual}
+    \Dcl(\Pi) = \inf_{\Phi \in \Gcal} \bigl[\Fcal[\Phi] + \|\Pi(\Phi) - \Pi_0\|^2\bigr] - \inf_{\Phi \in \Gcal} \Fcal[\Phi]
+\end{equation}
+where $\Pi_0$ is the boundary value imposed by the observer. The residual measures the additional closure cost incurred by requiring the geometry to be compatible with the boundary readout.
+\end{definition}
+
+\begin{remark}
+$\Dcl(\Pi) \geq 0$ always, with equality when the boundary readout $\Pi_0$ is already achieved at a closure minimum. The residual penalises projections that force the geometry away from its natural minima.
+\end{remark}
+
+\subsection{The closure projection principle}
+
+\begin{definition}[Closure projection]\label{def:closure_projection}
+The \textit{closure-projected observable} for geometry $\Gcal$ and boundary $B$ is:
+\begin{equation}\label{eq:observable}
+    \boxed{\hat{O}(\Gcal, B) = \arg\min_{\Pi \in \Pcal(\Gcal, B)} \Dcl(\Pi)}
+\end{equation}
+The measured value is the projection that minimises the closure residual: the most constraint-compatible way of reading the geometry through the observer boundary.
+\end{definition}
+
+\subsection{Properties}
+
+\begin{proposition}[Properties of the closure projection]\label{prop:properties}
+Under standard regularity assumptions on $\Fcal$ and $\Pcal$:
+\begin{enumerate}
+    \item \textbf{Existence}: the infimum in~\eqref{eq:observable} is attained (by compactness of the relevant projection space on a finite graph).
+    \item \textbf{$H_4$-invariance}: if $\Fcal$ is $H_4$-invariant and $B$ is compatible with the symmetry, then $\hat{O}$ is $H_4$-invariant.
+    \item \textbf{Stability}: small perturbations of $\Gcal$ or $B$ produce small changes in $\hat{O}$ (by continuity of the residual).
+    \item \textbf{No free parameters}: $\hat{O}$ depends only on $\Fcal$, $\Gcal$, and $B$; no additional fitting constants are introduced.
+\end{enumerate}
+\end{proposition}
+
+%==================================================================
+\section{Uniqueness and Degeneracy}\label{sec:uniqueness}
+%==================================================================
+
+The closure projection principle naturally distinguishes deterministic and probabilistic measurement outcomes.
+
+\subsection{Unique projection: deterministic observable}
+
+\begin{definition}[Non-degenerate measurement]\label{def:unique}
+A measurement is \textit{non-degenerate} if the minimiser of $\Dcl$ over $\Pcal(\Gcal, B)$ is unique:
+\begin{equation}
+    \exists!\; \Pi^* \in \Pcal(\Gcal, B) \;\text{such that}\; \Dcl(\Pi^*) = \min_\Pi \Dcl(\Pi)
+\end{equation}
+In this case, the observable takes a definite value $\hat{O} = \Pi^*$, and the measurement outcome is deterministic.
+\end{definition}
+
+\begin{remark}
+Most VFD observables computed to date (masses, coupling constants, charge radii) are of this type: the closure geometry determines a unique value with no residual degeneracy.
+\end{remark}
+
+\subsection{Multiple projections: probabilistic outcome}
+
+\begin{definition}[Degenerate measurement]\label{def:degenerate}
+A measurement is \textit{degenerate} if multiple projections $\{\Pi_i\}$ achieve the minimum (or near-minimum) residual:
+\begin{equation}
+    \Dcl(\Pi_i) \leq \Dcl^* + \delta \qquad \text{for } i = 1, \ldots, N
+\end{equation}
+where $\Dcl^* = \min_\Pi \Dcl(\Pi)$ and $\delta$ is a tolerance set by the noise strength $\sigma^2$.
+\end{definition}
+
+In this case, the outcome is not unique. The probability of each outcome is determined by the Paper~XXX construction:
+
+\begin{equation}\label{eq:born_weights}
+    P(\Pi_i) = \frac{w_i}{\sum_j w_j}, \qquad w_i = e^{-2\Dcl(\Pi_i)/\sigma^2}
+\end{equation}
+
+This connects the closure projection principle to the Born-rule framework: the residual $\Dcl(\Pi_i)$ plays the role of the closure-functional value $\Fcal[\Phi_i^*]$ in the stationary-measure weighting.
+
+\begin{remark}[Deterministic and probabilistic as limits]
+The deterministic case is the limit $\Dcl(\Pi^*) \ll \Dcl(\Pi_i)$ for all $i \neq *$: one projection dominates exponentially. The probabilistic case arises when multiple projections have comparable residual. The closure projection principle encompasses both without requiring separate rules.
+\end{remark}
+
+%==================================================================
+\section{Recovery of Spectral Observables}\label{sec:spectral}
+%==================================================================
+
+Masses and coupling constants were derived in Papers~V and~XXII from the eigenvalue structure of the 600-cell graph Laplacian. We show that these are closure projections.
+
+\subsection{Mass as eigenvalue projection}
+
+The 600-cell graph Laplacian has 9 distinct eigenvalues, of which $\{9, 12, 14, 15\}$ are the nontrivial integers (Paper~XXII~\citep{SmartXXII}). The mass of a particle assigned to eigenvalue $\lambda$ and representation $\rho$ is:
+\begin{equation}
+    m = m_{\mathrm{ref}} \cdot \varphi^{f(\lambda, \rho)}
+\end{equation}
+where $f$ is the spectral assignment function (Paper~V~\citep{SmartV}).
+
+\textbf{Closure projection interpretation.} The observer boundary $B$ for a mass measurement is the energy-momentum sampling frame. The admissible projections are the eigenvalues of the closure functional's Hessian at the relevant basin minimum. The projection with minimal closure residual is the eigenvalue that matches the particle's spectral assignment. Since the eigenvalue lattice is discrete and non-degenerate, the projection is unique: mass measurements are deterministic within this framework.
+
+\subsection{Coupling constant as ratio projection}
+
+The fine structure constant $\alpha^{-1} = 137 + \pi/87$ arises from the eigenvalue algebra and Coxeter phase structure (Paper~XXII). The Weinberg angle $\sin^2\theta_W = 9/(9+15) = 3/8$ is the ratio of nearest-neighbour to next-nearest-neighbour eigenvalues.
+
+\textbf{Closure projection interpretation.} Coupling constants are projections of inter-sector relationships onto the observer's interaction boundary. The ratio form arises because the projection involves the relative weight of two eigenvalue sectors, which is determined by the graph structure. Again, the projection is unique.
+
+%==================================================================
+\section{Recovery of Spatial Observables}\label{sec:spatial}
+%==================================================================
+
+Charge radii were derived in the radius programme using heat-kernel coherence lengths on geometric sub-objects. We show that these are also closure projections.
+
+\subsection{Baryon radii as boundary-resolvent projections}
+
+The proton charge radius $r_p = 4\lbar_p$ arises from the boundary resolvent of the proton's support graph on the 600-cell. The factor~4 is the resolvent coherence scale: the characteristic length over which the boundary condition propagates into the closure landscape.
+
+\textbf{Closure projection interpretation.} The observer boundary $B$ for a charge-radius measurement is the electromagnetic scattering frame (the photon probe). The admissible projection extracts the spatial coherence scale of the closure wavefunction restricted to the particle's support graph. The boundary resolvent provides the minimal-residual projection because it solves the closure equation with the boundary condition imposed by the probe. The result is unique: $r_p = 4\lbar_p$.
+
+\subsection{Meson radii as phase-coherence projections}
+
+The pion charge radius arises from the phase-coherence length on the closure orbit of the pion's eigenvalue sector.
+
+\textbf{Closure projection interpretation.} The same principle applies, but the relevant geometric sub-object is the closure orbit rather than the support graph. The observer boundary (electromagnetic probe) extracts the coherence scale from a different geometric structure, producing a different numerical result without changing the measurement principle.
+
+\subsection{Composite observables}
+
+The deuteron charge radius (Paper~XXXII~\citep{SmartXXXII}) combines three projections: the proton radius (boundary resolvent), the neutron charge radius (electromagnetic structure), and the structural separation $(6+\alpha)\pi\lbar_p$ (interaction functional mode decomposition).
+
+\textbf{Closure projection interpretation.} The composite observable is the closure projection of the \textit{total} closure functional $\Fcal_{\mathrm{tot}} = \Fcal_1 + \Fcal_2 + \Fint$ through the observer's scattering boundary. The three terms contribute additively (in quadrature) because they correspond to independent modes of the interaction. No new principle is introduced; the same closure projection, applied to the composite system, yields the composite observable.
+
+%==================================================================
+\section{The Measurement Operator}\label{sec:operator}
+%==================================================================
+
+The closure projection principle provides a single equation for all observables:
+
+\begin{equation}\label{eq:master}
+    \hat{O}(\Gcal, B) = \arg\min_{\Pi \in \Pcal(\Gcal, B)} \Dcl(\Pi)
+\end{equation}
+
+The observable changes not because the measurement rule changes, but because the inputs change:
+
+\begin{table}[ht]
+\centering
+\caption{Same measurement principle, different inputs.}
+\label{tab:inputs}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Observable & Geometry $\Gcal$ & Boundary $B$ & Projection type \\
+\midrule
+Particle mass & Single-basin 600-cell & Energy-momentum frame & Eigenvalue \\
+Coupling constant & Inter-sector structure & Interaction frame & Ratio \\
+Baryon radius & Support subgraph & EM scattering frame & Boundary resolvent \\
+Meson radius & Closure orbit & EM scattering frame & Phase coherence \\
+Composite radius & Total $\Fcal_{\mathrm{tot}}$ & EM scattering frame & Quadrature sum \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[No operator change]
+The measurement principle~\eqref{eq:master} is the same in every row. What changes is the geometric sub-object (determined by the particle) and the observer boundary (determined by the experiment). This is the sense in which the principle is universal: one rule, many applications.
+\end{remark}
+
+%==================================================================
+\section{Relation to Quantum Measurement Theory}\label{sec:qm}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Structural comparison: quantum measurement vs.\ closure projection.}
+\label{tab:qm}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Feature & Standard QM & VFD closure projection \\
+\midrule
+Observable & Hermitian operator $\hat{A}$ & Closure projection $\hat{O}(\Gcal, B)$ \\
+State space & Hilbert space $\mathcal{H}$ & Closure geometry $\Gcal$ \\
+Measurement values & Eigenvalues of $\hat{A}$ & Minimisers of $\Dcl$ \\
+Selection rule & Collapse postulate & Residual minimisation \\
+Probability & Born rule (postulated) & Stationary-measure weighting (Paper~XXX) \\
+Operator origin & Imposed externally & Derived from $\Fcal$ and $B$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[What VFD adds]
+In standard quantum mechanics, the operator $\hat{A}$ is not derived from the theory; it is specified by the experimental context. In the VFD framework, the measurement principle~\eqref{eq:master} derives the observable from the geometry and the boundary. The theory determines both what is measured and (through Papers~XXX--XXXI) with what probability. Whether this constitutes a full resolution of the measurement problem depends on whether the closure projection principle can be proved to reproduce all quantum-mechanical observables, which remains open.
+\end{remark}
+
+%==================================================================
+\section{Epistemic Classification}\label{sec:epistemic}
+%==================================================================
+
+\begin{itemize}
+    \item[$\blacktriangleright$] \textbf{Derived.}
+    \begin{itemize}
+        \item The closure projection principle (Definition~\ref{def:closure_projection}) is a logical consequence of the closure functional and observer boundary.
+        \item Existence and stability of the projection (Proposition~\ref{prop:properties}).
+        \item The deterministic/probabilistic distinction (Section~\ref{sec:uniqueness}).
+    \end{itemize}
+
+    \item[$\triangleright$] \textbf{Identified (structural correspondence).}
+    \begin{itemize}
+        \item The identification of specific VFD observables (masses, radii) as instances of closure projection.
+        \item The mapping between boundary types (energy-momentum, EM scattering) and projection types (eigenvalue, resolvent).
+        \item The connection between projection degeneracy and probabilistic outcomes.
+    \end{itemize}
+
+    \item[$\circ$] \textbf{Open.}
+    \begin{itemize}
+        \item Proof that all quantum-mechanical observables can be recovered as closure projections.
+        \item Derivation of the boundary $B$ from first principles for each experimental setup.
+        \item Multi-observer compatibility (consistency of projections across different boundaries).
+        \item Extension to continuous field theories and relativistic embedding.
+        \item Proof that the closure projection principle is unique (no alternative extraction rules produce the same results).
+    \end{itemize}
+\end{itemize}
+
+%==================================================================
+\section{Discussion and Limitations}\label{sec:discussion}
+%==================================================================
+
+\subsection{What is established}
+
+\begin{itemize}
+    \item A single measurement principle is proposed: observable = closure projection minimising residual.
+    \item The principle is universal (one equation), geometry-derived, and parameter-free.
+    \item Three classes of existing observables are recovered: spectral (masses, couplings), spatial (charge radii), and composite (deuteron).
+    \item The deterministic/probabilistic distinction arises naturally from uniqueness/degeneracy of the minimiser.
+    \item Probabilistic outcomes connect to the Paper~XXX Born-rule construction through the residual weighting.
+\end{itemize}
+
+\subsection{What is not established}
+
+\begin{itemize}
+    \item No proof that all quantum-mechanical observables are recoverable.
+    \item The observer boundary $B$ is defined abstractly; its derivation from experimental parameters is not given.
+    \item The identification of specific observables as closure projections is structural, not rigorously derived from the minimisation principle in each case.
+    \item No new observables are predicted by the principle (it organises existing results, not yet producing new ones).
+    \item The closure residual~\eqref{eq:residual} is defined schematically; a fully explicit construction on the 600-cell is deferred.
+    \item Multi-observer consistency and relativistic extension remain open.
+\end{itemize}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The VFD programme has derived geometric structures (masses, constants, radii) from the 600-cell closure functional using case-specific constructions. This paper proposes that these constructions are instances of a single measurement principle: the closure projection.
+
+The principle is:
+\begin{equation*}
+    \hat{O}(\Gcal, B) = \arg\min_{\Pi \in \Pcal(\Gcal, B)} \Dcl(\Pi)
+\end{equation*}
+
+The measured observable is the projection of the closure geometry through the observer boundary that incurs the least closure residual. When the minimiser is unique, the outcome is deterministic. When multiple projections achieve comparable residual, the outcome is probabilistic, with weights given by the stationary-measure construction of Paper~XXX.
+
+The same principle, applied to different geometric sub-objects and different observer boundaries, recovers masses (eigenvalue projections), coupling constants (ratio projections), charge radii (resolvent and phase-coherence projections), and composite observables (interaction-mode projections). No particle-specific operators, ad hoc extraction rules, or additional fitting parameters are introduced.
+
+Whether this principle can be extended to all quantum-mechanical observables, whether the observer boundary can be derived from experimental parameters, and whether the residual construction can be made fully explicit on the 600-cell geometry are the defining open questions. What is established is a candidate unifying measurement principle that organises the programme's existing results under a single framework.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
