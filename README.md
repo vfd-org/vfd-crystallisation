@@ -18,7 +18,7 @@ This repository presents a testable research framework and supporting reference 
 
 ## Research Scope
 
-This repository contains nine connected research tracks within the broader VFD programme:
+This repository contains ten connected research tracks within the broader VFD programme:
 
 1. **Crystallisation dynamics** — a deterministic, constraint-driven selection framework proposed as an alternative to probabilistic collapse in open quantum systems.
 2. **The mass programme** — a geometric closure framework for particle mass ratios, developed through Papers I–V and anchored by Paper IV as the primary external-facing mass paper.
@@ -29,8 +29,9 @@ This repository contains nine connected research tracks within the broader VFD p
 7. **Observer placement** — Paper XXIX defines the observer as a bounded, stable, self-referential constraint substructure within the event-order geometry. Quantum measurement is mapped to constraint-induced stabilisation; relativistic frame dependence is mapped to observer embedding. The paper also identifies a structural locus for conscious experience within the dynamics, without claiming a full theory of consciousness.
 8. **Probability and the Born rule** — Paper XXX addresses the Born-rule gap: why admissible outcomes have different probabilities and why those probabilities take the quadratic form P_i = |ψ_i|². Four candidate weighting routes are developed; the strongest shows that the Born measure is the stationary measure of the closure dynamics at equilibrium.
 9. **Measurement dynamics** — Paper XXXI justifies the key assumption of Paper XXX by showing that measurement interactions dynamically deform the closure landscape, producing well-separated outcome basins with high barriers. Kramers-type transition suppression and cross-term vanishing follow from the barrier structure.
+10. **Hadron charge radii** — Paper XXXII extends the spectral programme from masses and couplings to spatial observables. Six hadron charge radii are derived within the framework from a unified principle: each radius is the heat-kernel coherence length on the geometric sub-object of the 600-cell where the particle lives. The coherence mechanism depends on particle class — baryons use the boundary resolvent on their support graph, non-strange mesons use phase coherence on the closure orbit, and strange mesons use the diffusion length on the Hopf fiber. Results at leading structural order with zero fitted parameters: proton (0.04%), neutron (1.3%), pion (0.26%), kaon (1.7%), proton magnetic (prediction), deuteron (0.10%). Includes a closed-form proton electric form factor with golden-ratio analytic structure and a 120-vertex resolvent form factor matching low-Q² data within 0.4%.
 
-These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate; the unification bridge (Paper XXVIII) proposes that these two tracks admit a common structural interpretation; the observer placement paper (Paper XXIX) defines the observer's structural role across both regimes; and the Born-rule paper (Paper XXX) proposes that outcome probabilities emerge as geometric weights from the stationary measure of the closure dynamics; and the measurement paper (Paper XXXI) justifies the sector-separation assumption through dynamical landscape deformation.
+These tracks are related by a common structural theme: state resolution through constrained spectral structure. The crystallisation papers focus on general selection dynamics; the mass papers explore whether analogous closure geometry can organise particle mass structure; the quantum recovery programme derives quantum dynamics from closure; the spectral bridge (Paper XXII) connects them through computation; the GR programme (Papers XXIII–XXVII) separately reconstructs gravitational structure from the same event-order substrate; the unification bridge (Paper XXVIII) proposes that these two tracks admit a common structural interpretation; the observer placement paper (Paper XXIX) defines the observer's structural role across both regimes; the Born-rule paper (Paper XXX) proposes that outcome probabilities emerge as geometric weights from the stationary measure of the closure dynamics; the measurement paper (Paper XXXI) justifies the sector-separation assumption through dynamical landscape deformation; and the charge-radii paper (Paper XXXII) extends the spectral programme to spatial observables, deriving six hadron charge radii from the same 600-cell geometry that produces masses and coupling constants.
 
 ---
 
@@ -77,6 +78,9 @@ These tracks are related by a common structural theme: state resolution through 
 ### For measurement and probability (read in this order)
 1. **Paper XXXI** (measurement as dynamical sector separation — justifies sector assumptions)
 2. **Paper XXX** (probability as constraint geometry — Born rule from stationary measure of closure dynamics)
+
+### For hadron charge radii
+1. **Paper XXXII** (unified spectral coherence operator — derives six charge radii from 600-cell heat kernel)
 
 ### For the conceptual bridge (Dirac → Crystallisation)
 1. Bridge paper (selection architecture on Dirac solution space)
@@ -360,6 +364,14 @@ Addresses the Born-rule gap left by Paper XXIX: admissibility determines which o
 **[Measurement as Dynamical Sector Separation in Closure Dynamics](papers/paper-xxxi/Measurement_as_Dynamical_Sector_Separation_in_Closure_Dynamics.pdf)** ([LaTeX source](papers/paper-xxxi/paper-xxxi.tex))
 
 Justifies the key assumption of Paper XXX: that measurement produces well-separated outcome sectors. Defines measurement-type interactions as couplings that energetically favour correlated system-apparatus configurations. Shows such interactions deform the closure landscape from single-basin to multi-basin with high barriers (Proposition 1). Kramers-type transition suppression exp(-2ΔF/σ²) follows when barrier height exceeds noise strength. Cross-term suppression and outcome stability derived from the same barrier mechanism. Toy model: system with double-well potential coupled to single-well apparatus; coupling splits landscape into two separated basins with barrier proportional to coupling strength. Timescale hierarchy (separation < relaxation < observation) treated as working hypothesis. Structural comparison to standard decoherence (analogous but does not require environmental tracing). Does not claim a complete measurement solution; provides a dynamical route from interaction to sector separation.
+
+### Hadron Charge Radii (Paper XXXII)
+
+#### Paper XXXII — Hadron Charge Radii as Spectral Coherence Lengths from 600-Cell Closure Geometry
+
+**[Hadron Charge Radii as Spectral Coherence Lengths from 600-Cell Closure Geometry](papers/proton-radius/Hadron_Charge_Radii_as_Spectral_Coherence_Lengths_from_600_Cell_Closure_Geometry.pdf)** ([LaTeX source](papers/proton-radius/proton-radius.tex))
+
+Derives six hadron charge radii within the framework from a unified principle: each radius is the heat-kernel coherence length of the particle's electromagnetic response, computed on the geometric sub-object of the 600-cell where the particle lives. The heat kernel is induced by the closure functional through the effective Laplacian in the tight-binding regime. The coherence mechanism depends on particle class: baryons use the boundary resolvent on their support graph, non-strange mesons use phase coherence on the closure orbit, and strange mesons use the diffusion length on the Hopf fiber. The proton charge radius is derived from the boundary resolvent on the uniquely determined support graph P₃, giving r_p = √(12 Tr(L)/|V|) λ̄_p = 4ℏ/(m_p c) = 0.8412 fm (0.04% error, 0.84σ from PDG). Five additional results: neutron ⟨r_n²⟩ = -(8/3)λ̄² (1.3%), pion r_π = πλ̄_p (0.26%), kaon r_K = φ²λ̄_p (1.7%), proton magnetic r_M = r_E (prediction), deuteron r_d ≈ 2.126 fm (0.10%). The kaon result connects to the generation structure through the Hopf decagonal fiber spectral gap E₁(C₁₀) = φ⁻². The proton electric form factor is derived as the rational function G_E(Q²) = (1+3z+z²)/(1+4z+3z²) with golden-ratio zeros at z = −φ⁻² and z = −φ². The 120-vertex resolvent form factor matches low-Q² data within 0.4%. Zero fitted parameters. Reproducibility scripts: [build_600cell.py](scripts/build_600cell.py), [verify_hadron_radii.py](scripts/verify_hadron_radii.py).
 
 ### Bridge Paper — From Dirac to Crystallisation
 
