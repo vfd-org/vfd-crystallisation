@@ -40,17 +40,17 @@ Two hypotheses to test:
      for all f in X_n^0. (Equivalent question: how does Ã_n compare
      to A_n in quadratic-form order?)
 
-The script tests (H1)–(H4) on three concrete refinement instances:
+The script tests (H1)–(H6) on two concrete refinement instances:
 
   Tower I  — single edge → 1-midpoint subdivision (n=0 has 2 vertices,
              n=1 has 3 vertices). The minimal nontrivial case.
   Tower II — triangle (3-cycle) → edge-midpoint subdivision adding 3
              midpoints (n=0 has 3 vertices, n=1 has 6 vertices).
-  Tower III — single edge → two-step refinement (n=0 → n=1 → n=2),
-              testing whether a discovered relation composes across
-              levels.
 
-All linear algebra is exact via numpy on integer/rational matrices.
+The displayed Schur and defect matrix identities are computed in
+exact `Fraction` arithmetic with no floating-point error. Eigenvalue
+diagnostics use floating-point `numpy.linalg.eigvalsh` as a sanity
+check, not as load-bearing verification.
 """
 
 from __future__ import annotations
