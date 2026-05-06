@@ -44,8 +44,8 @@ The script tests (H1)–(H4) on three concrete refinement instances:
 
   Tower I  — single edge → 1-midpoint subdivision (n=0 has 2 vertices,
              n=1 has 3 vertices). The minimal nontrivial case.
-  Tower II — triangle (3-cycle) → barycentric subdivision adding 3
-             edge-midpoints (n=0 has 3 vertices, n=1 has 6 vertices).
+  Tower II — triangle (3-cycle) → edge-midpoint subdivision adding 3
+             midpoints (n=0 has 3 vertices, n=1 has 6 vertices).
   Tower III — single edge → two-step refinement (n=0 → n=1 → n=2),
               testing whether a discovered relation composes across
               levels.
@@ -97,7 +97,7 @@ def build_edge_tower():
 
 
 def build_triangle_tower():
-    """Tower II: triangle (3-cycle) → barycentric edge-midpoint subdivision."""
+    """Tower II: triangle (3-cycle) → edge-midpoint subdivision."""
     # Level 0: G_0 = ({0, 1, 2}, edges (0,1), (1,2), (2,0))
     # X_0^0 = R^3 indexed (0, 1, 2). X_0^1 = R^3 indexed (e01, e12, e20).
     # d_0 in oriented form:
@@ -140,7 +140,7 @@ def build_triangle_tower():
     p1[1, 2] = Fraction(1, 2); p1[1, 3] = Fraction(1, 2)   # e12
     p1[2, 4] = Fraction(1, 2); p1[2, 5] = Fraction(1, 2)   # e20
 
-    return {"d_0": d_0, "d_1": d_1, "p0": p0, "p1": p1, "name": "Tower II (triangle→barycentric)"}
+    return {"d_0": d_0, "d_1": d_1, "p0": p0, "p1": p1, "name": "Tower II (triangle→edge-midpoint)"}
 
 
 def fmat(M):
@@ -380,8 +380,8 @@ def test_hypotheses(tower):
             print(f"       D_n H e_{k} = {[str(x) for x in D_HfB]}")
 
     # ===== H6: D_n is generically NON-zero on {phi : phi_I = 0} =====
-    # Paper's Proposition 4.1(ii): defect does NOT vanish on the
-    # level-n-supported subspace, contradicting the original v1 claim.
+    # Paper's Proposition 4.1(iii): defect does NOT vanish on the
+    # level-n-supported subspace.
     print(f"\n[H6] D_n is non-zero on level-n-supported sector {{psi_I = 0}}:")
     H6_ok = False
     for k in range(n_B):
@@ -443,7 +443,7 @@ def main():
     if all(r["H5"] for r in results):
         print("  H5 true: D_n vanishes on harmonic-extension subspace (Proposition 4.1(i)).")
     if all(r["H6"] for r in results):
-        print("  H6 true: D_n NON-zero on level-n-supported sector (Proposition 4.1(ii)).")
+        print("  H6 true: D_n NON-zero on level-n-supported sector (Proposition 4.1(iii)).")
     print("=" * 70)
 
 

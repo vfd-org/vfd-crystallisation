@@ -41,51 +41,62 @@ Schur--Complement Identity and Energy Intertwining \\[0.4em]
 \maketitle
 
 \begin{abstract}
-We discharge two of the four consumer-API obligations in the
-cascade-closure mechanism paper~\cite{CascadeMechanism} for the
-finite-level P3/P4 refinement tower of
-\cite{CascadeRefinementSpaces, CascadeClosureDynamics}. With the
-scaled curvature operator
-$\widetilde A_n := 2^n A_n^{\mathrm{vertex}}$, where
-$A_n^{\mathrm{vertex}} = d_n^{*} d_n$ is the source's vertex
-graph-Laplacian and $2^n$ matches the source's factor-$\tfrac12$
-coboundary refinement relation $p^{1} d_{n+1} = \tfrac12 d_n p^{0}$,
-the Schur complement of $\widetilde A_{n+1}$ with respect to the
-(boundary, interior) decomposition induced by edge-midpoint
-subdivision equals $\widetilde A_n$ exactly:
-$\Schur(\widetilde A_{n+1}) = \widetilde A_n$.
-This identity is verified analytically and numerically on two
-concrete refinement towers (single edge to one-midpoint subdivision;
-triangle to barycentric edge-subdivision) and yields, on the
-boundary-energy sector, the cascade-mechanism residual-monotonicity
-hypothesis
-$\widetilde R_n(p^{0} \psi) \le \widetilde R_{n+1}(\psi)$
-for every $\psi \in X_{n+1}^{0}$, with equality if and only if
+We isolate a clean abstract model --- a scalar vertex-sector graph
+Laplacian under pure edge-midpoint subdivision with degree-$2$
+midpoints --- and prove a Schur-complement halving identity in this
+model that lifts the source's coboundary factor-$\tfrac12$ relation
+$p^{1} d_{n+1} = \tfrac12 d_n p^{0}$ from
+\cite{CascadeClosureDynamics} to the curvature level. With the
+scaled vertex Laplacian $\widetilde A_n := 2^n A_n^{\mathrm{vertex}}$,
+the Schur complement under the (boundary, interior) partition equals
+the previous-level operator exactly:
+$\Schur(\widetilde A_{n+1}) = \widetilde A_n$. The identity is
+verified analytically and numerically on two concrete instances of
+the abstract model (single edge with one-midpoint subdivision;
+triangle with edge-midpoint subdivision) and yields the
+cascade-mechanism residual-monotonicity hypothesis
+$\widetilde R_n(p^{0} \psi) \le \widetilde R_{n+1}(\psi)$ for every
+$\psi \in X_{n+1}^{0}$, with equality if (but not in general only if)
 $\psi$ is the harmonic extension of $p^{0} \psi$. Strict
 operator-level refinement-compatibility
 $p^{0} \widetilde A_{n+1} = \widetilde A_n p^{0}$ remains false; the
-defect operator vanishes precisely on the harmonic-extension subspace
-and is computed explicitly for the worked towers. The result discharges
-cascade-mechanism's obligation~(O3) (residual monotonicity) for the
-P3/P4 tower and reformulates obligation~(O2) (flow intertwining) at
-the quadratic-form / Schur level, where it holds, rather than at
-the strict operator level, where it does not.
+defect operator vanishes on harmonic extensions and is generically
+non-zero on the level-$n$-supported sector
+$\{\psi : \psi_I = 0\}$. We \emph{do not} extend the result to the
+full Schl\"{a}fli-refinement P3/P4 tower of
+\cite{CascadeRefinementSpaces, CascadeClosureDynamics} (which adds
+face-centroids, midpoint-centroid edges, and $F$-valued chain
+spaces with antisymmetric oriented-edge convention); the gap between
+this paper's abstract scalar pure-midpoint model and that fuller
+setting is named explicitly in \S\ref{sec:scope-and-gap} as the
+remaining upstream task. The result discharges
+cascade-mechanism's obligation~(O3) for the abstract model and
+partially discharges (O2) at the boundary-energy / Schur level for
+the abstract model, recasting the cascade-mechanism worked-invocation
+status table accordingly.
 \end{abstract}
 
 \begin{tcolorbox}[title=\textbf{Scope}]
 \begin{itemize}[leftmargin=*]
-\item This is a narrow technical paper. It contains no new
-  mechanism, no programme framing, no consciousness or cosmology
-  claim. It is the source-side companion to
-  \cite{CascadeMechanism}.
-\item Its job is to discharge as many of the consumer-API
-  obligations (O0)--(O3) of \cite{CascadeMechanism}~\S3.4 as the
-  imported P3/P4 finite-level tower will support.
-\item Two of the four obligations are closed here, in the
-  precise form recorded in \S\ref{sec:cascade-mechanism-update};
-  one is closed only at the boundary-energy / Schur level rather
-  than at the operator/flow level; one is recorded as essentially
-  trivial (kernel of a connected graph Laplacian).
+\item This is a narrow technical paper on an \emph{abstract scalar
+  model} of refinement (vertex-sector graph Laplacian, pure
+  edge-midpoint subdivision with degree-$2$ midpoints), not the full
+  Schl\"{a}fli-refinement P3/P4 tower of
+  \cite{CascadeRefinementSpaces, CascadeClosureDynamics} (see
+  \S\ref{sec:scope-and-gap}). It contains no new mechanism, no
+  programme framing, no consciousness or cosmology claim. It is the
+  source-side companion to \cite{CascadeMechanism}, applied to the
+  abstract model.
+\item Within the abstract scalar model: (O0) closed; (O3) closed via
+  the Schur halving identity (Theorem~\ref{thm:schur},
+  Theorem~\ref{thm:O3-discharge}); (O2) closed at the Schur /
+  boundary-energy level only (Proposition~\ref{prop:strict-fails});
+  (O1) recorded but not nontrivially discharged
+  (Proposition~\ref{prop:O1-status}).
+\item Lifting these results to the full P3/P4 tower (centroids,
+  midpoint-centroid extra edges, $F$-valued $X_n^{0}$ and
+  antisymmetric $X_n^{1}$ chain spaces) is named as the remaining
+  upstream task and is not attempted here.
 \end{itemize}
 \end{tcolorbox}
 
@@ -118,50 +129,139 @@ upstream upgrade required and observes that the role of
 \cite{CascadeMechanism} is to make the obligations visible as the
 programme's actual dependency gate, not to discharge them.
 
-The present paper is that source-side discharge, applied to the
-imported P3/P4 finite-level tower with the curvature operator
-$A_n$ rather than the source's mass-only $L_n$. We do not redefine
-the cascade-closure mechanism, do not modify
+The present paper is a partial source-side discharge, carried out
+in a deliberately scaled-down setting: an \emph{abstract scalar
+pure-midpoint refinement model} (Definition~\ref{def:abstract-model}
+below) that retains the load-bearing coboundary refinement relation
+of the imported tower while dropping the centroids,
+midpoint-centroid edges, and $F$-valued / antisymmetric oriented-edge
+structure of the full Schl\"{a}fli refinement. In this abstract
+model, with the curvature operator $A_n$ rather than the source's
+mass-only $L_n$, we supply a single source-side identity and
+exhibit its consequences for (O2) and (O3). The lift to the full
+P3/P4 tower of \cite{CascadeRefinementSpaces, CascadeClosureDynamics}
+is named explicitly in \S\ref{sec:scope-and-gap} as hypotheses
+\textup{(L1)}--\textup{(L3)} and is not attempted here. We do not
+redefine the cascade-closure mechanism, do not modify
 \cite{CascadeMechanism}'s consumer API, and do not introduce any
-programme-level claim. We supply a single source-side identity and
-exhibit its consequences for (O2) and (O3).
+programme-level claim.
 
-\subsection{Source objects (recap, no new content)}
+\subsection{Scope: abstract scalar pure-midpoint model vs.\ full P3/P4 tower}\label{sec:scope-and-gap}
 
-We use the notation of \cite{CascadeClosureDynamics} verbatim. At
-each refinement level $n$ the source provides a graph $G_n^{\bullet}$
-with vertex set $V(G_n^{\bullet})$ and edge set $E(G_n^{\bullet})$,
-and the chain spaces
-$X_n^{0} := \R^{V(G_n^{\bullet})}$,
-$X_n^{1} := \R^{E(G_n^{\bullet})}$,
-$X_n := X_n^{0} \oplus X_n^{1}$,
-together with the discrete coboundary
-$d_n : X_n^{0} \to X_n^{1}$ and its adjoint
-$d_n^{*} : X_n^{1} \to X_n^{0}$ in the standard $\ell^2$ inner
-products. The vertex-block curvature operator is
-\begin{equation}\label{eq:Anvertex}
-   A_n^{\mathrm{vertex}} := d_n^{*} d_n \in \R^{V(G_n^{\bullet}) \times V(G_n^{\bullet})},
+The actual source refinement of \cite{CascadeRefinementSpaces}
+(\texttt{cascade-refinement-spaces.tex} lines~273--287) is the
+\emph{Schl\"{a}fli refinement}: at each level $n$ it adds, alongside
+the new edge-midpoints $M_n^{\bullet}$, a separate set of
+face-centroids $C_n^{\bullet}$ (one per $2$-face of the underlying
+$4$-polytope), together with extra level-$(n+1)$ edges connecting
+midpoints to centroids and centroids to other midpoints in a
+$W^{\bullet}$-equivariant pattern. The chain spaces in the source
+are also $F$-valued (\texttt{cascade-refinement-spaces.tex}
+lines~464--493): $X_n^{0, \bullet}$ is $F^{0}$-valued on
+$V(G_n^{\bullet})$ and $X_n^{1, \bullet}$ is $F^{1}$-valued and
+antisymmetric on \emph{oriented} edges, with edge-parent map
+$\pi_{n+1, n}^{E}$ taking the value $\bot$ on the new
+midpoint-centroid and centroid-midpoint edges.
+
+The present paper does \emph{not} work in this fuller setting. We
+work in a deliberate \emph{abstract scalar pure-midpoint model}
+defined as follows:
+
+\begin{definition}[Abstract scalar pure-midpoint refinement model]\label{def:abstract-model}
+A pair of finite undirected graphs $G_n = (V_n, E_n)$ and
+$G_{n+1} = (V_{n+1}, E_{n+1})$ together with bonding maps is in the
+abstract scalar pure-midpoint model when:
+\begin{enumerate}[label=\textup{(M\arabic*)}, leftmargin=2.4em, nosep, topsep=2pt]
+\item $V_{n+1} = V_n \sqcup M_n$, where $M_n$ contains exactly one
+  new \emph{midpoint} vertex $m_e$ per edge $e \in E_n$, and no other
+  new vertices (no centroids);
+\item $E_{n+1} = \{(u, m_e), (m_e, v) : e = (u, v) \in E_n\}$, i.e.\
+  every level-$(n+1)$ edge is a child of exactly one level-$n$ edge
+  (no extra midpoint--midpoint edges);
+\item the chain spaces are scalar:
+  $X_n^{0} = \R^{V_n}$, $X_n^{1} = \R^{E_n}$, with standard $\ell^{2}$
+  inner products and \emph{unoriented} edge convention;
+\item bonding maps are vertex-restriction
+  $p^{0}_{n+1, n} : X_{n+1}^{0} \to X_n^{0}$ along the inclusion
+  $V_n \subset V_{n+1}$ and parent-fibre average
+  $p^{1}_{n+1, n} : X_{n+1}^{1} \to X_n^{1}$ by factor $\tfrac12$ on
+  each of the two children of every parent edge.
+\end{enumerate}
+The vertex-sector curvature is the standard graph Laplacian
+$A_n^{\mathrm{vertex}} := d_n^{*} d_n$ on $X_n^{0}$, with
+$d_n : X_n^{0} \to X_n^{1}$ the oriented difference (with respect to
+an arbitrary but fixed orientation of $E_n$).
+\end{definition}
+
+In this abstract model, the coboundary refinement relation
+\begin{equation}\label{eq:cobref}
+   p^{1}_{n+1, n} d_{n+1} = \tfrac12 \, d_n \, p^{0}_{n+1, n}
 \end{equation}
-the standard graph-Laplacian on $V(G_n^{\bullet})$.
+holds verbatim, by direct computation: for any
+$f \in X_{n+1}^{0}$, $(p^{1} d_{n+1} f)(e) = \tfrac12 [(d_{n+1} f)(u, m_e)
++ (d_{n+1} f)(m_e, v)] = \tfrac12 [(f(m_e) - f(u)) + (f(v) - f(m_e))]
+= \tfrac12 (f(v) - f(u)) = \tfrac12 (d_n p^{0} f)(e)$. We use
+\eqref{eq:cobref} as the load-bearing input below. The relation also
+holds in the source's full Schl\"{a}fli setting~(P4
+\texttt{coboundary-refinement}, lines~896--937), but the present
+paper only uses the abstract-model version, where it is elementary.
+
+\paragraph*{The gap to the full P3/P4 tower.}
+The Theorems and Proposition below all hold only \emph{within
+Definition~\ref{def:abstract-model}'s abstract model}. They do
+\emph{not} immediately transfer to the full Schl\"{a}fli setting of
+\cite{CascadeRefinementSpaces}. The minimal lift hypotheses we
+identify are:
+\begin{enumerate}[label=\textup{(L\arabic*)}, leftmargin=2.4em, nosep, topsep=2pt]
+\item the level-$(n+1)$ vertex Laplacian, restricted to boundary
+  vertices $V_n \subset V(G_{n+1}^{\bullet})$, agrees with the
+  Laplacian of the abstract model up to a defect that is supported
+  only on midpoints (no extra contribution from centroid neighbours
+  or centroid-midpoint edges);
+\item the parent-fibre averaging map $p^{1}_{n+1, n}$ on
+  $F^{1}$-valued, antisymmetric oriented-edge chains satisfies the
+  calibration identity $p^{1}(p^{1})^{*} = \tfrac12 \, I$ in the
+  $F^{1}$ inner product, with the same factor of $\tfrac12$ as in
+  the scalar abstract model;
+\item the harmonic-extension operator $H_{n+1}$ in the
+  $F^{0}$-valued setting saturates the
+  energy lower bound coming from
+  \textup{(L1)} and \textup{(L2)}.
+\end{enumerate}
+Each of these is concrete and isolatable: (L1) is a graph-theoretic
+incidence statement about the $W^{\bullet}$-equivariant midpoint
+and centroid placement; (L2) is an inner-product calculation
+in the source's $F^{1}$-valued, antisymmetric oriented-edge
+convention~(\texttt{cascade-refinement-spaces.tex} lines~464--493);
+(L3) is the analogue of Step~3 of the proof of
+Theorem~\ref{thm:schur} in the $F$-valued setting. Lifting the
+Schur-halving identity to the full P3/P4 tower under these
+hypotheses is named here as the remaining upstream task and is not
+attempted in this paper.
+
+\subsection{Source objects (recap)}
+
+Within the abstract model of Definition~\ref{def:abstract-model}, we
+use scalar finite-dimensional chain spaces. The vertex-block
+curvature operator is
+\begin{equation}\label{eq:Anvertex}
+   A_n^{\mathrm{vertex}} := d_n^{*} d_n \in \R^{V_n \times V_n},
+\end{equation}
+the standard graph Laplacian on $V_n$.
 
 The bonding maps are the pair
 $p_{n+1, n} = (p^{0}_{n+1, n}, p^{1}_{n+1, n})$, where
 $p^{0}_{n+1, n} : X_{n+1}^{0} \to X_n^{0}$ is vertex-restriction
-along the canonical inclusion
-$V(G_n^{\bullet}) \subset V(G_{n+1}^{\bullet})$ and
+along the canonical inclusion $V_n \subset V_{n+1}$ and
 $p^{1}_{n+1, n} : X_{n+1}^{1} \to X_n^{1}$ is the parent-fibre
-average over the canonical edge-parent map
-$\pi_{n+1, n}^{E} : E(G_{n+1}^{\bullet}) \to E(G_n^{\bullet})$ (each
-level-$n$ edge subdivides into exactly two level-$(n+1)$ edges; the
-average is by factor $\tfrac12$ on each child).
+average by factor $\tfrac12$ on each of the two children of every
+parent edge.
 
-The source's load-bearing identity is the coboundary refinement
-relation \cite{CascadeClosureDynamics}~Proposition
-\texttt{coboundary-refinement} (lines 896--937):
-\begin{equation}\label{eq:cobref}
-   p^{1}_{n+1, n} d_{n+1} = \tfrac12 \, d_n \, p^{0}_{n+1, n}.
-\end{equation}
-We use \eqref{eq:cobref} as a black box.
+The coboundary refinement relation \eqref{eq:cobref} of
+\S\ref{sec:scope-and-gap} is the load-bearing input below. (The
+analogous identity is also a theorem in the source's full
+Schl\"{a}fli setting, \cite{CascadeClosureDynamics}~Proposition
+\texttt{coboundary-refinement} at lines~896--937.)
 
 \subsection{What this paper proves}
 
@@ -208,7 +308,7 @@ $A_{BB} \in \R^{B \times B}$,
 $A_{BI} = A_{IB}^{T} \in \R^{B \times I}$,
 $A_{II} \in \R^{I \times I}$.
 
-By construction $A_n^{\mathrm{vertex}}$ is the graph-Laplacian on
+By construction $A_n^{\mathrm{vertex}}$ is the graph Laplacian on
 $V(G_n^{\bullet})$. The harmonic extension
 $H_{n+1} : X_n^{0} \to X_{n+1}^{0}$ is the unique linear map sending
 $f \in X_n^{0}$ to the level-$(n+1)$ state with prescribed boundary
@@ -229,17 +329,12 @@ the partition $(B, I)$ is
      \in \R^{B \times B}.
 \end{equation}
 
-\begin{theorem}[Schur--complement halving]\label{thm:schur}
-For the cascade refinement tower with
-$A_n^{\mathrm{vertex}} = d_n^{*} d_n$, where the refinement is the
-edge-midpoint subdivision scheme of
-\cite{CascadeClosureDynamics}~(each level-$n$ edge $e = (u, v)$ is
-subdivided by inserting one new midpoint vertex $m_e$ of degree~$2$
-in $G_{n+1}^{\bullet}$ with the two child edges $(u, m_e)$ and
-$(m_e, v)$, and no other level-$(n+1)$ edges incident to midpoints),
-the Schur complement of $A_{n+1}^{\mathrm{vertex}}$ under the
-(boundary, interior) partition \eqref{eq:block} is exactly half the
-level-$n$ Laplacian:
+\begin{theorem}[Schur--complement halving in the abstract model]\label{thm:schur}
+In the abstract scalar pure-midpoint refinement model of
+Definition~\ref{def:abstract-model}, with vertex-sector curvature
+$A_n^{\mathrm{vertex}} = d_n^{*} d_n$, the Schur complement of
+$A_{n+1}^{\mathrm{vertex}}$ under the (boundary, interior) partition
+\eqref{eq:block} is exactly half the level-$n$ Laplacian:
 \begin{equation}\label{eq:schur-half}
    \Schur(A_{n+1}^{\mathrm{vertex}}) =
      \tfrac12 \, A_n^{\mathrm{vertex}}.
@@ -378,7 +473,7 @@ Theorem~\ref{thm:schur} is verified to exact rational precision in
 \S\ref{sec:worked} for two finite refinement instances: the single
 edge with one-midpoint subdivision (Tower~I,
 $|V(G_0^{\bullet})| = 2$, $|V(G_1^{\bullet})| = 3$) and the triangle
-with three-midpoint barycentric subdivision (Tower~II,
+with edge-midpoint subdivision (Tower~II,
 $|V(G_0^{\bullet})| = 3$, $|V(G_1^{\bullet})| = 6$). The
 numerical witness is
 \texttt{papers/cascade-refinement-compat/scripts/explore\_defect.py};
@@ -394,7 +489,9 @@ in this paper's setting is
 $\widetilde R_n(\phi) := \tfrac12 \langle \phi, \widetilde A_n \phi\rangle$.
 
 \begin{theorem}[Energy intertwining; discharge of (O3)]\label{thm:O3-discharge}
-For every $\psi \in X_{n+1}^{0}$,
+In the abstract scalar pure-midpoint refinement model of
+Definition~\ref{def:abstract-model}, for every
+$\psi \in X_{n+1}^{0}$,
 \begin{equation}\label{eq:O3}
    \widetilde R_n\bigl(p^{0}_{n+1, n} \psi\bigr)
    \;\le\;
@@ -450,14 +547,19 @@ is positive definite by invertibility), i.e.\ $\psi$ is the harmonic
 extension of its boundary.
 \end{proof}
 
-\begin{corollary}[(O3) is closed for the P3/P4 tower with $\widetilde A_n$]\label{cor:O3-closed}
-The cascade-mechanism residual-monotonicity hypothesis
-\cite{CascadeMechanism}~(O3) holds for the P3/P4 finite-level
-refinement tower with the scaled curvature residual
+\begin{corollary}[(O3) is closed in the abstract pure-midpoint model]\label{cor:O3-closed}
+In the abstract scalar pure-midpoint refinement model of
+Definition~\ref{def:abstract-model}, the cascade-mechanism
+residual-monotonicity hypothesis \cite{CascadeMechanism}~(O3) holds
+for the scaled curvature residual
 $\widetilde R_n(\phi) = \tfrac12 \langle \phi, \widetilde A_n \phi\rangle$,
 where $\widetilde A_n = 2^n A_n^{\mathrm{vertex}}$ and
-$A_n^{\mathrm{vertex}} = d_n^{*} d_n$ is the source's vertex
-graph-Laplacian.
+$A_n^{\mathrm{vertex}} = d_n^{*} d_n$ is the vertex
+graph Laplacian. Lifting this discharge to the full Schl\"{a}fli
+P3/P4 tower of \cite{CascadeClosureDynamics} (which adds
+face-centroid vertices and centroid--midpoint edges absent from
+Definition~\ref{def:abstract-model}) is open and named in
+\S\ref{sec:scope-and-gap}.
 \end{corollary}
 
 \section{Strict operator-level refinement-compatibility fails}\label{sec:strict-fails}
@@ -467,8 +569,9 @@ The strict operator-level identity
 $p^{0}_{n+1, n} \widetilde A_{n+1} = \widetilde A_n p^{0}_{n+1, n}$
 remains false, with explicit defect.
 
-\begin{proposition}[Strict operator intertwining fails; defect vanishes on harmonic extensions]\label{prop:strict-fails}
-The strict identity
+\begin{proposition}[Strict operator intertwining fails; kernel of the defect]\label{prop:strict-fails}
+In the abstract scalar pure-midpoint refinement model of
+Definition~\ref{def:abstract-model}, the strict identity
 $p^{0}_{n+1, n} \widetilde A_{n+1} = \widetilde A_n p^{0}_{n+1, n}$ does
 not hold in general, and equivalently
 $p^{0}_{n+1, n} A_{n+1}^{\mathrm{vertex}} \ne \tfrac12 A_n^{\mathrm{vertex}} p^{0}_{n+1, n}$
@@ -481,57 +584,120 @@ satisfies the following:
 \item $D_n \,\psi = 0$ whenever $\psi \in \mathrm{range}(H_{n+1})$,
   i.e.\ whenever $\psi$ is the harmonic extension of its own
   boundary $p^{0} \psi$;
-\item $D_n$ is generically non-zero on $X_{n+1}^{0}$ outside
-  $\mathrm{range}(H_{n+1})$. In particular, $D_n$ does \emph{not}
-  vanish on the subspace $\{\psi : \psi_I = 0\}$.
+\item Writing $\delta(\psi) \in \R^{E_n}$ for the per-edge midpoint
+  deficit
+  $\delta_e(\psi) := \tfrac12(\psi_u + \psi_v) - \psi_{m_e}$
+  (with $e = \{u, v\} \in E_n$ and $m_e$ the midpoint inserted on
+  $e$), one has $(D_n \psi)_v = \sum_{e \ni v} \delta_e(\psi)$ for
+  every $v \in V_n$. Equivalently, $D_n \psi = B_n \delta(\psi)$
+  where $B_n \in \{0, 1\}^{V_n \times E_n}$ is the unsigned
+  vertex--edge incidence matrix of $G_n$. Consequently
+  \begin{equation}\label{eq:kerDn}
+     \ker D_n
+     \;=\; \mathrm{range}(H_{n+1}) + \bigl\{\psi : \delta(\psi) \in \ker B_n,\ \psi_B = 0\bigr\},
+  \end{equation}
+  with the two summands intersecting trivially. The kernel
+  $\ker B_n$ is non-trivial precisely when $G_n$ admits an
+  alternating-sign edge-weighting along a closed walk of even
+  length; in particular $\ker B_n = 0$ when $G_n$ is a forest, and
+  $\ker D_n = \mathrm{range}(H_{n+1})$ in that case. The smallest
+  counterexample is $G_n = C_4$ (4-cycle), where $\dim \ker B_n = 1$
+  and $\ker D_n$ is strictly larger than
+  $\mathrm{range}(H_{n+1})$;
+\item $D_n$ does \emph{not} vanish on the level-$n$-supported
+  subspace $\{\psi : \psi_I = 0\}$ in general (and not at all when
+  $G_n$ has at least one edge).
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-\textbf{(i)} Apply $D_n$ to a harmonic extension $\psi = H_{n+1} f$,
-$f := p^{0} \psi \in X_n^{0}$. Then $p^{0} \psi = f$, and the
-energy-form identity inside the proof of Theorem~\ref{thm:schur}
-yields
-$\langle \eta, p^{0} A_{n+1}^{\mathrm{vertex}} H_{n+1} f\rangle =
-\langle \eta, \tfrac12 A_n^{\mathrm{vertex}} f\rangle$ for every
-$\eta \in X_n^{0}$. (This is the inner product
-$\langle \eta, \cdot\rangle$ pulled back through the Schur identity:
-the right side is $\tfrac12 \langle \eta, A_n^{\mathrm{vertex}} f\rangle$,
-the left side is $\langle p_{0}^{*} \eta, A_{n+1}^{\mathrm{vertex}} H_{n+1} f\rangle$
-where $p_{0}^{*}$ is the obvious zero-extension to interior; both
-equal $\tfrac12 \langle f, A_n^{\mathrm{vertex}} \eta\rangle$ by
-symmetry of $A_n^{\mathrm{vertex}}$ and the Step~3 calculation in
-the proof of Theorem~\ref{thm:schur}.) Hence
-$p^{0} A_{n+1}^{\mathrm{vertex}} H_{n+1} f =
-\tfrac12 A_n^{\mathrm{vertex}} p^{0} H_{n+1} f$, which is exactly
-$D_n \cdot H_{n+1} f = 0$.
+\textbf{Per-vertex formula.} Fix $v \in V_n$. By
+Definition~\ref{def:abstract-model}~\textup{(M2)}, the level-$(n+1)$
+neighbours of $v$ are exactly the midpoints
+$\{m_e : e \in E_n,\, e \ni v\}$ of the level-$n$ edges incident to
+$v$, and $v$ has the same level-$(n+1)$ degree
+$\deg_{G_{n+1}}(v) = \deg_{G_n}(v)$. Hence
+\[
+   (A_{n+1}^{\mathrm{vertex}} \psi)(v)
+   \;=\; \sum_{e \ni v} \bigl(\psi(v) - \psi(m_e)\bigr)
+   \quad\text{and}\quad
+   (A_n^{\mathrm{vertex}} \psi_B)(v)
+   \;=\; \sum_{e = \{v, u\} \ni v} \bigl(\psi(v) - \psi(u)\bigr),
+\]
+so for every $\psi \in X_{n+1}^{0}$ with $\psi_B = p^{0} \psi$,
+\begin{align*}
+   (D_n \psi)(v)
+   &= (A_{n+1}^{\mathrm{vertex}} \psi)(v)
+      - \tfrac12 (A_n^{\mathrm{vertex}} \psi_B)(v) \\
+   &= \sum_{e \ni v} \bigl(\psi(v) - \psi(m_e)\bigr)
+      - \tfrac12 \sum_{e = \{v, u\}} \bigl(\psi(v) - \psi(u)\bigr) \\
+   &= \sum_{e \ni v} \Bigl[\tfrac12(\psi(u) + \psi(v)) - \psi(m_e)\Bigr]
+   \;=\; \sum_{e \ni v} \delta_e(\psi)
+   \;=\; (B_n \delta(\psi))(v).
+\end{align*}
+This proves the formula in the proposition statement.
 
 \smallskip
-\textbf{(ii)} On any state $\phi \in X_{n+1}^{0}$ with $\phi_I = 0$,
-i.e.\ $\phi = (\phi_B, 0)$ in block form, one computes
-$p^{0} A_{n+1}^{\mathrm{vertex}} \phi = A_{BB} \phi_B$ (the
-$(B, I)$ block on a state with $\phi_I = 0$). On the other side,
-$\tfrac12 A_n^{\mathrm{vertex}} p^{0} \phi = \tfrac12 A_n^{\mathrm{vertex}} \phi_B$.
-The block $A_{BB}$ is the level-$(n+1)$ Laplacian restricted to
-boundary vertices, which records edges from $B$ to neighbours both
-in $B$ and in $I$; for the edge-midpoint refinement scheme the
-endpoints of every level-$n$ edge $e \in E(G_n^{\bullet})$ acquire
-a new neighbour at level $n+1$ (the midpoint $m_e$), so $A_{BB}$
-differs from $\tfrac12 A_n^{\mathrm{vertex}}$ in general. The
-explicit defect $D_n \phi$ is computed for two concrete towers in
-\S\ref{sec:worked}; in both, $D_n |_{\{\phi_I = 0\}}$ is non-zero.
+\textbf{(i)} If $\psi = H_{n+1} f$ is the harmonic extension of
+$f \in X_n^{0}$, the harmonic-equation
+$(A_{II})_{m_e, m_e} \psi(m_e) + (A_{IB})_{m_e, \cdot} f = 0$
+collapses, since $m_e$ has level-$(n+1)$ neighbours
+$\{u, v\}$ (so $A_{II}$ is diagonal with entries $2$ on midpoints,
+$A_{IB}$ has rows $-e_u^{T} - e_v^{T}$ on midpoint $m_e$), to
+$2 \psi(m_e) = f(u) + f(v)$, i.e.\
+$\psi(m_e) = \tfrac12(f(u) + f(v))$. Hence
+$\delta_e(\psi) = \tfrac12(f(u) + f(v)) - \psi(m_e) = 0$ for all
+$e \in E_n$, and the per-vertex formula gives
+$D_n \psi = B_n \cdot 0 = 0$.
+
+\smallskip
+\textbf{(ii)} From the per-vertex formula above, $D_n \psi = 0$ iff
+$B_n \delta(\psi) = 0$ iff $\delta(\psi) \in \ker B_n$. The map
+$\psi \mapsto \delta(\psi)$ is surjective
+$X_{n+1}^{0} \twoheadrightarrow \R^{E_n}$ (any prescribed
+$\delta \in \R^{E_n}$ is realised by $\psi_B := 0$ and
+$\psi_{m_e} := -\delta_e$), and its kernel is exactly
+$\mathrm{range}(H_{n+1})$ by the harmonic-extension equation
+$\psi(m_e) = \tfrac12(\psi(u) + \psi(v))$ in part~(i). Hence the
+short exact sequence
+$0 \to \mathrm{range}(H_{n+1}) \to \ker D_n \to \ker B_n \to 0$
+splits via the section $\delta \mapsto \psi$ defined by $\psi_B = 0$,
+$\psi_{m_e} = -\delta_e$, giving \eqref{eq:kerDn}. The non-triviality
+of $\ker B_n$ on closed even-length walks is the standard fact that
+the unsigned incidence matrix has $\ker B_n^{T} B_n = \ker B_n$ with
+$B_n^{T} B_n = 2 I_{E_n} + A^{\mathrm{adj}}_{\mathrm{line}}(G_n)$ on
+the line graph, whose null space is generated by alternating-sign
+$\pm 1$ patterns along even closed walks (and is trivial on
+trees / forests). For $G_n = C_4$, an explicit kernel generator is
+$\delta = (1, -1, 1, -1)$ on the four edges in cyclic order.
+
+\smallskip
+\textbf{(iii)} For any $\phi \in X_{n+1}^{0}$ with $\phi_I = 0$ and
+edge $e = \{u, v\} \in E_n$, $\delta_e(\phi) = \tfrac12(\phi(u) + \phi(v))$.
+Take any $\phi$ with $\phi(u) \ne -\phi(v)$ on at least one edge
+(possible whenever $G_n$ has an edge): then $\delta(\phi) \ne 0$,
+and the per-vertex formula gives $D_n \phi = B_n \delta(\phi)$ with
+the right-hand side non-zero at any vertex incident to an edge $e$
+where $\delta_e(\phi) \ne 0$ and not cancelled by sums at that
+vertex. The explicit defect $D_n \phi$ is computed for two concrete
+towers in \S\ref{sec:worked}; in both, $D_n |_{\{\phi_I = 0\}}$ is
+non-zero.
 \end{proof}
 
 \begin{remark}[Geometric interpretation]\label{rem:harmonic-zero}
 The conclusion (i) of Proposition~\ref{prop:strict-fails} is the
 operator-level shadow of Theorem~\ref{thm:schur}: harmonic
-extensions are exactly the level-$(n+1)$ states whose interior
-values do not contribute to the boundary Laplacian action under
-$p^{0}$, hence the only states for which the strict scaled
-identity holds. On non-harmonic states, the defect measures the
-``midpoint deficit'' $\psi_I - H_{n+1}(p^{0} \psi)|_I$, i.e.\ how
-far the interior values of $\psi$ are from being harmonic averages
-of the boundary values.
+extensions saturate the boundary Laplacian action under $p^{0}$ at
+the strict scaled level. Conclusion (ii) records the genuinely
+finer fact that, on parent graphs $G_n$ with non-trivial unsigned
+incidence kernel (the smallest example is $G_n = C_4$), the kernel
+of $D_n$ is strictly larger than $\mathrm{range}(H_{n+1})$: there
+exist non-harmonic level-$(n+1)$ states whose midpoint deficits
+form a non-zero edge-cocycle in $\ker B_n$ but whose total at every
+boundary vertex still cancels. The defect $D_n$ measures the
+boundary-vertex sum of midpoint deficits
+$\delta_e(\psi) = \tfrac12(\psi_u + \psi_v) - \psi_{m_e}$ along
+incident edges, not the per-edge midpoint deficit itself.
 \end{remark}
 
 \begin{remark}[Energy vs.\ flow level]
@@ -555,7 +721,9 @@ discharges. In the cascade-mechanism reformulation table of
 
 For completeness we record the status of cascade-mechanism's
 obligation~(O1) (top-rung residual-zero fixed point and convergence)
-in the imported P3/P4 finite-level tower.
+in the abstract scalar pure-midpoint refinement model of
+Definition~\ref{def:abstract-model}, applied at the top level
+$n = N$.
 
 \begin{proposition}[Kernel and convergence of $\widetilde A_N$]\label{prop:O1-status}
 For any finite level $N$, $\widetilde A_N$ is positive semi-definite
@@ -664,16 +832,21 @@ The defect of strict refinement-compatibility is
 Both rows of $D_0$ act on $\phi = (\phi(u), \phi(m), \phi(v))$ as
 $\tfrac12 \phi(u) - \phi(m) + \tfrac12 \phi(v) =
 \tfrac12 (\phi(u) + \phi(v)) - \phi(m)$, the ``midpoint deficit''
-of $\phi$ at $m$. This vanishes precisely when
-$\phi(m) = \tfrac12 (\phi(u) + \phi(v))$, i.e.\ when $\phi$ is the
-harmonic extension of its boundary $(\phi(u), \phi(v))$, in agreement
-with Proposition~\ref{prop:strict-fails}(i). In particular, $D_0$
-does \emph{not} vanish on $\{\phi : \phi(m) = 0\}$ (which gives
+of $\phi$ at $m$. Tower~I has a single edge with no cycles, so
+the unsigned vertex--edge incidence matrix
+$B_0 \in \{0, 1\}^{2 \times 1}$ has trivial kernel, and the
+incidence characterisation in
+Proposition~\ref{prop:strict-fails}(ii) collapses to: $D_0 \phi = 0$
+iff the midpoint deficit at $m$ is zero, iff
+$\phi(m) = \tfrac12 (\phi(u) + \phi(v))$, iff $\phi$ is the harmonic
+extension of its boundary. So here the kernel of $D_0$
+coincides with $\mathrm{range}(H_1)$. Furthermore, $D_0$ does
+\emph{not} vanish on $\{\phi : \phi(m) = 0\}$ (which gives
 $D_0 \phi = (\tfrac12 (\phi(u) + \phi(v)),
 \tfrac12 (\phi(u) + \phi(v)))$, generically non-zero), confirming
-Proposition~\ref{prop:strict-fails}(ii).
+Proposition~\ref{prop:strict-fails}(iii).
 
-\subsection{Tower~II: triangle $\to$ barycentric edge-subdivision}
+\subsection{Tower~II: triangle $\to$ edge-midpoint subdivision}
 
 Let $G_0^{\bullet}$ be the 3-cycle on
 $V(G_0^{\bullet}) = \{0, 1, 2\}$ with edges
@@ -708,16 +881,25 @@ Laplacian; rescaling by $2^n$ at level $n$ exactly compensates).
 \section{Cascade-mechanism update}\label{sec:cascade-mechanism-update}
 
 The present paper updates the worked-invocation status table of
-\cite{CascadeMechanism}~\S3.5 for the imported P3/P4 finite-level
-refinement tower as follows. The consumer-API obligations
-themselves (\cite{CascadeMechanism}~\S3.4) are unchanged; the
-cascade-closure mechanism, Definition, Proposition, and Corollary
-of \cite{CascadeMechanism} are unchanged.
+\cite{CascadeMechanism}~\S3.5 in the abstract scalar pure-midpoint
+refinement model of Definition~\ref{def:abstract-model}, which
+\S\ref{sec:scope-and-gap} relates to the imported P3/P4
+finite-level refinement tower of \cite{CascadeClosureDynamics}: any
+update lifts to that tower under the named hypotheses
+\textup{(L1)}--\textup{(L3)} of \S\ref{sec:scope-and-gap} and
+otherwise stays inside the abstract model. The consumer-API
+obligations themselves (\cite{CascadeMechanism}~\S3.4) are
+unchanged; the cascade-closure mechanism, Definition, Proposition,
+and Corollary of \cite{CascadeMechanism} are unchanged.
 
 \begin{longtable}{>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.40\textwidth}>{\raggedright\arraybackslash}p{0.32\textwidth}}
 \caption{Updated status of cascade-mechanism consumer-API obligations
-in the imported P3/P4 finite-level tower with the scaled curvature
-operator $\widetilde A_n = 2^n A_n^{\mathrm{vertex}}$.}\label{tab:status-update}\\
+in the abstract scalar pure-midpoint refinement model
+(Definition~\ref{def:abstract-model}) with the scaled curvature
+operator $\widetilde A_n = 2^n A_n^{\mathrm{vertex}}$. Lifting any
+row to the full P3/P4 tower of \cite{CascadeClosureDynamics}
+requires the named hypotheses
+\textup{(L1)}--\textup{(L3)} of \S\ref{sec:scope-and-gap}.}\label{tab:status-update}\\
 \toprule
 \textbf{Obligation} & \textbf{Status (this paper)} & \textbf{Where established} \\
 \midrule
@@ -752,59 +934,72 @@ refinement-compatible object at the boundary-energy level.
 \section{Discussion}\label{sec:discussion}
 
 \paragraph*{What this paper does.}
-It proves that, with the scaled curvature operator
-$\widetilde A_n = 2^n A_n^{\mathrm{vertex}}$, the cascade-mechanism
-residual-monotonicity obligation~(O3) holds for the imported P3/P4
-finite-level refinement tower, and the flow-intertwining
-obligation~(O2) holds at the boundary-energy / Schur level. The
-mechanism by which both happen is the same: the source's
-coboundary factor-$\tfrac12$ relation
-$p^{1} d_{n+1} = \tfrac12 d_n p^{0}$ pulled forward through the
-boundary--interior decomposition.
+It proves that, in the abstract scalar pure-midpoint refinement
+model of Definition~\ref{def:abstract-model} and with the scaled
+curvature operator $\widetilde A_n = 2^n A_n^{\mathrm{vertex}}$,
+the cascade-mechanism residual-monotonicity obligation~(O3) holds
+(Theorem~\ref{thm:O3-discharge}, Corollary~\ref{cor:O3-closed}) and
+the flow-intertwining obligation~(O2) holds at the
+boundary-energy / Schur level (Theorem~\ref{thm:schur}). The
+mechanism by which both happen is the same: the coboundary
+factor-$\tfrac12$ relation
+$p^{1} d_{n+1} = \tfrac12 d_n p^{0}$, which holds verbatim in the
+abstract model (and as a theorem in the source's full Schl\"{a}fli
+setting), pulled forward through the boundary--interior
+decomposition.
 
 \paragraph*{What this paper does not do.}
 It does not establish strict operator-level
 $p^{0} \widetilde A_{n+1} = \widetilde A_n p^{0}$
-intertwining; that identity is genuinely false on the cascade
-refinement tower with new-midpoint refinement. The defect operator
-$D_n$ defined in Proposition~\ref{prop:strict-fails} vanishes
-precisely on the harmonic-extension subspace and is generically
-non-zero elsewhere (including on the level-$n$-supported sector
-$\{\psi : \psi_I = 0\}$). In particular, the
-strict cascade-mechanism flow-intertwining hypothesis (O2) at the
-operator/flow level remains a stronger condition than what the
-P3/P4 tower supports; cascade-mechanism users invoking the
-boundary-energy version of (O2) will find it discharged here, but
-those requiring strict operator-level intertwining will find the
-defect computed but not zero. The paper does not derive a selection
-rule for nontrivial elements of $\ker \widetilde A_N$, in keeping
-with \cite{CascadeMechanism}~\S5's explicit boundary.
+intertwining; that identity is genuinely false in the abstract
+model. The defect operator $D_n$ defined in
+Proposition~\ref{prop:strict-fails} satisfies
+$\mathrm{range}(H_{n+1}) \subseteq \ker D_n$, with equality when
+the parent graph $G_n$ has no bipartite component, and $D_n$ is
+non-zero on the level-$n$-supported sector
+$\{\psi : \psi_I = 0\}$ in general. In particular, the strict
+cascade-mechanism flow-intertwining hypothesis~(O2) at the
+operator/flow level remains a strictly stronger condition than
+what the abstract model supports; cascade-mechanism users invoking
+the boundary-energy version of (O2) will find it discharged here,
+but those requiring strict operator-level intertwining will find
+the defect computed but not zero. The paper also does not lift any
+of these results to the full Schl\"{a}fli P3/P4 tower of
+\cite{CascadeClosureDynamics}: that lift is named in
+\S\ref{sec:scope-and-gap} as hypotheses
+\textup{(L1)}--\textup{(L3)} and is not attempted here. The paper
+does not derive a selection rule for nontrivial elements of
+$\ker \widetilde A_N$, in keeping with
+\cite{CascadeMechanism}~\S5's explicit boundary.
 
 \paragraph*{Implication for cascade-mechanism v2.1.}
 The minimum cascade-mechanism update is a single sentence in
-\cite{CascadeMechanism}~\S3.5 replacing the ``(O3) open'' line with
-a citation of Corollary~\ref{cor:O3-closed} above, and a short
-remark recording the partial discharge of (O2) at the Schur level.
-The cascade-mechanism consumer API itself
+\cite{CascadeMechanism}~\S3.5 replacing the ``(O3) open'' line
+with a citation of Corollary~\ref{cor:O3-closed} above, scoped to
+the abstract pure-midpoint model of
+Definition~\ref{def:abstract-model}, and a short remark recording
+the partial discharge of (O2) at the Schur level under the same
+scope. The cascade-mechanism consumer API itself
 (\cite{CascadeMechanism}~\S3.4 (O0)--(O3)) does not change. The
-reproduction bundle of \cite{CascadeMechanism} is unaffected.
+reproduction bundle of \cite{CascadeMechanism} is unaffected. Any
+update describing the full P3/P4 tower must be flagged conditional
+on \textup{(L1)}--\textup{(L3)} of \S\ref{sec:scope-and-gap}.
 
 \paragraph*{Open follow-ups.}
-By Proposition~\ref{prop:strict-fails}(i), the strict identity
-$p^{0} \widetilde A_{n+1} = \widetilde A_n p^{0}$ holds exactly on
-the harmonic-extension subspace $\mathrm{range}(H_{n+1})$. The
-natural follow-up is whether this is the only invariant subspace on
-which strict intertwining holds (the negative answer on
-$\{\phi : \phi_I = 0\}$ is recorded above; a $\sigma$-fixed sector
-of the cascade $\sigma$-attractor is a possible richer candidate).
-A separate question is whether the cascade-mechanism flow
-$e^{-t \widetilde A_{n+1}}$ preserves $\mathrm{range}(H_{n+1})$
-(numerically, it does not, since $\widetilde A_{n+1}$ does not
-preserve the harmonic subspace). A separate question is whether a non-linear
-cascade-flow modification (gradient flow on a modified residual
-that absorbs the defect into the dynamics) would preserve the
-mechanism's structure while admitting strict intertwining; this is
-out of scope for the present paper.
+Proposition~\ref{prop:strict-fails}(ii) characterises $\ker D_n$ via
+the unsigned vertex--edge incidence operator $B_n$. The natural
+follow-up is the structure of $\ker D_n \setminus \mathrm{range}(H_{n+1})$
+when $G_n$ has non-trivial $\ker B_n$ (e.g.\ $G_n = C_4$), and whether such
+``incidence-cocycle'' kernel directions form an invariant sector
+under the cascade-mechanism flow $e^{-t \widetilde A_{n+1}}$
+(numerically they do not in general, since $\widetilde A_{n+1}$ does
+not preserve the harmonic subspace). A separate question is
+whether a non-linear cascade-flow modification (gradient flow on a
+modified residual that absorbs the defect into the dynamics)
+preserves the mechanism's structure while admitting strict
+intertwining; this is out of scope for the present paper. The
+P3/P4-tower lift under \textup{(L1)}--\textup{(L3)} is the most
+load-bearing follow-up.
 
 \section{Reproducibility}\label{sec:repro}
 
