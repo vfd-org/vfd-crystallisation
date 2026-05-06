@@ -1,0 +1,113 @@
+======================================================================
+explore_defect.py — Cascade Refinement Compatibility Exploration
+======================================================================
+
+======================================================================
+Tower I (edge→midpoint)
+======================================================================
+
+[sanity] coboundary refinement relation `p^1 d_1 = (1/2) d_0 p^0`
+         holds: True
+
+[setup] A_0^vertex (graph Laplacian on level-0 vertices):
+[ 1  -1 ]
+[ -1  1 ]
+
+[setup] A_1^vertex (graph Laplacian on level-1 vertices):
+[ 1  -1  0 ]
+[ -1  2  -1 ]
+[ 0  -1  1 ]
+
+[H1] strict: `p^0 A_1 = A_0 p^0`?  False
+     defect D = p^0 A_1 - A_0 p^0:
+[ 0  -1  1 ]
+[ 1  -1  0 ]
+
+[partition] level-1 vertices: 3 total = 2 boundary + 1 interior
+
+[H3] Schur complement S = A_BB - A_BI A_II^{-1} A_IB:
+[ 1/2  -1/2 ]
+[ -1/2  1/2 ]
+     A_0:
+[ 1  -1 ]
+[ -1  1 ]
+     S = (1/2) A_0  ✓✓✓ (Schur complement halves the level-0 Laplacian)
+
+[H2 op] On harmonic extensions of unit boundary states:
+     boundary state e_0: p^0 A_1 H e_0 = (1/2) A_0 e_0 ?  True
+     boundary state e_1: p^0 A_1 H e_1 = (1/2) A_0 e_1 ?  True
+
+[H4] eigenvalues of (S - A_0): ['-1.000000', '0.000000']
+     S ≤ A_0 (S - A_0 is negative semi-definite)
+     => for harmonic extensions: <H f, A_1 H f> ≤ <f, A_0 f>
+     i.e. REVERSED monotonicity holds (O3 form fails, but explicit defect).
+
+======================================================================
+Tower II (triangle→barycentric)
+======================================================================
+
+[sanity] coboundary refinement relation `p^1 d_1 = (1/2) d_0 p^0`
+         holds: True
+
+[setup] A_0^vertex (graph Laplacian on level-0 vertices):
+[ 2  -1  -1 ]
+[ -1  2  -1 ]
+[ -1  -1  2 ]
+
+[setup] A_1^vertex (graph Laplacian on level-1 vertices):
+[ 2  0  0  -1  0  -1 ]
+[ 0  2  0  -1  -1  0 ]
+[ 0  0  2  0  -1  -1 ]
+[ -1  -1  0  2  0  0 ]
+[ 0  -1  -1  0  2  0 ]
+[ -1  0  -1  0  0  2 ]
+
+[H1] strict: `p^0 A_1 = A_0 p^0`?  False
+     defect D = p^0 A_1 - A_0 p^0:
+[ 0  1  1  -1  0  -1 ]
+[ 1  0  1  -1  -1  0 ]
+[ 1  1  0  0  -1  -1 ]
+
+[partition] level-1 vertices: 6 total = 3 boundary + 3 interior
+
+[H3] Schur complement S = A_BB - A_BI A_II^{-1} A_IB:
+[ 1  -1/2  -1/2 ]
+[ -1/2  1  -1/2 ]
+[ -1/2  -1/2  1 ]
+     A_0:
+[ 2  -1  -1 ]
+[ -1  2  -1 ]
+[ -1  -1  2 ]
+     S = (1/2) A_0  ✓✓✓ (Schur complement halves the level-0 Laplacian)
+
+[H2 op] On harmonic extensions of unit boundary states:
+     boundary state e_0: p^0 A_1 H e_0 = (1/2) A_0 e_0 ?  True
+     boundary state e_1: p^0 A_1 H e_1 = (1/2) A_0 e_1 ?  True
+     boundary state e_2: p^0 A_1 H e_2 = (1/2) A_0 e_2 ?  True
+
+[H4] eigenvalues of (S - A_0): ['-1.500000', '-1.500000', '0.000000']
+     S ≤ A_0 (S - A_0 is negative semi-definite)
+     => for harmonic extensions: <H f, A_1 H f> ≤ <f, A_0 f>
+     i.e. REVERSED monotonicity holds (O3 form fails, but explicit defect).
+
+======================================================================
+SUMMARY — refinement-compatibility status across towers
+======================================================================
+
+Tower I (edge→midpoint):
+  H1 (strict p A_1 = A_0 p):          False
+  H2 (harmonic-state p A_1 H = (1/2) A_0):  True
+  H3 (Schur complement relation):     S = (1/2) A_0
+  H4 (monotonicity on harmonic):      S <= A_0
+
+Tower II (triangle→barycentric):
+  H1 (strict p A_1 = A_0 p):          False
+  H2 (harmonic-state p A_1 H = (1/2) A_0):  True
+  H3 (Schur complement relation):     S = (1/2) A_0
+  H4 (monotonicity on harmonic):      S <= A_0
+
+======================================================================
+INTERPRETATION:
+  H1 false (strict A_n intertwining fails) — confirms WO assumption.
+  H2 true (harmonic-state factor-1/2 compatibility) — STRETCH RESULT.
+======================================================================
