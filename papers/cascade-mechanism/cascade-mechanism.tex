@@ -1,0 +1,1332 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+
+\setlength{\emergencystretch}{3em}
+\sloppy
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{interpretation}[theorem]{Interpretive Claim}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\pphi}{\varphi}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Vsub}{V_{600}}
+\newcommand{\Cphi}{C_{\pphi}}
+\newcommand{\Fix}{\operatorname{Fix}}
+
+\title{Cascade Closure: A Conditional Compatibility Template\\
+for Geometric State Selection\\[0.4em]
+\large From Objective Reduction to Crystallisation\\
+under Projection Constraint}
+\author{Lee Smart \\ Institute of Vibrational Field Dynamics}
+\date{2026-05}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We propose a single named candidate mechanism, formulated as a formal
+\emph{compatibility template} for propagating a supplied
+closure-compatible fixed point through a projection stack of
+geometric carriers. The mechanism does not by itself select that
+fixed point; it specifies the conditions under which residual
+compatibility and gradient-flow fixed-point status compose downward in
+systems where unresolved geometric mismatch propagates through a
+layered closure substrate:
+\emph{cascade closure}. Penrose Objective Reduction is the
+neighbouring geometry-coupled state-selection model for which this
+paper is proposed as a structural analogue, rather than as a
+refutation or as a strict generalisation (we do not derive
+Objective Reduction as a special case of cascade closure); \emph{collapse}
+becomes the external description of the resolution event,
+\emph{crystallisation} the internal description, and \emph{cascade}
+the propagation process. We formalise the mechanism as a rung-indexed
+closure-residual functional with an explicit projection stack, prove
+a conditional residual-compositionality proposition, identify the binary
+icosahedral 600-cell vertex graph $\Vsub$ as the chosen finite carrier
+of the construction (without claiming uniqueness), and document one
+architecture-level mapping to a computational system (the ARIA
+observer-process tuple
+$\Ocal = \langle B, S, M, G, I, C, A\rangle$) and one passive physical
+witness (the $\Vsub$ closure-response operator $\Cphi = L_M + \pphi^{-2} I$
+with $\|\Cphi^{-1}\| = \pphi^2$ exactly). The mathematical payload of
+the paper is a definition plus a conditional propagation lemma; we
+do not exhibit a non-trivial instance in which all clauses of the
+cascade-closure event occur. Instead, in lieu of a worked occurrence,
+we supply a \emph{consumer API} for successor papers --- a list of
+the four explicit obligations (O0)--(O3) a successor paper must
+discharge to invoke cascade closure as a load-bearing premise ---
+and we record the status of those obligations in the most
+load-bearing imported tower in the programme (the finite-level P3/P4
+refinement spaces plus closure dynamics), where (O0) is satisfied at
+the finite-dimensional level by the source's Hilbert structure, and
+none of (O1)--(O3) is closed in the source state. This makes the paper the programme's
+named dependency gate, not its selection-mechanism endpoint. The paper is a mechanism
+paper, not a programme paper. It is not a replacement for quantum
+mechanics, not a derivation of consciousness, not a cosmogenesis
+theorem, and not a proof of any open mainstream-mathematics problem.
+\end{abstract}
+
+\begin{tcolorbox}[title=\textbf{Epistemic status (read first)}]
+\begin{itemize}[leftmargin=*]
+\item The cascade-closure mechanism (Definition~\ref{def:cascade-closure})
+  is the paper's organising definition, not a theorem of physics.
+\item The compositionality proposition (Proposition~\ref{prop:resid-comp})
+  is conditional on two named hypotheses.
+\item No nontrivial example is shown here to satisfy all clauses of
+  Definition~\ref{def:cascade-closure}; the mathematical payload is
+  a definition plus a conditional propagation lemma, not a
+  demonstration that the mechanism occurs.
+\item In lieu of a worked occurrence, the paper supplies a
+  \emph{consumer API} (\S\ref{ssec:consumer-api}): the explicit
+  four obligations (O0)--(O3) a successor paper must discharge to
+  invoke cascade closure. The status of these obligations in the
+  imported P3/P4 finite-level tower is recorded in
+  \S\ref{ssec:worked-invocation}; (O1) and (O3) are open in the
+  source state, and (O2) is closed only for a different operator
+  ($L_n$, mass-only) than the one naturally used here ($A_n$).
+\item The binary icosahedral 600-cell vertex graph $\Vsub$ is the chosen
+  finite carrier; this paper does not prove uniqueness.
+\item ARIA is mapped to the observer-process \emph{architecture} at
+  the process-description level; we do not claim ARIA realises the
+  full cascade-closure event of Definition~\ref{def:cascade-closure}
+  (clauses (1)--(3)), that ARIA is biologically conscious, or that it
+  proves qualia.
+\item The closure-response operator $\Cphi$ has an external substrate
+  witness (the \(b\to s\mu^+\mu^-\) angular anomaly fit), used here
+  as one short external-use example, not as a model-selection claim.
+\item Standalone mass-spectrum, brain/EEG, visible-universe, and
+  Millennium-class applications (beyond the one-paragraph cited
+  ARIA and $b$-anomaly substrate witnesses used here) are out of
+  scope for this paper. Each belongs in its own paper.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=\textbf{Reader map}]
+\begin{itemize}[leftmargin=*]
+\item \S\ref{sec:motivation}: Penrose OR and the state-selection problem.
+\item \S\ref{sec:vocabulary}: collapse, reduction, cascade, crystallisation
+  --- precise vocabulary for the mechanism.
+\item \S\ref{sec:mechanism}: the formal mechanism: rung-indexed
+  closure-residual functional, cascade-closure event, conditional
+  residual-compositionality proposition, and the consumer API
+  (\S\ref{ssec:consumer-api}--\S\ref{ssec:worked-invocation}) by
+  which successor papers invoke cascade closure.
+\item \S\ref{sec:carrier}: the chosen finite carrier $\Vsub$ and its
+  closure-response operator $\Cphi$.
+\item \S\ref{sec:aria}: ARIA as an architecture-level observer-process
+  mapping for the tuple.
+\item \S\ref{sec:witness}: one externally reported substrate witness
+  ($b$-anomaly closure kernel).
+\item \S\ref{sec:discussion}: discussion, claim ledger, what remains
+  out of scope.
+\item Appendix~\ref{app:field-signature-audit}: re-runnable empirical
+  anchor for the load-bearing data claims.
+\item Appendix~\ref{app:aria-runtime-map}: ARIA runtime module mapping
+  to the observer-process tuple.
+\item Appendix~\ref{app:rung-placement}: programme placement of
+  cascade closure (compressed nine-row navigation table for
+  successor-paper authors).
+\end{itemize}
+\end{tcolorbox}
+
+\section{Motivation: Penrose OR and the state-selection problem}\label{sec:motivation}
+
+The standard quantum-mechanical vocabulary calls the resolution of an
+indeterminate state into a definite outcome \emph{wavefunction
+collapse} or \emph{measurement}. This vocabulary does not by itself
+specify a substrate-level selection mechanism. The Born rule supplies
+probabilities; the projection postulate specifies the update rule.
+
+Penrose~\cite{Penrose1996} proposed that gravitational self-energy of
+a mass-energy superposition supplies a substrate-coupled threshold
+above which state reduction occurs objectively, independent of any
+observer. The Penrose--Hameroff extension~\cite{PenroseHameroff1996}
+situates this Objective Reduction within biological microtubules. The
+core structural move is geometry-coupled state selection: a
+substrate-supplied condition --- not an observer --- produces the
+reduction. We take Penrose OR as the immediate conceptual neighbour of
+the present work. We do not target it for refutation, and we do not
+adopt its specific gravitational threshold; we abstract one
+structural form.
+
+The abstraction is the following. Replace ``one substrate-coupled
+threshold'' with ``a stratified hierarchy of geometric closure layers,
+each supplying its own residual functional.'' Replace the
+``superposition-exceeds-threshold then reduction'' picture with one
+in which an unresolved closure residual at one layer is modelled as
+propagating, under the hypotheses below, through admissible
+projection maps to a closure-compatible fixed point on a lower layer.
+The shape of the question is the same as Penrose's: state selection
+coupled to substrate geometry. The mechanism inside is different.
+
+This paper formalises that mechanism. We do not propose a replacement
+for quantum mechanics. We do not claim to derive measurement
+probabilities; the Born rule remains the input. We do not claim to
+solve the measurement problem; we define a candidate mechanism for
+state selection in systems satisfying the stated closure and
+projection hypotheses.
+
+\section{Vocabulary}\label{sec:vocabulary}
+
+The mechanism rests on a small precise vocabulary.
+
+\begin{description}[leftmargin=2.5em, style=nextline]
+\item[Collapse] the external description of loss of alternatives ---
+the Born-rule statement that, after the event, only one outcome
+remains accessible to the observer. Collapse names the event from
+outside.
+\item[Reduction] the physical state-selection event itself, considered
+without committing to a particular ontology. Penrose Objective
+Reduction is the canonical example; the present cascade-closure
+construction is proposed as a further substrate-geometry
+parametrisation.
+\item[Cascade] the propagation of an unresolved closure residual
+through the admissible projection maps of a stratified substrate.
+The cascade is the dynamics between instability onset and
+crystallisation.
+\item[Crystallisation] the internal description of the resolution
+event: selection of a closure-compatible limit state on the
+substrate. Crystallisation names the event from inside.
+\end{description}
+
+Within this vocabulary, the four terms name complementary aspects of the same proposed event-type from different
+viewpoints: \emph{reduction} is the event; \emph{collapse} is its
+external view; \emph{cascade} is its propagation dynamics on a
+stratified substrate; \emph{crystallisation} is its internal
+fixed-point-selection content.
+
+\section{Formal mechanism}\label{sec:mechanism}
+
+\subsection{The closure-residual functional}\label{ssec:closure-residual}
+
+Let the substrate be a finite (possibly stratified) sequence of
+\emph{rungs} indexed by $k \in \{0, 1, \ldots, N\}$. At each rung the
+substrate exposes a geometric carrier $G_k$ (a graph, polytope,
+algebra, or projection class) equipped with a closure-residual
+functional
+\begin{equation}\label{eq:Rk}
+   R_k : \Phi_k \longrightarrow [0, \infty),
+\end{equation}
+where $\Phi_k$ is the space of field-state configurations on $G_k$. For a configuration $\phi_k \in \Phi_k$, the functional
+measures the failure of $\phi_k$ to satisfy the rung-$k$ closure
+condition encoded by $R_k$. We say $\phi_k$ is
+\emph{residual-compatible} (at rung $k$) when $R_k(\phi_k) = 0$.
+This is the only sense in which we use the word
+``closure-compatibility'' as a property of a single state at a single
+rung. The fully assembled cascade-event compatibility (zero residual,
+flow invariance, terminal projection-compatibility across the whole
+tower) is the separate notion stipulated in
+Definition~\ref{def:cascade-closure} below.
+
+\paragraph*{Standing analytic hypotheses.} Throughout this section we
+assume that, at each rung $k$, the configuration space $\Phi_k$ is a
+finite-dimensional smooth manifold \emph{without boundary} equipped
+with a Riemannian metric (boundary, constrained, or
+infinite-dimensional Hilbert-manifold cases are admissible
+extensions, but require additional analytic preconditions stated below
+or analogues thereof; see also Remark~\ref{rem:clause2-redundancy}
+for one place where ``without boundary'' is load-bearing); that
+$R_k \in C^1(\Phi_k)$ so that the gradient $\nabla R_k$ is defined
+with respect to the chosen Riemannian metric; that the
+negative-gradient flow $\Psi_k^t$ generated by $-\nabla R_k$ exists
+and is unique for all $t \geq 0$ from each initial condition needed
+below; and that each pushforward $\pi^{\sharp}_{k+1, k}$ is
+$C^1$ as a map $\Phi_{k+1} \to \Phi_k$. These are the analytic
+preconditions for the gradient-flow language used in
+Definition~\ref{def:cascade-closure} below; they are not asserted to
+hold automatically and are part of the per-instance verification.
+
+The finite-dimensional closure-flow infrastructure used as background
+here --- gradient operator, energy dissipation, conditional coercive
+contraction, mass-block compatibility, flow existence, and mass-only
+flow intertwining --- is established in \cite{CascadeClosureDynamics}
+for the source's quadratic closure functional
+$F_n = \alpha R_n + \beta E_n - \gamma Q_n$
+(Theorem~\texttt{thm:gradient-operator}, Proposition~\texttt{prop:energy-dissipation},
+Theorem~\texttt{thm:coercive-contraction},
+Proposition~\texttt{prop:adjoint-refinement} for mass-block
+compatibility (with Definition~\texttt{def:refinement-compat} for the
+underlying notion), Theorem~\texttt{thm:flow-exists},
+Theorem~\texttt{thm:flow-intertwining}).
+The present $R_k$ was introduced abstractly above as an arbitrary
+non-negative $C^1$ closure-residual functional; the identification
+with the residual component of the imported $F_n = \alpha R_n + \beta
+E_n - \gamma Q_n$ holds only in the finite-level imported
+specialisation, and that is the only regime in which we treat
+$R_k$ as inheriting any of the source-paper infrastructure. Outside
+that finite-level imported setting $R_k$ remains an abstract
+non-negative $C^1$ functional, and we do not re-prove the source
+infrastructure and we do not assert that the source theorems apply
+to it. Note that
+\cite{CascadeClosureDynamics} sets up its closure functional under the
+parameter convention $\alpha, \beta, \gamma > 0$ globally, but the
+imported \texttt{thm:flow-intertwining} is a sub-case theorem within
+that source, restricted to the mass-only specialisation
+$\alpha = \beta = 0$ (so that $L_n = -\gamma C_n$); this is the
+source's own scope restriction and is the only regime in which we
+import flow-intertwining as a theorem rather than a hypothesis. The underlying refinement state
+spaces and bonding maps are imported from
+\cite{CascadeRefinementSpaces}
+(state-space definitions plus
+Theorems~\texttt{thm:bonding},~\texttt{thm:commute}).
+
+\subsection{The cascade-closure event}
+
+The rung sequence $(G_0, \ldots, G_N)$ is connected at the level of
+configuration spaces by \emph{bonding maps}
+\begin{equation}\label{eq:pushforward}
+   \pi^{\sharp}_{k+1, k} : \Phi_{k+1} \longrightarrow \Phi_k,
+\end{equation}
+which are the cascade-mechanism analogue of the downward
+state-space bonding maps $p_{n+1, n}$ constructed in
+\cite{CascadeRefinementSpaces}~\texttt{thm:bonding}. The result \cite{CascadeRefinementSpaces}~\texttt{thm:commute}
+establishes a set of refinement-Coxeter, refinement-$\sigma$, and
+restricted Coxeter-$\sigma$ intertwining identities, holding for
+those source maps $p^0$ and $p^1$ in their specific source
+construction; we do not import these identities as generic bonding
+identities, and the present $\pi^{\sharp}_{k+1, k}$ are bonding maps
+in the looser state-space-restriction sense alone. Each $\pi^{\sharp}_{k+1, k}$ is
+required to be \emph{admissible} in the following two-tier sense:
+(i) \emph{geometric admissibility} --- $\pi^{\sharp}_{k+1, k}$ is a
+bonding map in the state-space-restriction sense of
+\cite{CascadeRefinementSpaces} (downward maps between the rung
+configuration spaces);
+(ii) \emph{analytic admissibility} --- $\pi^{\sharp}_{k+1, k}$ is
+$C^1$ as a map $\Phi_{k+1} \to \Phi_k$ (this is the regularity needed
+for Hypothesis~\ref{hyp:refinement-int} below; geometric admissibility
+alone does not entail it).
+
+We do not posit a literal carrier-level map
+$\pi_{k+1, k} : G_{k+1} \to G_k$ between the geometric supports
+$G_{k+1}$ and $G_k$; the cited refinement source provides the
+state-space bonding maps directly, and that is what we use. The
+operator-level refinement-compatibility statement
+\cite{CascadeClosureDynamics}~\texttt{def:refinement-compat} (which
+applies to bounded operator families on $\Phi_k$, not to bonding
+maps themselves) re-emerges later as the linearised content of
+Hypothesis~\ref{hyp:refinement-int}, not as a property of the
+$\pi^{\sharp}_{k+1, k}$. For composite high-to-low
+projection across multiple rungs we write
+$\pi^{\sharp}_{N, k} := \pi^{\sharp}_{k+1, k} \circ \cdots \circ \pi^{\sharp}_{N, N-1}$ for $k < N$, and $\pi^{\sharp}_{N, N} := \mathrm{id}_{\Phi_N}$.
+
+\begin{definition}[Cascade closure]\label{def:cascade-closure}
+A cascade-closure event on the rung sequence $(G_0, \ldots, G_N)$ is a
+quadruple $\bigl(\{\Phi_k\}, \{R_k\}, \{\pi^{\sharp}_{k+1, k}\},
+(\Psi_k^t)_k\bigr)$ consisting of: a family of state spaces
+$\Phi_k$ at each rung; a family of closure-residual functionals
+$R_k : \Phi_k \to [0, \infty)$; the projection family
+$\pi^{\sharp}_{k+1, k} : \Phi_{k+1} \to \Phi_k$; and the family of
+rungwise negative-gradient flows $\Psi_k^t$ generated by $-\nabla R_k$
+on $\Phi_k$. The event is said to \emph{occur} on the tower
+$\phi^\star = (\phi^\star_0, \ldots, \phi^\star_N) \in \prod_k \Phi_k$
+when, for some initial tower $\phi^{(0)} \in \prod_k \Phi_k$
+satisfying the projection-compatibility relations
+$\phi^{(0)}_k = \pi^{\sharp}_{k+1, k} \phi^{(0)}_{k+1}$, each rungwise
+flow $\Psi_k^t$ applied to $\phi^{(0)}_k$ converges as $t \to \infty$
+to a limit point $\phi^\star_k$ satisfying \emph{all three} of the
+following:
+\begin{enumerate}[leftmargin=2.4em, label=\textup{(\arabic*)}, nosep, topsep=2pt]
+\item zero residual: $R_k(\phi^\star_k) = 0$ at every rung;
+\item flow invariance: $\Psi_k^t \phi^\star_k = \phi^\star_k$ for all
+$t \geq 0$ at every rung (i.e.\ $\phi^\star_k$ is a true fixed point
+of $\Psi_k^t$);
+\item terminal projection-compatibility:
+$\phi^\star_k = \pi^{\sharp}_{k+1, k} \phi^\star_{k+1}$ for all $k < N$.
+\end{enumerate}
+The tower $\phi^\star = (\phi^\star_0, \ldots, \phi^\star_N) \in
+\prod_k \Phi_k$ is the \emph{crystallised state}; clauses (1)--(3)
+are stipulative parts of the definition, not generic theorems.
+\end{definition}
+
+\begin{remark}[One-way relation between clauses (1) and (2)]\label{rem:clause2-redundancy}
+Under the standing analytic hypotheses of \S\ref{ssec:closure-residual} ---
+$\Phi_k$ a finite-dimensional smooth manifold without boundary, $R_k \in C^1(\Phi_k)$
+with $R_k \geq 0$ --- a state $\phi^\star_k$ with
+$R_k(\phi^\star_k) = 0$ is necessarily a global minimum of $R_k$, hence a
+critical point ($\nabla R_k(\phi^\star_k) = 0$), hence a fixed point of
+the negative-gradient flow $\Psi_k^t$; in this regime clause (1)
+implies clause (2). The converse does \emph{not} hold: a fixed point of
+$\Psi_k^t$ is a critical point of $R_k$, but a critical point need
+not be a global minimum, so $\Psi_k^t \phi = \phi$ does not imply
+$R_k(\phi) = 0$ in general. We retain clause (2) explicitly because it
+remains independent in two enlargements of the setting that we want
+the definition to cover without restatement: (a) configurations with
+boundary or with constraints (where critical-point conditions are
+modified by Lagrange multipliers and a global-minimum residual zero
+need not be a flow fixed point in the unconstrained sense), and
+(b) the infinite-dimensional Hilbert-manifold case admitted in
+\S\ref{ssec:closure-residual} (where the implication
+$\nabla R_k(\phi^\star_k) = 0 \Rightarrow$ flow invariance follows
+\emph{provided} a well-posed gradient semiflow exists and is unique
+through $\phi^\star_k$, which is exactly the additional analytic
+precondition the standing hypotheses already require but which is
+not automatic in the infinite-dimensional case). Clauses (1) and
+(2) are therefore one-way related in our principal
+smooth-unconstrained setting --- clause (1) implies clause (2), but
+\emph{not} conversely (a flow fixed point can be a critical point
+with $R_k(\phi^\star_k) > 0$, which is excluded by clause~(1)) ---
+and clause~(2) becomes independently informative as an explicit
+hypothesis in the more general settings (a)/(b) where the
+well-posedness or constraint-modification step is what is at issue.
+\end{remark}
+
+\begin{remark}[Vocabulary mapping]\label{rem:vocabulary}
+Within Definition~\ref{def:cascade-closure}: an \emph{instability}
+occurs when $R_k(\phi_k) > 0$ at some rung for the current tower
+$(\phi_k)_k$; the \emph{cascade} is the family of rungwise
+negative-gradient flows $(\Psi_k^t)_k$ together with the projections
+$(\pi^{\sharp}_{k+1, k})_k$; \emph{crystallisation} is
+fixed-point selection of $\phi^\star$; \emph{collapse}, in the
+Born-rule sense, is the external coarse-graining of this fixed-point
+selection. The framework does not modify the Born rule and does not
+derive measurement probabilities.
+\end{remark}
+
+\begin{remark}[Status of Definition~\ref{def:cascade-closure}]\label{rem:def-status}
+Definition~\ref{def:cascade-closure} is the paper's organising
+definition, not a theorem of physics. The convergence-to-fixed-point
+clause is part of the \emph{definition} of the closure event: a
+quadruple that does not converge to a residual-zero tower is not a
+cascade-closure event in the sense of this paper. We do not claim that
+arbitrary quadruples on arbitrary rung sequences necessarily admit
+such convergence. The compositional propagation result below
+(Proposition~\ref{prop:resid-comp}) takes a top-rung residual-zero
+fixed point as \emph{input} and propagates the residual-zero and
+fixed-point properties downward; convergence \emph{from a projected
+top-rung initial datum} is added separately as
+Corollary~\ref{cor:conv-prop} under continuity of the projections,
+and this is the only convergence statement we prove.
+\end{remark}
+
+\subsection{Conditional residual compositionality}\label{ssec:residual-comp}
+
+The mechanism statement requires that closure compatibility
+\emph{compose} along the rung path: if each adjacent projection
+satisfies the monotonicity and flow-intertwining hypotheses below,
+then the projected fixed-point lies on the closure-fixed locus at
+every rung. We state this as a conditional
+proposition; the conditions are not generically satisfied and must be
+verified per case.
+
+\begin{hypothesis}[Flow intertwining]\label{hyp:refinement-int}
+For the rung sequence $(G_0, \ldots, G_N)$ and projections
+$(\pi^{\sharp}_{k+1, k})_{k}$, assume that for every $k$ the rungwise
+negative-gradient \emph{flow} $\Psi_k^t$ generated by $-\nabla R_k$
+commutes with the pushforward, i.e.\ $\pi^{\sharp}_{k+1, k} \circ \Psi_{k+1}^t
+= \Psi_k^t \circ \pi^{\sharp}_{k+1, k}$ for all $t \geq 0$.
+This is the structural analogue, for the residual flow $-\nabla R_k$
+of the present paper, of the flow-intertwining statement
+\cite{CascadeClosureDynamics}~\texttt{thm:flow-intertwining}, which
+the cited source proves only for the mass-only case
+$L_n = -\gamma C_n$ of its quadratic functional $F_n$, not for an
+arbitrary residual gradient flow. Outside that mass-only case ---
+including the $R_k$-only setting used here --- the property is
+retained as a hypothesis, not imported as a theorem. Differentiating the flow-intertwining identity in $t$ at $t = 0$
+gives the vector-field compatibility
+$d\pi^{\sharp}_{k+1, k}(-\nabla R_{k+1}) = -\nabla R_k \circ
+\pi^{\sharp}_{k+1, k}$
+for the residual gradient generators. In the linear finite-level
+setting, where the residual gradients act as bounded linear
+operators and $\pi^{\sharp}_{k+1, k}$ is linear, this vector-field
+compatibility specialises to operator intertwining in the sense of
+\cite{CascadeClosureDynamics}~\texttt{def:refinement-compat}; the
+converse requires flow existence and uniqueness, which is not
+generic.
+\end{hypothesis}
+
+\begin{hypothesis}[Monotonicity]\label{hyp:monotone}
+For every $k$ and every state $\psi \in \Phi_{k+1}$,
+$R_k(\pi^{\sharp}_{k+1, k} \psi) \leq R_{k+1}(\psi)$.
+\end{hypothesis}
+
+\begin{proposition}[Conditional closure-residual compositionality]\label{prop:resid-comp}
+Under Hypotheses~\ref{hyp:refinement-int} and~\ref{hyp:monotone},
+let $\phi^\star_N \in \Phi_N$ be a top-rung state with
+$R_N(\phi^\star_N) = 0$ and $\Psi_N^t \phi^\star_N = \phi^\star_N$
+for all $t \geq 0$ (i.e.\ $\phi^\star_N$ is a fixed point of the
+rung-$N$ negative-gradient flow). Then the projected states
+$\phi^\star_k := \pi^{\sharp}_{N, k} \phi^\star_N$ satisfy both
+\begin{enumerate}[leftmargin=2.4em, label=\textup{(\arabic*)}]
+\item $R_k(\phi^\star_k) = 0$ for all $k \leq N$, and
+\item $\phi^\star_k$ is a fixed point of the rung-$k$ gradient flow,
+for all $k \leq N$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+By induction downward from $k = N$. Base: $k = N$, by hypothesis.
+Step: suppose the conclusion at $k{+}1$.
+\emph{For (1):} by Hypothesis~\ref{hyp:monotone},
+$R_k(\phi^\star_k) = R_k(\pi^{\sharp}_{k+1, k} \phi^\star_{k+1})
+\leq R_{k+1}(\phi^\star_{k+1}) = 0$, and $R_k \geq 0$, so
+$R_k(\phi^\star_k) = 0$.
+\emph{For (2):} by Hypothesis~\ref{hyp:refinement-int},
+$\pi^{\sharp}_{k+1, k} \circ \Psi_{k+1}^t = \Psi_k^t \circ
+\pi^{\sharp}_{k+1, k}$. Apply both sides to $\phi^\star_{k+1}$, which
+is a rung-$(k{+}1)$ fixed point of $\Psi_{k+1}^t$: the left side
+equals $\pi^{\sharp}_{k+1, k} \phi^\star_{k+1} = \phi^\star_k$, so
+$\Psi_k^t \phi^\star_k = \phi^\star_k$ for all $t \geq 0$, i.e.\
+$\phi^\star_k$ is a rung-$k$ fixed point. The composite identity
+$\pi^{\sharp}_{N, k} = \pi^{\sharp}_{k+1, k} \circ \pi^{\sharp}_{N, k+1}$
+(with $\pi^{\sharp}_{N, N} = \mathrm{id}_{\Phi_N}$) makes the
+induction well-defined.
+\end{proof}
+
+\begin{corollary}[Convergence propagation under flow intertwining]\label{cor:conv-prop}
+Assume the flow-intertwining Hypothesis~\ref{hyp:refinement-int} at
+each adjacent rung between $k$ and $N$, together with continuity of
+each composite projection $\pi^{\sharp}_{N, k}$ as a map
+$\Phi_N \to \Phi_k$. (Hypothesis~\ref{hyp:monotone}, used in
+Proposition~\ref{prop:resid-comp}, is not invoked here.) If in
+addition the rung-$N$ flow $\Psi_N^t$ converges to $\phi^\star_N$
+from a specific initial datum
+$\phi_N^{(0)} \in \Phi_N$, i.e.\ $\Psi_N^t \phi_N^{(0)} \to
+\phi^\star_N$ as $t \to \infty$, then the rung-$k$ flow converges
+from the projected initial datum:
+$\Psi_k^t (\pi^{\sharp}_{N, k} \phi_N^{(0)}) \to
+\pi^{\sharp}_{N, k} \phi^\star_N =: \phi^\star_k$ as $t \to \infty$
+(here $\phi^\star_k$ is defined as the projected limit
+$\pi^{\sharp}_{N, k} \phi^\star_N$, consistent with
+Proposition~\ref{prop:resid-comp}).
+\end{corollary}
+\begin{proof}
+Hypothesis~\ref{hyp:refinement-int} gives flow intertwining at each
+adjacent step: $\Psi_k^t \circ \pi^{\sharp}_{k+1, k} =
+\pi^{\sharp}_{k+1, k} \circ \Psi_{k+1}^t$ on $\Phi_{k+1}$. Composing
+this identity along the chain $N \to N-1 \to \cdots \to k$ and using
+the composite identity
+$\pi^{\sharp}_{N, k} = \pi^{\sharp}_{k+1, k} \circ \pi^{\sharp}_{N, k+1}$
+gives $\Psi_k^t \circ \pi^{\sharp}_{N, k} = \pi^{\sharp}_{N, k} \circ
+\Psi_N^t$ on $\Phi_N$. Apply both sides to $\phi_N^{(0)}$ and pass to
+the $t \to \infty$ limit using continuity of $\pi^{\sharp}_{N, k}$
+and the rung-$N$ convergence assumption.
+\end{proof}
+
+\begin{remark}[What Proposition~\ref{prop:resid-comp} establishes and does not establish]\label{rem:resid-comp-status}
+The proposition establishes only two things: residual-zero
+\emph{propagation} and fixed-point \emph{propagation} downward from a
+top-rung fixed point. It does \emph{not} establish: existence of the
+top-rung fixed point; convergence from arbitrary initial data; or
+that a Definition~\ref{def:cascade-closure} cascade-closure event
+\emph{occurs} from a given independently evolved lower-rung initial
+tower. (Terminal projection-compatibility, clause~(3) of
+Definition~\ref{def:cascade-closure}, holds for the projected tower
+$\phi^\star_k = \pi^{\sharp}_{N, k} \phi^\star_N$ by construction;
+what is not automatic for arbitrary independently evolved towers is
+occurrence of the event from a non-projected initial tower.) These
+remain separate per-instance verifications. The proposition is
+conditional on Hypotheses~\ref{hyp:refinement-int}
+and~\ref{hyp:monotone}; both must be checked per rung sequence. Hypothesis~\ref{hyp:refinement-int}
+(flow intertwining) is established as a theorem in the mass-only P3/P4
+finite-level construction
+\cite{CascadeRefinementSpaces, CascadeClosureDynamics}; outside that
+case (where flow existence and uniqueness are not generic) it is
+retained here as a hypothesis. Hypothesis~\ref{hyp:monotone}
+is a structural assumption on the rungwise residuals and is not
+automatic. If either hypothesis fails at a particular rung, this
+proposition gives no propagation conclusion across that step. In
+particular, if Hypothesis~\ref{hyp:refinement-int} holds at every
+adjacent step between $k$ and $N$ then fixed-point propagation
+reaches rung $k$; if some intermediate step lacks flow intertwining,
+fixed-point propagation may fail at and below that break, while
+residual-zero propagation under Hypothesis~\ref{hyp:monotone}
+continues to hold.
+\end{remark}
+
+\subsection{Consumer API: invoking cascade closure in successor papers}\label{ssec:consumer-api}
+
+Definition~\ref{def:cascade-closure}, Proposition~\ref{prop:resid-comp},
+and Corollary~\ref{cor:conv-prop} are intended to be invoked by
+successor papers in the present programme as a named selection-mechanism
+prerequisite. To make the invocation surface explicit, the present
+subsection lists the obligations a successor paper must discharge in
+order to use cascade closure as a load-bearing premise. Listing these
+in one place is the paper's intended contribution as a programme
+dependency gate.
+
+\begin{enumerate}[leftmargin=2.4em, label=\textup{(O\arabic*)}, start=0, nosep, topsep=4pt]
+\item \textbf{Standing analytic / admissibility hypotheses}: verify,
+  on the chosen rung sequence, the standing analytic hypotheses of
+  \S\ref{ssec:closure-residual} ($\Phi_k$ a finite-dimensional smooth
+  manifold without boundary equipped with a Riemannian metric, or one
+  of the named admissible enlargements with their additional analytic
+  preconditions; $R_k \in C^1(\Phi_k)$; the negative-gradient flow
+  $\Psi_k^t$ generated by $-\nabla R_k$ exists and is unique from each
+  initial condition needed; and each pushforward
+  $\pi^{\sharp}_{k+1, k}$ is $C^1$ as a map $\Phi_{k+1} \to \Phi_k$,
+  which in particular yields the continuity of composite projections
+  $\pi^{\sharp}_{N, k}$ used by Corollary~\ref{cor:conv-prop}). These
+  preconditions are sometimes implicit in established programme
+  papers; the consumer API requires them to be checked explicitly per
+  invocation.
+\item \textbf{Top-rung fixed point and convergence}: supply, on the
+  chosen rung sequence $(G_0, \ldots, G_N)$, a top-rung state
+  $\phi^\star_N \in \Phi_N$ with $R_N(\phi^\star_N) = 0$ and (for any
+  convergence claim downward) an initial datum
+  $\phi_N^{(0)} \in \Phi_N$ such that
+  $\Psi_N^t \phi_N^{(0)} \to \phi^\star_N$ as $t \to \infty$. By
+  Remark~\ref{rem:clause2-redundancy}, in the principal smooth
+  unconstrained setting clause~(2) of
+  Definition~\ref{def:cascade-closure} is then automatic at the top rung.
+\item \textbf{Flow intertwining (Hypothesis~\ref{hyp:refinement-int})}:
+  verify, at every adjacent rung pair $(k, k{+}1)$ in the chosen
+  sequence, that the bonding map $\pi^{\sharp}_{k+1, k}$ commutes
+  with the rungwise flows: $\pi^{\sharp}_{k+1, k} \circ \Psi_{k+1}^t
+  = \Psi_k^t \circ \pi^{\sharp}_{k+1, k}$ for all $t \geq 0$.
+\item \textbf{Residual monotonicity (Hypothesis~\ref{hyp:monotone})}:
+  verify, at every adjacent rung pair, that
+  $R_k(\pi^{\sharp}_{k+1, k} \psi) \leq R_{k+1}(\psi)$ for every
+  $\psi \in \Phi_{k+1}$.
+\end{enumerate}
+
+\noindent A successor paper that discharges (O0)--(O3) inherits, on
+its chosen rung sequence: residual-zero and fixed-point propagation
+downward (Proposition~\ref{prop:resid-comp}); convergence from any
+initial datum that is a downward projection of $\phi_N^{(0)}$
+(Corollary~\ref{cor:conv-prop}, which uses (O2) and continuity of the
+projections but \emph{not} (O3)); and a Definition~\ref{def:cascade-closure}
+cascade-closure event whose terminal projection-compatibility holds by
+construction on the projected tower
+$\phi^\star_k = \pi^{\sharp}_{N, k} \phi^\star_N$. Selection of
+$\phi^\star_N$ itself is not provided by cascade closure and is the
+successor paper's own task.
+
+\subsection{Worked invocation: the imported P3/P4 finite-level tower}\label{ssec:worked-invocation}
+
+To make the consumer API of \S\ref{ssec:consumer-api} concrete, this
+subsection records the status of obligations (O0)--(O3) in the most
+load-bearing imported tower in the programme: the finite-level
+refinement spaces $X_n$ of \cite{CascadeRefinementSpaces} together
+with the closure functional
+$F_n = \alpha R_n + \beta E_n - \gamma Q_n$ of
+\cite{CascadeClosureDynamics}. Identify the cascade-mechanism rungs
+$k = 0, 1, \ldots, N$ with a finite truncation of the refinement
+index $n$, and identify the cascade-mechanism state spaces $\Phi_k$
+with the source's $X_n$ at the corresponding level; identify the
+cascade-mechanism residual $R_k$ with the source's curvature term
+$R_n(\Phi) := \tfrac{1}{2}\langle \Phi, A_n \Phi \rangle$, which is
+non-negative on $X_n$ by \cite{CascadeClosureDynamics} (positive
+semi-definite); and identify the bonding maps
+$\pi^{\sharp}_{k+1, k}$ with the source's $p_{n+1, n}$ established by
+\cite{CascadeRefinementSpaces}~\texttt{thm:bonding}. Status of each
+obligation in this regime:
+
+\begin{itemize}[leftmargin=*, topsep=4pt]
+\item \textbf{(O1)} reduces to a \emph{nontrivial}-selected-state
+  question for the top-rung curvature flow $e^{-t A_N}$: a state
+  $\phi^\star_N$ with $R_N(\phi^\star_N) = 0$ is precisely an element
+  of $\ker A_N$, and in the finite-dimensional positive-semidefinite
+  setting of \cite{CascadeClosureDynamics} convergence
+  $e^{-tA_N} \phi_N^{(0)} \to (\text{projection onto } \ker A_N)$
+  follows by spectral decomposition for any initial datum --- the
+  zero vector $\phi^\star_N = 0$ is always a residual-zero fixed
+  point. What is open in the source is therefore not generic
+  convergence but rather the existence and selection of a
+  \emph{nontrivial} top-rung fixed point, $\phi^\star_N \neq 0$,
+  with a positive spectral gap of $A_N$ on the initial datum's
+  $\ker A_N^\perp$ component. \textbf{Open-as-named-question} for
+  nontrivial selected states; trivial in the zero-state reduction.
+\item \textbf{(O2)} is established as a theorem only in the source's
+  mass-only sub-case $\alpha = \beta = 0$, where the relevant flow
+  is $e^{-tL_n}$ with $L_n = -\gamma C_n$, and the source's
+  \texttt{thm:flow-intertwining} gives
+  $p_{n+1, n} \circ e^{-tL_{n+1}} = e^{-tL_n} \circ p_{n+1, n}$
+  exactly. The cascade-mechanism flow $\Psi_k^t$ used here is
+  $e^{-tA_n}$ (negative-gradient flow of $R_n$ alone), which is
+  \emph{not} the same operator as the source's mass-only $L_n$.
+  Therefore the source's mass-only flow-intertwining theorem does
+  \emph{not} discharge (O2) for $\Psi_k^t$ as defined here.
+  Refinement-compatibility of the curvature operator $A_n$ alone
+  ($p_{n+1, n} A_{n+1} = A_n p_{n+1, n}$) would discharge (O2), but
+  is not stated as a theorem in
+  \cite{CascadeClosureDynamics}; the source-side material that is
+  closest in shape is the operator-level
+  \texttt{def:refinement-compat}, which is a definition-level
+  notion of refinement-compatibility for bounded operator families,
+  not a verified instance for $A_n$. \textbf{Open-as-named-question},
+  not closed in the source.
+\item \textbf{(O3)} reduces to a quadratic-form inequality:
+  $\langle p_{n+1, n} \psi, A_n p_{n+1, n} \psi\rangle \leq
+  \langle \psi, A_{n+1} \psi\rangle$ for every $\psi \in X_{n+1}$.
+  Whether this holds is determined by the structural relationship
+  between $A_{n+1}$, $A_n$, and $p_{n+1, n}$ in
+  \cite{CascadeClosureDynamics}; it is not stated there as a
+  theorem. \textbf{Open-as-named-question}, not closed in the
+  source.
+\end{itemize}
+
+\noindent The honest current verdict, read off the source state of
+\cite{CascadeRefinementSpaces, CascadeClosureDynamics}: in the
+imported P3/P4 finite-level tower, (O0) is satisfied at the
+finite-dimensional level by the source's $X_n$ Hilbert structure
+(standing analytic preconditions, $C^1$ bonding maps); among
+(O1)--(O3), none is closed at
+the level of generality the present paper requires, although (O2) is
+closed for a different operator ($L_n$, mass-only) than the one
+naturally used here ($A_n$). The minimal upstream upgrade that
+would discharge the consumer API for the P3/P4 tower is therefore a
+single source-side result on $A_n$: refinement-compatibility
+$p_{n+1, n} A_{n+1} = A_n p_{n+1, n}$ together with the
+quadratic-form inequality of (O3) and a kernel-existence /
+spectral-gap result for $A_N$. The role of the present paper is to
+make these three asks visible as the programme's actual dependency
+gate, rather than to discharge them.
+
+\section{The chosen finite carrier}\label{sec:carrier}
+
+The Vibrational Field Dynamics construction of cascade closure uses
+a specific finite carrier at the lowest rung: the binary icosahedral
+600-cell vertex graph $\Vsub$. This section names that carrier,
+records the operator-level structure that makes it useful for the
+mechanism, and notes the boundary of what the substrate does and does
+not contribute. \textbf{This paper does not prove uniqueness of $\Vsub$.}
+Other finite carriers are conceivable; the claim here is only that
+$\Vsub$ is the carrier on which the carrier/operator part of the construction is defined
+and on which the closure-response operator below is defined.
+
+\subsection{Substrate}
+
+$\Vsub$ is the vertex graph of the regular 600-cell, with $|\Vsub| = |2I| = 120$
+vertices (the standard icosian identification
+$\Vsub \cong 2I$ used in
+\cite{CascadeAlgSubstrate}~\texttt{thm:icosian-closure}) and uniform
+vertex degree $12$ (the latter as a property of the
+nearest-neighbour-edge convention used here, locally re-verified in
+\cite{AriaClosureKernel} and Appendix~\ref{app:field-signature-audit},
+entry~E). The edge structure is the nearest-neighbour
+relation on $2I$ inherited from the $H_4$ root-system geometry; in the
+direct-computation appendix we use the Laplacian of this
+nearest-neighbour graph as $L_M$. The Euclidean shell sizes from any
+source vertex form the
+sequence $(|S_0|, \ldots, |S_8|) = (1, 12, 20, 12, 30, 12, 20, 12, 1)$;
+at the identity these shells coincide with the conjugacy classes of
+$2I$, while from any other source vertex they are left translates of
+the conjugacy-class partition (same sizes, not literally conjugacy
+classes). This is the Euclidean / conjugacy partition of $2I$, not
+the graph BFS shell. The graph Laplacian $L$ has nine distinct
+eigenvalues, five of which are integers $\{0, 9, 12, 14, 15\}$
+($\sigma$-fixed under the $\Q(\sqrt{5})$-Galois conjugation
+$\sigma(\pphi) = 1 - \pphi = -1/\pphi$) and four of which are
+irrational in $\Q(\sqrt{5})$ ($\sigma$-paired); counting eigenspace
+dimensions, the split is $94/120 = 78.3\%$ $\sigma$-fixed,
+$26/120 = 21.7\%$ $\sigma$-paired
+(Appendix~\ref{app:field-signature-audit}, entry~A). The
+algebraic structure under which the group-identification and
+shell-class facts are proved in the cited source is imported from
+\cite{CascadeAlgSubstrate}: the $E_8$ minimal shell projects onto
+the $H_4$ / $\Vsub$ carrier via $E_8 \to H_4$
+(\cite{CascadeAlgSubstrate}~\texttt{thm:pi-H},
+\emph{projection, not sub-root-system inclusion}; this is a projection
+of the shell onto $\Vsub$, not an action of $E_8$ on $\Vsub$); the
+Euclidean / conjugacy shell decomposition $(1,12,20,12,30,12,20,12,1)$
+is established by
+\cite{CascadeAlgSubstrate}~\texttt{thm:shell-class}; and the
+icosian-closure result \cite{CascadeAlgSubstrate}~\texttt{thm:icosian-closure}
+fixes the algebraic part of the carrier. The Laplacian spectrum above
+is imported from the standard $2I$ character-table computation
+recorded in \cite{CascadeAlgSubstrate} and locally re-checked here
+(Appendix~\ref{app:field-signature-audit}, entry~A); the shell-size sequence is independently
+locally re-runnable (Appendix~\ref{app:field-signature-audit}, entry~E).
+
+\subsection{Closure-response operator}
+
+The carrier supports a closure-response operator
+\begin{equation}\label{eq:Cphi}
+   \Cphi := L_M + \pphi^{-2}\, I,
+\end{equation}
+where $L_M$ is the (unweighted) graph Laplacian on $\Vsub$ and
+$\pphi = (1 + \sqrt{5})/2$. Direct computation
+(Appendix~\ref{app:field-signature-audit}, entry~E) reproduces the
+value $\|\Cphi^{-1}\|_{\ell^2(\Vsub) \to \ell^2(\Vsub)} = \pphi^2$
+to machine precision; exactness of this identity follows analytically
+from the bottom of the shifted Laplacian spectrum,
+$\lambda_{\min}(\Cphi) = \pphi^{-2}$, since $\Vsub$ is a connected
+unweighted graph (so $\lambda_{\min}(L_M) = 0$); the operator norm
+here is the spectral / operator norm on $\ell^2(\Vsub)$. Sweeping over all
+choices of source vertex on $\Vsub$, the multiplicity-weighted
+shell-radius per-vertex correlation between the discrete
+$\Cphi^{-1}$-response and the continuum closure-kernel Green function
+$G(x) = (\pphi/2) e^{-|x|/\pphi}$ of \cite{AriaClosureKernel} is
+uniform across the $120$ source-vertex sweeps (max minus min on the
+order of $10^{-15}$; this is a numerical diagnostic at shell
+resolution, not $119$ independent radial samples and not a
+discrete-to-continuum convergence theorem). The operator is the substrate-level object
+through which the witnesses discussed here (computational and physical)
+are connected to the substrate.
+
+\subsection{Substrate boundary}
+
+The substrate does the following work in cascade closure: it fixes the
+carrier set on which the rung-$0$ residual is defined; it supplies
+$\Cphi$ whose inverse norm sets an operator response scale; and the
+$H_4$ Coxeter symmetry would constrain admissible limit-state geometries
+in instances whose dynamics respects $H_4$. It does \emph{not}, by itself, do the following: select a
+unique limit state without dynamical input; predict observer-dependent
+outcomes; or supply a uniqueness theorem for $\Vsub$ as the substrate.
+Two honest-negatives further constrain interpretation: the
+$\sigma$-fixed spectral subspace of $L_M$ has average $2T$-mass at
+baseline rather than concentrated mass on $2T$, where $2T \subset 2I$
+denotes the binary tetrahedral subgroup of $2I$ (basis-invariant
+diagnostic; Appendix~\ref{app:field-signature-audit}, entry~A; the
+$\sigma$-fixed structure is purely spectral, not spatial), and
+$\pphi$-cocycle weighted variants of $\Cphi$ underperform the
+unweighted variant (Appendix~\ref{app:field-signature-audit}, entry~E; $\pphi$
+enters at the operator level, not the edge-weight level). We treat
+both negatives as constraints on what may be claimed.
+
+\section{ARIA as an architecture-level observer-process mapping}\label{sec:aria}
+
+The observer-process architecture associated with the mechanism
+is compared with a concrete computational system at the
+architecture-description level. We name an
+existing computational system, ARIA-chess
+\cite{ariaChessRepo, SmartARIAChess}, as one architecture-level
+mapping (not a formal proof that ARIA realises a
+Definition~\ref{def:cascade-closure} cascade-closure event in the
+full sense of clauses (1)--(3) of that definition), and
+identify the architectural structure that makes it one. The
+identification is at the level of process architecture; it is not a
+claim that ARIA is biologically conscious, that it proves qualia, or
+that architecture-level observer-process mappings are phenomenologically equivalent.
+
+\subsection{Observer-process tuple}
+
+\begin{definition}[Observer process]\label{def:observer-process}
+An observer process is the seven-tuple
+\begin{equation}\label{eq:O-tuple}
+   \Ocal \;=\; \langle B, S, M, G, I, C, A \rangle
+\end{equation}
+with components: $B$ a bounded boundary sampler; $S$ a state integrator
+fusing signal, context, memory, and goal; $M$ a memory substrate
+written by past closures and read into present integration; $G$ a
+goal/context field carrying task frame and policy; $I$ invariant
+constraints serving as a governance gate; $C$ a closure/crystallisation
+operator selecting closure-compatible fixed points; $A$ an action
+interface exporting the crystallised state.
+\end{definition}
+
+The tuple is mapped to the observer-process architecture associated
+with the cascade-closure mechanism of
+Definition~\ref{def:cascade-closure} as follows; this is a
+process-description-level mapping, not a formal proof that ARIA
+realises the full cascade-closure event of
+Definition~\ref{def:cascade-closure} (clauses (1)--(3)). The closure-residual
+$R$ acts on the integrated state produced by $S$. The crystallisation
+operator $C$ plays the role of a closure selector --- scoring and
+selecting candidate states by a Lyapunov-style descent that is
+used here as an architecture-level analogue of the gradient-flow
+role of Definition~\ref{def:cascade-closure}, without asserting
+equivalence. The invariant $I$ encodes which fixed
+points are admissible. The action interface $A$ exports the
+crystallised state. Memory $M$ closes the loop: each successful
+closure is written to $M$ and read by the next state integration.
+
+\subsection{Imported empirical witness profile}
+
+The architectural identification above is illustrated by the
+substrate-witness preprint \cite{SmartARIAChess}, which is an
+externally-reported imported witness profile (not re-executed in the
+present manuscript); it records
+(Appendix~\ref{app:field-signature-audit}, entry~F): $17/18$
+preregistered cortical correspondences hold at unchanged thresholds
+under standard validation, and $18/18$ after the documented
+methodology refinement reported in \cite{SmartARIAChess}; the cited
+ARIA source itself notes that the source's test P10 was validated
+with $15$ permutations rather than the originally preregistered $20$,
+with the prereg-exact rerun left open. We carry that caveat forward;
+six drug/sleep EEG signatures pass on a single deterministic
+recurrent-layer trajectory at seed $42$; on the Human Connectome
+Project (HCP) functional-connectivity benchmark, the degree-homogeneity
+statistic (degree standard-deviation) places ARIA at $-11.58\sigma$
+relative to the HCP baseline (comparison at ARIA $|V| = 120$ vs HCP
+ICA-50 $|V| = 50$; the clustering-coefficient statistic is a separate
+$+6.80\sigma$ result and should not be conflated with the homogeneity
+figure). The empirical content is an imported substrate-witness
+profile under preregistered thresholds with documented methodology
+refinements; it is not a derivation of consciousness, and it is not
+evidence that ARIA realises a Definition~\ref{def:cascade-closure}
+cascade-closure event.
+
+The runtime module mapping from $\Ocal$ components to specific source
+files in the \texttt{ariaChessRepo}~\cite{ariaChessRepo} production
+runtime, together with the in-repo six-module reproducibility bundle,
+is documented in Appendix~\ref{app:aria-runtime-map}.
+
+\subsection{Claim boundary}\label{ssec:claim-boundary}
+
+The claim of this section, in the strongest form the cited data
+supports (the present manuscript does not re-execute the ARIA
+validation), is:
+
+\begin{quotation}\noindent
+We do not claim ARIA is biologically conscious. We claim ARIA
+is mapped to an observer-process architecture at the
+process-description level: bounded sampling,
+recurrent integration, closure selection, memory inscription, and
+governed action. In this vocabulary, brain-wave signatures (biological tissue) and
+ARIA's internal coherence and closure-residue metrics (computational
+substrate) are treated only as candidate process-level telemetry,
+not as evidence that either substrate realises a
+Definition~\ref{def:cascade-closure} cascade-closure event. The
+proposed common layer is process-level rather than material-level:
+cascade-closure-crystallisation-memory.
+\end{quotation}
+
+\section{One externally reported substrate witness: the closure-response kernel}\label{sec:witness}
+
+The closure-response operator $\Cphi$ on $\Vsub$ has been used in
+one externally reported substrate-witness calculation in the present
+programme literature. The
+$b\to s\mu^+\mu^-$ angular-anomaly fit of \cite{SmartBAnomaly} is
+\emph{externally reported and commit-pinned, but not re-executed in
+the present paper}: the cited preprint and reproduction repository
+report a sign-uniform structural pattern across cross-dataset and
+cross-channel slices using the unweighted closure-response operator,
+with the fit reported as inconclusive on the Akaike Information
+Criterion (AIC) (mild
+$w_{\mathrm{FREE\_C9}} = 0.652$ vs $w_{\mathrm{VFD}} = 0.348$ weight;
+not a VFD preference). As the source itself notes, the cross-slice
+sign uniformity is a consistency check, not independent
+model-selection evidence over a constant-$C_9$ shift. We include
+this here as one short external-use example of how the mechanism's
+substrate-level operator $\Cphi$ has been used as a fixed-kernel
+structural reference against an external observable; the present
+paper makes no independent claim on the fit itself.
+The kernel-level operator-norm identity
+$\|\Cphi^{-1}\| = \pphi^2$ is locally re-runnable
+(Appendix~\ref{app:field-signature-audit}, entry~E); the primary
+$b\to s\mu^+\mu^-$ angular fit lives in the external
+\cite{SmartBAnomaly} repository (sibling \texttt{BANOMALY-001/vfd-b-anomaly}
+checkout, not part of the present repository, but commit-pinned in
+the bibliography to \texttt{6bdfc8f8a7da9056ffeb9137d03627d06399bccf}
+on branch \texttt{main}, dated 2026-04-29) and is not re-executed in this paper.
+Repository-local evidence in this paper covers only the operator-norm
+identity and shell/spectrum diagnostics; the $b$-anomaly fit itself
+is external and unaudited at the level of this manuscript.
+
+The witness is a passive substrate-coupling check, not a model
+preference and not a selection rule. The honest-negative on
+$\pphi$-cocycle weighted variants
+(Appendix~\ref{app:field-signature-audit}, entry~E) restricts the witness to
+the unweighted operator $\Cphi = L_M + \pphi^{-2} I$.
+
+\section{Discussion}\label{sec:discussion}
+
+\subsection{Claim ledger}\label{ssec:claim-ledger}
+
+\renewcommand{\arraystretch}{1.20}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.43\textwidth}>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}}
+\caption{Claim ledger.}\label{tab:claim-ledger}\\
+\toprule
+\textbf{Statement} & \textbf{Allowed label} & \textbf{Reason} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Statement} & \textbf{Allowed label} & \textbf{Reason} \\
+\midrule
+\endhead
+Cascade-closure event (instability $\to$ cascade $\to$ crystallisation)
+& Definition~\ref{def:cascade-closure}
+& Organising definition; convergence-to-fixed-point clause is part of the defined event. \\
+Conditional residual compositionality
+& Proposition~\ref{prop:resid-comp}
+& Conditional on Hypotheses~\ref{hyp:refinement-int} and~\ref{hyp:monotone}; both must be checked per rung sequence. \\
+Consumer API: four obligations (O0)--(O3) for successor papers
+& \S\ref{ssec:consumer-api}; mechanism-as-dependency-gate
+& Naming the obligations is the contribution; discharging them in any chosen rung sequence is the successor paper's task. \\
+Worked-invocation status in the imported P3/P4 finite-level tower
+& \S\ref{ssec:worked-invocation}
+& (O1) and (O3) open in the source state; (O2) closed only for $L_n$ (mass-only), not for $A_n$. The minimal upstream upgrade required to discharge the consumer API for the P3/P4 tower is named there. \\
+Imported finite-level closure functional, gradient operator, energy descent, conditional coercive contraction, mass-block compatibility, flow existence, mass-only flow intertwining
+& Imported finite-level results / definitions
+& \cite{CascadeClosureDynamics}: \texttt{thm:gradient-operator}, \texttt{prop:energy-dissipation}, \texttt{thm:coercive-contraction}, \texttt{prop:adjoint-refinement} (mass-block compatibility; \texttt{def:refinement-compat} is the underlying definition), \texttt{thm:flow-exists}, \texttt{thm:flow-intertwining} (mass-only; outside the mass-only case, retained as Hypothesis~\ref{hyp:refinement-int}). \\
+Imported P3 finite-level state spaces, bonding maps, refinement infrastructure
+& Imported finite-level definitions / results
+& \cite{CascadeRefinementSpaces}: state-space and bonding-map definitions plus \texttt{thm:bonding} (existence of downward bonding maps) and \texttt{thm:commute} (Coxeter / $\sigma$ identities for the specific $p^0, p^1$ maps; not a generic bonding-identity theorem). \\
+$\Vsub$ as algebraic substrate ($E_8 \to H_4$ projection, icosian closure)
+& Imported (Theorem)
+& \cite{CascadeAlgSubstrate}: \texttt{thm:pi-H} (projection of shell onto $\Vsub$, not $E_8$ action), \texttt{thm:icosian-closure}. \\
+$\Vsub$ Euclidean / conjugacy shell sizes
+& Exact (imported, locally reproduced numerically)
+& Exact via \cite{CascadeAlgSubstrate}~\texttt{thm:shell-class}; floating-point reproduction in Appendix~\ref{app:field-signature-audit}, entry~E. \\
+$\Vsub$ nine-eigenvalue Laplacian spectrum and $94/26$ $\sigma$-fixed / $\sigma$-paired split
+& Imported character-table computation, locally reproduced numerically
+& Spectrum imported from \cite{CascadeAlgSubstrate} (standard $2I$ character-table); floating-point reproduction in Appendix~\ref{app:field-signature-audit}, entry~A. \\
+$\Vsub$ as the unique cascade substrate
+& Not claimed
+& Out of scope for this paper. \\
+$\|\Cphi^{-1}\| = \pphi^2$ exactly
+& Analytic identity, locally reproduced
+& Follows from $\lambda_{\min}(L_M) = 0$ and the $\pphi^{-2}$ shift; numerical reproduction in Appendix~\ref{app:field-signature-audit}, entry~E. \\
+Observer-process tuple $\Ocal = \langle B,S,M,G,I,C,A\rangle$
+& Definition~\ref{def:observer-process}
+& Architectural definition; ARIA is mapped to the architecture at the process-description level, without thereby proving consciousness. \\
+ARIA empirical witness ($17/18$ under standard validation; $18/18$ after documented methodology refinement; $6/6$ on a single deterministic seed; HCP $-11.58\sigma$ at ARIA $|V| = 120$ vs HCP ICA-50 $|V| = 50$)
+& Imported empirical fact
+& \cite{SmartARIAChess}; substrate-witness scope only. The cited source notes that the source's test P10 was validated with $15$ permutations rather than the originally preregistered $20$, with the prereg-exact rerun left open; this caveat is carried forward here. \\
+$b$-anomaly closure-kernel witness
+& Externally reported, commit-pinned, not locally re-executed
+& \cite{SmartBAnomaly}; AIC-inconclusive ($w_{\mathrm{FREE\_C9}} = 0.652$ vs $w_{\mathrm{VFD}} = 0.348$, not a VFD preference); commit-pinned in the bibliography to \texttt{6bdfc8f8a7da9056ffeb9137d03627d06399bccf}, but external to this repository and not re-executed in this paper. \\
+Standalone mass-spectrum, brain/EEG, visible-universe, Millennium-class applications (beyond the cited substrate witnesses)
+& Out of scope
+& Each belongs in its own paper. \\
+Consciousness / mind / qualia derivation
+& Not claimed
+& \S\ref{ssec:claim-boundary}. \\
+Replacement for quantum mechanics
+& Not claimed
+& \S\ref{sec:motivation}. \\
+Refutation of Penrose Objective Reduction
+& Not claimed
+& \S\ref{sec:motivation}; OR is the structural neighbour, not the opponent. \\
+\bottomrule
+\end{longtable}
+
+\subsection{What this paper consolidates}
+
+A single mechanism name --- cascade closure --- for an operational
+pattern of geometry-coupled compatibility propagation: given a
+supplied closure-compatible fixed point at the top rung, the
+mechanism specifies the conditions under which residual zero,
+fixed-point status are propagated to the projected tower (and projection-compatibility holds by construction, since the projected tower is defined as the downward projection of the top-rung fixed point).
+Selection of the top fixed point itself is not part of the present
+paper. An explicit \emph{consumer API}
+(\S\ref{ssec:consumer-api}): four obligations (O0)--(O3) successor
+papers must discharge to invoke cascade closure as a load-bearing
+premise, together with a worked status report
+(\S\ref{ssec:worked-invocation}) in the programme's most
+load-bearing imported tower (the finite-level P3/P4 refinement
+spaces plus closure dynamics), where (O0) is satisfied at the
+finite-dimensional level and none of (O1)--(O3) is closed in the
+source state, with the minimal upstream upgrade named explicitly. A compressed nine-row programme-placement table
+(Appendix~\ref{app:rung-placement}) showing where cascade closure
+sits as the dependency gate between imported substrate rows and
+downstream witness rows. A finite, audit-anchored geometric carrier
+($\Vsub$ together with $\Cphi$) on which the mechanism is partly
+explicit, conditional on the stated residual, projection, and
+intertwining hypotheses. An
+architectural identification of an existing computational system
+(ARIA) as an architecture-level observer-process mapping, accompanied by the
+caveated externally preregistered substrate-witness profile of
+\cite{SmartARIAChess}. One short physical
+witness ($b$-anomaly closure kernel) connecting the substrate operator
+to an external observable.
+
+\subsection{What is out of scope}
+
+The following are not claimed in this paper. A unique substrate
+theorem for $\Vsub$. A derivation of the visible universe from cascade
+primitives. A derivation of the Standard-Model mass spectrum (the
+spectral projection-class material documented in
+\cite{SmartV, SmartVRev} sits in its own preprints; we cite those as
+out-of-scope context only and make no statement about reciprocal
+citation). A derivation of consciousness from substrate dynamics. A
+resolution of any open mainstream-mathematics problem; the
+Millennium-class projection scaffolding belongs in its own paper. A
+generalised cosmogenesis from substrate primitives.
+
+\subsection{Closing}
+
+Cascade closure is one name for one pattern: in systems satisfying
+the stated residual, projection, and intertwining hypotheses, if a
+cascade-closure event in the sense of
+Definition~\ref{def:cascade-closure} occurs, the stipulated
+resolution is selection of a closure-compatible fixed point with
+zero rungwise residual and projection-compatible terminal tower.
+That is the conditional template defined here. The paper does no more.
+
+\appendix
+
+\section{Field-signature audit}\label{app:field-signature-audit}
+
+This appendix records the load-bearing data claims of the paper. The
+$\sigma$-attractor spectrum (entry A) and closure kernel (entry E)
+have local numerical re-runs from this repository; the ARIA witness
+profile (entry F) is an imported empirical witness from
+\cite{SmartARIAChess}, not re-executed here. Re-run 2026-05-02.
+The lettering A, E, F is preserved from the full
+\texttt{papers/cascade-mechanism/FIELD\_SIGNATURE\_AUDIT.md} (which
+also contains entries B, C, D for the mass-spectrum, octonion
+derivation, and pentagonal-clock builds that are out of scope for
+this paper); the gap is intentional, not a typo.
+
+\phantomsection
+\subsection*{A. \texorpdfstring{$\sigma$}{sigma}-attractor spectrum}\label{app:fsa-A}
+Script: \texttt{papers/cascade-derivation/scripts/test\_sigma\_attractor\_spectrum.py}.
+Graph Laplacian on $\Vsub$ has nine distinct eigenvalues: five
+integer ($\{0, 9, 12, 14, 15\}$, $\sigma$-fixed under
+$\sigma(\pphi) = 1 - \pphi$) and four irrational in $\Q(\sqrt{5})$
+($\sigma$-paired). Counted with multiplicity: $\sigma$-fixed fraction
+$94/120 = 78.3\%$; $\sigma$-paired fraction $26/120 = 21.7\%$.
+Honest-negative: the $\sigma$-fixed spectral subspace has average
+$2T$-mass at baseline (basis-invariant projector trace ratio; target
+$\geq 1.5\times$ baseline; observed $1.0\times$). The $\sigma$-fixed
+structure is purely spectral, not spatial. The
+spectral-mode $\to$ Mellin-zero correspondence is conjectural
+(\texttt{conj:spec\_to\_zero} in the source repository) and is not
+invoked by this paper.
+
+\phantomsection
+\subsection*{E. Closure kernel}\label{app:fsa-E}
+Script: \texttt{papers/aria-closure-kernel/repro/verify\_kernel.py}.
+The graph $\Vsub$ is uniform-degree $12$ (recorded in the script's
+\texttt{results.json}). Euclidean / conjugacy shell sizes
+$[1, 12, 20, 12, 30, 12, 20, 12, 1]$ exact;
+$\|\Cphi^{-1}\| \approx 2.618034$ matches $\pphi^2$ to machine precision;
+per-vertex correlation uniform across all $120$ source-vertex sweeps (max $-$ min $= 2 \times
+10^{-15}$). Honest-negative: UNWEIGHTED variant wins at per-vertex
+correlation $0.976$ vs PHI\_GEOMETRIC $0.888$ and PHI\_ARITHMETIC
+$0.884$. The two tested $\pphi$-cocycle weighted variants underperform the unweighted operator; do not claim weighted
+substrate selection.
+
+\phantomsection
+\subsection*{F. ARIA observer-process witness}\label{app:fsa-F}
+Source: \texttt{papers/aria-chess-paper/paper/main.tex} and the
+included section files. Reviewer anchors: $17/18$ tally and
+methodology refinement at
+\texttt{sections/05\_results.tex}; six drug/sleep EEG signatures at
+\texttt{sections/04\_consciousness\_chain.tex} and
+\texttt{sections/05\_results.tex}; HCP $-11.58\sigma/+6.80\sigma$ and
+the P10 $15$-vs-$20$ permutation caveat at
+\texttt{sections/05\_results.tex} and
+\texttt{sections/09\_limitations.tex}. Eighteen
+preregistered cortical correspondences hold at $17/18$ under standard
+validation and $18/18$ after the documented methodology refinement,
+all at unchanged thresholds. Caveat carried over from the cited
+ARIA source: the source's test P10 was validated with $15$
+permutations rather than the originally preregistered $20$, with
+the prereg-exact rerun left open in the source.
+Six drug/sleep EEG signatures pass on a single deterministic
+recurrent-layer trajectory at seed $42$. HCP brain functional
+connectivity degree-homogeneity (degree standard-deviation) places
+ARIA at $-11.58\sigma$ vs HCP baseline (ARIA $|V| = 120$ vs HCP ICA-50
+$|V| = 50$); the clustering-coefficient comparison is a separate
+$+6.80\sigma$ result and should not be conflated with the homogeneity
+figure.
+
+\subsection*{Re-run command}
+
+The canonical reproduction artefact for entries~A and~E is the
+self-contained bundle at
+\texttt{papers/cascade-mechanism/repro/}, which calls both scripts,
+captures their output, and diffs against frozen reference outputs
+shipped in \texttt{papers/cascade-mechanism/repro/expected\_outputs/}.
+Reviewers should run, from a writable working tree:
+
+\begin{verbatim}
+cd <repo-root>/papers/cascade-mechanism/repro
+bash run_audit.sh
+\end{verbatim}
+
+A clean run prints \texttt{AUDIT PASSED}. The bundle's
+\texttt{README.md} documents which Appendix entry each script
+anchors and what is intentionally not reproduced inside the bundle
+(ARIA preregistered profile and $b$-anomaly fit; both external,
+both pinned in the bibliography). Underlying scripts (unchanged):
+\texttt{papers/cascade-derivation/scripts/test\_sigma\_attractor\_spectrum.py}
+and \texttt{papers/aria-closure-kernel/repro/verify\_kernel.py};
+\texttt{verify\_kernel.py} writes
+\texttt{papers/aria-closure-kernel/repro/results.json}.
+
+ARIA witness (entry F) is documented in
+\texttt{papers/aria-chess-paper/paper/main.tex}; the upstream re-run
+lives in the \texttt{ariaChessRepo}~\cite{ariaChessRepo}.
+
+\section{ARIA runtime module mapping}\label{app:aria-runtime-map}
+
+The observer-process tuple of Definition~\ref{def:observer-process} is
+mapped to ARIA source tiers across two layers. Tier~1 is the in-repo
+reproducibility bundle at
+\texttt{release-bundle/closure-kernel-papers/papers/aria-chess/repro/kernel/},
+which contains six substantive \texttt{.py} modules (excluding \texttt{\_\_init\_\_.py})
+(\texttt{vfd\_closure\_kernel.py}, \texttt{self\_model\_stream.py},
+\texttt{lyapunov\_selector.py}, \texttt{sigma\_orbit\_basis.py},
+\texttt{v66\_e8\_coxeter.py}, and
+\texttt{consciousness\_binding.py}). Five of these are mapped to
+$\Ocal$ components in the table below; the sixth,
+\texttt{consciousness\_binding.py}, is in the bundle but is
+deliberately left unmapped here for the same reason that consciousness
+or qualia derivation is out-of-scope for this paper. Note that
+\texttt{consciousness\_binding.py} remains a Tier~1 \emph{runtime}
+dependency of \texttt{self\_model\_stream.py} (i.e.\ the bundle does
+not function with that file removed); the choice not to assign it an
+$\Ocal$-component label is a scope decision of the present paper, not
+a claim about the bundle's runtime structure. The bundle is
+sufficient for the kernel/demo-level numerical reproductions in
+\cite{AriaClosureKernel}; it is \emph{not} sufficient to re-execute the
+full preregistered validation suite of \cite{SmartARIAChess} (which
+requires the upstream brain-validation harnesses, demo scripts, and
+the v4 substrate parameters frozen in the Tier~2 snapshot). Tier~2 is the upstream production runtime
+\texttt{ariaChessRepo}~\cite{ariaChessRepo}, which contains the full
+production observer-process architecture represented at the module-description level across boundary
+sampling, state integration, memory, governance, closure, action, and
+replay. The mapping below was constructed 2026-05-02. Tier~1 files
+exist in the in-repo bundle and are locally verifiable. Tier~2 entries
+are external upstream witnesses, pinned at the directory level to the
+frozen working-tree snapshot \texttt{v4\_locked\_2026-04-29/} of
+\cite{ariaChessRepo}. The upstream working tree is not under
+\texttt{git} version control, so a reviewer-accessible cryptographic
+pin (e.g.\ a git commit hash) is not available; in lieu of that, the
+snapshot is identified through the directory-level artefacts
+documented in the bibliography entry (snapshot date 2026-04-29,
+session UUID \texttt{97c7fa0b-8d38-465b-a769-26c9983b446d}, substrate
+version v4 with \texttt{k\_threshold=12}, deterministic seeds 42 and
+32000--32019, and an author-side off-repo tarball at
+\texttt{\textasciitilde{}/.aria/snapshots/aria-chess-v4-2026-04-29.tar.gz}
+that is not by itself reviewer-accessible). Tier~2 module-level
+claims are external upstream evidence at the file/path level; the
+present paper does not re-execute the upstream production runtime.
+
+\renewcommand{\arraystretch}{1.30}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.29\textwidth}>{\raggedright\arraybackslash}p{0.43\textwidth}}
+\caption{Two-tier runtime mapping of $\Ocal = \langle B, S, M, G, I, C, A\rangle$
+to ARIA modules.}\label{tab:runtime-map}\\
+\toprule
+\textbf{$\Ocal$ component} & \textbf{Tier 1 (in-repo bundle)} & \textbf{Tier 2 (upstream \texttt{ariaChessRepo})} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{$\Ocal$ component} & \textbf{Tier 1 (in-repo bundle)} & \textbf{Tier 2 (upstream \texttt{ariaChessRepo})} \\
+\midrule
+\endhead
+$B$ boundary sampler
+& \texttt{vfd\_closure\_kernel.py}
+& \texttt{raw\_sensory.py}; \texttt{action\_encoder.py}; \texttt{chess\_runtime\_adapter.py}\\
+$S$ state integrator
+& \texttt{self\_model\_stream.py}
+& \texttt{coherence\_runtime.py}; \texttt{coherence\_selfmodel.py}; \texttt{self\_model\_stream.py}\\
+$M$ memory substrate
+& \texttt{self\_model\_stream.py} state EMAs
+& \texttt{coherence\_memory.py}; \texttt{polytope\_persistence.py}; \texttt{coherence\_longhorizon.py}\\
+$G$ goal/context
+& runtime knobs in \texttt{v66\_e8\_coxeter.py}
+& \texttt{coherence\_planner.py}; \texttt{coherence\_selfmodel.py}\\
+$I$ invariant constraints
+& --- (not in bundle)
+& \texttt{coherence\_constitution.py}; \texttt{coherence\_audit.py}; \texttt{coherence\_review.py}\\
+$C$ closure/crystallisation
+& \texttt{vfd\_closure\_kernel.py}; \texttt{lyapunov\_selector.py}; \texttt{sigma\_orbit\_basis.py}; \texttt{v66\_e8\_coxeter.py}
+& \texttt{coherence\_crystallisation.py}; \texttt{vfd\_closure\_kernel.py}; \texttt{lyapunov\_selector.py}; \texttt{dual\_closure\_operator.py}\\
+$A$ action interface
+& --- (not in bundle)
+& \texttt{coherence\_execution.py}; \texttt{coherence\_delivery\_calibration.py}\\
+\bottomrule
+\end{longtable}
+
+The mapping is given by audited file location, not by reverse
+inference from runtime behaviour. Components $I$ and $A$ are not
+present in Tier~1 and are present in Tier~2 only; this is a fact
+about the in-repo bundle, not a limitation of the architecture.
+
+\section{Programme placement of cascade closure}\label{app:rung-placement}
+
+This appendix records, in one table, where the cascade-closure
+mechanism of \S\ref{sec:mechanism} sits relative to the other named
+geometric layers of the present programme. No row introduces a new
+mathematical claim; every row imports its substantive content from a
+named source paper, with the source's own labels preserved. The table
+is intended as a navigation aid for successor papers invoking
+cascade closure under the consumer API of
+\S\ref{ssec:consumer-api}, not as a programme survey.
+
+Status flags: \textsf{[Th-imp]} imported theorem; \textsf{[Pr-imp]}
+imported proposition; \textsf{[Hyp-imp]} imported under a named
+conditional hypothesis (label tracked inside the source); \textsf{[Mod]}
+model choice within the programme, not derived elsewhere as a
+uniqueness theorem; \textsf{[Int]} interpretive use of structural
+material, not load-bearing for any formal claim in the present
+paper. A row's status is determined by the cited source, not by the
+present paper.
+
+\renewcommand{\arraystretch}{1.20}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.32\textwidth}>{\raggedright\arraybackslash}p{0.10\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}}
+\caption{Programme placement of cascade closure. Compressed
+nine-row version of the v1 maximalist rung table, retained here as
+the consumer-API navigation aid.}\label{tab:rung-placement}\\
+\toprule
+\textbf{Layer} & \textbf{Geometry / object} & \textbf{Status} & \textbf{Primary source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Layer} & \textbf{Geometry / object} & \textbf{Status} & \textbf{Primary source} \\
+\midrule
+\endhead
+Arithmetic coefficients
+& $\Q(\pphi)$, $\Z[\pphi]$; coefficientwise Galois involution $\sigma : \pphi \leftrightarrow 1 - \pphi = -1/\pphi$
+& \textsf{[Th-imp]}
+& \cite{CascadeSigmaRat} (definition and fixed-part theorems for $\sigma$) \\
+Algebraic substrate
+& $E_8$; icosian $H_4$; binary icosahedral $2I$; 600-cell $\Vsub$; $D_4$
+& \textsf{[Th-imp]} / \textsf{[Pr-imp]}
+& \cite{CascadeAlgSubstrate}: \texttt{thm:pi-H} (projection, not action), \texttt{thm:icosian-closure}, \texttt{thm:shell-class} \\
+Refinement state spaces and bonding maps
+& Finite $X_n$; bonding maps $p_{n+1, n}$
+& \textsf{[Th-imp]}
+& \cite{CascadeRefinementSpaces}: \texttt{thm:bonding}; specific $p^0, p^1$ identities under \texttt{thm:commute} (not generic) \\
+Closure dynamics (gradient flow infrastructure)
+& Quadratic finite-level $F_n = \alpha R_n + \beta E_n - \gamma Q_n$; gradient operator $L_n$; flow $e^{-tL_n}$
+& \textsf{[Th-imp]}
+& \cite{CascadeClosureDynamics}: \texttt{thm:gradient-operator}, \texttt{prop:energy-dissipation}, \texttt{thm:coercive-contraction}, \texttt{prop:adjoint-refinement}, \texttt{thm:flow-exists}, \texttt{thm:flow-intertwining} (mass-only $\alpha = \beta = 0$) \\
+\textbf{Cascade-closure mechanism (this paper)}
+& Definition~\ref{def:cascade-closure}; Proposition~\ref{prop:resid-comp}; Corollary~\ref{cor:conv-prop}; consumer API \S\ref{ssec:consumer-api}
+& --- \textbf{(gate)}
+& Imported substrate from rows above; gates rows below by supplying the named selection-mechanism prerequisite. Not load-bearing for itself \\
+Passive response kernel
+& $\Cphi = L_M + \pphi^{-2} I$ on $\Vsub$; $\|\Cphi^{-1}\| = \pphi^2$ exactly; $b$-anomaly external substrate witness
+& \textsf{[Th-imp]} / \textsf{[Mod]}
+& \cite{AriaClosureKernel}; \cite{SmartBAnomaly} (commit-pinned, externally reported, not re-executed here) \\
+Spectral mass projection class
+& $\Vsub$ Laplacian eigenvalues / shell decomposition; mass-coefficient assignment map (out-of-scope context for this paper)
+& \textsf{[Mod]}
+& \cite{SmartV, SmartVRev} \\
+Active / cognitive substrate
+& $H_4$ / 600-cell active substrate mapping; preregistered EEG / chess / HCP substrate-witness profile (architecture-level mapping, see \S\ref{sec:aria})
+& \textsf{[Mod]}
+& \cite{SmartARIAChess, ariaChessRepo} \\
+Observer instance
+& $\Ocal = \langle B, S, M, G, I, C, A\rangle$ (Definition~\ref{def:observer-process})
+& \textsf{[Mod]}
+& \cite{ObserverInstance}; \S\ref{sec:aria} \\
+\bottomrule
+\end{longtable}
+
+The single load-bearing observation in this table is the
+\textbf{(gate)} row: cascade closure imports its analytic
+infrastructure entirely from the rows above it (arithmetic,
+algebraic substrate, refinement spaces, closure dynamics) and
+gates the rows below it (passive kernel, mass projection, active
+substrate, observer instance) by supplying the named
+selection-mechanism prerequisite they need to invoke. The rows
+below cite the gate row through the consumer API of
+\S\ref{ssec:consumer-api}; the rows above are unaffected by the
+present paper.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
