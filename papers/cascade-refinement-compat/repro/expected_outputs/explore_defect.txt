@@ -18,10 +18,10 @@ Tower I (edge→midpoint)
 [ -1  2  -1 ]
 [ 0  -1  1 ]
 
-[H1] strict: `p^0 A_1 = A_0 p^0`?  False
-     defect D = p^0 A_1 - A_0 p^0:
-[ 0  -1  1 ]
-[ 1  -1  0 ]
+[H1] strict scaled: `p^0 A_1 = (1/2) A_0 p^0`? (paper's D_n=0?)  False
+     defect D_n = p^0 A_1 - (1/2) A_0 p^0:
+[ 1/2  -1  1/2 ]
+[ 1/2  -1  1/2 ]
 
 [partition] level-1 vertices: 3 total = 2 boundary + 1 interior
 
@@ -37,10 +37,16 @@ Tower I (edge→midpoint)
      boundary state e_0: p^0 A_1 H e_0 = (1/2) A_0 e_0 ?  True
      boundary state e_1: p^0 A_1 H e_1 = (1/2) A_0 e_1 ?  True
 
-[H4] eigenvalues of (S - A_0): ['-1.000000', '0.000000']
-     S ≤ A_0 (S - A_0 is negative semi-definite)
-     => for harmonic extensions: <H f, A_1 H f> ≤ <f, A_0 f>
-     i.e. REVERSED monotonicity holds (O3 form fails, but explicit defect).
+[H4] sanity: eigenvalues of (S - A_0) = ['-1.000000', '0.000000']
+     (since S = (1/2) A_0, expect S - A_0 = -(1/2) A_0, thus -PSD with one zero eigenvalue from constants kernel)
+
+[H5] D_n vanishes on harmonic extensions:
+     D_n applied to H(e_0): zero? True
+     D_n applied to H(e_1): zero? True
+
+[H6] D_n is non-zero on level-n-supported sector {psi_I = 0}:
+     D_n applied to (e_0, 0): non-zero: D_n phi = ['1/2', '1/2']
+     D_n applied to (e_1, 0): non-zero: D_n phi = ['1/2', '1/2']
 
 ======================================================================
 Tower II (triangle→barycentric)
@@ -62,11 +68,11 @@ Tower II (triangle→barycentric)
 [ 0  -1  -1  0  2  0 ]
 [ -1  0  -1  0  0  2 ]
 
-[H1] strict: `p^0 A_1 = A_0 p^0`?  False
-     defect D = p^0 A_1 - A_0 p^0:
-[ 0  1  1  -1  0  -1 ]
-[ 1  0  1  -1  -1  0 ]
-[ 1  1  0  0  -1  -1 ]
+[H1] strict scaled: `p^0 A_1 = (1/2) A_0 p^0`? (paper's D_n=0?)  False
+     defect D_n = p^0 A_1 - (1/2) A_0 p^0:
+[ 1  1/2  1/2  -1  0  -1 ]
+[ 1/2  1  1/2  -1  -1  0 ]
+[ 1/2  1/2  1  0  -1  -1 ]
 
 [partition] level-1 vertices: 6 total = 3 boundary + 3 interior
 
@@ -85,29 +91,44 @@ Tower II (triangle→barycentric)
      boundary state e_1: p^0 A_1 H e_1 = (1/2) A_0 e_1 ?  True
      boundary state e_2: p^0 A_1 H e_2 = (1/2) A_0 e_2 ?  True
 
-[H4] eigenvalues of (S - A_0): ['-1.500000', '-1.500000', '0.000000']
-     S ≤ A_0 (S - A_0 is negative semi-definite)
-     => for harmonic extensions: <H f, A_1 H f> ≤ <f, A_0 f>
-     i.e. REVERSED monotonicity holds (O3 form fails, but explicit defect).
+[H4] sanity: eigenvalues of (S - A_0) = ['-1.500000', '-1.500000', '0.000000']
+     (since S = (1/2) A_0, expect S - A_0 = -(1/2) A_0, thus -PSD with one zero eigenvalue from constants kernel)
+
+[H5] D_n vanishes on harmonic extensions:
+     D_n applied to H(e_0): zero? True
+     D_n applied to H(e_1): zero? True
+     D_n applied to H(e_2): zero? True
+
+[H6] D_n is non-zero on level-n-supported sector {psi_I = 0}:
+     D_n applied to (e_0, 0): non-zero: D_n phi = ['1', '1/2', '1/2']
+     D_n applied to (e_1, 0): non-zero: D_n phi = ['1/2', '1', '1/2']
+     D_n applied to (e_2, 0): non-zero: D_n phi = ['1/2', '1/2', '1']
 
 ======================================================================
 SUMMARY — refinement-compatibility status across towers
 ======================================================================
 
 Tower I (edge→midpoint):
-  H1 (strict p A_1 = A_0 p):          False
-  H2 (harmonic-state p A_1 H = (1/2) A_0):  True
-  H3 (Schur complement relation):     S = (1/2) A_0
-  H4 (monotonicity on harmonic):      S <= A_0
+  H1 (strict scaled p A_1 = (1/2) A_0 p):    False
+  H2 (harmonic-state p A_1 H = (1/2) A_0):   True
+  H3 (Schur complement relation):            S = (1/2) A_0
+  H4 (monotonicity on harmonic):             S = (1/2) A_0 [matches H3]
+  H5 (D_n vanishes on harmonic extensions):  True
+  H6 (D_n non-zero on level-n-supported):    True
 
 Tower II (triangle→barycentric):
-  H1 (strict p A_1 = A_0 p):          False
-  H2 (harmonic-state p A_1 H = (1/2) A_0):  True
-  H3 (Schur complement relation):     S = (1/2) A_0
-  H4 (monotonicity on harmonic):      S <= A_0
+  H1 (strict scaled p A_1 = (1/2) A_0 p):    False
+  H2 (harmonic-state p A_1 H = (1/2) A_0):   True
+  H3 (Schur complement relation):            S = (1/2) A_0
+  H4 (monotonicity on harmonic):             S = (1/2) A_0 [matches H3]
+  H5 (D_n vanishes on harmonic extensions):  True
+  H6 (D_n non-zero on level-n-supported):    True
 
 ======================================================================
 INTERPRETATION:
-  H1 false (strict A_n intertwining fails) — confirms WO assumption.
-  H2 true (harmonic-state factor-1/2 compatibility) — STRETCH RESULT.
+  H1 false: strict scaled p A_1 = (1/2) A_0 p FAILS (Proposition 4.1).
+  H2 true: harmonic-state factor-1/2 compatibility holds (Theorem 2.1).
+  H3 = S = (1/2) A_0: Schur halving (Theorem 2.1) verified.
+  H5 true: D_n vanishes on harmonic-extension subspace (Proposition 4.1(i)).
+  H6 true: D_n NON-zero on level-n-supported sector (Proposition 4.1(ii)).
 ======================================================================

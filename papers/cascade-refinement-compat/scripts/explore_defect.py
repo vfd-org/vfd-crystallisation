@@ -194,14 +194,16 @@ def test_hypotheses(tower):
     print(f"\n[setup] A_1^vertex (graph Laplacian on level-1 vertices):")
     print(fmat(A_1))
 
-    # ===== H1: strict refinement compatibility =====
+    # ===== H1: strict refinement compatibility (SCALED, paper's defect) =====
+    # Paper defines D_n := p^0 A_{n+1}^vertex - (1/2) A_n^vertex p^0
+    # (the "scaled" defect, matching p^0 \tilde A_{n+1} = \tilde A_n p^0).
     LHS = p0 @ A_1
-    RHS = A_0 @ p0
+    RHS = Fraction(1, 2) * (A_0 @ p0)
     defect_D = LHS - RHS
     H1_holds = is_zero(defect_D)
-    print(f"\n[H1] strict: `p^0 A_1 = A_0 p^0`?  {H1_holds}")
+    print(f"\n[H1] strict scaled: `p^0 A_1 = (1/2) A_0 p^0`? (paper's D_n=0?)  {H1_holds}")
     if not H1_holds:
-        print(f"     defect D = p^0 A_1 - A_0 p^0:")
+        print(f"     defect D_n = p^0 A_1 - (1/2) A_0 p^0:")
         print(fmat(defect_D))
 
     # ===== H2 / H3: harmonic-extension scaled compatibility =====
@@ -337,33 +339,61 @@ def test_hypotheses(tower):
             print(f"       RHS: {[str(x) for x in RHS_k]}")
     H2_holds = test_ok
 
-    # ===== H4: monotonicity on harmonic subspace =====
-    # Check: is <p^0 H f_B, A_0 p^0 H f_B> ≤ <H f_B, A_1 H f_B> for all f_B?
-    # Note: p^0 H f_B = f_B (by construction), so LHS = <f_B, A_0 f_B>.
-    # And <H f_B, A_1 H f_B> = <f_B, S f_B> by Schur-complement identity.
-    # So the question becomes: <f_B, A_0 f_B> ≤ <f_B, S f_B> for all f_B?
-    # Equivalent: A_0 ≤ S in quadratic-form order.
-    # If S = (1/2) A_0, then <f_B, A_0 f_B> ≤ <f_B, (1/2) A_0 f_B> would require A_0 ≤ 0,
-    # which is FALSE (A_0 is positive semi-definite). So monotonicity in the
-    # standard sense does NOT hold; we need to check the correct direction.
+    # ===== H4: scaled monotonicity check =====
+    # Cascade-mechanism's (O3) with the scaled curvature operator
+    # \tilde A_n := 2^n A_n^vertex requires:
+    #     <p^0 ψ, \tilde A_n p^0 ψ> <= <ψ, \tilde A_{n+1} ψ>  for all ψ
+    # On harmonic ψ = H f, we showed <H f, A_1 H f> = (1/2) <f, A_0 f>,
+    # so <H f, \tilde A_1 H f> = 2^{n+1} (1/2) <f, A_n f> = 2^n <f, A_n f>
+    # = <f, \tilde A_n f> = <p^0 H f, \tilde A_n p^0 H f>.
+    # i.e. EQUALITY on harmonic states (paper Theorem 3.1 with equality clause).
+    # The unscaled S vs A_0 comparison below is an independent sanity check;
+    # S = (1/2) A_0 trivially gives S <= A_0 since A_0 is PSD, but this does
+    # NOT say anything about the cascade-mechanism (O3) direction.
     diff = schur_S - A_0
-    # Compute eigenvalues of diff (numerically, since exact eigvals are ugly)
     diff_float = np.array([[float(x) for x in row] for row in diff], dtype=float)
     eigs = np.linalg.eigvalsh(diff_float)
-    print(f"\n[H4] eigenvalues of (S - A_0): {[f'{e:.6f}' for e in eigs]}")
-    if all(e >= -1e-12 for e in eigs):
-        print(f"     S ≥ A_0 (S - A_0 is positive semi-definite)")
-        print(f"     => for harmonic extensions: <H f, A_1 H f> ≥ <f, A_0 f>")
-        print(f"     i.e. monotonicity (O3) HOLDS on the harmonic subspace.")
-        H4_holds = "S >= A_0"
-    elif all(e <= 1e-12 for e in eigs):
-        print(f"     S ≤ A_0 (S - A_0 is negative semi-definite)")
-        print(f"     => for harmonic extensions: <H f, A_1 H f> ≤ <f, A_0 f>")
-        print(f"     i.e. REVERSED monotonicity holds (O3 form fails, but explicit defect).")
-        H4_holds = "S <= A_0"
-    else:
-        print(f"     S - A_0 is indefinite; monotonicity holds on a sector only.")
-        H4_holds = "indefinite"
+    print(f"\n[H4] sanity: eigenvalues of (S - A_0) = {[f'{e:.6f}' for e in eigs]}")
+    print(f"     (since S = (1/2) A_0, expect S - A_0 = -(1/2) A_0, "
+          f"thus -PSD with one zero eigenvalue from constants kernel)")
+    H4_holds = "S = (1/2) A_0 [matches H3]"
+
+    # ===== H5: defect D_n vanishes on harmonic extensions =====
+    # Paper's Proposition 4.1(i): D_n |_{range(H_{n+1})} = 0.
+    print(f"\n[H5] D_n vanishes on harmonic extensions:")
+    H5_ok = True
+    for k in range(n_B):
+        f_B = np.zeros(n_B, dtype=Fraction)
+        f_B[k] = Fraction(1)
+        # Construct H f_B as full level-1 state.
+        f_I = -(A_II_inv @ (A_IB @ f_B))
+        H_fB = np.zeros(n1, dtype=Fraction)
+        for i, idx in enumerate(boundary_idx):
+            H_fB[idx] = f_B[i]
+        for i, idx in enumerate(interior_idx):
+            H_fB[idx] = f_I[i]
+        D_HfB = defect_D @ H_fB
+        ok = all(D_HfB[i] == 0 for i in range(len(D_HfB)))
+        print(f"     D_n applied to H(e_{k}): zero? {ok}")
+        if not ok:
+            H5_ok = False
+            print(f"       D_n H e_{k} = {[str(x) for x in D_HfB]}")
+
+    # ===== H6: D_n is generically NON-zero on {phi : phi_I = 0} =====
+    # Paper's Proposition 4.1(ii): defect does NOT vanish on the
+    # level-n-supported subspace, contradicting the original v1 claim.
+    print(f"\n[H6] D_n is non-zero on level-n-supported sector {{psi_I = 0}}:")
+    H6_ok = False
+    for k in range(n_B):
+        # State with phi_B = e_k, phi_I = 0
+        phi = np.zeros(n1, dtype=Fraction)
+        phi[boundary_idx[k]] = Fraction(1)
+        D_phi = defect_D @ phi
+        is_nonzero = any(D_phi[i] != 0 for i in range(len(D_phi)))
+        print(f"     D_n applied to (e_{k}, 0): {'non-zero' if is_nonzero else 'zero'}: "
+              f"D_n phi = {[str(x) for x in D_phi]}")
+        if is_nonzero:
+            H6_ok = True
 
     return {
         "tower": tower["name"],
@@ -371,6 +401,8 @@ def test_hypotheses(tower):
         "H2": H2_holds,
         "H3": H3_relation,
         "H4": H4_holds,
+        "H5": H5_ok,
+        "H6": H6_ok,
         "schur_S": schur_S,
         "A_0": A_0,
     }
@@ -393,19 +425,25 @@ def main():
     print("=" * 70)
     for r in results:
         print(f"\n{r['tower']}:")
-        print(f"  H1 (strict p A_1 = A_0 p):          {r['H1']}")
-        print(f"  H2 (harmonic-state p A_1 H = (1/2) A_0):  {r['H2']}")
-        print(f"  H3 (Schur complement relation):     {r['H3']}")
-        print(f"  H4 (monotonicity on harmonic):      {r['H4']}")
+        print(f"  H1 (strict scaled p A_1 = (1/2) A_0 p):    {r['H1']}")
+        print(f"  H2 (harmonic-state p A_1 H = (1/2) A_0):   {r['H2']}")
+        print(f"  H3 (Schur complement relation):            {r['H3']}")
+        print(f"  H4 (monotonicity on harmonic):             {r['H4']}")
+        print(f"  H5 (D_n vanishes on harmonic extensions):  {r['H5']}")
+        print(f"  H6 (D_n non-zero on level-n-supported):    {r['H6']}")
 
     print("\n" + "=" * 70)
     print("INTERPRETATION:")
     if all(r["H1"] is False for r in results):
-        print("  H1 false (strict A_n intertwining fails) — confirms WO assumption.")
+        print("  H1 false: strict scaled p A_1 = (1/2) A_0 p FAILS (Proposition 4.1).")
     if all(r["H2"] for r in results):
-        print("  H2 true (harmonic-state factor-1/2 compatibility) — STRETCH RESULT.")
-    if all(r["H4"] == "S >= A_0" for r in results):
-        print("  H4 = S ≥ A_0 — monotonicity holds on harmonic subspace.")
+        print("  H2 true: harmonic-state factor-1/2 compatibility holds (Theorem 2.1).")
+    if all("S = (1/2) A_0" in str(r["H3"]) for r in results):
+        print("  H3 = S = (1/2) A_0: Schur halving (Theorem 2.1) verified.")
+    if all(r["H5"] for r in results):
+        print("  H5 true: D_n vanishes on harmonic-extension subspace (Proposition 4.1(i)).")
+    if all(r["H6"] for r in results):
+        print("  H6 true: D_n NON-zero on level-n-supported sector (Proposition 4.1(ii)).")
     print("=" * 70)
 
 

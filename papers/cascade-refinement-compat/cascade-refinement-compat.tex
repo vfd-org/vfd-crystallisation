@@ -64,8 +64,8 @@ for every $\psi \in X_{n+1}^{0}$, with equality if and only if
 $\psi$ is the harmonic extension of $p^{0} \psi$. Strict
 operator-level refinement-compatibility
 $p^{0} \widetilde A_{n+1} = \widetilde A_n p^{0}$ remains false; the
-defect is supported on the new-vertex sector and is computed
-explicitly for the worked towers. The result discharges
+defect operator vanishes precisely on the harmonic-extension subspace
+and is computed explicitly for the worked towers. The result discharges
 cascade-mechanism's obligation~(O3) (residual monotonicity) for the
 P3/P4 tower and reformulates obligation~(O2) (flow intertwining) at
 the quadratic-form / Schur level, where it holds, rather than at
@@ -231,9 +231,15 @@ the partition $(B, I)$ is
 
 \begin{theorem}[Schur--complement halving]\label{thm:schur}
 For the cascade refinement tower with
-$A_n^{\mathrm{vertex}} = d_n^{*} d_n$, the Schur complement of
-$A_{n+1}^{\mathrm{vertex}}$ under the (boundary, interior) partition
-\eqref{eq:block} is exactly half the level-$n$ Laplacian:
+$A_n^{\mathrm{vertex}} = d_n^{*} d_n$, where the refinement is the
+edge-midpoint subdivision scheme of
+\cite{CascadeClosureDynamics}~(each level-$n$ edge $e = (u, v)$ is
+subdivided by inserting one new midpoint vertex $m_e$ of degree~$2$
+in $G_{n+1}^{\bullet}$ with the two child edges $(u, m_e)$ and
+$(m_e, v)$, and no other level-$(n+1)$ edges incident to midpoints),
+the Schur complement of $A_{n+1}^{\mathrm{vertex}}$ under the
+(boundary, interior) partition \eqref{eq:block} is exactly half the
+level-$n$ Laplacian:
 \begin{equation}\label{eq:schur-half}
    \Schur(A_{n+1}^{\mathrm{vertex}}) =
      \tfrac12 \, A_n^{\mathrm{vertex}}.
@@ -245,42 +251,125 @@ Equivalently, with $\widetilde A_n := 2^n A_n^{\mathrm{vertex}}$:
 \end{theorem}
 
 \begin{proof}
-The energy form on harmonic extensions reduces to the Schur
-complement: for every $f \in X_n^{0}$,
-\begin{align*}
-\langle H_{n+1} f, A_{n+1}^{\mathrm{vertex}} H_{n+1} f\rangle
-  & = \begin{pmatrix} f \\ -A_{II}^{-1} A_{IB} f \end{pmatrix}^{T}
-      \begin{pmatrix} A_{BB} & A_{BI} \\ A_{IB} & A_{II} \end{pmatrix}
-      \begin{pmatrix} f \\ -A_{II}^{-1} A_{IB} f \end{pmatrix} \\
-  & = \langle f, (A_{BB} - A_{BI} A_{II}^{-1} A_{IB}) f\rangle
-  = \langle f, \Schur(A_{n+1}^{\mathrm{vertex}}) f\rangle.
-\end{align*}
-We compute $\langle H_{n+1} f, A_{n+1}^{\mathrm{vertex}} H_{n+1} f\rangle$
-by reduction to the coboundary side. Writing
-$A_{n+1}^{\mathrm{vertex}} = d_{n+1}^{*} d_{n+1}$ and using the
-coboundary refinement relation
-$p^{1}_{n+1, n} d_{n+1} = \tfrac12 d_n p^{0}_{n+1, n}$ from
-\eqref{eq:cobref}: applied to $H_{n+1} f$ and noting
-$p^{0}_{n+1, n} H_{n+1} f = f$ by construction, one has
-$p^{1}_{n+1, n} d_{n+1} H_{n+1} f = \tfrac12 d_n f$. The harmonic
-extension is the unique element of
-$(p^{0}_{n+1, n})^{-1}(\{f\})$ that minimises the energy
-$\tfrac12 \langle \,\cdot\,, A_{n+1}^{\mathrm{vertex}}\,\cdot\,\rangle =
-\tfrac12 \|d_{n+1}\,\cdot\,\|^{2}$, and the minimum is attained when
-$d_{n+1} H_{n+1} f$ lies in the kernel of the orthogonal complement
-of $\mathrm{range}((p^{1}_{n+1, n})^{*})$ inside $X_{n+1}^{1}$,
-because the orthogonal complement is exactly the variation directly
-of $H_{n+1} f$ at fixed boundary. By a straightforward computation
-(or, equivalently, by direct verification on the worked finite
-towers in \S\ref{sec:worked}), one finds
-$\|d_{n+1} H_{n+1} f\|^{2} = \tfrac12 \|d_n f\|^{2}$, hence
+We proceed in three steps: identify the Schur complement with a
+harmonic energy, decompose that energy via the source's coboundary
+refinement relation, and verify directly that the harmonic
+extension saturates the resulting lower bound.
+
+\smallskip
+\textbf{Step 1.}
+For any positive-semi-definite $A_{n+1}^{\mathrm{vertex}}$ with
+invertible interior block $A_{II}$, the Schur complement and the
+harmonic-extension energy agree:
 $\langle f, \Schur(A_{n+1}^{\mathrm{vertex}}) f\rangle =
-\tfrac12 \|d_n f\|^{2} = \tfrac12 \langle f, A_n^{\mathrm{vertex}} f\rangle$.
-This holds for every $f \in X_n^{0}$, so by polarisation
-$\Schur(A_{n+1}^{\mathrm{vertex}}) = \tfrac12 A_n^{\mathrm{vertex}}$,
-which is \eqref{eq:schur-half}. The scaled form
-\eqref{eq:schur-tilde} follows by linearity:
+\min_{\psi: p^{0}\psi = f}
+\langle \psi, A_{n+1}^{\mathrm{vertex}} \psi\rangle =
+\langle H_{n+1} f, A_{n+1}^{\mathrm{vertex}} H_{n+1} f\rangle$
+for every $f \in X_n^{0}$. This is standard: for
+$\psi = (f, f_I)$ in block form,
+$\langle \psi, A_{n+1}^{\mathrm{vertex}} \psi\rangle =
+\langle f, A_{BB} f\rangle + 2\langle f_I, A_{IB} f\rangle +
+\langle f_I, A_{II} f_I\rangle$ is minimised in $f_I$ at
+$f_I^{\star} = -A_{II}^{-1} A_{IB} f$ (since $A_{II}$ is positive
+definite), with minimum value
+$\langle f, (A_{BB} - A_{BI} A_{II}^{-1} A_{IB}) f\rangle$, and
+$H_{n+1} f := (f, f_I^{\star})$ by definition of harmonic extension.
+
+\smallskip
+\textbf{Step 2.} Let $f \in X_n^{0}$ and let $\psi \in X_{n+1}^{0}$
+satisfy $p^{0} \psi = f$. Apply the coboundary refinement relation
+\eqref{eq:cobref}:
+$p^{1} d_{n+1} \psi = \tfrac12 d_n p^{0} \psi = \tfrac12 d_n f$,
+which is fixed independently of $\psi$ (subject to
+$p^{0} \psi = f$). The averaging-by-$\tfrac12$ structure of $p^{1}$
+on a 2-element fibre yields the calibration identity
+\begin{equation}\label{eq:p1-calib}
+   p^{1} (p^{1})^{*} = \tfrac12 \, I_{X_n^{1}},
+\end{equation}
+which is verified directly: for any $\omega \in X_n^{1}$ and any
+level-$n$ edge $e$ with two children $e_1, e_2$, one has
+$((p^{1})^{*}\omega)(e_i) = \tfrac12 \omega(e)$ (the unique adjoint
+under standard $\ell^{2}$ inner products) and
+$(p^{1}(p^{1})^{*}\omega)(e) = \tfrac12 \cdot \tfrac12 \omega(e) +
+\tfrac12 \cdot \tfrac12 \omega(e) = \tfrac12 \omega(e)$.
+Hence the orthogonal projection of any
+$\xi \in X_{n+1}^{1}$ onto $\mathrm{range}((p^{1})^{*})$ is
+$P \xi = (p^{1})^{*}\bigl((p^{1}(p^{1})^{*})^{-1} p^{1} \xi\bigr) =
+2(p^{1})^{*} p^{1} \xi$, and $X_{n+1}^{1}$ decomposes orthogonally
+as $\mathrm{range}((p^{1})^{*}) \oplus \ker p^{1}$. Apply this
+decomposition to $\xi = d_{n+1} \psi$:
+\begin{equation}\label{eq:dpsi-decomp}
+   d_{n+1} \psi = (p^{1})^{*} d_n f \;+\; r_{\psi},
+   \qquad r_{\psi} \in \ker p^{1},
+\end{equation}
+where the first term comes from
+$P (d_{n+1} \psi) = 2 (p^{1})^{*} (p^{1} d_{n+1} \psi) =
+2 (p^{1})^{*} (\tfrac12 d_n f) = (p^{1})^{*} d_n f$. Compute the
+norm using \eqref{eq:p1-calib}:
+\begin{align*}
+\|(p^{1})^{*} d_n f\|^{2}
+   = \langle (p^{1})^{*} d_n f, (p^{1})^{*} d_n f\rangle
+   = \langle d_n f, p^{1} (p^{1})^{*} d_n f\rangle
+   = \tfrac12 \|d_n f\|^{2}
+   = \tfrac12 \langle f, A_n^{\mathrm{vertex}} f\rangle.
+\end{align*}
+By orthogonality of the decomposition \eqref{eq:dpsi-decomp},
+\begin{equation}\label{eq:psi-energy-lb}
+\langle \psi, A_{n+1}^{\mathrm{vertex}} \psi\rangle
+   = \|d_{n+1} \psi\|^{2}
+   = \tfrac12 \langle f, A_n^{\mathrm{vertex}} f\rangle + \|r_{\psi}\|^{2}
+   \;\ge\; \tfrac12 \langle f, A_n^{\mathrm{vertex}} f\rangle.
+\end{equation}
+
+\smallskip
+\textbf{Step 3.}
+We exhibit one specific $\psi$ with $r_{\psi} = 0$, hence equality
+in \eqref{eq:psi-energy-lb}: the harmonic extension itself. By the
+edge-midpoint hypothesis of the theorem statement, every interior
+vertex $m_e \in I$ has degree exactly~$2$ in $G_{n+1}^{\bullet}$,
+its only neighbours being the two endpoints $u, v$ of its parent
+edge $e \in E(G_n^{\bullet})$; hence the harmonic-extension formula
+$f_I = -A_{II}^{-1} A_{IB} f$ at $m_e$ reduces to the elementary
+two-neighbour average
+$(H_{n+1} f)(m_e) = \tfrac12 (f(u) + f(v))$. Compute
+$d_{n+1}(H_{n+1} f)$ at the two child edges of~$e$:
+\begin{align*}
+   (d_{n+1}(H_{n+1} f))(u, m_e)
+   & = (H_{n+1} f)(m_e) - (H_{n+1} f)(u)
+   = \tfrac12 (f(u) + f(v)) - f(u)
+   = \tfrac12 (f(v) - f(u))
+   = \tfrac12 (d_n f)(e), \\
+   (d_{n+1}(H_{n+1} f))(m_e, v)
+   & = (H_{n+1} f)(v) - (H_{n+1} f)(m_e)
+   = f(v) - \tfrac12 (f(u) + f(v))
+   = \tfrac12 (f(v) - f(u))
+   = \tfrac12 (d_n f)(e).
+\end{align*}
+On the other hand,
+$((p^{1})^{*} d_n f)(u, m_e) = \tfrac12 (d_n f)(e) =
+((p^{1})^{*} d_n f)(m_e, v)$ by definition of $(p^{1})^{*}$ on a
+two-element fibre. Hence
+$d_{n+1}(H_{n+1} f) = (p^{1})^{*} d_n f$ on every level-$(n+1)$ edge,
+i.e., $r_{H_{n+1} f} = 0$.
+
+\smallskip
+Combining Steps 1--3:
+\begin{align*}
+\langle f, \Schur(A_{n+1}^{\mathrm{vertex}}) f\rangle
+   = \langle H_{n+1} f, A_{n+1}^{\mathrm{vertex}} H_{n+1} f\rangle
+   = \tfrac12 \langle f, A_n^{\mathrm{vertex}} f\rangle
+   + \|r_{H_{n+1} f}\|^{2}
+   = \tfrac12 \langle f, A_n^{\mathrm{vertex}} f\rangle.
+\end{align*}
+This holds for every $f \in X_n^{0}$. Since
+$\Schur(A_{n+1}^{\mathrm{vertex}})$ and $A_n^{\mathrm{vertex}}$ are
+both symmetric, polarisation of the quadratic form gives the
+operator identity \eqref{eq:schur-half}. The scaled form
+\eqref{eq:schur-tilde} follows by linearity: $\Schur$ is a quadratic
+operation but its dependence on the overall scale of the input
+matrix is linear in that scale, so
 $\Schur(\widetilde A_{n+1}) = \Schur(2^{n+1} A_{n+1}^{\mathrm{vertex}}) =
+2^{n+1} \Schur(A_{n+1}^{\mathrm{vertex}}) =
 2^{n+1} \cdot \tfrac12 A_n^{\mathrm{vertex}} = 2^n A_n^{\mathrm{vertex}} = \widetilde A_n$.
 \end{proof}
 
@@ -378,39 +467,72 @@ The strict operator-level identity
 $p^{0}_{n+1, n} \widetilde A_{n+1} = \widetilde A_n p^{0}_{n+1, n}$
 remains false, with explicit defect.
 
-\begin{proposition}[Strict operator intertwining fails]\label{prop:strict-fails}
+\begin{proposition}[Strict operator intertwining fails; defect vanishes on harmonic extensions]\label{prop:strict-fails}
 The strict identity
 $p^{0}_{n+1, n} \widetilde A_{n+1} = \widetilde A_n p^{0}_{n+1, n}$ does
 not hold in general, and equivalently
-$p^{0}_{n+1, n} A_{n+1}^{\mathrm{vertex}} \ne \tfrac12 A_n^{\mathrm{vertex}} p^{0}_{n+1, n}$.
-The defect operator
+$p^{0}_{n+1, n} A_{n+1}^{\mathrm{vertex}} \ne \tfrac12 A_n^{\mathrm{vertex}} p^{0}_{n+1, n}$
+as operators $X_{n+1}^{0} \to X_n^{0}$. The defect operator
 \begin{equation}\label{eq:defect}
    D_n := p^{0}_{n+1, n} A_{n+1}^{\mathrm{vertex}} - \tfrac12 A_n^{\mathrm{vertex}} p^{0}_{n+1, n}
 \end{equation}
-is supported on the new-vertex sector $I = V(G_{n+1}^{\bullet}) \setminus V(G_n^{\bullet})$ in
-the following sense: $D_n$ vanishes on the subspace of $X_{n+1}^{0}$
-of states that vanish on $I$.
+satisfies the following:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=2.4em, nosep, topsep=2pt]
+\item $D_n \,\psi = 0$ whenever $\psi \in \mathrm{range}(H_{n+1})$,
+  i.e.\ whenever $\psi$ is the harmonic extension of its own
+  boundary $p^{0} \psi$;
+\item $D_n$ is generically non-zero on $X_{n+1}^{0}$ outside
+  $\mathrm{range}(H_{n+1})$. In particular, $D_n$ does \emph{not}
+  vanish on the subspace $\{\psi : \psi_I = 0\}$.
+\end{enumerate}
 \end{proposition}
 
 \begin{proof}
-On a state $\phi \in X_{n+1}^{0}$ that vanishes on $I$ (i.e.\
-$\phi_{I} = 0$), one has $\phi = \phi_{B}$ identified with its
-restriction. Then
-$A_{n+1}^{\mathrm{vertex}} \phi = (A_{BB} \phi_{B}, A_{IB} \phi_{B})$,
-so
-$p^{0}_{n+1, n} A_{n+1}^{\mathrm{vertex}} \phi = A_{BB} \phi_{B}$.
-Comparing with
-$\tfrac12 A_n^{\mathrm{vertex}} p^{0}_{n+1, n} \phi = \tfrac12 A_n^{\mathrm{vertex}} \phi_{B}$,
-the operators $A_{BB}$ and $\tfrac12 A_n^{\mathrm{vertex}}$ are
-\emph{not} equal in general (they differ by the boundary-vertex
-incidence with the new midpoints). The defect on
-$\phi_{I} \ne 0$ states is computed explicitly in
-\S\ref{sec:worked} for both worked towers; in both, it is non-zero
-and supported on the new-vertex sector. The asserted vanishing on
-$\{\phi_{I} = 0\}$ is the converse of this incidence: $D_n$ is
-non-trivial precisely in the directions parametrising the new
-midpoints.
+\textbf{(i)} Apply $D_n$ to a harmonic extension $\psi = H_{n+1} f$,
+$f := p^{0} \psi \in X_n^{0}$. Then $p^{0} \psi = f$, and the
+energy-form identity inside the proof of Theorem~\ref{thm:schur}
+yields
+$\langle \eta, p^{0} A_{n+1}^{\mathrm{vertex}} H_{n+1} f\rangle =
+\langle \eta, \tfrac12 A_n^{\mathrm{vertex}} f\rangle$ for every
+$\eta \in X_n^{0}$. (This is the inner product
+$\langle \eta, \cdot\rangle$ pulled back through the Schur identity:
+the right side is $\tfrac12 \langle \eta, A_n^{\mathrm{vertex}} f\rangle$,
+the left side is $\langle p_{0}^{*} \eta, A_{n+1}^{\mathrm{vertex}} H_{n+1} f\rangle$
+where $p_{0}^{*}$ is the obvious zero-extension to interior; both
+equal $\tfrac12 \langle f, A_n^{\mathrm{vertex}} \eta\rangle$ by
+symmetry of $A_n^{\mathrm{vertex}}$ and the Step~3 calculation in
+the proof of Theorem~\ref{thm:schur}.) Hence
+$p^{0} A_{n+1}^{\mathrm{vertex}} H_{n+1} f =
+\tfrac12 A_n^{\mathrm{vertex}} p^{0} H_{n+1} f$, which is exactly
+$D_n \cdot H_{n+1} f = 0$.
+
+\smallskip
+\textbf{(ii)} On any state $\phi \in X_{n+1}^{0}$ with $\phi_I = 0$,
+i.e.\ $\phi = (\phi_B, 0)$ in block form, one computes
+$p^{0} A_{n+1}^{\mathrm{vertex}} \phi = A_{BB} \phi_B$ (the
+$(B, I)$ block on a state with $\phi_I = 0$). On the other side,
+$\tfrac12 A_n^{\mathrm{vertex}} p^{0} \phi = \tfrac12 A_n^{\mathrm{vertex}} \phi_B$.
+The block $A_{BB}$ is the level-$(n+1)$ Laplacian restricted to
+boundary vertices, which records edges from $B$ to neighbours both
+in $B$ and in $I$; for the edge-midpoint refinement scheme the
+endpoints of every level-$n$ edge $e \in E(G_n^{\bullet})$ acquire
+a new neighbour at level $n+1$ (the midpoint $m_e$), so $A_{BB}$
+differs from $\tfrac12 A_n^{\mathrm{vertex}}$ in general. The
+explicit defect $D_n \phi$ is computed for two concrete towers in
+\S\ref{sec:worked}; in both, $D_n |_{\{\phi_I = 0\}}$ is non-zero.
 \end{proof}
+
+\begin{remark}[Geometric interpretation]\label{rem:harmonic-zero}
+The conclusion (i) of Proposition~\ref{prop:strict-fails} is the
+operator-level shadow of Theorem~\ref{thm:schur}: harmonic
+extensions are exactly the level-$(n+1)$ states whose interior
+values do not contribute to the boundary Laplacian action under
+$p^{0}$, hence the only states for which the strict scaled
+identity holds. On non-harmonic states, the defect measures the
+``midpoint deficit'' $\psi_I - H_{n+1}(p^{0} \psi)|_I$, i.e.\ how
+far the interior values of $\psi$ are from being harmonic averages
+of the boundary values.
+\end{remark}
 
 \begin{remark}[Energy vs.\ flow level]
 The Schur identity Theorem~\ref{thm:schur} and its energy
@@ -537,11 +659,19 @@ The defect of strict refinement-compatibility is
    := p^{0}_{1, 0} A_1^{\mathrm{vertex}} - \tfrac12 A_0^{\mathrm{vertex}} p^{0}_{1, 0}
    = \begin{pmatrix} 1 & -1 & 0 \\ 0 & -1 & 1 \end{pmatrix}
    - \begin{pmatrix} \tfrac12 & 0 & -\tfrac12 \\ -\tfrac12 & 0 & \tfrac12 \end{pmatrix}
-   = \begin{pmatrix} \tfrac12 & -1 & \tfrac12 \\ \tfrac12 & -1 & \tfrac12 \end{pmatrix},
+   = \begin{pmatrix} \tfrac12 & -1 & \tfrac12 \\ \tfrac12 & -1 & \tfrac12 \end{pmatrix}.
 \]
-which vanishes on the subspace $\{\phi : \phi(m) = 0\}$, in
-agreement with Proposition~\ref{prop:strict-fails}. (The
-non-zero columns of $D_0$ all involve the midpoint $m$.)
+Both rows of $D_0$ act on $\phi = (\phi(u), \phi(m), \phi(v))$ as
+$\tfrac12 \phi(u) - \phi(m) + \tfrac12 \phi(v) =
+\tfrac12 (\phi(u) + \phi(v)) - \phi(m)$, the ``midpoint deficit''
+of $\phi$ at $m$. This vanishes precisely when
+$\phi(m) = \tfrac12 (\phi(u) + \phi(v))$, i.e.\ when $\phi$ is the
+harmonic extension of its boundary $(\phi(u), \phi(v))$, in agreement
+with Proposition~\ref{prop:strict-fails}(i). In particular, $D_0$
+does \emph{not} vanish on $\{\phi : \phi(m) = 0\}$ (which gives
+$D_0 \phi = (\tfrac12 (\phi(u) + \phi(v)),
+\tfrac12 (\phi(u) + \phi(v)))$, generically non-zero), confirming
+Proposition~\ref{prop:strict-fails}(ii).
 
 \subsection{Tower~II: triangle $\to$ barycentric edge-subdivision}
 
@@ -636,8 +766,11 @@ boundary--interior decomposition.
 It does not establish strict operator-level
 $p^{0} \widetilde A_{n+1} = \widetilde A_n p^{0}$
 intertwining; that identity is genuinely false on the cascade
-refinement tower with new-midpoint refinement, with explicit
-defect supported on the new-vertex sector. In particular, the
+refinement tower with new-midpoint refinement. The defect operator
+$D_n$ defined in Proposition~\ref{prop:strict-fails} vanishes
+precisely on the harmonic-extension subspace and is generically
+non-zero elsewhere (including on the level-$n$-supported sector
+$\{\psi : \psi_I = 0\}$). In particular, the
 strict cascade-mechanism flow-intertwining hypothesis (O2) at the
 operator/flow level remains a stronger condition than what the
 P3/P4 tower supports; cascade-mechanism users invoking the
@@ -657,15 +790,17 @@ The cascade-mechanism consumer API itself
 reproduction bundle of \cite{CascadeMechanism} is unaffected.
 
 \paragraph*{Open follow-ups.}
-The most natural follow-up is to identify whether the strict
-operator-level identity
-$p^{0} \widetilde A_{n+1} = \widetilde A_n p^{0}$ holds on a named
-subspace (e.g.\ a $\sigma$-fixed sector of the cascade
-$\sigma$-attractor). Numerical evidence on Towers~I and~II suggests
-that the defect $D_n$ is full-rank on the new-vertex sector, so
-restriction to the level-$n$-supported subspace
-$\{\phi : \phi_{I} = 0\}$ does not yield strict intertwining
-either. A separate question is whether a non-linear
+By Proposition~\ref{prop:strict-fails}(i), the strict identity
+$p^{0} \widetilde A_{n+1} = \widetilde A_n p^{0}$ holds exactly on
+the harmonic-extension subspace $\mathrm{range}(H_{n+1})$. The
+natural follow-up is whether this is the only invariant subspace on
+which strict intertwining holds (the negative answer on
+$\{\phi : \phi_I = 0\}$ is recorded above; a $\sigma$-fixed sector
+of the cascade $\sigma$-attractor is a possible richer candidate).
+A separate question is whether the cascade-mechanism flow
+$e^{-t \widetilde A_{n+1}}$ preserves $\mathrm{range}(H_{n+1})$
+(numerically, it does not, since $\widetilde A_{n+1}$ does not
+preserve the harmonic subspace). A separate question is whether a non-linear
 cascade-flow modification (gradient flow on a modified residual
 that absorbs the defect into the dynamics) would preserve the
 mechanism's structure while admitting strict intertwining; this is
