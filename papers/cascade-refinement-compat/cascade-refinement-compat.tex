@@ -38,9 +38,10 @@ Schur--Complement Identity and Energy Intertwining \\[0.4em]
 We isolate a clean abstract model --- a scalar vertex-sector graph
 Laplacian under pure edge-midpoint subdivision with degree-$2$
 midpoints --- and prove a Schur-complement halving identity in this
-model that lifts the source's coboundary factor-$\tfrac12$ relation
+model that gives an abstract-model curvature-level analogue of the
+source's coboundary factor-$\tfrac12$ relation
 $p^{1} d_{n+1} = \tfrac12 d_n p^{0}$ from
-\cite{CascadeClosureDynamics} to the curvature level. With the
+\cite{CascadeClosureDynamics}. With the
 scaled vertex Laplacian $\widetilde A_n := 2^n A_n^{\mathrm{vertex}}$,
 the Schur complement under the (boundary, interior) partition equals
 the previous-level operator exactly:
@@ -152,21 +153,20 @@ programme-level claim.
 \subsection{Scope: abstract scalar pure-midpoint model vs.\ full P3/P4 tower}\label{sec:scope-and-gap}
 
 The actual source refinement of \cite{CascadeRefinementSpaces}
-(\texttt{cascade-refinement-spaces.tex} lines~273--287) is the
+(Definition~\texttt{def:refinement}) is the
 \emph{Schl\"{a}fli refinement}: at each level $n$ it adds, alongside
 the new edge-midpoints $M_n^{\bullet}$, a separate set of
 face-centroids $C_n^{\bullet}$ (one per $2$-face of the underlying
 $4$-polytope), together with extra level-$(n+1)$ edges connecting
 midpoints to centroids and centroids to other midpoints in a
 $W^{\bullet}$-equivariant pattern. The chain spaces in the source
-are also $F$-valued (\texttt{cascade-refinement-spaces.tex}
-lines~464--493): $X_n^{0, \bullet}$ is $F^{0}$-valued on
+are also $F$-valued (Definitions~\texttt{def:Xn-0}
+and~\texttt{def:Xn-1}): $X_n^{0, \bullet}$ is $F^{0}$-valued on
 $V(G_n^{\bullet})$ and $X_n^{1, \bullet}$ is $F^{1}$-valued and
 antisymmetric on \emph{oriented} edges, with edge-parent map
 $\pi_{n+1, n}^{E}$ taking the value $\bot$ on the new
 midpoint-centroid, centroid-midpoint, and (where present)
-midpoint-midpoint edges of \cite{CascadeRefinementSpaces}
-(lines~327--330).
+midpoint-midpoint edges of \cite{CascadeRefinementSpaces}.
 
 The present paper does \emph{not} work in this fuller setting. We
 work in a deliberate \emph{abstract scalar pure-midpoint model}
@@ -211,8 +211,8 @@ $f \in X_{n+1}^{0}$, $(p^{1} d_{n+1} f)(e) = \tfrac12 [(d_{n+1} f)(u, m_e)
 + (d_{n+1} f)(m_e, v)] = \tfrac12 [(f(m_e) - f(u)) + (f(v) - f(m_e))]
 = \tfrac12 (f(v) - f(u)) = \tfrac12 (d_n p^{0} f)(e)$. We use
 \eqref{eq:cobref} as the load-bearing input below. The relation also
-holds in the source's full Schl\"{a}fli setting~(P4
-\texttt{coboundary-refinement}, lines~896--937), but the present
+holds in the source's full Schl\"{a}fli setting (P4
+Proposition~\texttt{prop:coboundary-refinement}), but the present
 paper only uses the abstract-model version, where it is elementary.
 
 \paragraph*{The gap to the full P3/P4 tower.}
@@ -234,8 +234,8 @@ input:
   $p^{1}(p^{1})^{*} = \tfrac12 \, I$ in the $F^{1}$ inner product,
   with the same factor of $\tfrac12$ as in the scalar abstract
   model. This is \cite{CascadeRefinementSpaces}~Proposition
-  \texttt{prop:adjoints}, parts (3)--(4)~(lines~655--719); we
-  retain the label here for downstream reference;
+  Proposition~\texttt{prop:adjoints}, parts (3)--(4); we retain the
+  label here for downstream reference;
 \item (open) the harmonic-extension operator $H_{n+1}$ in the
   $F^{0}$-valued setting saturates the energy lower bound coming
   from \textup{(L1)} and \textup{(L2)}.
@@ -272,7 +272,7 @@ The coboundary refinement relation \eqref{eq:cobref} of
 \S\ref{sec:scope-and-gap} is the load-bearing input below. (The
 analogous identity is also a theorem in the source's full
 Schl\"{a}fli setting, \cite{CascadeClosureDynamics}~Proposition
-\texttt{coboundary-refinement} at lines~896--937.)
+Proposition~\texttt{prop:coboundary-refinement}.)
 
 \subsection{What this paper proves}
 
@@ -283,9 +283,11 @@ The corresponding scaled residual is
 $\widetilde R_n(\phi) := \tfrac12 \langle \phi, \widetilde A_n \phi\rangle = 2^{n-1} \langle \phi, A_n^{\mathrm{vertex}} \phi\rangle$.
 \end{definition}
 
-The scaling factor $2^n$ is the unique exponential factor (up to an
-overall normalisation $c$, giving $c \cdot 2^n$) for which
-Theorem~\ref{thm:schur} below produces the Schur-halving identity
+For nontrivial refinements (those with at least one parent edge,
+so $A_n^{\mathrm{vertex}} \ne 0$), the scaling factor $2^n$ is the
+unique exponential factor (up to an overall normalisation $c$,
+giving $c \cdot 2^n$) for which Theorem~\ref{thm:schur} below
+produces the Schur-halving identity
 $\Schur(\widetilde A_{n+1}) = \widetilde A_n$. (The coboundary
 relation \eqref{eq:cobref} alone does not fix this scaling; it is
 forced only after the Schur computation: writing
@@ -569,12 +571,15 @@ the positive-semi-definite $A_{n+1}^{\mathrm{vertex}}$). Hence
 \;\ge\;
 \tfrac12 \langle p^{0} \psi, A_n^{\mathrm{vertex}} p^{0} \psi\rangle.
 \end{equation*}
-Multiplying both sides by $2^{n}$:
-$2^{n} \langle \psi, A_{n+1}^{\mathrm{vertex}} \psi\rangle
-\ge 2^{n-1} \langle p^{0} \psi, A_n^{\mathrm{vertex}} p^{0} \psi\rangle$,
-which after dividing by $2$ and re-grouping factors becomes
-$\langle \psi, \widetilde A_{n+1} \psi\rangle / 2 \ge
-\langle p^{0} \psi, \widetilde A_n p^{0} \psi\rangle / 2$, i.e.\
+Multiplying both sides by $\tfrac12 \cdot 2^{n+1}$ and regrouping
+factors using
+$\widetilde A_{n+1} = 2^{n+1} A_{n+1}^{\mathrm{vertex}}$ and
+$\widetilde A_n = 2^{n} A_n^{\mathrm{vertex}}$:
+\[
+   \tfrac12 \langle \psi, \widetilde A_{n+1} \psi\rangle
+   \;\ge\; \tfrac12 \langle p^{0} \psi, \widetilde A_n p^{0} \psi\rangle,
+\]
+i.e.\
 $\widetilde R_{n+1}(\psi) \ge \widetilde R_n(p^{0} \psi)$, which is
 \eqref{eq:O3}. Equality requires $\psi^{\perp} = 0$ (since $A_{II}$
 is positive definite by invertibility), i.e.\ $\psi$ is the harmonic
@@ -599,7 +604,8 @@ Definition~\ref{def:abstract-model}) is open and named in
 
 \section{Strict operator-level refinement-compatibility fails}\label{sec:strict-fails}
 
-Theorem~\ref{thm:schur} closes the energy-level refinement question.
+Theorem~\ref{thm:schur} closes the energy-level refinement question
+in the abstract model.
 The strict operator-level identity
 $p^{0}_{n+1, n} \widetilde A_{n+1} = \widetilde A_n p^{0}_{n+1, n}$
 remains false, with explicit defect.
@@ -628,8 +634,8 @@ satisfies the following:
   where $\mathcal{B}_n \in \{0, 1\}^{V_n \times E_n}$ is the unsigned
   vertex--edge incidence matrix of $G_n$ (the calligraphic
   $\mathcal{B}_n$ disambiguates from the coboundary block $B_n$ of
-  \cite{CascadeClosureDynamics}~Definition lines~366--376, which is a
-  different operator). Consequently
+  \cite{CascadeClosureDynamics}~Definition~\texttt{def:Bn}, which is
+  a different operator). Consequently
   \begin{equation}\label{eq:kerDn}
      \ker D_n
      \;=\; \mathrm{range}(H_{n+1}) + \bigl\{\psi : \delta(\psi) \in \ker \mathcal{B}_n,\ \psi_B = 0\bigr\},
@@ -892,7 +898,7 @@ $\tfrac12 \phi(u) - \phi(m) + \tfrac12 \phi(v) =
 \tfrac12 (\phi(u) + \phi(v)) - \phi(m)$, the ``midpoint deficit''
 of $\phi$ at $m$. Tower~I has a single edge with no cycles, so
 the unsigned vertex--edge incidence matrix
-$B_0 \in \{0, 1\}^{2 \times 1}$ has trivial kernel, and the
+$\mathcal{B}_0 \in \{0, 1\}^{2 \times 1}$ has trivial kernel, and the
 incidence characterisation in
 Proposition~\ref{prop:strict-fails}(ii) collapses to: $D_0 \phi = 0$
 iff the midpoint deficit at $m$ is zero, iff
@@ -998,7 +1004,7 @@ is already a theorem of \cite{CascadeRefinementSpaces}).}\label{tab:status-updat
 & \textbf{Trivial fixed point closed} (zero state is always residual-zero, and $e^{-t \widetilde A_N}$ converges to the orthogonal projection onto $\ker \widetilde A_N$ on every component). \textbf{Nontrivial selection of an element of $\ker \widetilde A_N \ne \{0\}$ remains out of scope} per \cite{CascadeMechanism}~\S3.4 (it is the successor paper's task).
 & Proposition~\ref{prop:O1-status}. \\
 (O2) Flow intertwining
-& \textbf{(O2) as stated remains false.} Strict operator-level identity $p^{0} \widetilde A_{n+1} = \widetilde A_n p^{0}$ fails (Proposition~\ref{prop:strict-fails}), so the flow-level identity $p^{0} \circ e^{-t \widetilde A_{n+1}} = e^{-t \widetilde A_n} \circ p^{0}$ also fails. The boundary-energy / Schur substitute holds exactly: $\Schur(\widetilde A_{n+1}) = \widetilde A_n$ (Theorem~\ref{thm:schur}); cascade-mechanism users invoking that substitute find it discharged here.
+& \textbf{(O2) as stated remains false.} Strict operator-level identity $p^{0} \widetilde A_{n+1} = \widetilde A_n p^{0}$ fails (Proposition~\ref{prop:strict-fails}), so the flow-level identity $p^{0} \circ e^{-t \widetilde A_{n+1}} = e^{-t \widetilde A_n} \circ p^{0}$ also fails. The boundary-energy / Schur substitute holds exactly: $\Schur(\widetilde A_{n+1}) = \widetilde A_n$ (Theorem~\ref{thm:schur}). This proves the substitute; it does not discharge (O2) as stated.
 & Theorem~\ref{thm:schur}, Proposition~\ref{prop:strict-fails}. \\
 (O3) Residual monotonicity
 & \textbf{Closed.} $\widetilde R_n(p^{0} \psi) \le \widetilde R_{n+1}(\psi)$ for every $\psi \in X_{n+1}^{0}$, with equality iff $\psi$ is the harmonic extension of its boundary.
@@ -1051,7 +1057,8 @@ the boundary-energy version of (O2) will find it discharged here,
 but those requiring strict operator-level intertwining will find
 the defect computed but not zero. The paper also does not lift any
 of these results to the full Schl\"{a}fli P3/P4 tower of
-\cite{CascadeClosureDynamics}: that lift is named in
+\cite{CascadeRefinementSpaces, CascadeClosureDynamics}: that lift
+is named in
 \S\ref{sec:scope-and-gap} as hypotheses
 \textup{(L1)}--\textup{(L3)} and is not attempted here. The paper
 does not derive a selection rule for nontrivial elements of
@@ -1072,8 +1079,7 @@ theorem of P3, see~\S\ref{sec:scope-and-gap}), and the
 boundary-energy / Schur substitute for (O2) discharged in the same
 scope. The
 cascade-mechanism consumer API itself
-(\cite{CascadeMechanism}~\S3.4 (O0)--(O3)) does not change. The
-reproduction bundle of \cite{CascadeMechanism} is unaffected.
+(\cite{CascadeMechanism}~\S3.4 (O0)--(O3)) does not change.
 
 \paragraph*{Open follow-ups.}
 Proposition~\ref{prop:strict-fails}(ii) characterises $\ker D_n$ via
