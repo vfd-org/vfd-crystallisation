@@ -214,8 +214,12 @@ $1$-cochain conventions \cite{Hatcher}; elementary $\ell^2$ theory.
 \end{description}
 
 We do not cite as theorem-grade input any other cascade-internal
-note. The bibliography below contains only the sources actually
-used in proofs.
+note. The bibliography below distinguishes load-bearing
+upstream sources (P1, P2) used as theorem-grade input from
+downstream cascade preprints
+(\cite{CascadeClosureDynamics, CascadeRefinementCompat,
+CascadeMechanism}) that consume the present paper's results, and
+classical references used as background or auxiliary input.
 
 \subsection{Organization}
 
@@ -247,7 +251,7 @@ set of the regular $600$-cell, in the coordinate realization of
 \cite[\S 5]{AlgebraicSubstrate}. Let $V_{24} \subset V_{600}$ be
 the $24$-vertex subset (axis points and half-type points) congruent
 to the rescaled $D_4$ root polytope by
-\cite[Prop.~5.3]{AlgebraicSubstrate}.
+\cite[Theorem~\texttt{thm:shell-class}]{AlgebraicSubstrate}.
 
 The \emph{base $H_4$ graph} $G_0^{H_4} = (V_0^{H_4}, E_0^{H_4})$
 has vertex set $V_0^{H_4} := V_{600}$ and unoriented edges joining
@@ -315,49 +319,49 @@ explicit components:
     $f \in F_n^\bullet$ with edge sequence
     $(e_1, \ldots, e_k) = \partial_n^\bullet(f)$, the $k$ edges
     $\{m_{e_i}, c_f\}$ for $i = 1, \ldots, k$.
-  \item \emph{Centroid-midpoint reconnection edges:} the empty
-    set in this paper. (Some Schl\"{a}fli-style refinement schemes
-    in the literature add edges between centroids of adjacent
-    faces; we do not include those, and downstream uses of this
-    paper do not require them.)
+  \item \emph{Midpoint-midpoint diagonal edges:} for each face
+    $f \in F_n^\bullet$ with edge sequence $(e_1, \ldots, e_k)$,
+    the $k$ edges $\{m_{e_i}, m_{e_{i+1}}\}$ (cyclic indices),
+    closing each level-$(n+1)$ triangle face below.
   \end{enumerate}
-\item \textbf{Faces.} $F_{n+1}^\bullet$ is determined by the new
-  edge set: each level-$n$ face $f$ with edge sequence
-  $(e_1, \ldots, e_k)$ produces $k$ level-$(n+1)$ triangle faces
+\item \textbf{Faces.} $F_{n+1}^\bullet$ is the disjoint union of
+  level-$(n+1)$ triangles: each level-$n$ face $f$ with edge
+  sequence $(e_1, \ldots, e_k)$ produces $k$ triangles
   $(m_{e_i}, c_f, m_{e_{i+1}})$ (cyclic indices), each with edge
   sequence
-  $(\{m_{e_i}, c_f\}, \{c_f, m_{e_{i+1}}\}, \{m_{e_{i+1}}, m_{e_i}\})$.
-  Note: the third edge of each triangle, $\{m_{e_{i+1}}, m_{e_i}\}$,
-  is \emph{not} an element of $E_{n+1}^\bullet$ as constructed
-  above; we record this as a defect that the present paper does
-  not need (the load-bearing downstream uses of $G_{n+1}^\bullet$
-  in this paper, and in
-  \cite{CascadeClosureDynamics, CascadeRefinementCompat}, depend
-  only on the vertex inclusion and the edge classes (a)+(b), not
-  on the level-$(n+1)$ face structure).
-\item \textbf{Boundary map.} $\partial_{n+1}^\bullet$ is induced
-  on the level-$(n+1)$ triangles by the explicit construction
-  above.
+  $(\{m_{e_i}, c_f\}, \{c_f, m_{e_{i+1}}\}, \{m_{e_{i+1}}, m_{e_i}\})$
+  drawn from edge classes (b), (b), (c) respectively. All three
+  boundary edges lie in $E_{n+1}^\bullet$ by construction, so
+  $\partial_{n+1}^\bullet$ is well-defined and the iterated
+  refinement datum is well-formed.
 \item \textbf{$W^\bullet$-action.} $W^\bullet$ acts on
   $V_{n+1}^\bullet$ by $g \cdot v = gv$ for $v \in V_n^\bullet$,
   $g \cdot m_e = m_{ge}$ for $m_e \in M_n^\bullet$ (well-defined
   since $g\{u, v\} = \{gu, gv\}$), and $g \cdot c_f = c_{gf}$
   for $c_f \in C_n^\bullet$ (well-defined since $W^\bullet$ acts
   on $F_n^\bullet$). The induced action on $E_{n+1}^\bullet$
-  permutes each of the edge classes (a)+(b) among themselves.
+  permutes each of the three edge classes (a), (b), (c) among
+  themselves and on $F_{n+1}^\bullet$ permutes triangles among
+  themselves.
 \end{itemize}
 \end{definition}
 
 \begin{remark}[Scope of the construction]
 \label{rmk:refinement-scope}
-This paper uses Definition~\ref{def:refinement} only to construct
-the chain spaces $X_n^{0, \bullet}$, $X_n^{1, \bullet}$, the
-bonding maps, and the intertwining identities below.
-The level-$(n+1)$ face structure (and the missing
-midpoint-midpoint edges) play no role in those constructions.
-Downstream papers needing a fuller cell-complex structure on
-$\mathcal{R}_n^\bullet$ may extend Definition~\ref{def:refinement}
-explicitly; we do not.
+The bonding maps, chain-space, and intertwining constructions
+below depend only on the level-$(n+1)$ vertex and edge data, and in
+particular only on edge classes (a) and (b) (the subdividing and
+midpoint-centroid edges, since the edge sector
+$X_n^{1, \bullet}$ averaging is restricted to subdividing edges
+via Definition~\ref{def:edge-parent}). Edge class (c)
+(midpoint-midpoint diagonals) and the level-$(n+1)$ face
+structure $F_{n+1}^\bullet$ are present in the refinement datum
+to keep iteration well-formed but are not load-bearing for the
+intertwining theorem (Theorem~\ref{thm:commute}). Downstream
+papers \cite{CascadeClosureDynamics, CascadeRefinementCompat}
+either inherit the full datum or use a deliberately reduced
+``pure-midpoint'' abstract model that omits the face structure;
+\cite{CascadeRefinementCompat}~\S1.5 names the gap explicitly.
 \end{remark}
 
 \begin{remark}[Vertex inclusion is the key]
@@ -1115,11 +1119,11 @@ By inspection of the explicit fibre constructions in
 the standard $\Q$-form $V_{D_4, \Q} := \Q^4$; $V_{16} =
 \Cl(1, 3)$ has the $\Q$-form $V_{16, \Q} := \Q\{\gamma_A\}$
 (rational span of the Clifford monomial basis,
-\cite[Def.~6.2]{AlgebraicSubstrate}, which is a $\Q$-basis of a
+\cite[Definition~\texttt{def:Cl-1-3-basis}]{AlgebraicSubstrate}, which is a $\Q$-basis of a
 $\Q$-form whose $\R$-extension equals $\Cl(1, 3)$); $V_{8} = \OO$
 has the $\Q$-form $V_{8, \Q} := \Q\{1, e_1, \ldots, e_7\}$
 (rational span of the standard octonion basis,
-\cite[Def.~7.1]{AlgebraicSubstrate}). For $V_{H_4} = \R^4$ the
+\cite[Definition~\texttt{def:octonion-basis}]{AlgebraicSubstrate}). For $V_{H_4} = \R^4$ the
 natural rational structure is the $\Q(\varphi)$-form
 $V_{H_4, \Q(\varphi)} := \Q(\varphi)^4 \subset \R^4$ via the
 standard real embedding $\iota \colon \Q(\varphi) \hookrightarrow \R$
@@ -1224,9 +1228,16 @@ For every $n \geq 0$ and $\bullet \in \{H_4, D_4\}$:
   restriction of the bonding map (well-defined because vertex
   restriction preserves the sectorwise rationality)
   and $\sigma_n, \sigma_{n+1}$ are the involutions of
-  Definition~\ref{def:sigma}. Analogously
-  $\sigma_n \circ j_{n, n+1}^0|_{\Q(\varphi)/\Q} =
-  j_{n, n+1}^0|_{\Q(\varphi)/\Q} \circ \sigma_{n+1}$.
+  Definition~\ref{def:sigma}. Analogously, with $j_{n, n+1}^0$
+  the (zero-extension) adjoint of $p_{n+1, n}^0$ from
+  Proposition~\ref{prop:adjoints},
+  \[
+    \sigma_{n+1} \circ j_{n, n+1}^0|_{\Q(\varphi)/\Q}
+    = j_{n, n+1}^0|_{\Q(\varphi)/\Q} \circ \sigma_n
+  \]
+  on $X_n^{0, \bullet}|_{\Q(\varphi)/\Q}$ (the $\sigma$ indices swap
+  relative to the $p^0$ identity since $j$ goes upward
+  $n \to n+1$ while $p$ goes downward).
 \item (Sectorwise Coxeter-$\sigma$, vertex sector.) On the $D_4$
   branch ($\bullet = D_4$, $W^\bullet = W(D_4)$), the action of
   Definition~\ref{def:coxeter} acts on $V_{D_4}$ and trivially on
@@ -1237,9 +1248,13 @@ For every $n \geq 0$ and $\bullet \in \{H_4, D_4\}$:
   $X_n^{0, D_4}|_{\Q(\varphi)}$. On the $H_4$ branch, the analogous
   automatic-commutation statement holds only on the
   $\sigma$-trivial summands $V_{D_4, \Q}, V_{16, \Q}, V_{8, \Q}$
-  (on which $W(H_4)$ acts trivially by Definition~\ref{def:coxeter});
-  the full statement on the $V_{H_4}$ summand fails
-  (Remark~\ref{rmk:coxeter-sigma-restricted}).
+  (on which $W(H_4)$ acts trivially by Definition~\ref{def:coxeter}).
+  The full statement on the $V_{H_4}$ summand is \emph{not} an
+  instance of \cite[Theorem~\texttt{thm:sigma-commutes}]{SigmaRationality}
+  (the source theorem requires endomorphisms defined over the
+  $\sigma$-fixed $\Q$-form, which $W(H_4)$ reflections with
+  $\Q(\varphi)$-rational coefficients are not), and is not claimed
+  here; see Remark~\ref{rmk:coxeter-sigma-restricted}.
 \end{enumerate}
 The Coxeter intertwinings of (1)--(2) descend to the vertex
 cylindrical and inverse-limit spaces $X_\cyl^{0, \bullet}$,
@@ -1255,25 +1270,29 @@ through the standard real embedding $\iota$.
 
 \begin{remark}[Why Coxeter-$\sigma$ commutation is restricted]
 \label{rmk:coxeter-sigma-restricted}
-\cite[Thm.~4.5]{SigmaRationality} requires a $\Q$-linear
-endomorphism $T$ of the $\Q$-vector space $V$ \emph{defined over the
-$\sigma$-fixed $\Q$-form}: concretely, $T$ must restrict to
-$V \otimes 1 \subset V \otimes_\Q \Q(\varphi)$. On the
-$V_{H_4, \Q}$ component, the $W(H_4)$ action is given by reflection
-matrices whose coefficients lie in $\Q(\varphi)$ (not in $\Q$),
-because the icosian roots have $\Q(\varphi)$-rational coordinates
-\cite[\S 3]{AlgebraicSubstrate}. Such a reflection is $\Q(\varphi)$-linear
-(hence a fortiori $\Q$-linear on the underlying $\Q$-vector space
-$V_{H_4, \Q(\varphi)}$), but it does \emph{not} restrict to a
-$\Q$-linear endomorphism of the $\sigma$-fixed subspace
-$V_{H_4, \Q} \otimes 1$: a non-trivial $\Q(\varphi)$-coefficient
-reflection of a $\Q$-vector carries it out of $V_{H_4, \Q} \otimes 1$
-into the general $V_{H_4, \Q(\varphi)}$ space. The hypothesis of
-\cite[Thm.~4.5]{SigmaRationality} is therefore not satisfied in
-the form required for automatic $\sigma$-commutation, and in
-general $g \circ \sigma$ and $\sigma \circ g$ \emph{do not} commute
-on the $V_{H_4}$ sector for $g \in W(H_4)$ acting non-trivially on
-$V_{H_4}$.
+\cite[Theorem~\texttt{thm:sigma-commutes}]{SigmaRationality}
+requires a $\Q$-linear endomorphism $T$ of the $\Q$-vector space
+$V$ \emph{defined over the $\sigma$-fixed $\Q$-form}: concretely,
+$T$ must restrict to $V \otimes 1 \subset V \otimes_\Q \Q(\varphi)$.
+On the $V_{H_4, \Q(\varphi)}$ component, the $W(H_4)$ action is
+given by reflection matrices whose coefficients lie in
+$\Q(\varphi)$ (not in $\Q$), because the icosian roots have
+$\Q(\varphi)$-rational coordinates
+\cite{AlgebraicSubstrate}. Such a reflection is
+$\Q(\varphi)$-linear (hence a fortiori $\Q$-linear on the
+underlying $\Q$-vector space $V_{H_4, \Q(\varphi)}$), but it does
+\emph{not} restrict to a $\Q$-linear endomorphism of any $\Q$-form
+$V_{H_4, \Q} \subset V_{H_4, \Q(\varphi)}$ (e.g.\ $\Q^4$ via the
+standard basis): a non-trivial $\Q(\varphi)$-coefficient reflection
+of a $\Q^4$-vector carries it out of $\Q^4$ into the general
+$\Q(\varphi)^4$ space. The hypothesis of
+\cite[Theorem~\texttt{thm:sigma-commutes}]{SigmaRationality} is
+therefore not satisfied in the form required for automatic
+$\sigma$-commutation, so the source theorem does not deliver
+$g \circ \sigma_n = \sigma_n \circ g$ on the $V_{H_4}$ sector. We
+do not assert in this paper that the equality fails; we assert
+only that it is not delivered automatically by the source theorem
+and is not claimed here.
 
 The sectorwise statement (4) records the cases where commutation
 \emph{does} hold automatically under the branchwise action of
@@ -1336,7 +1355,7 @@ of the unrestricted spaces are
 $|V(\cdot)| \cdot 32$, but the $\Q$-form has $\Q$-dimension $36$
 because of the $\Q(\varphi)$-coefficient pair on the $V_{H_4}$
 sector). By the general
-functoriality theorem \cite[Thm.~4.5]{SigmaRationality}, the scalar
+functoriality theorem \cite[Theorem~\texttt{thm:sigma-commutes}]{SigmaRationality}, the scalar
 extension $p_{n+1, n}^0|_\Q \otimes \id_{\Q(\varphi)}$ commutes
 with the coefficientwise $\sigma$-actions on both sides.
 The same argument applies to $j_{n, n+1}^0|_\Q$.
@@ -1412,7 +1431,7 @@ Remark~\ref{rmk:coxeter-sigma-restricted} (full $W(H_4)$-$\sigma$
 commutation on the $V_{H_4}$ sector fails as a structural matter,
 because a non-trivial $W(H_4)$ reflection does not preserve the
 $\sigma$-fixed $\Q$-form $V_{H_4, \Q} \otimes 1$, so the hypothesis
-of \cite[Thm.~4.5]{SigmaRationality} is not satisfied on that
+of \cite[Theorem~\texttt{thm:sigma-commutes}]{SigmaRationality} is not satisfied on that
 summand).''
 
 \subsection{What this paper does not provide}
@@ -1463,30 +1482,58 @@ $W^\bullet$ & Coxeter group ($W(H_4)$ or $W(D_4)$) & Def.~\ref{def:base-graphs} 
 \emph{Cascade--Classical Correspondence I: Sigma-Fixed Rationality
 over $\Q(\varphi)$},
 \texttt{papers/cascade-sigma-rationality/cascade-sigma-rationality.tex}.
-(Paper P1.) Pinned results used in this paper:
-Definition~2.5 (coefficientwise $\sigma_V$ on $V \otimes_\Q
-\Q(\varphi)$); Definition~4.1 (the projector $\Pi_\sigma$);
-Lemma~2.6 ($\sigma$ commutes with $\Q$-linear endomorphisms after
-scalar extension); Theorem~4.5 (functoriality of the scalar
-extension of any $\Q$-linear map between finite-dimensional
-$\Q$-vector spaces).
+(Paper P1.) Pinned results used in this paper, cited by label:
+Definition~\texttt{def:sigma} (the Galois involution
+$\sigma \colon \Q(\varphi) \to \Q(\varphi)$); coefficientwise
+$\sigma_V$ on $V \otimes_\Q \Q(\varphi)$ as defined in
+\S\texttt{sec:coefficientwise}; functoriality of the scalar
+extension and Theorem~\texttt{thm:sigma-commutes} ($\sigma$ commutes
+with $\Q$-linear endomorphisms defined over the $\sigma$-fixed
+$\Q$-form, after scalar extension).
 
 \bibitem{AlgebraicSubstrate}
 \emph{Cascade--Classical Correspondence II: The Cascade Algebraic
 Substrate},
 \texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}.
-(Paper P2.) Pinned results used in this paper:
-\S 3 (icosian model of $V_{H_4}$, $\Q(\varphi)$-rationality of the
-$W(H_4)$ matrix entries); \S 5 (the $V_{600}$ and $V_{24}$ vertex
-sets, including their explicit coordinates); Proposition~5.3
-($V_{24} \subset V_{600}$ as the rescaled $D_4$ root polytope);
-Definition~6.2 (the $\Cl(1, 3)$ monomial basis $\{\gamma_A\}$);
-Definition~7.1 (the standard octonion basis); \S\S 6, 7 (sector
-fibre conventions for $V_{16}$ and $V_8$).
+(Paper P2.) Pinned results used in this paper, cited by label:
+\texttt{thm:icosian-closure} (icosian model of $V_{H_4}$, with
+$\Z[\varphi]$-rational coordinates and $\Q(\varphi)$-rational
+matrix-entry inference for the standard $W(H_4)$ reflection
+generators); \texttt{thm:pi-H} ($V_{600}$ vertex set and explicit
+coordinates); \texttt{thm:shell-class} ($V_{24} \subset V_{600}$
+shell decomposition); \texttt{def:Cl-1-3-basis} (the $\Cl(1, 3)$
+monomial basis $\{\gamma_A\}$); \texttt{def:octonion-basis}
+(standard octonion basis); sector fibre conventions for $V_{16}$
+and $V_8$.
 
 \bibitem{RefinementSpaces}
 (This paper.) \emph{Cascade--Classical Correspondence III:
 Refinement Spaces and Symmetry Actions}.
+
+\bibitem{CascadeClosureDynamics}
+\emph{Cascade Closure Dynamics: Finite Closure Functionals,
+Gradient Flow, and Refinement Compatibility}, paper P4.
+\texttt{papers/cascade-closure-dynamics/cascade-closure-dynamics.tex}.
+The downstream paper that puts dynamics on the chain spaces
+constructed here.
+
+\bibitem{CascadeRefinementCompat}
+\emph{The Cascade Curvature Operator under Refinement:
+Schur--Complement Identity and Energy Intertwining}.
+\texttt{papers/cascade-refinement-compat/cascade-refinement-compat.tex}.
+Discharges the residual-monotonicity obligation~(O3) of
+\cite{CascadeMechanism} for the scaled vertex Laplacian in an
+abstract scalar pure-midpoint refinement model;
+\S1.5 of that paper names the open lift hypotheses (L1) and (L3)
+needed to extend its results to the full refinement datum
+constructed here.
+
+\bibitem{CascadeMechanism}
+\emph{Cascade Closure: A Conditional Compatibility Template for
+Geometric State Selection}, paper P-mech.
+\texttt{papers/cascade-mechanism/cascade-mechanism.tex}.
+Defines the consumer API (O0)--(O3) that
+\cite{CascadeRefinementCompat} discharges in the abstract model.
 
 \bibitem{ReedSimonI}
 M.~Reed and B.~Simon, \emph{Methods of Modern Mathematical
