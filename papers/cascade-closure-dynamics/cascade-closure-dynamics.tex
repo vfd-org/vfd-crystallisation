@@ -89,7 +89,7 @@ regime must supply their own analysis.
 
 The false global theorem ``all correspondences are Borel /
 equivariant'' from an earlier foundations draft is replaced by an
-explicit explicit generator-family list of \emph{admissible finite-level
+explicit generator-family list of \emph{admissible finite-level
 intertwiners} (Definition~\ref{def:admissible}), with printed
 operator-norm bounds and continuity/Borel measurability following
 directly from finite-dimensional functional calculus
@@ -196,7 +196,7 @@ explicitly:
   Hecke, cohomology, or CTM/TM correspondence theorem.
 \item No universal ``all correspondences are Borel and
   equivariant'' global theorem. Instead
-  Section~\ref{sec:intertwiners} gives a explicit generator-family list
+  Section~\ref{sec:intertwiners} gives an explicit generator-family list
   with explicit bounds for the operators later papers actually
   invoke.
 \item No claim that $F_n$ has a unique minimiser or that the flow
@@ -254,7 +254,7 @@ and a mass-only refinement intertwining for $L_n$ in the
 specialization $\alpha = \beta = 0$, and records the obstruction
 to claiming more in the general $\alpha, \beta, \gamma > 0$
 regime. Section~\ref{sec:intertwiners} replaces the false
-global Borel/equivariance theorem by explicit finite-generator
+global Borel/equivariance theorem by explicit generator-family
 bounds. Section~\ref{sec:handoff} states the citation contract for
 downstream papers. Appendix~\ref{app:notation} is a notation
 concordance.
@@ -273,7 +273,8 @@ For $n \geq 0$ and $\bullet \in \{H_4, D_4\}$, let
   X_n := X_n^{0, \bullet} \oplus X_n^{1, \bullet}
 \]
 denote the direct sum of the vertex-sector and edge-sector
-$\ell^2$-spaces from \cite[Defs.~4.2, 4.3]{RefinementSpaces}, with
+$\ell^2$-spaces from
+\cite[Definitions~\texttt{def:Xn-0} and~\texttt{def:Xn-1}]{RefinementSpaces}, with
 the direct-sum inner product
 $\langle (f, A), (g, B) \rangle_{X_n} := \langle f, g
 \rangle_{X_n^0} + \langle A, B \rangle_{X_n^1}$.
@@ -305,17 +306,20 @@ Direct from \cite[Proposition~\texttt{prop:Xn-Hilbert}]{RefinementSpaces}.
 The \emph{discrete coboundary}
 $d_n \colon X_n^{0, \bullet} \to X_n^{1, \bullet}$ is defined by
 \[
-  (d_n f)(e) := f(\text{head}(e)) - f(\text{tail}(e))
+  (d_n f)(e) := \pi_{F^0 \to F^1}\bigl(
+    f(\text{head}(e)) - f(\text{tail}(e))\bigr)
 \]
 for $e \in E^{\rm or}(G_n^\bullet)$ a level-$n$ oriented edge,
 where $\text{head}(e), \text{tail}(e) \in V(G_n^\bullet)$ are its
-endpoints (with orientation). Here $f(\text{head}(e)) -
+endpoints (with orientation), $f(\text{head}(e)) -
 f(\text{tail}(e))$ is computed in the fibre $F^0$ of
-\cite[Notation~3.3]{RefinementSpaces}, and the difference is then
-projected to $F^1 = \Im(\OO)$ via the canonical quotient $F^0
-\to F^0 / (\text{non-}\Im(\OO) \text{ components}) \to \Im(\OO)$
-(i.e., taking the $V_8 = \OO$ component, then projecting to its
-imaginary part).
+\cite[Notation~\texttt{not:fibres}]{RefinementSpaces}, and
+$\pi_{F^0 \to F^1} \colon F^0 \to F^1 = \Im(\OO)$ is the
+canonical orthogonal projection: $F^0 \to V_8 = \OO$ (component
+projection in the orthogonal direct sum
+$F^0 = V_{H_4} \oplus V_{D_4} \oplus V_{16} \oplus V_8$),
+followed by $\OO \to \Im(\OO)$ (projection onto the imaginary
+part).
 
 $d_n$ satisfies the antisymmetry convention on oriented edges:
 $(d_n f)(-e) = f(\text{head}(-e)) - f(\text{tail}(-e)) =
@@ -329,15 +333,21 @@ convention of \cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces}).
 The \emph{adjoint coboundary} $d_n^* \colon X_n^{1, \bullet} \to
 X_n^{0, \bullet}$ is the $\ell^2$-adjoint of $d_n$ with respect
 to the inner products of $X_n^{0, \bullet}$ and $X_n^{1, \bullet}$:
-for $A \in X_n^{1, \bullet}$ and $v \in V(G_n^\bullet)$,
+for $A \in X_n^{1, \bullet}$ and $v \in V(G_n^\bullet)$, write
+$\iota_{F^1 \to F^0} \colon F^1 = \Im(\OO) \hookrightarrow F^0$
+for the canonical inclusion of the imaginary octonion summand
+into the $V_8$ summand of $F^0$. Then
 \[
-  (d_n^* A)(v) = \tfrac{1}{2} \sum_{e : v = \text{head}(e)}
-    A(e) - \tfrac{1}{2} \sum_{e : v = \text{tail}(e)} A(e),
+  (d_n^* A)(v) = \iota_{F^1 \to F^0}\Bigl(
+    \tfrac{1}{2} \sum_{e : v = \text{head}(e)}
+      A(e) - \tfrac{1}{2} \sum_{e : v = \text{tail}(e)} A(e)\Bigr),
 \]
 where each sum runs over oriented edges with $v$ as head or tail
 respectively. The factor $\tfrac{1}{2}$ compensates for the
 $\tfrac{1}{2}$ in the $X_n^1$ inner product convention
-\cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces}.
+\cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces}; the
+$\iota_{F^1 \to F^0}$ inclusion makes $(d_n^* A)(v) \in F^0$ as
+required by the codomain $X_n^{0, \bullet}$.
 \end{definition}
 
 \begin{lemma}[Coboundary-adjoint is the inner-product adjoint]
@@ -365,10 +375,14 @@ The \emph{graph Laplacian block} $A_n \colon X_n \to X_n$ is
   A_n := \begin{pmatrix} d_n^* d_n & 0 \\ 0 & d_n d_n^* \end{pmatrix},
 \]
 acting on $X_n = X_n^{0, \bullet} \oplus X_n^{1, \bullet}$. The
-top-left block $d_n^* d_n$ is the classical combinatorial graph
-Laplacian on $X_n^0$ (positive semi-definite by construction); the
-bottom-right block $d_n d_n^*$ is the edge-Laplacian on $X_n^1$
-(also positive semi-definite).
+top-left block $d_n^* d_n$ is the projected graph-Laplacian
+block on $X_n^0$ induced by the $\Im(\OO)$ projection in
+Definition~\ref{def:coboundary} (positive semi-definite by
+construction; it acts as the classical combinatorial graph
+Laplacian on the $V_8$-imaginary component of each fibre and
+trivially on $V_{H_4}, V_{D_4}, V_{16}$ and the real octonion
+direction). The bottom-right block $d_n d_n^*$ is the
+edge-Laplacian on $X_n^1$ (also positive semi-definite).
 \end{definition}
 
 \begin{definition}[Coboundary block $B_n$]
@@ -622,11 +636,12 @@ $e^{A} e^{B} = e^{A+B}$ for commuting $A, B$, taking $A = -t L_n$
 and $B = -s L_n$ gives $e^{-(t+s) L_n}$.
 \end{proof}
 
-\begin{corollary}[Flow is reversible]
+\begin{corollary}[The matrix exponential $e^{-tL_n}$ is invertible
+on $X_n$ for every $t \in \R$]
 \label{cor:flow-reversible}
-The flow $e^{-t L_n}$ extends to all $t \in \R$, forming a
-one-parameter group of bounded operators. In particular, the flow
-is invertible on $X_n$.
+The map $t \mapsto e^{-t L_n}$ extends to all $t \in \R$ as a
+one-parameter group of bounded operators on $X_n$. In particular,
+$e^{-t L_n}$ is invertible on $X_n$ for every $t \in \R$.
 \end{corollary}
 
 \begin{proof}
@@ -902,10 +917,7 @@ componentwise way: $p_{n+1, n}(f, A) := (p_{n+1, n}^0 f, p_{n+1, n}
 
 \subsection{Refinement compatibility of the constituent operators}
 
-We now need explicit verification that the constituent operators
-$A_n, B_n, C_n$ form refinement-compatible families. This is a
-level-by-level claim about the specific coboundary, Laplacian, and
-projection operators of \S\ref{sec:operators}.
+We verify the coboundary factor relation (Proposition~\ref{prop:coboundary-refinement}, $\tfrac{1}{2}$ factor) and exact mass-block compatibility (Proposition~\ref{prop:adjoint-refinement}); we do \emph{not} prove refinement-compatibility of the full Laplacian block $A_n$ or coboundary block $B_n$ in the $\alpha,\beta>0$ regime, and indeed no such identities are claimed in this paper (see Remark~\ref{rmk:refinement-compat-scope}).
 
 \begin{proposition}[Coboundary refinement-compatibility, with factor $\tfrac{1}{2}$]
 \label{prop:coboundary-refinement}
@@ -932,9 +944,9 @@ For $f \in X_{n+1}^0$ and $e \in E^{\rm or}(G_n^\bullet)$:
 (using $V(G_n^\bullet) \subset V(G_{n+1}^\bullet)$ and
 $p^0$ = restriction from \cite[Definition~\texttt{def:p0}]{RefinementSpaces}).
 
-On the other side, the level-$(n+1)$ edge $e$ subdivides as $e_1,
-e_2$ with $\text{head}(e_1) = \text{tail}(e_2) = m$ (the midpoint
-of $e$), so
+On the other side, the level-$n$ edge $e$ subdivides at level
+$n+1$ into $e_1, e_2$ with $\text{head}(e_1) = \text{tail}(e_2)
+= m$ (the midpoint of $e$), so
 \begin{align*}
   (d_{n+1} f)(e_1) &= f(m) - f(\text{tail}(e)), \\
   (d_{n+1} f)(e_2) &= f(\text{head}(e)) - f(m).
@@ -1183,8 +1195,12 @@ $j_{n, n+1}^0$ (vertex embedding) & $\|j^0\|_{\op} = 1$ &
   \cite[Proposition~\texttt{prop:adjoints}]{RefinementSpaces} (adjoint of restriction,
   isometric on image) \\
 $j_{n, n+1}^1$ (edge embedding) & $\|j^1\|_{\op} = 2^{-1/2}$ &
-  \cite[Proposition~\texttt{prop:adjoints}]{RefinementSpaces} (rescaled replication:
-  $\|j^1 B\|^2 = \tfrac{1}{2}\|B\|^2$) \\
+  computation from
+  \cite[Proposition~\texttt{prop:adjoints}]{RefinementSpaces}: the
+  half-section identity $p^1 j^1 = \tfrac{1}{2} \id$ together with
+  unitarity of the inner-product adjoint gives
+  $\|j^1 B\|^2 = \langle j^1 B, j^1 B \rangle =
+  \langle B, p^1 j^1 B \rangle = \tfrac{1}{2}\|B\|^2$ \\
 $j_{n, n+1}$ (direct-sum embedding $X_n \to X_{n+1}$) & $\|j\|_{\op}
   = 1$ & direct-sum norm: $\max(\|j^0\|, \|j^1\|) = 1$ \\
 $\mathbf{P}_{V_\bullet}$ (sector projections) & $\|\mathbf{P}\|_{\op}
@@ -1201,8 +1217,9 @@ $B_n$ (coboundary block) & $\|B_n\|_{\op} \leq 2\sqrt{\deg(G_n
   ^\bullet)}$ & Prop.~\ref{prop:block-bounds}(3) \\
 $C_n$ (mass block) & $0 \leq C_n \leq \id$, so $\|C_n\|_{\op} \leq 1$
   & Prop.~\ref{prop:block-bounds}(4) \\
-$L_n$ (gradient operator) & $\|L_n\|_{\op} \leq 4\alpha\deg +
-  2\beta\sqrt{\deg} + \gamma$ & Thm.~\ref{thm:gradient-operator}(3) \\
+$L_n$ (gradient operator) & $\|L_n\|_{\op} \leq
+  4\alpha\,\deg(G_n^\bullet) + 2\beta\sqrt{\deg(G_n^\bullet)}
+  + \gamma$ & Thm.~\ref{thm:gradient-operator}(3) \\
 $e^{-t L_n}$ (flow, $t \geq 0$) & $\|e^{-t L_n}\|_{\op} \leq
   e^{t \|L_n\|_{\op}}$ & Thm.~\ref{thm:flow-exists} \\
 \hline
@@ -1234,23 +1251,32 @@ sense of Definition~\ref{def:admissible}) is a bounded linear
 operator on the finite-dimensional Hilbert space in its codomain.
 Specifically:
 \begin{enumerate}
-\item (Boundedness with printed bound.) If $T$ is expressed as
-  a composition/sum of generators with the bounds of
-  Proposition~\ref{prop:generator-bounds}, then $\|T\|_{\op}$ is
-  bounded by the corresponding combination of the listed
-  generator bounds (via $\|T_1 \pm T_2\|_{\op} \leq \|T_1\|_{\op} +
-  \|T_2\|_{\op}$ and $\|T_1 T_2\|_{\op} \leq \|T_1\|_{\op} \|T_2\|_{\op}$).
+\item (Boundedness with printed bound.) If $T$ is expressed by
+  the syntax of Definition~\ref{def:admissible} as a finite
+  sum-of-products of generators
+  $T = \sum_i c_i \, T_{i, k_i^1} \circ \cdots \circ T_{i, k_i^{m_i}}$
+  with $c_i \in \R$ and each $T_{i, k_i^j}$ in the generator
+  list of Proposition~\ref{prop:generator-bounds}, then
+  $\|T\|_{\op} \leq \sum_i |c_i| \prod_j \|T_{i, k_i^j}\|_{\op}$,
+  using the triangle inequality on sums
+  ($\|T_1 + T_2\|_{\op} \leq \|T_1\|_{\op} + \|T_2\|_{\op}$),
+  the absolute scalar identity $\|c T\|_{\op} = |c| \|T\|_{\op}$,
+  and sub-multiplicativity on compositions
+  ($\|T_1 T_2\|_{\op} \leq \|T_1\|_{\op} \|T_2\|_{\op}$).
 \item (Continuity.) $T$ is continuous as a linear map between
   finite-dimensional Hilbert spaces (automatic for bounded linear
   maps).
 \item (Borel measurability.) $T$ is Borel-measurable (continuity
   plus finite-dimensionality).
-\item (Symmetry intertwining, conditional.) If every generator
-  $T_k$ appearing in the composition $T = T_{k_1} \circ \cdots
-  \circ T_{k_m}$ satisfies a prescribed intertwining relation
-  $\rho(g) T_k = T_k' \rho(g)$ with a symmetry $g$, then $T$
-  inherits the same relation: $\rho(g) T = (T_{k_1}' \cdots
-  T_{k_m}') \rho(g)$.
+\item (Symmetry intertwining, conditional.) Suppose
+  $T = \sum_i c_i \, T_{i, k_i^1} \circ \cdots \circ
+  T_{i, k_i^{m_i}}$ as in (1), and a fixed symmetry
+  $g \in W^\bullet$ satisfies a prescribed intertwining relation
+  $\rho(g) T_{i, k_i^j} = T_{i, k_i^j}' \rho(g)$ for every
+  generator factor (with the same source-side $\rho(g)$ in every
+  case). Then $\rho(g) T = T' \rho(g)$ where
+  $T' := \sum_i c_i \, T_{i, k_i^1}' \circ \cdots \circ
+  T_{i, k_i^{m_i}}'$, by linearity of $\rho(g)$ on each summand.
 \end{enumerate}
 \end{theorem}
 
@@ -1272,8 +1298,15 @@ topological spaces are Borel measurable
 \cite[Cor.~1.2.12]{Bogachev}. In finite dimension, all reasonable
 measurable structures coincide.
 
-\emph{(4) Symmetry intertwining.} By iterated application of the
-generator intertwinings along the composition sequence.
+\emph{(4) Symmetry intertwining.} For each summand
+$c_i \, T_{i, k_i^1} \circ \cdots \circ T_{i, k_i^{m_i}}$,
+iterating the generator intertwinings along the composition
+gives
+$\rho(g) (c_i \, T_{i, k_i^1} \circ \cdots \circ T_{i, k_i^{m_i}})
+= c_i (T_{i, k_i^1}' \circ \cdots \circ T_{i, k_i^{m_i}}')
+\rho(g)$.
+Summing over $i$ and using $\R$-linearity of $\rho(g)$ yields
+$\rho(g) T = T' \rho(g)$.
 \end{proof}
 
 \begin{remark}[What this replaces]
@@ -1366,7 +1399,7 @@ intertwiner bounds from the explicit generator-family list
 \item No PDE identification of $\dot\Phi_n = -L_n \Phi_n$ with
   any classical evolution equation.
 \item No universal Borel/equivariance principle beyond the
-  explicit explicit generator-family list.
+  explicit generator-family list.
 \end{enumerate}
 
 \appendix
