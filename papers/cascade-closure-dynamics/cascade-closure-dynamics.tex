@@ -80,7 +80,7 @@ only in the mass-only case $\alpha = \beta = 0$
 relation $p^1 d_{n+1} = \tfrac{1}{2} d_n p^0$
 (Proposition~\ref{prop:coboundary-refinement}) and the exact
 mass-block compatibility $p_{n+1, n} C_{n+1} = C_n p_{n+1, n}$
-(Proposition~\ref{prop:adjoint-refinement}). For arbitrary $(\alpha,
+(Proposition~\ref{prop:mass-refinement}). For arbitrary $(\alpha,
 \beta, \gamma)$ this paper makes no claim about refinement-
 intertwining of $L_n$ (neither positive nor negative); see
 Remark~\ref{rmk:refinement-compat-scope}. Downstream papers
@@ -164,7 +164,7 @@ is given an explicit norm bound.
   identities proved are the factor-$\tfrac{1}{2}$ coboundary
   relation (Proposition~\ref{prop:coboundary-refinement}) and the
   exact mass-block compatibility
-  (Proposition~\ref{prop:adjoint-refinement}). For arbitrary
+  (Proposition~\ref{prop:mass-refinement}). For arbitrary
   $(\alpha, \beta, \gamma)$ this paper makes no claim about
   refinement-intertwining of $L_n$; see
   Remark~\ref{rmk:refinement-compat-scope}.
@@ -322,10 +322,13 @@ followed by $\OO \to \Im(\OO)$ (projection onto the imaginary
 part).
 
 $d_n$ satisfies the antisymmetry convention on oriented edges:
-$(d_n f)(-e) = f(\text{head}(-e)) - f(\text{tail}(-e)) =
-f(\text{tail}(e)) - f(\text{head}(e)) = -(d_n f)(e)$, so
-$d_n f \in X_n^{1, \bullet}$ (which incorporates the antisymmetry
-convention of \cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces}).
+$(d_n f)(-e) = \pi_{F^0 \to F^1}\bigl(
+f(\text{head}(-e)) - f(\text{tail}(-e))\bigr) =
+\pi_{F^0 \to F^1}\bigl(f(\text{tail}(e)) - f(\text{head}(e))
+\bigr) = -(d_n f)(e)$, using $\R$-linearity of $\pi_{F^0 \to F^1}$.
+Hence $d_n f \in X_n^{1, \bullet}$ (which incorporates the
+antisymmetry convention of
+\cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces}).
 \end{definition}
 
 \begin{definition}[Adjoint coboundary]
@@ -448,8 +451,12 @@ $\|f(\text{head}(e)) - f(\text{tail}(e))\|^2 \leq 2(\|f(\text{head}(e))
     \|f(\text{tail}(e))\|^2) \leq 2 \deg(G_n^\bullet) \cdot
     \|f\|^2,
 \]
-using that each vertex $v$ appears as head or tail of at most
-$\deg(G_n^\bullet)$ edges. Hence $\|d_n\|_{\op} \leq \sqrt{2
+using that each vertex $v$ appears in at most
+$2\deg(G_n^\bullet)$ oriented-edge incidences (each unoriented
+edge incident to $v$ contributes one head-incidence and one
+tail-incidence at $v$ across its two orientations); the
+displayed factor $2\deg(G_n^\bullet)$ in the second inequality
+absorbs both head and tail sums. Hence $\|d_n\|_{\op} \leq \sqrt{2
 \deg(G_n^\bullet)} \leq 2\sqrt{\deg(G_n^\bullet)}$. The same
 bound for $d_n^* = (d_n)^*$ follows from $\|T^*\|_{\op} = \|T\|_{\op}$
 for bounded operators on Hilbert spaces.
@@ -846,10 +853,12 @@ I - \eta L_n$ is a strict contraction on $Y_n$:
   \|G_{n, \eta}|_{Y_n}\|_{\op} \leq \max(|1 - \eta m_n|, |1 - \eta
     M_n|) < 1.
 \]
-The optimal contraction rate $\|G_{n, \eta}\|_{\op}$ is minimised
-at $\eta^* = 2/(m_n + M_n)$, giving
-$\|G_{n, \eta^*}|_{Y_n}\|_{\op} = (M_n - m_n)/(M_n + m_n) =: \rho_n
-< 1$.
+The displayed worst-case bound is minimised over $\eta$ at
+$\eta^* = 2/(m_n + M_n)$, giving the upper bound
+$\|G_{n, \eta^*}|_{Y_n}\|_{\op} \leq (M_n - m_n)/(M_n + m_n)
+=: \rho_n < 1$. (Equality of $\|G_{n, \eta^*}|_{Y_n}\|_{\op}$
+to $\rho_n$ holds when $m_n = \min \mathrm{spec}(L_n|_{Y_n})$ and
+$M_n = \max \mathrm{spec}(L_n|_{Y_n})$, but not in general.)
 \end{theorem}
 
 \begin{proof}
@@ -865,7 +874,7 @@ sign: $1 - \eta m_n = -(1 - \eta M_n)$, giving $\eta = 2/(m_n +
 M_n)$ and the stated rate.
 \end{proof}
 
-\begin{proposition}[No global contraction without coercivity]
+\begin{proposition}[Negative spectrum obstructs global contraction]
 \label{prop:no-global-contraction}
 If $L_n$ has \emph{any} negative eigenvalue on $X_n$, then
 $G_{n, \eta} = I - \eta L_n$ is \emph{not} a contraction on
@@ -917,7 +926,7 @@ componentwise way: $p_{n+1, n}(f, A) := (p_{n+1, n}^0 f, p_{n+1, n}
 
 \subsection{Refinement compatibility of the constituent operators}
 
-We verify the coboundary factor relation (Proposition~\ref{prop:coboundary-refinement}, $\tfrac{1}{2}$ factor) and exact mass-block compatibility (Proposition~\ref{prop:adjoint-refinement}); we do \emph{not} prove refinement-compatibility of the full Laplacian block $A_n$ or coboundary block $B_n$ in the $\alpha,\beta>0$ regime, and indeed no such identities are claimed in this paper (see Remark~\ref{rmk:refinement-compat-scope}).
+We verify the coboundary factor relation (Proposition~\ref{prop:coboundary-refinement}, $\tfrac{1}{2}$ factor) and exact mass-block compatibility (Proposition~\ref{prop:mass-refinement}); we do \emph{not} prove refinement-compatibility of the full Laplacian block $A_n$ or coboundary block $B_n$ in the $\alpha,\beta>0$ regime, and indeed no such identities are claimed in this paper (see Remark~\ref{rmk:refinement-compat-scope}).
 
 \begin{proposition}[Coboundary refinement-compatibility, with factor $\tfrac{1}{2}$]
 \label{prop:coboundary-refinement}
@@ -934,12 +943,14 @@ edge-parent map of \cite[Definition~\texttt{def:p1} (using the edge-parent map o
 \end{proposition}
 
 \begin{proof}
+Write $\pi := \pi_{F^0 \to F^1}$ for the canonical projection of
+Definition~\ref{def:coboundary}.
 For $f \in X_{n+1}^0$ and $e \in E^{\rm or}(G_n^\bullet)$:
 \[
   (d_n (p_{n+1, n}^0 f))(e)
-  = (p_{n+1, n}^0 f)(\text{head}(e)) - (p_{n+1, n}^0 f)
-    (\text{tail}(e))
-  = f(\text{head}(e)) - f(\text{tail}(e))
+  = \pi\bigl((p_{n+1, n}^0 f)(\text{head}(e)) - (p_{n+1, n}^0 f)
+    (\text{tail}(e))\bigr)
+  = \pi\bigl(f(\text{head}(e)) - f(\text{tail}(e))\bigr)
 \]
 (using $V(G_n^\bullet) \subset V(G_{n+1}^\bullet)$ and
 $p^0$ = restriction from \cite[Definition~\texttt{def:p0}]{RefinementSpaces}).
@@ -948,18 +959,20 @@ On the other side, the level-$n$ edge $e$ subdivides at level
 $n+1$ into $e_1, e_2$ with $\text{head}(e_1) = \text{tail}(e_2)
 = m$ (the midpoint of $e$), so
 \begin{align*}
-  (d_{n+1} f)(e_1) &= f(m) - f(\text{tail}(e)), \\
-  (d_{n+1} f)(e_2) &= f(\text{head}(e)) - f(m).
+  (d_{n+1} f)(e_1) &= \pi\bigl(f(m) - f(\text{tail}(e))\bigr), \\
+  (d_{n+1} f)(e_2) &= \pi\bigl(f(\text{head}(e)) - f(m)\bigr).
 \end{align*}
 The parent-fibre average of $d_{n+1} f$ from
-\cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces} is
+\cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces}, plus
+$\R$-linearity of $\pi$, gives
 \[
   (p_{n+1, n}^1 d_{n+1} f)(e)
   = \tfrac{1}{2}\bigl((d_{n+1} f)(e_1) + (d_{n+1} f)(e_2)\bigr)
-  = \tfrac{1}{2}\bigl(f(\text{head}(e)) - f(\text{tail}(e))\bigr)
+  = \tfrac{1}{2}\, \pi\bigl(f(\text{head}(e)) - f(\text{tail}(e))\bigr)
   = \tfrac{1}{2} (d_n p_{n+1, n}^0 f)(e),
 \]
-which proves the claimed factor-$\tfrac{1}{2}$ identity.
+which proves the claimed factor-$\tfrac{1}{2}$ identity (both
+sides $F^1$-valued).
 \end{proof}
 
 \begin{remark}[The factor-$\tfrac{1}{2}$ is structural]
@@ -978,7 +991,7 @@ operator identities.
 \end{remark}
 
 \begin{proposition}[Mass-block refinement compatibility]
-\label{prop:adjoint-refinement}
+\label{prop:mass-refinement}
 Under the conventions of \S\ref{sec:operators} and
 \cite{RefinementSpaces}, the mass block satisfies
 \[
@@ -1007,7 +1020,7 @@ C_n p_{n+1, n}$ exactly.
 What is actually proved here:
 \begin{itemize}
 \item The mass block $C_n$ is refinement-compatible exactly:
-  $p C_{n+1} = C_n p$ (Proposition~\ref{prop:adjoint-refinement}).
+  $p C_{n+1} = C_n p$ (Proposition~\ref{prop:mass-refinement}).
 \item The coboundary obeys the factor-$\tfrac{1}{2}$ relation
   $p^1 d_{n+1} = \tfrac{1}{2} d_n p^0$
   (Proposition~\ref{prop:coboundary-refinement}).
@@ -1049,7 +1062,7 @@ Remark~\ref{rmk:refinement-compat-scope}.
 
 \begin{proof}
 Under $\alpha = \beta = 0$, $L_n = -\gamma C_n$. By
-Proposition~\ref{prop:adjoint-refinement}, $p_{n+1, n} C_{n+1} =
+Proposition~\ref{prop:mass-refinement}, $p_{n+1, n} C_{n+1} =
 C_n p_{n+1, n}$, hence (multiplying by $-\gamma$) $p_{n+1, n}
 L_{n+1} = L_n p_{n+1, n}$.
 \end{proof}
@@ -1087,7 +1100,7 @@ arbitrary $\alpha, \beta, \gamma$. It establishes:
 \item an explicit factor-$\tfrac{1}{2}$ relation for the
   coboundary (Proposition~\ref{prop:coboundary-refinement});
 \item exact compatibility for the mass block
-  (Proposition~\ref{prop:adjoint-refinement});
+  (Proposition~\ref{prop:mass-refinement});
 \item exact compatibility for $L_n$ and its flow in the mass-only
   degenerate case
   (Theorems~\ref{thm:refinement-compat}, \ref{thm:flow-intertwining}).
@@ -1248,7 +1261,7 @@ $\Im(\OO)$.
 \label{thm:intertwiner-bounds}
 Every admissible finite-level intertwiner $T$ (in the syntactic
 sense of Definition~\ref{def:admissible}) is a bounded linear
-operator on the finite-dimensional Hilbert space in its codomain.
+linear map between its finite-dimensional domain and codomain.
 Specifically:
 \begin{enumerate}
 \item (Boundedness with printed bound.) If $T$ is expressed by
@@ -1354,7 +1367,7 @@ composable from printed ingredients.
   cleanly separated.
 \item Proposition~\ref{prop:coboundary-refinement}: the explicit
   factor-$\tfrac{1}{2}$ coboundary relation $p^1 d_{n+1} =
-  \tfrac{1}{2} d_n p^0$. Proposition~\ref{prop:adjoint-refinement}:
+  \tfrac{1}{2} d_n p^0$. Proposition~\ref{prop:mass-refinement}:
   exact mass-block compatibility $p C_{n+1} = C_n p$.
   Theorems~\ref{thm:refinement-compat} and
   \ref{thm:flow-intertwining}: refinement compatibility of $L_n$
@@ -1382,7 +1395,7 @@ only on coercive invariant subspaces
 factor-$\tfrac{1}{2}$ coboundary refinement relation
 (Proposition~\ref{prop:coboundary-refinement}) and exact
 mass-block refinement compatibility
-(Proposition~\ref{prop:adjoint-refinement}), with full
+(Proposition~\ref{prop:mass-refinement}), with full
 refinement-intertwining $p_{n+1, n} e^{-t L_{n+1}} = e^{-t L_n}
 p_{n+1, n}$ holding in the mass-only case $\alpha = \beta = 0$
 (Theorem~\ref{thm:flow-intertwining}); and explicit bounded
@@ -1394,6 +1407,13 @@ intertwiner bounds from the explicit generator-family list
 \begin{enumerate}
 \item No continuum-limit statement about $(L_n)_n$ as $n \to
   \infty$ or about $(e^{-t L_n})_n$.
+\item No convergence target. The only proved
+  refinement-compatible flow is the mass-only case $L_n =
+  -\gamma C_n$ (with $\alpha = \beta = 0$), whose flow is
+  $e^{\gamma t C_n}$ and is generally norm-expanding rather
+  than contracting; we do not assert any attracting state, fixed
+  point, or continuum target for $\Phi_n(t)$ as $t \to \infty$
+  or as $n \to \infty$.
 \item No target-side metric / hydrodynamic / gauge / spectral /
   Hecke / cohomology / CTM/TM correspondence theorem.
 \item No PDE identification of $\dot\Phi_n = -L_n \Phi_n$ with
