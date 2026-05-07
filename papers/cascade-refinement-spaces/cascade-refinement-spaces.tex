@@ -291,7 +291,13 @@ $(e_1, \ldots, e_k) \in E_n^\bullet$ with $k \ge 3$ closing up
 into a polygon, with the standard cyclic-equivalence convention);
 and $\partial_n^\bullet \colon F_n^\bullet \to \bigsqcup_k
 (E_n^\bullet)^k$ is the boundary map sending each face to its
-edge sequence. The base data $\mathcal{R}_0^\bullet$ is induced
+edge sequence. We require only that every face boundary sits in
+$E_n^\bullet$ (i.e.\ $\partial_n^\bullet(f) \in (E_n^\bullet)^*$
+for every $f \in F_n^\bullet$); we do \emph{not} require that
+every edge belong to some face boundary. This is what we mean by
+``graph-plus-faces datum'' as opposed to a $2$-dimensional cell
+complex, and is the convention used at every refined level by
+Definition~\ref{def:refinement} below. The base data $\mathcal{R}_0^\bullet$ is induced
 by Definition~\ref{def:base-graphs} from the $1$-skeleton and
 $2$-faces of the underlying $4$-polytope ($V_{600}$ for
 $\bullet = H_4$, $V_{24}$ for $\bullet = D_4$). $W^\bullet$ acts
@@ -299,12 +305,14 @@ on each component of $\mathcal{R}_n^\bullet$ compatibly with the
 boundary map.
 \end{definition}
 
-\begin{definition}[Schl\"{a}fli refinement with vertex inclusion]
+\begin{definition}[Schl\"{a}fli-style refinement step with vertex
+inclusion]
 \label{def:refinement}
 Given a refinement datum
 $\mathcal{R}_n^\bullet = (V_n^\bullet, E_n^\bullet, F_n^\bullet,
-\partial_n^\bullet)$, the \emph{Schl\"{a}fli refinement} produces
-a new datum $\mathcal{R}_{n+1}^\bullet$ with the following
+\partial_n^\bullet)$, the \emph{Schl\"{a}fli-style refinement step}
+produces a new datum $\mathcal{R}_{n+1}^\bullet$ in the sense of
+Definition~\ref{def:refinement-datum} with the following
 explicit components:
 \begin{itemize}
 \item \textbf{Vertices.}
@@ -337,7 +345,17 @@ explicit components:
   drawn from edge classes (b), (b), (c) respectively. All three
   boundary edges lie in $E_{n+1}^\bullet$ by construction, so
   $\partial_{n+1}^\bullet$ is well-defined and the iterated
-  refinement datum is well-formed.
+  refinement datum is well-formed in the sense of
+  Definition~\ref{def:refinement-datum} (a graph-plus-faces datum
+  in which every face boundary lies in the edge set, but no
+  converse incidence is required: an edge need not belong to any
+  face boundary). In particular, the class-(a) subdividing edges
+  $\{u, m_e\}$, $\{m_e, v\}$ are present in $E_{n+1}^\bullet$ but
+  do not appear in any $\partial_{n+1}^\bullet(f)$; this is
+  intentional and is the only place the datum departs from a
+  classical $2$-dimensional cell complex (in which one would
+  retain the $2$-cells of $f$ as $2$-cells of the next level
+  rather than subdividing them into triangles).
 \item \textbf{$W^\bullet$-action.} $W^\bullet$ acts on
   $V_{n+1}^\bullet$ by $g \cdot v = gv$ for $v \in V_n^\bullet$,
   $g \cdot m_e = m_{ge}$ for $m_e \in M_n^\bullet$ (well-defined
@@ -516,8 +534,12 @@ We import the following sector fibres and inner products from
   Proposition~\texttt{prop:24-in-600}]{AlgebraicSubstrate};
 \item $V_{16} = \Cl(1, 3)$ with the Hilbert--Schmidt-style trace
   form $\langle a, b \rangle_{\Cl} := \langle a^\dagger b
-  \rangle_0$ (positive-definite by \cite[Ch.~9]{Lounesto}),
-  via \cite[Definition~\texttt{def:Cl-basis}]{AlgebraicSubstrate};
+  \rangle_0$, where $a^\dagger$ is the principal involution
+  (anti-automorphism reversing Clifford generators) of
+  \cite[Ch.~9]{Lounesto}, $\langle \cdot \rangle_0$ is the
+  scalar-grade projection, and the form is positive-definite by
+  \cite[Ch.~9]{Lounesto}, via
+  \cite[Definition~\texttt{def:Cl-basis}]{AlgebraicSubstrate};
 \item $V_8 = \OO$ with the standard octonion norm form
   $\langle a, b \rangle_\OO := \Re(a \bar b)$,
   via \cite[Definition~\texttt{def:octonions}]{AlgebraicSubstrate}.
@@ -816,9 +838,13 @@ $X_n^1$ to $X_{n+1}^1$:
   $\ell^2$-adjoint of $p_{n+1, n}^1$.
 \end{itemize}
 The two differ by the rescaling $j_{n, n+1}^1 = \tfrac{1}{2}
-s_{n, n+1}^1$. We use $j$ (the adjoint) below for inverse-limit
-constructions; we use $s$ (the section) only when an exact
-section is needed downstream. The vertex sector does not have this
+s_{n, n+1}^1$. We use $j$ (the adjoint) below in the
+finite-level intertwining identities of
+Theorem~\ref{thm:commute}; we use $s$ (the section) only when an
+exact section is needed downstream. (No edge inverse-limit
+Hilbert space is constructed in this paper; the inverse-limit
+construction is purely for the vertex sector.) The vertex sector
+does not have this
 distinction because the vertex bonding map is restriction (not
 averaging), and the corresponding adjoint $j_{n, n+1}^0$ is
 zero-extension, which is a section ($p^0 \circ j^0 = \id$).
@@ -1110,9 +1136,16 @@ $X_n^{0, \bullet}$ and on $X_n^{1, \bullet}$.
 
 \begin{proof}
 The $H_4$- (resp.\ $D_4$-) reflection representation on $V_{H_4}$
-(resp.\ $V_{D_4}$) is orthogonal with respect to the Euclidean
-metric on the fibre (P2~\S\S 3--5), and acts trivially on the other
-fibre summands; hence $\rho_{F^0}^\bullet(g)$ is a fibre isometry.
+(resp.\ $V_{D_4}$) is the standard finite real reflection
+representation of the corresponding Coxeter group, hence orthogonal
+with respect to the Euclidean metric on the fibre by the standard
+theorem on finite real reflection groups
+\cite[Ch.~1]{HumphreysReflectionGroups}; the underlying root
+system data is fixed in P2 (\cite[Definition~\texttt{def:V600},
+Definition~\texttt{def:V24} and
+Proposition~\texttt{prop:24-in-600}]{AlgebraicSubstrate}). The
+representation acts trivially on the other fibre summands; hence
+$\rho_{F^0}^\bullet(g)$ is a fibre isometry.
 The vertex (resp.\ oriented-edge) measure $\mu_n^\bullet$ (resp.\
 $\nu_n^\bullet$) is $W^\bullet$-invariant by the
 Coxeter-equivariance of the refinement
@@ -1272,10 +1305,13 @@ For every $n \geq 0$ and $\bullet \in \{H_4, D_4\}$:
   $\Q(\varphi)$-rational coefficients are not), and is not claimed
   here; see Remark~\ref{rmk:coxeter-sigma-restricted}.
 \end{enumerate}
-The Coxeter intertwinings of (1)--(2) descend to the vertex
+The vertex Coxeter intertwining of~(1) descends to the vertex
 cylindrical and inverse-limit spaces $X_\cyl^{0, \bullet}$,
 $X_\inv^{0, \bullet}$ by linearity and continuity (using
 Theorem~\ref{thm:Xinv-Hilbert} for the inverse limit). The
+edge Coxeter intertwining of~(2) is stated at the finite level
+only; we do not construct an edge inverse-limit Hilbert space
+in this paper. The
 $\sigma$-intertwining of (3) is stated only at the mixed-form level
 $X_n^{0, \bullet}|_{\Q(\varphi)/\Q}$; we do not claim a
 $\sigma$-action on the $\R$-Hilbert spaces $X_n^{0, \bullet}$,
@@ -1286,25 +1322,30 @@ through the standard real embedding $\iota$.
 
 \begin{remark}[Why Coxeter-$\sigma$ commutation is restricted]
 \label{rmk:coxeter-sigma-restricted}
+The forward direction of
 \cite[Theorem~\texttt{thm:pisigma-functorial}]{SigmaRationality}
-requires a $\Q$-linear endomorphism $T$ of the $\Q$-vector space
-$V$ \emph{defined over the $\sigma$-fixed $\Q$-form}: concretely,
-$T$ must restrict to $V \otimes 1 \subset V \otimes_\Q \Q(\varphi)$.
+applies here only when the map under consideration is the scalar
+extension $T_K$ of a $\Q$-linear endomorphism $T \colon V \to V$
+of an underlying $\Q$-vector space $V$ (so $T$ stabilises the
+fixed inclusion $V \otimes 1 \subset V \otimes_\Q \Q(\varphi)$).
 On the $V_{H_4, \Q(\varphi)}$ component, the $W(H_4)$ action is
 given by reflection matrices whose coefficients lie in
 $\Q(\varphi)$ (not in $\Q$), because the icosian roots have
 $\Q(\varphi)$-rational coordinates
-\cite{AlgebraicSubstrate}. Such a reflection is
-$\Q(\varphi)$-linear (hence a fortiori $\Q$-linear on the
+(\cite[Definitions~\texttt{def:V600},
+\texttt{def:icosian-ring}]{AlgebraicSubstrate}). Such a reflection
+is $\Q(\varphi)$-linear (hence a fortiori $\Q$-linear on the
 underlying $\Q$-vector space $V_{H_4, \Q(\varphi)}$), but it does
-\emph{not} restrict to a $\Q$-linear endomorphism of any $\Q$-form
-$V_{H_4, \Q} \subset V_{H_4, \Q(\varphi)}$ (e.g.\ $\Q^4$ via the
-standard basis): a non-trivial $\Q(\varphi)$-coefficient reflection
-of a $\Q^4$-vector carries it out of $\Q^4$ into the general
-$\Q(\varphi)^4$ space. The hypothesis of
-\cite[Theorem~\texttt{thm:pisigma-functorial}]{SigmaRationality} is
-therefore not satisfied in the form required for automatic
-$\sigma$-commutation, so the source theorem does not deliver
+\emph{not} restrict to a $\Q$-linear endomorphism of the chosen
+standard $\Q$-form $\Q^4 \subset \Q(\varphi)^4$ (the
+$\sigma$-fixed sublattice with respect to the basis fixed by
+\cite[Definition~\texttt{def:V600}]{AlgebraicSubstrate}): a
+non-trivial $\Q(\varphi)$-coefficient reflection of a
+$\Q^4$-vector carries it out of $\Q^4$ into the general
+$\Q(\varphi)^4$ space. The forward-direction hypothesis of
+\cite[Theorem~\texttt{thm:pisigma-functorial}]{SigmaRationality}
+is therefore not satisfied for the chosen standard $\Q$-form,
+so the source theorem does not deliver
 $g \circ \sigma_n = \sigma_n \circ g$ on the $V_{H_4}$ sector. We
 do not assert in this paper that the equality fails; we assert
 only that it is not delivered automatically by the source theorem
@@ -1359,6 +1400,24 @@ Substituting $e'' := g \cdot e'$:
     A(g^{-1} \cdot e'') = \tfrac{1}{2} \sum_{e''} (g \cdot A)(e'')
   = (p_{n+1, n}^1 (g \cdot A))(e).
 \]
+The corresponding identity for the adjoint $j_{n, n+1}^1
+= (p_{n+1, n}^1)^*$ follows by adjunction together with the
+unitarity of the $W^\bullet$-action (Lemma~\ref{lem:coxeter-unitary}):
+for any $A \in X_n^1$, $B \in X_{n+1}^1$, $g \in W^\bullet$,
+\[
+  \langle j_{n, n+1}^1 (g \cdot A), B \rangle
+  = \langle g \cdot A, p_{n+1, n}^1 B \rangle
+  = \langle A, g^{-1} \cdot p_{n+1, n}^1 B \rangle
+  = \langle A, p_{n+1, n}^1 (g^{-1} \cdot B) \rangle
+\]
+\[
+  = \langle j_{n, n+1}^1 A, g^{-1} \cdot B \rangle
+  = \langle g \cdot j_{n, n+1}^1 A, B \rangle,
+\]
+where the third equality is the just-proved $p^1$-identity.
+Since $B$ is arbitrary, $j_{n, n+1}^1 (g \cdot A)
+= g \cdot j_{n, n+1}^1 A$, i.e.\ $g \circ j_{n, n+1}^1
+= j_{n, n+1}^1 \circ g$.
 
 \emph{(3) Refinement-$\sigma$.} The bonding map $p_{n+1, n}^0$
 is vertex-restriction along $V_n^\bullet \subset V_{n+1}^\bullet$
@@ -1390,7 +1449,7 @@ on $V_{D_4}$ and trivially on $V_{H_4}, V_{16}, V_8$; since $\sigma$
 acts trivially on $V_{D_4, \Q}$ and on $V_{16, \Q}, V_{8, \Q}$, the
 composition $g \circ \sigma$ equals $\sigma \circ g$ on every fibre
 summand, so it equals $\sigma \circ g$ on
-$X_n^{0, D_4}|_{\Q(\varphi)}$. On the $H_4$ branch, $W(H_4)$ acts
+$X_n^{0, D_4}|_{\Q(\varphi)/\Q}$. On the $H_4$ branch, $W(H_4)$ acts
 on $V_{H_4}$ and trivially on $V_{D_4}, V_{16}, V_8$; on the latter
 three summands $\sigma$ also acts trivially, so the commutation is
 automatic there by the same fibrewise computation. The remaining
@@ -1432,8 +1491,10 @@ and the $\ell^2$-completion (Theorem~\ref{thm:Xinv-Hilbert}).
   (vertex sector).
 \item Proposition~\ref{prop:Xcyl-dense}: $X_\cyl^{0, \bullet}$
   dense in $X_\inv^{0, \bullet}$.
-\item Theorem~\ref{thm:commute}: refinement-Coxeter (full),
-  refinement-$\sigma$ (full), and Coxeter-$\sigma$ (restricted, see
+\item Theorem~\ref{thm:commute}: refinement-Coxeter (vertex
+  finite-level and inverse-limit; edge finite-level only),
+  refinement-$\sigma$ (mixed-form vertex sector only, on both
+  $p^0$ and $j^0$), and Coxeter-$\sigma$ (restricted, see
   Remark~\ref{rmk:coxeter-sigma-restricted}) intertwining
   identities.
 \end{enumerate}
@@ -1447,8 +1508,13 @@ restriction (Theorems~\ref{thm:bonding}, \ref{thm:Xinv-Hilbert});
 the cylindrical direct limit $X_\cyl^{0, \bullet} \cong
 c_{00}(V_\infty^\bullet; F^0)$ embeds densely in $X_\inv^{0,
 \bullet}$ (Theorem~\ref{thm:Xcyl-direct-limit},
-Proposition~\ref{prop:Xcyl-dense}); the refinement-Coxeter and
-refinement-$\sigma$ intertwinings hold without restriction, and
+Proposition~\ref{prop:Xcyl-dense}); the refinement-Coxeter
+intertwining holds for the vertex sector at every finite level
+and on the inverse limit, and for the edge sector at every
+finite level (no edge inverse limit is constructed); the
+refinement-$\sigma$ intertwining holds for both $p^0$ and $j^0$
+on the mixed-form vertex sector
+$X_n^{0, \bullet}|_{\Q(\varphi)/\Q}$; and
 the Coxeter-$\sigma$ intertwining holds in the restricted sense of
 Theorem~\ref{thm:commute}(4) and
 Remark~\ref{rmk:coxeter-sigma-restricted} (full $W(H_4)$-$\sigma$
@@ -1508,31 +1574,41 @@ over $\Q(\varphi)$},
 \texttt{papers/cascade-sigma-rationality/cascade-sigma-rationality.tex}.
 (Paper P1.) Pinned results used in this paper, cited by label:
 Definition~\texttt{def:sigma} (the Galois involution
-$\sigma \colon \Q(\varphi) \to \Q(\varphi)$); coefficientwise
-$\sigma_V$ on $V \otimes_\Q \Q(\varphi)$ as defined in
-\S\texttt{def:sigmaV}; functoriality of the scalar
-extension and Theorem~\texttt{thm:pisigma-functorial} ($\sigma$ commutes
-with $\Q$-linear endomorphisms defined over the $\sigma$-fixed
-$\Q$-form, after scalar extension).
+$\sigma \colon \Q(\varphi) \to \Q(\varphi)$);
+Definition~\texttt{def:sigmaV} (coefficientwise
+$\sigma_V$ on $V \otimes_\Q \Q(\varphi)$);
+Theorem~\texttt{thm:pisigma-functorial} (functoriality of the
+scalar extension $T_K$ for a $\Q$-linear map $T \colon V \to V$).
+We use \texttt{thm:pisigma-functorial} only in its forward direction
+(the scalar extension of a $\Q$-linear map intertwines $\sigma_V$);
+the converse, that any $\sigma_V$-intertwining map descends to a
+$\Q$-linear map on a chosen fixed $\Q$-form, is our local
+inference, not a statement in P1.
 
 \bibitem{AlgebraicSubstrate}
 \emph{Cascade--Classical Correspondence II: The Cascade Algebraic
 Substrate},
 \texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}.
 (Paper P2.) Pinned results used in this paper, cited by label:
-\texttt{thm:icosian-closure} (icosian model of $V_{H_4}$ with
-$\Z[\varphi]$-rational coordinates); \texttt{def:V600} ($V_{600}$
-vertex set and coordinates); \texttt{def:V24} and
-\texttt{prop:24-in-600} ($V_{24} \subset V_{600}$ as the rescaled
-$D_4$ root polytope); \texttt{def:Cl-basis} (the $\Cl(1, 3)$
-monomial basis $\{\gamma_A\}$); \texttt{def:octonions} (standard
-octonion basis); sector fibre conventions for $V_{16}$ and $V_8$.
+\texttt{def:icosian-ring} (the icosian ring $\Z[\varphi]^4$ as the
+arithmetic carrier of $V_{H_4}$);
+\texttt{def:V600} ($V_{600}$ vertex set and coordinates, with
+$\Z[\varphi]$-rational entries);
+\texttt{def:V24} and \texttt{prop:24-in-600}
+($V_{24} \subset V_{600}$ as the rescaled $D_4$ root polytope);
+\texttt{thm:icosian-closure} (closure of the icosian ring under
+its multiplication, used here only as a structural reference);
+\texttt{def:Cl-basis} (the $\Cl(1, 3)$ monomial basis $\{\gamma_A\}$);
+\texttt{def:octonions} (standard octonion basis);
+\texttt{def:Q-forms} (the standard $\Q$-forms on $V_{D_4}, V_{16}, V_8$
+used in this paper's mixed $\Q(\varphi)/\Q$-form construction).
 \textbf{Inference, not stated theorem in P2:} the standard
 $W(H_4)$ reflection generators have matrix entries in
 $\Q(\varphi)$ when written in the icosian basis. P2 supplies the
-$\Q(\varphi)$-rational coordinates of the icosian roots; the
-matrix-entry statement follows by the standard reflection formula
-and is used in this paper's $H_4$ branch.
+$\Q(\varphi)$-rational coordinates of the icosian roots
+(\texttt{def:V600}, \texttt{def:icosian-ring});
+the matrix-entry statement follows by the standard reflection
+formula and is used in this paper's $H_4$ branch.
 
 \bibitem{RefinementSpaces}
 (This paper.) \emph{Cascade--Classical Correspondence III:
@@ -1591,7 +1667,15 @@ Press, 2002. Finite graphs and $1$-cochain conventions: Ch.~1.
 \bibitem{Lounesto}
 P.~Lounesto, \emph{Clifford Algebras and Spinors}, 2nd ed., London
 Math.\ Soc.\ Lecture Note Series \textbf{286}, Cambridge
-University Press, 2001. Hilbert--Schmidt-style trace forms: Ch.~9.
+University Press, 2001. Hilbert--Schmidt-style trace forms (with
+the principal involution $a \mapsto a^\dagger$): Ch.~9.
+
+\bibitem{HumphreysReflectionGroups}
+J.~E.~Humphreys, \emph{Reflection Groups and Coxeter Groups},
+Cambridge Studies in Advanced Mathematics \textbf{29}, Cambridge
+University Press, 1990. Standard reflection representations of
+finite Coxeter groups (in particular $H_4$ and $D_4$) are
+orthogonal: Ch.~1.
 
 \end{thebibliography}
 
