@@ -60,13 +60,13 @@ operator $L_n \in B(X_n)$
 flow $\dot\Phi_n = -L_n \Phi_n$ has unique global solutions
 $\Phi_n(t) = e^{-t L_n} \Phi_n(0)$
 (Theorem~\ref{thm:flow-exists}); energy dissipates along the flow
-as $d_t F_n(\Phi_n(t)) = -\|L_n \Phi_n(t)\|^2 \leq 0$
+as $\frac{d}{dt} F_n(\Phi_n(t)) = -\|L_n \Phi_n(t)\|^2 \leq 0$
 (Proposition~\ref{prop:energy-dissipation}).
 
 A discrete-time Euler scheme $\Phi_{n, k+1} = (I - \eta L_n)
 \Phi_{n, k}$ is analysed in
-Section~\ref{sec:discrete-time}. Energy monotonicity under
-small step size is separated cleanly from norm contractivity
+Section~\ref{sec:discrete-time}. One-step energy descent under a
+step-size condition is separated cleanly from norm contractivity
 (Theorem~\ref{thm:coercive-contraction}), which holds only on
 coercive invariant subspaces $Y_n$ of $X_n$ where $L_n$ has a
 positive spectral gap.
@@ -127,11 +127,14 @@ We work exclusively on the finite-dimensional Hilbert spaces
 $X_n := X_n^{0, \bullet} \oplus X_n^{1, \bullet}$ of paper P3,
 define the closure functional as an explicit quadratic form,
 identify its gradient as a bounded self-adjoint operator $L_n$,
-and derive its dynamics rigorously. Every operator appearing in
-downstream constructions (bonding maps, flow maps, symmetry
-actions, sector projections, coboundaries, adjoints, Laplacians,
-mass operators, and the specific compositions used by P5--P13)
-is given an explicit norm bound.
+and derive its dynamics rigorously. Every operator in the
+generator-family list of \S\ref{sec:intertwiners} (bonding maps,
+flow-operator family, Coxeter actions, sector projections,
+coboundaries, adjoints, Laplacian and mass blocks, $G_2$-stabilizer
+fibre map) is given an explicit norm bound; downstream papers
+P5--P13 may freely compose these into admissible finite-level
+expressions, with bounds inherited via
+Theorem~\ref{thm:intertwiner-bounds}.
 
 \subsection{What this paper proves}
 
@@ -247,7 +250,8 @@ and identifies its gradient. Section~\ref{sec:continuous-flow}
 constructs the continuous-time flow. Section~\ref{sec:energy}
 derives the energy dissipation identity.
 Section~\ref{sec:discrete-time} analyses the discrete-time Euler
-scheme and separates energy monotonicity from norm contractivity.
+scheme and separates one-step energy descent (under a step-size
+condition) from norm contractivity.
 Section~\ref{sec:refinement-compat} establishes refinement
 intertwining for the coboundary block (factor $\tfrac{1}{2}$)
 and a mass-only refinement intertwining for $L_n$ in the
@@ -361,12 +365,41 @@ X_n^{1, \bullet}$.
 \end{lemma}
 
 \begin{proof}
-Direct computation. Writing out both sides using
-Definitions~\ref{def:coboundary} and
-\ref{def:coboundary-adjoint} and the inner product conventions:
-the matching of sums over endpoints is standard discrete-Hodge
-bookkeeping \cite[\S 1.2]{Chung} adapted to the antisymmetry
-convention.
+Write $\pi := \pi_{F^0 \to F^1}$, $\iota := \iota_{F^1 \to F^0}$,
+and note that with respect to the orthogonal-direct-sum inner
+product on $F^0 = V_{H_4} \oplus V_{D_4} \oplus V_{16} \oplus V_8$
+and the standard real inner product on $F^1 = \Im(\OO) \subset
+V_8$, the projection-inclusion pair is dual:
+$\pi^* = \iota$ in
+$\langle \pi(x), y \rangle_{F^1}
+= \langle x, \iota(y) \rangle_{F^0}$
+for $x \in F^0$, $y \in F^1$.
+
+For $f \in X_n^{0, \bullet}$, $A \in X_n^{1, \bullet}$, by
+Definition~\ref{def:Xn-1} the $X_n^1$ inner product carries a
+factor $\tfrac{1}{2}$ to compensate for the antisymmetric
+oriented-edge double count. Compute
+\begin{align*}
+\langle d_n f, A \rangle_{X_n^1}
+&= \tfrac{1}{2} \sum_{e \in E^{\rm or}(G_n^\bullet)}
+   \bigl\langle \pi\bigl(f(\text{head}(e)) - f(\text{tail}(e))\bigr),
+   A(e) \bigr\rangle_{F^1} \\
+&= \tfrac{1}{2} \sum_{e}
+   \bigl\langle f(\text{head}(e)) - f(\text{tail}(e)),
+   \iota(A(e)) \bigr\rangle_{F^0}
+   \qquad (\text{using } \pi^* = \iota) \\
+&= \tfrac{1}{2} \sum_v \Bigl\langle f(v),
+     \sum_{e:\, v=\text{head}(e)} \iota(A(e))
+     - \sum_{e:\, v=\text{tail}(e)} \iota(A(e))
+   \Bigr\rangle_{F^0}
+   \qquad (\text{regroup over vertices}) \\
+&= \sum_v \bigl\langle f(v), (d_n^* A)(v) \bigr\rangle_{F^0}
+   = \langle f, d_n^* A \rangle_{X_n^0},
+\end{align*}
+using Definition~\ref{def:coboundary-adjoint} for the last line
+and the standard discrete-Hodge regrouping
+\cite[\S 1.2]{Chung}; the antisymmetry of $A$ on each pair
+$(e, -e)$ ensures the regrouped vertex sum is well-defined.
 \end{proof}
 
 \subsection{Block operators on $X_n$}
@@ -509,7 +542,7 @@ For $\Phi \in X_n$, define:
   R_n(\Phi) &:= \tfrac{1}{2} \langle \Phi, A_n \Phi \rangle_{X_n}
     \quad \text{(curvature / graph-Laplacian form)}, \\
   E_n(\Phi) &:= \tfrac{1}{2} \langle \Phi, B_n \Phi \rangle_{X_n}
-    \quad \text{(kinetic / coboundary form)}, \\
+    \quad \text{(off-diagonal coboundary form)}, \\
   Q_n(\Phi) &:= \tfrac{1}{2} \langle \Phi, C_n \Phi \rangle_{X_n}
     \quad \text{(mass form)}.
 \end{align*}
@@ -517,8 +550,14 @@ $R_n$ and $Q_n$ are positive semi-definite on $X_n$ (by
 positive semi-definiteness of $A_n$ and $C_n$). $E_n$ is
 indefinite in general (since $B_n$ is self-adjoint but not
 positive semi-definite: it has pairs of eigenvalues
-$\pm\sqrt{\lambda}$ for each $\lambda \geq 0$ in
-$\spec(d_n^* d_n)$).
+$\pm\sqrt{\lambda}$ for each $\lambda > 0$ in
+$\spec(d_n^* d_n)$, plus zero with appropriate multiplicity).
+The form $E_n$ here is the off-diagonal coboundary square; this
+is \emph{not} the positive kinetic square that earlier
+correspondence-foundations drafts called ``kinetic.'' Downstream
+papers citing kinetic energy should distinguish whether they
+mean the indefinite off-diagonal form $E_n$ defined here or the
+positive square $\|d_n \Phi^0\|^2 + \|d_n^* \Phi^1\|^2$.
 \end{definition}
 
 \subsection{The closure functional}
@@ -862,16 +901,21 @@ $M_n = \max \mathrm{spec}(L_n|_{Y_n})$, but not in general.)
 \end{theorem}
 
 \begin{proof}
-On $Y_n$, $L_n$ is a self-adjoint operator with spectrum in the
-interval $[m_n, M_n]$. The operator $I - \eta L_n$ on $Y_n$ has
-spectrum in $[1 - \eta M_n, 1 - \eta m_n]$. For $0 < \eta < 2/M_n$,
-both endpoints have $|1 - \eta \lambda| < 1$ iff $0 < \eta < 2/
-\lambda$. The operator norm on $Y_n$ equals the maximum of
-$|1 - \eta \lambda|$ over $\lambda \in [m_n, M_n]$, which is the
-larger of $|1 - \eta m_n|$ and $|1 - \eta M_n|$. The optimum is
-achieved when these two are equal in magnitude and opposite in
-sign: $1 - \eta m_n = -(1 - \eta M_n)$, giving $\eta = 2/(m_n +
-M_n)$ and the stated rate.
+On $Y_n$, $L_n$ is self-adjoint with spectrum contained in the
+interval $[m_n, M_n]$ by Definition~\ref{def:coercive}; hence
+$I - \eta L_n|_{Y_n}$ has spectrum contained in
+$[1 - \eta M_n, 1 - \eta m_n]$. For $0 < \eta < 2/M_n$,
+$|1 - \eta \lambda| < 1$ for all $\lambda \in [m_n, M_n]$
+(since $0 < \eta < 2/\lambda$ for every $\lambda \geq m_n > 0$).
+By the spectral theorem on a finite-dimensional Hilbert space,
+$\|I - \eta L_n|_{Y_n}\|_{\op}$ is bounded above by
+$\sup_{\lambda \in [m_n, M_n]} |1 - \eta \lambda|
+= \max(|1 - \eta m_n|, |1 - \eta M_n|)$ (with equality if and
+only if $m_n, M_n$ are spectral endpoints of $L_n|_{Y_n}$).
+Minimising this upper bound over $\eta$, the two summands
+$|1 - \eta m_n|$ and $|1 - \eta M_n|$ become equal in magnitude
+and opposite in sign at $\eta^* = 2/(m_n + M_n)$, giving the
+stated bound.
 \end{proof}
 
 \begin{proposition}[Negative spectrum obstructs global contraction]
@@ -1211,9 +1255,9 @@ $j_{n, n+1}^1$ (edge embedding) & $\|j^1\|_{\op} = 2^{-1/2}$ &
   computation from
   \cite[Proposition~\texttt{prop:adjoints}]{RefinementSpaces}: the
   half-section identity $p^1 j^1 = \tfrac{1}{2} \id$ together with
-  unitarity of the inner-product adjoint gives
-  $\|j^1 B\|^2 = \langle j^1 B, j^1 B \rangle =
-  \langle B, p^1 j^1 B \rangle = \tfrac{1}{2}\|B\|^2$ \\
+  the adjoint identity $\langle j^1 B, j^1 B \rangle =
+  \langle B, p^1 j^1 B \rangle$ gives
+  $\|j^1 B\|^2 = \tfrac{1}{2}\|B\|^2$ \\
 $j_{n, n+1}$ (direct-sum embedding $X_n \to X_{n+1}$) & $\|j\|_{\op}
   = 1$ & direct-sum norm: $\max(\|j^0\|, \|j^1\|) = 1$ \\
 $\mathbf{P}_{V_\bullet}$ (sector projections) & $\|\mathbf{P}\|_{\op}
@@ -1238,12 +1282,21 @@ $e^{-t L_n}$ (flow, $t \geq 0$) & $\|e^{-t L_n}\|_{\op} \leq
 \hline
 \end{tabular}
 \end{center}
-The $G_2$-stabilizer fibre map (from
+The $G_2$-stabilizer fibre map of
 \cite[Definitions~\texttt{def:G2}, \texttt{def:stab-u} and
-Fact~\texttt{fact:SU3-stab}]{AlgebraicSubstrate}) acts on
-$\Im(\OO) = F^1$ as a compact-group element of orthogonal norm $1$;
-its $\ell^2$-extension to $X_n^1$ therefore has operator norm
-exactly $1$.
+Fact~\texttt{fact:SU3-stab}]{AlgebraicSubstrate} (an element
+of the stabilizer of a unit imaginary octonion in $G_2 \subset
+\mathrm{Aut}(\OO)$, identified with $\mathrm{SU}(3)$ acting on
+the orthogonal complement of the chosen unit) acts on
+$\Im(\OO) = F^1$ orthogonally with respect to the standard
+octonion inner product $\langle a, b \rangle_\OO := \Re(a\bar b)$:
+every octonion automorphism preserves the octonion norm
+\cite[Theorem~6.6]{Schafer} (and hence its real polarization),
+and restriction to a $G_2$-invariant subspace remains orthogonal.
+Therefore the corresponding fibre operator has operator norm
+exactly $1$ on $F^1$, and its $\ell^2$-extension to $X_n^1$ also
+has operator norm exactly $1$ (apply the bound fibrewise on each
+oriented edge).
 \end{proposition}
 
 \begin{proof}
@@ -1252,9 +1305,8 @@ proposition. $\|\rho_n(g)\|_{\op} = 1$ because $\rho_n(g)$ is
 unitary
 (\cite[Lemma~\texttt{lem:coxeter-unitary}]{RefinementSpaces}: it
 permutes an $\ell^2$-orthonormal basis up to fibre-level
-orthogonal transformations). The $G_2$-stabilizer claim uses that
-the relevant element is in the compact orthogonal group of
-$\Im(\OO)$.
+orthogonal transformations). The $G_2$-stabilizer norm equality
+is justified above the proof.
 \end{proof}
 
 \begin{theorem}[Admissible intertwiners are bounded, continuous, Borel]
@@ -1388,8 +1440,11 @@ $n$ carries an explicit quadratic closure functional
 $F_n = \tfrac{1}{2}\langle \cdot, L_n \cdot \rangle$ with bounded
 self-adjoint gradient $L_n$ (Theorem~\ref{thm:gradient-operator}),
 continuous-time semigroup flow $e^{-t L_n}$
-(Theorem~\ref{thm:flow-exists}), energy monotonicity
-(Proposition~\ref{prop:energy-dissipation}), strict contraction
+(Theorem~\ref{thm:flow-exists}), continuous-time energy
+dissipation $\frac{d}{dt} F_n(\Phi_n(t)) = -\|L_n \Phi_n(t)\|^2$
+(Proposition~\ref{prop:energy-dissipation}) and one-step Euler
+energy descent under a step-size condition
+(Proposition~\ref{prop:euler-energy-decrease}), strict contraction
 only on coercive invariant subspaces
 (Theorem~\ref{thm:coercive-contraction}), an explicit
 factor-$\tfrac{1}{2}$ coboundary refinement relation
@@ -1535,6 +1590,11 @@ Birkh\"auser, 1982. Linear ODEs: Ch.~IV.
 \bibitem{Bogachev}
 V.~I.~Bogachev, \emph{Measure Theory}, Vol.~I, Springer, 2007.
 Borel measurability of continuous maps: Cor.~1.2.12.
+
+\bibitem{Schafer}
+R.~D.~Schafer, \emph{An Introduction to Nonassociative Algebras},
+Academic Press, 1966 (reprinted Dover, 1995). Octonion
+automorphisms preserve the octonion norm: Theorem~6.6.
 
 \end{thebibliography}
 
