@@ -1,0 +1,1523 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\inv}{\mathrm{inv}}
+\newcommand{\cyl}{\mathrm{cyl}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+\title{Cascade--Classical Correspondence III:\\
+  Refinement Spaces and Symmetry Actions}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This paper builds the finite-level analytic infrastructure
+intended for downstream cascade-correspondence papers. From the
+algebraic substrate of paper P2, we construct: iterated refinement
+data $\mathcal{R}_n^\bullet = (V_n^\bullet, E_n^\bullet, F_n^\bullet,
+\partial_n^\bullet)$ for $\bullet \in \{H_4, D_4\}$, including
+explicit $2$-face data needed to place centroid vertices, with
+literal vertex inclusion $V(G_n^\bullet) \subset V(G_{n+1}^\bullet)$;
+finite-level $\ell^2$ vertex spaces $X_n^0$ and edge $\ell^2$
+spaces $X_n^1$ under counting measure; downward bonding maps $p_{n+1, n}^0$ defined
+as restriction to $V(G_n^\bullet)$ and $p_{n+1, n}^1$ defined as
+fibrewise averaging over the canonical edge-parent map; the
+projective inverse-limit Hilbert space (in the vertex sector)
+$X_\inv^{0, \bullet} \cong \ell^2(V_\infty^\bullet; F^0)$; the
+cylindrical inductive-limit space $X_\cyl^{0, \bullet} =
+c_{00}(V_\infty^\bullet; F^0)$ embedded densely in
+$X_\inv^{0, \bullet}$; full intertwining identities for the
+refinement-Coxeter and refinement-$\sigma$ pairs; and a restricted
+intertwining identity for the Coxeter-$\sigma$ pair (full
+$W(H_4)$-$\sigma$ commutation on the $V_{H_4}$ sector fails because
+$W(H_4)$ acts via $\Q(\varphi)$-linear matrices; see
+Theorem~\ref{thm:commute}(4) and
+Remark~\ref{rmk:coxeter-sigma-restricted} for the precise scope).
+
+This is the third of thirteen planned cascade infrastructure papers.
+The construction is in the correct projective direction: bonding
+maps $p_{n+1, n}$ go \emph{downward} from level $n+1$ to level $n$,
+implemented as restriction (vertex sector) or as canonical
+parent-fibre averaging (edge sector). Their adjoints
+$j_{n, n+1} := p_{n+1, n}^*$ are (rescaled) embeddings going upward.
+In the vertex sector the adjoint is a genuine section
+($p^0 j^0 = \id$), the cylindrical direct limit is well-defined,
+and the inverse limit is its Hilbert completion. In the edge sector
+the adjoint is only a \emph{half-section} ($p^1 j^1 = \tfrac12 \id$),
+a clean cylindrical direct-limit / Hilbert-completion package is
+not established here, and edge-sector statements are kept at the
+finite level with bounded bonding maps only
+(Remarks~\ref{rmk:edge-cyl} and~\ref{rmk:edge-inv}). \emph{No continuum-limit, Gromov--Hausdorff,
+spectral-convergence, or manifold-identification claim is made
+here.}
+
+The main theorems proved in this paper:
+(1) Proposition~\ref{prop:refinement-equivariant}, the refinement
+rule with $V_n \subset V_{n+1}$ inclusion is well-defined and
+Coxeter-equivariant;
+(2) Proposition~\ref{prop:Xn-Hilbert}, each finite-level $X_n^0,
+X_n^1$ is a finite-dimensional Hilbert space;
+(3) Theorem~\ref{thm:bonding}, downward bonding maps are
+contractions under counting measure;
+(4) Proposition~\ref{prop:adjoints}, the cylindrical embeddings
+$j_{n, n+1}$ are the adjoints of the bonding maps;
+(5) Theorem~\ref{thm:Xcyl-direct-limit}, the vertex algebraic
+direct limit $X_\cyl^{0, \bullet}$ is well-defined as
+$c_{00}(V_\infty^\bullet; F^0)$;
+(6) Theorem~\ref{thm:Xinv-Hilbert}, the vertex inverse limit
+$X_\inv^{0, \bullet}$ under restriction is canonically isometric
+to $\ell^2(V_\infty^\bullet; F^0)$ and is a separable Hilbert space;
+(7) Proposition~\ref{prop:Xcyl-dense}, $X_\cyl^{0, \bullet}$
+embeds densely in $X_\inv^{0, \bullet}$;
+(8) Theorem~\ref{thm:commute}, the commutation
+$g \circ p_{n+1, n} = p_{n+1, n} \circ g$ for $g$ in the relevant
+Coxeter group, and analogously for $\sigma$ from P1.
+
+These are the load-bearing inputs for the closure-dynamics paper P4,
+the metric projection paper P5, and the gauge/arithmetic/computation
+branch papers P9--P13, as well as for the correspondence Foundations
+paper.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction and Source Audit}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{The repair target}
+
+An earlier draft of the correspondence Foundations manuscript
+defined the cascade limit Hilbert space using forward zero-extension
+maps $X_n \to X_{n+1}$ and called the resulting object an
+``inverse limit''. That construction is incorrect on two counts:
+the system is inductive (not projective), and forward zero-extension
+is not isometric under any naturally-normalized $\ell^2$ structure on
+finite refinement levels.
+
+The correct construction is built on \emph{downward} bonding maps
+$p_{n+1, n} \colon X_{n+1} \to X_n$. The cleanest mathematical
+choice for these bonding maps, used here, is:
+\begin{itemize}
+\item Vertex sector: $p_{n+1, n}^0$ is restriction of a function on
+  $V(G_{n+1}^\bullet)$ to its sub-domain $V(G_n^\bullet)
+  \subset V(G_{n+1}^\bullet)$.
+\item Edge sector: $p_{n+1, n}^1$ is fibrewise averaging along the
+  canonical edge-parent map $E^{\rm or}(G_{n+1}^\bullet) \to
+  E^{\rm or}(G_n^\bullet)$, which assigns each subdivided
+  level-$(n+1)$ oriented edge to the level-$n$ oriented edge it is
+  a piece of.
+\end{itemize}
+
+Both maps are genuine contractions under \emph{counting measure}
+on finite vertex/edge sets, and their adjoints are the natural
+embeddings in the upward direction. The projective system in the
+correct direction is then $X_\inv := \{(f_n) : p_{n+1, n} f_{n+1} =
+f_n\}$, equipped with the limit inner product, and we show this is
+canonically isometric to $\ell^2(V_\infty^\bullet)$ for the
+countable union $V_\infty^\bullet := \bigcup_n V(G_n^\bullet)$.
+
+\subsection{What this paper proves}
+
+The substrate constructed here consists of:
+\begin{enumerate}
+\item Iterated refinement graphs $G_n^{H_4}$ and $G_n^{D_4}$ with
+  $V(G_n^\bullet) \subset V(G_{n+1}^\bullet)$ and a canonical
+  edge-parent map (\S\ref{sec:graphs}).
+\item Counting measures on vertices and oriented edges
+  (\S\ref{sec:measures}).
+\item Finite-level vertex and edge $\ell^2$ spaces $X_n^0, X_n^1$,
+  each a finite-dimensional Hilbert space
+  (\S\ref{sec:finite-level}).
+\item Downward bonding maps $p_{n+1, n}^0$ (restriction) and
+  $p_{n+1, n}^1$ (parent-fibre averaging), both contractions
+  (\S\ref{sec:bonding}).
+\item Cylindrical embeddings $j_{n, n+1}^0$ (zero-extension) and
+  $j_{n, n+1}^1$ (rescaled replication) as adjoints of the bonding
+  maps (\S\ref{sec:bonding}).
+\item Algebraic direct-limit space (vertex sector)
+  $X_\cyl^{0, \bullet} \cong c_{00}(V_\infty^\bullet; F^0)$
+  (\S\ref{sec:cyl-lim}).
+\item Projective inverse-limit Hilbert space (vertex sector)
+  $X_\inv^{0, \bullet} \cong \ell^2(V_\infty^\bullet; F^0)$
+  (\S\ref{sec:inv-lim}).
+\item Commuting refinement / Coxeter / $\sigma$ intertwining
+  identities for $p_{n+1, n}$ and $j_{n, n+1}$
+  (\S\ref{sec:commute}).
+\end{enumerate}
+
+\subsection{What this paper does not prove}
+
+P3 is deliberately narrow. We record the exclusions explicitly:
+\begin{enumerate}
+\item No continuum-limit, Gromov--Hausdorff, or spectral-convergence
+  statement.
+\item No closure-functional, gradient-flow, energy, or
+  monotonicity theorem.
+\item No identification of $X_\inv$ with any classical continuum
+  function space such as $L^2(S^3)$.
+\item No metric, hydrodynamic, gauge, spectral, zeta, Hecke, or
+  CTM/TM correspondence theorem.
+\item No vertex-wise quotient map $V(G_n^{H_4}) \to V(G_n^{D_4})$.
+\item No physical or phenomenological interpretation.
+\end{enumerate}
+
+\subsection{Source audit}
+
+Theorem inputs to this paper are:
+\begin{description}
+\item[\textbf{Internal cascade infrastructure.}]
+Paper P1 (cascade--classical correspondence I, $\sigma$-fixed
+rationality \cite{SigmaRationality}) for the coefficientwise
+$\sigma$-action; paper P2 (cascade algebraic substrate
+\cite{AlgebraicSubstrate}) for the algebraic substrate, including
+$D_4 \subset E_8$, the icosian model of $H_4$, the explicit
+$V_{600}$ and $V_{24}$ vertex sets, and the $\Cl(1, 3)$ and
+octonionic sector models.
+\item[\textbf{Classical mathematics.}]
+Standard Hilbert space and direct/inverse limit theory
+\cite{ReedSimonI, Bogachev}; standard Coxeter group theory
+\cite{Humphreys, CoxeterRegularPolytopes}; finite graph and
+$1$-cochain conventions \cite{Hatcher}; elementary $\ell^2$ theory.
+\end{description}
+
+We do not cite as theorem-grade input any other cascade-internal
+note. The bibliography below contains only the sources actually
+used in proofs.
+
+\subsection{Organization}
+
+Section~\ref{sec:graphs} sets up the refinement graphs and the
+canonical edge-parent map. Section~\ref{sec:measures} fixes the
+counting measures. Section~\ref{sec:finite-level} defines the
+finite-level vertex and edge $\ell^2$ spaces.
+Section~\ref{sec:bonding} constructs the downward bonding maps and
+their adjoints, the cylindrical embeddings.
+Section~\ref{sec:cyl-lim} treats the cylindrical algebraic
+direct-limit space. Section~\ref{sec:inv-lim} constructs the
+projective limit Hilbert space and proves it is $\ell^2(V_\infty)$.
+Section~\ref{sec:commute} establishes the intertwining identities
+for refinement, Coxeter, and $\sigma$. Section~\ref{sec:handoff}
+states the citation contract for downstream papers.
+Appendix~\ref{app:notation} is a notation concordance.
+
+%=====================================================================
+\section{Refinement Graphs and the Edge-Parent Map}
+\label{sec:graphs}
+%=====================================================================
+
+\subsection{The base graphs}
+
+\begin{definition}[Base graphs]
+\label{def:base-graphs}
+Let $V_{600} \subset \HH \cong \R^4$ be the standard $120$-vertex
+set of the regular $600$-cell, in the coordinate realization of
+\cite[\S 5]{AlgebraicSubstrate}. Let $V_{24} \subset V_{600}$ be
+the $24$-vertex subset (axis points and half-type points) congruent
+to the rescaled $D_4$ root polytope by
+\cite[Prop.~5.3]{AlgebraicSubstrate}.
+
+The \emph{base $H_4$ graph} $G_0^{H_4} = (V_0^{H_4}, E_0^{H_4})$
+has vertex set $V_0^{H_4} := V_{600}$ and unoriented edges joining
+pairs of $600$-cell vertices at the standard $600$-cell edge
+distance \cite[\S 22.7]{CoxeterRegularPolytopes}.
+
+The \emph{base $D_4$ graph} $G_0^{D_4} = (V_0^{D_4}, E_0^{D_4})$
+has vertex set $V_0^{D_4} := V_{24}$ and unoriented edges joining
+pairs of $24$-cell vertices at the standard $24$-cell edge
+distance \cite[\S 22.2]{CoxeterRegularPolytopes}.
+
+We write $\bullet$ for either decoration and $G_n^\bullet$ for the
+level-$n$ graph below. The Coxeter group $W^\bullet$ is $W(H_4)$
+when $\bullet = H_4$ and $W(D_4)$ when $\bullet = D_4$.
+\end{definition}
+
+\subsection{Refinement with vertex inclusion}
+
+A graph alone does not determine the Schl\"{a}fli refinement; the
+construction needs explicit $2$-face data, since centroids are
+indexed by $2$-faces. We carry that data through levels as a
+\emph{refinement datum}.
+
+\begin{definition}[Refinement datum]
+\label{def:refinement-datum}
+A \emph{refinement datum at level $n$} is a tuple
+$\mathcal{R}_n^\bullet = (V_n^\bullet, E_n^\bullet, F_n^\bullet,
+\partial_n^\bullet)$ where $V_n^\bullet$ and $E_n^\bullet$ are
+the vertex and unoriented edge sets of $G_n^\bullet$;
+$F_n^\bullet$ is a finite set of \emph{$2$-faces} (each face is
+a finite cyclic sequence of edges
+$(e_1, \ldots, e_k) \in E_n^\bullet$ with $k \ge 3$ closing up
+into a polygon, with the standard cyclic-equivalence convention);
+and $\partial_n^\bullet \colon F_n^\bullet \to \bigsqcup_k
+(E_n^\bullet)^k$ is the boundary map sending each face to its
+edge sequence. The base data $\mathcal{R}_0^\bullet$ is induced
+by Definition~\ref{def:base-graphs} from the $1$-skeleton and
+$2$-faces of the underlying $4$-polytope ($V_{600}$ for
+$\bullet = H_4$, $V_{24}$ for $\bullet = D_4$). $W^\bullet$ acts
+on each component of $\mathcal{R}_n^\bullet$ compatibly with the
+boundary map.
+\end{definition}
+
+\begin{definition}[Schl\"{a}fli refinement with vertex inclusion]
+\label{def:refinement}
+Given a refinement datum
+$\mathcal{R}_n^\bullet = (V_n^\bullet, E_n^\bullet, F_n^\bullet,
+\partial_n^\bullet)$, the \emph{Schl\"{a}fli refinement} produces
+a new datum $\mathcal{R}_{n+1}^\bullet$ with the following
+explicit components:
+\begin{itemize}
+\item \textbf{Vertices.}
+  $V_{n+1}^\bullet := V_n^\bullet \sqcup M_n^\bullet \sqcup
+  C_n^\bullet$, where $M_n^\bullet$ contains exactly one
+  edge-midpoint $m_e$ per $e \in E_n^\bullet$, and $C_n^\bullet$
+  contains exactly one face-centroid $c_f$ per $f \in F_n^\bullet$.
+  The first summand is the literal inclusion
+  $V_n^\bullet \subset V_{n+1}^\bullet$.
+\item \textbf{Edges.} $E_{n+1}^\bullet$ is the disjoint union of
+  three explicit edge classes:
+  \begin{enumerate}[label=(\alph*), leftmargin=2.4em, nosep, topsep=1pt]
+  \item \emph{Subdividing edges:} for each $e = \{u, v\} \in
+    E_n^\bullet$, the two edges $\{u, m_e\}$ and $\{m_e, v\}$.
+  \item \emph{Midpoint-centroid edges:} for each face
+    $f \in F_n^\bullet$ with edge sequence
+    $(e_1, \ldots, e_k) = \partial_n^\bullet(f)$, the $k$ edges
+    $\{m_{e_i}, c_f\}$ for $i = 1, \ldots, k$.
+  \item \emph{Centroid-midpoint reconnection edges:} the empty
+    set in this paper. (Some Schl\"{a}fli-style refinement schemes
+    in the literature add edges between centroids of adjacent
+    faces; we do not include those, and downstream uses of this
+    paper do not require them.)
+  \end{enumerate}
+\item \textbf{Faces.} $F_{n+1}^\bullet$ is determined by the new
+  edge set: each level-$n$ face $f$ with edge sequence
+  $(e_1, \ldots, e_k)$ produces $k$ level-$(n+1)$ triangle faces
+  $(m_{e_i}, c_f, m_{e_{i+1}})$ (cyclic indices), each with edge
+  sequence
+  $(\{m_{e_i}, c_f\}, \{c_f, m_{e_{i+1}}\}, \{m_{e_{i+1}}, m_{e_i}\})$.
+  Note: the third edge of each triangle, $\{m_{e_{i+1}}, m_{e_i}\}$,
+  is \emph{not} an element of $E_{n+1}^\bullet$ as constructed
+  above; we record this as a defect that the present paper does
+  not need (the load-bearing downstream uses of $G_{n+1}^\bullet$
+  in this paper, and in
+  \cite{CascadeClosureDynamics, CascadeRefinementCompat}, depend
+  only on the vertex inclusion and the edge classes (a)+(b), not
+  on the level-$(n+1)$ face structure).
+\item \textbf{Boundary map.} $\partial_{n+1}^\bullet$ is induced
+  on the level-$(n+1)$ triangles by the explicit construction
+  above.
+\item \textbf{$W^\bullet$-action.} $W^\bullet$ acts on
+  $V_{n+1}^\bullet$ by $g \cdot v = gv$ for $v \in V_n^\bullet$,
+  $g \cdot m_e = m_{ge}$ for $m_e \in M_n^\bullet$ (well-defined
+  since $g\{u, v\} = \{gu, gv\}$), and $g \cdot c_f = c_{gf}$
+  for $c_f \in C_n^\bullet$ (well-defined since $W^\bullet$ acts
+  on $F_n^\bullet$). The induced action on $E_{n+1}^\bullet$
+  permutes each of the edge classes (a)+(b) among themselves.
+\end{itemize}
+\end{definition}
+
+\begin{remark}[Scope of the construction]
+\label{rmk:refinement-scope}
+This paper uses Definition~\ref{def:refinement} only to construct
+the chain spaces $X_n^{0, \bullet}$, $X_n^{1, \bullet}$, the
+bonding maps, and the intertwining identities below.
+The level-$(n+1)$ face structure (and the missing
+midpoint-midpoint edges) play no role in those constructions.
+Downstream papers needing a fuller cell-complex structure on
+$\mathcal{R}_n^\bullet$ may extend Definition~\ref{def:refinement}
+explicitly; we do not.
+\end{remark}
+
+\begin{remark}[Vertex inclusion is the key]
+\label{rmk:vertex-inclusion}
+The literal subset $V_n^\bullet \subset V_{n+1}^\bullet$ from
+Definition~\ref{def:refinement} is the structural feature that
+makes the entire bonding-map construction below work cleanly:
+restriction of a function on $V_{n+1}^\bullet$ to $V_n^\bullet$ is
+a well-defined function on $V_n^\bullet$, and (under counting
+measure) is automatically a contraction in the $\ell^2$-norm.
+\end{remark}
+
+\subsection{The canonical edge-parent map}
+
+Unlike vertices, edges are not preserved under refinement: each
+level-$n$ edge $\{u, v\} \in E_n^\bullet$ is replaced by two
+level-$(n+1)$ edges $\{u, m\}$ and $\{m, v\}$. We record the
+inverse direction as a function:
+
+\begin{definition}[Edge-parent map]
+\label{def:edge-parent}
+For oriented edges, define
+\[
+  \pi_{n+1, n}^E \colon E^{\rm or}(G_{n+1}^\bullet) \to
+    E^{\rm or}(G_n^\bullet) \cup \{\bot\}
+\]
+by:
+\begin{itemize}
+\item If $e' \in E^{\rm or}(G_{n+1}^\bullet)$ is one of the two
+  pieces of a subdivided level-$n$ oriented edge $e =
+  (u, v) \in E^{\rm or}(G_n^\bullet)$ --- i.e., $e' = (u, m)$ or
+  $e' = (m, v)$ where $m$ is the midpoint of $\{u, v\}$ ---
+  then $\pi_{n+1, n}^E(e') := e$ (with the orientation inherited).
+\item If $e'$ is one of the new level-$(n+1)$ edges connecting a
+  midpoint to a centroid or two midpoints (i.e., a ``boundary''
+  edge introduced by Schl\"{a}fli refinement that does not
+  subdivide a level-$n$ edge), then $\pi_{n+1, n}^E(e') := \bot$.
+\end{itemize}
+The edge-parent map is well-defined as a function and is
+$W^\bullet$-equivariant: $g \cdot \pi_{n+1, n}^E(e') = \pi_{n+1, n}^
+E(g \cdot e')$ for every $g \in W^\bullet$ and every $e' \in
+E^{\rm or}(G_{n+1}^\bullet)$. This holds because Schl\"{a}fli
+refinement is itself $W^\bullet$-equivariant, so $W^\bullet$ permutes
+the descendants of an edge among themselves.
+\end{definition}
+
+\begin{notation}[Subdividing edges]
+\label{not:subdividing}
+We write $E^{\rm or}_{\rm sub}(G_{n+1}^\bullet) := \{e' :
+\pi_{n+1, n}^E(e') \neq \bot\}$ for the set of level-$(n+1)$
+oriented edges that subdivide a level-$n$ edge. By construction,
+$|E^{\rm or}_{\rm sub}(G_{n+1}^\bullet)| = 2 \cdot |E^{\rm or}(G_n^
+\bullet)|$ (each level-$n$ edge contributes exactly two
+level-$(n+1)$ subdividing edges).
+\end{notation}
+
+\subsection{Properties of the refinement}
+
+\begin{proposition}[Refinement properties]
+\label{prop:refinement-equivariant}
+For every $n \geq 0$ and $\bullet \in \{H_4, D_4\}$:
+\begin{enumerate}
+\item $V_n^\bullet \subset V_{n+1}^\bullet$ is a literal subset
+  inclusion of finite sets.
+\item The action of $W^\bullet$ on $V_n^\bullet$ extends to an
+  action on $V_{n+1}^\bullet$ that commutes with the inclusion.
+\item The edge-parent map $\pi_{n+1, n}^E$ is well-defined and
+  $W^\bullet$-equivariant.
+\item Each level-$n$ oriented edge has exactly two level-$(n+1)$
+  preimages under $\pi_{n+1, n}^E$ (its two subdividing pieces in
+  the inherited orientation).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) and (2) follow directly from Definition~\ref{def:refinement}:
+the vertex inclusion is by construction, and the
+$W^\bullet$-action extends because midpoints and centroids are
+$W^\bullet$-equivariantly defined from the level-$n$ data.
+
+(3) Edge-parent equivariance: by the Schl\"{a}fli refinement
+construction \cite[\S 8.2]{CoxeterRegularPolytopes}, $W^\bullet$
+permutes subdivided edges among themselves, and the
+parent-edge assignment respects this permutation.
+
+(4) Each level-$n$ unoriented edge $\{u, v\}$ contributes
+oriented edges $(u, v)$ and $(v, u)$ at level $n$, each of which
+has two subdividing pieces at level $n+1$ (namely $(u, m), (m, v)$
+for $(u, v)$, and $(v, m), (m, u)$ for $(v, u)$). So there are
+two preimages per oriented edge, giving the $|E^{\rm or}_{\rm sub}
+(G_{n+1}^\bullet)| = 2 |E^{\rm or}(G_n^\bullet)|$ count of
+Notation~\ref{not:subdividing}.
+\end{proof}
+
+\begin{remark}[No non-canonical choices]
+\label{rmk:no-canonical-choice}
+Definition~\ref{def:edge-parent} introduces no non-canonical
+choice: each level-$(n+1)$ oriented edge is either intrinsically a
+subdividing piece of a unique level-$n$ oriented edge (in which
+case it has a unique parent), or it is intrinsically a boundary
+edge of the Schl\"{a}fli refinement (in which case it has parent
+$\bot$). No lex-order, evaluation, or vertex-choice rule is needed.
+\end{remark}
+
+%=====================================================================
+\section{Counting Measures}
+\label{sec:measures}
+%=====================================================================
+
+\begin{definition}[Counting measures]
+\label{def:counting-measures}
+For each $n \geq 0$ and $\bullet \in \{H_4, D_4\}$:
+\begin{align*}
+  \mu_n^\bullet(S) &:= |S|, \qquad S \subseteq V(G_n^\bullet); \\
+  \nu_n^\bullet(T) &:= |T|, \qquad T \subseteq E^{\rm or}(G_n^
+    \bullet).
+\end{align*}
+These are unweighted counting measures; in particular, every vertex
+and oriented edge has measure $1$.
+\end{definition}
+
+\begin{remark}[Why counting measure]
+\label{rmk:why-counting}
+We use unscaled counting measure rather than probability
+normalization. The reason is that, with $V_n^\bullet \subset
+V_{n+1}^\bullet$, restriction to $V_n^\bullet$ is a contraction
+in $\ell^2(V_{n+1}^\bullet, \mu_{n+1}^\bullet) \to
+\ell^2(V_n^\bullet, \mu_n^\bullet)$ \emph{automatically}: the
+norm of the restriction is $\sum_{v \in V_n^\bullet} |f(v)|^2$,
+which is at most $\sum_{w \in V_{n+1}^\bullet} |f(w)|^2 =
+\|f\|^2_{X_{n+1}^0}$ since the smaller sum has fewer terms (all
+nonneg). Probability normalization would introduce a level-dependent
+rescaling factor that breaks this property.
+\end{remark}
+
+\begin{notation}[Sector fibres]
+\label{not:fibres}
+We import from \cite[\S\S 3, 5, 6, 7]{AlgebraicSubstrate}:
+\begin{itemize}
+\item $V_{H_4} \cong \HH \cong \R^4$ with the standard Euclidean
+  inner product (square-norm of unit icosian $= 1$);
+\item $V_{D_4} \cong \R^4$ with the standard Euclidean inner
+  product;
+\item $V_{16} = \Cl(1, 3)$ with the Hilbert--Schmidt-style trace
+  form $\langle a, b \rangle_{\Cl} := \langle a^\dagger b
+  \rangle_0$ (positive-definite by \cite[Ch.~9]{Lounesto});
+\item $V_8 = \OO$ with the standard octonion norm form
+  $\langle a, b \rangle_\OO := \Re(a \bar b)$.
+\end{itemize}
+We fix the combined vertex fibre
+\[
+  F^0 := V_{H_4} \oplus V_{D_4} \oplus V_{16} \oplus V_8,
+\]
+$\R$-dimension $4 + 4 + 16 + 8 = 32$, with the orthogonal-direct-sum
+inner product, and the edge fibre
+\[
+  F^1 := \Im(\OO),
+\]
+$\R$-dimension $7$, with the Euclidean inner product induced from
+$\OO$. These choices are fixed throughout this paper. (Downstream
+papers needing a different edge fibre re-construct the relevant
+spaces from scratch; we make no template promise to accommodate
+arbitrary $F^1$.)
+\end{notation}
+
+%=====================================================================
+\section{Sector Fibres and Finite-Level $\ell^2$ Spaces}
+\label{sec:finite-level}
+%=====================================================================
+
+\begin{definition}[Vertex-sector $\ell^2$ space]
+\label{def:Xn-0}
+For $n \geq 0$ and $\bullet \in \{H_4, D_4\}$, define
+\[
+  X_n^{0, \bullet} := \ell^2\bigl(V(G_n^\bullet), \mu_n^\bullet;\,
+    F^0\bigr),
+\]
+the $F^0$-valued $\ell^2$-functions on $V(G_n^\bullet)$ under
+counting measure, with inner product
+\[
+  \langle f, g \rangle_{X_n^0} :=
+    \sum_{v \in V(G_n^\bullet)} \langle f(v), g(v) \rangle_{F^0}.
+\]
+\end{definition}
+
+\begin{definition}[Edge-sector $\ell^2$ space]
+\label{def:Xn-1}
+For $n \geq 0$ define
+\[
+  X_n^{1, \bullet} := \ell^2_{\rm anti}\bigl(E^{\rm or}(G_n^\bullet),
+    \nu_n^\bullet;\, F^1\bigr),
+\]
+the $F^1$-valued $\ell^2$-functions $A$ on oriented edges
+satisfying the antisymmetry convention $A(-e) = -A(e)$ for every
+oriented edge $e$ (where $-e$ denotes reversed orientation), with
+inner product
+\[
+  \langle A, B \rangle_{X_n^1} := \tfrac{1}{2}
+    \sum_{e \in E^{\rm or}(G_n^\bullet)} \langle A(e), B(e)
+    \rangle_{F^1}.
+\]
+The factor of $\tfrac{1}{2}$ accounts for the double-counting from
+including both orientations of each unoriented edge.
+\end{definition}
+
+\begin{proposition}[Finite-level Hilbert structure]
+\label{prop:Xn-Hilbert}
+For every $n \geq 0$ and $\bullet \in \{H_4, D_4\}$:
+\begin{enumerate}
+\item $X_n^{0, \bullet}$ and $X_n^{1, \bullet}$ are
+  finite-dimensional real Hilbert spaces.
+\item $\dim_\R X_n^{0, \bullet} = |V(G_n^\bullet)| \cdot 32$ and
+  $\dim_\R X_n^{1, \bullet} = |E(G_n^\bullet)| \cdot 7$, where
+  $|E(G_n^\bullet)|$ is the number of unoriented edges
+  ($= |E^{\rm or}(G_n^\bullet)|/2$).
+\item In particular, both spaces are separable Hilbert spaces.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Each fibre is a finite-dimensional Euclidean space (32 for $F^0$,
+$7$ for $F^1$), and $V(G_n^\bullet), E^{\rm or}(G_n^\bullet)$ are
+finite (Proposition~\ref{prop:refinement-equivariant}). A finite
+direct sum of finite-dimensional Euclidean spaces under a
+positive-definite bilinear form is a finite-dimensional Hilbert
+space \cite[Ch.~II]{ReedSimonI}. The dimension formulas follow by
+counting; the antisymmetry convention identifies each pair
+$(e, -e)$ with a single element of dimension $\dim_\R F^1 = 7$,
+giving the unoriented-edge count.
+Separability is automatic.
+\end{proof}
+
+%=====================================================================
+\section{Downward Bonding Maps and Their Adjoints}
+\label{sec:bonding}
+%=====================================================================
+
+\subsection{Vertex-sector bonding by restriction}
+
+\begin{definition}[Vertex bonding map]
+\label{def:p0}
+For $n \geq 0$, define the \emph{vertex bonding map}
+\[
+  p_{n+1, n}^0 \colon X_{n+1}^0 \to X_n^0, \qquad
+    (p_{n+1, n}^0 f)(v) := f(v) \quad \text{for } v \in V(G_n^
+    \bullet).
+\]
+Since $V(G_n^\bullet) \subset V(G_{n+1}^\bullet)$ (Definition
+\ref{def:refinement}), the right-hand side is well-defined: $f$ is
+already a function on $V(G_{n+1}^\bullet)$ and we simply restrict
+its domain to the subset $V(G_n^\bullet)$.
+\end{definition}
+
+\subsection{Edge-sector bonding by parent-fibre averaging}
+
+\begin{definition}[Edge bonding map]
+\label{def:p1}
+For $n \geq 0$, define the \emph{edge bonding map}
+\[
+  p_{n+1, n}^1 \colon X_{n+1}^1 \to X_n^1, \qquad
+    (p_{n+1, n}^1 A)(e) := \tfrac{1}{2} \sum_{e' \in (\pi_{n+1, n}^E)^{-1}(e)}
+    A(e')
+\]
+for $e \in E^{\rm or}(G_n^\bullet)$. By
+Proposition~\ref{prop:refinement-equivariant}(4), the parent fibre
+$(\pi_{n+1, n}^E)^{-1}(e)$ has exactly two oriented edges (the two
+subdividing pieces of $e$), so the sum has two terms and the average
+factor $\tfrac{1}{2}$ gives the standard arithmetic mean.
+
+We verify that $p_{n+1, n}^1 A$ satisfies the antisymmetry
+convention: $(p_{n+1, n}^1 A)(-e) = \tfrac{1}{2} \sum A(-e') =
+-\tfrac{1}{2} \sum A(e') = -(p_{n+1, n}^1 A)(e)$, since each
+subdividing piece of $-e$ is the reverse of a subdividing piece of
+$e$.
+\end{definition}
+
+\subsection{Bonding maps are contractions}
+
+\begin{theorem}[Bonding contractions]
+\label{thm:bonding}
+For every $n \geq 0$:
+\begin{enumerate}
+\item $p_{n+1, n}^0 \colon X_{n+1}^0 \to X_n^0$ is a contraction:
+  $\|p_{n+1, n}^0 f\|_{X_n^0} \leq \|f\|_{X_{n+1}^0}$ for all
+  $f \in X_{n+1}^0$.
+\item $p_{n+1, n}^1 \colon X_{n+1}^1 \to X_n^1$ is a contraction:
+  $\|p_{n+1, n}^1 A\|_{X_n^1} \leq \|A\|_{X_{n+1}^1}$ for all
+  $A \in X_{n+1}^1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(1)} By Definition~\ref{def:p0},
+$\|p_{n+1, n}^0 f\|_{X_n^0}^2 = \sum_{v \in V(G_n^\bullet)}
+\|f(v)\|_{F^0}^2$. Since $V(G_n^\bullet) \subset
+V(G_{n+1}^\bullet)$ and $\|f(v)\|_{F^0}^2 \geq 0$ for every $v$,
+\[
+  \|p_{n+1, n}^0 f\|_{X_n^0}^2 = \sum_{v \in V(G_n^\bullet)}
+    \|f(v)\|_{F^0}^2 \leq \sum_{w \in V(G_{n+1}^\bullet)}
+    \|f(w)\|_{F^0}^2 = \|f\|_{X_{n+1}^0}^2.
+\]
+
+\emph{(2)} By Definition~\ref{def:p1} and the Cauchy--Schwarz
+inequality applied to the two-term average $\tfrac{1}{2}(A(e_1) +
+A(e_2))$:
+\[
+  \tfrac{1}{2}\|(p_{n+1, n}^1 A)(e)\|_{F^1}^2
+  = \tfrac{1}{2} \cdot \tfrac{1}{4} \|A(e_1) + A(e_2)\|_{F^1}^2
+  \leq \tfrac{1}{2} \cdot \tfrac{1}{2} (\|A(e_1)\|^2 + \|A(e_2)\|^2),
+\]
+where the first equality is the antisymmetry convention's
+$\tfrac{1}{2}$ factor and the inequality is Cauchy--Schwarz on the
+two-term average. Summing over $e \in E^{\rm or}(G_n^\bullet)$
+and using that each subdividing piece $e'$ of level $n+1$
+contributes to exactly one parent (by
+Proposition~\ref{prop:refinement-equivariant}(4)):
+\[
+  \|p_{n+1, n}^1 A\|_{X_n^1}^2
+  \leq \tfrac{1}{2} \sum_{e' \in E^{\rm or}_{\rm sub}(G_{n+1}^
+    \bullet)} \|A(e')\|^2_{F^1}
+  \leq \tfrac{1}{2} \sum_{e' \in E^{\rm or}(G_{n+1}^\bullet)}
+    \|A(e')\|^2_{F^1}
+  = \|A\|_{X_{n+1}^1}^2,
+\]
+where the final inequality is because $E^{\rm or}_{\rm sub}
+(G_{n+1}^\bullet) \subseteq E^{\rm or}(G_{n+1}^\bullet)$.
+\end{proof}
+
+\subsection{Adjoint cylindrical embeddings}
+
+\begin{definition}[Cylindrical embeddings]
+\label{def:j}
+For $n \geq 0$, define:
+\begin{itemize}
+\item \emph{Vertex embedding} $j_{n, n+1}^0 \colon X_n^0 \to
+  X_{n+1}^0$ by zero-extension:
+  \[
+    (j_{n, n+1}^0 g)(w) := \begin{cases} g(w) & \text{if } w \in
+      V(G_n^\bullet), \\ 0 & \text{if } w \in V(G_{n+1}^\bullet)
+      \setminus V(G_n^\bullet). \end{cases}
+  \]
+\item \emph{Edge embedding (adjoint of $p^1$)}
+  $j_{n, n+1}^1 \colon X_n^1 \to X_{n+1}^1$ by rescaled
+  parent-replication:
+  \[
+    (j_{n, n+1}^1 B)(e') := \begin{cases}
+      \tfrac{1}{2} B(\pi_{n+1, n}^E(e'))
+        & \text{if } \pi_{n+1, n}^E(e') \neq \bot, \\
+      0 & \text{otherwise.}
+    \end{cases}
+  \]
+  The rescaling factor $\tfrac{1}{2}$ is required for $j_{n, n+1}^1$
+  to be the genuine $\ell^2$-adjoint of $p_{n+1, n}^1$
+  (Proposition~\ref{prop:adjoints}(3) below). Without this factor,
+  the unscaled replication $s_{n, n+1}^1 B(e') := B(\pi^E(e'))$ is a
+  \emph{section} of $p_{n+1, n}^1$ (i.e.\
+  $p_{n+1, n}^1 \circ s_{n, n+1}^1 = \id$,
+  Remark~\ref{rmk:edge-section} below) but not its adjoint.
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[Adjoint relation]
+\label{prop:adjoints}
+For every $n \geq 0$:
+\begin{enumerate}
+\item $j_{n, n+1}^0 = (p_{n+1, n}^0)^*$ as bounded linear maps,
+  i.e.\ $\langle p_{n+1, n}^0 f, g \rangle_{X_n^0} = \langle f,
+  j_{n, n+1}^0 g \rangle_{X_{n+1}^0}$ for all $f \in X_{n+1}^0,
+  g \in X_n^0$.
+\item $p_{n+1, n}^0 \circ j_{n, n+1}^0 = \id_{X_n^0}$ (vertex
+  embedding is a section).
+\item $j_{n, n+1}^1 = (p_{n+1, n}^1)^*$ as bounded linear maps.
+\item $p_{n+1, n}^1 \circ j_{n, n+1}^1 = \tfrac{1}{2}\,\id_{X_n^1}$
+  (the genuine adjoint $j^1$ is a half-section, not an exact
+  section, of $p^1$; see also
+  Remark~\ref{rmk:edge-section}).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{(1)}
+\begin{align*}
+  \langle p_{n+1, n}^0 f, g \rangle_{X_n^0}
+  &= \sum_{v \in V(G_n^\bullet)} \langle f(v), g(v) \rangle_{F^0} \\
+  &= \sum_{w \in V(G_{n+1}^\bullet)} \langle f(w), (j_{n, n+1}^0 g)
+    (w) \rangle_{F^0} \quad \text{(extending by zero)} \\
+  &= \langle f, j_{n, n+1}^0 g \rangle_{X_{n+1}^0}.
+\end{align*}
+
+\emph{(2)} For $g \in X_n^0$ and $v \in V(G_n^\bullet)$,
+$(p_{n+1, n}^0 j_{n, n+1}^0 g)(v) = (j_{n, n+1}^0 g)(v) = g(v)$.
+
+\emph{(3)} Compute both sides explicitly. With the edge-sector
+inner product factor of $\tfrac{1}{2}$ from
+Definition~\ref{def:Xn-1}:
+\begin{align*}
+  \langle p_{n+1, n}^1 A, B \rangle_{X_n^1}
+  &= \tfrac{1}{2} \sum_{e \in E^{\rm or}(G_n^\bullet)}
+    \langle (p_{n+1, n}^1 A)(e), B(e) \rangle_{F^1} \\
+  &= \tfrac{1}{2} \sum_{e} \tfrac{1}{2} \sum_{e' \in (\pi^E)^{-1}(e)}
+    \langle A(e'), B(e) \rangle_{F^1} \\
+  &= \tfrac{1}{4} \sum_{e' \in E^{\rm or}_{\rm sub}(G_{n+1}^
+    \bullet)} \langle A(e'), B(\pi^E(e')) \rangle_{F^1}.
+\end{align*}
+With the rescaled $j_{n, n+1}^1$ formula
+$(j_{n, n+1}^1 B)(e') = \tfrac{1}{2} B(\pi^E(e'))$ on subdividing
+edges and $0$ elsewhere:
+\begin{align*}
+  \langle A, j_{n, n+1}^1 B \rangle_{X_{n+1}^1}
+  &= \tfrac{1}{2} \sum_{e' \in E^{\rm or}(G_{n+1}^\bullet)}
+    \langle A(e'), (j_{n, n+1}^1 B)(e') \rangle_{F^1} \\
+  &= \tfrac{1}{2} \sum_{e' \in E^{\rm or}_{\rm sub}}
+    \langle A(e'), \tfrac{1}{2} B(\pi^E(e')) \rangle_{F^1} \\
+  &= \tfrac{1}{4} \sum_{e' \in E^{\rm or}_{\rm sub}}
+    \langle A(e'), B(\pi^E(e')) \rangle_{F^1}.
+\end{align*}
+The two expressions agree, so $j_{n, n+1}^1 = (p_{n+1, n}^1)^*$.
+
+\emph{(4)} For $B \in X_n^1$ and $e \in E^{\rm or}(G_n^\bullet)$,
+the parent fibre of $e$ has two oriented edges $e_1, e_2$, both
+satisfying $\pi^E(e_i) = e$. Thus
+$(j_{n, n+1}^1 B)(e_i) = \tfrac{1}{2} B(e)$ for $i = 1, 2$, and
+$(p_{n+1, n}^1 j_{n, n+1}^1 B)(e) = \tfrac{1}{2}\bigl((j_{n, n+1}^1
+B)(e_1) + (j_{n, n+1}^1 B)(e_2)\bigr) = \tfrac{1}{2}\bigl(\tfrac{1}{2}
+B(e) + \tfrac{1}{2} B(e)\bigr) = \tfrac{1}{2} B(e)$. So
+$p_{n+1, n}^1 \circ j_{n, n+1}^1 = \tfrac{1}{2}\,\id_{X_n^1}$.
+\end{proof}
+
+\begin{remark}[Edge section vs adjoint]
+\label{rmk:edge-section}
+The edge sector has \emph{two} naturally-related upward maps from
+$X_n^1$ to $X_{n+1}^1$:
+\begin{itemize}
+\item the \emph{adjoint} $j_{n, n+1}^1 := (p_{n+1, n}^1)^*$, which
+  satisfies $j_{n, n+1}^1 B(e') = \tfrac{1}{2} B(\pi^E(e'))$ on
+  subdividing edges and $p_{n+1, n}^1 \circ j_{n, n+1}^1 =
+  \tfrac{1}{2} \id$ (Proposition~\ref{prop:adjoints}(4));
+\item the \emph{section} $s_{n, n+1}^1 B(e') := B(\pi^E(e'))$
+  on subdividing edges and $0$ elsewhere, which satisfies
+  $p_{n+1, n}^1 \circ s_{n, n+1}^1 = \id$ but is not the
+  $\ell^2$-adjoint of $p_{n+1, n}^1$.
+\end{itemize}
+The two differ by the rescaling $j_{n, n+1}^1 = \tfrac{1}{2}
+s_{n, n+1}^1$. We use $j$ (the adjoint) below for inverse-limit
+constructions; we use $s$ (the section) only when an exact
+section is needed downstream. The vertex sector does not have this
+distinction because the vertex bonding map is restriction (not
+averaging), and the corresponding adjoint $j_{n, n+1}^0$ is
+zero-extension, which is a section ($p^0 \circ j^0 = \id$).
+\end{remark}
+
+%=====================================================================
+\section{The Cylindrical Algebraic Direct-Limit Space}
+\label{sec:cyl-lim}
+%=====================================================================
+
+\subsection{Algebraic direct limit}
+
+\begin{definition}[Algebraic direct limit on vertices]
+\label{def:Xcyl-vertex}
+The \emph{cylindrical algebraic direct-limit space (vertex sector)}
+is
+\[
+  X_\cyl^{0, \bullet} := \varinjlim_n \big( X_n^{0, \bullet},\,
+    j_{n, n+1}^0 \big),
+\]
+the direct limit of the system $(X_n^{0, \bullet})_{n \geq 0}$
+under the cylindrical embeddings $j_{n, n+1}^0$ of
+Definition~\ref{def:j}.
+\end{definition}
+
+\begin{theorem}[Identification of $X_\cyl^0$]
+\label{thm:Xcyl-direct-limit}
+The vertex cylindrical direct-limit space identifies canonically
+with $c_{00}$-functions on the countable union $V_\infty^\bullet$
+of refinement-vertex sets:
+\[
+  X_\cyl^{0, \bullet} \cong c_{00}\bigl(V_\infty^\bullet;\, F^0\bigr),
+\]
+where $V_\infty^\bullet := \bigcup_{n \geq 0} V(G_n^\bullet)$
+(a countable set, by Proposition~\ref{prop:refinement-equivariant}(1)
+and the inclusion chain) and $c_{00}(\cdot; F^0)$ denotes
+$F^0$-valued functions of finite support.
+\end{theorem}
+
+\begin{proof}
+The algebraic direct limit $\varinjlim_n X_n^{0, \bullet}$ is the
+disjoint union $\bigsqcup_n X_n^{0, \bullet}$ modulo the
+equivalence relation generated by $f \sim j_{n, n+1}^0 f$ for
+$f \in X_n^{0, \bullet}$ \cite[Ch.~II.1.4]{ReedSimonI}. Each
+equivalence class has a unique representative at the smallest
+level $n$ for which the class contains an element; that
+representative is a function on $V(G_n^\bullet)$, which by
+zero-extension to all higher levels gives a function on
+$V_\infty^\bullet$ vanishing outside $V(G_n^\bullet)$.
+
+Conversely, every $c_{00}$-function $\phi \colon V_\infty^\bullet
+\to F^0$ has support contained in $V(G_n^\bullet)$ for some
+$n$ (since the support is finite and $V_\infty^\bullet$ is the
+ascending union), so it represents an element of $X_n^{0, \bullet}$.
+
+These maps are inverse to each other and are $\R$-linear, giving
+the identification $X_\cyl^{0, \bullet} \cong c_{00}(V_\infty^
+\bullet; F^0)$.
+\end{proof}
+
+\begin{remark}[Edge sector: half-section, finite-level only]
+\label{rmk:edge-cyl}
+The edge cylindrical direct-limit construction of the vertex
+sector does \emph{not} transfer cleanly to edges. The adjoint
+$j_{n, n+1}^1 = (p_{n+1, n}^1)^*$ satisfies only
+$p_{n+1, n}^1 \circ j_{n, n+1}^1 = \tfrac{1}{2}\id_{X_n^1}$
+(Proposition~\ref{prop:adjoints}(4)): it is a \emph{half-section},
+not a section, of $p_{n+1, n}^1$. Consequently
+$\varinjlim_n(X_n^{1, \bullet}, j_{n, n+1}^1)$ does not enjoy the
+properties used in the vertex identification
+(Theorem~\ref{thm:Xcyl-direct-limit}), and we do \emph{not} define an edge
+cylindrical direct-limit space here. Downstream papers requiring
+the edge sector should work at the finite level $X_n^1$ with the
+bounded bonding maps $p_{n+1, n}^1$ and their adjoints, without
+relying on a cylindrical-direct-limit formalism for edges.
+\end{remark}
+
+\subsection{The $\ell^2$-norm on $X_\cyl$}
+
+\begin{definition}[Pre-Hilbert structure on $X_\cyl$]
+\label{def:Xcyl-norm}
+On $X_\cyl^{0, \bullet} \cong c_{00}(V_\infty^\bullet; F^0)$, define
+the inner product
+\[
+  \langle \phi, \psi \rangle_{X_\cyl^0} :=
+    \sum_{v \in V_\infty^\bullet} \langle \phi(v), \psi(v)
+    \rangle_{F^0}.
+\]
+This sum is finite since $\phi, \psi$ have finite support. The
+resulting inner product is positive-definite (since $\langle \cdot,
+\cdot \rangle_{F^0}$ is) and makes $X_\cyl^0$ into a pre-Hilbert
+space.
+\end{definition}
+
+\begin{lemma}[Compatibility with finite-level inner products]
+\label{lem:Xcyl-compatibility}
+For each $n \geq 0$ and $f \in X_n^{0, \bullet}$ identified with
+its image in $X_\cyl^{0, \bullet}$ via the embedding $j_{n,
+\infty}^0$ (zero-extension to $V_\infty^\bullet$),
+$\|f\|_{X_n^0} = \|f\|_{X_\cyl^0}$.
+\end{lemma}
+
+\begin{proof}
+$\|f\|_{X_n^0}^2 = \sum_{v \in V(G_n^\bullet)} \|f(v)\|^2_{F^0}$;
+$\|f\|_{X_\cyl^0}^2 = \sum_{v \in V_\infty^\bullet} \|f(v)\|^2$,
+where $f(v) = 0$ for $v \in V_\infty^\bullet \setminus V(G_n^
+\bullet)$. The two sums agree.
+\end{proof}
+
+%=====================================================================
+\section{The Inverse-Limit Hilbert Space}
+\label{sec:inv-lim}
+%=====================================================================
+
+\begin{definition}[Inverse-limit space]
+\label{def:Xinv}
+The \emph{vertex inverse-limit space} is
+\[
+  X_\inv^{0, \bullet} :=
+    \big\{(f_n)_{n \geq 0} : f_n \in X_n^{0, \bullet},\
+    p_{n+1, n}^0 f_{n+1} = f_n \text{ for all } n,\
+    \sup_n \|f_n\|_{X_n^0} < \infty \big\}.
+\]
+It is equipped with the inner product
+\[
+  \langle f, g \rangle_{X_\inv^0} := \lim_{n \to \infty}
+    \langle f_n, g_n \rangle_{X_n^0}.
+\]
+\end{definition}
+
+\begin{lemma}[Limits exist]
+\label{lem:Xinv-limit-exists}
+For every bounded compatible family $(f_n)_n \in X_\inv^{0, \bullet}$,
+the sequence $\|f_n\|_{X_n^0}$ is non-decreasing and bounded, hence
+converges. By polarization, $\langle f_n, g_n \rangle_{X_n^0}$
+also converges for any pair of compatible families $(f_n), (g_n)$.
+\end{lemma}
+
+\begin{proof}
+By Definition~\ref{def:p0}, $p_{n+1, n}^0$ is restriction to
+$V(G_n^\bullet) \subset V(G_{n+1}^\bullet)$. So the compatibility
+$f_n = p_{n+1, n}^0 f_{n+1}$ means $f_n$ is the restriction of
+$f_{n+1}$ to the smaller domain $V(G_n^\bullet)$. Hence
+$\|f_n\|^2 = \sum_{v \in V(G_n^\bullet)} \|f_{n+1}(v)\|^2 \leq
+\sum_{w \in V(G_{n+1}^\bullet)} \|f_{n+1}(w)\|^2 = \|f_{n+1}\|^2$.
+The sequence is non-decreasing. By the supremum bound it is
+bounded, hence converges. Polarization for cross terms:
+$\langle f_n, g_n \rangle = \tfrac{1}{4}(\|f_n + g_n\|^2 -
+\|f_n - g_n\|^2)$, both norms converge, so does the inner product.
+\end{proof}
+
+\begin{theorem}[$X_\inv^0 \cong \ell^2(V_\infty^\bullet)$]
+\label{thm:Xinv-Hilbert}
+The map
+\[
+  \Phi \colon X_\inv^{0, \bullet} \to \ell^2(V_\infty^\bullet;
+    F^0), \qquad
+  \Phi\bigl((f_n)_n\bigr) := f_\infty,
+\]
+where $f_\infty(v) := f_n(v)$ for $v \in V(G_n^\bullet)$ (using
+the compatibility $f_n = p_{n+1, n}^0 f_{n+1}$ to ensure
+well-definedness across levels), is an $\R$-linear bijection that
+intertwines the inner products:
+\[
+  \langle f, g \rangle_{X_\inv^0} = \langle \Phi(f), \Phi(g)
+    \rangle_{\ell^2(V_\infty^\bullet; F^0)}.
+\]
+In particular, $X_\inv^{0, \bullet}$ is a separable Hilbert space.
+\end{theorem}
+
+\begin{proof}
+\emph{Well-definedness of $\Phi$.} For $v \in V_\infty^\bullet =
+\bigcup_n V(G_n^\bullet)$, choose $n$ minimal such that $v \in
+V(G_n^\bullet)$ and set $f_\infty(v) := f_n(v)$. The compatibility
+$f_n = p_{n+1, n}^0 f_{n+1}$ gives $f_n(v) = f_{n+1}(v)$ for
+$v \in V(G_n^\bullet)$ at any larger level, so the value is
+independent of the choice of $n$.
+
+$f_\infty \in \ell^2(V_\infty^\bullet; F^0)$: by
+Lemma~\ref{lem:Xinv-limit-exists}, $\sum_v \|f_\infty(v)\|^2 =
+\lim_n \sum_{v \in V(G_n^\bullet)} \|f_n(v)\|^2 = \lim_n
+\|f_n\|^2 < \infty$.
+
+\emph{Injectivity.} If $\Phi(f) = 0$, then $f_\infty(v) = 0$ for
+all $v$, so $f_n(v) = 0$ for all $n, v \in V(G_n^\bullet)$, hence
+$f_n = 0$ for all $n$.
+
+\emph{Surjectivity.} For $\phi \in \ell^2(V_\infty^\bullet; F^0)$,
+define $f_n := \phi|_{V(G_n^\bullet)} \in X_n^0$. Then
+$\|f_n\|^2 = \sum_{v \in V(G_n^\bullet)} \|\phi(v)\|^2 \leq
+\|\phi\|^2_{\ell^2}$, bounded. Compatibility: $p_{n+1, n}^0
+f_{n+1} = (\phi|_{V(G_{n+1}^\bullet)})|_{V(G_n^\bullet)} =
+\phi|_{V(G_n^\bullet)} = f_n$. So $(f_n) \in X_\inv$ and
+$\Phi(f) = \phi$.
+
+\emph{Inner product preservation.}
+$\langle f, g \rangle_{X_\inv} = \lim_n \sum_{v \in V(G_n^
+\bullet)} \langle f_n(v), g_n(v) \rangle = \sum_{v \in V_\infty^
+\bullet} \langle \Phi(f)(v), \Phi(g)(v) \rangle =
+\langle \Phi(f), \Phi(g) \rangle_{\ell^2}$.
+
+\emph{Hilbert + separable.} $\ell^2$ on a countable set with
+finite-dimensional fibre is a standard separable Hilbert space
+\cite[Ch.~II.4]{ReedSimonI}. The bijection $\Phi$ transports
+this structure to $X_\inv^{0, \bullet}$.
+\end{proof}
+
+\subsection{Density of $X_\cyl$ in $X_\inv$}
+
+\begin{proposition}[$X_\cyl^0$ is dense in $X_\inv^0$]
+\label{prop:Xcyl-dense}
+Under the canonical map
+\[
+  X_\cyl^{0, \bullet} \cong c_{00}(V_\infty^\bullet; F^0)
+    \hookrightarrow \ell^2(V_\infty^\bullet; F^0) \cong
+    X_\inv^{0, \bullet},
+\]
+the cylindrical algebraic direct-limit space embeds as a dense
+subspace of the inverse-limit Hilbert space.
+\end{proposition}
+
+\begin{proof}
+$c_{00}$ is dense in $\ell^2$ on any countable index set, by
+truncation: for $\phi \in \ell^2(V_\infty^\bullet)$ and
+$\varepsilon > 0$, choose $n$ large enough that $\sum_{v \in
+V_\infty^\bullet \setminus V(G_n^\bullet)} \|\phi(v)\|^2 <
+\varepsilon^2$, then $\phi_n := \phi|_{V(G_n^\bullet)}$ extended
+by zero is in $c_{00}$ and satisfies $\|\phi - \phi_n\|^2 <
+\varepsilon^2$. By Theorem~\ref{thm:Xinv-Hilbert}, the same
+density holds in $X_\inv^{0, \bullet}$.
+\end{proof}
+
+\subsection{Edge sector}
+
+\begin{remark}[Edge inverse limit: deferred]
+\label{rmk:edge-inv}
+The edge bonding map $p_{n+1, n}^1$ is parent-fibre averaging
+(not restriction), and satisfies the contraction bound
+$\|p_{n+1,n}^1\| \leq 1$ (Theorem~\ref{thm:bonding}(2)). However,
+contraction-monotonicity alone does \emph{not} establish completeness
+of the set
+$X_\inv^{1, \bullet} := \{(A_n) : p_{n+1, n}^1 A_{n+1} = A_n,\
+\sup_n \|A_n\| < \infty\}$
+in the induced limit norm: the vertex proof of
+Theorem~\ref{thm:Xinv-Hilbert} uses the concrete identification
+with $\ell^2(V_\infty^\bullet; F^0)$ (via restriction-bonding maps),
+and the averaging-bonding edge sector has no analogous
+identification at present. We therefore do \emph{not} claim here
+that $X_\inv^{1, \bullet}$ is a Hilbert space; it is at this stage
+a set of bounded compatible families with a pre-inner product
+induced by the finite-level norms. Establishing Hilbert-completion
+for the edge sector is left to downstream papers needing it.
+\end{remark}
+
+%=====================================================================
+\section{Commuting Symmetry Actions}
+\label{sec:commute}
+%=====================================================================
+
+\subsection{The three actions on $X_n$}
+
+\begin{definition}[Coxeter action, branchwise]
+\label{def:coxeter}
+For $g \in W^\bullet$ and $f \in X_n^{0, \bullet}$, define
+$(g \cdot f)(v) := \rho_{F^0}^\bullet(g) \cdot f(g^{-1} \cdot v)$
+for $v \in V(G_n^\bullet)$, where the fibre representation
+$\rho_{F^0}^\bullet$ depends on the branch:
+\begin{itemize}
+\item On the $H_4$ branch ($\bullet = H_4$, $W^\bullet = W(H_4)$):
+  $\rho_{F^0}^{H_4}(g)$ acts by the standard $H_4$-reflection
+  representation on $V_{H_4}$, and trivially on $V_{D_4},
+  V_{16}, V_8$.
+\item On the $D_4$ branch ($\bullet = D_4$, $W^\bullet = W(D_4)$):
+  $\rho_{F^0}^{D_4}(g)$ acts by the standard $D_4$-reflection
+  representation on $V_{D_4}$, and trivially on $V_{H_4},
+  V_{16}, V_8$.
+\end{itemize}
+The analogous action on $X_n^{1, \bullet}$ acts trivially on $F^1
+= \Im(\OO)$ on both branches and on the edge index by $W^\bullet$-
+permutation.
+\end{definition}
+
+\begin{lemma}[Unitarity of the Coxeter action]
+\label{lem:coxeter-unitary}
+Under the $\ell^2$-inner product of Definition~\ref{def:Xn-0}, the
+Coxeter action of Definition~\ref{def:coxeter} is unitary on
+$X_n^{0, \bullet}$ and on $X_n^{1, \bullet}$.
+\end{lemma}
+
+\begin{proof}
+The $H_4$- (resp.\ $D_4$-) reflection representation on $V_{H_4}$
+(resp.\ $V_{D_4}$) is orthogonal with respect to the Euclidean
+metric on the fibre (P2~\S\S 3--5), and acts trivially on the other
+fibre summands; hence $\rho_{F^0}^\bullet(g)$ is a fibre isometry.
+The vertex (resp.\ oriented-edge) measure $\mu_n^\bullet$ (resp.\
+$\nu_n^\bullet$) is $W^\bullet$-invariant by the
+Coxeter-equivariance of the refinement (Proposition~\ref
+{prop:refinement-equivariant}). The combined pre-composition with
+$g^{-1}$ and fibrewise action by $\rho_{F^0}^\bullet(g)$ is
+therefore a unitary on the $\ell^2$-space.
+\end{proof}
+
+\subsection{$\Q$-form and the $\sigma$-action}
+
+\begin{definition}[Mixed $\Q(\varphi)/\Q$-form of the vertex sector]
+\label{def:Xn-Q-form}
+By inspection of the explicit fibre constructions in
+\cite[\S\S 3, 5, 6, 7]{AlgebraicSubstrate}: $V_{D_4} = \R^4$ has
+the standard $\Q$-form $V_{D_4, \Q} := \Q^4$; $V_{16} =
+\Cl(1, 3)$ has the $\Q$-form $V_{16, \Q} := \Q\{\gamma_A\}$
+(rational span of the Clifford monomial basis,
+\cite[Def.~6.2]{AlgebraicSubstrate}, which is a $\Q$-basis of a
+$\Q$-form whose $\R$-extension equals $\Cl(1, 3)$); $V_{8} = \OO$
+has the $\Q$-form $V_{8, \Q} := \Q\{1, e_1, \ldots, e_7\}$
+(rational span of the standard octonion basis,
+\cite[Def.~7.1]{AlgebraicSubstrate}). For $V_{H_4} = \R^4$ the
+natural rational structure is the $\Q(\varphi)$-form
+$V_{H_4, \Q(\varphi)} := \Q(\varphi)^4 \subset \R^4$ via the
+standard real embedding $\iota \colon \Q(\varphi) \hookrightarrow \R$
+sending $\varphi$ to the golden ratio
+$\tfrac12(1 + \sqrt{5})$, because the icosian arithmetic on
+$V_{H_4}$ is naturally over $\Z[\varphi]$ rather than over $\Z$
+\cite[\S 3]{AlgebraicSubstrate}.
+
+The combined rationality data is the \emph{mixed
+$\Q(\varphi)/\Q$-form}
+\[
+  F^0_{\Q(\varphi)/\Q} := V_{H_4, \Q(\varphi)} \oplus V_{D_4, \Q}
+    \oplus V_{16, \Q} \oplus V_{8, \Q},
+\]
+which is a $\Q$-vector space of total $\Q$-dimension
+$8 + 4 + 16 + 8 = 36$ (since $V_{H_4, \Q(\varphi)} = \Q(\varphi)^4$
+has $\Q$-dimension $8$). Its R-extension is sector-dependent: on the
+$H_4$ sector we use $V_{H_4, \Q(\varphi)} \otimes_{\Q(\varphi)} \R
+= \R^4 = V_{H_4}$ via $\iota$, on the other three sectors we use
+$V_{*, \Q} \otimes_\Q \R = V_*$. With this convention
+\[
+  F^0 \;=\; V_{H_4} \oplus V_{D_4} \oplus V_{16} \oplus V_{8}
+  \quad (\dim_\R F^0 = 32)
+\]
+is recovered from $F^0_{\Q(\varphi)/\Q}$. We do \emph{not} claim
+$F^0_{\Q(\varphi)/\Q} \otimes_\Q \R = F^0$; that would have
+$\R$-dimension $36$, not $32$, because $\Q(\varphi) \otimes_\Q \R
+\cong \R \oplus \R$ (the two real roots of $x^2 - x - 1$). The
+$\R$-dimension $32$ of $F^0$ comes from the $\Q(\varphi)$-tensor
+product on the $H_4$ sector, not from the $\Q$-tensor product.
+
+Define the mixed-form vertex space at level $n$ by
+\[
+  X_n^{0, \bullet}|_{\Q(\varphi)/\Q}
+  := \ell^2_{\rm fin}\bigl(V(G_n^\bullet),
+    \mu_n^\bullet;\, F^0_{\Q(\varphi)/\Q}\bigr),
+\]
+the $F^0_{\Q(\varphi)/\Q}$-valued functions on the finite set
+$V(G_n^\bullet)$.
+\end{definition}
+
+\begin{definition}[$\sigma$-action on the mixed-form vertex sector]
+\label{def:sigma}
+The Galois involution $\sigma \colon \Q(\varphi) \to \Q(\varphi)$
+defined by $\sigma(\varphi) = 1 - \varphi$
+(\cite[Def.~\texttt{def:sigma}]{SigmaRationality}) extends
+sector-by-sector to a $\Q$-linear involution
+$\sigma_n \colon X_n^{0, \bullet}|_{\Q(\varphi)/\Q}
+\to X_n^{0, \bullet}|_{\Q(\varphi)/\Q}$
+on the mixed-form vertex space of
+Definition~\ref{def:Xn-Q-form} as follows:
+\begin{itemize}[topsep=2pt]
+\item on the $V_{H_4, \Q(\varphi)} = \Q(\varphi)^4$ component,
+  $\sigma_n$ acts coefficientwise by $\sigma$ in each of the four
+  $\Q(\varphi)$-coordinates;
+\item on each of $V_{D_4, \Q}, V_{16, \Q}, V_{8, \Q}$, $\sigma_n$
+  acts as the identity (these sectors carry no
+  $\Q(\varphi)$-rationality).
+\end{itemize}
+$\sigma_n$ is a $\Q$-linear involution on the $\Q$-vector space
+$X_n^{0, \bullet}|_{\Q(\varphi)/\Q}$. It does \emph{not} extend to
+an $\R$-linear involution on the $\R$-extension
+$X_n^{0, \bullet} = \ell^2(V(G_n^\bullet), \mu_n^\bullet; F^0)$
+through the standard real embedding $\iota$ (because $\sigma$ on
+$\Q(\varphi) \otimes_{\Q(\varphi), \iota} \R = \R$ is fixed by
+$\iota$ but free over the conjugate embedding $\bar\iota$ sending
+$\varphi$ to $1 - \varphi$); $\sigma_n$ is the \emph{rationality-side}
+involution, used in the intertwining identities below at the
+mixed-form level.
+
+We do not define a $\sigma$-action on the edge sector $X_n^1$ in
+this paper: the edge fibre $\Im(\OO)$ has no canonical
+$\Q(\varphi)$-coefficient structure relevant to the cascade
+arithmetic, and downstream papers needing edge $\sigma$-actions
+construct them separately.
+\end{definition}
+
+\subsection{The intertwining theorem}
+
+\begin{theorem}[Intertwining identities]
+\label{thm:commute}
+For every $n \geq 0$ and $\bullet \in \{H_4, D_4\}$:
+\begin{enumerate}
+\item (Refinement-Coxeter, vertex sector.) For every $g \in W^
+  \bullet$,
+  \[
+    g \circ p_{n+1, n}^0 = p_{n+1, n}^0 \circ g
+    \quad \text{on } X_{n+1}^{0, \bullet},
+  \]
+  and analogously $g \circ j_{n, n+1}^0 = j_{n, n+1}^0 \circ g$.
+\item (Refinement-Coxeter, edge sector.) The same identities hold
+  for $p_{n+1, n}^1$ and $j_{n, n+1}^1$ on $X_{n+1}^{1, \bullet}$.
+\item (Refinement-$\sigma$, vertex sector, mixed-form level.) On
+  the mixed-form vertex space
+  $X_{n+1}^{0, \bullet}|_{\Q(\varphi)/\Q}$ of
+  Definition~\ref{def:Xn-Q-form},
+  \[
+    \sigma_{n} \circ p_{n+1, n}^0|_{\Q(\varphi)/\Q}
+    = p_{n+1, n}^0|_{\Q(\varphi)/\Q} \circ \sigma_{n+1},
+  \]
+  where $p_{n+1, n}^0|_{\Q(\varphi)/\Q}$ is the mixed-form
+  restriction of the bonding map (well-defined because vertex
+  restriction preserves the sectorwise rationality)
+  and $\sigma_n, \sigma_{n+1}$ are the involutions of
+  Definition~\ref{def:sigma}. Analogously
+  $\sigma_n \circ j_{n, n+1}^0|_{\Q(\varphi)/\Q} =
+  j_{n, n+1}^0|_{\Q(\varphi)/\Q} \circ \sigma_{n+1}$.
+\item (Sectorwise Coxeter-$\sigma$, vertex sector.) On the $D_4$
+  branch ($\bullet = D_4$, $W^\bullet = W(D_4)$), the action of
+  Definition~\ref{def:coxeter} acts on $V_{D_4}$ and trivially on
+  $V_{H_4}, V_{16}, V_8$; since $\sigma$ acts trivially on
+  $V_{D_4, \Q}, V_{16, \Q}, V_{8, \Q}$, the commutation
+  $g|_{\Q(\varphi)} \circ \sigma_n = \sigma_n \circ g|_{\Q(\varphi)}$
+  holds automatically for all $g \in W(D_4)$ on
+  $X_n^{0, D_4}|_{\Q(\varphi)}$. On the $H_4$ branch, the analogous
+  automatic-commutation statement holds only on the
+  $\sigma$-trivial summands $V_{D_4, \Q}, V_{16, \Q}, V_{8, \Q}$
+  (on which $W(H_4)$ acts trivially by Definition~\ref{def:coxeter});
+  the full statement on the $V_{H_4}$ summand fails
+  (Remark~\ref{rmk:coxeter-sigma-restricted}).
+\end{enumerate}
+The Coxeter intertwinings of (1)--(2) descend to the vertex
+cylindrical and inverse-limit spaces $X_\cyl^{0, \bullet}$,
+$X_\inv^{0, \bullet}$ by linearity and continuity (using
+Theorem~\ref{thm:Xinv-Hilbert} for the inverse limit). The
+$\sigma$-intertwining of (3) is stated only at the mixed-form level
+$X_n^{0, \bullet}|_{\Q(\varphi)/\Q}$; we do not claim a
+$\sigma$-action on the $\R$-Hilbert spaces $X_n^{0, \bullet}$,
+$X_\cyl^{0, \bullet}$, $X_\inv^{0, \bullet}$, since (per
+Definition~\ref{def:sigma}) $\sigma$ does not extend $\R$-linearly
+through the standard real embedding $\iota$.
+\end{theorem}
+
+\begin{remark}[Why Coxeter-$\sigma$ commutation is restricted]
+\label{rmk:coxeter-sigma-restricted}
+\cite[Thm.~4.5]{SigmaRationality} requires a $\Q$-linear
+endomorphism $T$ of the $\Q$-vector space $V$ \emph{defined over the
+$\sigma$-fixed $\Q$-form}: concretely, $T$ must restrict to
+$V \otimes 1 \subset V \otimes_\Q \Q(\varphi)$. On the
+$V_{H_4, \Q}$ component, the $W(H_4)$ action is given by reflection
+matrices whose coefficients lie in $\Q(\varphi)$ (not in $\Q$),
+because the icosian roots have $\Q(\varphi)$-rational coordinates
+\cite[\S 3]{AlgebraicSubstrate}. Such a reflection is $\Q(\varphi)$-linear
+(hence a fortiori $\Q$-linear on the underlying $\Q$-vector space
+$V_{H_4, \Q(\varphi)}$), but it does \emph{not} restrict to a
+$\Q$-linear endomorphism of the $\sigma$-fixed subspace
+$V_{H_4, \Q} \otimes 1$: a non-trivial $\Q(\varphi)$-coefficient
+reflection of a $\Q$-vector carries it out of $V_{H_4, \Q} \otimes 1$
+into the general $V_{H_4, \Q(\varphi)}$ space. The hypothesis of
+\cite[Thm.~4.5]{SigmaRationality} is therefore not satisfied in
+the form required for automatic $\sigma$-commutation, and in
+general $g \circ \sigma$ and $\sigma \circ g$ \emph{do not} commute
+on the $V_{H_4}$ sector for $g \in W(H_4)$ acting non-trivially on
+$V_{H_4}$.
+
+The sectorwise statement (4) records the cases where commutation
+\emph{does} hold automatically under the branchwise action of
+Definition~\ref{def:coxeter}: the entire $D_4$-branch action (since
+$W(D_4)$ acts only on $V_{D_4}$, which is $\sigma$-trivial), and
+the $H_4$-branch action restricted to the $\sigma$-trivial summands
+$V_{D_4, \Q}, V_{16, \Q}, V_{8, \Q}$ (on which $W(H_4)$ acts
+trivially).
+
+Downstream papers needing the full $W(H_4)$-$\sigma$ relationship
+(e.g.\ in spectral-arithmetic constructions) should formulate it
+as an intertwining with $\sigma$-conjugate Coxeter elements
+$g^\sigma$ rather than as commutation: $\sigma \circ g = g^\sigma
+\circ \sigma$ where $g^\sigma$ is the matrix-coefficient
+$\sigma$-conjugate of $g$.
+\end{remark}
+
+\begin{proof}
+\emph{(1) Refinement-Coxeter, vertex.} For $f \in X_{n+1}^0,
+v \in V(G_n^\bullet), g \in W^\bullet$:
+\begin{align*}
+  (g \circ p_{n+1, n}^0 f)(v)
+  &= \rho_{F^0}(g) \cdot (p_{n+1, n}^0 f)(g^{-1} \cdot v)
+  = \rho_{F^0}(g) \cdot f(g^{-1} \cdot v) \\
+  &= (g \cdot f)(v) = (p_{n+1, n}^0 (g \cdot f))(v).
+\end{align*}
+This uses $g^{-1} \cdot v \in V(G_n^\bullet)$ (because $V(G_n^
+\bullet)$ is $W^\bullet$-stable) and the equality $f(g^{-1} v) =
+(p_{n+1, n}^0 f)(g^{-1} v)$ (definition of $p^0$ as restriction).
+
+The $j$-version follows by adjunction: $g \circ j = j \circ g$ is
+equivalent to $g^{-1} \circ p = p \circ g^{-1}$ (which we just
+proved with $g^{-1}$ in place of $g$).
+
+\emph{(2) Refinement-Coxeter, edge.} For $A \in X_{n+1}^1,
+e \in E^{\rm or}(G_n^\bullet), g \in W^\bullet$ (with the $W^\bullet$
+action on $\Im(\OO)$ trivial, so we drop the $\rho_{F^1}(g)$ factor):
+\begin{align*}
+  (g \circ p_{n+1, n}^1 A)(e)
+  &= (p_{n+1, n}^1 A)(g^{-1} \cdot e)
+  = \tfrac{1}{2} \sum_{e' \in (\pi^E)^{-1}(g^{-1} e)} A(e').
+\end{align*}
+By Proposition~\ref{prop:refinement-equivariant}(3),
+$(\pi^E)^{-1}(g^{-1} e) = g^{-1} \cdot (\pi^E)^{-1}(e)$.
+Substituting $e'' := g \cdot e'$:
+\[
+  = \tfrac{1}{2} \sum_{e'' \in (\pi^E)^{-1}(e)}
+    A(g^{-1} \cdot e'') = \tfrac{1}{2} \sum_{e''} (g \cdot A)(e'')
+  = (p_{n+1, n}^1 (g \cdot A))(e).
+\]
+
+\emph{(3) Refinement-$\sigma$.} The bonding map $p_{n+1, n}^0$
+restricts to a $\Q$-linear map $p_{n+1, n}^0|_\Q \colon
+X_{n+1}^{0, \bullet}|_\Q \to X_n^{0, \bullet}|_\Q$ between
+$\Q$-vector spaces of finite $\Q$-dimensions
+$|V(G_{n+1}^\bullet)| \cdot 36$ and $|V(G_n^\bullet)| \cdot 36$
+(using the $\Q$-dimension of $F^0_\Q$ from
+Definition~\ref{def:Xn-Q-form}; the corresponding $\R$-dimensions
+of the unrestricted spaces are
+$|V(\cdot)| \cdot 32$, but the $\Q$-form has $\Q$-dimension $36$
+because of the $\Q(\varphi)$-coefficient pair on the $V_{H_4}$
+sector). By the general
+functoriality theorem \cite[Thm.~4.5]{SigmaRationality}, the scalar
+extension $p_{n+1, n}^0|_\Q \otimes \id_{\Q(\varphi)}$ commutes
+with the coefficientwise $\sigma$-actions on both sides.
+The same argument applies to $j_{n, n+1}^0|_\Q$.
+
+\emph{(4) Sectorwise Coxeter-$\sigma$.}
+On the $D_4$ branch, $W(D_4)$ acts (by Definition~\ref{def:coxeter})
+on $V_{D_4}$ and trivially on $V_{H_4}, V_{16}, V_8$; since $\sigma$
+acts trivially on $V_{D_4, \Q}$ and on $V_{16, \Q}, V_{8, \Q}$, the
+composition $g \circ \sigma$ equals $\sigma \circ g$ on every fibre
+summand, so it equals $\sigma \circ g$ on
+$X_n^{0, D_4}|_{\Q(\varphi)}$. On the $H_4$ branch, $W(H_4)$ acts
+on $V_{H_4}$ and trivially on $V_{D_4}, V_{16}, V_8$; on the latter
+three summands $\sigma$ also acts trivially, so the commutation is
+automatic there by the same fibrewise computation. The remaining
+$V_{H_4}$ summand is excluded from (4)
+(Remark~\ref{rmk:coxeter-sigma-restricted}).
+
+The descent to $X_\cyl$ and $X_\inv$: each action is continuous on
+each $X_n$, and the intertwining is preserved under the algebraic
+direct-limit construction (Theorem~\ref{thm:Xcyl-direct-limit})
+and the $\ell^2$-completion (Theorem~\ref{thm:Xinv-Hilbert}).
+\end{proof}
+
+%=====================================================================
+\section{Citation Contract and Downstream Handoff}
+\label{sec:handoff}
+%=====================================================================
+
+\subsection{What downstream papers may cite}
+
+\begin{enumerate}
+\item Definitions~\ref{def:Xn-0}, \ref{def:Xn-1}: finite-level
+  Hilbert sector spaces $X_n^{0, \bullet}, X_n^{1, \bullet}$
+  under counting measure.
+\item Theorem~\ref{thm:bonding}: contractive downward bonding maps
+  $p_{n+1, n}^0$ (restriction) and $p_{n+1, n}^1$ (parent-fibre
+  averaging).
+\item Proposition~\ref{prop:adjoints}: cylindrical embeddings
+  $j_{n, n+1}^0, j_{n, n+1}^1$ as adjoints of the bonding maps,
+  with the section relations $p_{n+1, n}^0 \circ j_{n, n+1}^0 =
+  \id_{X_n^0}$ (vertex sector) and
+  $p_{n+1, n}^1 \circ j_{n, n+1}^1 = \tfrac{1}{2}\,\id_{X_n^1}$
+  (edge sector); see also Remark~\ref{rmk:edge-section} for the
+  unscaled section $s^1$ in the edge sector.
+\item Theorem~\ref{thm:Xcyl-direct-limit}: $X_\cyl^{0, \bullet}
+  \cong c_{00}(V_\infty^\bullet; F^0)$ as algebraic direct limit
+  (vertex sector).
+\item Theorem~\ref{thm:Xinv-Hilbert}: $X_\inv^{0, \bullet} \cong
+  \ell^2(V_\infty^\bullet; F^0)$ as separable Hilbert space
+  (vertex sector).
+\item Proposition~\ref{prop:Xcyl-dense}: $X_\cyl^{0, \bullet}$
+  dense in $X_\inv^{0, \bullet}$.
+\item Theorem~\ref{thm:commute}: refinement-Coxeter (full),
+  refinement-$\sigma$ (full), and Coxeter-$\sigma$ (restricted, see
+  Remark~\ref{rmk:coxeter-sigma-restricted}) intertwining
+  identities.
+\end{enumerate}
+
+\subsection{Recommended citation phrasing}
+
+``By P3 \cite{RefinementSpaces}, the cascade vertex substrate is
+$\ell^2(V_\infty^\bullet; F^0)$ as the projective inverse limit
+of $(X_n^{0, \bullet}, p_{n+1, n}^0)_n$ with $p_{n+1, n}^0$
+restriction (Theorems~\ref{thm:bonding}, \ref{thm:Xinv-Hilbert});
+the cylindrical direct limit $X_\cyl^{0, \bullet} \cong
+c_{00}(V_\infty^\bullet; F^0)$ embeds densely in $X_\inv^{0,
+\bullet}$ (Theorem~\ref{thm:Xcyl-direct-limit},
+Proposition~\ref{prop:Xcyl-dense}); the refinement-Coxeter and
+refinement-$\sigma$ intertwinings hold without restriction, and
+the Coxeter-$\sigma$ intertwining holds in the restricted sense of
+Theorem~\ref{thm:commute}(4) and
+Remark~\ref{rmk:coxeter-sigma-restricted} (full $W(H_4)$-$\sigma$
+commutation on the $V_{H_4}$ sector fails as a structural matter,
+because a non-trivial $W(H_4)$ reflection does not preserve the
+$\sigma$-fixed $\Q$-form $V_{H_4, \Q} \otimes 1$, so the hypothesis
+of \cite[Thm.~4.5]{SigmaRationality} is not satisfied on that
+summand).''
+
+\subsection{What this paper does not provide}
+
+No closure-functional / dynamics theorem (P4); no metric, gauge,
+spectral, Hecke, $\sigma$-cohomology, or computation
+correspondence (P5--P13); no continuum-limit identification of
+$X_\inv$ with any classical $L^2$ space; no physical interpretation.
+
+\appendix
+
+%=====================================================================
+\section{Notation Audit}
+\label{app:notation}
+%=====================================================================
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Symbol & Meaning & Defined \\
+\hline
+$\bullet$ & branch decoration ($H_4$ or $D_4$) & Def.~\ref{def:base-graphs} \\
+$V_{600}, V_{24}$ & base vertex sets (P2) & Def.~\ref{def:base-graphs} \\
+$G_n^\bullet$ & graph at refinement level $n$ & Def.~\ref{def:refinement} \\
+$V(G_n^\bullet)$ & vertex set, with $V_n \subset V_{n+1}$ & Def.~\ref{def:refinement} \\
+$M_n^\bullet, C_n^\bullet$ & midpoints and centroids at level $n$ & Def.~\ref{def:refinement} \\
+$\pi_{n+1, n}^E$ & canonical edge-parent map & Def.~\ref{def:edge-parent} \\
+$\mu_n^\bullet, \nu_n^\bullet$ & vertex / edge counting measures & Def.~\ref{def:counting-measures} \\
+$F^0$ & vertex fibre $V_{H_4}\oplus V_{D_4}\oplus V_{16}\oplus V_8$ & Notation~\ref{not:fibres} \\
+$F^1$ & edge fibre $\Im(\OO)$ (fixed) & Notation~\ref{not:fibres} \\
+$X_n^0, X_n^1$ & finite-level $\ell^2$ spaces & Defs.~\ref{def:Xn-0}, \ref{def:Xn-1} \\
+$p_{n+1, n}^0$ & vertex bonding (restriction) & Def.~\ref{def:p0} \\
+$p_{n+1, n}^1$ & edge bonding (parent-fibre averaging) & Def.~\ref{def:p1} \\
+$j_{n, n+1}^0$ & vertex embedding (zero-extension) & Def.~\ref{def:j} \\
+$j_{n, n+1}^1$ & edge embedding (parent-replication) & Def.~\ref{def:j} \\
+$V_\infty^\bullet$ & $\bigcup_n V(G_n^\bullet)$ & Thm.~\ref{thm:Xcyl-direct-limit} \\
+$X_\cyl^{0, \bullet}$ & $\cong c_{00}(V_\infty^\bullet; F^0)$ & Def.~\ref{def:Xcyl-vertex}, Thm.~\ref{thm:Xcyl-direct-limit} \\
+$X_\inv^{0, \bullet}$ & $\cong \ell^2(V_\infty^\bullet; F^0)$ & Def.~\ref{def:Xinv}, Thm.~\ref{thm:Xinv-Hilbert} \\
+$\sigma$ & coefficientwise Galois involution per P1 & Def.~\ref{def:sigma} \\
+$W^\bullet$ & Coxeter group ($W(H_4)$ or $W(D_4)$) & Def.~\ref{def:base-graphs} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{SigmaRationality}
+\emph{Cascade--Classical Correspondence I: Sigma-Fixed Rationality
+over $\Q(\varphi)$},
+\texttt{papers/cascade-sigma-rationality/cascade-sigma-rationality.tex}.
+(Paper P1.) Pinned results used in this paper:
+Definition~2.5 (coefficientwise $\sigma_V$ on $V \otimes_\Q
+\Q(\varphi)$); Definition~4.1 (the projector $\Pi_\sigma$);
+Lemma~2.6 ($\sigma$ commutes with $\Q$-linear endomorphisms after
+scalar extension); Theorem~4.5 (functoriality of the scalar
+extension of any $\Q$-linear map between finite-dimensional
+$\Q$-vector spaces).
+
+\bibitem{AlgebraicSubstrate}
+\emph{Cascade--Classical Correspondence II: The Cascade Algebraic
+Substrate},
+\texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}.
+(Paper P2.) Pinned results used in this paper:
+\S 3 (icosian model of $V_{H_4}$, $\Q(\varphi)$-rationality of the
+$W(H_4)$ matrix entries); \S 5 (the $V_{600}$ and $V_{24}$ vertex
+sets, including their explicit coordinates); Proposition~5.3
+($V_{24} \subset V_{600}$ as the rescaled $D_4$ root polytope);
+Definition~6.2 (the $\Cl(1, 3)$ monomial basis $\{\gamma_A\}$);
+Definition~7.1 (the standard octonion basis); \S\S 6, 7 (sector
+fibre conventions for $V_{16}$ and $V_8$).
+
+\bibitem{RefinementSpaces}
+(This paper.) \emph{Cascade--Classical Correspondence III:
+Refinement Spaces and Symmetry Actions}.
+
+\bibitem{ReedSimonI}
+M.~Reed and B.~Simon, \emph{Methods of Modern Mathematical
+Physics, Vol.~I: Functional Analysis}, rev.\ ed., Academic Press,
+1980. Hilbert spaces and direct/inverse limits: Ch.~II;
+$\ell^2$-spaces on countable sets: Ch.~II.4; algebraic direct
+limits: Ch.~II.1.4.
+
+\bibitem{Bogachev}
+V.~I.~Bogachev, \emph{Measure Theory}, Vol.~I, Springer, 2007.
+Conditional expectation and projective systems: Ch.~10.
+
+\bibitem{Humphreys}
+J.~E.~Humphreys, \emph{Reflection Groups and Coxeter Groups},
+Cambridge Studies in Advanced Mathematics \textbf{29}, Cambridge
+University Press, 1990. $W(H_4)$ and $W(D_4)$: Ch.~2.
+
+\bibitem{CoxeterRegularPolytopes}
+H.~S.~M.~Coxeter, \emph{Regular Polytopes}, 3rd ed., Dover, 1973.
+$24$-cell: \S 22.2; $600$-cell coordinates: \S 22.7;
+Schl\"{a}fli refinement: \S 8.
+
+\bibitem{Hatcher}
+A.~Hatcher, \emph{Algebraic Topology}, Cambridge University
+Press, 2002. Finite graphs and $1$-cochain conventions: Ch.~1.
+
+\bibitem{Lounesto}
+P.~Lounesto, \emph{Clifford Algebras and Spinors}, 2nd ed., London
+Math.\ Soc.\ Lecture Note Series \textbf{286}, Cambridge
+University Press, 2001. Hilbert--Schmidt-style trace forms: Ch.~9.
+
+\end{thebibliography}
+
+\end{document}
