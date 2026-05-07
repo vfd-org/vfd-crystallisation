@@ -488,10 +488,11 @@ the vertex inclusion is by construction, and the
 $W^\bullet$-action extends because midpoints and centroids are
 $W^\bullet$-equivariantly defined from the level-$n$ data.
 
-(3) Edge-parent equivariance: by the Schl\"{a}fli refinement
-construction \cite[\S 8.2]{CoxeterRegularPolytopes}, $W^\bullet$
-permutes subdivided edges among themselves, and the
-parent-edge assignment respects this permutation.
+(3) Edge-parent equivariance: by Definition~\ref{def:refinement}
+and the equivariant action on labelled descendants (the
+$W^\bullet$-action permutes labelled level-$(n+1)$ edges among
+themselves, preserving the class-label and the parent face), so
+the edge-parent map respects this permutation.
 
 (4) Each level-$n$ unoriented edge $\{u, v\}$ contributes
 oriented edges $(u, v)$ and $(v, u)$ at level $n$, each of which
@@ -642,8 +643,12 @@ For every $n \geq 0$ and $\bullet \in \{H_4, D_4\}$:
   finite-dimensional real Hilbert spaces.
 \item $\dim_\R X_n^{0, \bullet} = |V(G_n^\bullet)| \cdot 32$ and
   $\dim_\R X_n^{1, \bullet} = |E(G_n^\bullet)| \cdot 7$, where
-  $|E(G_n^\bullet)|$ is the number of unoriented edges
-  ($= |E^{\rm or}(G_n^\bullet)|/2$).
+  $|V(G_n^\bullet)|$ counts elements of the vertex set
+  $V_n^\bullet$ and $|E(G_n^\bullet)|$ counts labelled
+  unoriented edge elements of $E_n^\bullet$
+  (Definition~\ref{def:refinement}; in particular tagged
+  duplicates are counted separately), with
+  $|E(G_n^\bullet)| = |E^{\rm or}(G_n^\bullet)|/2$.
 \item In particular, both spaces are separable Hilbert spaces.
 \end{enumerate}
 \end{proposition}
@@ -1162,15 +1167,28 @@ $\rho_{F^0}^\bullet$ depends on the branch:
   group), and trivially on $V_{D_4}, V_{16}, V_8$.
 \item On the $D_4$ branch ($\bullet = D_4$, $W^\bullet = W(D_4)$):
   $\rho_{F^0}^{D_4}(g)$ acts on $V_{D_4} \cong \R^4$ by the
-  standard $D_4$-reflection representation in its
-  signed-permutation realization on the orthonormal basis
-  $\{e_1, e_2, e_3, e_4\}$ of $V_{D_4} = \R^4$ fixed by
-  $V_{24}$ being identified with the rescaled $D_4$ root polytope
-  in \cite[Definition~\texttt{def:V24}]{AlgebraicSubstrate} via
-  \cite[Proposition~\texttt{prop:24-in-600}]{AlgebraicSubstrate}
-  (matrix entries in $\Z \subset \Q$, see
-  \cite[Ch.~2]{Humphreys}), and trivially on $V_{H_4}, V_{16},
-  V_8$.
+  standard $D_4$-reflection representation transported from the
+  abstract $D_4$ root system through the orthogonal identification
+  $R \in \mathrm{O}(4)$ that realizes $V_{24}$ as the rescaled
+  $D_4$ root polytope in
+  \cite[Definition~\texttt{def:V24} and
+  Proposition~\texttt{prop:24-in-600}]{AlgebraicSubstrate}; that is,
+  for $g \in W(D_4)$ acting on the abstract root space by an
+  even signed-permutation matrix $g_0$ in
+  $\mathrm{Mat}_4(\Z)$ (\cite[Ch.~2]{Humphreys}), define
+  \[
+    \rho_{F^0}^{D_4}(g) := R \, g_0 \, R^{-1} \in \mathrm{O}(V_{D_4}).
+  \]
+  Although $R$ has entries in $\tfrac{1}{\sqrt{2}} \Q$, the
+  conjugation $R \, g_0 \, R^{-1}$ has entries in
+  $\tfrac{1}{2}\Z \subset \Q$ (each entry is a sum of products
+  $R_{ik} g_{0, kl} R^{-1}_{lj}$ in which the
+  $\tfrac{1}{\sqrt{2}}$ factors combine pairwise to a rational
+  $\tfrac{1}{2}$; explicit verification on the eight $D_4$
+  reflections is straightforward). In particular,
+  $\rho_{F^0}^{D_4}(g)$ preserves the $\Q$-form
+  $V_{D_4, \Q} = \Q^4$ for every $g \in W(D_4)$. The
+  representation acts trivially on $V_{H_4}, V_{16}, V_8$.
 \end{itemize}
 The analogous action on $X_n^{1, \bullet}$ acts trivially on $F^1
 = \Im(\OO)$ on both branches and on the edge index by $W^\bullet$-
@@ -1362,16 +1380,11 @@ For every $n \geq 0$ and $\bullet \in \{H_4, D_4\}$:
   \begin{enumerate}[label=(\roman*), leftmargin=2.6em, nosep,
     topsep=2pt]
   \item ($D_4$ branch.) For $\bullet = D_4$ and any $g \in W(D_4)$,
-    $\rho_{F^0}^{D_4}(g)$ acts on $V_{D_4}$ by the standard
-    $D_4$-reflection representation (signed-permutation
-    realization on the orthonormal basis $\{e_1, e_2, e_3, e_4\}$
-    of $V_{D_4} = \R^4$ fixed by
-    \cite[Definition~\texttt{def:V24}]{AlgebraicSubstrate}, with
-    $V_{24}$ identified as the rescaled $D_4$ root polytope by
-    \cite[Proposition~\texttt{prop:24-in-600}]{AlgebraicSubstrate};
-    the $W(D_4)$ matrix entries in this basis lie in $\Z \subset
-    \Q$ by \cite[Ch.~2]{Humphreys}), and trivially on
-    $V_{H_4}, V_{16}, V_8$. Hence $g|_{\Q(\varphi)/\Q}$ is
+    $\rho_{F^0}^{D_4}(g)$ has matrix entries in $\Q$ (in the
+    ambient $V_{D_4} = \R^4$ basis used here), as established in
+    Definition~\ref{def:coxeter}, hence preserves the $\Q$-form
+    $V_{D_4, \Q} = \Q^4$. It acts trivially on
+    $V_{H_4}, V_{16}, V_8$. Therefore $g|_{\Q(\varphi)/\Q}$ is
     well-defined for all $g \in W(D_4)$, and
     \[
       g|_{\Q(\varphi)/\Q} \circ \sigma_n
@@ -1458,12 +1471,12 @@ the $H_4$-branch action restricted to the $\sigma$-trivial summands
 $V_{D_4, \Q}, V_{16, \Q}, V_{8, \Q}$ (on which $W(H_4)$ acts
 trivially).
 
-Downstream papers needing the full $W(H_4)$-$\sigma$ relationship
-(e.g.\ in spectral-arithmetic constructions) should formulate it
-as an intertwining with $\sigma$-conjugate Coxeter elements
-$g^\sigma$ rather than as commutation: $\sigma \circ g = g^\sigma
-\circ \sigma$ where $g^\sigma$ is the matrix-coefficient
-$\sigma$-conjugate of $g$.
+For downstream papers needing the full $W(H_4)$-$\sigma$
+relationship (e.g.\ in spectral-arithmetic constructions),
+a natural formulation is as an intertwining with $\sigma$-conjugate
+Coxeter elements $g^\sigma$ rather than as commutation:
+$\sigma \circ g = g^\sigma \circ \sigma$ where $g^\sigma$ is the
+matrix-coefficient $\sigma$-conjugate of $g$.
 \end{remark}
 
 \begin{proof}
