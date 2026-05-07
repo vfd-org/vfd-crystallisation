@@ -89,7 +89,7 @@ regime must supply their own analysis.
 
 The false global theorem ``all correspondences are Borel /
 equivariant'' from an earlier foundations draft is replaced by an
-explicit finite-generator list of \emph{admissible finite-level
+explicit explicit generator-family list of \emph{admissible finite-level
 intertwiners} (Definition~\ref{def:admissible}), with printed
 operator-norm bounds and continuity/Borel measurability following
 directly from finite-dimensional functional calculus
@@ -196,7 +196,7 @@ explicitly:
   Hecke, cohomology, or CTM/TM correspondence theorem.
 \item No universal ``all correspondences are Borel and
   equivariant'' global theorem. Instead
-  Section~\ref{sec:intertwiners} gives a finite generator list
+  Section~\ref{sec:intertwiners} gives a explicit generator-family list
   with explicit bounds for the operators later papers actually
   invoke.
 \item No claim that $F_n$ has a unique minimiser or that the flow
@@ -221,7 +221,11 @@ Theorem-grade inputs to this paper:
   \cite{RefinementSpaces}) for the finite-level Hilbert spaces
   $X_n^{0, \bullet}, X_n^{1, \bullet}$, the downward bonding
   maps $p_{n+1, n}$, the adjoint cylindrical embeddings
-  $j_{n, n+1}$, and the commuting Coxeter/$\sigma$ actions.
+  $j_{n, n+1}$, and the finite-level Coxeter actions
+  (P3 only constructs the vertex inverse-limit Hilbert space and
+  defines $\sigma$ on the mixed $\Q(\varphi)/\Q$ vertex form,
+  not on the real Hilbert space; we use $\sigma$ here only at
+  the rational-form level).
 \item[\textbf{Classical mathematics.}]
   Spectral graph theory and finite-graph Hodge theory
   \cite{Chung}; bounded self-adjoint operators and spectral
@@ -245,7 +249,11 @@ derives the energy dissipation identity.
 Section~\ref{sec:discrete-time} analyses the discrete-time Euler
 scheme and separates energy monotonicity from norm contractivity.
 Section~\ref{sec:refinement-compat} establishes refinement
-intertwining. Section~\ref{sec:intertwiners} replaces the false
+intertwining for the coboundary block (factor $\tfrac{1}{2}$)
+and a mass-only refinement intertwining for $L_n$ in the
+specialization $\alpha = \beta = 0$, and records the obstruction
+to claiming more in the general $\alpha, \beta, \gamma > 0$
+regime. Section~\ref{sec:intertwiners} replaces the false
 global Borel/equivariance theorem by explicit finite-generator
 bounds. Section~\ref{sec:handoff} states the citation contract for
 downstream papers. Appendix~\ref{app:notation} is a notation
@@ -280,14 +288,14 @@ below is bounded.
 $X_n$ is a finite-dimensional real Hilbert space with
 $\dim_\R X_n = \dim_\R X_n^{0, \bullet} + \dim_\R X_n^{1, \bullet}
 < \infty$. The dimension bounds are given by
-\cite[Prop.~4.4]{RefinementSpaces}:
+\cite[Proposition~\texttt{prop:Xn-Hilbert}]{RefinementSpaces}:
 $\dim_\R X_n^{0, \bullet} = |V(G_n^\bullet)| \cdot 32$ and
 $\dim_\R X_n^{1, \bullet} = |E(G_n^\bullet)| \cdot 7$, both
 finite.
 \end{proposition}
 
 \begin{proof}
-Direct from \cite[Prop.~4.4]{RefinementSpaces}.
+Direct from \cite[Proposition~\texttt{prop:Xn-Hilbert}]{RefinementSpaces}.
 \end{proof}
 
 \subsection{Discrete coboundary and adjoint}
@@ -313,7 +321,7 @@ $d_n$ satisfies the antisymmetry convention on oriented edges:
 $(d_n f)(-e) = f(\text{head}(-e)) - f(\text{tail}(-e)) =
 f(\text{tail}(e)) - f(\text{head}(e)) = -(d_n f)(e)$, so
 $d_n f \in X_n^{1, \bullet}$ (which incorporates the antisymmetry
-convention of \cite[Def.~4.3]{RefinementSpaces}).
+convention of \cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces}).
 \end{definition}
 
 \begin{definition}[Adjoint coboundary]
@@ -329,7 +337,7 @@ for $A \in X_n^{1, \bullet}$ and $v \in V(G_n^\bullet)$,
 where each sum runs over oriented edges with $v$ as head or tail
 respectively. The factor $\tfrac{1}{2}$ compensates for the
 $\tfrac{1}{2}$ in the $X_n^1$ inner product convention
-\cite[Def.~4.3]{RefinementSpaces}.
+\cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces}.
 \end{definition}
 
 \begin{lemma}[Coboundary-adjoint is the inner-product adjoint]
@@ -455,11 +463,15 @@ Combining the blocks: $0 \leq C_n \leq \id$.
 \label{rmk:bounds-depend}
 The operator bounds in Proposition~\ref{prop:block-bounds} involve
 $\deg(G_n^\bullet)$, which grows with $n$ as the refinement
-subdivides edges and introduces new vertices with higher degree.
-This is expected and does not affect the finite-level theorems of
-this paper. For the infinite-level / inverse-limit theorems of
-P3, the bounds remain well-defined because the inverse limit is
-evaluated level-by-level.
+subdivides edges and centroid vertices acquire degree at least
+the lengths of their parent face boundaries. This is expected
+and does not affect the finite-level theorems of this paper. No
+inverse-limit boundedness statement for these operators is
+proved here; in particular, P3 constructs only a vertex
+inverse-limit Hilbert space
+(\cite[Theorem~\texttt{thm:Xinv-Hilbert}]{RefinementSpaces}) and
+explicitly does not construct an edge inverse-limit Hilbert
+space (\cite[Remark~\texttt{rmk:edge-inv}]{RefinementSpaces}).
 \end{remark}
 
 %=====================================================================
@@ -492,9 +504,11 @@ $\spec(d_n^* d_n)$).
 
 \begin{definition}[Closure functional $F_n$]
 \label{def:Fn}
-Fix real constants $\alpha, \beta, \gamma > 0$, to remain fixed
-throughout the paper. The \emph{closure functional at level $n$}
-is
+Fix real constants $\alpha, \beta \geq 0$, $\gamma > 0$. The
+default working regime, used unless explicitly overridden, is
+$\alpha, \beta, \gamma > 0$. The \emph{mass-only specialization}
+is the case $\alpha = \beta = 0$, $\gamma > 0$. The
+\emph{closure functional at level $n$} is
 \[
   F_n(\Phi) := \alpha R_n(\Phi) + \beta E_n(\Phi) - \gamma Q_n(\Phi),
 \]
@@ -880,7 +894,7 @@ is \emph{refinement-compatible} if, for every $n \geq 0$:
   p_{n+1, n} T_{n+1} = T_n p_{n+1, n} \quad \text{on } X_{n+1},
 \]
 where $p_{n+1, n} \colon X_{n+1} \to X_n$ is the downward bonding
-map of \cite[Thm.~5.3]{RefinementSpaces} (extended to the
+map of \cite[Theorem~\texttt{thm:bonding}]{RefinementSpaces} (extended to the
 direct-sum space $X_n = X_n^0 \oplus X_n^1$ in the natural
 componentwise way: $p_{n+1, n}(f, A) := (p_{n+1, n}^0 f, p_{n+1, n}
 ^1 A)$).
@@ -901,10 +915,10 @@ The coboundary family $(d_n)_n$ satisfies
   \quad \text{on } X_{n+1}^0,
 \]
 where $p_{n+1, n}^1$ is the parent-fibre averaging bonding map
-of \cite[Def.~5.2]{RefinementSpaces}, $p_{n+1, n}^0$ is the
-restriction of \cite[Def.~5.1]{RefinementSpaces}, and the level-
+of \cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces}, $p_{n+1, n}^0$ is the
+restriction of \cite[Definition~\texttt{def:p0}]{RefinementSpaces}, and the level-
 $(n+1)$ edges subdivide the level-$n$ edges via the canonical
-edge-parent map of \cite[Def.~5.2]{RefinementSpaces}.
+edge-parent map of \cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces}.
 \end{proposition}
 
 \begin{proof}
@@ -916,7 +930,7 @@ For $f \in X_{n+1}^0$ and $e \in E^{\rm or}(G_n^\bullet)$:
   = f(\text{head}(e)) - f(\text{tail}(e))
 \]
 (using $V(G_n^\bullet) \subset V(G_{n+1}^\bullet)$ and
-$p^0$ = restriction from \cite[Def.~5.1]{RefinementSpaces}).
+$p^0$ = restriction from \cite[Definition~\texttt{def:p0}]{RefinementSpaces}).
 
 On the other side, the level-$(n+1)$ edge $e$ subdivides as $e_1,
 e_2$ with $\text{head}(e_1) = \text{tail}(e_2) = m$ (the midpoint
@@ -926,7 +940,7 @@ of $e$), so
   (d_{n+1} f)(e_2) &= f(\text{head}(e)) - f(m).
 \end{align*}
 The parent-fibre average of $d_{n+1} f$ from
-\cite[Def.~5.2]{RefinementSpaces} is
+\cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces} is
 \[
   (p_{n+1, n}^1 d_{n+1} f)(e)
   = \tfrac{1}{2}\bigl((d_{n+1} f)(e_1) + (d_{n+1} f)(e_2)\bigr)
@@ -942,7 +956,7 @@ The factor of $\tfrac{1}{2}$ in
 Proposition~\ref{prop:coboundary-refinement} is intrinsic to the
 combination of an \emph{undivided-difference coboundary} $d_n$ at
 every refinement level with the \emph{averaging bonding map}
-$p_{n+1, n}^1$ of \cite[Def.~5.2]{RefinementSpaces}. Changing the
+$p_{n+1, n}^1$ of \cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces}. Changing the
 coboundary normalization (e.g.\ scaling $d_n$ by $2^n$ or by an
 edge-length factor) can convert the factor into different constants,
 but cannot eliminate it without sacrificing some other structural
@@ -1097,7 +1111,7 @@ Theorem~\ref{thm:flow-intertwining}.
 \begin{definition}[Generator list]
 \label{def:generators}
 The \emph{finite-level generator list} $\mathcal{G}_n$ at level
-$n$ consists of the following bounded operators:
+$n$ consists of the following bounded real-Hilbert-space operators:
 \begin{itemize}
 \item downward bonding maps: $p_{n+1, n}^0, p_{n+1, n}^1$ and
   their composition $p_{n+1, n}$ on $X_{n+1} \to X_n$;
@@ -1109,12 +1123,19 @@ $n$ consists of the following bounded operators:
 \item Coxeter actions: $\rho_n(g)$ for $g \in W^\bullet$;
 \item discrete differential operators: $d_n, d_n^*, A_n, B_n, C_n,
   L_n$ from \S\ref{sec:operators};
-\item flow operators: $e^{-t L_n}$ for $t \geq 0$;
-\item fixed fibre maps from \cite{AlgebraicSubstrate}: the
-  $\sigma$-involution on $V_{H_4, \Q(\varphi)}$, the icosian
-  star-map $\ast$, and the stabilizer map $\Im(\OO) \to \Im(\OO)$
-  fixing a chosen unit $i_0$.
+\item flow-operator family: $\{e^{-t L_n} : t \geq 0\}$;
+\item the $G_2$-stabilizer fibre map $\Im(\OO) \to \Im(\OO)$
+  fixing a chosen unit $i_0$ (an orthogonal map of norm $1$,
+  imported from \cite{AlgebraicSubstrate}).
 \end{itemize}
+The rationality-side $\sigma$-involution and the icosian star-map
+are \emph{not} elements of $\mathcal{G}_n$: by P3
+(\cite[Definition~\texttt{def:sigma}, Theorem~\texttt{thm:commute}]
+{RefinementSpaces}) these are defined only on the mixed-form
+$\Q(\varphi)/\Q$ vertex space and do not extend to bounded
+operators on the real Hilbert space $X_n^0$. They appear in
+this paper only at the rational-form level, never as elements
+of $\mathcal{G}_n$.
 \end{definition}
 
 \begin{definition}[Admissible intertwiner, syntactic]
@@ -1153,23 +1174,23 @@ finite-level Hilbert spaces:
 Generator & Norm bound & Source \\
 \hline
 $p_{n+1, n}^0$ (vertex bonding) & $\|p^0\|_{\op} \leq 1$ &
-  \cite[Thm.~5.3]{RefinementSpaces} \\
+  \cite[Theorem~\texttt{thm:bonding}]{RefinementSpaces} \\
 $p_{n+1, n}^1$ (edge bonding) & $\|p^1\|_{\op} \leq 1$ &
-  \cite[Thm.~5.3]{RefinementSpaces} \\
+  \cite[Theorem~\texttt{thm:bonding}]{RefinementSpaces} \\
 $p_{n+1, n}$ (direct-sum bonding $X_{n+1} \to X_n$) & $\|p\|_{\op}
   \leq 1$ & direct-sum norm, from $\|p^0\|, \|p^1\| \leq 1$ \\
 $j_{n, n+1}^0$ (vertex embedding) & $\|j^0\|_{\op} = 1$ &
-  \cite[Prop.~5.5]{RefinementSpaces} (adjoint of restriction,
+  \cite[Proposition~\texttt{prop:adjoints}]{RefinementSpaces} (adjoint of restriction,
   isometric on image) \\
 $j_{n, n+1}^1$ (edge embedding) & $\|j^1\|_{\op} = 2^{-1/2}$ &
-  \cite[Prop.~5.5]{RefinementSpaces} (rescaled replication:
+  \cite[Proposition~\texttt{prop:adjoints}]{RefinementSpaces} (rescaled replication:
   $\|j^1 B\|^2 = \tfrac{1}{2}\|B\|^2$) \\
 $j_{n, n+1}$ (direct-sum embedding $X_n \to X_{n+1}$) & $\|j\|_{\op}
   = 1$ & direct-sum norm: $\max(\|j^0\|, \|j^1\|) = 1$ \\
 $\mathbf{P}_{V_\bullet}$ (sector projections) & $\|\mathbf{P}\|_{\op}
   = 1$ & orthogonal projections \\
 $\rho_n(g)$ (Coxeter action) & $\|\rho_n(g)\|_{\op} = 1$ & unitary,
-  \cite[Def.~8.1]{RefinementSpaces} \\
+  \cite[Lemma~\texttt{lem:coxeter-unitary}]{RefinementSpaces} \\
 $d_n$ (coboundary) & $\|d_n\|_{\op} \leq 2\sqrt{\deg(G_n^\bullet)}$
   & Prop.~\ref{prop:block-bounds}(1) \\
 $d_n^*$ (adjoint coboundary) & $\|d_n^*\|_{\op} \leq 2\sqrt{\deg(G_n
@@ -1187,21 +1208,23 @@ $e^{-t L_n}$ (flow, $t \geq 0$) & $\|e^{-t L_n}\|_{\op} \leq
 \hline
 \end{tabular}
 \end{center}
-The fibre maps (icosian star, $\sigma$-involution, $G_2$
-stabilizer) from P2 act on the individual fibres $F^0, F^1$; their
-$\ell^2$-extension to $X_n^0, X_n^1$ has norm $\leq 1$ (each is
-unitary or norm-reducing at the fibre level). Explicit references:
-\cite[Def.~4.2]{AlgebraicSubstrate} for the icosian star,
-\cite[Def.~7.4]{AlgebraicSubstrate} for the $G_2$ stabilizer.
+The $G_2$-stabilizer fibre map (from
+\cite[Definitions~\texttt{def:G2}, \texttt{def:stab-u} and
+Fact~\texttt{fact:SU3-stab}]{AlgebraicSubstrate}) acts on
+$\Im(\OO) = F^1$ as a compact-group element of orthogonal norm $1$;
+its $\ell^2$-extension to $X_n^1$ therefore has operator norm
+exactly $1$.
 \end{proposition}
 
 \begin{proof}
-Each row is verified by citation or by the referenced proposition.
-$\|\rho_n(g)\|_{\op} = 1$ because $\rho_n(g)$ is unitary (it permutes
-an $\ell^2$-orthonormal basis up to fibre-level unitaries). The
-fibre-map claims use that the icosian star $\ast$ is an involution
-of norm $1$ on $V_{H_4, \Q(\varphi)}$ and the $G_2$ stabilizer is
-a compact group element of norm $1$ on $\Im(\OO)$.
+Each row of the table is verified by citation or by the referenced
+proposition. $\|\rho_n(g)\|_{\op} = 1$ because $\rho_n(g)$ is
+unitary
+(\cite[Lemma~\texttt{lem:coxeter-unitary}]{RefinementSpaces}: it
+permutes an $\ell^2$-orthonormal basis up to fibre-level
+orthogonal transformations). The $G_2$-stabilizer claim uses that
+the relevant element is in the compact orthogonal group of
+$\Im(\OO)$.
 \end{proof}
 
 \begin{theorem}[Admissible intertwiners are bounded, continuous, Borel]
@@ -1307,7 +1330,7 @@ composable from printed ingredients.
   this paper makes no claim about refinement-intertwining of $L_n$;
   see Remark~\ref{rmk:refinement-compat-scope}.
 \item Definitions~\ref{def:generators}, \ref{def:admissible} and
-  Theorem~\ref{thm:intertwiner-bounds}: finite generator list
+  Theorem~\ref{thm:intertwiner-bounds}: explicit generator-family list
   and bounded-intertwiner theorem replacing the false global
   Borel/equivariance theorem.
 \end{enumerate}
@@ -1330,7 +1353,7 @@ mass-block refinement compatibility
 refinement-intertwining $p_{n+1, n} e^{-t L_{n+1}} = e^{-t L_n}
 p_{n+1, n}$ holding in the mass-only case $\alpha = \beta = 0$
 (Theorem~\ref{thm:flow-intertwining}); and explicit bounded
-intertwiner bounds from the finite generator list
+intertwiner bounds from the explicit generator-family list
 (Theorem~\ref{thm:intertwiner-bounds}).''
 
 \subsection{What this paper does not provide}
@@ -1343,7 +1366,7 @@ intertwiner bounds from the finite generator list
 \item No PDE identification of $\dot\Phi_n = -L_n \Phi_n$ with
   any classical evolution equation.
 \item No universal Borel/equivariance principle beyond the
-  explicit finite generator list.
+  explicit explicit generator-family list.
 \end{enumerate}
 
 \appendix
@@ -1382,29 +1405,46 @@ $\mathcal{G}_n$ & finite-level generator list & Def.~\ref{def:generators} \\
 \emph{Cascade--Classical Correspondence II: The Cascade Algebraic
 Substrate},
 \texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}.
-(Paper P2.) Pinned results used here: Def.~4.2 (icosian star-map
-on $\Lambda(E_8)$, identified with the coefficientwise $\sigma$ of
-P1 via the remark ``$\ast$ is the coefficientwise $\sigma$ of P1''
-in P2~\S 3.2); Def.~7.4 ($G_2$ stabilizer of a unit imaginary
-octonion $= \mathrm{SU}(3)$); P2~\S 7 and Thm.~``$\sigma$-compatibility of
-$\Q$-defined P2 maps'' (coefficientwise $\sigma$-compatibility,
-including the fibre maps imported in
-\S\ref{sec:intertwiners} of this paper).
+(Paper P2.) Pinned results used here, cited by label:
+\texttt{def:icosian-star} (icosian star-map $\ast$ on the icosian
+ring $I \subset \HH$, identified at the rational level with the
+coefficientwise $\sigma$ of P1; this map is used in this paper
+only at the rational-form level, never as a real-Hilbert-space
+operator on $X_n^0$);
+\texttt{def:G2}, \texttt{def:stab-u}, and
+Fact~\texttt{fact:SU3-stab} ($G_2$ stabilizer of a unit imaginary
+octonion $\cong \mathrm{SU}(3)$);
+\texttt{def:Cl-basis}, \texttt{def:octonions}, and
+\texttt{def:Q-forms} (sector-fibre $\Q$-forms used in P3's
+mixed-form construction).
 
 \bibitem{RefinementSpaces}
 \emph{Cascade--Classical Correspondence III: Refinement Spaces
 and Symmetry Actions},
 \texttt{papers/cascade-refinement-spaces/cascade-refinement-spaces.tex}.
-(Paper P3.) Pinned results used here: Notation~3.3 (sector
-fibres $F^0, F^1$); Def.~4.2, Def.~4.3 (finite-level $\ell^2$
-spaces $X_n^0, X_n^1$); Prop.~4.4 (finite-level Hilbert structure);
-Def.~5.1 (vertex bonding $p^0$, a.k.a.\ restriction);
-Def.~5.2 (edge bonding $p^1$, a.k.a.\ parent-fibre averaging);
-Thm.~5.3 (operator-norm contraction bounds for $p^0, p^1$);
-Prop.~5.5 (embedding $j_{n, n+1} = (p_{n+1, n})^*$, giving
+(Paper P3.) Pinned results used here, cited by label:
+Notation~\texttt{not:fibres} (sector fibres $F^0, F^1$);
+Definitions~\texttt{def:Xn-0} and~\texttt{def:Xn-1} (finite-level
+$\ell^2$ spaces $X_n^0, X_n^1$);
+Proposition~\texttt{prop:Xn-Hilbert} (finite-level Hilbert
+structure);
+Definition~\texttt{def:edge-parent} (canonical edge-parent map
+on subdividing edges);
+Definition~\texttt{def:p0} (vertex bonding $p^0$ as restriction);
+Definition~\texttt{def:p1} (edge bonding $p^1$ as parent-fibre
+averaging);
+Theorem~\texttt{thm:bonding} (operator-norm contraction bounds
+for $p^0, p^1$);
+Proposition~\texttt{prop:adjoints} (adjoints
+$j_{n, n+1} = (p_{n+1, n})^*$, giving
 $\|j^0\|_{\op} = 1$ and $\|j^1 B\|^2 = \tfrac{1}{2}\|B\|^2$);
-Def.~8.1 (branchwise Coxeter action $\rho_n(g)$, unitary on each
-$X_n^{0, \bullet}, X_n^{1, \bullet}$).
+Definition~\texttt{def:coxeter} (branchwise Coxeter action
+$\rho_n(g)$);
+Lemma~\texttt{lem:coxeter-unitary} (unitarity of $\rho_n(g)$ on
+each $X_n^{0, \bullet}, X_n^{1, \bullet}$);
+Theorem~\texttt{thm:Xinv-Hilbert} (vertex inverse-limit Hilbert
+space; no edge inverse-limit Hilbert space is constructed in
+P3, see Remark~\texttt{rmk:edge-inv} of P3).
 
 \bibitem{ClosureDynamics}
 (This paper.) \emph{Cascade--Classical Correspondence IV: Discrete
