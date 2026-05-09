@@ -1,19 +1,24 @@
 # cascade-refinement-papers
 
-> *A four-paper bundle that builds the finite-level cascade refinement
+> *A five-paper bundle that builds the finite-level cascade refinement
 > infrastructure (vertex/edge Hilbert chains, downward bonding maps,
-> finite-level dynamics) and discharges the refinement-compatibility
+> finite-level dynamics), discharges the refinement-compatibility
 > obligation of the cascade-closure consumer API in an abstract
-> scalar pure-midpoint model.*
+> scalar pure-midpoint model, and supplies a witnessed (O1) tuple
+> for the cascade-mechanism API on the H_4 branch at every finite
+> top-rung level.*
 
-This repository ships **four preprints** as a single coherent release.
+This repository ships **five preprints** as a single coherent release.
 They share an underlying refinement geometry on the 600-cell and the
 24-cell, and chain together as **P3 → P4 → cascade-refinement-compat →
-cascade-mechanism**: P3 builds the finite-level Hilbert spaces, P4
-puts dynamics on them, cascade-refinement-compat discharges the
-residual-monotonicity obligation in an abstract scalar model, and
-cascade-mechanism defines the consumer API that successor papers in
-the cascade programme will cite.
+cascade-mechanism → cascade-selection-h4**: P3 builds the finite-level
+Hilbert spaces, P4 puts dynamics on them, cascade-refinement-compat
+discharges the residual-monotonicity obligation in an abstract scalar
+model, cascade-mechanism defines the consumer API that successor papers
+in the cascade programme will cite, and cascade-selection-h4 is the
+first such successor — a witnessed (O1) discharge on the H_4 branch
+at every finite top-rung level N ≥ 0, parametrised by a free choice
+in a punctured 28-dimensional W(H_4)-fixed subspace of F^0.
 
 | | paper | scope | status |
 |---|---|---|---|
@@ -21,11 +26,13 @@ the cascade programme will cite.
 | **P4** | [cascade-closure-dynamics][p4] — *finite-level closure dynamics* | Closure functional $F_n = \alpha R_n + \beta E_n - \gamma Q_n$ with bounded self-adjoint gradient $L_n$; continuous-time gradient flow $e^{-tL_n}$; energy dissipation; Euler one-step descent; coboundary refinement compatibility (factor $\tfrac{1}{2}$); mass-only refinement and flow intertwining ($\alpha=\beta=0$); explicit generator-family list with operator-norm bounds. | publication-ready (6 hostile-review rounds) |
 | **cascade-refinement-compat** | [cascade-refinement-compat][rc] — *(O3) discharge in abstract scalar model* | Schur-complement halving identity for the scaled curvature operator $\widetilde A_n = 2^n A_n^{\mathrm{vertex}}$; full discharge of cascade-closure consumer-obligation (O3) in an abstract scalar pure-midpoint refinement model; explicit obstruction proof that strict operator-level (O2) fails for nontrivial refinements (with defect $D_n$ characterised via the unsigned vertex–edge incidence operator $\mathcal{B}_n$). Lift to full P3/P4 tower conditional on open hypotheses (L1) and (L3). | publication-ready (7 hostile-review rounds) |
 | **cascade-mechanism** | [cascade-mechanism][cm] — *consumer API for cascade closure* | Definition 3.1 (cascade-closure event) + Proposition 3.6 (residual-zero / fixed-point propagation under flow-intertwining + monotonicity hypotheses) + Corollary 3.7 (convergence propagation) + Consumer API §3.4 (four obligations O0-O3) + Worked-invocation §3.5 (P3/P4 finite-level tower with explicit per-obligation open-status verdict) + Appendix C (programme-placement table). | publication-ready, codex programme-contribution verdict **(a) Moves the needle, now full** (20 hostile-review rounds + 3-round companion alignment) |
+| **cascade-selection-h4** | [cascade-selection-h4][csh] — *witnessed (O1) discharge on the H_4 branch* | Auxiliary block graph Laplacian $L_N^{\mathrm{block}} = L^{\mathrm{cl}}_N \otimes \mathrm{id}_{F^0}$ on $X_N^{0,H_4}$ (distinct from P4's $A_n^{\mathrm{vertex}}$ and from compat's $\widetilde A_n$); single named Theorem `thm:main` with five proved ingredients — bounded self-adjoint PSD operator with Chung-style norm bound; connected refined graph $G_N^{H_4}$ + $\ker L_N^{\mathrm{block}} \cong F^0$ via constant embedding $\iota_N$; convergence of $e^{-tL_N^{\mathrm{block}}}$ to kernel projection at exponential rate $\lambda_+(L_N^{\mathrm{block}}) > 0$; $\dim_{\mathbb{R}}(F^0)^{W(H_4)} = 28$ from $H_4$-irreducibility; witnessed $(O1)$ five-tuple in the witnessed-fixed-point sense for any $\xi^* \in (F^0)^{W(H_4)} \setminus \{0\}$; (O0) verified at top-rung level only; explicit $N=0$ numerics ($\lambda_+ = 9 - 3\sqrt{5}$ from P2 spectrum). | publication-ready (5 hostile-review rounds, three consecutive yes verdicts) |
 
 [p3]: papers/cascade-refinement-spaces/
 [p4]: papers/cascade-closure-dynamics/
 [rc]: papers/cascade-refinement-compat/
 [cm]: papers/cascade-mechanism/
+[csh]: papers/cascade-selection-h4/
 
 ## Reading order
 
@@ -45,6 +52,11 @@ the cascade programme will cite.
    API for cascade closure (O0)–(O3) and walks through the P3 / P4
    / compat machinery as a worked invocation, recording the
    precise open status of each obligation.
+5. **cascade-selection-h4** — read fifth; it is the first
+   successor that uses the cascade-mechanism API, supplying a
+   witnessed (O1) tuple on the H_4 branch via a new auxiliary
+   block graph Laplacian, parametrised by a free choice in the
+   28-dimensional W(H_4)-fixed subspace of the fibre $F^0$.
 
 ## What this bundle claims
 
@@ -68,14 +80,26 @@ the cascade programme will cite.
   citing cascade closure as load-bearing know exactly which four
   obligations they must discharge, and exactly what the present
   bundle has and has not closed.
+- A worked first invocation of that consumer API on the H_4
+  branch: a single named theorem (`thm:main` in
+  cascade-selection-h4) producing an explicit witnessed (O1)
+  five-tuple at every finite top-rung level $N \geq 0$,
+  parametrised by a free choice $\xi^*$ in a punctured
+  28-dimensional $W(H_4)$-fixed subspace.
 
 ## What this bundle does not claim
 
-- **No selection theorem.** cascade-mechanism is a
+- **No physical selection theorem.** cascade-mechanism is a
   *compatibility-template prerequisite*: it propagates residual-zero
   / fixed-point status downward under flow-intertwining + monotonicity
-  hypotheses. Nontrivial physical selection (O1) of an element of
-  $\ker \widetilde A_N \neq \{0\}$ remains the successor paper's task.
+  hypotheses. cascade-selection-h4 then supplies a *witnessed* (O1)
+  tuple on the $H_4$ branch in the fixed-point sense, but the
+  $\xi^*$-parameter is a free choice in the punctured 28-dimensional
+  $W(H_4)$-fixed subspace; **single-ray (single-state) physical
+  selection** is the named open hypothesis **(H-uniqueness)** of
+  cascade-selection-h4 §`sec:open-hyp` and lies *outside* the
+  cascade-closure consumer API. No basin-of-attraction selection
+  from arbitrary initial data is claimed.
 - **No full P3/P4-tower (O3) discharge.** The Schur-complement
   identity and the (O3) discharge in cascade-refinement-compat hold
   in a deliberately reduced abstract scalar pure-midpoint model.
@@ -118,6 +142,10 @@ papers/cascade-mechanism/           # cascade-closure consumer API
 ├── cascade-mechanism.tex
 ├── cascade-mechanism.pdf           # ~190 KiB
 └── references.bib
+
+papers/cascade-selection-h4/        # witnessed (O1) on H_4 branch
+├── cascade-selection-h4.tex        # tex source, label-form citations
+└── cascade-selection-h4.pdf        # built PDF, ~170 KiB
 ```
 
 ## Upstream dependencies (cited but not in this bundle)

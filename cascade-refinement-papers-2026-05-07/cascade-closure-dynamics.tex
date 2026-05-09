@@ -1,0 +1,1617 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\op}{\operatorname{op}}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\inv}{\mathrm{inv}}
+\newcommand{\cyl}{\mathrm{cyl}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+\title{Cascade--Classical Correspondence IV:\\
+  Discrete Closure Dynamics}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This paper puts dynamics on the refinement-spaces substrate of paper
+P3. At each refinement level $n \geq 0$ and branch $\bullet \in
+\{H_4, D_4\}$, we define an explicit quadratic closure functional
+\[
+  F_n = \alpha R_n + \beta E_n - \gamma Q_n
+    = \tfrac{1}{2} \langle \cdot, L_n \cdot \rangle
+\]
+on the finite-level Hilbert space $X_n := X_n^{0, \bullet} \oplus
+X_n^{1, \bullet}$, where $R_n$ is the curvature form, $E_n$ the
+indefinite off-diagonal coboundary form, and $Q_n$ the mass form,
+built respectively from the discrete graph Laplacian, coboundary,
+and mass operator of \S\ref{sec:operators}. The
+gradient of $F_n$ is represented by a bounded self-adjoint
+operator $L_n \in B(X_n)$
+(Theorem~\ref{thm:gradient-operator}); the continuous-time gradient
+flow $\dot\Phi_n = -L_n \Phi_n$ has unique global solutions
+$\Phi_n(t) = e^{-t L_n} \Phi_n(0)$
+(Theorem~\ref{thm:flow-exists}); energy dissipates along the flow
+as $\frac{d}{dt} F_n(\Phi_n(t)) = -\|L_n \Phi_n(t)\|^2 \leq 0$
+(Proposition~\ref{prop:energy-dissipation}).
+
+A discrete-time Euler scheme $\Phi_{n, k+1} = (I - \eta L_n)
+\Phi_{n, k}$ is analysed in
+Section~\ref{sec:discrete-time}. One-step energy descent under a
+step-size condition is separated cleanly from norm contractivity
+(Theorem~\ref{thm:coercive-contraction}), which holds only on
+coercive invariant subspaces $Y_n$ of $X_n$ where $L_n$ has a
+positive spectral gap.
+
+Refinement compatibility of the full gradient operator
+$L_n = \alpha A_n + \beta B_n - \gamma C_n$ is established here
+only in the mass-only case $\alpha = \beta = 0$
+(Theorems~\ref{thm:refinement-compat} and
+\ref{thm:flow-intertwining}); the two constituent results that
+\emph{are} proved are the factor-$\tfrac{1}{2}$ coboundary
+relation $p^1 d_{n+1} = \tfrac{1}{2} d_n p^0$
+(Proposition~\ref{prop:coboundary-refinement}) and the exact
+mass-block compatibility $p_{n+1, n} C_{n+1} = C_n p_{n+1, n}$
+(Proposition~\ref{prop:mass-refinement}). For arbitrary $(\alpha,
+\beta, \gamma)$ this paper makes no claim about refinement-
+intertwining of $L_n$ (neither positive nor negative); see
+Remark~\ref{rmk:refinement-compat-scope}. Downstream papers
+needing refinement-intertwining of cascade dynamics in that
+regime must supply their own analysis.
+
+An earlier foundations draft contained a broad ``all correspondences
+are Borel / equivariant'' framing as a global theorem-grade claim;
+this paper deliberately does not rely on that, and instead supplies
+an explicit generator-family list of \emph{admissible finite-level
+operator expressions} (Definition~\ref{def:admissible}; the legacy
+name ``intertwiner'' is retained for continuity but is purely
+syntactic, not equivariance-implying), with printed operator-norm
+bounds and continuity/Borel measurability following directly from
+finite-dimensional functional calculus
+(Theorem~\ref{thm:intertwiner-bounds}). This is the fourth of
+thirteen planned cascade infrastructure papers.
+
+\emph{No continuum-limit, Gromov--Hausdorff, or
+manifold-identification claim is made here. No target-side
+metric, hydrodynamic, gauge, spectral, Hecke, cohomology, or CTM
+correspondence theorem is in scope; those are P5--P13.}
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction and Source Audit}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{The repair target}
+
+The cascade framework has long referred to ``closure dynamics'' in
+heuristic language: a closure functional $\mathcal{F} = \alpha R +
+\beta E - \gamma Q$ whose critical points or gradient flows
+organise the cascade rungs. An earlier draft of the cascade
+correspondence foundations manuscript invoked this at an abstract
+global level via a broad ``correspondence theorem'' asserting that
+every correspondence arising from closure dynamics is Borel and
+symmetry-equivariant. Internal review identified that claim as
+false in the form stated, and recommended replacement by
+case-by-case operator-level bounds.
+
+This paper executes that replacement at the finite-level stage.
+We work exclusively on the finite-dimensional Hilbert spaces
+$X_n := X_n^{0, \bullet} \oplus X_n^{1, \bullet}$ of paper P3,
+define the closure functional as an explicit quadratic form,
+identify its gradient as a bounded self-adjoint operator $L_n$,
+and derive its dynamics rigorously. Every operator in the
+generator-family list of \S\ref{sec:intertwiners} (bonding maps,
+flow-operator family, Coxeter actions, sector projections,
+coboundaries, adjoints, Laplacian and mass blocks, $G_2$-stabilizer
+fibre map) is given an explicit norm bound; downstream papers
+P5--P13 may freely compose these into admissible finite-level
+expressions, with bounds inherited via
+Theorem~\ref{thm:intertwiner-bounds}.
+
+\subsection{What this paper proves}
+
+\begin{enumerate}
+\item The closure functional $F_n = \alpha R_n + \beta E_n -
+  \gamma Q_n$ is a continuous symmetric quadratic form on $X_n$,
+  equivalently $F_n(\Phi) = \tfrac{1}{2}\langle \Phi, L_n \Phi
+  \rangle$ for a unique bounded self-adjoint operator $L_n$
+  (\S\ref{sec:quadratic}, Theorem~\ref{thm:gradient-operator}).
+\item The continuous-time gradient flow $\dot\Phi_n = -L_n \Phi_n$
+  has unique global solutions on $[0, \infty)$ given by
+  $\Phi_n(t) = e^{-t L_n} \Phi_n(0)$, a finite-dimensional
+  $C^0$-semigroup on $X_n$
+  (\S\ref{sec:continuous-flow}, Theorem~\ref{thm:flow-exists}).
+\item Energy dissipation along the flow:
+  $d_t F_n(\Phi_n(t)) = -\|L_n \Phi_n(t)\|^2 \leq 0$
+  (\S\ref{sec:energy}, Proposition~\ref{prop:energy-dissipation}).
+\item Discrete-time Euler iteration: energy-decreasing under a
+  step-size bound; strict norm-contraction only on coercive
+  invariant subspaces of $L_n$
+  (\S\ref{sec:discrete-time}, Propositions~\ref{prop:euler-energy-decrease}
+  and Theorem~\ref{thm:coercive-contraction}).
+\item Refinement compatibility for the mass-only case
+  ($\alpha = \beta = 0$): the identity $p_{n+1, n} L_{n+1} =
+  L_n p_{n+1, n}$ and the flow intertwining
+  $p_{n+1, n} e^{-t L_{n+1}} = e^{-t L_n} p_{n+1, n}$ hold
+  (\S\ref{sec:refinement-compat},
+  Theorems~\ref{thm:refinement-compat} and
+  \ref{thm:flow-intertwining}). The constituent intermediate
+  identities proved are the factor-$\tfrac{1}{2}$ coboundary
+  relation (Proposition~\ref{prop:coboundary-refinement}) and the
+  exact mass-block compatibility
+  (Proposition~\ref{prop:mass-refinement}). For arbitrary
+  $(\alpha, \beta, \gamma)$ this paper makes no claim about
+  refinement-intertwining of $L_n$; see
+  Remark~\ref{rmk:refinement-compat-scope}.
+\item Admissible finite-level intertwiners (a finite list of
+  generators: bonding maps, cylindrical embeddings, sector
+  projections, symmetry actions, coboundaries, adjoints,
+  Laplacians, $L_n$, $e^{-tL_n}$, and fibre maps from P2) have
+  explicit operator-norm bounds; all admissible intertwiners are
+  bounded, continuous, and Borel
+  (\S\ref{sec:intertwiners}, Theorem~\ref{thm:intertwiner-bounds}).
+\end{enumerate}
+
+\subsection{What this paper does not prove}
+
+To forestall any reader from treating P4 as a continuum-dynamics
+or branch-specific-correspondence paper, we record the exclusions
+explicitly:
+
+\begin{enumerate}
+\item No continuum-limit statement: no Gromov--Hausdorff or
+  spectral-convergence claim about the $n \to \infty$ behaviour
+  of $F_n, L_n, e^{-tL_n}$, or the bonding maps. Those belong to
+  paper P6.
+\item No continuum PDE identification. This paper gives no
+  heat-equation, Ricci-flow, Navier--Stokes, or Yang--Mills-type
+  interpretation of $\dot\Phi_n = -L_n \Phi_n$. Those are P5, P7,
+  and P9.
+\item No target-side metric, hydrodynamic, gauge, spectral,
+  Hecke, cohomology, or CTM/TM correspondence theorem.
+\item No universal ``all correspondences are Borel and
+  equivariant'' global theorem. Instead
+  Section~\ref{sec:intertwiners} gives an explicit generator-family list
+  with explicit bounds for the operators later papers actually
+  invoke.
+\item No claim that $F_n$ has a unique minimiser or that the flow
+  converges to the ground state without further spectral
+  hypotheses. Energy monotonicity and norm contractivity are
+  separated theorems with separate hypotheses.
+\item No claim about uniqueness or classification of the closure
+  functional at the level of abstract $W^\bullet$-symmetric
+  quadratic forms. (The cascade-foundations note F2 contains such
+  a claim; P4 does not rely on or reproduce it.)
+\end{enumerate}
+
+\subsection{Source audit}
+
+Theorem-grade inputs to this paper:
+\begin{description}
+\item[\textbf{Internal cascade infrastructure.}]
+  Paper P2 (cascade algebraic substrate
+  \cite{AlgebraicSubstrate}) for the sector fibres $V_{H_4},
+  V_{D_4}, V_{16}, V_8, \Im(\OO)$ and their fixed trace forms.
+  Paper P3 (cascade refinement spaces
+  \cite{RefinementSpaces}) for the finite-level Hilbert spaces
+  $X_n^{0, \bullet}, X_n^{1, \bullet}$, the downward bonding
+  maps $p_{n+1, n}$, the adjoint cylindrical embeddings
+  $j_{n, n+1}$, and the finite-level Coxeter actions
+  (P3 only constructs the vertex inverse-limit Hilbert space and
+  defines $\sigma$ on the mixed $\Q(\varphi)/\Q$ vertex form,
+  not on the real Hilbert space; we use $\sigma$ here only at
+  the rational-form level).
+\item[\textbf{Classical mathematics.}]
+  Spectral graph theory and finite-graph Hodge theory
+  \cite{Chung}; bounded self-adjoint operators and spectral
+  calculus in finite dimension \cite{ReedSimonI, HornJohnson};
+  linear ODEs with bounded coefficients
+  \cite{CoddingtonLevinson, Hartman}.
+\end{description}
+
+We do not use as theorem-grade input any cascade-foundations F2
+uniqueness claim, any prior global Borel/equivariance correspondence
+theorem from earlier foundations drafts, or any continuum-limit
+cascade note.
+
+\subsection{Organization}
+
+Section~\ref{sec:operators} fixes the finite-level discrete
+operators (coboundary, Laplacian, mass) and proves their basic
+bounds. Section~\ref{sec:quadratic} defines the closure functional
+and identifies its gradient. Section~\ref{sec:continuous-flow}
+constructs the continuous-time flow. Section~\ref{sec:energy}
+derives the energy dissipation identity.
+Section~\ref{sec:discrete-time} analyses the discrete-time Euler
+scheme and separates one-step energy descent (under a step-size
+condition) from norm contractivity.
+Section~\ref{sec:refinement-compat} establishes refinement
+intertwining for the coboundary block (factor $\tfrac{1}{2}$)
+and a mass-only refinement intertwining for $L_n$ in the
+specialization $\alpha = \beta = 0$, and records the obstruction
+to claiming more in the general $\alpha, \beta, \gamma > 0$
+regime. Section~\ref{sec:intertwiners} replaces the false
+global Borel/equivariance theorem by explicit generator-family
+bounds. Section~\ref{sec:handoff} states the citation contract for
+downstream papers. Appendix~\ref{app:notation} is a notation
+concordance.
+
+%=====================================================================
+\section{Finite-Level State Spaces and Discrete Operators}
+\label{sec:operators}
+%=====================================================================
+
+\subsection{State spaces}
+
+\begin{definition}[Combined state space]
+\label{def:Xn}
+For $n \geq 0$ and $\bullet \in \{H_4, D_4\}$, let
+\[
+  X_n := X_n^{0, \bullet} \oplus X_n^{1, \bullet}
+\]
+denote the direct sum of the vertex-sector and edge-sector
+$\ell^2$-spaces from
+\cite[Definitions~\texttt{def:Xn-0} and~\texttt{def:Xn-1}]{RefinementSpaces}, with
+the direct-sum inner product
+$\langle (f, A), (g, B) \rangle_{X_n} := \langle f, g
+\rangle_{X_n^0} + \langle A, B \rangle_{X_n^1}$.
+The \emph{domain} is $D_n := X_n$; since $X_n$ is
+finite-dimensional (Proposition~\ref{prop:Xn-finite}), the domain
+is automatically dense in itself and every operator introduced
+below is bounded.
+\end{definition}
+
+\begin{proposition}[$X_n$ is finite-dimensional]
+\label{prop:Xn-finite}
+$X_n$ is a finite-dimensional real Hilbert space with
+$\dim_\R X_n = \dim_\R X_n^{0, \bullet} + \dim_\R X_n^{1, \bullet}
+< \infty$. The dimension bounds are given by
+\cite[Proposition~\texttt{prop:Xn-Hilbert}]{RefinementSpaces}:
+$\dim_\R X_n^{0, \bullet} = |V(G_n^\bullet)| \cdot 32$ and
+$\dim_\R X_n^{1, \bullet} = |E(G_n^\bullet)| \cdot 7$, both
+finite.
+\end{proposition}
+
+\begin{proof}
+Direct from \cite[Proposition~\texttt{prop:Xn-Hilbert}]{RefinementSpaces}.
+\end{proof}
+
+\subsection{Discrete coboundary and adjoint}
+
+\begin{definition}[Coboundary operator]
+\label{def:coboundary}
+The \emph{discrete coboundary}
+$d_n \colon X_n^{0, \bullet} \to X_n^{1, \bullet}$ is defined by
+\[
+  (d_n f)(e) := \pi_{F^0 \to F^1}\bigl(
+    f(\text{head}(e)) - f(\text{tail}(e))\bigr)
+\]
+for $e \in E^{\rm or}(G_n^\bullet)$ a level-$n$ oriented edge,
+where $\text{head}(e), \text{tail}(e) \in V(G_n^\bullet)$ are its
+endpoints (with orientation), $f(\text{head}(e)) -
+f(\text{tail}(e))$ is computed in the fibre $F^0$ of
+\cite[Notation~\texttt{not:fibres}]{RefinementSpaces}, and
+$\pi_{F^0 \to F^1} \colon F^0 \to F^1 = \Im(\OO)$ is the
+canonical orthogonal projection: $F^0 \to V_8 = \OO$ (component
+projection in the orthogonal direct sum
+$F^0 = V_{H_4} \oplus V_{D_4} \oplus V_{16} \oplus V_8$),
+followed by $\OO \to \Im(\OO)$ (projection onto the imaginary
+part).
+
+$d_n$ satisfies the antisymmetry convention on oriented edges:
+$(d_n f)(-e) = \pi_{F^0 \to F^1}\bigl(
+f(\text{head}(-e)) - f(\text{tail}(-e))\bigr) =
+\pi_{F^0 \to F^1}\bigl(f(\text{tail}(e)) - f(\text{head}(e))
+\bigr) = -(d_n f)(e)$, using $\R$-linearity of $\pi_{F^0 \to F^1}$.
+Hence $d_n f \in X_n^{1, \bullet}$ (which incorporates the
+antisymmetry convention of
+\cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces}).
+\end{definition}
+
+\begin{definition}[Adjoint coboundary]
+\label{def:coboundary-adjoint}
+The \emph{adjoint coboundary} $d_n^* \colon X_n^{1, \bullet} \to
+X_n^{0, \bullet}$ is the $\ell^2$-adjoint of $d_n$ with respect
+to the inner products of $X_n^{0, \bullet}$ and $X_n^{1, \bullet}$:
+for $A \in X_n^{1, \bullet}$ and $v \in V(G_n^\bullet)$, write
+$\iota_{F^1 \to F^0} \colon F^1 = \Im(\OO) \hookrightarrow F^0$
+for the canonical inclusion of the imaginary octonion summand
+into the $V_8$ summand of $F^0$. Then
+\[
+  (d_n^* A)(v) = \iota_{F^1 \to F^0}\Bigl(
+    \tfrac{1}{2} \sum_{e : v = \text{head}(e)}
+      A(e) - \tfrac{1}{2} \sum_{e : v = \text{tail}(e)} A(e)\Bigr),
+\]
+where each sum runs over oriented edges with $v$ as head or tail
+respectively. The factor $\tfrac{1}{2}$ compensates for the
+$\tfrac{1}{2}$ in the $X_n^1$ inner product convention
+\cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces}; the
+$\iota_{F^1 \to F^0}$ inclusion makes $(d_n^* A)(v) \in F^0$ as
+required by the codomain $X_n^{0, \bullet}$.
+\end{definition}
+
+\begin{lemma}[Coboundary-adjoint is the inner-product adjoint]
+\label{lem:dn-adjoint}
+$\langle d_n f, A \rangle_{X_n^1} = \langle f, d_n^* A
+\rangle_{X_n^0}$ for all $f \in X_n^{0, \bullet}, A \in
+X_n^{1, \bullet}$.
+\end{lemma}
+
+\begin{proof}
+Write $\pi := \pi_{F^0 \to F^1}$, $\iota := \iota_{F^1 \to F^0}$,
+and note that with respect to the orthogonal-direct-sum inner
+product on $F^0 = V_{H_4} \oplus V_{D_4} \oplus V_{16} \oplus V_8$
+and the standard real inner product on $F^1 = \Im(\OO) \subset
+V_8$, the projection-inclusion pair is dual:
+$\pi^* = \iota$ in
+$\langle \pi(x), y \rangle_{F^1}
+= \langle x, \iota(y) \rangle_{F^0}$
+for $x \in F^0$, $y \in F^1$.
+
+For $f \in X_n^{0, \bullet}$, $A \in X_n^{1, \bullet}$, by
+\cite[Definition~\texttt{def:Xn-1}]{RefinementSpaces} the $X_n^1$
+inner product carries a factor $\tfrac{1}{2}$ to compensate for
+the antisymmetric oriented-edge double count. Compute
+\begin{align*}
+\langle d_n f, A \rangle_{X_n^1}
+&= \tfrac{1}{2} \sum_{e \in E^{\rm or}(G_n^\bullet)}
+   \bigl\langle \pi\bigl(f(\text{head}(e)) - f(\text{tail}(e))\bigr),
+   A(e) \bigr\rangle_{F^1} \\
+&= \tfrac{1}{2} \sum_{e}
+   \bigl\langle f(\text{head}(e)) - f(\text{tail}(e)),
+   \iota(A(e)) \bigr\rangle_{F^0}
+   \qquad (\text{using } \pi^* = \iota) \\
+&= \tfrac{1}{2} \sum_v \Bigl\langle f(v),
+     \sum_{e:\, v=\text{head}(e)} \iota(A(e))
+     - \sum_{e:\, v=\text{tail}(e)} \iota(A(e))
+   \Bigr\rangle_{F^0}
+   \qquad (\text{regroup over vertices}) \\
+&= \sum_v \bigl\langle f(v), (d_n^* A)(v) \bigr\rangle_{F^0}
+   = \langle f, d_n^* A \rangle_{X_n^0},
+\end{align*}
+using Definition~\ref{def:coboundary-adjoint} for the last line
+and the standard discrete-Hodge regrouping
+\cite[\S 1.2]{Chung}; the antisymmetry of $A$ on each pair
+$(e, -e)$ ensures the regrouped vertex sum is well-defined.
+\end{proof}
+
+\subsection{Block operators on $X_n$}
+
+\begin{definition}[Graph Laplacian block $A_n$]
+\label{def:An}
+The \emph{graph Laplacian block} $A_n \colon X_n \to X_n$ is
+\[
+  A_n := \begin{pmatrix} d_n^* d_n & 0 \\ 0 & d_n d_n^* \end{pmatrix},
+\]
+acting on $X_n = X_n^{0, \bullet} \oplus X_n^{1, \bullet}$. The
+top-left block $d_n^* d_n$ is the projected graph-Laplacian
+block on $X_n^0$ induced by the $\Im(\OO)$ projection in
+Definition~\ref{def:coboundary} (positive semi-definite by
+construction; it acts as the classical combinatorial graph
+Laplacian on the $V_8$-imaginary component of each fibre and
+trivially on $V_{H_4}, V_{D_4}, V_{16}$ and the real octonion
+direction). The bottom-right block $d_n d_n^*$ is the
+edge-Laplacian on $X_n^1$ (also positive semi-definite).
+\end{definition}
+
+\begin{definition}[Coboundary block $B_n$]
+\label{def:Bn}
+The \emph{coboundary block} $B_n \colon X_n \to X_n$ is the
+self-adjoint extension of the off-diagonal coboundary-adjoint
+pair:
+\[
+  B_n := \begin{pmatrix} 0 & d_n^* \\ d_n & 0 \end{pmatrix}.
+\]
+$B_n$ is self-adjoint by Lemma~\ref{lem:dn-adjoint}. Its square is
+$B_n^2 = \begin{pmatrix} d_n^* d_n & 0 \\ 0 & d_n d_n^* \end{pmatrix}
+= A_n$, so $B_n$ is a ``square root''-type structure for the
+Hodge Laplacian.
+\end{definition}
+
+\begin{definition}[Mass block $C_n$]
+\label{def:Cn}
+The \emph{mass block} $C_n \colon X_n \to X_n$ is
+\[
+  C_n := \begin{pmatrix} \mathbf{P}_{V_{D_4}} & 0 \\ 0 & \id_{X_n^1}
+    \end{pmatrix},
+\]
+where $\mathbf{P}_{V_{D_4}}$ is the orthogonal projection on
+$X_n^{0, \bullet}$ onto the $V_{D_4}$-sector component of the
+fibre $F^0$ (so $\mathbf{P}_{V_{D_4}}$ acts pointwise on each
+vertex value by the linear projection $F^0 = V_{H_4} \oplus
+V_{D_4} \oplus V_{16} \oplus V_8 \to V_{D_4}$). $C_n$ is
+self-adjoint and positive semi-definite.
+\end{definition}
+
+\begin{proposition}[Bounds on the block operators]
+\label{prop:block-bounds}
+For every $n \geq 0$:
+\begin{enumerate}
+\item $d_n, d_n^*$ are bounded linear maps with $\|d_n\|_{\op},
+  \|d_n^*\|_{\op} \leq 2 \sqrt{\deg(G_n^\bullet)}$, where
+  $\deg(G_n^\bullet)$ is the maximum vertex degree of
+  $G_n^\bullet$.
+\item $A_n$ is bounded self-adjoint with $0 \leq A_n \leq 4
+  \deg(G_n^\bullet) \cdot \id$.
+\item $B_n$ is bounded self-adjoint with $\|B_n\|_{\op} \leq 2
+  \sqrt{\deg(G_n^\bullet)}$.
+\item $C_n$ is bounded self-adjoint with $0 \leq C_n \leq \id$.
+\end{enumerate}
+All four operators are bounded in operator norm uniformly on
+$X_n$ (but not uniformly in $n$, since $\deg(G_n^\bullet)$ may
+grow with refinement).
+\end{proposition}
+
+\begin{proof}
+\emph{(1) Coboundary bound.} For $f \in X_n^{0, \bullet}$,
+\[
+  \|d_n f\|^2_{X_n^1} = \tfrac{1}{2} \sum_e \|f(\text{head}(e)) -
+    f(\text{tail}(e))\|^2_{\Im(\OO)}.
+\]
+By the Cauchy--Schwarz inequality applied to the projection onto
+$\Im(\OO)$ and the triangle inequality,
+$\|f(\text{head}(e)) - f(\text{tail}(e))\|^2 \leq 2(\|f(\text{head}(e))
+\|^2 + \|f(\text{tail}(e))\|^2)$. Summing over $e$:
+\[
+  \|d_n f\|^2 \leq \sum_e (\|f(\text{head}(e))\|^2 +
+    \|f(\text{tail}(e))\|^2) \leq 2 \deg(G_n^\bullet) \cdot
+    \|f\|^2,
+\]
+using that each vertex $v$ appears in at most
+$2\deg(G_n^\bullet)$ oriented-edge incidences (each unoriented
+edge incident to $v$ contributes one head-incidence and one
+tail-incidence at $v$ across its two orientations); the
+displayed factor $2\deg(G_n^\bullet)$ in the second inequality
+absorbs both head and tail sums. Hence $\|d_n\|_{\op} \leq \sqrt{2
+\deg(G_n^\bullet)} \leq 2\sqrt{\deg(G_n^\bullet)}$. The same
+bound for $d_n^* = (d_n)^*$ follows from $\|T^*\|_{\op} = \|T\|_{\op}$
+for bounded operators on Hilbert spaces.
+
+\emph{(2), (3) Laplacian and coboundary block bounds.} $A_n$ is
+positive semi-definite as a sum of $T^*T$-type blocks (both
+$d_n^* d_n$ and $d_n d_n^*$ are $T^*T$ or $T T^*$). The upper
+bound $A_n \leq 4 \deg(G_n^\bullet) \id$ follows from $\|d_n^* d_n
+\|_{\op} \leq \|d_n\|_{\op}^2 \leq 4 \deg(G_n^\bullet)$.
+
+For $B_n = \begin{pmatrix} 0 & d_n^* \\ d_n & 0 \end{pmatrix}$:
+\[
+  \|B_n(f, A)\|^2 = \|d_n^* A\|^2 + \|d_n f\|^2 \leq
+    \|d_n\|_{\op}^2 (\|A\|^2 + \|f\|^2) = \|d_n\|_{\op}^2 \|(f, A)\|^2,
+\]
+so $\|B_n\|_{\op} \leq \|d_n\|_{\op} \leq 2\sqrt{\deg(G_n^\bullet)}$.
+
+\emph{(4) Mass block bound.} $\mathbf{P}_{V_{D_4}}$ is an
+orthogonal projection, hence $0 \leq \mathbf{P}_{V_{D_4}} \leq
+\id$. The identity on $X_n^1$ is trivially $0 \leq \id \leq \id$.
+Combining the blocks: $0 \leq C_n \leq \id$.
+\end{proof}
+
+\begin{remark}[Bounds depend on $n$]
+\label{rmk:bounds-depend}
+The operator bounds in Proposition~\ref{prop:block-bounds} involve
+$\deg(G_n^\bullet)$, which grows with $n$ as the refinement
+subdivides edges and centroid vertices acquire degree at least
+the lengths of their parent face boundaries. This is expected
+and does not affect the finite-level theorems of this paper. No
+inverse-limit boundedness statement for these operators is
+proved here; in particular, P3 constructs only a vertex
+inverse-limit Hilbert space
+(\cite[Theorem~\texttt{thm:Xinv-Hilbert}]{RefinementSpaces}) and
+explicitly does not construct an edge inverse-limit Hilbert
+space (\cite[Remark~\texttt{rmk:edge-inv}]{RefinementSpaces}).
+\end{remark}
+
+%=====================================================================
+\section{Quadratic Closure Functional and Gradient Operator}
+\label{sec:quadratic}
+%=====================================================================
+
+\subsection{The three quadratic pieces}
+
+\begin{definition}[Curvature, off-diagonal coboundary, mass
+quadratic forms]
+\label{def:RnEnQn}
+For $\Phi \in X_n$, define:
+\begin{align*}
+  R_n(\Phi) &:= \tfrac{1}{2} \langle \Phi, A_n \Phi \rangle_{X_n}
+    \quad \text{(curvature / graph-Laplacian form)}, \\
+  E_n(\Phi) &:= \tfrac{1}{2} \langle \Phi, B_n \Phi \rangle_{X_n}
+    \quad \text{(off-diagonal coboundary form)}, \\
+  Q_n(\Phi) &:= \tfrac{1}{2} \langle \Phi, C_n \Phi \rangle_{X_n}
+    \quad \text{(mass form)}.
+\end{align*}
+$R_n$ and $Q_n$ are positive semi-definite on $X_n$ (by
+positive semi-definiteness of $A_n$ and $C_n$). $E_n$ is
+indefinite in general (since $B_n$ is self-adjoint but not
+positive semi-definite: it has pairs of eigenvalues
+$\pm\sqrt{\lambda}$ for each $\lambda > 0$ in
+$\spec(d_n^* d_n)$, plus zero with appropriate multiplicity).
+The form $E_n$ here is the off-diagonal coboundary form; this
+is \emph{not} the positive kinetic square that earlier
+correspondence-foundations drafts called ``kinetic.'' Downstream
+papers citing kinetic energy should distinguish whether they
+mean the indefinite off-diagonal form $E_n$ defined here or the
+positive square $\|d_n \Phi^0\|^2 + \|d_n^* \Phi^1\|^2$.
+\end{definition}
+
+\subsection{The closure functional}
+
+\begin{definition}[Closure functional $F_n$]
+\label{def:Fn}
+Fix real constants $\alpha, \beta \geq 0$, $\gamma > 0$. The
+default working regime, used unless explicitly overridden, is
+$\alpha, \beta, \gamma > 0$. The \emph{mass-only specialization}
+is the case $\alpha = \beta = 0$, $\gamma > 0$. The
+\emph{closure functional at level $n$} is
+\[
+  F_n(\Phi) := \alpha R_n(\Phi) + \beta E_n(\Phi) - \gamma Q_n(\Phi),
+\]
+a continuous quadratic form on $X_n$.
+\end{definition}
+
+\begin{theorem}[Gradient operator]
+\label{thm:gradient-operator}
+For every $n \geq 0$:
+\begin{enumerate}
+\item $F_n$ is a continuous symmetric quadratic form on $X_n$,
+  equivalently $F_n(\Phi) = \tfrac{1}{2} \langle \Phi, L_n \Phi
+  \rangle_{X_n}$ for a unique bounded self-adjoint operator
+  $L_n \in B(X_n)$.
+\item The gradient of $F_n$ at $\Phi \in X_n$ is
+  $\nabla F_n(\Phi) = L_n \Phi$.
+\item $L_n = \alpha A_n + \beta B_n - \gamma C_n$, with
+  $\|L_n\|_{\op} \leq \alpha \cdot 4\deg(G_n^\bullet) + \beta \cdot
+  2\sqrt{\deg(G_n^\bullet)} + \gamma$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(1) Self-adjoint representation.} By
+Proposition~\ref{prop:block-bounds}, $A_n, B_n, C_n$ are each
+bounded self-adjoint on $X_n$. Their real linear combination
+$L_n := \alpha A_n + \beta B_n - \gamma C_n$ is therefore bounded
+self-adjoint. By the finite-dimensional version of the
+Riesz representation theorem for quadratic forms
+\cite[Prop.~I.3.14]{ReedSimonI}, every continuous symmetric
+quadratic form on a finite-dimensional Hilbert space is uniquely
+represented as $\tfrac{1}{2} \langle \Phi, L \Phi \rangle$ for a
+bounded self-adjoint $L$. The quadratic form $F_n$ is manifestly
+continuous (polynomial in matrix entries) and symmetric (each of
+$R_n, E_n, Q_n$ is symmetric), so this representation exists. By
+uniqueness, $L_n = \alpha A_n + \beta B_n - \gamma C_n$ is
+\emph{the} representing operator.
+
+\emph{(2) Gradient.} For any bounded self-adjoint $L$ on a
+finite-dimensional Hilbert space, the quadratic form $Q(\Phi) :=
+\tfrac{1}{2} \langle \Phi, L \Phi \rangle$ is Fr\'echet
+differentiable with derivative $\nabla Q(\Phi) = L \Phi$
+\cite[\S 4.6]{HornJohnson}.
+
+\emph{(3) Operator-norm bound.} By the triangle inequality:
+\[
+  \|L_n\|_{\op} \leq \alpha \|A_n\|_{\op} + \beta \|B_n\|_{\op} +
+    \gamma \|C_n\|_{\op} \leq \alpha \cdot 4\deg(G_n^\bullet) +
+    \beta \cdot 2\sqrt{\deg(G_n^\bullet)} + \gamma,
+\]
+using Proposition~\ref{prop:block-bounds}.
+\end{proof}
+
+\begin{remark}[Sign of $L_n$]
+\label{rmk:Ln-sign}
+$L_n = \alpha A_n + \beta B_n - \gamma C_n$ is \emph{not} in
+general positive semi-definite: the indefinite term $\beta B_n$
+and the subtracted mass term $-\gamma C_n$ can produce negative
+eigenvalues. Whether $L_n \geq 0$ depends on the specific
+$(\alpha, \beta, \gamma)$ and on spectral properties of the
+constituent operators. We will \emph{not} assume $L_n \geq 0$ in
+general; the continuous-time flow below is defined and studied
+for arbitrary bounded self-adjoint $L_n$, and the
+norm-contractivity statements are restricted to coercive
+subspaces where positivity holds locally.
+\end{remark}
+
+%=====================================================================
+\section{Continuous-Time Gradient Flow}
+\label{sec:continuous-flow}
+%=====================================================================
+
+\begin{theorem}[Gradient flow exists and is unique]
+\label{thm:flow-exists}
+For every initial datum $\Phi_{n, 0} \in X_n$, the ordinary
+differential equation
+\begin{equation}
+\label{eq:flow}
+  \dot \Phi_n(t) = -L_n \Phi_n(t), \qquad \Phi_n(0) = \Phi_{n, 0}
+\end{equation}
+has a unique global-in-time $C^1$ solution $\Phi_n \colon
+[0, \infty) \to X_n$ given by
+\[
+  \Phi_n(t) = e^{-t L_n} \Phi_{n, 0},
+\]
+where $e^{-t L_n} := \sum_{k=0}^\infty \frac{(-t)^k L_n^k}{k!}$ is
+the finite-dimensional matrix exponential of $-t L_n$. The map
+$e^{-t L_n} \colon X_n \to X_n$ is a bounded linear operator with
+$\|e^{-t L_n}\|_{\op} \leq e^{t \|L_n\|_{\op}}$ for every $t \geq 0$
+(and $\|e^{-t L_n}\|_{\op} \leq e^{|t| \|L_n\|_{\op}}$ for every $t \in
+\R$ when the extension to negative times is used;
+Cor.~\ref{cor:flow-reversible}), and the family
+$(e^{-t L_n})_{t \geq 0}$ is a $C^0$-semigroup on $X_n$:
+$e^{0 \cdot L_n} = \id$ and $e^{-(t + s) L_n} = e^{-t L_n}
+e^{-s L_n}$ for $t, s \geq 0$.
+\end{theorem}
+
+\begin{proof}
+$L_n$ is a bounded linear operator on a finite-dimensional
+Hilbert space, so the linear ODE \eqref{eq:flow} has a unique
+solution for every initial datum, by the standard
+Picard--Lindel\"of theorem for linear ODEs with bounded
+coefficients \cite[Theorem~1.1]{CoddingtonLevinson}; the solution
+is given by the matrix exponential
+$\Phi_n(t) = e^{-t L_n} \Phi_{n, 0}$
+\cite[\S 6.2]{HornJohnson}. The matrix exponential has operator
+norm bounded by $e^{t\|L_n\|_{\op}}$ (direct series estimate); on a
+finite-dimensional space the series converges in operator norm.
+Semigroup property: by the functional-equation identity
+$e^{A} e^{B} = e^{A+B}$ for commuting $A, B$, taking $A = -t L_n$
+and $B = -s L_n$ gives $e^{-(t+s) L_n}$.
+\end{proof}
+
+\begin{corollary}[The matrix exponential $e^{-tL_n}$ is invertible
+on $X_n$ for every $t \in \R$]
+\label{cor:flow-reversible}
+The map $t \mapsto e^{-t L_n}$ extends to all $t \in \R$ as a
+one-parameter group of bounded operators on $X_n$. In particular,
+$e^{-t L_n}$ is invertible on $X_n$ for every $t \in \R$.
+\end{corollary}
+
+\begin{proof}
+$(e^{-t L_n})^{-1} = e^{t L_n}$ by direct computation. The
+time-reversed ODE $\dot \Phi_n(s) = L_n \Phi_n(s)$ has the same
+well-posedness theorem applied to $-L_n$ in place of $L_n$.
+\end{proof}
+
+\begin{remark}[Finite-dimensional semigroup]
+\label{rmk:finite-dim-semigroup}
+Because $X_n$ is finite-dimensional, the distinction between
+``bounded semigroup'' and ``$C_0$-semigroup'' that matters in
+infinite-dimensional PDE theory is absent here. The flow
+$e^{-t L_n}$ is simply a matrix exponential, and all analytic
+properties (continuity in $t$, differentiability, strong/uniform
+topology equivalence) follow from finite-dimensional linear
+algebra.
+\end{remark}
+
+%=====================================================================
+\section{Energy Dissipation}
+\label{sec:energy}
+%=====================================================================
+
+\begin{proposition}[Energy dissipation identity]
+\label{prop:energy-dissipation}
+For every initial datum $\Phi_{n, 0} \in X_n$ and every $t \geq
+0$, with $\Phi_n(t) = e^{-t L_n} \Phi_{n, 0}$:
+\[
+  \frac{d}{dt} F_n(\Phi_n(t)) = -\|L_n \Phi_n(t)\|^2_{X_n} \leq 0.
+\]
+Hence $F_n(\Phi_n(t))$ is non-increasing in $t$, and the integrated
+dissipation identity holds:
+\[
+  F_n(\Phi_{n, 0}) - F_n(\Phi_n(t)) = \int_0^t \|L_n \Phi_n(s)
+  \|^2_{X_n} \, ds.
+\]
+\end{proposition}
+
+\begin{proof}
+Using the gradient formula $\nabla F_n(\Phi) = L_n \Phi$
+(Theorem~\ref{thm:gradient-operator}(2)) and the flow equation
+$\dot \Phi_n = -L_n \Phi_n$:
+\begin{align*}
+  \frac{d}{dt} F_n(\Phi_n(t))
+  &= \langle \nabla F_n(\Phi_n(t)), \dot \Phi_n(t) \rangle_{X_n}
+  = \langle L_n \Phi_n(t), -L_n \Phi_n(t) \rangle_{X_n} \\
+  &= -\|L_n \Phi_n(t)\|^2_{X_n}.
+\end{align*}
+The sign is $\leq 0$ since $\|\cdot\|^2 \geq 0$. Integrating over
+$[0, t]$ gives the integrated identity.
+\end{proof}
+
+\begin{remark}[Energy decay vs norm decay: distinct theorems]
+\label{rmk:energy-vs-norm}
+Proposition~\ref{prop:energy-dissipation} says $F_n$ decreases
+along the gradient flow. It does \emph{not} say $\|\Phi_n(t)\|_{X_n}$
+decreases. In general these are different statements:
+\begin{itemize}
+\item Energy monotonicity holds unconditionally (since
+  $-\|L_n \Phi_n(t)\|^2 \leq 0$).
+\item Norm contractivity $\|\Phi_n(t)\|_{X_n} \leq \|\Phi_n(0)
+  \|_{X_n}$ holds iff $e^{-t L_n}$ is a contraction for all $t
+  \geq 0$, which requires $L_n \geq 0$
+  (Corollary~\ref{cor:norm-decay} below).
+\end{itemize}
+These are separate hypotheses; conflating them would invalidate
+the paper.
+\end{remark}
+
+\begin{corollary}[Norm contractivity under positivity]
+\label{cor:norm-decay}
+If $L_n \geq 0$ (i.e., $L_n$ is positive semi-definite), then
+$\|e^{-t L_n}\|_{\op} \leq 1$ for all $t \geq 0$, and hence
+$\|\Phi_n(t)\|_{X_n} \leq \|\Phi_{n, 0}\|_{X_n}$ for all $t \geq
+0$.
+\end{corollary}
+
+\begin{proof}
+For self-adjoint $L_n$ with $L_n \geq 0$, the spectral theorem
+gives $L_n = \int \lambda \, dE(\lambda)$ with
+$\lambda \geq 0$ on the spectral support, so $e^{-t L_n} = \int
+e^{-t\lambda} \, dE(\lambda)$ with $|e^{-t\lambda}| \leq 1$ for
+$\lambda \geq 0$ and $t \geq 0$. Hence $\|e^{-t L_n}\|_{\op} \leq 1$
+\cite[Thm.~VIII.5]{ReedSimonI}.
+
+If $L_n$ has any negative eigenvalue $-\mu < 0$, the corresponding
+eigenvector grows as $e^{t\mu}$, violating contractivity.
+\end{proof}
+
+%=====================================================================
+\section{Discrete-Time Euler Step}
+\label{sec:discrete-time}
+%=====================================================================
+
+\subsection{The Euler iteration}
+
+\begin{definition}[Euler operator]
+\label{def:Euler}
+For $n \geq 0$ and step size $\eta > 0$, the \emph{Euler operator}
+is
+\[
+  G_{n, \eta} := I - \eta L_n \in B(X_n).
+\]
+The \emph{Euler iteration} is the discrete-time dynamics
+\[
+  \Phi_{n, k+1} := G_{n, \eta} \Phi_{n, k} = (I - \eta L_n)
+    \Phi_{n, k}, \qquad k = 0, 1, 2, \ldots,
+\]
+with initial datum $\Phi_{n, 0} \in X_n$.
+\end{definition}
+
+\subsection{Energy monotonicity under small step size}
+
+\begin{proposition}[Euler step is energy-decreasing for small $\eta$]
+\label{prop:euler-energy-decrease}
+Let $\Phi_{n, k} \in X_n$ with $L_n \Phi_{n, k} \neq 0$, and set
+$a := \|L_n \Phi_{n, k}\|^2 > 0$ and $b := \langle L_n \Phi_{n, k},
+L_n^2 \Phi_{n, k} \rangle_{X_n} \in \R$. The exact per-step
+energy change is
+\[
+  F_n(\Phi_{n, k+1}) - F_n(\Phi_{n, k}) = -\eta a + \tfrac{1}{2}
+    \eta^2 b.
+\]
+Hence:
+\begin{enumerate}
+\item If $b \leq 0$, every $\eta > 0$ strictly decreases $F_n$.
+\item If $b > 0$, every $\eta$ with $0 < \eta < 2a/b$ strictly
+  decreases $F_n$, with the optimum at $\eta^* = a/b$ giving
+  $F_n(\Phi_{n, k+1}) - F_n(\Phi_{n, k}) = -a^2/(2b) < 0$.
+\end{enumerate}
+In particular, there exists $\eta_0(\Phi_{n, k}) > 0$ such that
+$F_n(\Phi_{n, k+1}) < F_n(\Phi_{n, k})$ for every $0 < \eta <
+\eta_0(\Phi_{n, k})$.
+\end{proposition}
+
+\begin{proof}
+Direct computation:
+\begin{align*}
+  F_n(\Phi_{n, k+1})
+  &= \tfrac{1}{2} \langle \Phi_{n, k} - \eta L_n \Phi_{n, k},
+    L_n (\Phi_{n, k} - \eta L_n \Phi_{n, k}) \rangle \\
+  &= \tfrac{1}{2} \langle \Phi_{n, k}, L_n \Phi_{n, k} \rangle
+    - \eta \langle L_n \Phi_{n, k}, L_n \Phi_{n, k} \rangle
+    + \tfrac{1}{2}\eta^2 \langle L_n \Phi_{n, k}, L_n^2 \Phi_{n, k}
+      \rangle \\
+  &= F_n(\Phi_{n, k}) - \eta a + \tfrac{1}{2}\eta^2 b.
+\end{align*}
+The claimed sign analysis follows from completing the square in the
+quadratic $-\eta a + \tfrac{1}{2}\eta^2 b$: when $b \leq 0$ the
+expression is $\leq -\eta a < 0$ for $\eta > 0$; when $b > 0$ it is
+negative iff $0 < \eta < 2a/b$, with minimum at $\eta = a/b$.
+\end{proof}
+
+\begin{remark}[$b$ is not always positive]
+\label{rmk:b-sign}
+Note that $b := \langle L_n \Phi, L_n^2 \Phi \rangle$ is not an
+inner-product-type quantity unless $L_n \geq 0$, and can be
+negative when $L_n$ has negative eigenvalues on the component of
+$L_n \Phi$. When $b \leq 0$, the quadratic correction only helps
+the descent; when $b > 0$ the step-size bound $\eta < 2a/b$ is
+required. The proposition does \emph{not} assume $L_n \geq 0$.
+\end{remark}
+
+\begin{remark}[Spectral version on coercive subspace]
+\label{rmk:spectral-version-descent}
+If $\Phi_{n, k} \in Y_n$ lies in a coercive invariant subspace with
+$m_n \id_{Y_n} \leq L_n|_{Y_n} \leq M_n \id_{Y_n}$, then, setting
+$v := L_n \Phi_{n,k} \in Y_n$, we have $a = \|v\|^2$ and
+$b = \langle v, L_n v \rangle$, so the spectral bound
+$m_n \|v\|^2 \leq \langle v, L_n v \rangle \leq M_n \|v\|^2$ yields
+$m_n a \leq b \leq M_n a$. The pointwise step-size bound $0 < \eta
+< 2a/b$ therefore holds uniformly on $Y_n$ for any $\eta$ with $0 <
+\eta < 2/M_n$. The pointwise optimum $\eta = a/b$ depends on
+$\Phi_{n,k}$; for a \emph{uniform} choice that minimises the
+worst-case norm-contraction rate one takes $\eta = 2/(m_n + M_n)$
+(cf.\ Theorem~\ref{thm:coercive-contraction}), but this is not in
+general the pointwise energy-descent optimum.
+\end{remark}
+
+\subsection{Norm contractivity on coercive invariant subspaces}
+
+\begin{definition}[Coercive invariant subspace]
+\label{def:coercive}
+A subspace $Y_n \subseteq X_n$ is \emph{coercive invariant} for
+$L_n$ if:
+\begin{enumerate}
+\item $L_n Y_n \subseteq Y_n$ (invariance), and
+\item there exist constants $0 < m_n \leq M_n < \infty$ such that
+  $m_n \id_{Y_n} \leq L_n|_{Y_n} \leq M_n \id_{Y_n}$
+  (coercivity with spectral gap $m_n > 0$).
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Strict contraction on coercive invariant subspaces]
+\label{thm:coercive-contraction}
+Suppose $Y_n \subseteq X_n$ is a coercive invariant subspace for
+$L_n$ with constants $0 < m_n \leq M_n$. Then for every step size
+$\eta$ with $0 < \eta < 2/M_n$, the Euler operator $G_{n, \eta} =
+I - \eta L_n$ is a strict contraction on $Y_n$:
+\[
+  \|G_{n, \eta}|_{Y_n}\|_{\op} \leq \max(|1 - \eta m_n|, |1 - \eta
+    M_n|) < 1.
+\]
+The displayed worst-case bound is minimised over $\eta$ at
+$\eta^* = 2/(m_n + M_n)$, giving the upper bound
+$\|G_{n, \eta^*}|_{Y_n}\|_{\op} \leq (M_n - m_n)/(M_n + m_n)
+=: \rho_n < 1$. (Equality of $\|G_{n, \eta^*}|_{Y_n}\|_{\op}$
+to $\rho_n$ holds when $m_n = \min \mathrm{spec}(L_n|_{Y_n})$ and
+$M_n = \max \mathrm{spec}(L_n|_{Y_n})$, but not in general.)
+\end{theorem}
+
+\begin{proof}
+On $Y_n$, $L_n$ is self-adjoint with spectrum contained in the
+interval $[m_n, M_n]$ by Definition~\ref{def:coercive}; hence
+$I - \eta L_n|_{Y_n}$ has spectrum contained in
+$[1 - \eta M_n, 1 - \eta m_n]$. For $0 < \eta < 2/M_n$,
+$|1 - \eta \lambda| < 1$ for all $\lambda \in [m_n, M_n]$
+(since $0 < \eta < 2/\lambda$ for every $\lambda \geq m_n > 0$).
+By the spectral theorem on a finite-dimensional Hilbert space,
+$\|I - \eta L_n|_{Y_n}\|_{\op}$ is bounded above by
+$\sup_{\lambda \in [m_n, M_n]} |1 - \eta \lambda|
+= \max(|1 - \eta m_n|, |1 - \eta M_n|)$ (with equality if and
+only if $m_n, M_n$ are spectral endpoints of $L_n|_{Y_n}$).
+Minimising this upper bound over $\eta$, the two summands
+$|1 - \eta m_n|$ and $|1 - \eta M_n|$ become equal in magnitude
+and opposite in sign at $\eta^* = 2/(m_n + M_n)$, giving the
+stated bound.
+\end{proof}
+
+\begin{proposition}[Negative spectrum obstructs global contraction]
+\label{prop:no-global-contraction}
+If $L_n$ has \emph{any} negative eigenvalue on $X_n$, then
+$G_{n, \eta} = I - \eta L_n$ is \emph{not} a contraction on
+$X_n$ for any $\eta > 0$: there exists $\xi \in X_n$ with
+$\|G_{n, \eta} \xi\| > \|\xi\|$.
+\end{proposition}
+
+\begin{proof}
+If $L_n \xi_0 = -\mu \xi_0$ for some unit eigenvector $\xi_0 \in
+X_n$ and $\mu > 0$, then $G_{n, \eta} \xi_0 = (1 + \eta\mu)
+\xi_0$, which has norm $1 + \eta\mu > 1$.
+\end{proof}
+
+\begin{remark}[The error we are not making]
+\label{rmk:no-global-contraction-error}
+Propositions~\ref{prop:euler-energy-decrease} and
+\ref{prop:no-global-contraction} together say: the Euler iteration
+can be energy-decreasing (for small $\eta$, on vectors where $L_n$
+is active) \emph{and} norm-growing (on vectors in the negative
+eigenspace of $L_n$). These are compatible: energy $F_n$ and norm
+$\|\Phi\|$ are genuinely different functionals, and $L_n$ can
+decrease $F_n$ on one eigenvector while increasing $\|\Phi\|$ on
+another. An earlier cascade-correspondence manuscript claimed
+$G_{n, \eta}$ is a contraction on $X_n$ for $0 < \eta \leq
+\|L_n\|^{-1}$ without any positivity hypothesis; that claim is
+false, as shown by Proposition~\ref{prop:no-global-contraction}.
+\end{remark}
+
+%=====================================================================
+\section{Refinement Compatibility and Symmetry Intertwining}
+\label{sec:refinement-compat}
+%=====================================================================
+
+\subsection{Refinement compatibility hypothesis}
+
+\begin{definition}[Refinement-compatible operator family]
+\label{def:refinement-compat}
+A family $(T_n)_{n \geq 0}$ of bounded operators $T_n \in B(X_n)$
+is \emph{refinement-compatible} if, for every $n \geq 0$:
+\[
+  p_{n+1, n} T_{n+1} = T_n p_{n+1, n} \quad \text{on } X_{n+1},
+\]
+where $p_{n+1, n} \colon X_{n+1} \to X_n$ is the downward bonding
+map of \cite[Theorem~\texttt{thm:bonding}]{RefinementSpaces} (extended to the
+direct-sum space $X_n = X_n^0 \oplus X_n^1$ in the natural
+componentwise way: $p_{n+1, n}(f, A) := (p_{n+1, n}^0 f, p_{n+1, n}
+^1 A)$).
+\end{definition}
+
+\subsection{Refinement compatibility of the constituent operators}
+
+We verify the coboundary factor relation (Proposition~\ref{prop:coboundary-refinement}, $\tfrac{1}{2}$ factor) and exact mass-block compatibility (Proposition~\ref{prop:mass-refinement}); we do \emph{not} prove refinement-compatibility of the full Laplacian block $A_n$ or coboundary block $B_n$ in the $\alpha,\beta>0$ regime, and indeed no such identities are claimed in this paper (see Remark~\ref{rmk:refinement-compat-scope}).
+
+\begin{proposition}[Coboundary refinement-compatibility, with factor $\tfrac{1}{2}$]
+\label{prop:coboundary-refinement}
+The coboundary family $(d_n)_n$ satisfies
+\[
+  p_{n+1, n}^1 d_{n+1} = \tfrac{1}{2}\, d_n p_{n+1, n}^0
+  \quad \text{on } X_{n+1}^0,
+\]
+where $p_{n+1, n}^1$ is the parent-fibre averaging bonding map
+of \cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces}, $p_{n+1, n}^0$ is the
+restriction of \cite[Definition~\texttt{def:p0}]{RefinementSpaces}, and the level-
+$(n+1)$ edges subdivide the level-$n$ edges via the canonical
+edge-parent map of \cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces}.
+\end{proposition}
+
+\begin{proof}
+Write $\pi := \pi_{F^0 \to F^1}$ for the canonical projection of
+Definition~\ref{def:coboundary}.
+For $f \in X_{n+1}^0$ and $e \in E^{\rm or}(G_n^\bullet)$:
+\[
+  (d_n (p_{n+1, n}^0 f))(e)
+  = \pi\bigl((p_{n+1, n}^0 f)(\text{head}(e)) - (p_{n+1, n}^0 f)
+    (\text{tail}(e))\bigr)
+  = \pi\bigl(f(\text{head}(e)) - f(\text{tail}(e))\bigr)
+\]
+(using $V(G_n^\bullet) \subset V(G_{n+1}^\bullet)$ and
+$p^0$ = restriction from \cite[Definition~\texttt{def:p0}]{RefinementSpaces}).
+
+On the other side, the level-$n$ edge $e$ subdivides at level
+$n+1$ into $e_1, e_2$ with $\text{head}(e_1) = \text{tail}(e_2)
+= m$ (the midpoint of $e$), so
+\begin{align*}
+  (d_{n+1} f)(e_1) &= \pi\bigl(f(m) - f(\text{tail}(e))\bigr), \\
+  (d_{n+1} f)(e_2) &= \pi\bigl(f(\text{head}(e)) - f(m)\bigr).
+\end{align*}
+The parent-fibre average of $d_{n+1} f$ from
+\cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces}, plus
+$\R$-linearity of $\pi$, gives
+\[
+  (p_{n+1, n}^1 d_{n+1} f)(e)
+  = \tfrac{1}{2}\bigl((d_{n+1} f)(e_1) + (d_{n+1} f)(e_2)\bigr)
+  = \tfrac{1}{2}\, \pi\bigl(f(\text{head}(e)) - f(\text{tail}(e))\bigr)
+  = \tfrac{1}{2} (d_n p_{n+1, n}^0 f)(e),
+\]
+which proves the claimed factor-$\tfrac{1}{2}$ identity (both
+sides $F^1$-valued).
+\end{proof}
+
+\begin{remark}[The factor-$\tfrac{1}{2}$ is structural]
+\label{rmk:factor-structural}
+With the present unscaled undivided-difference coboundary $d_n$
+at every refinement level and the averaging bonding map
+$p_{n+1, n}^1$ of \cite[Definition~\texttt{def:p1} (using the edge-parent map of Definition~\texttt{def:edge-parent})]{RefinementSpaces}, the factor
+$\tfrac{1}{2}$ in Proposition~\ref{prop:coboundary-refinement} is
+unavoidable: the averaging step in $p_{n+1, n}^1$ contributes
+exactly the $\tfrac{1}{2}$ that appears on the right-hand side.
+Alternative normalizations (e.g.\ scaling $d_n$ by $2^n$ or by an
+edge-length factor) move the factor elsewhere in the identity
+without removing it. We keep the factor of $\tfrac{1}{2}$
+explicit and propagate it through the downstream operator
+identities.
+\end{remark}
+
+\begin{proposition}[Mass-block refinement compatibility]
+\label{prop:mass-refinement}
+Under the conventions of \S\ref{sec:operators} and
+\cite{RefinementSpaces}, the mass block satisfies
+\[
+  p_{n+1, n} C_{n+1} = C_n p_{n+1, n}
+\]
+exactly (no scaling factor). The analogous exact identity for the
+coboundary, adjoint coboundary, or graph-Laplacian blocks is not
+established in this paper; see
+Remark~\ref{rmk:refinement-compat-scope} below for the scope of
+what is and is not proved.
+\end{proposition}
+
+\begin{proof}
+$C_n = \begin{pmatrix} \mathbf{P}_{V_{D_4}} & 0 \\ 0 & \id
+\end{pmatrix}$ acts pointwise on each vertex / edge value by a
+fixed linear operation on fibres: on $X_n^0$ by the projection
+$\mathbf{P}_{V_{D_4}} \colon F^0 \to V_{D_4}$, and on $X_n^1$ by
+the identity. Both of these commute with fibrewise restriction
+(vertex case, $p_{n+1, n}^0$) and with fibrewise parent-fibre
+averaging (edge case, $p_{n+1, n}^1$). Hence $p_{n+1, n} C_{n+1} =
+C_n p_{n+1, n}$ exactly.
+\end{proof}
+
+\begin{remark}[Scope of refinement compatibility]
+\label{rmk:refinement-compat-scope}
+What is actually proved here:
+\begin{itemize}
+\item The mass block $C_n$ is refinement-compatible exactly:
+  $p C_{n+1} = C_n p$ (Proposition~\ref{prop:mass-refinement}).
+\item The coboundary obeys the factor-$\tfrac{1}{2}$ relation
+  $p^1 d_{n+1} = \tfrac{1}{2} d_n p^0$
+  (Proposition~\ref{prop:coboundary-refinement}).
+\end{itemize}
+What is \emph{not} proved here: an analogous factor-$\tfrac{1}{2}$
+relation for $d_n^*$; a block identity of the form $p B_{n+1} = c
+B_n p$ for any explicit constant $c$; an induced factor on the
+graph-Laplacian block $A_n$. Each of these would require a separate
+calculation reconciling the distinct $p^0$ and $p^1$ bonding-map
+factors across the off-diagonal blocks, and none is carried out in
+this paper.
+
+Consequently, we restrict Theorem~\ref{thm:refinement-compat}
+(and Theorem~\ref{thm:flow-intertwining} below) to the mass-only
+regime $\alpha = \beta = 0$, where refinement compatibility is
+positively established. For arbitrary $(\alpha, \beta, \gamma)$ we
+make \emph{no} claim about refinement-intertwining of $L_n$: neither
+that it holds (no such calculation is offered), nor that it fails
+(no negative example is offered). Downstream papers requiring
+refinement-intertwining outside the mass-only regime must supply
+their own analysis of the coboundary--adjoint block identities.
+\end{remark}
+
+\subsection{The refinement-intertwining theorem: mass-only case}
+
+\begin{theorem}[$L_n$ is refinement-compatible in the mass-only case]
+\label{thm:refinement-compat}
+Under the restriction $\alpha = \beta = 0$ (i.e., $L_n = -\gamma
+C_n$), the gradient operator family $(L_n)_{n \geq 0}$ is
+refinement-compatible:
+\[
+  p_{n+1, n} L_{n+1} = L_n p_{n+1, n}
+  \quad \text{for every } n \geq 0.
+\]
+For arbitrary $(\alpha, \beta, \gamma)$ we make no claim about the
+corresponding identity; see
+Remark~\ref{rmk:refinement-compat-scope}.
+\end{theorem}
+
+\begin{proof}
+Under $\alpha = \beta = 0$, $L_n = -\gamma C_n$. By
+Proposition~\ref{prop:mass-refinement}, $p_{n+1, n} C_{n+1} =
+C_n p_{n+1, n}$, hence (multiplying by $-\gamma$) $p_{n+1, n}
+L_{n+1} = L_n p_{n+1, n}$.
+\end{proof}
+
+\begin{theorem}[Flow intertwining: mass-only case]
+\label{thm:flow-intertwining}
+Under the restriction $\alpha = \beta = 0$, the continuous-time
+flow of $L_n$ intertwines with the bonding maps:
+\[
+  p_{n+1, n} e^{-t L_{n+1}} = e^{-t L_n} p_{n+1, n}
+  \quad \text{for every } t \geq 0.
+\]
+For arbitrary $(\alpha, \beta, \gamma)$ we make no claim about the
+corresponding identity; see
+Remark~\ref{rmk:refinement-compat-scope}.
+\end{theorem}
+
+\begin{proof}
+Under $\alpha = \beta = 0$, Theorem~\ref{thm:refinement-compat}
+gives $p_{n+1, n} L_{n+1} = L_n p_{n+1, n}$ exactly. By functional
+calculus for bounded operators on finite-dimensional Hilbert
+spaces \cite[Thm.~VIII.5]{ReedSimonI}, applied to the power series
+$e^{-tx} = \sum_{k \geq 0} (-tx)^k / k!$ term by term (each power
+$L_n^k$ commutes with $p_{n+1, n}$ by iteration of the linear
+intertwining), we obtain
+$p_{n+1, n} e^{-t L_{n+1}} = e^{-t L_n} p_{n+1, n}$.
+\end{proof}
+
+\begin{remark}[Pedagogical note on §7 scope]
+\label{rmk:section7-scope}
+Section~\ref{sec:refinement-compat} \emph{does not} establish
+refinement-intertwining of the full cascade gradient flow with
+arbitrary $\alpha, \beta, \gamma$. It establishes:
+\begin{itemize}
+\item an explicit factor-$\tfrac{1}{2}$ relation for the
+  coboundary (Proposition~\ref{prop:coboundary-refinement});
+\item exact compatibility for the mass block
+  (Proposition~\ref{prop:mass-refinement});
+\item exact compatibility for $L_n$ and its flow in the mass-only
+  degenerate case
+  (Theorems~\ref{thm:refinement-compat}, \ref{thm:flow-intertwining}).
+\end{itemize}
+Any downstream paper needing a refinement-intertwining theorem
+for non-degenerate $(\alpha, \beta, \gamma)$ must supply its own
+analysis. This paper makes no claim about whether such intertwining
+holds in that regime; it is simply not established here.
+\end{remark}
+
+\subsection{Symmetry intertwining}
+
+\begin{corollary}[Symmetries commuting with $L_n$ commute with the flow]
+\label{cor:symmetry-flow}
+If $g \in W^\bullet$ acts on $X_n$ by $\rho_n(g) \in B(X_n)$ with
+$\rho_n(g) L_n = L_n \rho_n(g)$ (i.e., $g$-equivariant gradient
+operator), then $\rho_n(g) e^{-t L_n} = e^{-t L_n} \rho_n(g)$ for
+every $t \geq 0$.
+\end{corollary}
+
+\begin{proof}
+Same functional-calculus argument as
+Theorem~\ref{thm:flow-intertwining}.
+\end{proof}
+
+%=====================================================================
+\section{Sectorwise Intertwiners: Explicit Bounds}
+\label{sec:intertwiners}
+%=====================================================================
+
+\subsection{Admissible finite-level intertwiners}
+
+\begin{definition}[Generator list]
+\label{def:generators}
+The \emph{finite-level generator list} $\mathcal{G}_n$ at level
+$n$ consists of the following bounded real-Hilbert-space operators:
+\begin{itemize}
+\item downward bonding maps: $p_{n+1, n}^0, p_{n+1, n}^1$ and
+  their composition $p_{n+1, n}$ on $X_{n+1} \to X_n$;
+\item upward cylindrical embeddings: $j_{n, n+1}^0, j_{n, n+1}^1$
+  and $j_{n, n+1}$ on $X_n \to X_{n+1}$;
+\item sector projections: $\mathbf{P}_{V_{H_4}},
+  \mathbf{P}_{V_{D_4}}, \mathbf{P}_{V_{16}}, \mathbf{P}_{V_8}$ on
+  $X_n^0$;
+\item Coxeter actions: $\rho_n(g)$ for $g \in W^\bullet$;
+\item discrete differential operators: $d_n, d_n^*, A_n, B_n, C_n,
+  L_n$ from \S\ref{sec:operators};
+\item flow-operator family: $\{e^{-t L_n} : t \geq 0\}$;
+\item the $G_2$-stabilizer fibre map $\Im(\OO) \to \Im(\OO)$
+  fixing a chosen unit $i_0$ (an orthogonal map of norm $1$,
+  imported from \cite{AlgebraicSubstrate}).
+\end{itemize}
+The rationality-side $\sigma$-involution and the icosian star-map
+are \emph{not} elements of $\mathcal{G}_n$: by P3
+(\cite[Definition~\texttt{def:sigma}, Theorem~\texttt{thm:commute}]
+{RefinementSpaces}) these are defined only on the mixed-form
+$\Q(\varphi)/\Q$ vertex space and do not extend to bounded
+operators on the real Hilbert space $X_n^0$. They appear in
+this paper only at the rational-form level, never as elements
+of $\mathcal{G}_n$.
+\end{definition}
+
+\begin{definition}[Admissible intertwiner, syntactic]
+\label{def:admissible}
+An \emph{admissible finite-level intertwiner} is a formal
+expression obtained from the generator list $\mathcal{G}_n$ (or
+$\mathcal{G}_n \cup \mathcal{G}_m$ for inter-level intertwiners)
+by the syntactic rules:
+\begin{itemize}
+\item Every generator $T \in \mathcal{G}_n$ is an admissible
+  intertwiner (of level $n$, or between appropriate levels).
+\item If $T_1, T_2$ are admissible intertwiners with compatible
+  domains and codomains (matching refinement levels and state-space
+  types), then $c_1 T_1 + c_2 T_2$ is an admissible intertwiner
+  for any $c_1, c_2 \in \R$.
+\item If $T_1 \colon X_m \to X_\ell$ and $T_2 \colon X_n \to X_m$
+  are admissible, then the composition $T_1 \circ T_2 \colon X_n
+  \to X_\ell$ is admissible.
+\end{itemize}
+The definition is \emph{syntactic}: it does not assume that the
+resulting operator is bounded \emph{a priori}. Boundedness is
+proved in Theorem~\ref{thm:intertwiner-bounds} below from the
+printed generator bounds.
+
+The word ``intertwiner'' is used here for continuity with prior
+literature; it does \emph{not} mean that the resulting operator
+intertwines a fixed symmetry action. Equivariance is established
+only conditionally in Theorem~\ref{thm:intertwiner-bounds}(4),
+under the additional hypothesis that every generator factor
+satisfies the prescribed intertwining relation. Without that
+hypothesis, an admissible expression in the syntactic sense above
+is just a bounded linear map between finite-dimensional Hilbert
+spaces.
+\end{definition}
+
+\subsection{Explicit bounds for the named generators}
+
+\begin{proposition}[Generator bounds table]
+\label{prop:generator-bounds}
+The named generators from Definition~\ref{def:generators} satisfy
+the following explicit operator-norm bounds on their respective
+finite-level Hilbert spaces:
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Generator & Norm bound & Source \\
+\hline
+$p_{n+1, n}^0$ (vertex bonding) & $\|p^0\|_{\op} \leq 1$ &
+  \cite[Theorem~\texttt{thm:bonding}]{RefinementSpaces} \\
+$p_{n+1, n}^1$ (edge bonding) & $\|p^1\|_{\op} \leq 1$ &
+  \cite[Theorem~\texttt{thm:bonding}]{RefinementSpaces} \\
+$p_{n+1, n}$ (direct-sum bonding $X_{n+1} \to X_n$) & $\|p\|_{\op}
+  \leq 1$ & direct-sum norm, from $\|p^0\|, \|p^1\| \leq 1$ \\
+$j_{n, n+1}^0$ (vertex embedding) & $\|j^0\|_{\op} = 1$ &
+  \cite[Proposition~\texttt{prop:adjoints}]{RefinementSpaces} (adjoint of restriction,
+  isometric on image) \\
+$j_{n, n+1}^1$ (edge embedding) & $\|j^1\|_{\op} = 2^{-1/2}$ &
+  computation from
+  \cite[Proposition~\texttt{prop:adjoints}]{RefinementSpaces}: the
+  half-section identity $p^1 j^1 = \tfrac{1}{2} \id$ together with
+  the adjoint identity $\langle j^1 B, j^1 B \rangle =
+  \langle B, p^1 j^1 B \rangle$ gives
+  $\|j^1 B\|^2 = \tfrac{1}{2}\|B\|^2$ \\
+$j_{n, n+1}$ (direct-sum embedding $X_n \to X_{n+1}$) & $\|j\|_{\op}
+  = 1$ & direct-sum norm: $\max(\|j^0\|, \|j^1\|) = 1$ \\
+$\mathbf{P}_{V_\bullet}$ (sector projections) & $\|\mathbf{P}\|_{\op}
+  = 1$ & orthogonal projections \\
+$\rho_n(g)$ (Coxeter action) & $\|\rho_n(g)\|_{\op} = 1$ & unitary,
+  \cite[Lemma~\texttt{lem:coxeter-unitary}]{RefinementSpaces} \\
+$d_n$ (coboundary) & $\|d_n\|_{\op} \leq 2\sqrt{\deg(G_n^\bullet)}$
+  & Prop.~\ref{prop:block-bounds}(1) \\
+$d_n^*$ (adjoint coboundary) & $\|d_n^*\|_{\op} \leq 2\sqrt{\deg(G_n
+  ^\bullet)}$ & adjoint of $d_n$ \\
+$A_n$ (graph-Laplacian block) & $\|A_n\|_{\op} \leq 4\deg(G_n
+  ^\bullet)$ & Prop.~\ref{prop:block-bounds}(2) \\
+$B_n$ (coboundary block) & $\|B_n\|_{\op} \leq 2\sqrt{\deg(G_n
+  ^\bullet)}$ & Prop.~\ref{prop:block-bounds}(3) \\
+$C_n$ (mass block) & $0 \leq C_n \leq \id$, so $\|C_n\|_{\op} \leq 1$
+  & Prop.~\ref{prop:block-bounds}(4) \\
+$L_n$ (gradient operator) & $\|L_n\|_{\op} \leq
+  4\alpha\,\deg(G_n^\bullet) + 2\beta\sqrt{\deg(G_n^\bullet)}
+  + \gamma$ & Thm.~\ref{thm:gradient-operator}(3) \\
+$e^{-t L_n}$ (flow, $t \geq 0$) & $\|e^{-t L_n}\|_{\op} \leq
+  e^{t \|L_n\|_{\op}}$ & Thm.~\ref{thm:flow-exists} \\
+\hline
+\end{tabular}
+\end{center}
+The $G_2$-stabilizer fibre map of
+\cite[Definitions~\texttt{def:G2}, \texttt{def:stab-u} and
+Fact~\texttt{fact:SU3-stab}]{AlgebraicSubstrate} (an element
+of the stabilizer of a unit imaginary octonion in $G_2 \subset
+\mathrm{Aut}(\OO)$, identified with $\mathrm{SU}(3)$ acting on
+the orthogonal complement of the chosen unit) acts on
+$\Im(\OO) = F^1$ orthogonally with respect to the standard
+octonion inner product $\langle a, b \rangle_\OO := \Re(a\bar b)$:
+every octonion automorphism preserves the octonion norm
+\cite[Theorem~6.6]{Schafer} (and hence its real polarization),
+and restriction to a $G_2$-invariant subspace remains orthogonal.
+Therefore the corresponding fibre operator has operator norm
+exactly $1$ on $F^1$, and its $\ell^2$-extension to $X_n^1$ also
+has operator norm exactly $1$ (apply the bound fibrewise on each
+oriented edge).
+\end{proposition}
+
+\begin{proof}
+Each row of the table is verified by citation or by the referenced
+proposition. $\|\rho_n(g)\|_{\op} = 1$ because $\rho_n(g)$ is
+unitary
+(\cite[Lemma~\texttt{lem:coxeter-unitary}]{RefinementSpaces}: it
+permutes an $\ell^2$-orthonormal basis up to fibre-level
+orthogonal transformations). The $G_2$-stabilizer norm equality
+is justified above the proof.
+\end{proof}
+
+\begin{theorem}[Admissible intertwiners are bounded, continuous, Borel]
+\label{thm:intertwiner-bounds}
+Every admissible finite-level intertwiner $T$ (in the syntactic
+sense of Definition~\ref{def:admissible}) is a bounded linear
+map between its finite-dimensional domain and codomain.
+Specifically:
+\begin{enumerate}
+\item (Boundedness with printed bound.) If $T$ is expressed by
+  the syntax of Definition~\ref{def:admissible} as a finite
+  sum-of-products of generators
+  $T = \sum_i c_i \, T_{i, k_i^1} \circ \cdots \circ T_{i, k_i^{m_i}}$
+  with $c_i \in \R$ and each $T_{i, k_i^j}$ in the generator
+  list of Proposition~\ref{prop:generator-bounds}, then
+  $\|T\|_{\op} \leq \sum_i |c_i| \prod_j \|T_{i, k_i^j}\|_{\op}$,
+  using the triangle inequality on sums
+  ($\|T_1 + T_2\|_{\op} \leq \|T_1\|_{\op} + \|T_2\|_{\op}$),
+  the absolute scalar identity $\|c T\|_{\op} = |c| \|T\|_{\op}$,
+  and sub-multiplicativity on compositions
+  ($\|T_1 T_2\|_{\op} \leq \|T_1\|_{\op} \|T_2\|_{\op}$).
+\item (Continuity.) $T$ is continuous as a linear map between
+  finite-dimensional Hilbert spaces (automatic for bounded linear
+  maps).
+\item (Borel measurability.) $T$ is Borel-measurable (continuity
+  plus finite-dimensionality).
+\item (Symmetry intertwining, conditional.) Suppose
+  $T = \sum_i c_i \, T_{i, k_i^1} \circ \cdots \circ
+  T_{i, k_i^{m_i}}$ as in (1), and a fixed symmetry
+  $g \in W^\bullet$ satisfies a prescribed intertwining relation
+  $\rho(g) T_{i, k_i^j} = T_{i, k_i^j}' \rho(g)$ for every
+  generator factor (with the same source-side $\rho(g)$ in every
+  case). Then $\rho(g) T = T' \rho(g)$ where
+  $T' := \sum_i c_i \, T_{i, k_i^1}' \circ \cdots \circ
+  T_{i, k_i^{m_i}}'$, by linearity of $\rho(g)$ on each summand.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(1) Boundedness with printed bound.} By structural induction
+on the formal expression of $T$ per
+Definition~\ref{def:admissible}, using the sub-multiplicativity
+of $\|\cdot\|_{\op}$ on compositions and the triangle inequality on
+sums. Base case: each generator has a norm bound from
+Proposition~\ref{prop:generator-bounds}. Inductive cases (sum,
+composition): standard operator-theoretic inequalities
+\cite[Ch.~I.1]{ReedSimonI}.
+
+\emph{(2) Continuity.} Bounded linear maps on normed spaces are
+continuous \cite[Thm.~I.1.3]{ReedSimonI}.
+
+\emph{(3) Borel measurability.} Continuous maps between
+topological spaces are Borel measurable
+\cite[Cor.~1.2.12]{Bogachev}. In finite dimension, all reasonable
+measurable structures coincide.
+
+\emph{(4) Symmetry intertwining.} For each summand
+$c_i \, T_{i, k_i^1} \circ \cdots \circ T_{i, k_i^{m_i}}$,
+iterating the generator intertwinings along the composition
+gives
+$\rho(g) (c_i \, T_{i, k_i^1} \circ \cdots \circ T_{i, k_i^{m_i}})
+= c_i (T_{i, k_i^1}' \circ \cdots \circ T_{i, k_i^{m_i}}')
+\rho(g)$.
+Summing over $i$ and using $\R$-linearity of $\rho(g)$ yields
+$\rho(g) T = T' \rho(g)$.
+\end{proof}
+
+\begin{remark}[What this replaces]
+\label{rmk:intertwiner-replacement}
+Theorem~\ref{thm:intertwiner-bounds} is the structural replacement
+for the false global theorem ``every correspondence arising from
+closure dynamics is Borel and equivariant'' that appeared in an
+earlier foundations draft. Instead of one grand theorem, we have:
+\begin{itemize}
+\item a printed generator list
+  (Definition~\ref{def:generators});
+\item a printed bounds table
+  (Proposition~\ref{prop:generator-bounds});
+\item a compositionality theorem
+  (Theorem~\ref{thm:intertwiner-bounds}).
+\end{itemize}
+Downstream papers naming an intertwiner as a specific composition
+of generators read off the operator bound, continuity, and
+intertwining properties from this table and theorem. No abstract
+``Borel/equivariance'' theorem is invoked; every claim is
+composable from printed ingredients.
+\end{remark}
+
+%=====================================================================
+\section{Citation Contract and Downstream Handoff}
+\label{sec:handoff}
+%=====================================================================
+
+\subsection{What downstream papers may cite}
+
+\begin{enumerate}
+\item Definition~\ref{def:Fn} and
+  Theorem~\ref{thm:gradient-operator}: the closure functional
+  $F_n$ and its gradient operator $L_n = \alpha A_n + \beta B_n -
+  \gamma C_n$, a bounded self-adjoint operator on $X_n$.
+\item Theorem~\ref{thm:flow-exists}: global existence and
+  uniqueness of the continuous-time gradient flow
+  $\Phi_n(t) = e^{-t L_n} \Phi_n(0)$.
+\item Proposition~\ref{prop:energy-dissipation}: energy
+  dissipation along the flow.
+\item Propositions~\ref{prop:euler-energy-decrease},
+  \ref{prop:no-global-contraction} and
+  Theorem~\ref{thm:coercive-contraction}: discrete-time Euler
+  analysis, with energy monotonicity and norm contractivity
+  cleanly separated.
+\item Proposition~\ref{prop:coboundary-refinement}: the explicit
+  factor-$\tfrac{1}{2}$ coboundary relation $p^1 d_{n+1} =
+  \tfrac{1}{2} d_n p^0$. Proposition~\ref{prop:mass-refinement}:
+  exact mass-block compatibility $p C_{n+1} = C_n p$.
+  Theorems~\ref{thm:refinement-compat} and
+  \ref{thm:flow-intertwining}: refinement compatibility of $L_n$
+  and of the continuous-time flow \emph{in the mass-only case}
+  $\alpha = \beta = 0$. For arbitrary $(\alpha, \beta, \gamma)$
+  this paper makes no claim about refinement-intertwining of $L_n$;
+  see Remark~\ref{rmk:refinement-compat-scope}.
+\item Definitions~\ref{def:generators}, \ref{def:admissible} and
+  Theorem~\ref{thm:intertwiner-bounds}: explicit generator-family list
+  and bounded-intertwiner theorem replacing the false global
+  Borel/equivariance theorem.
+\end{enumerate}
+
+\subsection{Recommended citation phrasing}
+
+``By P4 \cite{ClosureDynamics}, each finite refinement level
+$n$ carries an explicit quadratic closure functional
+$F_n = \tfrac{1}{2}\langle \cdot, L_n \cdot \rangle$ with bounded
+self-adjoint gradient $L_n$ (Theorem~\ref{thm:gradient-operator}),
+continuous-time semigroup flow $e^{-t L_n}$
+(Theorem~\ref{thm:flow-exists}), continuous-time energy
+dissipation $\frac{d}{dt} F_n(\Phi_n(t)) = -\|L_n \Phi_n(t)\|^2$
+(Proposition~\ref{prop:energy-dissipation}) and one-step Euler
+energy descent under a step-size condition
+(Proposition~\ref{prop:euler-energy-decrease}), strict contraction
+only on coercive invariant subspaces
+(Theorem~\ref{thm:coercive-contraction}), an explicit
+factor-$\tfrac{1}{2}$ coboundary refinement relation
+(Proposition~\ref{prop:coboundary-refinement}) and exact
+mass-block refinement compatibility
+(Proposition~\ref{prop:mass-refinement}), with full
+refinement-intertwining $p_{n+1, n} e^{-t L_{n+1}} = e^{-t L_n}
+p_{n+1, n}$ holding in the mass-only case $\alpha = \beta = 0$
+(Theorem~\ref{thm:flow-intertwining}); and explicit bounded
+intertwiner bounds from the explicit generator-family list
+(Theorem~\ref{thm:intertwiner-bounds}).''
+
+\subsection{What this paper does not provide}
+
+\begin{enumerate}
+\item No continuum-limit statement about $(L_n)_n$ as $n \to
+  \infty$ or about $(e^{-t L_n})_n$.
+\item No convergence target. The only proved
+  refinement-compatible flow is the mass-only case $L_n =
+  -\gamma C_n$ (with $\alpha = \beta = 0$), whose flow is
+  $e^{\gamma t C_n}$ and is generally norm-expanding rather
+  than contracting; we do not assert any attracting state, fixed
+  point, or continuum target for $\Phi_n(t)$ as $t \to \infty$
+  or as $n \to \infty$.
+\item No target-side metric / hydrodynamic / gauge / spectral /
+  Hecke / cohomology / CTM/TM correspondence theorem.
+\item No PDE identification of $\dot\Phi_n = -L_n \Phi_n$ with
+  any classical evolution equation.
+\item No universal Borel/equivariance principle beyond the
+  explicit generator-family list.
+\end{enumerate}
+
+\appendix
+
+%=====================================================================
+\section{Notation Audit}
+\label{app:notation}
+%=====================================================================
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Symbol & Meaning & Defined \\
+\hline
+$X_n$ & combined state space $X_n^0 \oplus X_n^1$ & Def.~\ref{def:Xn} \\
+$D_n$ & domain of the operators ($= X_n$) & Def.~\ref{def:Xn} \\
+$d_n, d_n^*$ & discrete coboundary and adjoint & Defs.~\ref{def:coboundary}, \ref{def:coboundary-adjoint} \\
+$A_n$ & graph-Laplacian block operator & Def.~\ref{def:An} \\
+$B_n$ & coboundary block operator & Def.~\ref{def:Bn} \\
+$C_n$ & mass block operator & Def.~\ref{def:Cn} \\
+$R_n, E_n, Q_n$ & curvature, off-diagonal coboundary, mass forms & Def.~\ref{def:RnEnQn} \\
+$F_n$ & closure functional $\alpha R_n + \beta E_n - \gamma Q_n$ & Def.~\ref{def:Fn} \\
+$L_n$ & gradient operator $\alpha A_n + \beta B_n - \gamma C_n$ & Thm.~\ref{thm:gradient-operator}(3) \\
+$e^{-t L_n}$ & continuous-time flow & Thm.~\ref{thm:flow-exists} \\
+$G_{n, \eta}$ & Euler operator $I - \eta L_n$ & Def.~\ref{def:Euler} \\
+$Y_n$ & coercive invariant subspace & Def.~\ref{def:coercive} \\
+$m_n, M_n$ & coercive spectral bounds & Def.~\ref{def:coercive} \\
+$\mathcal{G}_n$ & finite-level generator list & Def.~\ref{def:generators} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{AlgebraicSubstrate}
+\emph{Cascade--Classical Correspondence II: The Cascade Algebraic
+Substrate},
+\texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}.
+(Paper P2.) Pinned results used here, cited by label:
+\texttt{def:icosian-star} (icosian star-map $\ast$ on the icosian
+ring $I \subset \HH$, identified at the rational level with the
+coefficientwise $\sigma$ of P1; this map is used in this paper
+only at the rational-form level, never as a real-Hilbert-space
+operator on $X_n^0$);
+\texttt{def:G2}, \texttt{def:stab-u}, and
+Fact~\texttt{fact:SU3-stab} ($G_2$ stabilizer of a unit imaginary
+octonion $\cong \mathrm{SU}(3)$);
+\texttt{def:Cl-basis}, \texttt{def:octonions}, and
+\texttt{def:Q-forms} (sector-fibre $\Q$-forms used in P3's
+mixed-form construction).
+
+\bibitem{RefinementSpaces}
+\emph{Cascade--Classical Correspondence III: Refinement Spaces
+and Symmetry Actions},
+\texttt{papers/cascade-refinement-spaces/cascade-refinement-spaces.tex}.
+(Paper P3.) Pinned results used here, cited by label:
+Notation~\texttt{not:fibres} (sector fibres $F^0, F^1$);
+Definitions~\texttt{def:Xn-0} and~\texttt{def:Xn-1} (finite-level
+$\ell^2$ spaces $X_n^0, X_n^1$);
+Proposition~\texttt{prop:Xn-Hilbert} (finite-level Hilbert
+structure);
+Definition~\texttt{def:edge-parent} (canonical edge-parent map
+on subdividing edges);
+Definition~\texttt{def:p0} (vertex bonding $p^0$ as restriction);
+Definition~\texttt{def:p1} (edge bonding $p^1$ as parent-fibre
+averaging);
+Theorem~\texttt{thm:bonding} (operator-norm contraction bounds
+for $p^0, p^1$);
+Proposition~\texttt{prop:adjoints} (adjoints
+$j_{n, n+1} = (p_{n+1, n})^*$, giving
+$\|j^0\|_{\op} = 1$ and $\|j^1 B\|^2 = \tfrac{1}{2}\|B\|^2$);
+Definition~\texttt{def:coxeter} (branchwise Coxeter action
+$\rho_n(g)$);
+Lemma~\texttt{lem:coxeter-unitary} (unitarity of $\rho_n(g)$ on
+each $X_n^{0, \bullet}, X_n^{1, \bullet}$);
+Theorem~\texttt{thm:Xinv-Hilbert} (vertex inverse-limit Hilbert
+space; no edge inverse-limit Hilbert space is constructed in
+P3, see Remark~\texttt{rmk:edge-inv} of P3).
+
+\bibitem{ClosureDynamics}
+(This paper.) \emph{Cascade--Classical Correspondence IV: Discrete
+Closure Dynamics}.
+
+\bibitem{ReedSimonI}
+M.~Reed and B.~Simon, \emph{Methods of Modern Mathematical
+Physics, Vol.~I: Functional Analysis}, rev.\ ed., Academic Press,
+1980. Quadratic forms and self-adjoint operators: Ch.~I.3;
+bounded operators: Ch.~I.1; spectral theorem and functional
+calculus: Ch.~VIII.5.
+
+\bibitem{HornJohnson}
+R.~A.~Horn and C.~R.~Johnson, \emph{Matrix Analysis}, 2nd ed.,
+Cambridge University Press, 2013. Matrix exponentials and linear
+ODEs: Ch.~6.2; spectral decomposition in finite dimension:
+Ch.~2.4; Fr\'echet differentiability of quadratic forms on
+finite-dimensional Hilbert spaces: \S 4.6 (treated in the chapter
+on matrix-valued functions).
+
+\bibitem{Chung}
+F.~R.~K.~Chung, \emph{Spectral Graph Theory}, CBMS Regional
+Conference Series in Mathematics 92, AMS, 1997. Graph Laplacians,
+coboundaries, and finite-graph Hodge theory: Ch.~1--2.
+
+\bibitem{CoddingtonLevinson}
+E.~A.~Coddington and N.~Levinson, \emph{Theory of Ordinary
+Differential Equations}, McGraw-Hill, 1955. Linear ODEs with
+bounded coefficients and global existence: Ch.~1.
+
+\bibitem{Hartman}
+P.~Hartman, \emph{Ordinary Differential Equations}, 2nd ed.,
+Birkh\"auser, 1982. Linear ODEs: Ch.~IV.
+
+\bibitem{Bogachev}
+V.~I.~Bogachev, \emph{Measure Theory}, Vol.~I, Springer, 2007.
+Borel measurability of continuous maps: Cor.~1.2.12.
+
+\bibitem{Schafer}
+R.~D.~Schafer, \emph{An Introduction to Nonassociative Algebras},
+Academic Press, 1966 (reprinted Dover, 1995). Octonion
+automorphisms preserve the octonion norm: Theorem~6.6.
+
+\end{thebibliography}
+
+\end{document}
