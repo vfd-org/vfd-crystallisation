@@ -45,35 +45,38 @@ on $V_{600}$}
 \maketitle
 
 \begin{abstract}
-We discharge the cascade-mechanism consumer-API obligation $(O1)$
-(top-rung fixed point and convergence,
-\cite[\S 3.4]{CascadeMechanism}) on the $H_4$ branch at every
+We give a finite-level witnessed $(O1)$ tuple for the
+cascade-mechanism consumer-API obligation
+\cite[\S 3.4]{CascadeMechanism} on the $H_4$ branch at every
 finite top-rung level $N \geq 0$, parametrised by a free choice of
 $\xi^{*} \in (F^0)^{W(H_4)} \setminus \{0\}$. The witness operator
 is a new auxiliary block graph Laplacian
 $L_N^{\mathrm{block}}$ on the finite-level vertex-sector Hilbert
 space $X_N^{0, H_4}$ of \cite[Definition~\texttt{def:Xn-0}]{RefinementSpaces},
 introduced in this paper and explicitly distinct from
-\cite{ClosureDynamics}'s $A_n$ (which acts non-trivially only on
-the $\mathrm{Im}(\OO)$ direction) and from
+\cite{ClosureDynamics}'s vertex / top-left block
+$A_n^{\mathrm{vertex}} = d_n^{*} d_n$ (which acts trivially off
+the $\mathrm{Im}(\OO)$ direction in $F^{0}$) and from
 \cite{RefinementCompat}'s $\widetilde A_n$ (which lives in an
 abstract scalar pure-midpoint reduction).
 
-Five clauses constitute the named theorem:
+The paper proves five ingredients:
 $L_N^{\mathrm{block}}$ is bounded self-adjoint and positive
 semi-definite on $X_N^{0, H_4}$, with an explicit Chung-style
-operator-norm bound;
+operator-norm bound (Proposition~\ref{prop:psd});
 $G_N^{H_4}$ is connected at every level and
 $\ker L_N^{\mathrm{block}} \cong F^0$ via constant-function
-embedding (32-dimensional);
+embedding ($32$-dimensional, Theorem~\ref{thm:kernel});
 the gradient flow $e^{-t L_N^{\mathrm{block}}}$ converges to the
-kernel projection with uniform exponential bound governed by the
-spectral gap $\lambda_{+}(L_N^{\mathrm{block}}) > 0$;
+kernel projection with exponential rate governed by the
+spectral gap $\lambda_{+}(L_N^{\mathrm{block}}) > 0$
+(uniform over initial data at fixed $N$, Theorem~\ref{thm:convergence});
 $\dim_{\R} (F^0)^{W(H_4)} = 28$ by irreducibility of the standard
-$H_4$-reflection representation; and the resulting tuple
-discharges $(O1)$ for any chosen $\xi^{*} \in (F^0)^{W(H_4)}
-\setminus \{0\}$, with $(O0)$ verified separately as a standing
-precondition.
+$H_4$-reflection representation (Theorem~\ref{thm:fixed-dim});
+and the resulting tuple satisfies $(O1)$ for the chosen $\xi^{*}$
+and chosen top-rung initial datum (Theorem~\ref{thm:main}), with
+the standing analytic preconditions $(O0)$ verified at the
+top-rung level (Proposition~\ref{prop:o0}).
 
 We do \emph{not} discharge $(O2)$, $(O3)$, the inverse limit, the
 $D_4$ branch, or the strong sense of selection that would pick
@@ -93,13 +96,18 @@ consumer API as stated in
 \subsection{The narrow goal}
 
 This paper is a single-target follow-up to
-\cite{CascadeMechanism}: we supply a witnessed $(O1)$ discharge
-for the cascade-closure consumer API on the $H_4$ branch at every
+\cite{CascadeMechanism}: we supply a witnessed $(O1)$ tuple for
+the cascade-closure consumer API on the $H_4$ branch at every
 finite top-rung level $N \geq 0$. The
 \cite[\S 3.4]{CascadeMechanism} consumer API consists of four
 \emph{separate} obligations $(O0)$, $(O1)$, $(O2)$, $(O3)$
 (\cite[lines 594--627]{CascadeMechanism}); we discharge $(O1)$
-and verify $(O0)$ as a standing precondition. $(O2)$ and $(O3)$
+and verify the top-rung analytic pieces of $(O0)$ as a standing
+precondition (the inter-rung pushforward bonding map needed by
+the rung-sequence formulation of $(O0)$ is available from
+\cite[Definition~\texttt{def:p0}, Theorem~\texttt{thm:bonding}]
+{RefinementSpaces} but is not used in the present
+$(O1)$-witness construction). $(O2)$ and $(O3)$
 are not addressed and remain in their current
 \cite{RefinementCompat} status (i.e., $(O2)$ \emph{as stated}
 remains false; $(O3)$ holds in the abstract scalar pure-midpoint
@@ -108,7 +116,7 @@ model only).
 The $(O1)$ discharge is \emph{parametrised} by a free choice of
 $\xi^{*} \in (F^0)^{W(H_4)} \setminus \{0\}$ (the
 $W(H_4)$-fixed subspace, of explicit real dimension $28$,
-Theorem~\ref{thm:main}(4)). For each fixed $\xi^{*}$ we
+Theorem~\ref{thm:fixed-dim}). For each fixed $\xi^{*}$ we
 exhibit an explicit five-tuple
 $(\Phi_N, R_N, \Psi_N^{t}, \phi^{\star}_{N}, \phi_N^{(0)})$
 satisfying every part of $(O1)$
@@ -130,23 +138,32 @@ cascade-closure API.
 This paper does \emph{not} establish any of the following:
 \begin{enumerate}[label=(\roman*), leftmargin=2em]
 \item \textbf{Single-state selection.} $\xi^{*}$ is freely chosen
-  from $(F^0)^{W(H_4)} \setminus \{0\}$ (a $28$-dim cone);
+  from $(F^0)^{W(H_4)} \setminus \{0\}$ (a $28$-dimensional cone);
   reducing to a single ray requires \textbf{(H-uniqueness)}
   (\S\ref{sec:open-hyp}). The cascade-closure consumer API does
   not provide single-ray selection.
 \item \textbf{$(O2)$, $(O3)$, or the full $(O0)$--$(O3)$ API.}
-  $(O0)$ is verified only as a standing precondition for the
-  witnessed $(O1)$ tuple. $(O2)$ as stated remains false
+  $(O0)$ is verified only at the top-rung level as a standing
+  precondition for the witnessed $(O1)$ tuple (the full
+  rung-sequence formulation of $(O0)$ is not built here; the
+  required inter-rung pushforward bonding map is recorded as
+  available from
+  \cite[Definition~\texttt{def:p0}, Theorem~\texttt{thm:bonding}]
+  {RefinementSpaces} but not used). $(O2)$ as stated remains false
   (\cite[Proposition~\texttt{prop:strict-fails}]{RefinementCompat}),
   and $(O3)$ holds only in the abstract scalar pure-midpoint
   model
   (\cite[Theorem~\texttt{thm:O3-discharge}]{RefinementCompat}).
   Neither is touched here.
 \item \textbf{Inverse-limit $(O1)$.} We work strictly at finite
-  top-rung level $N$; lifting to $N \to \infty$ requires
-  hypotheses $(L1)$ refinement-compatibility of unscaled $A_n$
-  and $(L3)$ spectral-gap propagation
-  (\cite[\S\texttt{sec:scope-and-gap}]{RefinementCompat}).
+  top-rung level $N$; lifting to $N \to \infty$ would require
+  the named open hypotheses of
+  \cite[\S\texttt{sec:scope-and-gap}]{RefinementCompat}, namely
+  $(L1)$ (boundary-vertex-incidence agreement of the level-$(n+1)$
+  vertex Laplacian with the abstract scalar model up to a
+  midpoint-supported defect) and $(L3)$ (energy-saturation of the
+  $F^{0}$-valued harmonic-extension operator $H_{n+1}$). Neither is
+  invoked here.
 \item \textbf{$D_4$ branch.} The construction uses the
   $H_4$-branch action of \cite[Definition~\texttt{def:coxeter}]{RefinementSpaces}
   in a load-bearing way (clause 4); a $D_4$-branch analogue is
@@ -154,13 +171,14 @@ This paper does \emph{not} establish any of the following:
 \item \textbf{Identification with upstream operators.}
   $L_N^{\mathrm{block}}$ is a new auxiliary operator introduced
   here. Theorems about it do not transfer to
-  \cite{ClosureDynamics}'s $A_n$ or
+  \cite{ClosureDynamics}'s vertex / top-left block
+  $A_n^{\mathrm{vertex}} = d_n^{*} d_n$ or
   \cite{RefinementCompat}'s $\widetilde A_n$.
 \item \textbf{$W(H_4)$-non-equivariant initial data.}
-  Convergence still holds (Theorem~\ref{thm:main}(3)), but the
-  limit lies in the full $32$-dim
-  $\ker L_N^{\mathrm{block}}$, not in the $28$-dim
-  $\Psi_N\bigl((F^0)^{W(H_4)}\bigr)$.
+  Convergence still holds (Theorem~\ref{thm:convergence}), but
+  the limit lies in the full $32$-dimensional
+  $\ker L_N^{\mathrm{block}}$, not in the $28$-dimensional
+  $\iota_N\bigl((F^0)^{W(H_4)}\bigr)$.
 \item \textbf{Continuum limit / target-side correspondence
   theorem.} No PDE identification, no metric / spectral / Hecke
   / cohomology correspondence.
@@ -410,13 +428,14 @@ and positive semi-definiteness.
 For the bound, the standard scalar estimate
 $\|L^{\mathrm{cl}}_N\|_{\op} \leq 2 \, \Delta(G_N^{H_4})$
 (\cite[Ch.~1]{Chung}, multigraph case) extends to the block
-operator with the same constant: since $L_N^{\mathrm{block}}$
-acts as $L^{\mathrm{cl}}_N$ on each of four orthogonal copies of
-$\ell^2(V(G_N^{H_4}); \R)$ inside $X_N^{0, H_4}$, the operator
-norm of the block operator equals the operator norm of the
-scalar Laplacian
-(\cite[Ch.~6.4]{HornJohnson}: norm of a block-diagonal operator
-is the maximum of the block norms; here all four blocks coincide).
+operator with the same constant via the tensor-product
+operator-norm identity: under the orthogonal identification
+$X_N^{0, H_4} \cong \ell^2(V(G_N^{H_4}); \R) \otimes_{\R} F^{0}$
+of Definition~\ref{def:block-laplacian}, $L_N^{\mathrm{block}} =
+L^{\mathrm{cl}}_N \otimes \id_{F^{0}}$, so
+$\|L_N^{\mathrm{block}}\|_{\op} = \|L^{\mathrm{cl}}_N\|_{\op}
+\cdot \|\id_{F^{0}}\|_{\op} = \|L^{\mathrm{cl}}_N\|_{\op}$
+(\cite[Ch.~4.2]{HornJohnson}).
 \end{proof}
 
 % =====================================================================
@@ -475,8 +494,8 @@ $L_N^{\mathrm{block}}$]
 \label{thm:kernel}
 For every $N \geq 0$, the constant-function embedding
 \[
-  \Psi_N \colon F^0 \to \ker L_N^{\mathrm{block}},
-  \qquad \Psi_N(\xi)(v) := \xi \quad \text{for all }
+  \iota_N \colon F^0 \to \ker L_N^{\mathrm{block}},
+  \qquad \iota_N(\xi)(v) := \xi \quad \text{for all }
   v \in V(G_N^{H_4}),
 \]
 is an $\R$-linear isomorphism. In particular,
@@ -490,23 +509,21 @@ is one-dimensional, spanned by the constant function
 $G_N^{H_4}$ is connected, so $\ker L^{\mathrm{cl}}_N = \R \cdot
 \mathbf{1}_{V(G_N^{H_4})}$.
 
-The block-diagonal structure of Definition~\ref{def:block-laplacian}
-gives
+By the tensor identification of Definition~\ref{def:block-laplacian},
+$L_N^{\mathrm{block}} = L^{\mathrm{cl}}_N \otimes \id_{F^{0}}$ on
+$X_N^{0, H_4} \cong \ell^2(V(G_N^{H_4}); \R) \otimes_{\R} F^{0}$,
+so
 \[
   \ker L_N^{\mathrm{block}}
-  \;=\; \ker L^{\mathrm{cl}}_N \oplus \ker L^{\mathrm{cl}}_N
-        \oplus \ker L^{\mathrm{cl}}_N \oplus \ker L^{\mathrm{cl}}_N
-  \;\cong\; \R^{4} \otimes_{\R} F^0_{\text{summandwise}}
-  \;\cong\; F^0,
+  \;=\; \bigl(\ker L^{\mathrm{cl}}_N\bigr) \otimes_{\R} F^{0}
+  \;=\; \bigl(\R \cdot \mathbf{1}_{V(G_N^{H_4})}\bigr) \otimes_{\R} F^{0}
+  \;\cong\; F^{0},
 \]
-where the last isomorphism sends a four-tuple of constants
-$(c_{H_4}, c_{D_4}, c_{16}, c_{8})$ in
-$V_{H_4}, V_{D_4}, V_{16}, V_8$ respectively to the
-$F^0$-element $c_{H_4} \oplus c_{D_4} \oplus c_{16} \oplus c_{8}$.
-This isomorphism is exactly $\Psi_N$ (constant-function embedding,
-fibrewise).
+where the last isomorphism sends $\mathbf{1} \otimes \xi$ to
+$\xi \in F^{0}$. This isomorphism is exactly $\iota_N$
+(constant-function embedding $\xi \mapsto (v \mapsto \xi)$).
 
-$\R$-linearity of $\Psi_N$ is by construction; injectivity is
+$\R$-linearity of $\iota_N$ is by construction; injectivity is
 immediate; surjectivity onto $\ker L_N^{\mathrm{block}}$ is the
 above identification.
 \end{proof}
@@ -539,7 +556,8 @@ $e^{-t L_N^{\mathrm{block}}}$ satisfies
   \;=\; P_{\ker L_N^{\mathrm{block}}}\,\Phi(0)
   \quad \text{in } X_N^{0, H_4}\text{-norm,}
 \]
-with uniform exponential bound
+with exponential bound, uniform over initial data $\Phi(0)$ at
+fixed $N$ (no claim about uniformity in $N$),
 \[
   \bigl\|\, e^{-t L_N^{\mathrm{block}}} \Phi(0)
         - P_{\ker L_N^{\mathrm{block}}}\Phi(0) \,\bigr\|_{X_N^{0, H_4}}
@@ -611,15 +629,15 @@ satisfies $V_{H_4}^{W(H_4)} = \{0\}$.
 $W(H_4)$ is a finite \emph{irreducible} Coxeter group; the
 standard reflection representation of any finite irreducible
 Coxeter group is irreducible (\cite[Ch.~5]{Humphreys}; see also
-\cite[Ch.~2]{Humphreys} for $H_4$ specifically). An irreducible
-representation of a finite group has trivial fixed subspace if
-and only if the trivial representation does not appear as a
-subrepresentation; for the standard reflection representation of
-a finite irreducible Coxeter group, this is the case
-(\cite[Ch.~5]{Humphreys}: the reflection representation is
-faithful and not the trivial representation, and irreducibility
-forbids any non-trivial proper invariant subspace, hence in
-particular the fixed subspace, being non-zero).
+\cite[Ch.~2]{Humphreys} for $H_4$ specifically). The reflection
+representation of a finite irreducible Coxeter group is faithful
+and is not the trivial representation
+(\cite[Ch.~5]{Humphreys}). The fixed subspace
+$V_{H_4}^{W(H_4)} \subset V_{H_4}$ is a $W(H_4)$-invariant
+subspace; by irreducibility it is either $\{0\}$ or all of
+$V_{H_4}$. The latter would force every reflection to act as
+the identity, contradicting faithfulness (or non-triviality).
+Hence $V_{H_4}^{W(H_4)} = \{0\}$.
 \end{proof}
 
 \begin{theorem}[Clause (4): the $W(H_4)$-fixed subspace of $F^0$]
@@ -733,14 +751,16 @@ explicit real dimension $28$ (Theorem~\ref{thm:fixed-dim}), set:
   the quadratic-form residual associated to $L_N^{\mathrm{block}}$;
 \item $\Psi_N^{t} := e^{-t L_N^{\mathrm{block}}}$, the gradient
   flow of $R_N$;
-\item $\phi^{\star}_{N} := \Psi_N(\xi^{*})$, the constant
+\item $\phi^{\star}_{N} := \iota_N(\xi^{*})$, the constant
   $\xi^{*}$-valued function on $V(G_N^{H_4})$
   (Theorem~\ref{thm:kernel});
 \item $\phi_N^{(0)} := \phi^{\star}_{N}$.
 \end{itemize}
 Then the five-tuple $(\Phi_N, R_N, \Psi_N^{t}, \phi^{\star}_{N},
-\phi_N^{(0)})$ discharges the cascade-mechanism $(O1)$ obligation
-of \cite[\S 3.4 lines 609--617]{CascadeMechanism}:
+\phi_N^{(0)})$ satisfies the cascade-mechanism $(O1)$ obligation
+of \cite[\S 3.4 lines 609--617]{CascadeMechanism} for the chosen
+$\xi^{*}$ and the chosen top-rung initial datum
+$\phi_N^{(0)} = \phi^{\star}_{N}$:
 \begin{enumerate}[label=\textup{(O1.\arabic*)}, leftmargin=3em]
 \item \emph{Top-rung residual-zero state.} $\phi^{\star}_{N} \in
   \Phi_N$ satisfies $R_N(\phi^{\star}_{N}) = 0$.
@@ -761,7 +781,7 @@ Proposition~\ref{prop:o0}.
 \end{theorem}
 
 \begin{proof}
-\emph{(O1.1).} By Theorem~\ref{thm:kernel}, $\Psi_N(\xi^{*}) \in
+\emph{(O1.1).} By Theorem~\ref{thm:kernel}, $\iota_N(\xi^{*}) \in
 \ker L_N^{\mathrm{block}}$, so
 $L_N^{\mathrm{block}} \phi^{\star}_{N} = 0$, hence
 $R_N(\phi^{\star}_{N}) =
@@ -804,14 +824,14 @@ single ray requires the named open hypothesis
 \textbf{(H-uniqueness)} (\S\ref{sec:open-hyp}).
 
 The chosen $\xi^{*}$ is $W(H_4)$-equivariant by construction
-($\xi^{*} \in (F^0)^{W(H_4)}$), so $\Psi_N(\xi^{*})$ is a
+($\xi^{*} \in (F^0)^{W(H_4)}$), so $\iota_N(\xi^{*})$ is a
 $W(H_4)$-equivariant function on $V(G_N^{H_4})$.
 $W(H_4)$-non-equivariant initial data
 $\widetilde\phi_N^{(0)} \in X_N^{0, H_4}$ still converge by
-Theorem~\ref{thm:convergence}, but to the $32$-dim full kernel
+Theorem~\ref{thm:convergence}, but to the $32$-dimensional full kernel
 projection $P_{\ker L_N^{\mathrm{block}}} \widetilde\phi_N^{(0)}$,
 which need not coincide with any constant
-$\Psi_N(\xi^{*})$ for $\xi^{*}$ in the $28$-dim
+$\iota_N(\xi^{*})$ for $\xi^{*}$ in the $28$-dimensional
 $W(H_4)$-fixed subspace.
 \end{remark}
 
@@ -899,7 +919,7 @@ located:
 
 \begin{itemize}[leftmargin=2em]
 \item \textbf{Single-state selection.} See \S\ref{sec:open-hyp}
-  \textbf{(H-uniqueness)} below; reducing the $28$-dim $\xi^{*}$
+  \textbf{(H-uniqueness)} below; reducing the $28$-dimensional $\xi^{*}$
   freedom to a single ray is the next-paper task.
 \item \textbf{$(O2)$ and $(O3)$.} Inherited from
   \cite{RefinementCompat}: $(O2)$ as stated remains false
@@ -953,13 +973,13 @@ for an additional selection principle include:
 $\phi^{\star}_{N}$ itself is not provided by cascade closure and
 is the successor paper's own task'' --- this paper supplies
 \emph{a} $\phi^{\star}_{N}$ (parametrised by $\xi^{*}$), not
-the unique one. Reducing the $28$-dim freedom to a single ray
+the unique one. Reducing the $28$-dimensional freedom to a single ray
 lies \emph{outside} the cascade-closure consumer API.
 \end{remark}
 
 \begin{remark}[\textbf{(H-physical-interpretation)}]
 \label{rmk:H-phys}
-Whether $\Psi_N\bigl((F^0)^{W(H_4)}\bigr) \subset X_N^{0, H_4}$
+Whether $\iota_N\bigl((F^0)^{W(H_4)}\bigr) \subset X_N^{0, H_4}$
 is the \emph{physically correct} selected subspace --- as opposed
 to a mathematical artefact of restricting to the $H_4$ branch
 with the constant-function embedding --- is a physical-modelling
@@ -982,7 +1002,7 @@ interpretation.
 \item Proposition~\ref{prop:psd} (PSD self-adjointness of
   $L_N^{\mathrm{block}}$ with explicit norm bound).
 \item Theorem~\ref{thm:kernel} ($\ker L_N^{\mathrm{block}} \cong
-  F^0$ via $\Psi_N$).
+  F^0$ via $\iota_N$).
 \item Theorem~\ref{thm:convergence} (convergence of
   $e^{-t L_N^{\mathrm{block}}}$ with rate
   $\lambda_{+}(L_N^{\mathrm{block}})$).
@@ -998,12 +1018,14 @@ interpretation.
 
 \begin{enumerate}[leftmargin=2em]
 \item Any theorem about $L_N^{\mathrm{block}}$ as a theorem about
-  P4's $A_n$ or compat's $\widetilde A_n$: the operators differ
+  P4's vertex / top-left block
+  $A_n^{\mathrm{vertex}} = d_n^{*} d_n$ or compat's
+  $\widetilde A_n$: the operators differ
   (Remark~\ref{rmk:no-identification}).
 \item Single-state selection of a unique
   $\phi^{\star}_{N}$: Theorem~\ref{thm:main} parametrises
   $\phi^{\star}_{N}$ by $\xi^{*} \in (F^0)^{W(H_4)} \setminus
-  \{0\}$ (a $28$-dim cone); single-ray selection is
+  \{0\}$ (a $28$-dimensional cone); single-ray selection is
   \textbf{(H-uniqueness)} (\S\ref{sec:open-hyp}).
 \item Inverse-limit $(O1)$ as $N \to \infty$: open under
   $(L1), (L3)$
@@ -1020,14 +1042,14 @@ cascade-mechanism consumer-API obligation $(O1)$ on the $H_4$
 branch is discharged at every finite top-rung level $N \geq 0$ by
 the explicit five-tuple
 $(X_N^{0, H_4}, \tfrac12 \langle \cdot, L_N^{\mathrm{block}}
-\cdot \rangle, e^{-t L_N^{\mathrm{block}}}, \Psi_N(\xi^{*}),
-\Psi_N(\xi^{*}))$ for any chosen $\xi^{*} \in (F^0)^{W(H_4)}
+\cdot \rangle, e^{-t L_N^{\mathrm{block}}}, \iota_N(\xi^{*}),
+\iota_N(\xi^{*}))$ for any chosen $\xi^{*} \in (F^0)^{W(H_4)}
 \setminus \{0\}$, where $L_N^{\mathrm{block}}$ is the auxiliary
 block graph Laplacian and $(F^0)^{W(H_4)}$ has explicit real
-dimension $28$. The selected state is unique up to the
-$28$-dimensional choice of $\xi^{*}$; reducing to a single ray
-is the named open hypothesis \textbf{(H-uniqueness)}, outside
-the cascade-closure consumer API.''
+dimension $28$. The construction leaves a $28$-dimensional free
+choice of $\xi^{*}$; single-ray selection is the named open
+hypothesis \textbf{(H-uniqueness)}, outside the cascade-closure
+consumer API.''
 
 % =====================================================================
 \begin{thebibliography}{99}
