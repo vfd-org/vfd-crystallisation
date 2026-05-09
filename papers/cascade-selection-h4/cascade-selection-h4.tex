@@ -1,0 +1,1130 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{enumitem}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue,
+            urlcolor=blue]{hyperref}
+\usepackage{microtype}
+
+% =====================================================================
+% Notation
+% =====================================================================
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\Schur}{\operatorname{Schur}}
+\newcommand{\id}{\operatorname{id}}
+\DeclareMathOperator*{\Span}{span}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+
+% =====================================================================
+
+\title{Cascade Selection on the $H_4$ Branch:\\
+An Auxiliary Block Graph Laplacian and a Witnessed $(O1)$ Discharge
+on $V_{600}$}
+
+\author{Cascade--Classical Correspondence Programme}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We discharge the cascade-mechanism consumer-API obligation $(O1)$
+(top-rung fixed point and convergence,
+\cite[\S 3.4]{CascadeMechanism}) on the $H_4$ branch at every
+finite top-rung level $N \geq 0$, parametrised by a free choice of
+$\xi^{*} \in (F^0)^{W(H_4)} \setminus \{0\}$. The witness operator
+is a new auxiliary block graph Laplacian
+$L_N^{\mathrm{block}}$ on the finite-level vertex-sector Hilbert
+space $X_N^{0, H_4}$ of \cite[Definition~\texttt{def:Xn-0}]{RefinementSpaces},
+introduced in this paper and explicitly distinct from
+\cite{ClosureDynamics}'s $A_n$ (which acts non-trivially only on
+the $\mathrm{Im}(\OO)$ direction) and from
+\cite{RefinementCompat}'s $\widetilde A_n$ (which lives in an
+abstract scalar pure-midpoint reduction).
+
+Five clauses constitute the named theorem:
+$L_N^{\mathrm{block}}$ is bounded self-adjoint and positive
+semi-definite on $X_N^{0, H_4}$, with an explicit Chung-style
+operator-norm bound;
+$G_N^{H_4}$ is connected at every level and
+$\ker L_N^{\mathrm{block}} \cong F^0$ via constant-function
+embedding (32-dimensional);
+the gradient flow $e^{-t L_N^{\mathrm{block}}}$ converges to the
+kernel projection with uniform exponential bound governed by the
+spectral gap $\lambda_{+}(L_N^{\mathrm{block}}) > 0$;
+$\dim_{\R} (F^0)^{W(H_4)} = 28$ by irreducibility of the standard
+$H_4$-reflection representation; and the resulting tuple
+discharges $(O1)$ for any chosen $\xi^{*} \in (F^0)^{W(H_4)}
+\setminus \{0\}$, with $(O0)$ verified separately as a standing
+precondition.
+
+We do \emph{not} discharge $(O2)$, $(O3)$, the inverse limit, the
+$D_4$ branch, or the strong sense of selection that would pick
+a single ray in $(F^0)^{W(H_4)}$. The latter is named
+\textbf{(H-uniqueness)} and lies outside the cascade-closure
+consumer API as stated in
+\cite[\S 3.4 lines 637--639]{CascadeMechanism}.
+\end{abstract}
+
+\tableofcontents
+
+% =====================================================================
+\section{Recap and scope}
+\label{sec:intro}
+% =====================================================================
+
+\subsection{The narrow goal}
+
+This paper is a single-target follow-up to
+\cite{CascadeMechanism}: we supply a witnessed $(O1)$ discharge
+for the cascade-closure consumer API on the $H_4$ branch at every
+finite top-rung level $N \geq 0$. The
+\cite[\S 3.4]{CascadeMechanism} consumer API consists of four
+\emph{separate} obligations $(O0)$, $(O1)$, $(O2)$, $(O3)$
+(\cite[lines 594--627]{CascadeMechanism}); we discharge $(O1)$
+and verify $(O0)$ as a standing precondition. $(O2)$ and $(O3)$
+are not addressed and remain in their current
+\cite{RefinementCompat} status (i.e., $(O2)$ \emph{as stated}
+remains false; $(O3)$ holds in the abstract scalar pure-midpoint
+model only).
+
+The $(O1)$ discharge is \emph{parametrised} by a free choice of
+$\xi^{*} \in (F^0)^{W(H_4)} \setminus \{0\}$ (the
+$W(H_4)$-fixed subspace, of explicit real dimension $28$,
+Theorem~\ref{thm:main}(4)). For each fixed $\xi^{*}$ we
+exhibit an explicit five-tuple
+$(\Phi_N, R_N, \Psi_N^{t}, \phi^{\star}_{N}, \phi_N^{(0)})$
+satisfying every part of $(O1)$
+(\cite[lines 609--617]{CascadeMechanism}). The freedom in
+$\xi^{*}$ is the $(O1)$-witness parameter; the
+\cite[\S 3.4 lines 637--639]{CascadeMechanism} statement
+``selection of $\phi^{\star}_{N}$ itself is not provided by
+cascade closure and is the successor paper's own task'' is
+satisfied by our construction supplying \emph{a} $\phi^{\star}_{N}$.
+Reducing to a single ray in $(F^0)^{W(H_4)} \setminus \{0\}$
+requires the named open hypothesis \textbf{(H-uniqueness)}
+(\S\ref{sec:open-hyp}), which lies \emph{outside} the
+cascade-closure API.
+
+\subsection{Explicit non-claims}
+
+\begin{remark}[Non-claims box]
+\label{rmk:non-claims}
+This paper does \emph{not} establish any of the following:
+\begin{enumerate}[label=(\roman*), leftmargin=2em]
+\item \textbf{Single-state selection.} $\xi^{*}$ is freely chosen
+  from $(F^0)^{W(H_4)} \setminus \{0\}$ (a $28$-dim cone);
+  reducing to a single ray requires \textbf{(H-uniqueness)}
+  (\S\ref{sec:open-hyp}). The cascade-closure consumer API does
+  not provide single-ray selection.
+\item \textbf{$(O2)$, $(O3)$, or the full $(O0)$--$(O3)$ API.}
+  $(O0)$ is verified only as a standing precondition for the
+  witnessed $(O1)$ tuple. $(O2)$ as stated remains false
+  (\cite[Proposition~\texttt{prop:strict-fails}]{RefinementCompat}),
+  and $(O3)$ holds only in the abstract scalar pure-midpoint
+  model
+  (\cite[Theorem~\texttt{thm:O3-discharge}]{RefinementCompat}).
+  Neither is touched here.
+\item \textbf{Inverse-limit $(O1)$.} We work strictly at finite
+  top-rung level $N$; lifting to $N \to \infty$ requires
+  hypotheses $(L1)$ refinement-compatibility of unscaled $A_n$
+  and $(L3)$ spectral-gap propagation
+  (\cite[\S\texttt{sec:scope-and-gap}]{RefinementCompat}).
+\item \textbf{$D_4$ branch.} The construction uses the
+  $H_4$-branch action of \cite[Definition~\texttt{def:coxeter}]{RefinementSpaces}
+  in a load-bearing way (clause 4); a $D_4$-branch analogue is
+  a separate paper.
+\item \textbf{Identification with upstream operators.}
+  $L_N^{\mathrm{block}}$ is a new auxiliary operator introduced
+  here. Theorems about it do not transfer to
+  \cite{ClosureDynamics}'s $A_n$ or
+  \cite{RefinementCompat}'s $\widetilde A_n$.
+\item \textbf{$W(H_4)$-non-equivariant initial data.}
+  Convergence still holds (Theorem~\ref{thm:main}(3)), but the
+  limit lies in the full $32$-dim
+  $\ker L_N^{\mathrm{block}}$, not in the $28$-dim
+  $\Psi_N\bigl((F^0)^{W(H_4)}\bigr)$.
+\item \textbf{Continuum limit / target-side correspondence
+  theorem.} No PDE identification, no metric / spectral / Hecke
+  / cohomology correspondence.
+\item \textbf{Selection mechanism in the strong sense.}
+  ``Cascade closure as selection mechanism'' is overstatement.
+  This paper provides a top-rung $(O1)$ witness for a chosen
+  $\xi^{*}$ on the $H_4$ branch at finite $N$, no more.
+\end{enumerate}
+\end{remark}
+
+\subsection{Inputs and notation}
+
+We use the following inputs without re-deriving:
+\begin{itemize}
+\item \cite{RefinementSpaces} (paper P3): the finite-level
+  vertex-sector Hilbert space
+  $X_n^{0, \bullet} = \ell^2(V(G_n^\bullet); F^0)$
+  (\texttt{def:Xn-0}, \texttt{prop:Xn-Hilbert}); the
+  Schl\"{a}fli-style refinement step (\texttt{def:refinement});
+  the base graph $G_0^{H_4}$ on $V_{600}$
+  (\texttt{def:base-graphs}); the sector fibres $F^0 = V_{H_4}
+  \oplus V_{D_4} \oplus V_{16} \oplus V_8$ of $\R$-dimension
+  $32$ (\texttt{not:fibres}); the branchwise Coxeter action
+  $\rho_{F^0}^\bullet$ (\texttt{def:coxeter}); Coxeter unitarity
+  (\texttt{lem:coxeter-unitary}); the vertex bonding map $p^0$
+  (\texttt{def:p0}, \texttt{thm:bonding}).
+\item \cite{ClosureDynamics} (paper P4): the discrete coboundary
+  $d_n$ which projects $F^0$ to $F^1 = \mathrm{Im}(\OO)$ via
+  $\pi_{F^0 \to F^1}$ (\texttt{def:coboundary}); the
+  \emph{vertex} (top-left) block $A_n^{\mathrm{vertex}} :=
+  d_n^{*} d_n$ on $X_n^{0, \bullet}$ (\texttt{def:An}); the
+  finite-dim ODE / matrix-exponential argument for flow
+  existence (\texttt{thm:flow-exists}).
+\item \cite{RefinementCompat}: the abstract scalar pure-midpoint
+  refinement model (\texttt{def:abstract-model}); the scaled
+  curvature operator $\widetilde A_n := 2^n A_n^{\mathrm{vertex}}$
+  in that abstract scalar model (\texttt{def:Atilde}); the
+  open lift hypotheses $(L1), (L3)$
+  (\texttt{sec:scope-and-gap}).
+\item \cite{CascadeMechanism}: the cascade-closure consumer API
+  $(O0)$--$(O3)$ (\S 3.4 lines 594--627); the explicit
+  ``selection is the successor's task'' framing (\S 3.4 lines
+  637--639).
+\item \cite{AlgebraicSubstrate} (paper P2): the $V_{600}$
+  vertex set (\texttt{def:V600}); the icosian ring
+  (\texttt{def:icosian-ring}); $V_{24} \subset V_{600}$
+  (\texttt{prop:24-in-600}); the explicit $V_{600}$ graph
+  Laplacian spectrum (\texttt{tab:P2-spectrum}), used only in
+  the $N = 0$ worked numerics of \S\ref{sec:numerics}.
+\end{itemize}
+
+Classical references invoked: \cite{Humphreys} for $H_4$
+reflection-group irreducibility; \cite{Chung} for the scalar
+graph Laplacian on multigraphs; \cite{ReedSimonI},
+\cite{HornJohnson} for finite-dim spectral / matrix-exponential
+arguments; \cite{CoxeterRegularPolytopes} for the $600$-cell edge
+graph.
+
+% =====================================================================
+\section{The auxiliary block graph Laplacian $L_N^{\mathrm{block}}$}
+\label{sec:block-laplacian}
+% =====================================================================
+
+\subsection{Why we need a new operator}
+
+The cascade-closure consumer API of
+\cite[\S 3.4]{CascadeMechanism} requires the supplied $R_N$ and
+flow $\Psi_N^{t}$ to be the successor paper's own choice; in
+particular, $R_N$ is not required to be P4's closure functional
+$F_n = \alpha R_n + \beta E_n - \gamma Q_n$
+(\cite[Definition~\texttt{def:Fn}]{ClosureDynamics}). We exploit
+this freedom: P4's vertex / top-left block
+$A_n^{\mathrm{vertex}} := d_n^{*} d_n$
+(\cite[Definition~\texttt{def:An}]{ClosureDynamics}) acts
+non-trivially only on the $\mathrm{Im}(\OO)$ direction within the
+$V_8$ fibre summand, because P4's coboundary
+$d_n \colon X_n^0 \to X_n^1$ first projects $F^0$ onto
+$F^1 = \mathrm{Im}(\OO)$ via the canonical projection
+$\pi_{F^0 \to F^1}$
+(\cite[Definition~\texttt{def:coboundary}]{ClosureDynamics}). Hence
+\[
+  \dim_{\R} \ker A_n^{\mathrm{vertex}}
+  \;=\; 25 \,|V(G_n^\bullet)| + 7
+\]
+on a connected graph $G_n^\bullet$ (the $25$ counts $\dim
+V_{H_4} + \dim V_{D_4} + \dim V_{16} = 4 + 4 + 16$ plus the
+real-octonion direction $\dim \R \cdot 1 = 1$, all of which
+$d_n$ ignores; the additional $+7$ counts constant
+$\mathrm{Im}(\OO)$-functions). That kernel is too large for a
+clean $(O1)$ witness.
+
+We need an operator whose kernel is exactly the $F^0$-valued
+constants on a connected refined graph (dimension $|F^0| = 32$);
+the simple block-diagonal extension of the scalar graph
+Laplacian to $F^0$-valued functions does the job and is what
+we introduce below.
+
+\subsection{Definition}
+
+\begin{definition}[Labelled-multiset scalar graph Laplacian]
+\label{def:scalar-laplacian}
+Let $G_N^{H_4} = (V(G_N^{H_4}), E(G_N^{H_4}))$ be the level-$N$
+Schl\"{a}fli-style refined graph of
+\cite[Definition~\texttt{def:refinement}]{RefinementSpaces},
+with base $G_0^{H_4}$ on $V_{600}$
+(\cite[Definition~\texttt{def:base-graphs}]{RefinementSpaces}).
+By \cite[Definition~\texttt{def:refinement}]{RefinementSpaces},
+$E(G_N^{H_4})$ is a \emph{labelled-edge multiset}: each generated
+edge carries a class tag $\in \{(\mathrm{a}), (\mathrm{b}),
+(\mathrm{c})\}$ and a parent-face tag where applicable, so two
+edges with the same unordered endpoint pair but different tags
+are distinct elements of $E(G_N^{H_4})$.
+
+The \emph{labelled-multiset combinatorial scalar graph Laplacian}
+$L^{\mathrm{cl}}_N$ on $V(G_N^{H_4})$, acting on $\R$-valued
+functions, is
+\[
+  (L^{\mathrm{cl}}_N f)(v)
+  \;:=\; \sum_{e \in E(G_N^{H_4}),\; v \in e}
+         \bigl(f(v) - f(\op_e(v))\bigr),
+\]
+where for each $e = \{v, \op_e(v)\}$ in the multiset, $\op_e(v)$
+denotes the other endpoint of the labelled edge $e$. Each labelled
+edge $e \in E(G_N^{H_4})$ contributes once with multiplicity $1$;
+parallel labelled edges with coinciding endpoints are summed
+separately.
+
+Equivalently, $L^{\mathrm{cl}}_N = D_N - W_N$ where the diagonal
+$D_N(v) := |\{e \in E(G_N^{H_4}) : v \in e\}| =
+\deg_{G_N^{H_4}}(v)$ uses the labelled-multiset degree count, and
+$W_N(v, u) := |\{e \in E(G_N^{H_4}) : e = \{v, u\}\}|$ is the
+number of labelled edges joining $v$ to $u$ (an integer
+$\geq 0$). This is the standard Chung convention
+(\cite[Ch.~1]{Chung}) extended to multigraphs.
+
+For $N = 0$ all base edges of $G_0^{H_4}$ on $V_{600}$ have
+multiplicity $1$ (the $600$-cell edge graph is simple,
+\cite[\S 22.7]{CoxeterRegularPolytopes}), so $W_0(v, u) \in
+\{0, 1\}$ and $L^{\mathrm{cl}}_0$ reduces to the standard simple
+graph Laplacian on the $600$-cell edge graph.
+\end{definition}
+
+\begin{definition}[Block graph Laplacian]
+\label{def:block-laplacian}
+The \emph{block graph Laplacian on the $H_4$ branch at level $N$}
+is the bounded $\R$-linear operator $L_N^{\mathrm{block}}$ on the
+finite-dimensional Hilbert space
+$X_N^{0, H_4} = \ell^2(V(G_N^{H_4}); F^0)$
+(\cite[Definition~\texttt{def:Xn-0}]{RefinementSpaces}) defined
+fibrewise by
+\[
+  L_N^{\mathrm{block}}(\phi)(v)
+  \;:=\; \bigl(L^{\mathrm{cl}}_N \phi^{(H_4)}\bigr)(v)
+        \oplus \bigl(L^{\mathrm{cl}}_N \phi^{(D_4)}\bigr)(v)
+        \oplus \bigl(L^{\mathrm{cl}}_N \phi^{(16)}\bigr)(v)
+        \oplus \bigl(L^{\mathrm{cl}}_N \phi^{(8)}\bigr)(v),
+\]
+where $\phi(v) = \phi^{(H_4)}(v) \oplus \phi^{(D_4)}(v) \oplus
+\phi^{(16)}(v) \oplus \phi^{(8)}(v)$ in the orthogonal
+decomposition $F^0 = V_{H_4} \oplus V_{D_4} \oplus V_{16} \oplus
+V_8$ of \cite[Notation~\texttt{not:fibres}]{RefinementSpaces},
+and $L^{\mathrm{cl}}_N$ acts componentwise on each summand
+independently via Definition~\ref{def:scalar-laplacian}.
+\end{definition}
+
+\subsection{Relation to upstream operators}
+
+\begin{remark}[$L_N^{\mathrm{block}}$ is not an upstream operator]
+\label{rmk:no-identification}
+We do \emph{not} claim that $L_N^{\mathrm{block}}$ equals or is a
+restriction of any operator from \cite{ClosureDynamics} or
+\cite{RefinementCompat}. Specifically:
+\begin{itemize}
+\item P4's vertex / top-left block
+  $A_n^{\mathrm{vertex}} = d_n^{*} d_n$
+  (\cite[Definition~\texttt{def:An}]{ClosureDynamics}) factors
+  through the $\mathrm{Im}(\OO)$ projection of P4's coboundary
+  (\cite[Definition~\texttt{def:coboundary}]{ClosureDynamics}):
+  informally,
+  $A_n^{\mathrm{vertex}} = \iota_{F^1 \to F^0} \circ
+  L^{\mathrm{cl}}_N \circ \pi_{F^0 \to F^1}$. Compared with
+  $L_N^{\mathrm{block}}$, this replaces three of the four fibre
+  blocks ($V_{H_4}$, $V_{D_4}$, $V_{16}$, plus the real-octonion
+  direction in $V_8$) with zero. Hence $L_N^{\mathrm{block}}$ is
+  a strictly larger operator on $X_N^{0, H_4}$.
+\item \cite{RefinementCompat}'s scaled curvature operator
+  $\widetilde A_n := 2^n A_n^{\mathrm{vertex}}$
+  (\cite[Definition~\texttt{def:Atilde}]{RefinementCompat}) is
+  the \emph{scaled scalar abstract-model analogue} of P4's
+  vertex Laplacian: \cite{RefinementCompat} works in the
+  abstract scalar pure-midpoint reduction
+  (\cite[Definition~\texttt{def:abstract-model}]{RefinementCompat}),
+  where the underlying state space is scalar-valued (not
+  $F^0$-valued) on a pure-midpoint refinement of $V_{600}$. The
+  full-fibre $L_N^{\mathrm{block}}$ on $X_N^{0, H_4}$ used here
+  is in a different scope from both
+  \cite{RefinementCompat} (which has no fibre $F^0$) and
+  \cite{ClosureDynamics} (which restricts to the
+  $\mathrm{Im}(\OO)$ direction).
+\end{itemize}
+$L_N^{\mathrm{block}}$ is introduced in this paper for the
+$(O1)$ witness. The simple block-diagonal construction is one
+natural choice; we do not claim minimality.
+\end{remark}
+
+% =====================================================================
+\section{Self-adjointness, positive semi-definiteness, and bound}
+\label{sec:psd}
+% =====================================================================
+
+\begin{proposition}[Clause (1): operator structure of
+$L_N^{\mathrm{block}}$]
+\label{prop:psd}
+For every $N \geq 0$, $L_N^{\mathrm{block}}$ is bounded,
+self-adjoint, and positive semi-definite on $X_N^{0, H_4}$, with
+operator-norm bound
+\[
+  \|L_N^{\mathrm{block}}\|_{\op}
+  \;\leq\; 2 \, \Delta(G_N^{H_4})
+\]
+where $\Delta(G_N^{H_4}) := \max_{v \in V(G_N^{H_4})}
+\deg_{G_N^{H_4}}(v)$ is the maximum labelled-multiset degree.
+\end{proposition}
+
+\begin{proof}
+Self-adjointness and positive semi-definiteness of the scalar
+Laplacian $L^{\mathrm{cl}}_N$ follow from the standard identity
+\[
+  \langle L^{\mathrm{cl}}_N f, g \rangle_{\ell^2(V(G_N^{H_4}); \R)}
+  \;=\; \sum_{e \in E(G_N^{H_4})}
+        (f(h(e)) - f(t(e))) (g(h(e)) - g(t(e)))
+\]
+(for any orientation $e \mapsto (t(e), h(e))$ of each labelled
+edge; the sum is symmetric in the unoriented edge), which gives
+$\langle L^{\mathrm{cl}}_N f, g\rangle = \langle f,
+L^{\mathrm{cl}}_N g\rangle$ and
+$\langle L^{\mathrm{cl}}_N f, f\rangle = \sum_e (f(h(e)) -
+f(t(e)))^{2} \geq 0$ (\cite[Ch.~1]{Chung} for the multigraph
+extension).
+
+The block-diagonal construction
+$L_N^{\mathrm{block}} = L^{\mathrm{cl}}_N \otimes \id_{F^0}$
+(after identifying $X_N^{0, H_4} = \ell^2(V(G_N^{H_4}); \R)
+\otimes_{\R} F^0$ orthogonally) preserves both self-adjointness
+and positive semi-definiteness.
+
+For the bound, the standard scalar estimate
+$\|L^{\mathrm{cl}}_N\|_{\op} \leq 2 \, \Delta(G_N^{H_4})$
+(\cite[Ch.~1]{Chung}, multigraph case) extends to the block
+operator with the same constant: since $L_N^{\mathrm{block}}$
+acts as $L^{\mathrm{cl}}_N$ on each of four orthogonal copies of
+$\ell^2(V(G_N^{H_4}); \R)$ inside $X_N^{0, H_4}$, the operator
+norm of the block operator equals the operator norm of the
+scalar Laplacian
+(\cite[Ch.~6.4]{HornJohnson}: norm of a block-diagonal operator
+is the maximum of the block norms; here all four blocks coincide).
+\end{proof}
+
+% =====================================================================
+\section{Connectivity and the kernel theorem}
+\label{sec:kernel}
+% =====================================================================
+
+\begin{lemma}[Connectivity of the refined $H_4$ graph]
+\label{lem:connected}
+For every $N \geq 0$, the (labelled-multiset) graph $G_N^{H_4}$
+is connected.
+\end{lemma}
+
+\begin{proof}
+Induction on $N$.
+
+\emph{Base case $N = 0$.} $G_0^{H_4}$ has vertex set $V_{600}$
+and edges joining $600$-cell vertices at the standard $600$-cell
+edge distance
+(\cite[Definition~\texttt{def:base-graphs}]{RefinementSpaces},
+\cite[\S 22.7]{CoxeterRegularPolytopes}). The $600$-cell edge
+graph is connected; this is classical and equivalent to
+$W(H_4)$-orbit transitivity on $V_{600}$ via edge-adjacent unit
+icosians.
+
+\emph{Inductive step.} Assume $G_n^{H_4}$ is connected. By
+\cite[Definition~\texttt{def:refinement}]{RefinementSpaces},
+$V(G_{n+1}^{H_4}) = V(G_n^{H_4}) \sqcup M_n^{H_4} \sqcup
+C_n^{H_4}$ (vertices, midpoints, centroids), and the edge set
+$E(G_{n+1}^{H_4})$ consists of three classes:
+\begin{itemize}[leftmargin=2em]
+\item Class (a): for each $e = \{u, v\} \in E_n^{H_4}$, two
+  subdividing edges $\{u, m_e\}$ and $\{m_e, v\}$ (using the
+  midpoint $m_e$).
+\item Class (b): for each face $f \in F_n^{H_4}$ with edge
+  sequence $(e_1, \ldots, e_k)$, midpoint-centroid edges
+  $\{m_{e_i}, c_f\}$.
+\item Class (c): midpoint-midpoint diagonal edges
+  $\{m_{e_i}, m_{e_{i+1}}\}$ closing each level-$(n+1)$ triangle
+  face.
+\end{itemize}
+Class-(a) edges keep every level-$(n+1)$ midpoint $m_e$ joined to
+the existing $V(G_n^{H_4})$ component (each $m_e$ is adjacent to
+both endpoints of its parent edge $e$). Class-(b) edges keep
+every level-$(n+1)$ centroid $c_f$ joined to the existing
+component (each $c_f$ is adjacent to every midpoint of every
+edge in $\partial^\bullet_n(f)$, all of which lie in
+$V(G_{n+1}^{H_4})$ via Class (a)). Hence every vertex in
+$V(G_{n+1}^{H_4})$ is in the same connected component as
+$V(G_n^{H_4})$, which is connected by the inductive hypothesis.
+Class-(c) edges are not needed for the inductive step.
+\end{proof}
+
+\begin{theorem}[Clause (2): kernel structure of
+$L_N^{\mathrm{block}}$]
+\label{thm:kernel}
+For every $N \geq 0$, the constant-function embedding
+\[
+  \Psi_N \colon F^0 \to \ker L_N^{\mathrm{block}},
+  \qquad \Psi_N(\xi)(v) := \xi \quad \text{for all }
+  v \in V(G_N^{H_4}),
+\]
+is an $\R$-linear isomorphism. In particular,
+$\dim_{\R} \ker L_N^{\mathrm{block}} = \dim_{\R} F^0 = 32$.
+\end{theorem}
+
+\begin{proof}
+The kernel of the scalar Laplacian on a connected (multi)graph
+is one-dimensional, spanned by the constant function
+(\cite[Ch.~1]{Chung}, multigraph case). By Lemma~\ref{lem:connected},
+$G_N^{H_4}$ is connected, so $\ker L^{\mathrm{cl}}_N = \R \cdot
+\mathbf{1}_{V(G_N^{H_4})}$.
+
+The block-diagonal structure of Definition~\ref{def:block-laplacian}
+gives
+\[
+  \ker L_N^{\mathrm{block}}
+  \;=\; \ker L^{\mathrm{cl}}_N \oplus \ker L^{\mathrm{cl}}_N
+        \oplus \ker L^{\mathrm{cl}}_N \oplus \ker L^{\mathrm{cl}}_N
+  \;\cong\; \R^{4} \otimes_{\R} F^0_{\text{summandwise}}
+  \;\cong\; F^0,
+\]
+where the last isomorphism sends a four-tuple of constants
+$(c_{H_4}, c_{D_4}, c_{16}, c_{8})$ in
+$V_{H_4}, V_{D_4}, V_{16}, V_8$ respectively to the
+$F^0$-element $c_{H_4} \oplus c_{D_4} \oplus c_{16} \oplus c_{8}$.
+This isomorphism is exactly $\Psi_N$ (constant-function embedding,
+fibrewise).
+
+$\R$-linearity of $\Psi_N$ is by construction; injectivity is
+immediate; surjectivity onto $\ker L_N^{\mathrm{block}}$ is the
+above identification.
+\end{proof}
+
+% =====================================================================
+\section{Convergence theorem}
+\label{sec:convergence}
+% =====================================================================
+
+\begin{notation}[Spectral gap]
+\label{not:lambda-plus}
+For a positive semi-definite self-adjoint operator $T$ on a
+finite-dimensional Hilbert space, write
+\[
+  \lambda_{+}(T)
+  \;:=\; \min\bigl\{\lambda \in \spec(T) : \lambda > 0\bigr\}
+\]
+for the smallest positive eigenvalue (the spectral gap). When
+$\dim \ker T > 1$, $\lambda_{+}(T)$ is strictly larger than the
+``second eigenvalue'' $\lambda_2(T) = 0$, and we use $\lambda_{+}$
+throughout to avoid confusion.
+\end{notation}
+
+\begin{theorem}[Clause (3): convergence of the gradient flow]
+\label{thm:convergence}
+For every $\Phi(0) \in X_N^{0, H_4}$, the operator semigroup
+$e^{-t L_N^{\mathrm{block}}}$ satisfies
+\[
+  \lim_{t \to \infty} e^{-t L_N^{\mathrm{block}}} \Phi(0)
+  \;=\; P_{\ker L_N^{\mathrm{block}}}\,\Phi(0)
+  \quad \text{in } X_N^{0, H_4}\text{-norm,}
+\]
+with uniform exponential bound
+\[
+  \bigl\|\, e^{-t L_N^{\mathrm{block}}} \Phi(0)
+        - P_{\ker L_N^{\mathrm{block}}}\Phi(0) \,\bigr\|_{X_N^{0, H_4}}
+  \;\leq\;
+  e^{-t \, \lambda_{+}(L_N^{\mathrm{block}})}
+  \,\bigl\|\Phi(0) - P_{\ker L_N^{\mathrm{block}}}\Phi(0)\bigr\|_{X_N^{0, H_4}}
+\]
+for every $t \geq 0$, where $\lambda_{+}(L_N^{\mathrm{block}}) =
+\lambda_{+}(L^{\mathrm{cl}}_N) > 0$ (the block extension repeats
+each scalar eigenvalue with multiplicity $32$, leaving the
+smallest positive eigenvalue unchanged).
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:psd}, $L_N^{\mathrm{block}}$ is bounded
+self-adjoint and positive semi-definite on the finite-dimensional
+Hilbert space $X_N^{0, H_4}$. By the spectral theorem
+(\cite[Ch.~VIII.5]{ReedSimonI},
+\cite[Ch.~6.2]{HornJohnson}), there is an orthogonal decomposition
+\[
+  X_N^{0, H_4} = \bigoplus_{\lambda \in \spec(L_N^{\mathrm{block}})}
+                  E_\lambda(L_N^{\mathrm{block}}),
+\]
+where $E_0 = \ker L_N^{\mathrm{block}}$ and every other
+$E_\lambda$ has $\lambda \geq \lambda_{+}(L_N^{\mathrm{block}})$.
+For $\Phi(0) = \sum_\lambda \Phi_\lambda(0)$ with
+$\Phi_\lambda(0) \in E_\lambda$,
+\[
+  e^{-t L_N^{\mathrm{block}}} \Phi(0)
+  \;=\; \sum_\lambda e^{-t\lambda} \Phi_\lambda(0)
+  \;=\; \Phi_0(0) + \sum_{\lambda > 0} e^{-t\lambda} \Phi_\lambda(0).
+\]
+The first term is $P_{\ker} \Phi(0)$, constant in $t$. The
+second term is bounded by
+\[
+  \Bigl\| \sum_{\lambda > 0} e^{-t\lambda} \Phi_\lambda(0)
+  \Bigr\|^{2}
+  = \sum_{\lambda > 0} e^{-2t\lambda} \|\Phi_\lambda(0)\|^{2}
+  \leq e^{-2t\lambda_{+}}
+       \sum_{\lambda > 0} \|\Phi_\lambda(0)\|^{2}
+  = e^{-2t\lambda_{+}}
+    \|\Phi(0) - P_{\ker}\Phi(0)\|^{2},
+\]
+which gives the stated exponential bound on taking square roots.
+
+The eigenvalue identity $\lambda_{+}(L_N^{\mathrm{block}}) =
+\lambda_{+}(L^{\mathrm{cl}}_N)$ follows from
+$\spec(L_N^{\mathrm{block}}) = \spec(L^{\mathrm{cl}}_N)$
+(set-equality; multiplicities multiply by $\dim F^0 = 32$ but the
+set of distinct eigenvalues is unchanged), which is a standard
+property of block-diagonal operators
+(\cite[Ch.~6.4]{HornJohnson}).
+\end{proof}
+
+% =====================================================================
+\section{The $W(H_4)$-fixed subspace count}
+\label{sec:fixed}
+% =====================================================================
+
+\begin{lemma}[Standard $H_4$-reflection representation has trivial
+fixed subspace]
+\label{lem:H4-fixed}
+The standard reflection representation of the finite irreducible
+Coxeter group $W(H_4)$ on $V_{H_4} \cong \HH \cong \R^{4}$
+satisfies $V_{H_4}^{W(H_4)} = \{0\}$.
+\end{lemma}
+
+\begin{proof}
+$W(H_4)$ is a finite \emph{irreducible} Coxeter group; the
+standard reflection representation of any finite irreducible
+Coxeter group is irreducible (\cite[Ch.~5]{Humphreys}; see also
+\cite[Ch.~2]{Humphreys} for $H_4$ specifically). An irreducible
+representation of a finite group has trivial fixed subspace if
+and only if the trivial representation does not appear as a
+subrepresentation; for the standard reflection representation of
+a finite irreducible Coxeter group, this is the case
+(\cite[Ch.~5]{Humphreys}: the reflection representation is
+faithful and not the trivial representation, and irreducibility
+forbids any non-trivial proper invariant subspace, hence in
+particular the fixed subspace, being non-zero).
+\end{proof}
+
+\begin{theorem}[Clause (4): the $W(H_4)$-fixed subspace of $F^0$]
+\label{thm:fixed-dim}
+Under the branchwise Coxeter representation $\rho_{F^0}^{H_4}$ of
+\cite[Definition~\texttt{def:coxeter}]{RefinementSpaces}
+(standard $H_4$-reflection representation on $V_{H_4}$, trivial
+on $V_{D_4}, V_{16}, V_8$),
+\[
+  (F^0)^{W(H_4)}
+  \;=\; V_{H_4}^{W(H_4)} \oplus V_{D_4} \oplus V_{16} \oplus V_8
+  \;=\; \{0\} \oplus V_{D_4} \oplus V_{16} \oplus V_8,
+\]
+so $\dim_{\R} (F^0)^{W(H_4)} = 0 + 4 + 16 + 8 = 28$.
+\end{theorem}
+
+\begin{proof}
+The branchwise representation
+$\rho_{F^0}^{H_4} = \rho_{V_{H_4}}^{H_4} \oplus
+\rho_{V_{D_4}}^{H_4} \oplus \rho_{V_{16}}^{H_4} \oplus
+\rho_{V_8}^{H_4}$ acts on each summand independently
+(\cite[Definition~\texttt{def:coxeter}]{RefinementSpaces} fixes
+the standard reflection representation on $V_{H_4}$ and the
+trivial representation on the other three summands). Hence
+\[
+  (F^0)^{W(H_4)}
+  = V_{H_4}^{W(H_4)} \oplus V_{D_4}^{W(H_4)} \oplus
+    V_{16}^{W(H_4)} \oplus V_{8}^{W(H_4)}.
+\]
+By Lemma~\ref{lem:H4-fixed}, $V_{H_4}^{W(H_4)} = \{0\}$.
+By the trivial representation on the other summands,
+$V_{D_4}^{W(H_4)} = V_{D_4}$ (dim $4$),
+$V_{16}^{W(H_4)} = V_{16}$ (dim $16$),
+$V_{8}^{W(H_4)} = V_{8}$ (dim $8$). Summing dimensions,
+$\dim_{\R} (F^0)^{W(H_4)} = 0 + 4 + 16 + 8 = 28$.
+\end{proof}
+
+% =====================================================================
+\section{$(O0)$ verification and $(O1)$ witnessed discharge}
+\label{sec:o1-discharge}
+% =====================================================================
+
+\subsection{$(O0)$ standing analytic preconditions}
+
+\begin{proposition}[$(O0)$ verification]
+\label{prop:o0}
+The cascade-mechanism standing analytic preconditions $(O0)$ of
+\cite[\S 3.4 lines 595--608]{CascadeMechanism} hold for the
+five-tuple supplied in Theorem~\ref{thm:main} below. Specifically:
+\begin{enumerate}[label=\textup{(O0.\arabic*)}, leftmargin=3em]
+\item \emph{Finite-dimensional Hilbert structure of $\Phi_N =
+  X_N^{0, H_4}$.} By
+  \cite[Proposition~\texttt{prop:Xn-Hilbert}]{RefinementSpaces},
+  $X_N^{0, H_4}$ is a finite-dimensional real Hilbert space of
+  dimension $|V(G_N^{H_4})| \cdot 32$.
+\item \emph{$R_N \in C^{1}(\Phi_N)$.} The quadratic form
+  $R_N(\phi) = \tfrac12 \langle \phi, L_N^{\mathrm{block}} \phi
+  \rangle$ on a finite-dimensional Hilbert space is real-analytic
+  (in particular $C^{1}$); its gradient is $\nabla R_N(\phi) =
+  L_N^{\mathrm{block}} \phi$ by Proposition~\ref{prop:psd}
+  (self-adjointness).
+\item \emph{Well-posed gradient flow $\Psi_N^{t} = e^{-t
+  L_N^{\mathrm{block}}}$.} By the same finite-dimensional ODE /
+  matrix-exponential argument as
+  \cite[Theorem~\texttt{thm:flow-exists}]{ClosureDynamics},
+  applied here to the bounded self-adjoint $L_N^{\mathrm{block}}$
+  on the finite-dimensional Hilbert space $X_N^{0, H_4}$, the
+  initial-value problem $\dot\Phi_N(t) = -L_N^{\mathrm{block}}
+  \Phi_N(t)$, $\Phi_N(0) = \Phi(0)$ has a unique global solution
+  $\Phi_N(t) = e^{-t L_N^{\mathrm{block}}} \Phi(0)$.
+\item \emph{$C^{1}$ pushforward bonding maps.} The
+  $(O1)$-witness construction below uses no inter-rung
+  pushforward: clauses (1)--(3) of $(O1)$ are top-rung statements
+  about $L_N^{\mathrm{block}}$ on the single space $X_N^{0,
+  H_4}$. For completeness, when the cascade-mechanism API
+  invokes an inter-rung pushforward
+  $\pi^{\sharp}_{k+1, k} \colon \Phi_{k+1} \to \Phi_k$ for
+  downstream propagation
+  (\cite[\S 3.4 lines 600--605]{CascadeMechanism}),
+  \cite[Definition~\texttt{def:p0}, Theorem~\texttt{thm:bonding}]
+  {RefinementSpaces} supplies a bounded $\R$-linear (hence $C^{1}$,
+  in fact $C^{\omega}$) vertex restriction map
+  $p_{k+1, k}^{0} \colon X_{k+1}^{0, H_4} \to X_k^{0, H_4}$
+  between adjacent levels. This paper does not use it for the
+  $(O1)$ discharge but records its availability.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Each item follows directly from the cited result, as stated.
+\end{proof}
+
+\subsection{$(O1)$ witnessed discharge: the named theorem}
+
+\begin{theorem}[Witnessed $(O1)$ discharge on the $H_4$ branch at
+finite top-rung level $N$, parametrised by $\xi^{*}$]
+\label{thm:main}
+Let $N \geq 0$ and let $L_N^{\mathrm{block}}$ be the block graph
+Laplacian of Definition~\ref{def:block-laplacian}. For each
+fixed
+\[
+  \xi^{*} \in (F^0)^{W(H_4)} \setminus \{0\},
+\]
+where $(F^0)^{W(H_4)}$ is the $W(H_4)$-fixed subspace of $F^0$ of
+explicit real dimension $28$ (Theorem~\ref{thm:fixed-dim}), set:
+\begin{itemize}
+\item $\Phi_N := X_N^{0, H_4}$
+  (\cite[Definition~\texttt{def:Xn-0}]{RefinementSpaces});
+\item $R_N(\phi) := \tfrac{1}{2}
+  \langle \phi, L_N^{\mathrm{block}} \phi \rangle_{X_N^{0, H_4}}$,
+  the quadratic-form residual associated to $L_N^{\mathrm{block}}$;
+\item $\Psi_N^{t} := e^{-t L_N^{\mathrm{block}}}$, the gradient
+  flow of $R_N$;
+\item $\phi^{\star}_{N} := \Psi_N(\xi^{*})$, the constant
+  $\xi^{*}$-valued function on $V(G_N^{H_4})$
+  (Theorem~\ref{thm:kernel});
+\item $\phi_N^{(0)} := \phi^{\star}_{N}$.
+\end{itemize}
+Then the five-tuple $(\Phi_N, R_N, \Psi_N^{t}, \phi^{\star}_{N},
+\phi_N^{(0)})$ discharges the cascade-mechanism $(O1)$ obligation
+of \cite[\S 3.4 lines 609--617]{CascadeMechanism}:
+\begin{enumerate}[label=\textup{(O1.\arabic*)}, leftmargin=3em]
+\item \emph{Top-rung residual-zero state.} $\phi^{\star}_{N} \in
+  \Phi_N$ satisfies $R_N(\phi^{\star}_{N}) = 0$.
+\item \emph{Convergence from a chosen initial datum.} For
+  $\phi_N^{(0)} = \phi^{\star}_{N}$, $\Psi_N^{t} \phi_N^{(0)} =
+  \phi^{\star}_{N}$ for every $t \geq 0$ (a fixed point of the
+  flow). More generally, for any $\widetilde\phi_N^{(0)} \in
+  \Phi_N$ with $P_{\ker L_N^{\mathrm{block}}} \widetilde
+  \phi_N^{(0)} = \phi^{\star}_{N}$,
+  $\lim_{t \to \infty} \Psi_N^{t} \widetilde\phi_N^{(0)} =
+  \phi^{\star}_{N}$ in $X_N^{0, H_4}$-norm with uniform
+  exponential bound governed by
+  $\lambda_{+}(L_N^{\mathrm{block}})$
+  (Theorem~\ref{thm:convergence}).
+\end{enumerate}
+The standing analytic preconditions $(O0)$ are verified in
+Proposition~\ref{prop:o0}.
+\end{theorem}
+
+\begin{proof}
+\emph{(O1.1).} By Theorem~\ref{thm:kernel}, $\Psi_N(\xi^{*}) \in
+\ker L_N^{\mathrm{block}}$, so
+$L_N^{\mathrm{block}} \phi^{\star}_{N} = 0$, hence
+$R_N(\phi^{\star}_{N}) =
+\tfrac12 \langle \phi^{\star}_{N}, L_N^{\mathrm{block}}
+\phi^{\star}_{N} \rangle = 0$.
+
+\emph{(O1.2).} For $\phi_N^{(0)} = \phi^{\star}_{N}$,
+$\Psi_N^{t} \phi^{\star}_{N} = e^{-t L_N^{\mathrm{block}}}
+\phi^{\star}_{N} = \phi^{\star}_{N}$ for all $t \geq 0$ because
+$\phi^{\star}_{N} \in \ker L_N^{\mathrm{block}}$ implies
+$L_N^{\mathrm{block}} \phi^{\star}_{N} = 0$, hence
+$e^{-t L_N^{\mathrm{block}}} \phi^{\star}_{N} =
+\sum_{k \geq 0} \frac{(-t)^{k}}{k!}
+(L_N^{\mathrm{block}})^{k} \phi^{\star}_{N} = \phi^{\star}_{N}$
+(only the $k = 0$ term survives).
+
+For the more general statement: any $\widetilde\phi_N^{(0)}$ with
+$P_{\ker} \widetilde\phi_N^{(0)} = \phi^{\star}_{N}$ decomposes
+orthogonally as
+$\widetilde\phi_N^{(0)} = \phi^{\star}_{N} + \widetilde\phi^{\perp}$
+with $\widetilde\phi^{\perp} \in (\ker L_N^{\mathrm{block}})^{\perp}$.
+By Theorem~\ref{thm:convergence},
+$\Psi_N^{t} \widetilde\phi^{\perp} \to 0$ in norm with rate
+$\lambda_{+}$, while $\Psi_N^{t} \phi^{\star}_{N} =
+\phi^{\star}_{N}$ as above. Hence
+$\Psi_N^{t} \widetilde\phi_N^{(0)} \to \phi^{\star}_{N}$ in norm.
+\end{proof}
+
+\begin{remark}[On the $\xi^{*}$ parameter]
+\label{rmk:xi-freedom}
+For each $\xi^{*} \in (F^0)^{W(H_4)} \setminus \{0\}$,
+Theorem~\ref{thm:main} produces a witnessed $(O1)$-tuple. The
+freedom in $\xi^{*}$ is the $(O1)$-witness parameter; the
+\cite[\S 3.4 lines 637--639]{CascadeMechanism} statement
+``selection of $\phi^{\star}_{N}$ itself is not provided by
+cascade closure and is the successor paper's own task'' is
+satisfied by our supplying \emph{a} $\phi^{\star}_{N}$, not the
+unique one. Reducing the $28$-dimensional $\xi^{*}$-freedom to a
+single ray requires the named open hypothesis
+\textbf{(H-uniqueness)} (\S\ref{sec:open-hyp}).
+
+The chosen $\xi^{*}$ is $W(H_4)$-equivariant by construction
+($\xi^{*} \in (F^0)^{W(H_4)}$), so $\Psi_N(\xi^{*})$ is a
+$W(H_4)$-equivariant function on $V(G_N^{H_4})$.
+$W(H_4)$-non-equivariant initial data
+$\widetilde\phi_N^{(0)} \in X_N^{0, H_4}$ still converge by
+Theorem~\ref{thm:convergence}, but to the $32$-dim full kernel
+projection $P_{\ker L_N^{\mathrm{block}}} \widetilde\phi_N^{(0)}$,
+which need not coincide with any constant
+$\Psi_N(\xi^{*})$ for $\xi^{*}$ in the $28$-dim
+$W(H_4)$-fixed subspace.
+\end{remark}
+
+% =====================================================================
+\section{Worked numerics for $N = 0$}
+\label{sec:numerics}
+% =====================================================================
+
+We exhibit the explicit numerical content of
+Theorem~\ref{thm:main} at the base level $N = 0$, where the
+graph $G_0^{H_4}$ on $V_{600}$ has a fully understood spectrum
+imported from \cite[Table~\texttt{tab:P2-spectrum}]{AlgebraicSubstrate}.
+
+\begin{itemize}[leftmargin=2em]
+\item Vertex count: $|V(G_0^{H_4})| = |V_{600}| = 120$
+  (\cite[Definition~\texttt{def:V600}]{AlgebraicSubstrate}).
+\item Edge count: $|E(G_0^{H_4})| = 720$
+  (the $600$-cell edge graph has $120$ vertices each of degree
+  $12$, giving $\tfrac{120 \cdot 12}{2} = 720$ edges;
+  \cite[\S 22.7]{CoxeterRegularPolytopes}).
+\item Maximum labelled-multiset degree (here equal to ordinary
+  degree since the base graph is simple):
+  $\Delta(G_0^{H_4}) = 12$ (uniform).
+\item Hilbert-space dimension:
+  $\dim_{\R} X_0^{0, H_4} = 120 \cdot 32 = 3840$
+  (\cite[Proposition~\texttt{prop:Xn-Hilbert}]{RefinementSpaces}).
+\item Block-Laplacian operator-norm bound:
+  $\|L_0^{\mathrm{block}}\|_{\op} \leq 2 \cdot 12 = 24$
+  (Proposition~\ref{prop:psd}). The actual operator norm is
+  $\|L_0^{\mathrm{block}}\|_{\op} = 9 + 3\sqrt{5} \approx 15.708$
+  (largest eigenvalue from
+  \cite[Table~\texttt{tab:P2-spectrum}]{AlgebraicSubstrate}).
+\item Kernel dimension:
+  $\dim_{\R} \ker L_0^{\mathrm{block}} = 32$
+  (Theorem~\ref{thm:kernel}; the trivial irrep multiplicity is
+  $1$ for the scalar Laplacian, so $1 \cdot 32 = 32$ in the
+  block extension).
+\item Spectral gap:
+  $\lambda_{+}(L_0^{\mathrm{block}}) = \lambda_{+}(L^{\mathrm{cl}}_0)
+  = 9 - 3\sqrt{5} \approx 2.2918$
+  (smallest positive eigenvalue from
+  \cite[Table~\texttt{tab:P2-spectrum}]{AlgebraicSubstrate}, the
+  $\mathbf{2}$ irrep entry).
+\item $W(H_4)$-fixed subspace of $F^0$:
+  $\dim_{\R} (F^0)^{W(H_4)} = 28$ (Theorem~\ref{thm:fixed-dim}).
+\item $\xi^{*}$-parametrised constant subspace inside
+  $\ker L_0^{\mathrm{block}}$:
+  $\dim_{\R} \Psi_0\bigl((F^0)^{W(H_4)}\bigr) = 28$
+  (image of injective $\Psi_0$).
+\end{itemize}
+
+The convergence rate constant is therefore
+\[
+  \lambda_{+}(L_0^{\mathrm{block}}) = 9 - 3\sqrt{5},
+\]
+giving the explicit decay bound
+$\bigl\|\Phi(t) - P_{\ker} \Phi(0)\bigr\|
+\leq e^{-(9 - 3\sqrt{5}) t}
+\bigl\|\Phi(0) - P_{\ker} \Phi(0)\bigr\|$
+for any initial datum $\Phi(0) \in X_0^{0, H_4}$.
+
+\begin{remark}[Sim verification (optional)]
+\label{rmk:sim}
+A one-line numerical check of the spectrum is straightforward:
+build the $120 \times 120$ scalar Laplacian
+$L^{\mathrm{cl}}_0 = D_0 - W_0$ from the $600$-cell adjacency
+matrix and compute its eigenvalues. The result reproduces
+\cite[Table~\texttt{tab:P2-spectrum}]{AlgebraicSubstrate}:
+nine distinct eigenvalues $\{0, 9 - 3\sqrt{5}, 10 - 2\sqrt{5},
+9, 12, 14, 10 + 2\sqrt{5}, 15, 9 + 3\sqrt{5}\}$ with
+multiplicities $\{1, 4, 9, 16, 25, 36, 9, 16, 4\}$ summing to
+$120$. The block-Laplacian spectrum is the same set of
+eigenvalues, each with multiplicity multiplied by $32$.
+\end{remark}
+
+% =====================================================================
+\section{What this paper does not do}
+\label{sec:non-claims}
+% =====================================================================
+
+For convenience we collect the explicit non-claims of
+Remark~\ref{rmk:non-claims} as bullet points, with cross-references
+to where in this paper or in upstream sources each non-claim is
+located:
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Single-state selection.} See \S\ref{sec:open-hyp}
+  \textbf{(H-uniqueness)} below; reducing the $28$-dim $\xi^{*}$
+  freedom to a single ray is the next-paper task.
+\item \textbf{$(O2)$ and $(O3)$.} Inherited from
+  \cite{RefinementCompat}: $(O2)$ as stated remains false
+  (\cite[Proposition~\texttt{prop:strict-fails}]{RefinementCompat}),
+  and $(O3)$ holds only in the abstract scalar pure-midpoint
+  model
+  (\cite[Theorem~\texttt{thm:O3-discharge}]{RefinementCompat}).
+\item \textbf{Inverse-limit $(O1)$.} Lifting Theorem~\ref{thm:main}
+  to $N \to \infty$ requires the open hypotheses $(L1), (L3)$
+  of \cite[\S\texttt{sec:scope-and-gap}]{RefinementCompat}.
+\item \textbf{$D_4$ branch.} Theorem~\ref{thm:fixed-dim} and the
+  surrounding construction use the $H_4$-branch action of
+  \cite[Definition~\texttt{def:coxeter}]{RefinementSpaces}; the
+  $D_4$ analogue would have a different fixed-subspace count and
+  is a separate paper.
+\item \textbf{Identification of $L_N^{\mathrm{block}}$ with
+  upstream operators.} See Remark~\ref{rmk:no-identification}.
+\item \textbf{$W(H_4)$-non-equivariant initial data convergent to
+  $(F^0)^{W(H_4)}$.} See Remark~\ref{rmk:xi-freedom}.
+\item \textbf{Continuum limit / target-side correspondence.}
+  No PDE identification; no metric, spectral, Hecke, or
+  cohomology correspondence theorem.
+\item \textbf{Selection mechanism in the strong sense.}
+  ``Cascade closure as selection mechanism'' is overstatement.
+  This paper provides only a top-rung $(O1)$ witness for a
+  chosen $\xi^{*}$ on the $H_4$ branch at finite $N$.
+\end{itemize}
+
+% =====================================================================
+\section{Named open hypotheses}
+\label{sec:open-hyp}
+% =====================================================================
+
+\begin{remark}[\textbf{(H-uniqueness)}: single-ray selection]
+\label{rmk:H-uniqueness}
+Selection of a single ray in $(F^0)^{W(H_4)} \setminus \{0\}$
+requires structure beyond the cascade-closure flow. Candidates
+for an additional selection principle include:
+\begin{itemize}
+\item closure-energy normalisation on the kernel of
+  $L_N^{\mathrm{block}}$;
+\item an additional symmetry beyond $W(H_4)$ (e.g.,
+  time-reversal, or the $\sigma$ Galois action on rationality
+  data of \cite[Definition~\texttt{def:sigma}]{RefinementSpaces});
+\item a top-rung initial condition tied to a physical observable;
+\item a thermodynamic / variational principle on the family of
+  admissible $\xi^{*}$.
+\end{itemize}
+\textbf{(H-uniqueness)} is named here, not discharged. Per
+\cite[\S 3.4 lines 637--639]{CascadeMechanism}, ``selection of
+$\phi^{\star}_{N}$ itself is not provided by cascade closure and
+is the successor paper's own task'' --- this paper supplies
+\emph{a} $\phi^{\star}_{N}$ (parametrised by $\xi^{*}$), not
+the unique one. Reducing the $28$-dim freedom to a single ray
+lies \emph{outside} the cascade-closure consumer API.
+\end{remark}
+
+\begin{remark}[\textbf{(H-physical-interpretation)}]
+\label{rmk:H-phys}
+Whether $\Psi_N\bigl((F^0)^{W(H_4)}\bigr) \subset X_N^{0, H_4}$
+is the \emph{physically correct} selected subspace --- as opposed
+to a mathematical artefact of restricting to the $H_4$ branch
+with the constant-function embedding --- is a physical-modelling
+question outside this paper's scope. The mathematical theorem
+makes no claim of physical correctness or uniqueness of
+interpretation.
+\end{remark}
+
+% =====================================================================
+\section{Citation contract and downstream handoff}
+\label{sec:handoff}
+% =====================================================================
+
+\subsection{What downstream papers may cite}
+
+\begin{enumerate}[leftmargin=2em]
+\item Definition~\ref{def:block-laplacian} ($L_N^{\mathrm{block}}$
+  as an auxiliary operator on $X_N^{0, H_4}$, distinct from
+  upstream operators by Remark~\ref{rmk:no-identification}).
+\item Proposition~\ref{prop:psd} (PSD self-adjointness of
+  $L_N^{\mathrm{block}}$ with explicit norm bound).
+\item Theorem~\ref{thm:kernel} ($\ker L_N^{\mathrm{block}} \cong
+  F^0$ via $\Psi_N$).
+\item Theorem~\ref{thm:convergence} (convergence of
+  $e^{-t L_N^{\mathrm{block}}}$ with rate
+  $\lambda_{+}(L_N^{\mathrm{block}})$).
+\item Theorem~\ref{thm:fixed-dim} (explicit
+  $\dim_{\R} (F^0)^{W(H_4)} = 28$).
+\item Theorem~\ref{thm:main} (witnessed $(O1)$ discharge for
+  any chosen $\xi^{*} \in (F^0)^{W(H_4)} \setminus \{0\}$).
+\item Worked numerics of \S\ref{sec:numerics} ($N = 0$ explicit
+  values).
+\end{enumerate}
+
+\subsection{What downstream papers may not cite}
+
+\begin{enumerate}[leftmargin=2em]
+\item Any theorem about $L_N^{\mathrm{block}}$ as a theorem about
+  P4's $A_n$ or compat's $\widetilde A_n$: the operators differ
+  (Remark~\ref{rmk:no-identification}).
+\item Single-state selection of a unique
+  $\phi^{\star}_{N}$: Theorem~\ref{thm:main} parametrises
+  $\phi^{\star}_{N}$ by $\xi^{*} \in (F^0)^{W(H_4)} \setminus
+  \{0\}$ (a $28$-dim cone); single-ray selection is
+  \textbf{(H-uniqueness)} (\S\ref{sec:open-hyp}).
+\item Inverse-limit $(O1)$ as $N \to \infty$: open under
+  $(L1), (L3)$
+  (\cite[\S\texttt{sec:scope-and-gap}]{RefinementCompat}).
+\item $(O2), (O3)$, the full cascade-closure $(O0)$--$(O3)$ API:
+  not addressed (see Remark~\ref{rmk:non-claims}).
+\item $D_4$-branch witness: requires a separate paper.
+\end{enumerate}
+
+\subsection{Recommended citation phrasing}
+
+``By cascade-selection-h4 (Theorem~\ref{thm:main}), the
+cascade-mechanism consumer-API obligation $(O1)$ on the $H_4$
+branch is discharged at every finite top-rung level $N \geq 0$ by
+the explicit five-tuple
+$(X_N^{0, H_4}, \tfrac12 \langle \cdot, L_N^{\mathrm{block}}
+\cdot \rangle, e^{-t L_N^{\mathrm{block}}}, \Psi_N(\xi^{*}),
+\Psi_N(\xi^{*}))$ for any chosen $\xi^{*} \in (F^0)^{W(H_4)}
+\setminus \{0\}$, where $L_N^{\mathrm{block}}$ is the auxiliary
+block graph Laplacian and $(F^0)^{W(H_4)}$ has explicit real
+dimension $28$. The selected state is unique up to the
+$28$-dimensional choice of $\xi^{*}$; reducing to a single ray
+is the named open hypothesis \textbf{(H-uniqueness)}, outside
+the cascade-closure consumer API.''
+
+% =====================================================================
+\begin{thebibliography}{99}
+
+\bibitem{RefinementSpaces}
+\emph{Cascade--Classical Correspondence III: Refinement Spaces and
+Symmetry Actions}, paper P3.
+\texttt{papers/cascade-refinement-spaces/cascade-refinement-spaces.tex}.
+Pinned results used here, cited by label:
+\texttt{def:Xn-0}, \texttt{def:refinement}, \texttt{def:base-graphs},
+\texttt{prop:Xn-Hilbert}, \texttt{not:fibres},
+\texttt{def:coxeter}, \texttt{lem:coxeter-unitary},
+\texttt{def:p0}, \texttt{thm:bonding}, \texttt{def:sigma}.
+
+\bibitem{ClosureDynamics}
+\emph{Cascade--Classical Correspondence IV: Discrete Closure
+Dynamics}, paper P4.
+\texttt{papers/cascade-closure-dynamics/cascade-closure-dynamics.tex}.
+Pinned results used here, cited by label:
+\texttt{def:coboundary} (the $F^0 \to F^1 = \mathrm{Im}(\OO)$
+projection), \texttt{def:An} (the vertex / top-left block
+$A_n^{\mathrm{vertex}} = d_n^{*} d_n$),
+\texttt{def:Fn} (P4's closure functional), and
+\texttt{thm:flow-exists} (style-only: same finite-dim ODE /
+matrix-exponential argument used in
+Proposition~\ref{prop:o0}(O0.3) for $L_N^{\mathrm{block}}$).
+
+\bibitem{RefinementCompat}
+\emph{The Cascade Curvature Operator under Refinement:
+Schur-Complement Identity and Energy Intertwining}.
+\texttt{papers/cascade-refinement-compat/cascade-refinement-compat.tex}.
+Pinned results used here, cited by label:
+\texttt{def:abstract-model} (the abstract scalar pure-midpoint
+refinement model), \texttt{def:Atilde} (the scaled curvature
+operator $\widetilde A_n = 2^n A_n^{\mathrm{vertex}}$ in that
+abstract model), \texttt{prop:strict-fails} ($(O2)$ as stated
+fails for nontrivial refinements),
+\texttt{thm:O3-discharge} ($(O3)$ closed in the abstract scalar
+model), \texttt{sec:scope-and-gap} (the open lift hypotheses
+$(L1)$ and $(L3)$).
+
+\bibitem{CascadeMechanism}
+\emph{Cascade Closure: A Conditional Compatibility Template for
+Geometric State Selection}, paper P-mech.
+\texttt{papers/cascade-mechanism/cascade-mechanism.tex}.
+Pinned results used here: the consumer API $(O0)$--$(O3)$
+(\S 3.4 lines 594--627), with $(O1)$ specifically at lines
+609--617, and the explicit ``selection is the successor's task''
+framing at lines 637--639.
+
+\bibitem{AlgebraicSubstrate}
+\emph{Cascade--Classical Correspondence II: The Cascade Algebraic
+Substrate}, paper P2.
+\texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}.
+Pinned results used here, cited by label:
+\texttt{def:V600} ($V_{600}$ vertex set);
+\texttt{def:icosian-ring} (the icosian ring $I \subset \HH$);
+\texttt{prop:24-in-600} ($V_{24} \subset V_{600}$);
+\texttt{tab:P2-spectrum} (the $V_{600}$ scalar Laplacian
+spectrum, used only in the $N = 0$ worked numerics of
+\S\ref{sec:numerics}). \textbf{No P2 character data is
+load-bearing for the main theorem}; irreducibility of the
+$H_4$-reflection representation is taken from \cite{Humphreys}.
+
+\bibitem{Humphreys}
+J.~E.~Humphreys, \emph{Reflection Groups and Coxeter Groups},
+Cambridge Studies in Advanced Mathematics \textbf{29}, Cambridge
+University Press, 1990.
+$H_4$ as a finite irreducible Coxeter group: Ch.~2;
+irreducibility of the standard reflection representation: Ch.~5.
+
+\bibitem{Chung}
+F.~R.~K.~Chung, \emph{Spectral Graph Theory}, CBMS Regional
+Conference Series in Mathematics 92, AMS, 1997.
+Combinatorial graph Laplacian, kernel structure, and
+operator-norm bound on (multi)graphs: Ch.~1.
+
+\bibitem{ReedSimonI}
+M.~Reed and B.~Simon, \emph{Methods of Modern Mathematical
+Physics, Vol.~I: Functional Analysis}, rev.\ ed., Academic
+Press, 1980.
+Spectral theorem and functional calculus for self-adjoint
+finite-dim operators: Ch.~VIII.5; bounded operators on Hilbert
+spaces: Ch.~II.
+
+\bibitem{HornJohnson}
+R.~A.~Horn and C.~R.~Johnson, \emph{Matrix Analysis}, 2nd ed.,
+Cambridge University Press, 2013.
+Matrix exponentials and linear ODEs: Ch.~6.2; spectrum and
+operator norm of block-diagonal matrices: Ch.~6.4.
+
+\bibitem{CoxeterRegularPolytopes}
+H.~S.~M.~Coxeter, \emph{Regular Polytopes}, 3rd ed., Dover, 1973.
+$600$-cell edge graph: \S 22.7;
+$24$-cell: \S 22.2;
+Schl\"{a}fli refinement: \S 8.
+
+\end{thebibliography}
+
+\end{document}
