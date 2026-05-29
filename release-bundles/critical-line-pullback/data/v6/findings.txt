@@ -1,0 +1,32 @@
+trace(P_tau_fixed)   = 94 (expected 94)
+trace(P_tau_paired)  = 26 (expected 26)
+trace(P_plus_phi)    = 13  (expected 13)
+trace(P_minus_phi)   = 13  (expected 13)
+
+V_min dimension: 1 (expected 1)
+||P_V_min - P_tau_fixed P_V_min||_inf = 2.949e-17
+  (= 0 means V_min subset tau-fixed)
+
+STRUCTURAL THEOREM (H-attr universality):
+  Let X: R^120 -> R^120 be any closure-flow dynamics
+  whose unique attractor is V_min = ker(C_phi - phi^-2 I).
+  Then for any initial v with <v, P_tau_fixed v> > 0,
+    lim_{t -> inf} <X^t v, P_tau_paired X^t v>
+                  / <X^t v, P_tau_fixed X^t v>  ->  0.
+  Proof: V_min subset P_tau_fixed (verified above),
+  and X^t v -> V_min by hypothesis.
+
+This is universal across NATURAL dynamics (those
+attracting to V_min). The next test exhibits a
+PATHOLOGICAL dynamics whose attractor is NOT V_min,
+and verifies it does NOT suppress tau-paired.
+
+PATHOLOGICAL DYNAMICS E (inverse iteration toward A_1 = 4 phi):
+  initial ratio (P_paired / P_fixed) = 0.2364
+  final   ratio (P_paired / P_fixed) = 999999999999.9998
+  initial ||P_+phi v||^2 = 0.0881
+  final   ||P_+phi v||^2 = 1.0000
+  initial ||P_-phi v||^2 = 0.1031
+  final   ||P_-phi v||^2 = 0.0000
+  -> tau-paired AMPLIFIED by factor 4.23e+12
+  -> H-attr FAILS for this dynamics (as predicted)

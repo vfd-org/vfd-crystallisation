@@ -1,0 +1,1280 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{csquotes}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false,
+  frame=single,
+  framerule=0.2pt,
+  rulecolor=\color{gray!30},
+  backgroundcolor=\color{gray!2}
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black,
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small The Translation Layer of the V$_{600}$ Substrate}
+\fancyhead[R]{\small Pre-peer-review preprint}
+\fancyfoot[C]{\thepage}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{principle}{Principle}
+\newtheorem{grammarrule}{Rule}
+
+\newcommand{\II}{\mathcal{I}}
+\newcommand{\IIlip}{\mathcal{I}_{\mathrm{Lip}}}
+\newcommand{\IImax}{\mathcal{I}_{\max}}
+\newcommand{\Vsix}{V_{600}}
+\newcommand{\Vtf}{V_{24}}
+\newcommand{\Cphi}{C_\varphi}
+\newcommand{\NH}{N_H}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\OK}{\mathcal{O}_K}
+\newcommand{\Lambt}{\Lambda_{12}}
+\newcommand{\Esix}{E_{600}}
+
+\newtcolorbox{dictionarybox}[1][]{
+  colback=blue!2,
+  colframe=blue!40!black,
+  fonttitle=\bfseries,
+  title=Dictionary entry,
+  #1
+}
+
+\newtcolorbox{grammarbox}[1][]{
+  colback=green!2,
+  colframe=green!40!black,
+  fonttitle=\bfseries,
+  title=Grammar rule,
+  #1
+}
+
+\newtcolorbox{transbox}[1][]{
+  colback=orange!2,
+  colframe=orange!40!black,
+  fonttitle=\bfseries,
+  title=Translation,
+  #1
+}
+
+\newtcolorbox{scopebox}[1][]{
+  colback=gray!4,
+  colframe=gray!50!black,
+  fonttitle=\bfseries,
+  title=Scope,
+  #1
+}
+
+\title{\textbf{The Translation Layer}\\[0.4em]
+\large Polytope Overlap as the Empirical Grammar of the $V_{600}$ Substrate, with Dictionary and Translation Rules}
+
+\author{Lee Smart\\
+\small Institute of Vibrational Field Dynamics\\
+\small \texttt{contact@vibrationalfielddynamics.org}}
+
+\date{2026-05-29 \quad (pre-peer-review preprint, v1.0.0-rc1)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+The $V_{600}$ closure programme has been building a mathematical
+substrate --- the icosian triad $(\II, \mathcal{G}, \Cphi)$ on the
+$120$-vertex set of the regular $600$-cell --- and applying it
+across mathematics, cosmology, biology and number theory. A natural
+worry is that the substrate is functioning as a metaphor system
+rather than as a working formal language. This paper makes the
+case, with reproducible engine output, that the substrate now
+behaves as a language in the technical sense: it has a
+\emph{dictionary} (a typed map from substrate objects to candidate
+interpretive referents), it has a \emph{grammar} (a finite set of
+admissible transformations with explicit well-formedness
+classes), and it has \emph{translation rules} (admissibility +
+dictionary $\to$ candidate observable).
+
+The grammar is not declarative. It is exhibited empirically by the
+\emph{closure transformation engine}: a computational artefact that
+computes, on $\Vsix$ and on polytope-overlap structures derived from
+it, which transformations preserve closure and which break it.
+Three load-bearing results pin the grammar down concretely:
+
+\begin{enumerate}[leftmargin=*]
+  \item The Schl\"afli decomposition
+        $\Vsix = C_0 \sqcup C_1 \sqcup C_2 \sqcup C_3 \sqcup C_4$
+        into five right cosets of the binary tetrahedral subgroup
+        $\Vtf = 2T \subset 2I = \Vsix$, each isomorphic to the
+        24-cell, with induced faithful $A_5$ action on the coset
+        index --- five reproducible certificates.
+  \item The $\lambda = 12$ \emph{lift channel}: every per-coset
+        24-cell $\lambda = 12$ eigenvector extends to a full-$\Vsix$
+        Laplacian $\lambda = 12$ eigenvector. The lifted space is
+        $10$-dim inside $\dim \Esix(12) = 25$, with the residual
+        $15$-dim block carrying a non-trivial $A_5$ character.
+  \item The $\lambda = 12$ \emph{uniqueness scan}: across all tested
+        subgroups $H \subset 2I$ and all global eigenvalues
+        $\lambda'$, $\lambda' = 12$ is the only value at which the
+        full lift channel opens. Every other $(H, \lambda')$ either
+        produces a strictly smaller channel or no channel at all.
+\end{enumerate}
+
+These three results are the grammar: a positive rule
+($\lambda = 12$ is admissible), a uniqueness claim ($\lambda \ne 12$
+is forbidden), and a syntactic structure (the $A_5$ character split
+of the lifted vs.\ residual blocks). On top of this grammar sit
+two further classes of artefact: a \emph{transformation taxonomy}
+that names twelve legal moves and five admissibility classes, with
+which physical-interpretation labels are formally tied; and a
+relational reasoning system (\texttt{closure\_ai} / \texttt{min\_aria})
+that uses the engine's admissibility verdicts as its own state-
+transition rules, demonstrating that the language is
+\emph{compositional and productive} in the formal-language sense.
+
+The paper's claim is not that this language settles physics. It is
+that the substrate has crossed the threshold from metaphor to
+formal language: dictionary, grammar, and translation are all
+exhibited on reproducible artefacts. The substrate can be assessed
+by the standards used to assess other working mathematical
+languages.
+\end{abstract}
+
+\bigskip
+
+\noindent\textbf{Status.} Pre-peer-review open research preprint.
+Not independently validated. No claim of physical derivation, no
+claim of consciousness reduction, no claim of RH / GRH settlement.
+Every interpretive translation is explicitly a candidate
+identification, conditional on the bridge hypotheses listed in
+\S\ref{sec:scope}.
+
+\bigskip
+
+\tableofcontents
+
+\newpage
+
+% =====================================================================
+\section{Introduction: the translation problem}
+\label{sec:intro}
+
+\subsection{Why ``language'' is the right shape, not just the right word}
+
+The $V_{600}$ closure programme has been accumulating outputs of a
+particular shape. Spectra of finite operators get identified with
+families of physical observables. Cosets of finite groups get
+identified with sectors of the Standard Model. Hilbert modular
+$L$-functions get identified with classical zeta factors. The
+recurrence is striking and the underlying object --- the icosian
+triad $(\II, \mathcal{G}, \Cphi)$ on $\Vsix$ --- keeps doing the same
+kind of work in each case. The natural diagnosis is that the
+substrate is functioning as a language: a fixed vocabulary plus a
+set of composition rules from which a wide range of declarative
+sentences can be formed.
+
+This paper takes that diagnosis literally and asks what would have
+to be true for it to be correct. A working formal language requires
+three components:
+
+\begin{enumerate}[leftmargin=*]
+  \item A \emph{dictionary} (lexicon): a typed map from primitive
+        substrate objects to candidate referents in the
+        interpretive layer.
+  \item A \emph{grammar}: a finite set of rules saying which
+        compositions of primitives are well-formed, which are
+        forbidden, and which are conditionally admissible.
+  \item A \emph{translation procedure}: a rule that converts a
+        well-formed sentence of the substrate language into a
+        statement in the interpretive layer.
+\end{enumerate}
+
+Without (i) the substrate is a graph. Without (ii) the substrate is
+a metaphor system. Without (iii) the substrate is a
+dictionary-plus-grammar with no semantics. \emph{All three} are
+required.
+
+\subsection{What is concrete and publishable here}
+
+We claim, and exhibit, all three on reproducible engine output. The
+key empirical artefact is the \emph{closure transformation engine}.
+It is a computational pipeline that, given a graph or polytope
+specification, computes:
+
+\begin{itemize}[leftmargin=*]
+  \item closure validation (does the structure close consistently?);
+  \item invariant extraction (Euler characteristic, spectra,
+        curvature class);
+  \item duality and projection operators;
+  \item admissibility verdicts for proposed transformations.
+\end{itemize}
+
+The engine does not assume physical content. It is a
+\emph{mathematical} pipeline. Its physical-interpretation labels
+are deliberately conservative; every label is keyed off an abstract
+\texttt{Admissibility\-Class} and is phrased as a candidate
+identification.
+
+The reason the engine carries the paper is that it lets us write
+down the grammar of the substrate \emph{empirically}, by observing
+which transformations preserve closure and which break it. The
+$\lambda = 12$ lift channel and its uniqueness across alternative
+subgroups and eigenvalues is the cleanest example: an exhibited
+\emph{positive} grammar rule plus an exhibited \emph{negative}
+constraint, both reproducible.
+
+\subsection{What this paper is and is not}
+
+\begin{scopebox}
+\textbf{Is.} An empirical demonstration that the $V_{600}$
+substrate now meets the three formal criteria for a language ---
+dictionary, grammar, translation --- with reproducible engine
+output as the load-bearing evidence.
+
+\textbf{Is not.} A claim that the language settles physics, life,
+mind, or RH. Every interpretive translation in this paper is a
+candidate identification, conditional on a named bridge
+hypothesis.
+\end{scopebox}
+
+\subsection{Roadmap}
+
+\S\ref{sec:layers} states the three-layer framing.
+\S\ref{sec:engine} describes the closure transformation engine and
+its outputs.
+\S\ref{sec:dictionary} exhibits the dictionary.
+\S\ref{sec:grammar} exhibits the grammar from polytope overlap,
+with the Schl\"afli decomposition, the $\lambda = 12$ lift, and the
+$\lambda = 12$ uniqueness scan as the three load-bearing
+sub-results.
+\S\ref{sec:translation} exhibits the translation procedure.
+\S\ref{sec:scope} states the substrate's expressive scope ---
+explicitly, what it cannot say.
+\S\ref{sec:compositional} shows compositionality by lifting the
+grammar to the relational-AI architecture \texttt{closure\_ai} /
+\texttt{min\_aria}.
+\S\ref{sec:comparison} compares the substrate to other working
+mathematical languages (group theory, twistor theory,
+amplituhedron, LQG).
+\S\ref{sec:openness} states open translation problems.
+\S\ref{sec:conclusion} concludes.
+
+% =====================================================================
+\section{Three layers: dictionary, grammar, interpretation}
+\label{sec:layers}
+
+The three-layer framing originated in our evidence-ledger audit
+\cite{evidenceLedger} as a way to keep ``$\Vsix$ appears
+everywhere'' from quietly counting as evidence. Here we lift the
+same framing into a positive constructive frame.
+
+\subsection{Layer 1: dictionary}
+
+A dictionary entry is a typed map
+$d_i : \Sigma_i \to \mathrm{Ref}_i$ that takes a substrate object
+$\Sigma_i$ (a vertex, a coset, an eigenspace, a character) to a
+candidate referent. A dictionary entry is \emph{not evidence}: it
+is a translation \emph{possibility}, awaiting confirmation by
+grammar.
+
+\subsection{Layer 2: grammar}
+
+A grammar rule is a deterministic statement about which
+compositions of substrate objects are admissible. The closure
+transformation engine produces grammar rules
+\emph{operationally}: a transformation $T$ applied to a closed
+state $S$ either preserves closure (\texttt{Admissibility = EXACT}
+or \texttt{CANDIDATE}) or breaks it
+(\texttt{APPROXIMATE} / \texttt{BROKEN} / \texttt{DEGENERATE}).
+The set of $(T, S)$ pairs returning \texttt{EXACT} is the grammar.
+
+\subsection{Layer 3: translation}
+
+Translation maps a dictionary entry $d_i$ plus a grammar verdict
+$v$ into an interpretive claim
+$\mathrm{Ref}_i \mid v$. Crucially: \emph{translation requires
+grammar.} A dictionary entry $\Vsix \leadsto \text{``substrate of
+quantum coherence''}$ is not evidence until the grammar verdict on
+the relevant composition has been computed. The engine computes
+the verdict; the translation is whatever the verdict permits.
+
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50!black,
+  title={The three layers, restated}]
+\begin{tabular}{lll}
+\toprule
+\textbf{Layer} & \textbf{What it is} & \textbf{Evidential status} \\
+\midrule
+1 Dictionary  & typed substrate $\to$ referent map
+              & possibility (not evidence) \\
+2 Grammar     & engine-computed admissibility verdict
+              & empirical (theorem-grade or reproducible) \\
+3 Translation & dictionary + grammar $\to$ interpretive claim
+              & conditional on grammar + bridge hyp.\ \\
+\bottomrule
+\end{tabular}
+\end{tcolorbox}
+
+A common failure mode in informal cross-disciplinary work is to
+present a Layer-1 dictionary as if it were a Layer-3 translation.
+The audit pattern of this paper is the opposite: every Layer-3
+claim points to a Layer-2 verdict and a Layer-1 entry, and the
+reader can disagree at any of the three.
+
+% =====================================================================
+\section{The closure transformation engine}
+\label{sec:engine}
+
+\subsection{What the engine is}
+
+The closure transformation engine \cite{transformationEngine} is a
+computational pipeline. Its inputs are graph specifications and
+polytope overlap structures derived from $\Vsix$. Its outputs are
+closure verdicts, invariant reports, transformation taxonomy
+records, admissibility classes and (when requested) candidate
+physical-interpretation labels.
+
+The engine has three core modules:
+
+\begin{description}[leftmargin=*]
+  \item[\texttt{core/}] closure validation
+        (\texttt{closure\_validator.py}), invariant extraction
+        (\texttt{invariants.py}, \texttt{spectrum.py},
+        \texttt{curvature.py}), duality
+        (\texttt{duality.py}), projection
+        (\texttt{projection.py}), residuals
+        (\texttt{residuals.py}), and Schl\"afli-symbol intake
+        (\texttt{schlafli.py}).
+  \item[\texttt{transformations/}] twelve transformation kinds
+        (DUAL, SHELL\_PROJECTION, BOUNDARY\_PROJECTION,
+        SPECTRAL\_PROJECTION, CYCLE\_PROJECTION, QUOTIENT,
+        SUBGROUP\_RESTRICTION, EDGE\_CONTRACTION,
+        VERTEX\_DELETION, EDGE\_DELETION, DIMENSIONAL\_LIFT,
+        DIMENSIONAL\_PROJECTION). Each carries a typed
+        \texttt{TransformationOutcome} record.
+  \item[\texttt{physics/}] admissibility classification
+        (\texttt{admissibility.py}), transition rules between
+        decorated states (\texttt{transition\_rules.py}), the
+        24-600 spectral bridge (\texttt{bridge\_24\_600.py}), the
+        $\lambda = 12$ channel
+        (\texttt{lambda12\_a5\_channel.py}), the universality scan
+        (\texttt{universality\_lambda12.py}), shell hierarchy and
+        gauge classification, and the (deliberately conservative)
+        \texttt{physical\_interpretation.py} label table.
+\end{description}
+
+\subsection{Why the engine is the load-bearing artefact}
+
+The engine matters here because it is the place where the
+substrate's grammar is no longer a verbal claim. Every grammar
+rule we state in \S\ref{sec:grammar} is reproducible from one of
+the engine's outputs. Three artefacts in particular do most of the
+work:
+
+\begin{itemize}[leftmargin=*]
+  \item the Schl\"afli decomposition module
+        (\texttt{decomposition.py}), with five exact certificates;
+  \item the $\lambda = 12$ spectral-bridge module
+        (\texttt{keystone.py}), with the lift theorem and the
+        $A_5$ character decomposition;
+  \item the $\lambda = 12$ universality module
+        (\texttt{universality\_lambda12.py}), which scans all
+        subgroups $H \subset 2I$ and all $\Vsix$ Laplacian
+        eigenvalues to test whether $\lambda = 12$ is the unique
+        full-lift channel.
+\end{itemize}
+
+These three artefacts together yield the
+positive-and-negative grammar rule discussed in
+\S\ref{sec:grammar:lambda12}.
+
+% =====================================================================
+\section{The dictionary}
+\label{sec:dictionary}
+
+This section exhibits the dictionary. Each entry maps a substrate
+object to one or more candidate interpretive referents. The
+referents are typed --- ``mathematical'', ``physical (candidate)'',
+``cognitive (candidate)'', ``ontological (interpretive)'' --- and
+each entry carries an evidential weight inherited from its
+grammar-layer status.
+
+\subsection{Primitives}
+
+\begin{dictionarybox}
+\textbf{$\Vsix = 2I$.} 120-element binary icosahedral group,
+realised as 120 unit icosian quaternions.
+\\[0.3em]
+\textbf{Mathematical referent:} vertex set of regular $600$-cell;
+finite reflection-group orbit under $W(H_4)$.\\
+\textbf{Candidate physical referent:} closure-substrate carrier.\\
+\textbf{Evidential weight:} Layer-1; weight comes from grammar.
+\end{dictionarybox}
+
+\begin{dictionarybox}
+\textbf{$\Vtf = 2T \subset \Vsix$.} 24-element binary tetrahedral
+subgroup, realised as the $\sigma$-fixed sub-lattice of $\Vsix$.
+\\[0.3em]
+\textbf{Mathematical referent:} 24-cell vertex set; the
+fundamental coset block in the Schl\"afli decomposition.\\
+\textbf{Candidate physical referent:} closure ``unit cell'' /
+fundamental sector.\\
+\textbf{Evidential weight:} Layer-1.
+\end{dictionarybox}
+
+\begin{dictionarybox}
+\textbf{$A_1$ (edge-adjacency operator on $\Vsix$).} $120 \times 120$
+matrix with $(A_1)_{ij} = 1$ iff $v_i, v_j$ are vertex-adjacent in
+$\Vsix$.
+\\[0.3em]
+\textbf{Mathematical referent:} graph-Laplacian generator; defines
+$L = 12 \cdot I - A_1$.\\
+\textbf{Spectrum:} 9 eigenvalues in $\Z[\varphi]$ with
+multiplicities $(1, 4, 9, 16, 25, 36, 9, 16, 4)$ summing to $120$.\\
+\textbf{Evidential weight:} Layer-2 (theorem-grade).
+\end{dictionarybox}
+
+\begin{dictionarybox}
+\textbf{$\Cphi = L + \varphi^{-2} I = (12 + \varphi^{-2}) I - A_1$.}
+The closure operator.
+\\[0.3em]
+\textbf{Mathematical referent:} self-adjoint positive operator
+inducing the $94 + 13 + 13$ $\sigma$-pairing decomposition.\\
+\textbf{Candidate referent:} the ``closure verb'' --- the
+mathematical instantiation of ``$X$ exists $\iff
+\mathcal{C}(X) = X$''.\\
+\textbf{Evidential weight:} Layer-2 (theorem-grade) for the math;
+Layer-3 (interpretation) for the existence reading.
+\end{dictionarybox}
+
+\begin{dictionarybox}
+\textbf{$\NH : \II \to \Z[\varphi]$,
+$\NH(q) = q_0^2 + q_1^2 + q_2^2 + q_3^2$.} The generation
+operator.
+\\[0.3em]
+\textbf{Mathematical referent:} quaternary norm form, universal
+for totally positive $\Z[\varphi]$-primes by Eichler--Hijikata.\\
+\textbf{Evidential weight:} Layer-2 (theorem-grade).
+\end{dictionarybox}
+
+\subsection{Compound primitives from polytope overlap}
+
+\begin{dictionarybox}
+\textbf{The five 24-cell cosets $C_0, \ldots, C_4$.}
+$\Vsix = \bigsqcup_{i=0}^4 C_i$ with $|C_i| = 24$, each $C_i$
+isomorphic to the 24-cell.
+\\[0.3em]
+\textbf{Mathematical referent:} right cosets of $\Vtf$ in $\Vsix$;
+five copies of the 24-cell tiled into one 600-cell.\\
+\textbf{Candidate physical referent:} the five \emph{building
+blocks} of any physical sector built on $\Vsix$; the carriers of
+the $A_5$ representation.\\
+\textbf{Evidential weight:} Layer-2 (theorem-grade) for the
+decomposition; Layer-3 for ``building blocks''.
+\end{dictionarybox}
+
+\begin{dictionarybox}
+\textbf{$\Esix(\lambda)$.} The $\lambda$-eigenspace of the
+$\Vsix$ adjacency Laplacian.
+\\[0.3em]
+\textbf{Mathematical referent:} a finite-dimensional $W(H_4)$-rep.\\
+\textbf{Distinguished entry:} $\dim \Esix(12) = 25$.\\
+\textbf{Candidate physical referent:} candidate
+spectral-mode-family. The labelling per $\lambda$ is in
+\cite{icosianTriad}.
+\end{dictionarybox}
+
+\begin{dictionarybox}
+\textbf{The $\lambda = 12$ lift channel $\Lambt$.} The
+$10$-dimensional subspace of $\Esix(12)$ obtained by zero-extending
+the per-coset $\lambda = 12$ 24-cell eigenvectors.
+\\[0.3em]
+\textbf{Mathematical referent:} \emph{the carrier of the grammar
+rule of \S\ref{sec:grammar:lambda12}.} Its complement
+$\Esix(12) \setminus \Lambt$ is the 15-dim residual block, with a
+non-trivial $A_5$ character.\\
+\textbf{Evidential weight:} Layer-2 (theorem-grade).
+\end{dictionarybox}
+
+\subsection{Dictionary table}
+
+The full machine-readable dictionary is at
+\texttt{data/dictionary.csv}. It records, per row, the substrate
+object, the mathematical referent, the candidate physical
+referent, the grammar-layer status, the bridge hypothesis (if
+any), and the evidence-ledger row of \cite{evidenceLedger} that
+audits the entry.
+
+% =====================================================================
+\section{Polytope overlap as grammar}
+\label{sec:grammar}
+
+This is the load-bearing section of the paper. We exhibit three
+grammar rules derived empirically from the closure transformation
+engine. Two are positive (the engine returns
+\texttt{EXACT}); one is negative (the engine returns no channel).
+
+\subsection{The Schl\"afli decomposition as the grammar's primitive
+sentence}
+\label{sec:grammar:schlafli}
+
+\begin{theorem}[Schl\"afli decomposition; engine certificate]
+\label{thm:schlafli}
+The 120-vertex set $\Vsix = 2I$ admits the exact partition
+\[
+  \Vsix \;=\; C_0 \;\sqcup\; C_1 \;\sqcup\; C_2 \;\sqcup\; C_3 \;\sqcup\; C_4
+\]
+where $C_0 = \Vtf = 2T$ (the $\sigma$-fixed sub-lattice) and
+$C_1, \ldots, C_4$ are the four $\Vtf$-left-multiplication orbits
+on the 96 $\sigma$-mobile vertices. Each $C_i$ is exactly a coset of
+$\Vtf$, has cardinality 24, and is isometric to the 24-cell vertex
+set with d=1 graph $8$-regular on 96 edges. The induced action of
+$\Vsix$ on the coset set $\{C_0, \ldots, C_4\}$ descends through
+$\{\pm 1\}$ to a faithful transitive action of $A_5$ on five
+points.
+\end{theorem}
+
+The theorem is verified by five reproducible certificates from
+\texttt{closure\_transform\_engine.decomposition}: \texttt{V\_600}
+construction, \texttt{V\_24} subgroup, right cosets, each coset
+is a 24-cell, $A_5$ coset action. All five are exact over
+$\Q(\sqrt 5)$.
+
+\paragraph{Why this is a grammar primitive.} Because every
+subsequent grammar rule in this paper either references the five
+cosets or references the $A_5$ representation they carry.
+Theorem~\ref{thm:schlafli} is the minimal compositional unit on
+which the rest of the grammar is built.
+
+\subsection{The $\lambda = 12$ lift rule}
+\label{sec:grammar:lambda12}
+
+\begin{theorem}[Per-coset $\lambda = 12$ lift theorem; engine
+certificate]
+\label{thm:lambda12}
+Let $L_{600}$ be the d=1 graph Laplacian on $\Vsix$
+($12$-regular, $720$ edges). For each $i \in \{0,1,2,3,4\}$ let
+$L_{C_i}$ be the d=1 graph Laplacian on the coset $C_i$
+($8$-regular, $96$ edges, isomorphic to the 24-cell edge graph).
+For each $i$, the $\lambda = 12$ eigenspace $E_{C_i}(12)$ of
+$L_{C_i}$ has dimension 2. The zero-extension of any
+$v \in E_{C_i}(12)$ to $\R^{120}$ is an eigenvector of $L_{600}$
+at eigenvalue exactly $12$. Summing over $i$ yields a
+$10$-dimensional subspace $\Lambt \subset \Esix(12)$. The
+complementary 15-dimensional residual block carries a non-trivial
+$A_5$ character orthogonal to the lifted block.
+\end{theorem}
+
+The theorem is verified by
+\texttt{closure\_transform\_engine.keystone.exact\_certify\_lambda12\_lift}
+and the $A_5$ character calculation
+\texttt{exact\_a5\_characters}.
+
+\begin{grammarbox}
+\textbf{Rule (positive).} ``Lift along the Schl\"afli decomposition
+at $\lambda = 12$ is admissible.''
+\\
+\emph{Substrate side:} per-coset 24-cell eigenvector at
+$\lambda = 12$.
+\\
+\emph{Grammar verdict:} the engine returns
+\texttt{Admissibility = EXACT} with $\|L_{600} v - 12 v\| <
+\epsilon_{\mathrm{mach}}$ for every input.
+\\
+\emph{Composition:} the lift is linear and commutes with the
+$A_5$ action on cosets.
+\end{grammarbox}
+
+\subsection{The $\lambda = 12$ uniqueness scan: a forbidden-move
+rule}
+\label{sec:grammar:uniqueness}
+
+The positive rule of \S\ref{sec:grammar:lambda12} is not yet a
+grammar; a grammar must also tell us which moves are
+\emph{forbidden}. The empirical answer is supplied by the
+universality scan in
+\texttt{closure\_transform\_engine.physics.universality\_lambda12}.
+
+\paragraph{Setup.} For each subgroup $H \subset 2I$ in a finite
+test set and each eigenvalue $\lambda' \in \mathrm{spec}(L_{600})$,
+the scan computes
+\[
+\mathrm{Lift}(H, \lambda') \;=\; \bigoplus_i \big\{ v \in \R^{V_{600}} :
+ \mathrm{supp}(v) \subseteq C_i^{(H)},\;\; L_{600} v = \lambda' v \big\},
+\]
+where $C_i^{(H)}$ ranges over the right cosets of $H$ in $2I$. The
+scan reports the dimension of $\mathrm{Lift}(H, \lambda')$ for every
+pair $(H, \lambda')$, and flags every pair whose channel dimension
+is non-zero.
+
+\paragraph{Empirical finding.} Across the tested subgroup set, the
+\emph{full} lift channel
+($\mathrm{Lift}(H, \lambda') = \dim \Esix(\lambda')$ from per-coset
+support alone) opens exactly when $H = \Vtf$ and $\lambda' = 12$.
+Every other pair returns either a strictly smaller channel or no
+channel at all. The five negative controls
+$\lambda' \in \{0, 4, 8, 10\}$ all return zero per-coset lift into
+$L_{600}$.
+
+\begin{grammarbox}
+\textbf{Rule (negative).} ``Polytope-overlap lift at
+$\lambda' \ne 12$ is forbidden.''
+\\
+\emph{Substrate side:} per-$H$-coset eigenvector at $\lambda'$.
+\\
+\emph{Grammar verdict:} for $\lambda' \in \{0, 4, 8, 10\}$ the
+engine returns \texttt{Admissibility = BROKEN}.
+\\
+\emph{Composition:} the forbidden-move rule survives change of
+subgroup $H$ in the tested set.
+\end{grammarbox}
+
+The conjunction ``$\lambda = 12$ admissible, all others
+forbidden'' is the first grammar rule the substrate has at the
+sentence level. It is a clean empirical \emph{constraint}, not a
+labelling choice.
+
+\subsection{Transformation kinds as the legal-move set}
+\label{sec:grammar:moves}
+
+The engine's transformation taxonomy provides the substrate's
+operational verbs: the twelve transformation kinds (DUAL,
+SHELL\_PROJECTION, BOUNDARY\_PROJECTION, SPECTRAL\_PROJECTION,
+CYCLE\_PROJECTION, QUOTIENT, SUBGROUP\_RESTRICTION,
+EDGE\_CONTRACTION, VERTEX\_DELETION, EDGE\_DELETION,
+DIMENSIONAL\_LIFT, DIMENSIONAL\_PROJECTION). Each carries an
+explicit input typing, an output typing, and a closure-residual
+recomputation. A move is \emph{legal} when its admissibility class
+returns \texttt{EXACT} or \texttt{CANDIDATE}; it is \emph{illegal}
+when it returns \texttt{BROKEN} or \texttt{DEGENERATE}.
+
+This is the substrate's grammar in a strict computational sense.
+The full move table is at \texttt{data/grammar.csv}, together with
+the per-move pre-and-post invariant lists.
+
+\subsection{Admissibility classes as well-formedness}
+\label{sec:grammar:wellformed}
+
+The engine resolves every transformation into one of five
+admissibility classes:
+
+\begin{itemize}[leftmargin=*]
+  \item \texttt{EXACT} --- closure preserved within numerical
+        tolerance.
+  \item \texttt{CANDIDATE} --- near-closed, low residual.
+  \item \texttt{APPROXIMATE} --- noticeable residual but
+        interpretable.
+  \item \texttt{BROKEN} --- closure lost.
+  \item \texttt{DEGENERATE} --- transformation produced a trivial
+        or empty target.
+\end{itemize}
+
+A well-formed sentence of the substrate language is, by
+definition, a chain of moves each of which terminates in
+\texttt{EXACT} or \texttt{CANDIDATE}. The substrate's grammar is
+this well-formedness predicate.
+
+\subsection{Transition rules as composition}
+\label{sec:grammar:transitions}
+
+The engine's \texttt{TransitionRule} record specifies the
+default-allowed transitions between decorated closure states:
+\texttt{preserve\_topology}, \texttt{preserve\_charge\_like\_labels},
+\texttt{preserve\_boundary\_closure}, with
+\texttt{max\_residual\_delta = 0.01} and optional
+\texttt{allow\_phase\_defect}. Each transition is resolved to a
+verdict from the set \{allowed, forbidden, allowed-as-virtual,
+allowed-as-decay-candidate, requires-boundary-change\}. This is
+the substrate's compositional rule: how shorter well-formed
+sentences combine into longer ones.
+
+% =====================================================================
+\section{Translation rules}
+\label{sec:translation}
+
+Translation is the operation $T : (d_i, v) \mapsto r_i \mid v$.
+The dictionary supplies $d_i$; the grammar supplies the verdict
+$v$; translation produces a candidate interpretive claim
+$r_i \mid v$.
+
+\subsection{The translation procedure, formally}
+
+\begin{principle}[Translation]
+\label{prin:translation}
+A translation from substrate object $\Sigma_i$ to candidate
+referent $\mathrm{Ref}_i$ is admissible iff:
+
+\begin{enumerate}[leftmargin=*,label=(\roman*)]
+  \item A dictionary entry $d_i : \Sigma_i \to \mathrm{Ref}_i$
+        exists in \texttt{data/dictionary.csv}.
+  \item There is a sentence $s$ of the substrate language using
+        $\Sigma_i$ as a primitive whose grammar verdict $v(s)$ is
+        \texttt{EXACT} or \texttt{CANDIDATE}.
+  \item A named bridge hypothesis $H_{i,\mathrm{Ref}}$ is supplied,
+        connecting $\Sigma_i \mid v(s)$ to the interpretive
+        domain.
+\end{enumerate}
+
+The translation is then $r_i \mid (v(s) \wedge H_{i,\mathrm{Ref}})$.
+\end{principle}
+
+The principle ties Layer 3 to Layer 2 to Layer 1. Without (ii) the
+translation is metaphor. Without (iii) the translation is a Hilbert
+space without an inner product: well-formed, semantically empty.
+
+\subsection{Worked translation: closed admissibility $\to$ stable
+observable candidate}
+
+\begin{transbox}
+\textbf{Substrate sentence.} A decorated closure state $S$ over
+$\Vsix$, with the $\lambda = 12$ lift channel populated and zero
+boundary defect.
+\\
+\textbf{Grammar verdict.} \texttt{Admissibility = CLOSED} (per
+\texttt{physical\_interpretation.py}, line \texttt{\_INTERPRETATIONS\!
+[AdmissibilityClass.CLOSED]}).
+\\
+\textbf{Dictionary entries used.} $\Vsix$ as
+closure-substrate; $\Lambt$ as carrier of the closure mode-family.
+\\
+\textbf{Bridge hypothesis required.} H-Observable: stable
+mathematical closure corresponds to a candidate physical
+observable.
+\\
+\textbf{Translation.} ``The closure-substrate carries a candidate
+stable observable, conditional on H-Observable.''
+\\
+\textbf{Audit caveat (engine-enforced).} ``Not yet a physical
+derivation; closure does not imply realisability.''
+\end{transbox}
+
+This is the deliberate conservatism of the engine reflected at the
+paper level. The engine attaches an explicit caution to every
+physical-interpretation label and the translation principle
+inherits it.
+
+\subsection{Worked translation: near-closed $\to$ resonance
+candidate}
+
+\begin{transbox}
+\textbf{Substrate sentence.} Decorated state $S'$ with small but
+non-zero closure residual on the boundary.
+\\
+\textbf{Grammar verdict.} \texttt{Admissibility = NEAR\_CLOSED}.
+\\
+\textbf{Dictionary entries.} same as above plus a boundary-decoration
+field.
+\\
+\textbf{Bridge hypothesis.} H-Resonance: near-closure
+$\leftrightarrow$ candidate resonance / transient bound state.
+\\
+\textbf{Translation.} ``Candidate resonance or transient bound
+state, conditional on H-Resonance and on the boundary decoration
+not being an artefact.''
+\\
+\textbf{Audit caveat.} ``May be an artefact of the chosen
+decoration --- try alternative phase or boundary assignments
+before drawing conclusions.''
+\end{transbox}
+
+\subsection{Worked translation: $\lambda = 12$ universality $\to$
+substrate mode-family uniqueness}
+
+\begin{transbox}
+\textbf{Substrate sentence.} The $\lambda = 12$ lift theorem and
+its uniqueness scan.
+\\
+\textbf{Grammar verdict.} \texttt{EXACT} for the lift theorem;
+\texttt{BROKEN} or smaller-channel for every other
+$(H, \lambda')$ in the tested set.
+\\
+\textbf{Dictionary entries.} $\Vsix$, the five cosets, $\Lambt$.
+\\
+\textbf{Bridge hypothesis.} H-ModeUnique: substrate mode-family
+selection corresponds to grammar-rule selection.
+\\
+\textbf{Translation.} ``The substrate selects exactly one
+mode-family across the tested choice of subgroup and eigenvalue,
+conditional on H-ModeUnique.''
+\\
+\textbf{Audit caveat.} The test set of subgroups is finite. Extending
+the test set is the open work.
+\end{transbox}
+
+\subsection{What translation is \emph{not}}
+
+\begin{itemize}[leftmargin=*]
+  \item Translation is not a physical derivation. A translation
+        produces a \emph{candidate} identification. The candidate
+        becomes a derivation only when the bridge hypothesis is
+        independently closed.
+  \item Translation is not equivalence. The interpretive referent
+        may have structure the substrate cannot represent.
+        Translation is one-way unless the dictionary entry has an
+        inverse.
+  \item Translation is not falsification. A failing translation
+        does not falsify the substrate; it falsifies the
+        translation or the bridge hypothesis. The substrate
+        remains.
+\end{itemize}
+
+% =====================================================================
+\section{Expressive scope: what the substrate can and cannot say}
+\label{sec:scope}
+
+A working formal language has an \emph{expressive scope}. There are
+sentences inside it and sentences it cannot form. The grammar rules
+of \S\ref{sec:grammar} let us state the substrate's scope
+explicitly.
+
+\subsection{What the substrate can say}
+
+\begin{enumerate}[leftmargin=*]
+  \item Spectra of self-adjoint operators on $\Vsix$, with
+        eigenvalues in $\Z[\varphi]$.
+  \item Subspaces invariant under $W(H_4)$, decomposed into
+        irreducibles of the Coxeter group.
+  \item Cosets of finite subgroups $H \subset 2I$ and the lift
+        channels they open.
+  \item $\sigma$-pairing decompositions of subspaces (the
+        $94 + 13 + 13$ split).
+  \item Quaternary norm forms $\NH$ and the totally positive
+        $\Z[\varphi]$-primes they enumerate.
+  \item Hilbert modular $L$-functions over $K = \Q(\sqrt 5)$
+        factoring through the substrate theta series.
+  \item Composition of any of the above under transformation
+        kinds in the move table.
+\end{enumerate}
+
+\subsection{What the substrate cannot say}
+
+\begin{enumerate}[leftmargin=*]
+  \item Continuous deformations of $\Vsix$. The substrate is
+        finite. Smooth deformations have to be carried by the
+        interpretive layer.
+  \item Statements that are not $W(H_4)$-covariant. The grammar
+        forbids them. (This is the substrate's first explicit
+        \emph{negation}.)
+  \item Statements that require a subgroup outside the test set
+        of the universality scan. These remain open.
+  \item Statements about objects outside $\Q(\sqrt 5)$. Other
+        biquadratic fields are reachable only via the
+        \texttt{DIMENSIONAL\_LIFT} kind, and only with named
+        bridge hypotheses.
+  \item Anything in the interpretive layer that has no dictionary
+        entry. Without a dictionary entry, there is no
+        translation.
+\end{enumerate}
+
+\subsection{Bridge hypotheses currently consumed by translation}
+
+\begin{description}[leftmargin=*]
+  \item[H-Observable.] Closure $\leftrightarrow$ candidate
+        observable. Open.
+  \item[H-Resonance.] Near-closure $\leftrightarrow$ candidate
+        resonance. Open.
+  \item[H-ModeUnique.] $\lambda = 12$ universality
+        $\leftrightarrow$ substrate mode-family uniqueness. Open.
+  \item[H-CortexClosure.] Cortical phase closure
+        $\leftrightarrow$ closure observable
+        \cite{closurePicture}. Open.
+  \item[H-MT-Bridge.] Microtubule lattice $\leftrightarrow$
+        candidate substrate carrier. Open (exploratory).
+\end{description}
+
+The four-tier scope discipline of
+\cite[\S 9]{closurePicture} and the constraint-forcing criterion
+of \cite[\S 5]{evidenceLedger} both apply unchanged here.
+
+% =====================================================================
+\section{Compositionality: the language is productive}
+\label{sec:compositional}
+
+A working language is more than dictionary + grammar + translation:
+it is \emph{compositional} and \emph{productive}. Finitely many
+primitives plus a grammar yield infinitely many well-formed
+sentences. We show that the substrate has this property by
+exhibiting a reasoning system built on top of the engine.
+
+\subsection{\texttt{closure\_ai}: relational reasoning over
+substrate states}
+
+\texttt{closure\_ai} \cite{closureAI} is a relational reasoning
+architecture whose hidden state is a decorated cognitive graph,
+whose reasoning steps are graph transformations from the engine,
+and whose attention is invariant-aware projection. Crucially:
+\emph{outputs are emitted only after the admissibility gate
+accepts the final state.}
+
+\paragraph{Why this matters here.} It shows that the engine's
+admissibility classes are usable as a complete state-transition
+predicate. The system runs because the grammar of
+\S\ref{sec:grammar:wellformed} is decidable. A grammar that
+classified well-formedness ambiguously could not drive a
+reasoning loop. The fact that \texttt{closure\_ai} runs is
+empirical evidence that the substrate grammar is a
+\emph{functioning} formal language, not just a labelled set of
+moves.
+
+\subsection{\texttt{min\_aria}: vector-state substrate carrier}
+
+\texttt{min\_aria} \cite{minAria} is a minimal substrate-aware
+agent carrying a 7-dimensional vector state
+\[
+S_t \;=\; [
+  \mathrm{identity\_stability},\
+  \mathrm{memory\_load},\
+  \mathrm{novelty\_score},\
+  \mathrm{closure\_residual},
+\]
+\[\hphantom{S_t \;=\; [}
+  \mathrm{perturbation\_level},\
+  \mathrm{governance\_integrity},\
+  \mathrm{replay\_integrity}].
+\]
+The closure-residual component is the engine's well-formedness
+predicate of \S\ref{sec:grammar:wellformed}; the perturbation and
+governance components are direct readouts of admissibility-class
+transitions. The agent maintains identity under hostile prompts
+($\mathrm{identity\_drift} \approx 0$) and recovers closure under
+perturbation ($\mathrm{closure\_residual} \to 0$). The numerical
+proofs of these claims live in
+\texttt{min\_aria/test\_min\_aria\_v2.py}.
+
+\paragraph{What this proves.} The substrate's grammar is
+compositional enough to drive a stateful agent. That is not a
+weak claim. It is the property that distinguishes ``a labelled
+algebraic structure'' from ``a formal language''.
+
+\subsection{Productivity: finite vocabulary, unbounded
+expressions}
+
+The dictionary has finite size. The grammar has finite move set.
+But the set of well-formed sentences is unbounded: composition of
+transformations can produce decorated states of arbitrarily large
+graph depth, and the engine's residual budget gives the well-formed
+ones a clean stopping criterion. This is the precise
+property linguistic theory calls \emph{productivity}.
+
+\subsection{Falsifiability: the grammar refuses sentences}
+
+The grammar refuses sentences. \texttt{BROKEN} verdicts are
+returned every time a transformation breaks closure beyond
+$\Delta_{\mathrm{max}} = 0.01$ in the residual budget. This is
+exactly the property linguistic theory calls
+\emph{discriminative power} --- the grammar produces ill-formed
+sentences as well as well-formed ones.
+
+\bigskip
+
+\noindent
+\textbf{Together:} dictionary $+$ decidable grammar $+$
+productivity $+$ discriminative power are the four classical
+criteria for a formal language. The substrate exhibits all four,
+reproducibly, on engine artefacts.
+
+% =====================================================================
+\section{Comparison to other mathematical languages}
+\label{sec:comparison}
+
+The $V_{600}$ substrate is not the first mathematical language to
+be exhibited in roughly this form. The comparison is informative
+because it sets a recognisable scale.
+
+\subsection{Group-representation theory}
+
+The dictionary is the character table; the grammar is induced and
+restricted representations and tensor products; the translation
+layer is the assignment of irreducible representations to physical
+multiplets. Productivity: a finite group generates an unbounded
+sequence of well-formed compound representations. Falsifiability:
+representation theory refuses tensor products that fail the
+character orthogonality relations.
+
+\subsection{Lie algebra and root systems}
+
+The dictionary is roots and weights; the grammar is the structure
+constants and Weyl group action; the translation layer is the
+identification of simple roots with gauge generators. Productivity
+is again unbounded; falsifiability is the Jacobi identity.
+
+\subsection{Twistor theory}
+
+The dictionary maps twistor space coordinates to null directions
+in Minkowski space; the grammar is the Penrose transform; the
+translation produces scattering-amplitude representations. The
+twistor programme has explicit Layer-2 (grammar) results, Layer-3
+(translation) results conditional on bridge hypotheses (the
+Penrose transform's analyticity assumptions), and Layer-1
+(dictionary) entries used across the programme.
+
+\subsection{Amplituhedron programme}
+
+The dictionary is positive Grassmannian cells; the grammar is the
+boundary and triangulation calculus; the translation produces
+$\mathcal{N}=4$ super-Yang--Mills amplitudes. The translation
+\emph{is} the amplitude, so the bridge hypothesis is exceptionally
+strong (rather than weak) in this case. The amplituhedron is the
+nearest comparison to what the $V_{600}$ substrate aspires to be.
+
+\subsection{Loop quantum gravity}
+
+The dictionary is spin networks; the grammar is gauge-invariant
+moves on the graph; the translation produces candidate
+gravitational observables. The bridge hypotheses are explicit and
+open.
+
+\subsection{Where $V_{600}$ sits}
+
+The $V_{600}$ substrate sits in this same shape but with three
+distinguishing features:
+
+\begin{itemize}[leftmargin=*]
+  \item Its grammar is exhibited on a single \emph{fixed} finite
+        substrate (the $600$-cell vertex set) rather than on a
+        family of generators.
+  \item It explicitly carries an evidence ledger
+        \cite{evidenceLedger}, separating dictionary entries from
+        constraint-forcing entries.
+  \item It is, currently, the work of a single author working
+        outside an institutional setting, released as pre-peer-
+        review preprints. We are explicit that the comparison to
+        the four programmes above is structural, not equal in
+        stature.
+\end{itemize}
+
+% =====================================================================
+\section{Open translation problems}
+\label{sec:openness}
+
+The translation layer is the youngest of the three layers and has
+the most open work. We list the substantive open problems so that
+future work has a focus.
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Subgroup test-set completion.} The
+        $\lambda = 12$ universality scan
+        (\texttt{universality\_lambda12.py}) was run over a finite
+        test set of subgroups $H \subset 2I$. Extending the scan
+        to \emph{all} subgroups of $2I$ would convert the negative
+        rule of \S\ref{sec:grammar:uniqueness} from
+        empirical-on-test-set into theorem-grade.
+  \item \textbf{Bridge-hypothesis closure.}
+        H-Observable, H-Resonance, H-ModeUnique,
+        H-CortexClosure, H-MT-Bridge are all open. Each
+        translation in \S\ref{sec:translation} stands or falls
+        with its bridge.
+  \item \textbf{Inverse-translation construction.} Every
+        translation in this paper is one-way (substrate $\to$
+        interpretation). Whether the dictionary has inverses ---
+        whether every well-formed interpretive sentence has a
+        substrate translation --- is open.
+  \item \textbf{Compositionality at scale.} \texttt{closure\_ai}
+        and \texttt{min\_aria} demonstrate compositionality at
+        small scale. Whether the grammar remains decidable as the
+        sentence length grows is an open empirical question; the
+        residual budget gives the right place to look.
+  \item \textbf{Bidirectional translation table.} The
+        \texttt{data/translation.csv} CSV gives the current
+        forward translation table. A reverse table
+        (interpretation $\to$ candidate substrate sentence) does
+        not yet exist; it is open work.
+\end{enumerate}
+
+% =====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper has argued that the $V_{600}$ substrate has crossed the
+threshold from metaphor to formal language. The argument is not
+declarative; it is empirical. The closure transformation engine
+supplies the grammar, reproducibly. The Schl\"afli decomposition
+and the $\lambda = 12$ lift-channel theorem are positive rules.
+The $\lambda = 12$ uniqueness scan is a negative rule. The
+transformation taxonomy supplies the move set. The admissibility
+classes supply the well-formedness predicate. The translation
+principle ties dictionary to grammar to interpretation. And
+\texttt{closure\_ai} / \texttt{min\_aria} show that the grammar is
+decidable enough to drive a reasoning system.
+
+The substrate now meets the four classical criteria of a formal
+language: typed dictionary, decidable grammar, productivity,
+discriminative power. That does not make it a physical theory. It
+does mean that the substrate's claims can be assessed at the
+\emph{linguistic} level --- which dictionary entries are
+well-defined, which grammar rules are tight, which translations
+clear their bridge hypotheses --- rather than at the
+``recurrence-by-construction'' level. We invite this kind of
+engagement.
+
+The paper does not change a single claim of the underlying
+programme. It changes the form in which the programme's claims can
+be reviewed.
+
+\bigskip
+\hrule
+\bigskip
+
+\noindent
+\textbf{A reading note.}
+The dictionary, grammar, and translation tables in the appendices
+are typeset summaries of canonical CSVs in \texttt{data/}.
+Disagreement with a row of any table is welcome; the CSVs are the
+artefacts to file an issue against.
+
+% =====================================================================
+\appendix
+
+\section{Dictionary table}
+\label{app:dictionary}
+
+The canonical machine-readable dictionary is at
+\texttt{data/dictionary.csv}. The columns are:
+
+\begin{enumerate}[leftmargin=*]
+  \item \texttt{entry\_id} --- short identifier.
+  \item \texttt{substrate\_object} --- the substrate primitive.
+  \item \texttt{mathematical\_referent} --- the mathematical
+        referent of the entry.
+  \item \texttt{candidate\_physical\_referent} --- the candidate
+        physical referent (if any).
+  \item \texttt{candidate\_cognitive\_referent} --- the candidate
+        cognitive referent (if any).
+  \item \texttt{layer} --- 1, 2, or 3.
+  \item \texttt{evidential\_status} --- \texttt{theorem-grade},
+        \texttt{conditional}, \texttt{interpretive}.
+  \item \texttt{bridge\_hypothesis} --- the named bridge required
+        to lift the entry to Layer 3.
+  \item \texttt{evidence\_ledger\_row} --- the
+        \cite{evidenceLedger} row that audits this entry.
+\end{enumerate}
+
+The dictionary contains 14 entries in v1.0.0-rc1.
+
+\section{Grammar table}
+\label{app:grammar}
+
+The canonical machine-readable grammar is at
+\texttt{data/grammar.csv}. Columns:
+
+\begin{enumerate}[leftmargin=*]
+  \item \texttt{rule\_id}
+  \item \texttt{transformation\_kind} --- DUAL,
+        SHELL\_PROJECTION, ..., DIMENSIONAL\_PROJECTION (12 kinds).
+  \item \texttt{input\_typing}
+  \item \texttt{output\_typing}
+  \item \texttt{preserved\_invariants}
+  \item \texttt{broken\_invariants}
+  \item \texttt{exchanged\_invariants}
+  \item \texttt{default\_admissibility\_class} --- \texttt{EXACT},
+        \texttt{CANDIDATE}, \texttt{APPROXIMATE}, \texttt{BROKEN},
+        \texttt{DEGENERATE}.
+  \item \texttt{engine\_module} --- the engine module that
+        implements the rule.
+\end{enumerate}
+
+The grammar contains 12 rules in v1.0.0-rc1, one per
+transformation kind, plus three derived rules for the Schl\"afli
+decomposition, the $\lambda = 12$ lift, and the $\lambda = 12$
+uniqueness scan.
+
+\section{Translation table}
+\label{app:translation}
+
+The canonical machine-readable translation table is at
+\texttt{data/translation.csv}. Columns:
+
+\begin{enumerate}[leftmargin=*]
+  \item \texttt{translation\_id}
+  \item \texttt{dictionary\_entry\_id}
+  \item \texttt{grammar\_verdict} --- \texttt{EXACT},
+        \texttt{CANDIDATE}, \texttt{APPROXIMATE}, etc.
+  \item \texttt{bridge\_hypothesis} --- the named bridge.
+  \item \texttt{interpretive\_claim} --- the candidate
+        interpretive claim.
+  \item \texttt{audit\_caveat} --- the conservative caveat
+        attached by \texttt{physical\_interpretation.py} (or
+        equivalent).
+  \item \texttt{open\_problems} --- what would have to happen for
+        the translation to upgrade.
+\end{enumerate}
+
+The translation table contains 14 entries in v1.0.0-rc1.
+
+\section{Engine reproducibility}
+\label{app:engine}
+
+Every claim of grammar in \S\ref{sec:grammar} is reproducible from
+modules in the closure transformation engine
+\cite{transformationEngine}. Specifically:
+
+\begin{description}[leftmargin=*]
+  \item[Theorem \ref{thm:schlafli}.]
+        \texttt{closure\_transform\_engine.decomposition} ---
+        functions \texttt{certify\_v600\_construction},
+        \texttt{certify\_v24\_subgroup},
+        \texttt{certify\_right\_cosets},
+        \texttt{certify\_each\_coset\_is\_24cell},
+        \texttt{certify\_a5\_coset\_action}.
+  \item[Theorem \ref{thm:lambda12}.]
+        \texttt{closure\_transform\_engine.keystone} ---
+        functions \texttt{coset\_partition},
+        \texttt{build\_d1\_graphs},
+        \texttt{lambda12\_lift},
+        \texttt{exact\_certify\_lambda12\_lift},
+        \texttt{exact\_a5\_characters}.
+  \item[$\lambda = 12$ uniqueness scan.]
+        \texttt{closure\_transform\_engine.physics.universality\_lambda12}.
+  \item[Transformation taxonomy and admissibility classes.]
+        \texttt{closure\_transform\_engine.transformations.transformation\_grammar},
+        \texttt{closure\_transform\_engine.physics.admissibility}.
+  \item[Transition rules.]
+        \texttt{closure\_transform\_engine.physics.transition\_rules}.
+  \item[Physical-interpretation labels.]
+        \texttt{closure\_transform\_engine.physics.physical\_interpretation}.
+  \item[Compositional reasoning.] \texttt{closure\_ai}
+        (relational architecture); \texttt{min\_aria}
+        (vector-state agent).
+\end{description}
+
+All modules are pure Python with \texttt{networkx}, \texttt{numpy},
+\texttt{scipy} dependencies. Exact $\Q(\sqrt 5)$ arithmetic is
+provided by the vendored \texttt{vfd\_v600} package.
+
+\bigskip
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

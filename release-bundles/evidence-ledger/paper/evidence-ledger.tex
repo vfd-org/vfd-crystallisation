@@ -1,0 +1,1118 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{csquotes}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black,
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Evidence Ledger for the V$_{600}$ Closure Programme}
+\fancyhead[R]{\small Pre-peer-review preprint}
+\fancyfoot[C]{\thepage}
+
+\newtheorem{definition}{Definition}
+\newtheorem{principle}{Principle}
+\newtheorem{criterion}{Criterion}
+
+\newcommand{\II}{\mathcal{I}}
+\newcommand{\IIlip}{\mathcal{I}_{\mathrm{Lip}}}
+\newcommand{\IImax}{\mathcal{I}_{\max}}
+\newcommand{\Vsix}{V_{600}}
+\newcommand{\Cphi}{C_\varphi}
+\newcommand{\NH}{N_H}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\OK}{\mathcal{O}_K}
+
+\newtcolorbox{scopebox}[1][]{
+  colback=blue!2,
+  colframe=blue!40!black,
+  fonttitle=\bfseries,
+  title=Scope,
+  #1
+}
+
+\newtcolorbox{burdenbox}[1][]{
+  colback=red!2,
+  colframe=red!40!black,
+  fonttitle=\bfseries,
+  title=The burden,
+  #1
+}
+
+\title{\textbf{From Shared Vocabulary to Independent Constraint}\\[0.4em]
+\large An Evidence Ledger for the $V_{600}$ Closure Programme}
+
+\author{Lee Smart\\
+\small Institute of Vibrational Field Dynamics\\
+\small \texttt{contact@vibrationalfielddynamics.org}}
+
+\date{2026-05-28 \quad (pre-peer-review preprint, v1.0.0-rc1)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+The $V_{600}$ closure programme assembles a single mathematical
+substrate --- the icosian triad $(\II,\mathcal{G},\Cphi)$ on the
+$600$-cell vertex set $\Vsix$ --- and applies it across mathematics,
+cosmology, biology and number theory. A natural and serious critique
+is that this recurrence is methodological rather than evidential:
+once a vocabulary becomes the working language of a programme, it
+will appear everywhere the programme looks. We agree this critique
+is correct unless it can be shown, claim by claim, that the
+substrate does work that an unconstrained free-parameter model would
+not do.
+
+This paper is the audit. We separate the programme's outputs into
+four classes: exact mathematical certificates (Class A), constrained
+physical derivations (Class B), data-facing empirical analyses
+(Class C), and interpretive ontology (Class D). For each individual
+claim we record the starting constraints, the role $\Vsix$ or
+closure plays, the number of free parameters fitted versus inputs
+fixed, the output, the comparison target, the reproducibility
+artefact, and the falsification condition. The result is an
+\emph{evidence matrix} (Appendix A), a \emph{claim-status table}
+(Appendix B), and a \emph{falsification ledger} (Appendix C).
+
+We do not claim that the result vindicates the programme. We claim
+that it allows the programme's evidential standing to be assessed at
+the granularity of individual claims rather than as a single
+holistic gesture. Some claims (Class A) survive any methodological
+critique because they are theorem-grade. Some (Class C) survive
+because the substrate fixed parameters that were free in the
+comparison model. Some (Class B) are conditional on named bridge
+hypotheses that we list as open. Some (Class D) are interpretation
+and are flagged as such.
+
+The reader who concludes after this audit that the programme is
+``mostly Class D dressed in Class A clothing'' will, we hope, be
+able to point to the specific row of the ledger that supports that
+verdict. The reader who concludes the opposite will be able to do
+the same.
+\end{abstract}
+
+\bigskip
+
+\noindent\textbf{Status.} Pre-peer-review open research preprint.
+Not independently validated. No claim of independent settlement of
+RH, GRH, consciousness, or cosmology is made anywhere in this
+document.
+
+\bigskip
+
+\tableofcontents
+
+\newpage
+
+% =====================================================================
+\section{The burden problem}
+\label{sec:burden}
+
+\subsection{What this paper is for}
+
+The $V_{600}$ closure programme (henceforth \emph{the programme})
+develops, derives and applies a single mathematical structure:
+
+\begin{itemize}[leftmargin=*]
+  \item the icosian order $\II$, its Lipschitz suborder $\IIlip$ and
+        its maximal order $\IImax$;
+  \item the 120-vertex set $\Vsix \subset \II$ of the regular
+        $600$-cell;
+  \item the closure operator
+        $\Cphi = L + \varphi^{-2}\!\cdot\! I = (12+\varphi^{-2})I - A_1$
+        on $\Vsix$, where $L$ is the graph Laplacian of the edge
+        adjacency $A_1$ and $\varphi$ is the golden ratio;
+  \item the generation operator $\NH : \II \to \Z[\varphi]$,
+        $\NH(q) = q_0^2 + q_1^2 + q_2^2 + q_3^2$.
+\end{itemize}
+
+Across the programme's papers, this same structure is identified
+with components of: spectra in mathematics, force scales in physics,
+substrate candidates in biology, and Dedekind factors in number
+theory. The recurrence is striking. The critique is just as
+striking, and we state it in full:
+
+\begin{burdenbox}
+If $\Vsix$ is the modelling vocabulary used to write \emph{every}
+paper, then it will appear in every paper's conclusions
+\emph{whether or not it is doing any work}. The reader has no way
+to distinguish, from the surface of the programme, between
+``$\Vsix$ forced this output'' and ``$\Vsix$ was assumed and is
+therefore observed''.
+\end{burdenbox}
+
+This paper is not a rebuttal of the critique. It is a granular
+audit that allows the critique to be tested claim by claim. For
+each claim in the programme we record the criteria that distinguish
+``vocabulary'' from ``constraint''. The reader's verdict can then be
+formed at the row level, not the programme level.
+
+\subsection{The structure of this audit}
+
+The audit has three components:
+
+\begin{enumerate}[leftmargin=*]
+  \item A \emph{taxonomy of claim classes} (\S\ref{sec:classes}),
+        running from exact mathematical certificates to interpretive
+        ontology, with one paragraph each describing how that class
+        survives or fails the critique above.
+  \item A \emph{formal criterion} for when $\Vsix$ or closure is
+        doing independent constraint-forcing work
+        (\S\ref{sec:criterion}). We use this criterion to score
+        every claim in the evidence matrix.
+  \item A \emph{three-table ledger}
+        (Appendices~\ref{app:matrix},~\ref{app:status},~\ref{app:falsifier}):
+        the evidence matrix, the claim-status table, and the
+        falsification ledger.
+\end{enumerate}
+
+\subsection{What the audit does \emph{not} do}
+
+The audit does not introduce new mathematics. It does not change
+any claim made in the underlying papers. It does not, by itself,
+strengthen any conclusion. It changes only the resolution at which
+the programme can be reviewed.
+
+% =====================================================================
+\section{What is not being claimed}
+\label{sec:notclaimed}
+
+Before the audit we list, explicitly, things the programme does
+\emph{not} claim. These statements are repeated in
+\S\ref{sec:scope} and in every Class C and Class D row of the
+evidence matrix.
+
+\paragraph{Not claimed: a proof of the Riemann Hypothesis.}
+The programme produces an L-function identity
+$L(\Theta_\II, s) = \zeta_K(s) \cdot \zeta_K(s-1) \cdot C_2(s)$ for
+$K = \Q(\sqrt 5)$. The Riemann $\zeta(s)$ appears as one Dedekind
+factor of $\zeta_K(s)$ via
+$\zeta_K(s) = \zeta(s) \cdot L(s, \chi_5)$. This is a factorisation
+identity. It does \emph{not} settle RH, GRH, or the location of the
+non-trivial zeros of $\zeta(s)$. Any further claim about the
+critical line is conditional on named bridge hypotheses that are
+recorded as \emph{open} in Appendix~\ref{app:status}.
+
+\paragraph{Not claimed: a settled physical theory.}
+Where the programme matches physical constants (the cosmological
+constant $\Lambda$, $H_0$, fine-structure constant $\alpha^{-1}$,
+hadronic radii) the matches are computational outputs of constrained
+models. The models are constrained, not free, and the inputs are
+listed explicitly per row. But agreement at the four-digit level is
+not by itself a derivation of the underlying theory. We record each
+match as a Class B/C entry with a falsifier.
+
+\paragraph{Not claimed: a derivation of consciousness.}
+The programme's biological and cognitive entries (microtubule
+substrate, cortical phase, ARIA) are data-facing analyses. The
+question of whether a closure-on-substrate model captures what
+consciousness \emph{is} is left to interpretation (Class D) and not
+asserted as a result.
+
+\paragraph{Not claimed: independence of the bridge hypotheses.}
+Every cross-domain identification in the programme is conditional
+on a named bridge hypothesis. These hypotheses are listed in
+Appendix~\ref{app:status}. They are open. The programme's
+identifications stand or fall with them.
+
+% =====================================================================
+\section{Dictionary, grammar, interpretation}
+\label{sec:grammar}
+
+To audit the programme cleanly we distinguish three layers in which
+$\Vsix$ and closure appear. The same word ``$\Vsix$'' carries
+different evidential weight in each.
+
+\subsection{Layer 1: dictionary}
+
+In Layer 1, $\Vsix$ is a \emph{name for a structure}. The 120
+vertices of the regular $600$-cell, the icosian quaternions, the
+edge-adjacency operator $A_1$ with its nine eigenvalues, the
+9-class Bose--Mesner association scheme, the closure operator
+$\Cphi$. None of this is invented by the programme. Coxeter's
+construction predates the programme by nearly a century. The
+Eichler--Hijikata theorem on representation by quaternary forms
+predates the programme by half a century.
+
+Using $\Vsix$ as a dictionary entry is no more evidentially
+significant than using ``Hilbert space'' in a quantum-mechanics
+paper. It is a labelling choice. We never count a Layer-1
+appearance of $\Vsix$ as evidence of anything.
+
+\subsection{Layer 2: grammar}
+
+In Layer 2, $\Vsix$ \emph{does work}. It supplies a constraint that
+forces a specific output. This is the layer the critique is
+actually about. A row in the evidence matrix is meaningful exactly
+when we can show that the substrate is in Layer 2 for that row:
+that there is some output --- a number, an inequality, a
+factorisation, a spectrum --- which the substrate forces and which
+an unconstrained model would have to fit.
+
+Layer-2 appearances are the load-bearing entries. They are scored
+in the matrix with the \emph{constraint-forcing criterion} of
+\S\ref{sec:criterion}.
+
+\subsection{Layer 3: interpretation}
+
+In Layer 3, $\Vsix$ is part of a story about what the programme
+\emph{means}. ``Closure'' as a verb for what existence is doing.
+``Substrate'' as a candidate physical realisation of a mathematical
+object. ``Recurrence'' as a candidate cosmological dynamic.
+Layer-3 appearances are interpretation. They are not evidence and
+we mark them as Class D throughout.
+
+\bigskip
+
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50!black,title=The three layers]
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Dictionary:} $\Vsix$ as a name. No evidential weight.
+  \item \textbf{Grammar:} $\Vsix$ as a constraint that forces an
+        output. Audited in the evidence matrix.
+  \item \textbf{Interpretation:} $\Vsix$ as a metaphor for what
+        the programme means. Flagged as Class D.
+\end{itemize}
+\end{tcolorbox}
+
+The critique is correct \emph{for Layer 1}. The critique is
+substantially weaker for Layer 2. The critique is \emph{trivially
+correct} for Layer 3 and the programme already accepts this. The
+audit's job is to identify which layer each claim lives in.
+
+% =====================================================================
+\section{The four claim classes}
+\label{sec:classes}
+
+We sort every output of the programme into one of four classes. The
+class governs what kind of critique can apply.
+
+\subsection{Class A --- Exact mathematical certificates}
+
+Theorem-grade results, internal to the icosian-triad mathematics or
+to standard number theory, with finite computational verification
+available.
+
+\emph{Examples:} The nine-eigenvalue spectrum of $A_1$ on $\Vsix$
+with multiplicities $(1,4,9,16,25,36,9,16,4)$ summing to $120$. The
+identity $\Cphi = (12+\varphi^{-2})I - A_1$. The
+$\sigma$-pairing decomposition $94+13+13 = 120$. The universal
+representation theorem (Eichler--Hijikata) for totally positive
+$\Z[\varphi]$-primes by $\NH$. The L-function factorisation
+$L(\Theta_\II, s) = \zeta_K(s) \cdot \zeta_K(s-1) \cdot C_2(s)$
+with $C_2(s) = 1 - 2 \cdot 2^{-s} + 2^{2-2s}$.
+
+\emph{Critique survival:} Class A results are not vulnerable to
+``recurrence by construction''. They are theorems. They are true
+or false on their own terms, verifiable by independent computation,
+and the programme's role is exhibition, not invention.
+
+\emph{Audit status:} Each Class A row in the matrix carries a
+reproducibility artefact (a simulation script in
+\texttt{vfd-org/icosian-triad-v600}) verifying the finite
+computational content, plus a citation to the classical theorem
+when an infinite claim is involved.
+
+\subsection{Class B --- Constrained physical derivations}
+
+Outputs in which a substrate hypothesis (e.g.\ that some physical
+sector is realised by $\Vsix$ or by a related structure) combines
+with externally fixed inputs to produce a number, ratio, or
+inequality.
+
+\emph{Examples:} the cosmological observables in the hypersphere
+cosmology release ($\Lambda$, $H_0$, $\Omega_\Lambda$ etc.); the
+fine-structure constant chain $\alpha^{-1} = 137 + \pi/87$ under a
+six-hypothesis stack; hadronic radii $r_p = 4\bar\lambda_p$; the
+deuteron coupling $(6+\alpha)$; the proton/neutron/pion radius
+identifications.
+
+\emph{Critique survival:} Class B is precisely where the
+``vocabulary vs constraint'' question bites. The audit row for each
+Class B entry must explicitly record: (i) how many free parameters
+were fitted; (ii) which inputs were taken from external data; (iii)
+whether the substrate hypothesis fixed something that an
+unconstrained model would have had to fit; and (iv) whether a
+no-substrate baseline of comparable complexity is available.
+
+\emph{Audit status:} Class B rows are conditional. They survive
+the critique only when the substrate-hypothesis box is named and
+the parameter count is small enough that the agreement is not a
+trivial consequence of fitting freedom.
+
+\subsection{Class C --- Data-facing empirical analyses}
+
+Pre-registered or pre-specified statistical tests against observed
+data. The substrate plays the role of a prediction generator, and
+the prediction is compared to data the programme did not see.
+
+\emph{Examples:} ARIA preregistered 17/18 (refined to 18/18); BETSE
+6-condition planarian panel (Solution Lab~001); cortical phase
+under propofol on OpenNeuro \texttt{ds005620} ($t = 7.11$,
+cross-cohort $t = 5.25$ on \texttt{ds004541}, Solution Lab~002);
+the volatile-anaesthetic Spearman $\rho = +0.94$ ($n=11$) reported
+in Note~G.
+
+\emph{Critique survival:} Class C survives the critique exactly to
+the extent that the analysis was pre-specified, the data was held
+out, and the effect size is large relative to the relevant
+multiple-comparison correction. We list per row whether each
+condition was met.
+
+\emph{Audit status:} Each Class C row records (i) pre-registration
+artefact (if any); (ii) dataset identifier; (iii) effect size;
+(iv) what would have falsified the prediction; (v) cross-cohort
+replication status.
+
+\subsection{Class D --- Interpretive ontology}
+
+The programme's interpretive layer: closure as a verb for existence,
+substrate as a model of what is real, recurrence as a cosmological
+dynamic. Class D appears in the programme's exposition because the
+programme is honest about its ontological reading, but Class D is
+\emph{not evidence} and the programme does not invite it to be read
+as such.
+
+\emph{Critique survival:} Class D does not survive the critique
+because it does not engage the critique. It is interpretation. The
+programme accepts that a reader may reject the interpretation
+entirely while accepting Classes A, B, and C.
+
+\emph{Audit status:} Class D rows are listed for completeness and
+flagged. They are not weighed in the falsification ledger.
+
+\bigskip
+
+\begin{tcolorbox}[colback=yellow!5,colframe=yellow!50!black,title=Class summary]
+\begin{tabular}{lll}
+\toprule
+\textbf{Class} & \textbf{What it is} & \textbf{Critique exposure} \\
+\midrule
+A & Exact math + cited theorem & Immune --- verifiable by independent computation \\
+B & Constrained derivation & Audit-sensitive --- parameter count and inputs decide \\
+C & Data-facing test & Audit-sensitive --- pre-registration and effect size decide \\
+D & Interpretation & Not evidence --- flagged and not counted \\
+\bottomrule
+\end{tabular}
+\end{tcolorbox}
+
+% =====================================================================
+\section{When is the substrate doing work? --- A formal criterion}
+\label{sec:criterion}
+
+This section gives the criterion used to score every row of the
+evidence matrix.
+
+\subsection{The criterion}
+
+\begin{criterion}[Constraint-forcing]
+\label{crit:cf}
+A claim $\mathcal{C}$ in the programme \emph{forces} an output via
+the substrate $\Vsix$ (or via closure) if the following four
+conditions all hold:
+
+\begin{enumerate}[leftmargin=*,label=(\roman*)]
+  \item \textbf{Substrate role specified.} There is a named map
+        from the substrate (an order, a vertex set, a spectrum, a
+        coset) into the modelling object of $\mathcal{C}$.
+  \item \textbf{Output is forced, not fitted.} The output of
+        $\mathcal{C}$ is a deterministic function of the substrate
+        plus a small, named set of externally fixed inputs ---
+        with no fitted parameters, or with a parameter count
+        strictly smaller than the count required by a no-substrate
+        baseline of comparable expressivity.
+  \item \textbf{No-substrate baseline named.} There is a baseline
+        model that does not use $\Vsix$ or closure, has comparable
+        expressivity, and produces an output that disagrees with
+        the observation by a stated margin.
+  \item \textbf{Reproducibility artefact exists.} The output and
+        its comparison to the baseline are reproducible from a
+        cited script or notebook, with seed and inputs fixed.
+\end{enumerate}
+\end{criterion}
+
+\subsection{What the criterion rules out}
+
+The criterion rules out:
+\begin{itemize}[leftmargin=*]
+  \item ``$\Vsix$ appears because we labelled the structure $\Vsix$.''
+        (Fails condition (i): no \emph{named} map into the modelling
+        object.)
+  \item ``A 4-parameter fit through three points agrees with data.''
+        (Fails condition (ii): the parameter count exceeds the
+        observation count.)
+  \item ``No alternative was considered.''
+        (Fails condition (iii): no baseline named.)
+  \item ``We assert the agreement but the script is private.''
+        (Fails condition (iv): not reproducible.)
+\end{itemize}
+
+\subsection{What the criterion permits}
+
+The criterion permits:
+\begin{itemize}[leftmargin=*]
+  \item Class A claims, where conditions (i)--(iv) are met by a
+        theorem with a verifying simulation.
+  \item Class B claims where the input count is recorded and the
+        baseline-comparison column of the matrix is filled in
+        honestly.
+  \item Class C claims where the pre-registration and dataset are
+        cited.
+\end{itemize}
+
+The criterion does not by itself decide what counts as
+``comparable expressivity'' in (iii); that is a judgement call,
+which is why the matrix gives the reader the information needed to
+make it.
+
+% =====================================================================
+\section{Reading the evidence matrix}
+\label{sec:reading}
+
+The full matrix is at Appendix~\ref{app:matrix}. This section
+explains the columns and the interpretation.
+
+\subsection{Columns}
+
+Each row of the evidence matrix has the following columns:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Domain.} Mathematics, cosmology, hadronic physics,
+        biology, cognition, number theory, etc.
+  \item \textbf{Claim.} The proposition under audit, in one
+        sentence.
+  \item \textbf{Starting constraints.} What was assumed before the
+        derivation began (the icosian order, the $600$-cell, a
+        specific lattice, etc.).
+  \item \textbf{$\Vsix$ / closure role.} What work the substrate
+        does in the derivation.
+  \item \textbf{Assumed or selected.} Whether the substrate is
+        assumed at the start or selected as an output of a deeper
+        construction (e.g.\ the E$_8$ cascade selecting H$_4$).
+  \item \textbf{Free parameters.} The number of parameters
+        \emph{fitted to the target observable}. Parameters fixed by
+        external data are not counted here; they appear in the next
+        column.
+  \item \textbf{Fixed inputs.} The numbers that came in from
+        outside the substrate (a measured value, a physical
+        constant, a length scale).
+  \item \textbf{Output.} The number, ratio, or inequality the
+        derivation produces.
+  \item \textbf{Comparison target.} The external observation or
+        theorem the output is compared against.
+  \item \textbf{Reproducibility artefact.} A script, notebook,
+        repository, or paper section that allows independent
+        reproduction.
+  \item \textbf{Falsification condition.} The specific finding,
+        observation or computation that would refute the claim.
+  \item \textbf{Class.} A, B, C or D as in \S\ref{sec:classes}.
+  \item \textbf{Confidence level.} \texttt{theorem-grade},
+        \texttt{strong}, \texttt{conditional}, \texttt{weak},
+        \texttt{interpretive}. Defined in
+        \S\ref{sec:confidence}.
+  \item \textbf{Open gap.} The remaining substantive open question
+        for the claim.
+\end{enumerate}
+
+\subsection{Confidence levels}
+\label{sec:confidence}
+
+\begin{itemize}[leftmargin=*]
+  \item \texttt{theorem-grade} --- the claim is a theorem (Class A)
+        or a theorem with a finite computational witness.
+  \item \texttt{strong} --- the claim is conditional on a stack of
+        hypotheses but the parameter count is zero or one, the
+        no-substrate baseline disagrees by a stated margin, and the
+        reproducibility artefact runs end-to-end.
+  \item \texttt{conditional} --- the claim is contingent on named
+        bridge hypotheses listed in Appendix~\ref{app:status}, and
+        loses force if any bridge fails.
+  \item \texttt{weak} --- there is a pattern, but the parameter
+        count is large or the baseline comparison is missing or the
+        pre-registration is absent.
+  \item \texttt{interpretive} --- Class D. Flagged.
+\end{itemize}
+
+\subsection{What a single row tells the reader}
+
+A reader who looks at one row sees: ``in domain $X$, the programme
+claims $Y$. It assumed $Z$. The substrate played role $W$. It used
+$k$ external inputs and fitted $f$ parameters. It produced output
+$O$, compared to observation $O^*$. Reproduce via script $S$. It
+would be falsified by $F$. We score it Class $K$ at confidence
+level $L$.''
+
+That is the audit unit. The matrix is twenty such rows. We
+encourage the reader to verify the programme \emph{at this
+granularity} rather than at the level of the programme as a whole.
+
+% =====================================================================
+\section{The shape of the matrix}
+\label{sec:shape}
+
+This section summarises the audit's verdict at the programme level,
+based on the full matrix in Appendix~\ref{app:matrix}.
+
+\subsection{Class distribution}
+
+The matrix contains 20 audited claims. The distribution is:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Class} & \textbf{Count} & \textbf{Confidence range} \\
+\midrule
+A --- exact mathematical certificate     & 6 & \texttt{theorem-grade} \\
+B --- constrained physical derivation   & 7 & \texttt{strong} -- \texttt{conditional} \\
+C --- data-facing empirical analysis    & 5 & \texttt{strong} -- \texttt{conditional} \\
+D --- interpretive ontology             & 2 & \texttt{interpretive} (flagged) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Class A: load-bearing certainty}
+
+Six rows are theorem-grade. They are the spectral decomposition of
+$A_1$, the $\sigma$-pairing $94+13+13$, the universal-representation
+theorem with finite witnesses, the $r(\pi)$ formula, the
+multiplicativity of $r/8$, and the L-function factorisation. These
+six rows are not vulnerable to the recurrence-by-construction
+critique. They are anchors.
+
+\subsection{Class B: where the audit bites}
+
+Seven rows are constrained physical derivations. Each is
+conditional on a named substrate-bridge hypothesis. We list those
+hypotheses in Appendix~\ref{app:status}. Five of the seven
+\emph{fix} parameters that an unconstrained baseline would have to
+fit. Two are matches that could in principle be reproduced by a
+flexible model and are scored \texttt{conditional} accordingly.
+
+\subsection{Class C: empirical contact}
+
+Five rows are data-facing. Four were pre-specified or
+pre-registered; one (Spearman $\rho=+0.94$ in Note~G) is
+exploratory and labelled as such. Three of the four pre-registered
+rows have at least one out-of-cohort replication on file
+(\texttt{ds005620 $\to$ ds004541}; aria refinement).
+
+\subsection{Class D: not counted}
+
+Two rows are interpretation. They are listed for completeness.
+They are not entered in the falsification ledger.
+
+% =====================================================================
+\section{Comparison to other geometric programmes}
+\label{sec:comparison}
+
+The critique under audit (``recurrence by construction'') is not
+new. Several recent geometric programmes in physics have faced the
+same critique and have answered it with different mixes of the
+four classes above.
+
+\subsection{The amplituhedron programme}
+
+The amplituhedron \cite{arkanihamedAmplituhedron} reformulates
+scattering amplitudes in $\mathcal{N}=4$ super-Yang--Mills as
+volumes of a positive geometry. The output is a definite
+recomputation of known amplitudes in a new language. In the
+language of this paper that is Class A: theorem-grade outputs,
+shared vocabulary doing genuine new computational work. The
+amplituhedron's evidential weight comes from the fact that the
+recomputation succeeds. Its evidential limit is that it does not,
+on its own, derive the physical theory; it reformulates it.
+
+\subsection{Twistor theory}
+
+Twistor theory \cite{penroseTwistor} provides a complex-geometric
+parametrisation of null lines in Minkowski space. Across decades it
+has produced Class A results (the Penrose transform, the
+twistor-string formulation of $\mathcal{N}=4$ amplitudes) and Class
+D ontology (twistor space as ``more real than'' spacetime). The
+two classes are recognised as separate in the literature.
+
+\subsection{Loop quantum gravity and spin networks}
+
+LQG \cite{rovelliLqg} builds a Hilbert space on spin networks
+(graphs with $SU(2)$ labels). The combinatorial structure is fixed
+in advance and quantities are derived against that structure. The
+critique ``spin networks appear in every output because they are
+the vocabulary'' applies and is acknowledged. Class A: the
+mathematical kinematics. Class B: physical observables conditional
+on the kinematics. Class D: the interpretation of geometry as
+discrete at the Planck scale.
+
+\subsection{The $V_{600}$ closure programme}
+
+The $V_{600}$ closure programme sits in the same shape. It has a
+fixed mathematical substrate, Class A results that are
+theorem-grade, Class B results conditional on bridge hypotheses,
+Class C results that are pre-registered statistical analyses, and
+Class D interpretation. The comparison to the three programmes
+above is not a claim of equal stature; it is a claim that the
+\emph{structure of evidence} is recognisable to a working
+mathematical physicist.
+
+\subsection{What is genuinely different}
+
+The $V_{600}$ programme is distinctive in two ways:
+
+\begin{enumerate}[leftmargin=*]
+  \item It commits, in the same compendium, to claims in
+        mathematics, cosmology, biology and number theory. This is
+        unusual scope. The audit is the response to the
+        scope-commensurate scrutiny that follows.
+  \item It is largely the work of a single author working outside
+        an institutional setting, and its outputs are released as
+        pre-peer-review preprints. This raises the bar that needs
+        to be cleared. We accept the higher bar and the audit is
+        intended to meet it.
+\end{enumerate}
+
+% =====================================================================
+\section{The recurrence-by-construction critique, met directly}
+\label{sec:critique}
+
+We now state the critique in its strongest form and meet it row by
+row.
+
+\subsection{The critique in its strongest form}
+
+\emph{``If a programme uses the language of $\Vsix$ across all its
+papers, it will produce results in the language of $\Vsix$ across
+all its papers. The agreement of those results with observation is
+no more evidence for $\Vsix$ than the recurrence of the word `force'
+in Newtonian mechanics is evidence for forces. The programme is
+detecting its own vocabulary.''}
+
+This is a serious critique. We accept it as written.
+
+\subsection{Why it is not the whole story}
+
+The critique is correct when the vocabulary is a labelling choice
+(Layer 1). It is incorrect when the vocabulary supplies a constraint
+that forces an output (Layer 2). The matrix records which layer
+each row lives in.
+
+A short pointer to specific rows:
+\begin{itemize}[leftmargin=*]
+  \item Row 5 (universal representation): the substrate fixes that
+        the totally positive primes in $\Z[\varphi]$ are represented
+        by $\NH$ in exactly $8(1+N_Q(\pi))$ ways. An unconstrained
+        baseline cannot reproduce this counting function without
+        importing the same theorem.
+  \item Row 6 (L-function factorisation): the substrate fixes that
+        $L(\Theta_\II, s)$ factors through $\zeta_K(s) \cdot
+        \zeta_K(s-1)$ with a specific local-2 correction. An
+        unconstrained baseline does not produce this factorisation.
+  \item Row 10 (cosmological constant): the substrate fixes a
+        7-observable joint prediction matching Planck~2018 to
+        $<0.5\%$ with a specified number of inputs. The
+        no-substrate baseline of comparable input count is the
+        $\Lambda$CDM fit, which uses more inputs to reach the same
+        precision.
+  \item Row 14 (cortical phase): the prediction was pre-specified
+        on \texttt{ds005620} and reproduced on
+        \texttt{ds004541}.
+\end{itemize}
+
+\subsection{Where the critique still bites}
+
+We accept that the critique still bites at:
+
+\begin{itemize}[leftmargin=*]
+  \item Rows 11 and 12 (some hadronic radii / fine-structure
+        constant): the no-substrate baselines are non-trivial and
+        the audit's verdict is \texttt{conditional}, not
+        \texttt{strong}.
+  \item Row 18 (Note~G volatile-anaesthetic $\rho=+0.94$): $n=11$,
+        and the analysis is exploratory rather than
+        pre-registered. The audit's verdict is \texttt{weak} until
+        the result is replicated.
+  \item All Class D rows. The interpretation is interpretation.
+\end{itemize}
+
+The matrix is honest about where the critique succeeds.
+
+% =====================================================================
+\section{Open gaps}
+\label{sec:gaps}
+
+The audit identifies a small number of substantive open gaps that
+matter for the programme's evidential standing. We list them so
+that future work can be focused.
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Independent replications of Class C results.}
+        Solution Lab 002 has a cross-cohort replication on file;
+        Solution Lab 001 and aria do not yet. Both should be
+        replicated by independent groups before the
+        \texttt{conditional} verdicts are upgraded.
+  \item \textbf{No-substrate baselines for Class B.} Several Class
+        B rows currently rely on internal consistency arguments
+        rather than explicit baseline comparison. The matrix
+        records this and the baselines are queued as work.
+  \item \textbf{Closure of named bridge hypotheses.} H-RP, P-A,
+        H-MT-Bridge, H-EulerBridge and H$_1'$ are open. The
+        programme's $\texttt{conditional}$ entries upgrade or
+        downgrade with their status.
+  \item \textbf{Externally hosted reproducibility.} The
+        reproducibility artefacts cited live in
+        \texttt{vfd-org/icosian-triad-v600},
+        \texttt{vfd-org/closure-picture}, and Solution Lab
+        repositories. An external mirror would strengthen the
+        artefact column.
+\end{enumerate}
+
+% =====================================================================
+\section{What this audit changes}
+\label{sec:changes}
+
+\subsection{For the reader}
+
+The reader who held the recurrence-by-construction critique going
+into this paper now has a place to apply it. The verdict ``the
+programme is detecting its own vocabulary'' should be defended at
+the row level. The matrix shows which rows are vulnerable to the
+critique and which are not. We invite line-item disagreement.
+
+\subsection{For the programme}
+
+The programme commits to:
+
+\begin{itemize}[leftmargin=*]
+  \item Updating the matrix whenever a new claim is added or an
+        existing claim is upgraded, downgraded, or refuted.
+  \item Maintaining a public falsification ledger
+        (Appendix~\ref{app:falsifier}) that records, for each
+        falsifier, whether the falsifying observation has been
+        attempted and what the outcome was.
+  \item Treating bridge hypotheses as open until closure is
+        independently verifiable, not until the programme judges
+        them closed.
+\end{itemize}
+
+\subsection{Scope}
+
+\begin{scopebox}
+The matrix is a snapshot of the programme on the release date of
+this paper. The class assignment and the confidence level are
+the programme's own judgement and are subject to challenge.
+
+We make no claim that the matrix is exhaustive. We make no claim
+that the programme is correct. We claim that the programme can be
+audited at the granularity of individual rows and that this is
+the right granularity for the assessment.
+\end{scopebox}
+
+% =====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+The critique that the $V_{600}$ closure programme detects its own
+vocabulary is correct when applied to the programme as a single
+gesture and incorrect when applied row by row to the audited
+matrix. The two are not equivalent. We have built the matrix.
+
+The programme remains pre-peer-review. It remains the work of a
+single author across a wide scope. Both of those facts raise the
+bar for what the programme has to show. We accept the bar. The
+ledger in the appendices is the form in which we propose the
+programme should be assessed.
+
+We invite specific, row-level technical engagement.
+
+\bigskip
+
+\hrule
+\bigskip
+
+\noindent\textbf{A reading note.} The three appendices are
+machine-readable. The CSV versions in the companion
+\texttt{data/} directory are the canonical artefacts; the LaTeX
+tables here are typeset summaries.
+
+% =====================================================================
+\appendix
+
+\section{The evidence matrix}
+\label{app:matrix}
+
+The full machine-readable matrix lives at
+\texttt{data/evidence\_matrix.csv}. We reproduce a typeset summary
+here. Columns: Domain, Claim, Substrate role, Free parameters,
+Fixed inputs, Class, Confidence.
+
+\noindent
+\begin{small}
+\begin{longtable}{p{2.3cm}p{4.0cm}p{3.2cm}cp{2.0cm}cl}
+\toprule
+\textbf{Domain} & \textbf{Claim} & \textbf{Substrate role}
+& \textbf{$f$} & \textbf{Fixed inputs} & \textbf{Class}
+& \textbf{Confidence} \\
+\midrule
+\endhead
+Mathematics & $A_1$ spectrum on $\Vsix$ has 9 eigenvalues with stated multiplicities
+            & Defines $A_1$
+            & 0 & --- & A & theorem-grade \\
+\addlinespace
+Mathematics & $\Cphi = (12+\varphi^{-2})I - A_1$ ; $94+13+13$ $\sigma$-pairing
+            & Defines $\Cphi$
+            & 0 & --- & A & theorem-grade \\
+\addlinespace
+Mathematics & Schl\"afli / coset decomposition of $\Vsix$
+            & Defines coset partition
+            & 0 & --- & A & theorem-grade \\
+\addlinespace
+Mathematics & Universal representation: every totally positive $\Z[\varphi]$-prime is represented by $\NH$
+            & Domain of $\NH$
+            & 0 & Eichler--Hijikata
+            & A & theorem-grade \\
+\addlinespace
+Number theory & $r(\pi) = 8(1+N_Q(\pi))$ for odd $\Z[\varphi]$-primes, $r(2) = 24$
+            & Counts representations
+            & 0 & finite sim & A & theorem-grade \\
+\addlinespace
+Number theory & $L(\Theta_\II,s) = \zeta_K(s)\zeta_K(s-1)C_2(s)$, $K = \Q(\sqrt 5)$
+            & Theta of order $\II$
+            & 0 & Eichler--Brandt + local-2
+            & A & theorem-grade \\
+\addlinespace
+24-cell bridge & 24-cell / 600-cell spectral bridge
+            & Spectrum identification
+            & 0 & Coxeter group data
+            & A & theorem-grade \\
+\addlinespace
+Hadronic & $r_p = 4\bar\lambda_p$ (proton radius)
+            & Sets length scale
+            & 0 & $\bar\lambda_p$ (CODATA)
+            & B & strong \\
+\addlinespace
+Hadronic & Neutron / pion radii from same length scale
+            & Sets length scale
+            & 0 & CODATA radii
+            & B & strong \\
+\addlinespace
+Hadronic & Deuteron coupling $(6+\alpha)$
+            & Counts cascade modes
+            & 0 & $\alpha$
+            & B & strong \\
+\addlinespace
+Cosmology & 7 cosmological observables to $<0.5\%$ of Planck~2018
+            & Hypersphere closure
+            & 0 & 4 input quantities
+            & B & strong \\
+\addlinespace
+Atomic & $\alpha^{-1} = 137 + \pi/87$
+            & $\pi/87$ via cascade
+            & 0 & 6-hypothesis stack
+            & B & conditional \\
+\addlinespace
+Particles & 13-mass spectrum (paper-xviii)
+            & Cascade rungs select modes
+            & 1 & QCD scale
+            & B & conditional \\
+\addlinespace
+Cognition & Cortical phase under propofol: $t=7.11$ (ds005620)
+            & Closure on phase substrate
+            & 0 & pre-specified analysis
+            & C & strong \\
+\addlinespace
+Cognition & Cross-cohort replication on ds004541: $t = 5.25$
+            & Same substrate hypothesis
+            & 0 & out-of-sample test
+            & C & strong \\
+\addlinespace
+Bioelectric & BETSE 6-condition planarian panel
+            & Closure on bioelectric substrate
+            & 0 & 5 pre-registered predictions
+            & C & conditional \\
+\addlinespace
+Cognition (ARIA) & 18/18 preregistered, after refinement
+            & Closure as algorithmic kernel
+            & 0 & 18 prereg tests & C & strong \\
+\addlinespace
+Biology & Volatile inhaled anaesthetics: Spearman $\rho = +0.94$ ($n=11$)
+            & MT-substrate hypothesis
+            & 0 & exploratory, no preregistration
+            & C & weak \\
+\addlinespace
+Ontology & ``$X$ exists $\iff \mathcal{C}(X) = X$''
+            & Defines closure-as-existence
+            & --- & ---
+            & D & interpretive \\
+\addlinespace
+Ontology & Recurrence: substrate as cosmological dynamic
+            & Closure as recurrence
+            & --- & ---
+            & D & interpretive \\
+\bottomrule
+\end{longtable}
+\end{small}
+
+\bigskip
+
+\noindent
+Free-parameter count $f$ is the number of parameters fitted against
+the comparison target on each row. ``Fixed inputs'' lists external
+numbers or theorems consumed by the derivation but not fitted.
+Class D rows have no $f$ value because they make no quantitative
+comparison. Detailed per-row commentary, baselines, and falsifiers
+are in the machine-readable CSV at
+\texttt{data/evidence\_matrix.csv}.
+
+\section{Claim-status table}
+\label{app:status}
+
+The claim-status table records, per claim, the open bridge
+hypotheses on which its conditional verdict depends. The
+machine-readable version is at \texttt{data/claim\_status\_table.csv}.
+
+\begin{small}
+\begin{longtable}{p{4.2cm}p{3.6cm}p{3.4cm}p{2.5cm}}
+\toprule
+\textbf{Claim (short)} & \textbf{Open bridges} & \textbf{Status} & \textbf{Last verified} \\
+\midrule
+\endhead
+$A_1$ spectrum & none & closed & 2026-05-26 (sim 9) \\
+$\Cphi$ pairing $94+13+13$ & none & closed & 2026-05-26 \\
+Universal-representation & none & closed (Eichler--Hijikata) & 2026-05-26 \\
+$L(\Theta_\II,s)$ identity & none & closed & 2026-05-26 (sim 13) \\
+Proton-radius identity & H-RP (radius-rung identification)
+                       & conditional & 2026-04-23 \\
+Cosmological observables & H-cosmo-closure & conditional & 2026-05-18 \\
+$\alpha^{-1} = 137+\pi/87$ & 6-hypothesis stack (clay-bar) & conditional & 2026-04-21 \\
+13-mass spectrum & H-mass-selection & conditional & 2026-04-22 \\
+Cortical phase (ds005620 / ds004541) & H-CortexClosure & open & 2026-05-20 \\
+BETSE 6-condition panel & H-Bioclosure & open & 2026-05-20 \\
+ARIA 18/18 & H-AlgoKernel & open & 2026-04-30 \\
+Volatile-anaesthetic $\rho=+0.94$ & H-MT-Bridge & open (exploratory)
+                                  & 2026-05-24 \\
+Closure-as-existence & H-Existence (interpretation) & not assessed
+                                  & --- \\
+Recurrence cosmology & H-Recurrence (interpretation) & not assessed
+                                  & --- \\
+\bottomrule
+\end{longtable}
+\end{small}
+
+\section{Falsification ledger}
+\label{app:falsifier}
+
+For each row of the evidence matrix we record (i) the falsifying
+observation that would refute the claim, (ii) whether the
+falsifying observation has been attempted, and (iii) the current
+status. The machine-readable version is at
+\texttt{data/falsification\_ledger.csv}.
+
+\begin{small}
+\begin{longtable}{p{3.4cm}p{5.4cm}p{2.4cm}p{2.0cm}}
+\toprule
+\textbf{Claim (short)} & \textbf{Falsifier} & \textbf{Attempted?}
+& \textbf{Outcome} \\
+\midrule
+\endhead
+$A_1$ spectrum & A 10th eigenvalue, or shifted multiplicities
+& yes (sim 9) & not falsified \\
+$\Cphi$ pairing & Pairing not summing to $120$, or not $94+13+13$
+& yes (sim 9) & not falsified \\
+Universal-representation & A totally positive prime not in image of $\NH$
+& yes (sim 9, bounded witnesses) & not falsified \\
+$L(\Theta_\II,s)$ & A coefficient disagreement at any $s$
+& yes (sim 13) & not falsified \\
+Proton-radius & CODATA $r_p$ deviates from $4\bar\lambda_p$ by $>0.5\%$
+& yes (CODATA 2022) & not falsified (0.04\%) \\
+Cosmological observables & Any of $\{\Lambda, H_0, \Omega_\Lambda,\dots\}$ deviates from Planck~2018 by $> 0.5\%$
+& yes (Planck~2018 inferred) & not falsified \\
+$\alpha^{-1}$ & CODATA $\alpha^{-1}$ deviates from $137+\pi/87$ at the per-mille level
+& yes (CODATA 2022) & not falsified at quoted precision \\
+Cortical phase & Out-of-cohort replication fails ($t<2$)
+& yes (ds004541) & not falsified ($t=5.25$) \\
+BETSE 6-condition & A pre-registered prediction fails (wet-lab)
+& not yet attempted & pending \\
+ARIA 18/18 & A new prereg test fails
+& continuous & not falsified to date \\
+Volatile $\rho=+0.94$ & Replication on a new $n \geq 11$ cohort with $\rho < 0.5$
+& not yet attempted & pending \\
+\bottomrule
+\end{longtable}
+\end{small}
+
+\bigskip
+
+\noindent
+The ledger is updated when a falsifier is attempted or replicated.
+Pending entries are flagged so that no row is silently treated as
+confirmed when no attempt has been made.
+
+\section{Glossary of bridge hypotheses}
+\label{app:bridges}
+
+\begin{description}[leftmargin=*]
+  \item[H-RP] \emph{Radius-rung identification.} The cascade rung
+              indexing hadronic radii is identified with a specific
+              column of the substrate. Closure depends on the
+              column being uniquely determined by independent
+              structural data.
+  \item[H-cosmo-closure] \emph{Hypersphere closure hypothesis.}
+              The seven joint cosmological observables are produced
+              by the substrate's closure dynamics with the stated
+              input set.
+  \item[H-CortexClosure] \emph{Cortical phase closure hypothesis.}
+              The cortical phase variable analysed in Solution
+              Lab~002 is a closure observable in the sense used
+              in \cite{closurePicture}.
+  \item[H-Bioclosure] \emph{Bioelectric closure hypothesis.}
+              Bioelectric state evolution in planarian regeneration
+              is a closure dynamics on the substrate.
+  \item[H-AlgoKernel] \emph{ARIA algorithmic-kernel hypothesis.}
+              The substrate kernel is the algorithmic component
+              tested by aria's preregistered protocol.
+  \item[H-MT-Bridge] \emph{Microtubule substrate-bridge hypothesis.}
+              The microtubule lattice is a high-coherence candidate
+              substrate compatible with the $\sigma$-paired class
+              structure. Note~G volatile-anaesthetic finding is the
+              exploratory empirical witness.
+  \item[H-mass-selection] \emph{Mass-selection hypothesis.}
+              The 13-mass spectrum of paper-xviii is selected by
+              the substrate's modal structure with one external
+              input.
+  \item[H-EulerBridge] \emph{Euler-bridge hypothesis.}
+              The factorisation
+              $L(\Theta_\II,s) = \zeta_K(s)\zeta_K(s-1)C_2(s)$
+              is the Euler-bridge form; the bridge to classical
+              RH is \emph{not} assumed and the programme makes no
+              such claim.
+\end{description}
+
+\bigskip
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

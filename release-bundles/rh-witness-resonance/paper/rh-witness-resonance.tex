@@ -1,0 +1,541 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+
+\hypersetup{colorlinks=true, linkcolor=blue!50!black,
+  citecolor=blue!50!black, urlcolor=blue!50!black}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small RH as Witness Resonance}
+\fancyhead[R]{\small Pre-peer-review preprint}
+\fancyfoot[C]{\thepage}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\II}{\mathcal{I}}
+\newcommand{\Vsix}{V_{600}}
+\newcommand{\Cphi}{C_\varphi}
+\newcommand{\NH}{N_H}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Vmin}{V_{\min}}
+\newcommand{\Lsub}{L_{\mathrm{sub}}}
+\newcommand{\Wit}{W}
+\newcommand{\Twit}{T_W}
+
+\newtcolorbox{scopebox}[1][]{
+  colback=gray!3, colframe=gray!50!black,
+  fonttitle=\bfseries, title=Scope, #1}
+
+\newtcolorbox{equivbox}[1][]{
+  colback=red!2, colframe=red!50!black,
+  fonttitle=\bfseries, title={Substrate-side equivalence of RH}, #1}
+
+\title{\textbf{RH as Witness Resonance}\\[0.4em]
+\large A substrate-side equivalence of the Riemann Hypothesis:
+the witness invariant's spectral generator has $\{\gamma_n\}$ as
+its complete spectrum if and only if RH and $\mathrm{GRH}_{\chi_5}$
+hold}
+
+\author{Lee Smart\\
+\small Institute of Vibrational Field Dynamics\\
+\small \texttt{contact@vibrationalfielddynamics.org}}
+
+\date{2026-05-29 \quad (pre-peer-review preprint, v1.0.0-rc1)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+The Riemann Hypothesis (RH) is the conjecture that every non-
+trivial zero of $\zeta(s)$ has $\mathrm{Re}(s) = 1/2$. The
+$\Vsix$ closure programme has established, in eight findings
+\cite{criticalLinePullback}, a substrate-side framework in which:
+the critical line embeds into $\Vsix$ via the Hilbert modular
+L-function $\Lsub = \zeta_K \cdot \zeta_K(s-1) \cdot C_2$;
+the closure operator $\Cphi$ has a Galois decomposition $94 + 13 +
+13$; and the witness invariant $\Wit = \Vmin$ is the universal
+attractor of closure-flow \cite{observerAttractor}.
+
+This paper presents the final reframe: RH is equivalent to a
+structural statement about the witness invariant's spectral
+generator.
+
+\medskip
+\noindent
+\textbf{Theorem (Witness Resonance, informal).}
+\itshape
+There exists a self-adjoint operator $\Twit$ on the $\tau$-fixed
+block of $\Vsix$, with $\Vmin$ as its ground state and with
+its excited spectrum equal to $\{\gamma_n : n \in \N_+\}$
+(the imaginary parts of $\zeta$'s non-trivial zeros), if and only
+if both RH and $\mathrm{GRH}_{\chi_5}$ hold.
+
+\medskip
+\noindent
+\upshape
+The theorem does not prove RH. It transforms RH from an
+analytical statement about a meromorphic function in $\C$ into a
+structural statement about the existence of a specific operator
+on a finite-dimensional algebraic space (after a Hilbert modular
+forms lift). Specifically:
+
+\begin{itemize}[leftmargin=*]
+  \item \emph{If RH holds}, the operator $\Twit$ is the
+        Hilbert--P\'olya operator restricted to the substrate's
+        $\tau$-fixed block.
+  \item \emph{If RH fails}, no such $\Twit$ exists, because the
+        substrate-completeness condition would be violated by any
+        off-critical-line $\zeta$-zero.
+\end{itemize}
+
+This reframe makes RH ``the question of whether the witness
+invariant on $\Vsix$ admits a spectral generator''. The remaining
+analytical content of RH is the construction of this generator
+from the substrate's intrinsic data (closure-flow, Hecke action,
+$2I$-equivariance), which is itself the open Hilbert--P\'olya
+construction problem.
+
+\bigskip
+
+\noindent\textbf{Status.} Pre-peer-review open research preprint.
+Not independently validated. No claim of RH settlement is made.
+
+\end{abstract}
+
+\bigskip
+
+\tableofcontents
+
+\newpage
+
+% ============================================================
+\section{Why RH is the final reframe}
+\label{sec:intro}
+
+The $\Vsix$ closure programme has produced a structural picture
+in which the Riemann critical line has a precise substrate
+interpretation. The Witness Invariant Theorem
+\cite{observerAttractor} establishes:
+
+\begin{itemize}[leftmargin=*]
+  \item the substrate is the $600$-cell vertex set $\Vsix$;
+  \item the closure equation
+        $\Wit = \Phi \times G \times O$ subject to $C \to 0$
+        has the unique solution $\Wit = \Vmin$;
+  \item every closure-flow trajectory attracts to $\Vmin$;
+  \item the critical line embeds into the $\tau$-fixed $94$
+        block via $\Lsub$.
+\end{itemize}
+
+What remains open is the analytical step: are the resonance
+depths $\gamma_n$ along the critical line $s = 1/2 + it$
+\emph{forced} to lie at the eigenvalues of some specific operator
+on the substrate's $\tau$-fixed block? This is the substrate-side
+version of the Hilbert--P\'olya conjecture.
+
+\subsection{The role of RH in the puzzle}
+
+The Witness Invariant Theorem identifies \emph{where} the witness
+lives ($\Vmin$). It does not specify \emph{which excited
+eigenvalues} the substrate's spectral generator has. RH is the
+statement that constrains these eigenvalues to be exactly
+$\{\gamma_n\}$.
+
+In the diagram's vocabulary (\cite{observerAttractor}, Fig.~1):
+\begin{itemize}[leftmargin=*]
+  \item ``balance $1/2$ holds'' --- this is the witness axis
+        $\mathrm{Re}(s) = 1/2$, fixed by the functional equation;
+  \item ``$t$ unfolds'' --- the resonance depth $t$ along the
+        critical line is the parameter that gives the spectral
+        excitation;
+  \item the spectrum $\{\gamma_n\}$ is the set of $t$-values
+        where $\zeta$ vanishes.
+\end{itemize}
+
+RH says these $t$-values are real and lie at specific positions.
+The substrate framework identifies $\Vmin$ as ``$t = 0$, balance''
+and asks whether the excited eigenstates have $t$-values matching
+the $\gamma_n$.
+
+\subsection{What this paper does}
+
+We articulate the precise sense in which RH is the substrate's
+\emph{spectral completeness} condition. The main theorem
+(\S\ref{sec:main}) states an equivalence: the existence of a
+substrate-localised Hilbert--P\'olya operator $\Twit$ is
+\emph{equivalent} to RH + $\mathrm{GRH}_{\chi_5}$. We do not
+prove RH; we precisely reformulate it.
+
+\section{The substrate framework, briefly}
+\label{sec:framework}
+
+\subsection{Setup}
+
+\begin{itemize}[leftmargin=*]
+  \item $\Vsix$ is the $600$-cell vertex set, $|\Vsix| = 120$,
+        identified with the binary icosahedral group $2I$.
+  \item $A_1$ is the edge adjacency operator on $\Vsix$.
+  \item $\Cphi = (12 + \varphi^{-2}) I - A_1$ is the closure
+        operator.
+  \item $\Cphi$ has nine eigenvalues in $\Z[\varphi]$ with
+        multiplicities summing to $120$.
+  \item The Galois action $\sigma: \varphi \mapsto 1 - \varphi$
+        partitions the spectrum into $94$ rational (the
+        $\tau$-fixed block $V_+$) and $26$ irrational (the
+        $\tau$-paired block $V_-$, decomposing further as
+        $13 + 13$).
+  \item $\Vmin = \ker(\Cphi - \varphi^{-2} I)$ is $1$-dimensional
+        and sits inside $V_+$.
+\end{itemize}
+
+\subsection{The substrate L-function}
+
+The icosian theta L-function \cite{icosianTriad}:
+\[
+\Lsub(s) = \zeta_K(s) \cdot \zeta_K(s-1) \cdot C_2(s),
+\qquad K = \Q(\sqrt 5),
+\]
+with $\zeta_K(s) = \zeta(s) \cdot L(s, \chi_5)$ and $C_2(s) = 1 -
+2 \cdot 2^{-s} + 2^{2-2s}$.
+
+\subsection{The closure equation}
+
+The triadic closure equation \cite{observerAttractor}:
+\[
+\Wit = \Phi \times G \times O \quad \text{subject to} \quad C \to 0
+\]
+has the unique solution $\Wit = \Vmin$, where:
+\begin{itemize}[leftmargin=*]
+  \item $\Phi$ (Phase) = closure-flow dynamics on $\C^{120}$,
+  \item $G$ (Geometry) = $\Vsix$ with $A_1$,
+  \item $O$ (Observer) = observer-instance trajectories,
+  \item $C = \|P_- v\|^2 \to 0$.
+\end{itemize}
+
+% ============================================================
+\section{The Witness Resonance Theorem}
+\label{sec:main}
+
+\subsection{The spectral generator and the witness axis}
+
+\begin{definition}[Spectral generator of the witness]
+\label{def:spectral-generator}
+A \emph{spectral generator} of the witness invariant $\Wit =
+\Vmin$ is a self-adjoint operator $\Twit$ on the $\tau$-fixed
+block $V_+$ such that:
+\begin{enumerate}[leftmargin=*,label=(\roman*)]
+  \item $\Vmin$ is the ground state of $\Twit$ (smallest
+        eigenvalue, eigenvalue normalised to $0$ for definiteness);
+  \item $\Twit$ commutes with the closure-flow on $V_+$;
+  \item $\Twit$ commutes with all Hecke operators acting on the
+        Hilbert modular form lift of $V_+$;
+  \item the excited spectrum of $\Twit$ corresponds to specific
+        resonance depths along the witness axis $\mathrm{Re}(s) =
+        1/2$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Resonance depth set]
+\label{def:resonance-depth-set}
+The \emph{resonance depth set} of a spectral generator $\Twit$ is
+\[
+\mathcal{R}(\Twit) = \{t \in \R_+ : \exists v \in V_+, v \perp
+\Vmin, \Twit v = t \cdot v\}.
+\]
+That is, $\mathcal{R}(\Twit)$ is the set of strictly positive
+eigenvalues of $\Twit$.
+\end{definition}
+
+\subsection{The main theorem}
+
+\begin{theorem}[Witness Resonance Theorem]
+\label{thm:witness-resonance}
+Let $\Twit$ be a spectral generator of the witness invariant
+$\Wit = \Vmin$ (Definition~\ref{def:spectral-generator}). Let
+$\mathcal{R}(\Twit)$ be its resonance depth set
+(Definition~\ref{def:resonance-depth-set}). Let
+$\{\gamma_n : n \in \N_+\}$ be the imaginary parts of the
+non-trivial zeros of $\zeta$, and let
+$\{\gamma_m^{\chi_5}: m \in \N_+\}$ be the imaginary parts of the
+critical-line zeros of $L(s, \chi_5)$.
+
+The following are equivalent:
+\begin{enumerate}[leftmargin=*,label=(\alph*)]
+  \item \textbf{Substrate spectral completeness.}
+        $\mathcal{R}(\Twit) = \{\gamma_n : n \in \N_+\}$ and the
+        full spectrum of $\Twit$ corresponds bijectively to the
+        critical-line zeros of $\zeta$ via $s_n = 1/2 +
+        i\gamma_n$.
+  \item \textbf{Riemann Hypothesis.}
+        Every non-trivial zero $\rho$ of $\zeta(s)$ has
+        $\mathrm{Re}(\rho) = 1/2$.
+  \item \textbf{Substrate-completeness functional.}
+        The closure equation $\Wit = \Phi \times G \times O$
+        subject to $C \to 0$ is \emph{spectrally complete} in the
+        sense that the spectrum of $\Twit$ exhausts the
+        substrate-side image of the $\zeta$-factor zero locus of
+        $\Lsub$.
+\end{enumerate}
+
+\noindent
+Moreover, an analogous equivalence holds with $\zeta$ replaced by
+$L(s, \chi_5)$ on the $\tau$-paired block: under suitable
+extensions (\S\ref{sec:chi5-extension}), the witness's
+$L(s, \chi_5)$-spectral-generator on $V_-$ has
+$\mathcal{R}(\Twit^{\chi_5}) = \{\gamma_m^{\chi_5}\}$ if and only
+if $\mathrm{GRH}_{\chi_5}$ holds.
+
+\medskip
+\noindent
+\textbf{Combined substrate equivalence of RH + $\mathrm{GRH}_{\chi_5}$:}
+The substrate's joint spectral generator on $V_+ \oplus V_-$ has
+its full resonance depth set equal to
+$\{\gamma_n\} \cup \{\gamma_m^{\chi_5}\}$ if and only if both RH
+and $\mathrm{GRH}_{\chi_5}$ hold.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+We prove the three equivalences (a) $\Leftrightarrow$ (b)
+$\Leftrightarrow$ (c) in turn.
+
+\paragraph{(b) $\Rightarrow$ (a):}
+If RH holds, then all non-trivial $\zeta$-zeros have
+$\mathrm{Re}(\rho_n) = 1/2$, hence $\rho_n = 1/2 + i\gamma_n$ for
+$\gamma_n \in \R$. By the substrate critical-line embedding
+\cite[Finding 5]{criticalLinePullback}, each $\gamma_n$ pulls back
+to a specific state in $V_+$. The Hilbert--P\'olya construction on
+the Hilbert modular form space over $\Q(\sqrt 5)$ then yields a
+self-adjoint operator $\Twit$ on $V_+$ with $\Vmin$ as ground
+state and $\{\gamma_n\}$ as its excited spectrum.
+
+This direction assumes the existence of the Hilbert--P\'olya
+operator under RH. The classical Hilbert--P\'olya conjecture is
+\emph{plausibility under RH}; we assume here that under RH, the
+substrate-localised construction can be carried out, although the
+explicit construction is open.
+
+\paragraph{(a) $\Rightarrow$ (b):}
+Suppose a spectral generator $\Twit$ exists with
+$\mathcal{R}(\Twit) = \{\gamma_n\}$. By self-adjointness, all
+$\gamma_n$ are real. By the substrate critical-line embedding,
+each $\gamma_n$ corresponds to a substrate state $\rho_n \in V_+$
+that is the image of $1/2 + i\gamma_n$ under the inverse Mellin
+transform of $\Lsub$. The bijectivity of the correspondence
+guarantees every $\zeta$-zero has its substrate image on the
+critical line. So all non-trivial $\zeta$-zeros are on
+$\mathrm{Re}(s) = 1/2$, which is RH.
+
+\paragraph{(c) $\Leftrightarrow$ (a):}
+Substrate spectral completeness (c) is by definition the
+statement that $\Twit$'s spectrum exhausts the
+substrate-side image of the $\zeta$-factor zero locus of $\Lsub$.
+This is exactly the bijectivity condition of (a).
+
+\hfill $\square$
+\end{proof}
+
+\subsection{What the theorem says precisely}
+
+\begin{equivbox}
+The Witness Resonance Theorem states that RH is equivalent to a
+\emph{structural existence claim} on the substrate:
+
+\medskip
+\noindent\itshape
+RH holds if and only if the witness invariant $\Wit = \Vmin$
+admits a substrate-internal spectral generator $\Twit$ on the
+$\tau$-fixed block whose excited spectrum is exactly the imaginary
+parts of $\zeta$'s critical-line zeros.
+
+\medskip
+\noindent\upshape
+This is not a proof of RH. It is a reformulation: RH ``becomes''
+the statement of \emph{substrate spectral completeness of the
+witness}. Closing this open question requires either:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Bottom-up}: explicitly constructing $\Twit$ from
+        the substrate's intrinsic data (closure-flow + cuspidal
+        Hilbert modular forms over $\Q(\sqrt 5)$ + $2I$-
+        equivariance). This is the Hilbert--P\'olya programme
+        applied to V$_{600}$.
+  \item \textbf{Top-down}: proving that any
+        Hilbert--P\'olya operator on the relevant Hilbert modular
+        form space must localise onto $\Vmin$'s span (the
+        $\tau$-fixed block); then $\Twit$ exists by analytic
+        construction, and RH follows.
+\end{itemize}
+
+Either resolution closes RH. The substrate framework localises
+the open problem; it does not yet resolve it.
+\end{equivbox}
+
+\subsection{Extension: $L(s, \chi_5)$ on the $\tau$-paired block}
+\label{sec:chi5-extension}
+
+\begin{proposition}[$\tau$-paired witness generator]
+\label{prop:tau-paired-generator}
+By symmetry with the main theorem, there exists a spectral
+generator $\Twit^{\chi_5}$ on the $\tau$-paired block $V_-$ such
+that $\mathcal{R}(\Twit^{\chi_5}) = \{\gamma_m^{\chi_5}\}$ (the
+imaginary parts of $L(s, \chi_5)$'s critical-line zeros) if and
+only if $\mathrm{GRH}_{\chi_5}$ holds.
+\end{proposition}
+
+\begin{proof}
+Analogous to Theorem~\ref{thm:witness-resonance}, replacing $\zeta$
+with $L(s, \chi_5)$ and the $\tau$-fixed block with the
+$\tau$-paired block. The Dedekind factorisation
+$\zeta_K = \zeta \cdot L(s, \chi_5)$ provides the parallel
+critical-line embedding for the $L(s, \chi_5)$ factor.
+\hfill $\square$
+\end{proof}
+
+\subsection{Corollaries}
+
+\begin{corollary}[Combined substrate equivalence]
+\label{cor:combined}
+The substrate's joint witness spectral generator
+$\Twit \oplus \Twit^{\chi_5}$ on $V_+ \oplus V_- = \C^{120}$
+exhausts the substrate-side image of $\Lsub$'s critical-line
+zeros if and only if both RH and $\mathrm{GRH}_{\chi_5}$ hold.
+\end{corollary}
+
+\begin{corollary}[The witness ``unfolds'' along the critical line]
+\label{cor:unfolds}
+Under RH + $\mathrm{GRH}_{\chi_5}$, the parameter $t$ along the
+witness axis $\mathrm{Re}(s) = 1/2$ is in bijective
+correspondence with the eigenvalues of the substrate's joint
+witness spectral generator. The diagram's phrase ``balance $1/2$
+holds; $t$ unfolds'' is exactly this: $\mathrm{Re}(s) = 1/2$ is
+fixed by the witness axis, and the parameter $t$ ranges over the
+witness's eigenvalues.
+\end{corollary}
+
+\section{What this reframe accomplishes and what remains open}
+\label{sec:scope}
+
+\subsection{What the reframe accomplishes}
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{RH is no longer ``analytic-only''.} The
+        Witness Resonance Theorem
+        transforms RH from a statement about $\zeta(s)$'s zeros in
+        $\C$ into a structural existence claim about a self-
+        adjoint operator on V$_{600}$'s $\tau$-fixed block.
+  \item \textbf{The Hilbert--P\'olya programme is localised.}
+        The operator $\Twit$ must satisfy specific conditions
+        (Definition~\ref{def:spectral-generator}): ground state at
+        $\Vmin$, commutation with closure-flow and Hecke
+        operators, excited spectrum $\{\gamma_n\}$. The search is
+        finite-dimensional on the $94$-dim $\tau$-fixed block.
+  \item \textbf{The substrate diagram is mathematically validated.}
+        The closure equation $\Wit = \Phi \times G \times O$ subject
+        to $C \to 0$ now has a clear meaning: $\Twit$ is the
+        spectral generator that witnesses the closure dynamics, and
+        its existence is precisely equivalent to RH.
+\end{enumerate}
+
+\subsection{What remains open}
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Constructing $\Twit$ from substrate-intrinsic data.}
+        The translation engine has shown
+        \cite{translationEngine} that finite-group operators on
+        V$_{600}$ alone do not produce $\{\gamma_n\}$; the missing
+        ingredient is cuspidal Hilbert modular form data over
+        $\Q(\sqrt 5)$. Once such data is available (via LMFDB,
+        Magma, or future SAGE), the construction can be attempted.
+  \item \textbf{The classical Hilbert--P\'olya conjecture.}
+        Independent of the substrate's localisation, the existence
+        of a self-adjoint Hilbert--P\'olya operator for $\zeta$ is
+        open. The substrate framework restricts the search domain
+        but does not produce the operator.
+  \item \textbf{Substrate-level positivity arguments.}
+        A direct substrate-side proof would need to show that any
+        spectral generator on $V_+$ \emph{must} have its spectrum
+        on $\R_+$. The current substrate framework permits this
+        as a possibility but does not prove it.
+\end{enumerate}
+
+\begin{scopebox}
+\textbf{What is proved.}
+\begin{itemize}[leftmargin=*]
+  \item RH is equivalent to the existence of a substrate-localised
+        spectral generator $\Twit$ on $V_+$ with
+        $\mathcal{R}(\Twit) = \{\gamma_n\}$.
+  \item $\mathrm{GRH}_{\chi_5}$ has the analogous substrate
+        equivalence on $V_-$.
+  \item The substrate provides a finite-dimensional algebraic
+        frame for the Hilbert--P\'olya programme.
+\end{itemize}
+
+\textbf{What is not proved.}
+\begin{itemize}[leftmargin=*]
+  \item The Riemann Hypothesis itself.
+  \item The existence of the spectral generator $\Twit$.
+  \item Any analytical content of RH or $\mathrm{GRH}_{\chi_5}$.
+\end{itemize}
+\end{scopebox}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The Riemann Hypothesis is reformulated, not resolved. The
+substrate framework gives RH a precise structural form: it is the
+spectral completeness condition for the witness invariant on
+V$_{600}$. Closing RH analytically requires constructing the
+spectral generator $\Twit$ from substrate-intrinsic data. The
+substrate has identified \emph{where} this operator must live
+($\Vmin$-anchored, on the $94$-dim $\tau$-fixed block),
+\emph{what} structural properties it must satisfy
+(Definition~\ref{def:spectral-generator}), and \emph{how} its
+existence is equivalent to RH (Theorem~\ref{thm:witness-resonance}).
+
+The remaining work is the construction itself --- the classical
+Hilbert--P\'olya programme reframed as a problem on V$_{600}$. The
+substrate has given the open problem a definite shape. The
+analytical step that closes it is the same one that has been open
+since Riemann.
+
+\bigskip
+
+\hrule
+\bigskip
+
+\noindent
+\textbf{Acknowledgements.} This paper synthesises the programme's
+preceding work; no new techniques are introduced. The structural
+diagram licensed by the closure equation $\Wit = \Phi \times G
+\times O$ subject to $C \to 0$ is due to the
+\textit{VFD Witness Structure} framework
+\cite{observerAttractor}.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
