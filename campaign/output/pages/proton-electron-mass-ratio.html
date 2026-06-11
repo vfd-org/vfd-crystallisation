@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proton–electron mass ratio from the 600-cell spectrum</title>
+<style>
+  :root { --ink:#1a1f2b; --soft:#5b6472; --line:#e3e6eb; --accent:#0b6e4f; --bg:#fbfbf9; }
+  * { box-sizing:border-box; }
+  body { font:17px/1.65 Georgia,'Times New Roman',serif; color:var(--ink);
+         background:var(--bg); margin:0; }
+  main { max-width:760px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:1.7em; line-height:1.25; margin:0 0 .4em; }
+  .claim { font-size:1.12em; color:var(--soft); margin-bottom:2em; }
+  .numbers { display:flex; gap:16px; flex-wrap:wrap; margin:2em 0; }
+  .num { flex:1 1 180px; border:1px solid var(--line); border-radius:8px;
+          padding:14px 18px; background:#fff; }
+  .num b { display:block; font-size:1.35em; font-family:ui-monospace,Menlo,monospace; }
+  .num span { color:var(--soft); font-size:.85em; }
+  .err b { color:var(--accent); }
+  h2 { font-size:1.05em; letter-spacing:.04em; text-transform:uppercase;
+        color:var(--soft); border-bottom:1px solid var(--line);
+        padding-bottom:.3em; margin-top:2.4em; }
+  ol li { margin:.45em 0; }
+  pre { background:#11151d; color:#dde3ec; padding:18px 20px; border-radius:8px;
+         overflow-x:auto; font:14px/1.6 ui-monospace,Menlo,monospace; }
+  .falsifier { border-left:3px solid var(--accent); padding:.2em 0 .2em 1em;
+                color:var(--ink); }
+  a { color:var(--accent); }
+  footer { margin-top:3em; color:var(--soft); font-size:.85em;
+            border-top:1px solid var(--line); padding-top:1em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Proton–electron mass ratio from the 600-cell spectrum</h1>
+  <p class="claim">A parameter-free spectral-geometric expression gives the proton–electron mass ratio as m_p/m_e = φ^(1265/81) ≈ 1835.8 against the measured 1836.15 (0.02%), where the leading exponent component ΔC = 15 is exactly the top eigenvalue of the 600-cell graph Laplacian.</p>
+
+  <div class="numbers">
+    <div class="num"><b>1835.8</b><span>this computation</span></div>
+    <div class="num"><b>1836.15267 (CODATA)</b><span>measured / independent</span></div>
+    <div class="num err"><b>0.02%</b><span>difference</span></div>
+  </div>
+
+  <h2>Everything that goes in</h2>
+  <ol>
+    <li>The 600-cell: a single, classical 4D polytope (120 vertices, H4 symmetry)</li>
+    <li>Its graph Laplacian spectrum {0, 9, 12, 14, 15} — exact integers, verifiable by diagonalisation</li>
+    <li>The golden ratio φ as base (forced by H4/icosian structure, not chosen)</li>
+    <li>A stated counting rule for the exponent 1265/81 (the modelling input — see paper)</li>
+  </ol>
+
+  <h2>Run it yourself</h2>
+  <pre>git clone https://github.com/vfd-org/vfd-crystallisation
+cd papers/paper-xxii/scripts
+python3 run_600cell_spectral_verification.py   # deps: numpy, scipy</pre>
+
+  <h2>How to kill this claim</h2>
+  <p class="falsifier">The exponent has no continuous freedom: 1265/81 is fixed by the counting rule and φ is fixed by H4. If the 600-cell Laplacian spectrum is not exactly {0,9,12,14,15}, or the counting rule cannot be stated without tuning, the claim dies.</p>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://github.com/vfd-org/vfd-crystallisation">https://github.com/vfd-org/vfd-crystallisation</a> (repo)</li>
+    <li><a href="https://vibrationalfielddynamics.org/articles/paper-iv-pemr.html">https://vibrationalfielddynamics.org/articles/paper-iv-pemr.html</a> (external)</li>
+    <li>paper: Paper IV (site entry point: /articles/paper-iv-pemr.html)</li>
+  </ul>
+
+  <footer>One result, fully stated. Pre-peer-review; every input and the
+  falsifier are above. Part of the VFD programme &mdash; but this page stands
+  or falls on its own.</footer>
+</main>
+</body>
+</html>

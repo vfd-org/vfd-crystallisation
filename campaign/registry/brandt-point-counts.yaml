@@ -1,0 +1,43 @@
+slug: brandt-point-counts
+priority: 1
+status: verified
+segment: number-theorists
+title: "Icosian Brandt eigenvalues match elliptic-curve point counts over Q(√5)"
+claim: >
+  Brandt operators built from the icosian (binary-icosahedral) quaternion order at the
+  norm-31 prime reproduce the point-counted Hecke eigenvalues a_P of elliptic curve
+  31.1-a1 over Q(√5) — 11/11 in-sample and 13/13 out-of-sample primes against
+  LMFDB, with no fitted parameters.
+value: "664/664 prime ideals matched, to norm 4999 (0 mismatches)"
+target: "Point counts for curve 31.1-a1 / Q(√5) (LMFDB-identified)"
+error: "exact integer agreement"
+inputs:
+  - "The icosian order in the Hamilton quaternions over Q(√5) (a classical object)"
+  - "The norm-31 prime of Z[φ] as the level"
+  - "Brandt matrix construction via native Z[φ] lattice arithmetic (no Magma/SAGE)"
+  - "Eichler mass formula and class number h=2 as structural gates"
+falsifier: >
+  Any prime ideal (not dividing 31) where the cuspidal Brandt eigenvalue differs from
+  the point-count a_P kills the claim. 664 ideals to norm 4999 are certified in
+  out/provenance_664.json; extend the bound and re-run to stress it further.
+script:
+  cwd: release-bundles/closure-positivity-lab
+  cmd: "python3 run_lab.py   # provenance artifact: out/provenance_664.json"
+  deps: numpy
+  evidence: release-bundles/closure-positivity-lab/out/provenance_664.json
+links:
+  repo: "https://github.com/vfd-org/closure-positivity-lab"
+  local: release-bundles/closure-positivity-lab
+  paper: "papers/closure-diffraction-rh.pdf (reviewed, 2x GO)"
+  external: "https://www.lmfdb.org/EllipticCurve/2.2.5.1/31.1/a/1"
+post_hook: >
+  Quaternion arithmetic predicting point counts on an elliptic curve: 664 consecutive
+  prime ideals, exact integers, zero fitting.
+figure_idea: >
+  Table/strip plot of Brandt eigenvalue vs point-counted a_P per prime, in-sample vs
+  out-of-sample shaded, all residuals zero.
+notes: >
+  Wave-1 anchor result. BLOCKING: bundle is local-only; push a clean public repo with
+  one-command verification before this post goes out. Verdict in results.json is
+  PASS_GEOMETRIC_CUSPIDAL_ENCODING. This claim is pure number theory; do not attach
+  VFD framing in the post.

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>33 zeros of a degree-4 L-function built from the icosian order</title>
+<style>
+  :root { --ink:#1a1f2b; --soft:#5b6472; --line:#e3e6eb; --accent:#0b6e4f; --bg:#fbfbf9; }
+  * { box-sizing:border-box; }
+  body { font:17px/1.65 Georgia,'Times New Roman',serif; color:var(--ink);
+         background:var(--bg); margin:0; }
+  main { max-width:760px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:1.7em; line-height:1.25; margin:0 0 .4em; }
+  .claim { font-size:1.12em; color:var(--soft); margin-bottom:2em; }
+  .numbers { display:flex; gap:16px; flex-wrap:wrap; margin:2em 0; }
+  .num { flex:1 1 180px; border:1px solid var(--line); border-radius:8px;
+          padding:14px 18px; background:#fff; }
+  .num b { display:block; font-size:1.35em; font-family:ui-monospace,Menlo,monospace; }
+  .num span { color:var(--soft); font-size:.85em; }
+  .err b { color:var(--accent); }
+  h2 { font-size:1.05em; letter-spacing:.04em; text-transform:uppercase;
+        color:var(--soft); border-bottom:1px solid var(--line);
+        padding-bottom:.3em; margin-top:2.4em; }
+  ol li { margin:.45em 0; }
+  pre { background:#11151d; color:#dde3ec; padding:18px 20px; border-radius:8px;
+         overflow-x:auto; font:14px/1.6 ui-monospace,Menlo,monospace; }
+  .falsifier { border-left:3px solid var(--accent); padding:.2em 0 .2em 1em;
+                color:var(--ink); }
+  a { color:var(--accent); }
+  footer { margin-top:3em; color:var(--soft); font-size:.85em;
+            border-top:1px solid var(--line); padding-top:1em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>33 zeros of a degree-4 L-function built from the icosian order</h1>
+  <p class="claim">The cuspidal face of the icosian closure object over Q(√5) yields a degree-4 L-function of conductor 775 = disc(K)²·31. Its first 33 non-trivial zeros are computed to height 25 (functional equation self-consistent, ε=+1), and the explicit formula — read as one interference wave per prime ideal — rebuilds the critical line so the independently-computed zeros fall on its fringes, with no zero data used in the reconstruction.</p>
+
+  <div class="numbers">
+    <div class="num"><b>33 zeros to height 25; t₁ = 3.679; lfuncheckfeq ≈ −126 (log₂)</b><span>this computation</span></div>
+    <div class="num"><b>functional-equation self-consistency + Sato–Tate (2nd moment 0.2515 vs 0.25)</b><span>measured / independent</span></div>
+    <div class="num err"><b>two independent review passes, both GO; reviewer re-ran all numbers live</b><span>difference</span></div>
+  </div>
+
+  <h2>Everything that goes in</h2>
+  <ol>
+    <li>The icosian (binary-icosahedral) maximal order over Q(√5) — a classical object</li>
+    <li>Brandt eigenvalues certified by two independent algorithms at 664/664 prime ideals to norm 4999</li>
+    <li>Modularity identification with elliptic curve 31.1-a1/Q(√5) (the licence, certified above)</li>
+    <li>PARI/GP lfun machinery for the zero computation (standard, reproducible)</li>
+  </ol>
+
+  <h2>Run it yourself</h2>
+  <pre>git clone https://github.com/vfd-org/closure-positivity-lab
+cd release-bundles/closure-positivity-lab
+gp -q out/_curve_zeros.gp   # zeros; python3 run_lab.py for the lab table   # deps: PARI/GP (zeros), numpy (lab)</pre>
+
+  <h2>How to kill this claim</h2>
+  <p class="falsifier">Recompute in PARI/GP (out/_curve_zeros.gp) and find a zero off the critical line within the certified height, break the functional-equation self-consistency, or find one Brandt/point-count mismatch among the 664 certified prime ideals.</p>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://github.com/vfd-org/closure-positivity-lab">https://github.com/vfd-org/closure-positivity-lab</a> (repo)</li>
+    <li><a href="https://www.lmfdb.org/EllipticCurve/2.2.5.1/31.1/a/1">https://www.lmfdb.org/EllipticCurve/2.2.5.1/31.1/a/1</a> (external)</li>
+    <li>paper: papers/closure-diffraction-rh.pdf (reviewed, 2x GO)</li>
+  </ul>
+
+  <footer>One result, fully stated. Pre-peer-review; every input and the
+  falsifier are above. Part of the VFD programme &mdash; but this page stands
+  or falls on its own.</footer>
+</main>
+</body>
+</html>

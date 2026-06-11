@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Icosian Brandt eigenvalues match elliptic-curve point counts over Q(√5)</title>
+<style>
+  :root { --ink:#1a1f2b; --soft:#5b6472; --line:#e3e6eb; --accent:#0b6e4f; --bg:#fbfbf9; }
+  * { box-sizing:border-box; }
+  body { font:17px/1.65 Georgia,'Times New Roman',serif; color:var(--ink);
+         background:var(--bg); margin:0; }
+  main { max-width:760px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:1.7em; line-height:1.25; margin:0 0 .4em; }
+  .claim { font-size:1.12em; color:var(--soft); margin-bottom:2em; }
+  .numbers { display:flex; gap:16px; flex-wrap:wrap; margin:2em 0; }
+  .num { flex:1 1 180px; border:1px solid var(--line); border-radius:8px;
+          padding:14px 18px; background:#fff; }
+  .num b { display:block; font-size:1.35em; font-family:ui-monospace,Menlo,monospace; }
+  .num span { color:var(--soft); font-size:.85em; }
+  .err b { color:var(--accent); }
+  h2 { font-size:1.05em; letter-spacing:.04em; text-transform:uppercase;
+        color:var(--soft); border-bottom:1px solid var(--line);
+        padding-bottom:.3em; margin-top:2.4em; }
+  ol li { margin:.45em 0; }
+  pre { background:#11151d; color:#dde3ec; padding:18px 20px; border-radius:8px;
+         overflow-x:auto; font:14px/1.6 ui-monospace,Menlo,monospace; }
+  .falsifier { border-left:3px solid var(--accent); padding:.2em 0 .2em 1em;
+                color:var(--ink); }
+  a { color:var(--accent); }
+  footer { margin-top:3em; color:var(--soft); font-size:.85em;
+            border-top:1px solid var(--line); padding-top:1em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Icosian Brandt eigenvalues match elliptic-curve point counts over Q(√5)</h1>
+  <p class="claim">Brandt operators built from the icosian (binary-icosahedral) quaternion order at the norm-31 prime reproduce the point-counted Hecke eigenvalues a_P of elliptic curve 31.1-a1 over Q(√5) — 11/11 in-sample and 13/13 out-of-sample primes against LMFDB, with no fitted parameters.</p>
+
+  <div class="numbers">
+    <div class="num"><b>664/664 prime ideals matched, to norm 4999 (0 mismatches)</b><span>this computation</span></div>
+    <div class="num"><b>Point counts for curve 31.1-a1 / Q(√5) (LMFDB-identified)</b><span>measured / independent</span></div>
+    <div class="num err"><b>exact integer agreement</b><span>difference</span></div>
+  </div>
+
+  <h2>Everything that goes in</h2>
+  <ol>
+    <li>The icosian order in the Hamilton quaternions over Q(√5) (a classical object)</li>
+    <li>The norm-31 prime of Z[φ] as the level</li>
+    <li>Brandt matrix construction via native Z[φ] lattice arithmetic (no Magma/SAGE)</li>
+    <li>Eichler mass formula and class number h=2 as structural gates</li>
+  </ol>
+
+  <h2>Run it yourself</h2>
+  <pre>git clone https://github.com/vfd-org/closure-positivity-lab
+cd release-bundles/closure-positivity-lab
+python3 run_lab.py   # provenance artifact: out/provenance_664.json   # deps: numpy</pre>
+
+  <h2>How to kill this claim</h2>
+  <p class="falsifier">Any prime ideal (not dividing 31) where the cuspidal Brandt eigenvalue differs from the point-count a_P kills the claim. 664 ideals to norm 4999 are certified in out/provenance_664.json; extend the bound and re-run to stress it further.</p>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://github.com/vfd-org/closure-positivity-lab">https://github.com/vfd-org/closure-positivity-lab</a> (repo)</li>
+    <li><a href="https://www.lmfdb.org/EllipticCurve/2.2.5.1/31.1/a/1">https://www.lmfdb.org/EllipticCurve/2.2.5.1/31.1/a/1</a> (external)</li>
+    <li>paper: papers/closure-diffraction-rh.pdf (reviewed, 2x GO)</li>
+  </ul>
+
+  <footer>One result, fully stated. Pre-peer-review; every input and the
+  falsifier are above. Part of the VFD programme &mdash; but this page stands
+  or falls on its own.</footer>
+</main>
+</body>
+</html>

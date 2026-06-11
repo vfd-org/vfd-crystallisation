@@ -1,0 +1,48 @@
+slug: prime-gap-local-law
+priority: 5
+status: verified
+segment: number-theorists
+title: "Prime-gap abundances from an all-places product (and twins to 0.003%)"
+claim: >
+  The relative abundance of prime pairs at every even gap h is the product of
+  (p−1)/(p−2) over the odd primes dividing h — gap-6 pairs are exactly twice as
+  common as twins, gap-210 pairs 16/5 as common — and the absolute twin count to
+  5×10⁷ matches the Hardy–Littlewood all-places integral to 0.003%. Classical
+  mathematics (HL 1923), verified live as the first rows of a prime-phenomena
+  ledger run on the closure-diffraction instrument.
+value: "239,101 twins counted vs 239,107 predicted; every gap ratio within 0.25%"
+target: "Hardy–Littlewood singular series (1923)"
+error: "0.003% (twins); ≤0.25% (gap ratios incl. 210 → 3.1994 vs 16/5)"
+inputs:
+  - "A prime sieve to 5×10⁷ (nothing else — no fitting surface exists)"
+  - "Per-place admissibility counting: each odd prime p dividing the gap contributes (p−1)/(p−2)"
+  - "Hardy–Littlewood constant C2 as the convergent all-places product"
+  - "Theorem anchors run alongside: Dirichlet equidistribution + Q(√5) splitting, both PASS"
+falsifier: >
+  Run python3 -m lab.prime_ledger with a larger X: any gap whose abundance drifts
+  from its local product, or a twin count diverging from the HL integral, kills
+  the row. Every gate and artifact is in out/prime_ledger.json.
+script:
+  cwd: release-bundles/closure-positivity-lab
+  cmd: python3 -m lab.prime_ledger
+  deps: numpy
+  evidence: release-bundles/closure-positivity-lab/out/prime_ledger.json
+links:
+  repo: "https://github.com/vfd-org/closure-positivity-lab"
+  local: release-bundles/closure-positivity-lab/lab/prime_ledger
+  paper: "Prime Phenomena Ledger (WO-VFD-PRIME-LEDGER-001, paper in Phase C)"
+  external: "https://en.wikipedia.org/wiki/Twin_prime#First_Hardy%E2%80%93Littlewood_conjecture"
+post_hook: >
+  Did you know prime pairs at gap 6 are exactly twice as common as twin primes?
+  One product over the primes dividing the gap predicts every ratio — verified to
+  0.25% across eight gaps, and the twin count itself to 0.003%.
+figure_idea: >
+  Bar chart: measured abundance ratio per gap (2..210) with the local-product
+  prediction overlaid as markers — eight bars, eight bullseyes. Inset: twin count
+  vs HL curve converging (1.0038 → 1.0017 → 0.99997).
+notes: >
+  Scope discipline: Hardy–Littlewood 1923, NOT our discovery — the post must say
+  "verified" not "found". The novel framing (local closure product × zero-correlation
+  wall) belongs in the ledger paper, one clause max in the thread. This is
+  deliberately the most accessible claim in the registry — good first post for
+  warming up the number-theory segment before the L-function flagship.

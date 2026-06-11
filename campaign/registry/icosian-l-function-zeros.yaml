@@ -1,0 +1,47 @@
+slug: icosian-l-function-zeros
+priority: 4
+status: verified
+segment: number-theorists
+title: "33 zeros of a degree-4 L-function built from the icosian order"
+claim: >
+  The cuspidal face of the icosian closure object over Q(√5) yields a degree-4
+  L-function of conductor 775 = disc(K)²·31. Its first 33 non-trivial zeros are
+  computed to height 25 (functional equation self-consistent, ε=+1), and the
+  explicit formula — read as one interference wave per prime ideal — rebuilds the
+  critical line so the independently-computed zeros fall on its fringes, with no
+  zero data used in the reconstruction.
+value: "33 zeros to height 25; t₁ = 3.679; lfuncheckfeq ≈ −126 (log₂)"
+target: "functional-equation self-consistency + Sato–Tate (2nd moment 0.2515 vs 0.25)"
+error: "two independent review passes, both GO; reviewer re-ran all numbers live"
+inputs:
+  - "The icosian (binary-icosahedral) maximal order over Q(√5) — a classical object"
+  - "Brandt eigenvalues certified by two independent algorithms at 664/664 prime ideals to norm 4999"
+  - "Modularity identification with elliptic curve 31.1-a1/Q(√5) (the licence, certified above)"
+  - "PARI/GP lfun machinery for the zero computation (standard, reproducible)"
+falsifier: >
+  Recompute in PARI/GP (out/_curve_zeros.gp) and find a zero off the critical line
+  within the certified height, break the functional-equation self-consistency, or
+  find one Brandt/point-count mismatch among the 664 certified prime ideals.
+script:
+  cwd: release-bundles/closure-positivity-lab
+  cmd: "gp -q out/_curve_zeros.gp   # zeros; python3 run_lab.py for the lab table"
+  deps: PARI/GP (zeros), numpy (lab)
+  evidence: release-bundles/closure-positivity-lab/out/curve_zeros.json
+links:
+  repo: "https://github.com/vfd-org/closure-positivity-lab"
+  local: release-bundles/closure-positivity-lab
+  paper: "papers/closure-diffraction-rh.pdf (reviewed, 2x GO)"
+  external: "https://www.lmfdb.org/EllipticCurve/2.2.5.1/31.1/a/1"
+post_hook: >
+  We built an L-function out of quaternion geometry, computed 33 of its zeros, then
+  rebuilt its critical line from prime waves alone — the zeros landed on the fringes.
+figure_idea: >
+  The diffraction figure from the paper (fig_diffraction.png): prime-wave
+  interference intensity with the 33 independently-computed zeros overlaid on the
+  fringes. The bundle also has anim_diffraction.mp4 for a video post.
+notes: >
+  IMPORTANT scope line for every post: RH(L) here is GRH for ONE cuspidal
+  L-function, NOT classical RH; no proof of either is claimed. Weil margins
+  positive on every finite test but the margin does not stabilize — say so if
+  asked. This is the Wave-4 honest-status artifact; the diffraction visual makes
+  it the most media-friendly claim in the registry.

@@ -1,0 +1,42 @@
+slug: proton-electron-mass-ratio
+priority: 2
+status: verified
+segment: physicists
+title: "Proton–electron mass ratio from the 600-cell spectrum"
+claim: >
+  A parameter-free spectral-geometric expression gives the proton–electron mass ratio
+  as m_p/m_e = φ^(1265/81) ≈ 1835.8 against the measured 1836.15 (0.02%), where the
+  leading exponent component ΔC = 15 is exactly the top eigenvalue of the 600-cell
+  graph Laplacian.
+value: "1835.8"
+target: "1836.15267 (CODATA)"
+error: "0.02%"
+inputs:
+  - "The 600-cell: a single, classical 4D polytope (120 vertices, H4 symmetry)"
+  - "Its graph Laplacian spectrum {0, 9, 12, 14, 15} — exact integers, verifiable by diagonalisation"
+  - "The golden ratio φ as base (forced by H4/icosian structure, not chosen)"
+  - "A stated counting rule for the exponent 1265/81 (the modelling input — see paper)"
+falsifier: >
+  The exponent has no continuous freedom: 1265/81 is fixed by the counting rule and φ
+  is fixed by H4. If the 600-cell Laplacian spectrum is not exactly {0,9,12,14,15},
+  or the counting rule cannot be stated without tuning, the claim dies.
+script:
+  cwd: papers/paper-xxii/scripts
+  cmd: python3 run_600cell_spectral_verification.py
+  deps: numpy, scipy
+  evidence: "spectrum {0,9,12,14,15} confirmed by direct 120x120 diagonalisation; ratio check is closed-form arithmetic"
+links:
+  repo: "https://github.com/vfd-org/vfd-crystallisation"
+  local: papers/paper-xxii/scripts
+  paper: "Paper IV (site entry point: /articles/paper-iv-pemr.html)"
+  external: "https://vibrationalfielddynamics.org/articles/paper-iv-pemr.html"
+post_hook: >
+  The proton–electron mass ratio from one polytope's spectrum: φ^(1265/81) = 1835.8
+  vs measured 1836.15. The exponent's leading term is a 600-cell Laplacian eigenvalue.
+figure_idea: >
+  600-cell vertex graph render + its five-line integer spectrum, with the 15 eigenvalue
+  highlighted feeding into the formula; predicted-vs-measured bar with 0.02% gap.
+notes: >
+  Designated site entry point (canonical result page candidate). Honest framing per
+  the website's own scoping: structural agreement at 10^-4, constrained model not a
+  full theory; the counting rule is the named modelling input.

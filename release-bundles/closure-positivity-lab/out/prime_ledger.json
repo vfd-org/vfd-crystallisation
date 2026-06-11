@@ -1,0 +1,177 @@
+{
+  "work_order": "WO-VFD-PRIME-LEDGER-001",
+  "phase": "A",
+  "x": 50000000,
+  "thesis": "every prime-distribution phenomenon factors as (all-finite-places closure product, decidable) x (zero-correlation interference, the single open wall)",
+  "scope": "layer-1 results are classical (verified, not discovered); layer-2 is open in every conjectural row; nothing here proves RH, GRH, or any infinitude conjecture",
+  "rows": [
+    {
+      "row": 1,
+      "phenomenon": "twin primes (gap 2)",
+      "layer1_classical_source": "Hardy-Littlewood (1923) conjecture B; constant C2",
+      "layer2_wall": "infinitude <-> pair correlation of zeros (explicit formula); unconditional frontier: bounded gaps <= 246",
+      "computed": {
+        "checkpoints": [
+          {
+            "x": 10000000,
+            "counted": 58980,
+            "hl_predicted": 58755.2,
+            "ratio": 1.003826
+          },
+          {
+            "x": 25000000,
+            "counted": 130512,
+            "hl_predicted": 130292.5,
+            "ratio": 1.001685
+          },
+          {
+            "x": 50000000,
+            "counted": 239101,
+            "hl_predicted": 239107.3,
+            "ratio": 0.999973
+          }
+        ],
+        "C2": 0.6601618158468696,
+        "worst_deviation": 0.003826
+      },
+      "gate": "abs(counted/predicted - 1) < 0.005 at every checkpoint",
+      "verdict": "PASS",
+      "falsifier": "Sieve further and find the count drifting from the HL integral; or exhibit a finite place at which the pattern {0,2} is inadmissible."
+    },
+    {
+      "row": 2,
+      "phenomenon": "prime pairs at every even gap (Polignac)",
+      "layer1_classical_source": "Hardy-Littlewood singular series S(h)",
+      "layer2_wall": "infinitude for any fixed h open; same zero-pair-correlation wall as row 1",
+      "computed": {
+        "x": 50000000,
+        "gaps": [
+          {
+            "gap": 2,
+            "pairs": 239101,
+            "ratio_vs_twins": 1.0,
+            "local_product": 1.0,
+            "deviation": 0.0
+          },
+          {
+            "gap": 4,
+            "pairs": 238611,
+            "ratio_vs_twins": 0.998,
+            "local_product": 1.0,
+            "deviation": 0.002
+          },
+          {
+            "gap": 6,
+            "pairs": 477012,
+            "ratio_vs_twins": 1.995,
+            "local_product": 2.0,
+            "deviation": 0.0025
+          },
+          {
+            "gap": 8,
+            "pairs": 238761,
+            "ratio_vs_twins": 0.9986,
+            "local_product": 1.0,
+            "deviation": 0.0014
+          },
+          {
+            "gap": 10,
+            "pairs": 318437,
+            "ratio_vs_twins": 1.3318,
+            "local_product": 1.3333,
+            "deviation": 0.0011
+          },
+          {
+            "gap": 12,
+            "pairs": 478092,
+            "ratio_vs_twins": 1.9995,
+            "local_product": 2.0,
+            "deviation": 0.0002
+          },
+          {
+            "gap": 30,
+            "pairs": 636808,
+            "ratio_vs_twins": 2.6633,
+            "local_product": 2.6667,
+            "deviation": 0.0012
+          },
+          {
+            "gap": 210,
+            "pairs": 764983,
+            "ratio_vs_twins": 3.1994,
+            "local_product": 3.2,
+            "deviation": 0.0002
+          }
+        ],
+        "worst_deviation": 0.0025
+      },
+      "gate": "every gap ratio within 2% of its all-places local product",
+      "verdict": "PASS",
+      "falsifier": "Find an even gap whose abundance ratio is NOT the product of (p-1)/(p-2) over odd primes dividing it."
+    },
+    {
+      "row": 4,
+      "phenomenon": "primes in arithmetic progressions",
+      "layer1_classical_source": "THEOREM: Dirichlet (1837); PNT in APs (de la Vallee Poussin)",
+      "layer2_wall": "error term: square-root cancellation = GRH for Dirichlet L-functions",
+      "computed": {
+        "x": 50000000,
+        "moduli": [
+          {
+            "q": 4,
+            "class_counts": {
+              "1": 1500452,
+              "3": 1500680
+            },
+            "inadmissible_class_primes": 0,
+            "max_deviation_from_equidistribution": 8e-05
+          },
+          {
+            "q": 5,
+            "class_counts": {
+              "1": 750340,
+              "2": 750394,
+              "3": 750394,
+              "4": 750003
+            },
+            "inadmissible_class_primes": 0,
+            "max_deviation_from_equidistribution": 0.00037
+          },
+          {
+            "q": 12,
+            "class_counts": {
+              "1": 750094,
+              "5": 750357,
+              "7": 750385,
+              "11": 750293
+            },
+            "inadmissible_class_primes": 0,
+            "max_deviation_from_equidistribution": 0.00025
+          }
+        ],
+        "worst_deviation": 0.00037
+      },
+      "gate": "inadmissible classes empty above q; admissible classes within 1% of equidistribution",
+      "verdict": "PASS",
+      "falsifier": "Find a prime > q in a residue class not coprime to q, or persistent skew between admissible classes (beyond Chebyshev-bias scale, row 5)."
+    },
+    {
+      "row": 6,
+      "phenomenon": "splitting of primes in Q(sqrt 5) (the programme's base field)",
+      "layer1_classical_source": "THEOREM: quadratic reciprocity / Chebotarev density",
+      "layer2_wall": "error term = zeros of zeta_K / L(s, chi_5)",
+      "computed": {
+        "x": 50000000,
+        "split": 1500343,
+        "inert": 1500788,
+        "split_fraction": 0.49993,
+        "twin_pairs_with_p_eq_3_mod_5": 1,
+        "note": "Brandt prime ideals in provenance_664.json lie over these primes"
+      },
+      "gate": "split fraction within 1% of 1/2; exactly one twin pair with p = 3 mod 5 (namely (3,5))",
+      "verdict": "PASS",
+      "falsifier": "Find a prime p = +-2 mod 5 that splits (or +-1 that does not), or a second twin pair with p = 3 mod 5."
+    }
+  ],
+  "runtime_seconds": 2.0
+}
