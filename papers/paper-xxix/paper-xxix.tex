@@ -21,6 +21,7 @@
 \newcommand{\Fcal}{\mathcal{F}}
 \newcommand{\Ocal}{\mathcal{O}}
 \newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
 
 \title{Observer as Constraint:\\[6pt]
 \large A Field-Theoretic Placement Across Quantum and Relativistic Regimes}
@@ -41,7 +42,9 @@
 \begin{abstract}
 The observer occupies an unresolved position in both quantum mechanics and general relativity. In quantum mechanics, definite outcomes are registered relative to measurement interactions, but the observer is not internally defined within the formalism. In general relativity, physical description is frame-relative, while the observer is typically represented only in idealised kinematic terms. This paper proposes a field-theoretic placement of the observer within the VFD event-order framework.
 
-An observer is defined as a bounded, dynamically stable, self-referential substructure within the event set, characterised by a constraint functional $\Ccal_\Ocal$ that enforces internal coherence. The observer constrains the set of admissible field configurations: measurement corresponds to constraint-induced stabilisation, not external collapse. Relativistic frame dependence corresponds to the observer's embedding within the event partial order. Both roles --- quantum state selection and relativistic frame specification --- are unified as aspects of a single constraint-placement mechanism.
+An observer is defined as a bounded, dynamically stable, self-referential substructure within the event set, characterised by a constraint functional $\Ccal_\Ocal$ that enforces internal coherence. The observer constrains the set of admissible field configurations: measurement is proposed to be modelled as constraint-induced restriction of the admissible set, not external collapse. Relativistic frame dependence is proposed to correspond to the observer's embedding within the event partial order, conditional on a to-be-supplied construction of Paper~XXIV's $(\leq_O, \mu_O)$ from the observer's structural data. Both roles are \emph{proposed to be treated} as aspects of a single constraint-placement mechanism; a common derivation is not supplied.
+
+A specific measurement-adapted variant --- the \emph{localised probe observer} --- is characterised by a probe decomposition of its coherence constraint, one basin-local probe functional per distinguishable outcome. The variant \emph{modifies} (rather than restricts) Definition~\ref{def:observer}'s connectedness and strict-Hessian stability conditions; it is a variant class, not a subclass, of the general observer definition. Observers in this variant satisfy a basin-wise admissibility coincidence property (local measurement consistency, LMC): two probe observers that both admit a given basin $B_\phi$ assign identical (vanishing) coherence cost to configurations in $B_\phi$, and therefore the observer-admissible subset of $B_\phi$ is the same for both. LMC is definitional by design: Definition~\ref{def:probe} fixes a restrictive class of observers precisely so that this property holds. Paper~XXX's downstream Born-rule argument uses LMC together with a separate completeness hypothesis to derive non-contextuality of the \emph{normalised} sector probability; LMC by itself gives only numerator coincidence, not full probability-assignment equality.
 
 The paper connects this placement to the crystallisation dynamics (selection as constraint satisfaction) and to the GR programme (observer as linear extension with sampling measure). A brief section addresses implications for the locus of conscious experience within the framework, without claiming a full theory of consciousness.
 
@@ -65,12 +68,12 @@ The observer problem appears in three guises:
 \subsection*{Central proposal}
 
 \begin{quote}
-The observer is not external to the system and not an undefined primitive. It is a stable, self-referential, coherence-preserving substructure within the event-order geometry that imposes constraints on admissible configurations.
+The observer is not external to the system and not an undefined primitive. It is a stable, self-referential, locally coherence-stable substructure within the event-order geometry that imposes constraints on admissible configurations.
 \end{quote}
 
 \subsection*{Scope}
 
-This paper defines the observer as a constraint structure, shows how this placement recovers quantum measurement and relativistic frame dependence, and connects to the crystallisation dynamics. A brief section addresses the locus of conscious experience. The paper does not derive a complete measurement theory, a theory of consciousness, or new experimental predictions. It is a placement paper: it identifies where the observer sits and what structural role it plays.
+This paper defines the observer as a constraint structure and proposes a structural mapping from this placement to quantum measurement (via admissibility restriction) and to relativistic frame dependence (via event-order embedding, conditional on a to-be-supplied bridge to Paper~XXIV's $(\leq_O, \mu_O)$), and connects to the crystallisation formalism. A brief section addresses the locus of conscious experience. The paper does not derive a complete measurement theory, a theory of consciousness, or new experimental predictions. It is a placement paper: it identifies where the observer sits and what structural role it plays.
 
 %==================================================================
 \section{Limits of Formal Closure}\label{sec:godel}
@@ -113,32 +116,38 @@ Paper~XXIV~\citep{SmartXXIV} defined an observer on the event poset $(\Ecal, \pr
 
 The present paper extends that definition.
 
+\subsection{Standing hypothesis}\label{subsec:standing}
+
+\begin{quote}
+\textbf{Standing finiteness and smoothness hypothesis.} Throughout Sections~\ref{sec:definition}--\ref{sec:toy}, $\Ecal$ is assumed to be a \emph{finite} event set and the configuration space is $\mathbb{R}^\Ecal$ (finite-dimensional). All coherence and closure functionals ($\Ccal_\Ocal$, $c_{\phi_j}$, and $\Fcal$) are assumed $C^2$ on $\mathbb{R}^\Ecal$ (or on the relevant product $\mathbb{R}^O \times \mathbb{R}^{\partial_\Ocal}$, extended to $\mathbb{R}^\Ecal$ by its local restriction) unless explicitly stated otherwise; this gives meaning to gradients $\nabla$, Hessians $\mathrm{Hess}$, strict local minima, and gradient flows used below. Morse-Smale-type hypotheses are invoked explicitly where needed (Remark~\ref{rem:partition}). Extensions to infinite-dimensional event sets or configuration spaces (e.g., continuum or countable-infinite $\Ecal$) are outside the scope of this paper and would require a separate infinite-dimensional treatment (direct method, weak-compactness, weak-lower-semicontinuity; see Paper~XXVIII~\citep{SmartXXVIII} for a related discussion in the crystallisation context).
+\end{quote}
+
 \subsection{Structural definition}
 
 \begin{definition}[Observer region]\label{def:observer_region}
-An \textit{observer region} is a connected subgraph $\Ocal \subset \Gcal$ of the transition graph, together with a constraint functional $\Ccal_\Ocal: \mathbb{R}^\Ecal \to \mathbb{R}_{\geq 0}$ that measures the internal coherence of field configurations restricted to $\Ocal$.
+An \textit{observer region} is a non-empty vertex set $O \subseteq \Ecal$ whose induced subgraph $\Ocal = \Gcal[O]$ on the transition graph $\Gcal$ is connected, together with a constraint functional $\Ccal_\Ocal: \mathbb{R}^\Ecal \to \mathbb{R}_{\geq 0}$ that measures the internal coherence of field configurations restricted to $O$. We use the symbol $\Ocal$ for either the vertex set or its induced subgraph depending on context; when the distinction matters we write $O$ (vertex set) and $\Ocal = \Gcal[O]$ (induced subgraph) explicitly. The \emph{boundary} of $O$ in $\Gcal$ is $\partial_\Ocal = \{e' \in \Ecal \setminus O : (e, e') \in E(\Gcal)\text{ for some } e \in O\}$, and $\partial_\Ocal \Phi = (\Phi(e'))_{e' \in \partial_\Ocal}$ denotes the field values at boundary events. The same notation is used for probe subregions $O_{\phi_j}$ below.
 \end{definition}
 
 \begin{definition}[Observer]\label{def:observer}
 An \textit{observer} is an observer region $(\Ocal, \Ccal_\Ocal)$ satisfying:
 \begin{enumerate}
     \item \textbf{Boundedness.} $\Ocal$ is a proper subgraph of $\Gcal$: $\Ocal \subsetneq \Gcal$.
-    \item \textbf{Stability.} The constraint functional is at a local minimum:
+    \item \textbf{Stability.} The constraint functional is at a strict local minimum in the sense of classical finite-dimensional calculus of variations:
     \begin{equation}\label{eq:stability}
-        \delta \Ccal_\Ocal[\Phi]\big|_{\Phi = \Phi_0} = 0, \qquad \delta^2 \Ccal_\Ocal[\Phi]\big|_{\Phi = \Phi_0} > 0
+        \nabla_O \Ccal_\Ocal(\Phi_0) = 0, \qquad \mathrm{Hess}_O\, \Ccal_\Ocal(\Phi_0) \succ 0
     \end{equation}
-    for the ambient field configuration $\Phi_0$. The first condition is stationarity; the second ensures genuine stability (the observer region lies in a basin of attraction, not at a saddle point).
+    for the ambient field configuration $\Phi_0 \in \mathbb{R}^\Ecal$, where $\nabla_O$ and $\mathrm{Hess}_O$ denote the gradient and Hessian of $\Ccal_\Ocal$ at $\Phi_0$ taken with respect to the internal $O$-coordinates $(\Phi(e))_{e \in O}$ only, with boundary values $(\Phi(e'))_{e' \in \partial_\Ocal}$ held fixed; positive-definiteness is asserted of the $|O| \times |O|$ restricted Hessian. The first condition is stationarity; the second ensures a strict local minimum (the observer region lies in an internal fixed-boundary basin of attraction of $\Ccal_\Ocal$, not at a saddle point).
     \item \textbf{Self-reference with boundary coupling.} The constraint functional $\Ccal_\Ocal$ depends primarily on the restriction of the field to $\Ocal$, with secondary dependence on the boundary:
     \begin{equation}\label{eq:selfref}
         \Ccal_\Ocal[\Phi] = \Ccal_\Ocal\!\bigl(\Phi|_\Ocal,\; \partial_\Ocal \Phi\bigr)
     \end{equation}
     where $\partial_\Ocal \Phi$ denotes the field values at the boundary of $\Ocal$ (the neighbouring events in $\Gcal$). The observer's coherence is determined primarily by its own internal state, with environmental coupling entering through the boundary.
-    \item \textbf{Persistence.} The observer region $\Ocal$ is stable under the event-order dynamics: it persists as a connected, coherent substructure across successive events in the partial order.
+    \item \textbf{Persistence.} The observer region $\Ocal$ is stable under the event-order dynamics: it persists as a connected, coherent substructure across successive events in the partial order. ``Persistence'' is used here as an \emph{assumed qualitative condition}: no formal event-dynamics predicate is supplied in this paper, and no identification is made with any specific dynamical model (gradient flow on $\Fcal$, cascade dynamics, etc.). Making persistence formal would require specifying an event-dynamics relation and is an identified open programme step.
 \end{enumerate}
 \end{definition}
 
-\begin{remark}[Relation to Paper~XXIV]
-The Paper~XXIV observer $(\leq_O, \mu_O)$ specifies the observer's \textit{epistemic access}: what ordering and weighting it assigns to events. The present definition specifies the observer's \textit{physical substrate}: what it is as a substructure within the event-order geometry. The two are compatible: an observer region $\Ocal$ that satisfies Definition~\ref{def:observer} naturally induces a linear extension (the ordering of events as encountered by $\Ocal$) and a sampling measure (the duration weight determined by the local constraint structure).
+\begin{remark}[Relation to Paper~XXIV]\label{rem:xxiv_bridge}
+The Paper~XXIV observer $(\leq_O, \mu_O)$ specifies the observer's \textit{epistemic access}: what ordering and weighting it assigns to events. The present definition specifies the observer's \textit{physical substrate}: what it is as a substructure within the event-order geometry. The two levels are \emph{intended to be compatible}, but Paper~XXIV's observer pair is \emph{not} derived from $(\Ocal, \Ccal_\Ocal)$ in this paper: a construction of $\leq_O$ and $\mu_O$ from the structural data $(\Ocal, \Ccal_\Ocal)$ (for example: $\leq_O$ as a linear extension induced by the event-order accessibility relation on $\Ocal$, and $\mu_O$ as a duration weight read off from the local constraint structure) is an identified open programme step, not established here. All statements of the form ``$\Ocal$ induces $(\leq_O, \mu_O)$'' in this paper are placement-level intentions conditional on such a construction being supplied; nothing in this paper constitutes that construction.
 \end{remark}
 
 \subsection{Functional properties}
@@ -146,8 +155,8 @@ The Paper~XXIV observer $(\leq_O, \mu_O)$ specifies the observer's \textit{epist
 An observer as defined above has the following structural properties:
 
 \begin{itemize}
-    \item \textbf{Coherence preservation.} The stability condition~\eqref{eq:stability} ensures that the observer maintains internal consistency. Small perturbations do not destroy the observer structure.
-    \item \textbf{Internal state coupling.} The self-reference condition~\eqref{eq:selfref} means the observer's coherence depends primarily on its own configuration. This is the structural basis for locality of experience.
+    \item \textbf{Local coherence stability.} The stability condition~\eqref{eq:stability} gives local coherence stability against sufficiently small perturbations in the specified coordinates (Hessian positivity at $\Phi_0$); it does not by itself guarantee stability against arbitrary or finite perturbations.
+    \item \textbf{Internal state coupling.} The self-reference condition~\eqref{eq:selfref} means the observer's coherence depends primarily on its own configuration. This is proposed as a structural input to a locality-of-experience proposal, not a derivation of it.
     \item \textbf{Sensitivity to external configuration.} The boundary term $\partial_\Ocal \Phi$ in~\eqref{eq:selfref} means the observer is sensitive to its environment through the boundary conditions imposed by the ambient field, without being globally determined.
     \item \textbf{Persistence.} The observer is not an instantaneous structure. It persists across the event ordering, maintaining coherence through successive events.
 \end{itemize}
@@ -159,34 +168,185 @@ An observer as defined above has the following structural properties:
 The central structural role of the observer is to constrain the set of admissible field configurations.
 
 \begin{definition}[Observer-admissible configurations]\label{def:admissible}
-Given an observer $(\Ocal, \Ccal_\Ocal)$, the set of \textit{observer-admissible configurations} is:
+Given any constraint-observer pair $(\Ocal, \Ccal_\Ocal)$ --- i.e., either (A) an observer region in the sense of Definition~\ref{def:observer_region} (non-empty vertex set $O \subseteq \Ecal$ with connected induced subgraph and coherence functional $\Ccal_\Ocal$), or (B) a finite disjoint union $\Ocal = O_{\phi_1} \sqcup \cdots \sqcup O_{\phi_k}$ of probe subregions in the sense of Definition~\ref{def:probe} with the additive coherence functional $\Ccal_\Ocal = \sum_j c_{\phi_j}$ --- the set of \textit{observer-admissible configurations} is:
 \begin{equation}\label{eq:admissible}
     \Phi_{\mathrm{adm}}(\Ocal) = \bigl\{\, \Phi \in \mathbb{R}^\Ecal \;\big|\; \Ccal_\Ocal\!\bigl(\Phi|_\Ocal,\, \partial_\Ocal \Phi\bigr) \leq \epsilon \,\bigr\}
 \end{equation}
-where $\epsilon > 0$ is a coherence threshold.
+where $\epsilon > 0$ is a coherence threshold. Throughout this paper, whenever $\Phi_{\mathrm{adm}}(\Ocal)$ is used for a localised probe observer, this broadened definition is the one in force.
 \end{definition}
 
 The observer does not select a configuration arbitrarily. It \textit{constrains} the space of configurations to those compatible with its own internal coherence. Configurations that would destabilise the observer ($\Ccal_\Ocal > \epsilon$) are excluded from the admissible set.
 
 \begin{remark}[Not external selection]
-The observer is not an agent that reaches into the system and picks an outcome. It is a substructure whose existence imposes a boundary condition: only configurations compatible with the observer's coherence are dynamically accessible. This is constraint, not choice.
+The observer is not an agent that reaches into the system and picks an outcome. It is a substructure whose existence imposes a coherence sublevel constraint: only configurations compatible with the observer's coherence sublevel $\{\Ccal_\Ocal \leq \epsilon\}$ are admissible in the constraint-filter sense of Definition~\ref{def:admissible}. Whether inadmissibility corresponds to dynamical inaccessibility requires dynamics on the combined system not supplied here. This is constraint, not choice.
 \end{remark}
 
 \begin{remark}[Constraint restricts multiplicity]\label{rem:restriction}
-If the unconstrained configuration space has $N$ locally stable configurations (local minima of $\Fcal$), the observer-admissible set $\Phi_{\mathrm{adm}}(\Ocal)$ will generically contain fewer than $N$ configurations, since the additional constraint $\Ccal_\Ocal \leq \epsilon$ need not be satisfied at all minima of $\Fcal$. The observer reduces multiplicity by excluding configurations incompatible with its coherence. A precise statement requires transversality or non-degeneracy assumptions on the joint level sets of $\Fcal$ and $\Ccal_\Ocal$.
+If the unconstrained configuration space has $N$ locally stable configurations (local minima of $\Fcal$), the observer-admissible set $\Phi_{\mathrm{adm}}(\Ocal)$ may contain fewer than $N$ configurations, since the additional constraint $\Ccal_\Ocal \leq \epsilon$ need not be satisfied at all minima of $\Fcal$. The observer reduces multiplicity by excluding configurations incompatible with its coherence. A precise statement requires transversality or non-degeneracy assumptions on the joint level sets of $\Fcal$ and $\Ccal_\Ocal$.
 \end{remark}
 
 %==================================================================
-\section{Recovery of Quantum Measurement}\label{sec:quantum}
+\section{Localised Probe Observers}\label{sec:localised}
 %==================================================================
 
-The quantum measurement problem asks: how does a system in superposition resolve to a definite outcome upon measurement? Within the present framework, the answer is structural.
+\begin{remark}[Addendum status]\label{rem:addendum_localised}
+This section was added in a subsequent revision to formalise a measurement-adapted variant of observer used by Paper~XXX. Definitions~\ref{def:observer_region} and~\ref{def:observer} remain the general definitions of observer. The present section introduces a \emph{measurement-adapted variant} --- the \emph{localised probe observer} --- which \emph{modifies} (rather than restricts) Definition~\ref{def:observer}'s connectedness and strict-local-minimum stability conditions, and establishes a local measurement consistency property that the downstream Born-rule derivation of Paper~XXX invokes. Because the probe definition modifies the general definition (relaxing connectedness and replacing strict-Hessian stability of $\Ccal_\Ocal$ by basin-based stability of $\Fcal$), the probe class is \emph{not} a subclass of the general observer class in the strict type-theoretic sense; the relation is that of a variant class satisfying related but not uniformly stronger conditions. The general observer framework of Sections~\ref{sec:definition}--\ref{sec:constraint} is unchanged.
+\end{remark}
+
+Definition~\ref{def:observer} admits a very broad class of observers: any bounded, stable, self-referential constraint substructure qualifies. Physical measurement apparatuses, however, typically have a more specific structure. They couple to the measured field through a finite number of \emph{independent channels}, each channel locally coupled to the closure basin associated with a distinguishable outcome. This section formalises that structure as a \emph{measurement-adapted variant} of the general observer definition (not a subclass of it; see Remark~\ref{rem:addendum_localised}) and establishes a consistency property --- local measurement consistency (LMC) --- that follows from it.
+
+\subsection{Closure basins}\label{subsec:basins}
+
+Before defining the variant we record the basin structure on which it relies.
+
+\begin{definition}[Closure basin]\label{def:basin}
+Let $\Fcal: \mathbb{R}^\Ecal \to \mathbb{R}_{\geq 0}$ be a closure functional with a non-degenerate local minimum at $\phi \in \mathbb{R}^\Ecal$. The \emph{closure basin of $\phi$} is
+\begin{equation}\label{eq:basin}
+    B_\phi \;=\; \bigl\{\, \Phi_0 \in \mathbb{R}^\Ecal \;\big|\; \text{the gradient flow }\Gamma_{\Phi_0}(t)\text{ defined by }\dot\Gamma = -\nabla\Fcal(\Gamma),\ \Gamma(0) = \Phi_0,\ \text{satisfies }\lim_{t\to\infty} \Gamma_{\Phi_0}(t) = \phi \,\bigr\}.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Basin locality]\label{lem:basin_locality}
+For fixed $\Fcal$, the basin $B_\phi$ is determined by the pair $(\Fcal, \phi)$ alone: the definition (\ref{eq:basin}) does not reference any other minimum of $\Fcal$. (This is a definition-level statement for a fixed closure functional; it does not assert invariance of $B_\phi$ under changes to $\Fcal$ elsewhere in the landscape.)
+\end{lemma}
+
+\begin{proof}
+For fixed $\Fcal$, the gradient flow ODE $\dot\Gamma = -\nabla\Fcal(\Gamma)$ involves only $\Fcal$. Membership of $\Phi_0$ in $B_\phi$ is decided by evaluating the flow $\Gamma_{\Phi_0}$'s long-time limit and testing equality with $\phi$. Neither the flow equation nor the convergence test references any other minimum of $\Fcal$.
+\end{proof}
+
+\begin{remark}[Basin partition]\label{rem:partition}
+Under Morse-Smale hypotheses on $\Fcal$ (finite-dimensionality of the relevant configuration space, all critical points of $\Fcal$ non-degenerate and hyperbolic under the gradient flow, no escape to infinity under gradient descent, and transversality of stable and unstable manifolds), the basins $B_{\phi_i}$ associated with the locally stable minima $\phi_1, \ldots, \phi_N$ partition a full-measure subset of $\mathbb{R}^\Ecal$ (the complement consists of configurations on the stable manifolds of saddle points, a measure-zero set). The basin partition is an intrinsic feature of $\Fcal$, independent of any observer. None of these Morse-Smale hypotheses are verified for closure functionals arising from the 600-cell construction; they are imported as standard background.
+\end{remark}
+
+\subsection{Probe subregions and additive decomposition}\label{subsec:probe}
+
+\begin{definition}[Localised probe observer (measurement-adapted variant)]\label{def:probe}
+A pair $(\Ocal, \Ccal_\Ocal)$ is a \emph{localised probe observer distinguishing} the basins $\{B_{\phi_1}, \ldots, B_{\phi_k}\}$ (with $k \geq 1$) if it satisfies the self-reference and persistence conditions of Definition~\ref{def:observer} (with persistence applied componentwise, below), together with two modifications of Definition~\ref{def:observer}: (i) the connectedness condition on the observer region is relaxed to allow $\Ocal$ to be a finite disjoint union of connected components (each component satisfying persistence independently), and (ii) the strict-local-minimum form of the stability condition (\ref{eq:stability}) is replaced by a \emph{basin-based stability condition}: each admitted basin $B_{\phi_i}$ is a stable basin of the closure functional $\Fcal$ (each $\phi_i$ satisfies $\nabla\Fcal(\phi_i) = 0$ and $\mathrm{Hess}\, \Fcal(\phi_i) \succ 0$ as a function of the full field coordinates $\Phi \in \mathbb{R}^\Ecal$; this is distinct from the observer-region-restricted Hessian of equation~(\ref{eq:stability}) and concerns $\Fcal$'s landscape on the full configuration space). Modification (ii) is needed because condition~(3) below requires $\Ccal_\Ocal$ to vanish on open neighbourhoods of the $\phi_i$ inside the admitted basins, which is incompatible with a strict positive-definite Hessian of $\Ccal_\Ocal$ at those points; stability for probe observers is therefore carried by $\Fcal$'s basin structure, not by $\Ccal_\Ocal$'s own Hessian. Specifically:
+\begin{enumerate}
+    \item \textbf{Probe decomposition.} The observer region $\Ocal$ is a disjoint union of \emph{probe subregions} $O_{\phi_j} \subset \Ecal$, one per distinguishable basin, with each $O_{\phi_j} \subsetneq \Ecal$ proper (the boundedness clause of Definition~\ref{def:observer} is retained componentwise):
+    \begin{equation}
+        \Ocal \;=\; O_{\phi_1} \sqcup \cdots \sqcup O_{\phi_k},
+    \end{equation}
+    where each $O_{\phi_j}$ is a connected subset of the event set $\Ecal$ (equivalently, a connected induced subgraph of $\Gcal$ when $\Ocal$ is regarded through its induced subgraph structure). For $k = 1$ the region-connectedness matches a single connected observer region in the sense of Definition~\ref{def:observer} (though the stability condition is still modified by~(ii) above, so the $k=1$ case is not a Definition~\ref{def:observer} observer either); for $k > 1$ the observer region is disconnected as a whole but each component is connected. This extension is consistent with the physical reading of multiple-channel measurement apparatuses, whose probe subregions are spatially separated by construction.
+    \item \textbf{Additive constraint.} The coherence constraint is a sum of independent probe functionals, one per probe subregion:
+    \begin{equation}\label{eq:additive}
+        \Ccal_\Ocal\!\bigl(\Phi|_\Ocal,\, \partial_\Ocal \Phi\bigr)
+        \;=\; \sum_{j=1}^{k} c_{\phi_j}\!\bigl(\Phi|_{O_{\phi_j}},\, \partial_{O_{\phi_j}}\Phi\bigr),
+    \end{equation}
+    where each \emph{probe functional} $c_{\phi_j}: \mathbb{R}^{O_{\phi_j}} \times \mathbb{R}^{\partial_{O_{\phi_j}}} \to \mathbb{R}_{\geq 0}$ depends only on $\Phi$ restricted to $O_{\phi_j}$ and its boundary $\partial_{O_{\phi_j}}$ (defined in the sense of Definition~\ref{def:observer_region}).
+    \item \textbf{Basin coherence (vanishing on all admissible basins).} Each $c_{\phi_j}$ vanishes whenever the global configuration $\Phi$ lies in any basin $B_{\phi_i}$ that the observer admits:
+    \begin{equation}\label{eq:silence}
+        \Phi \in B_{\phi_i} \text{ for any } i \in \{1, \ldots, k\} \quad\Longrightarrow\quad c_{\phi_j}\!\bigl(\Phi|_{O_{\phi_j}},\, \partial_{O_{\phi_j}}\Phi\bigr) = 0.
+    \end{equation}
+    In particular, this covers both the case $i = j$ (the probe's own target, yielding a ``coherent matching'' reading) and $i \neq j$ (other admissible basins, yielding a ``null'' reading). The probe functional is \emph{allowed to be} strictly positive only when $\Phi$ lies outside $\bigcup_i B_{\phi_i}$, i.e., on incoherent configurations not in any admissible basin; the definition guarantees vanishing on admitted basins but does not force positivity elsewhere.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Physical interpretation]\label{rem:probe_interp}
+Condition~(1) says the apparatus has distinct detection channels, one per outcome; ``distinguishing'' here is a structural labelling on the probe subregions, not an operational outcome readout (the readout is the external classical side channel of Remark~\ref{rem:probe_feasibility}). Condition~(2) says overall coherence is the sum of independent-channel coherence tests, as for a standard detector array. Condition~(3) stipulates the behaviour of an idealised detector array under an off-basin-silence assumption: each probe channel reads ``coherent'' (exactly zero coherence cost, not merely small) whenever the global configuration is in \emph{any} admitted basin --- whether the system registered this channel's outcome (in $B_{\phi_j}$) or another channel's outcome (in $B_{\phi_i}$, $i \neq j$, with the $j$-th probe sitting idle). The probe functional is strictly positive only when the field lies outside every admitted basin. The ``distinguishing'' between outcomes happens at the level of which internal probe readings are ``matched'' versus ``idle'', not through the value of the coherence cost $c_{\phi_j}$ (which is zero in both cases). This \emph{models} an idealised detector array under an off-basin-silence assumption (all channels of a well-functioning device report zero local incoherence when the system is in any of its admissible definite outcomes); it is a modelling stipulation, not a claim derived from measurement physics. The self-reference condition~\eqref{eq:selfref} of Definition~\ref{def:observer} is satisfied automatically: each $c_{\phi_j}$ depends only on $\Phi|_{O_{\phi_j}}$ and $\partial_{O_{\phi_j}}\Phi$.
+\end{remark}
+
+\begin{remark}[Probe observers vs general observers]\label{rem:scope_probe}
+Definition~\ref{def:probe} is a \emph{measurement-adapted variant} of Definition~\ref{def:observer}, not a subclass of it: it adds the probe-decomposition and basin-coherence conditions on $\Ccal_\Ocal$ and simultaneously relaxes connectedness and the strict-Hessian stability condition (see Remark~\ref{rem:addendum_localised}). A general observer in the sense of Definition~\ref{def:observer} could, in principle, have a constraint functional that does not decompose additively --- for instance, a ``holistic'' observer whose coherence involves correlations across basins. Such general observers are admitted by Definition~\ref{def:observer} but are not probe observers. Some measurement apparatuses constructed from independent local couplings are plausibly modellable as localised probe observers; whether this variant covers all physical measurement scenarios is not established here and is identified as a future programme step.
+\end{remark}
+
+\begin{remark}[Feasibility of Definition~\ref{def:probe}]\label{rem:probe_feasibility}
+Condition~(3) (basin coherence) is a non-trivial feasibility requirement on the pair $(O_{\phi_j}, c_{\phi_j})$: the probe functional $c_{\phi_j}$ must depend only on the local data $(\Phi|_{O_{\phi_j}}, \partial_{O_{\phi_j}}\Phi)$ and yet vanish on $B_{\phi_i}$ for every admissible basin $i$, which is a global property of $\Fcal$. This is not automatic: a compatible pair exists only if basin membership on the admitted basins is recoverable from local data on $O_{\phi_j}$ (for instance, if each admitted basin admits a locally witnessing condition such as a prescribed neighbour-mean or near-neighbour phase relation on $O_{\phi_j}$). A full basin-level instance of Definition~\ref{def:probe} (one in which $c_{\phi_j}$ is verified to vanish on an entire basin $B_{\phi_i}$, not merely at a single configuration) is not supplied in this paper; the minimal toy model of Section~\ref{sec:toy} gives only a pointwise feasibility check at the basin centre $\Phi_A$. Non-emptiness of the probe-observer class at the full basin-level (for any closure functional of programme interest) is therefore an identified open feasibility question, not established here. Whether $\Fcal$ from the 600-cell construction admits a full $k$-probe decomposition covering each of $N$ global minima is an identified open programme step.
+
+Condition~(3) moreover conflates two distinct notions that a standard detector separates: (i) \emph{zero coherence cost} on any admitted basin ($c_{\phi_j} = 0$ for $\Phi \in B_{\phi_i}$, $i = 1, \ldots, k$), and (ii) an \emph{outcome readout} that distinguishes ``the $j$-th probe matched'' (system in $B_{\phi_j}$) from ``the $j$-th probe sat idle'' (system in $B_{\phi_i}$, $i \neq j$). This paper formalises only (i); the readout map $r_j(\Phi) \in \{\text{matched}, \text{idle}\}$ needed for (ii) is left as an external classical side channel and is not part of the coherence-cost functional. Paper~XXX's downstream Born-rule argument uses only (i).
+\end{remark}
+
+\subsection{Local measurement consistency}\label{subsec:lmc}
+
+The three conditions of Definition~\ref{def:probe} imply that any two probe observers admitting a shared basin assign identical (in fact, vanishing) coherence cost to configurations in that basin. This is the content of local measurement consistency.
+
+\begin{theorem}[Local measurement consistency, LMC]\label{thm:lmc}
+Let $\Ocal$ and $\Ocal'$ be two localised probe observers in the sense of Definition~\ref{def:probe}, and suppose both observers admit the basin $B_\phi$ as one of the distinguishable outcomes of their respective probe decompositions. Then for every configuration $\Phi \in B_\phi$,
+\begin{equation}\label{eq:lmc}
+    \Ccal_\Ocal\!\bigl(\Phi|_\Ocal,\, \partial_\Ocal \Phi\bigr)
+    \;=\; 0
+    \;=\; \Ccal_{\Ocal'}\!\bigl(\Phi|_{\Ocal'},\, \partial_{\Ocal'} \Phi\bigr).
+\end{equation}
+In particular, the observer-admissible subset of $B_\phi$ (configurations in $B_\phi$ satisfying $\Ccal \leq \epsilon$) is all of $B_\phi$ for both observers, and therefore coincides.
+\end{theorem}
+
+\begin{proof}
+By condition~(2) of Definition~\ref{def:probe},
+\begin{equation}
+    \Ccal_\Ocal\!\bigl(\Phi|_\Ocal, \partial_\Ocal \Phi\bigr)
+    \;=\; \sum_{j} c_{\phi_j}\!\bigl(\Phi|_{O_{\phi_j}}, \partial_{O_{\phi_j}}\Phi\bigr),
+\end{equation}
+summed over the distinguishable outcomes of $\Ocal$. For every $j$, condition~(3) of Definition~\ref{def:probe} (basin coherence) applied to $\Phi \in B_\phi$ gives $c_{\phi_j} = 0$, since $B_\phi$ is one of the admissible basins of $\Ocal$ by hypothesis. Therefore $\Ccal_\Ocal(\Phi) = 0$. The identical argument applied to $\Ocal'$ yields $\Ccal_{\Ocal'}(\Phi) = 0$, since $B_\phi$ is also an admissible basin of $\Ocal'$ by hypothesis. Equation~\eqref{eq:lmc} follows.
+\end{proof}
+
+\begin{remark}[LMC is definitional by design]\label{rem:lmc_definitional}
+Theorem~\ref{thm:lmc} is an immediate consequence of condition~(3) of Definition~\ref{def:probe}. The theorem is not meant as a deep result independent of the definition; rather, Definition~\ref{def:probe} is \emph{designed} so that LMC holds, by stipulating the class of observers for which coherence cost vanishes on any admissible basin. The content worth stressing is twofold: (a) the localised-probe-observer variant is a physically motivated idealised class (modelled on the standard idealisation of measurement apparatuses built from independent local couplings), with full basin-level non-emptiness identified as an open feasibility question (Remark~\ref{rem:probe_feasibility}), and (b) observers outside this class --- holistic, non-decomposable, or with non-coherent basin readings --- are not covered by LMC and may fail observer-admissibility coincidence on shared basins. Paper~XXX uses LMC together with a separate completeness condition to derive non-contextuality of sector probability (in restricted form) from basin locality; that derivation's substance lies in assembling the pieces, not in Theorem~\ref{thm:lmc} alone.
+\end{remark}
+
+\begin{corollary}[Basin-admissibility is context-independent]\label{cor:basin_admissible}
+Under the hypotheses of Theorem~\ref{thm:lmc}, the admissible subset of $B_\phi$ is the same for both observers:
+\begin{equation}
+    B_\phi \cap \Phi_{\mathrm{adm}}(\Ocal)
+    \;=\; B_\phi \cap \Phi_{\mathrm{adm}}(\Ocal').
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Immediate from Theorem~\ref{thm:lmc}: on $B_\phi$, the two constraint functionals take identical values, so the inequality $\Ccal \leq \epsilon$ selects the same subset.
+\end{proof}
+
+\subsection{Shared-admissibility hypothesis and the canonical-probe convention}\label{subsec:same_c}
+
+Theorem~\ref{thm:lmc} requires only that both observers admit the basin $B_\phi$ as one of their distinguishable outcomes; under Definition~\ref{def:probe}, this is enough to force $\Ccal_\Ocal(\Phi) = 0 = \Ccal_{\Ocal'}(\Phi)$ on $\Phi \in B_\phi$, and hence observer-admissible coincidence on the basin. The specific probe subregions and functionals $(O_\phi, c_\phi)$ used by the two observers do not need to be identical for the theorem; basin coherence (condition~3) delivers vanishing regardless.
+
+For downstream use in Paper~XXX's non-contextuality argument, however, it is convenient to adopt the \emph{canonical-probe assignment} convention: fix a canonical map $\phi \mapsto (O_\phi, c_\phi)$ at the framework level, so that every localised probe observer distinguishing $\phi$ uses the same canonical probe. This is analogous to fixing a PVM in standard quantum mechanics: the projector associated with an outcome is specified once, and distinct measurement contexts differ only in which projector set they implement. Paper~XXX adopts this convention for the purpose of deriving a restricted form of non-contextuality. The canonical-probe assignment is stronger than required by Theorem~\ref{thm:lmc} but is a convenient downstream convention.
+
+\subsection{Role in the downstream Born-rule derivation}\label{subsec:role_xxx_placement}
+
+\begin{remark}[How Paper~XXX uses these results]\label{rem:role_xxx}
+Paper~XXX identifies a sector-probability assignment with the integrated stationary mass over an observer-admissible basin, \emph{normalised} over the total admissible set. The results of this section contribute the numerator side of that identification: if two measurement contexts $\mathcal{B}$ and $\mathcal{B}'$ share a projector $\Pi = |\phi\rangle\langle\phi|$ and correspond to localised probe observers $\Ocal_{\mathcal{B}}, \Ocal_{\mathcal{B}'}$ admitting $B_\phi$, Corollary~\ref{cor:basin_admissible} gives $B_\phi \cap \Phi_{\mathrm{adm}}(\Ocal_{\mathcal{B}}) = B_\phi \cap \Phi_{\mathrm{adm}}(\Ocal_{\mathcal{B}'})$, so the numerator $\int_{B_\phi \cap \Phi_{\mathrm{adm}}(\Ocal)} |\Psi|^2\, d\mu$ coincides across the two contexts. This is \emph{not} yet equality of the normalised sector probabilities: if the two observers have different total admissible sets, their normalisation denominators differ, and the conditional probabilities may differ. Paper~XXX adds a separate \emph{completeness} hypothesis $\Mcl(\Ocal) = \mathbb{CP}^{N-1}$ (where $\Mcl(\Ocal)$ denotes Paper~XXX's closure manifold of observer-admissible projective states; or, state-specifically, $\mathrm{supp}\,\rho_\Psi \subseteq \Phi_{\mathrm{adm}}$) that makes both denominators equal $\|\Psi\|^2 = 1$; only under that additional hypothesis does XXX obtain context-independence of the full probability assignment (in restricted form). The present section therefore provides the numerator coincidence; the full non-contextuality of probability in XXX requires completeness in addition.
+\end{remark}
+
+\subsection{Two-observer example}\label{subsec:two_obs}
+
+Consider a closure functional with three minima $\phi_1, \phi_2, \phi_3$ and canonical probe subregions $O_{\phi_1}, O_{\phi_2}, O_{\phi_3} \subset \Ecal$ with probe functionals $c_{\phi_1}, c_{\phi_2}, c_{\phi_3}$.
+
+\begin{itemize}
+    \item Observer $\Ocal$ distinguishes $\{B_{\phi_1}, B_{\phi_2}\}$ with $\Ocal = O_{\phi_1} \sqcup O_{\phi_2}$ and
+    \begin{equation}
+        \Ccal_\Ocal \;=\; c_{\phi_1}\!\bigl(\Phi|_{O_{\phi_1}}, \partial_{O_{\phi_1}}\Phi\bigr) \;+\; c_{\phi_2}\!\bigl(\Phi|_{O_{\phi_2}}, \partial_{O_{\phi_2}}\Phi\bigr).
+    \end{equation}
+    \item Observer $\Ocal'$ distinguishes $\{B_{\phi_1}, B_{\phi_3}\}$ with $\Ocal' = O_{\phi_1} \sqcup O_{\phi_3}$ and
+    \begin{equation}
+        \Ccal_{\Ocal'} \;=\; c_{\phi_1}\!\bigl(\Phi|_{O_{\phi_1}}, \partial_{O_{\phi_1}}\Phi\bigr) \;+\; c_{\phi_3}\!\bigl(\Phi|_{O_{\phi_3}}, \partial_{O_{\phi_3}}\Phi\bigr).
+    \end{equation}
+\end{itemize}
+
+Both observers admit $B_{\phi_1}$ as one of their distinguishable outcomes. For any $\Phi \in B_{\phi_1}$, condition~(3) of Definition~\ref{def:probe} (basin coherence) gives $c_{\phi_1}(\Phi|_{O_{\phi_1}}, \partial_{O_{\phi_1}}\Phi) = 0$ for both observers (since $B_{\phi_1}$ is in the admissible set of each), and similarly $c_{\phi_2}(\Phi|_{O_{\phi_2}}, \cdot) = 0$ for $\Ocal$ and $c_{\phi_3}(\Phi|_{O_{\phi_3}}, \cdot) = 0$ for $\Ocal'$. Therefore
+\begin{equation}
+    \Ccal_\Ocal(\Phi) \;=\; 0 \;=\; \Ccal_{\Ocal'}(\Phi).
+\end{equation}
+The two observers' constraint values coincide on the shared basin despite distinguishing different outer basins. This is LMC in a schematic two-observer example; both observers treat all of $B_{\phi_1}$ as admissible.
+
+\subsection{Relation to the minimal toy model}\label{subsec:toy_relation}
+
+The toy model of Section~\ref{sec:toy} is a one-probe \emph{pointwise} analogue of Definition~\ref{def:probe}, not a full-basin instance: the observer $\Ocal = \{e_2\}$ has a single probe subregion $O_{\phi_A} = \{e_2\}$ with probe functional
+\begin{equation}
+    c_{\phi_A}\!\bigl(\Phi|_{O_{\phi_A}}, \partial_{O_{\phi_A}} \Phi\bigr) \;=\; \bigl|\Phi(e_2) - \tfrac12[\Phi(e_1) + \Phi(e_3)]\bigr|^2.
+\end{equation}
+Conditions~(1) and~(2) of Definition~\ref{def:probe} are satisfied trivially (one probe subregion, one additive term). Condition~(3), basin coherence, requires that $c_{\phi_A}$ vanish on the admissible basin; the toy model verifies this \emph{at the specific configuration $\Phi_A$} (the field value at $e_2$ matches the neighbour-mean at $\Phi_A$, giving $c = 0$), but does not extend the check to the full basin $B_{\phi_A}$: gradient-flow membership for configurations away from $\Phi_A$ is not computed here. A one-probe instance of the feasibility condition of Remark~\ref{rem:probe_feasibility} with locally-witnessing basin condition ``$\Phi(e_2) = \tfrac12[\Phi(e_1) + \Phi(e_3)]$'' is therefore exhibited pointwise at $\Phi_A$; a multi-basin extension would require additional probe subregions and would exercise the full basin-coherence condition across multiple probes, which the one-probe toy model does not.
+
+%==================================================================
+\section{Structural Placement of Quantum Measurement}\label{sec:quantum}
+%==================================================================
+
+The quantum measurement problem asks: how does a system in superposition resolve to a definite outcome upon measurement? Within the present framework, the proposed answer is structural.
 
 \subsection{Superposition as configuration multiplicity}
 
-In the VFD framework, superposition corresponds to the coexistence of multiple admissible configurations (Paper~XXVIII~\citep{SmartXXVIII}, weak-ordering regime). The system has not yet resolved to a single stable configuration.
+In the VFD framework, superposition is here \emph{modelled as analogous to} the coexistence of multiple admissible configurations in the weak-ordering label of Paper~XXVIII~\citep{SmartXXVIII}; that label is a suggestive programme-level mapping, not a derivational identification of quantum superposition with poset multiplicity. The system has not yet resolved to a single stable configuration in this modelled picture.
 
-\subsection{Measurement as constraint-induced stabilisation}
+\subsection{Measurement as constraint-induced admissibility restriction}
 
 When an observer $(\Ocal, \Ccal_\Ocal)$ interacts with a system in superposition, the observer's coherence constraint restricts the admissible configurations (Definition~\ref{def:admissible}). The combined system --- observed system plus observer --- must satisfy:
 
@@ -194,7 +354,7 @@ When an observer $(\Ocal, \Ccal_\Ocal)$ interacts with a system in superposition
     \Fcal[\Phi] \;\text{locally minimal} \quad \text{and} \quad \Ccal_\Ocal\!\bigl(\Phi|_\Ocal,\, \partial_\Ocal \Phi\bigr) \leq \epsilon
 \end{equation}
 
-If only one of the original configurations satisfies both conditions, the system resolves to that configuration. If multiple configurations remain admissible, further constraint resolution (crystallisation) determines the outcome.
+If only one of the original configurations satisfies both conditions, only that configuration remains admissible (a statement about the admissibility set; not a dynamical resolution). If multiple configurations remain admissible, further constraint resolution is needed; this paper does not supply the additional dynamics that would single out one of them.
 
 \subsection{Structural mapping}
 
@@ -210,40 +370,40 @@ Superposition & Multiple admissible configurations \\
 Measurement apparatus & Observer region $\Ocal$ with constraint $\Ccal_\Ocal$ \\
 Collapse / state selection & Constraint-induced reduction of admissible set \\
 Definite outcome & Stable configuration satisfying $\Fcal$ and $\Ccal_\Ocal$ \\
-Born rule probabilities & Not derived (open) \\
+Born rule probabilities & Paper~XXX gives a conditional Born-rule argument using LMC (Theorem~\ref{thm:lmc}) plus completeness and further equilibrium assumptions \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{remark}[What is and is not recovered]
-The framework provides a structural account of how multiplicity reduces to a definite outcome: observer coherence constrains the admissible set. It does not derive the Born rule or the specific probability distribution over outcomes. Whether the Born rule emerges from the constraint geometry (e.g.\ through the stationary distribution of Paper~XIV~\citep{SmartXIV}) is an open question.
+The framework \emph{defines a constraint filter} on admissible configurations: observer coherence restricts the admissible set from outside to inside its sublevel locus $\{\Ccal_\Ocal \leq \epsilon\}$. It does not derive dynamical collapse, outcome selection, or measurement-time ordering. The specific probability distribution over outcomes --- the Born rule --- is not derived within this paper; Paper~XXX~\citep{SmartXXX} derives a restricted sector-probability statement conditionally, using the stationary distribution of Paper~XIV~\citep{SmartXIV} together with the localised-probe-observer variant and LMC theorem introduced in Section~\ref{sec:localised}, a separate completeness hypothesis, and further equilibrium assumptions.
 \end{remark}
 
 %==================================================================
-\section{Recovery of Relativistic Frames}\label{sec:relativistic}
+\section{Connection to Observer-Dependent Frames}\label{sec:relativistic}
 %==================================================================
 
-In general relativity, physical quantities are defined relative to an observer's frame. The VFD framework recovers this structure through observer placement.
+In general relativity, physical quantities are defined relative to an observer's frame. The VFD framework \emph{proposes to connect to} this structure through observer placement (conditional on the XXIV bridge of Remark~\ref{rem:xxiv_bridge}).
 
 \subsection{Frame as observer embedding}
 
-Paper~XXIV~\citep{SmartXXIV} showed that different observers (different linear extensions of the event partial order) assign different time functions to the same event set. Simultaneity is observer-dependent, and elapsed-time assignments differ between observers.
+Paper~XXIV~\citep{SmartXXIV} (working under its standing finite-event-poset hypothesis) showed that different observers (different linear extensions of the event partial order) assign different time functions to the same event set. Simultaneity is observer-dependent \emph{for pairs of events that are incomparable in $(\Ecal, \prec)$} (no such freedom exists for comparable pairs), and endpoint-interval elapsed-time assignments differ between observers \emph{under the further hypothesis that their sampling measures assign unequal total weight to the interval}. These are the conditional forms actually proved in Paper~XXIV; we use them only in their conditional form.
 
-In the present framework, this structure extends naturally:
+In the present framework, this structure is \emph{intended} to extend as follows (see Remark~\ref{rem:xxiv_bridge}: the construction below is an identified open programme step, not a derivation supplied in this paper):
 
 \begin{itemize}
     \item An observer region $\Ocal \subset \Gcal$ occupies a specific location within the transition graph.
-    \item The observer's linear extension $\leq_O$ is determined by the order in which events become accessible from $\Ocal$.
-    \item The sampling measure $\mu_O$ is determined by the local constraint structure within $\Ocal$.
+    \item The observer's linear extension $\leq_O$ is \emph{intended to be} determined by the order in which events become accessible from $\Ocal$ (a precise accessibility relation is not supplied here).
+    \item The sampling measure $\mu_O$ is \emph{intended to be} determined by the local constraint structure within $\Ocal$ (a precise read-off rule is not supplied here).
 \end{itemize}
 
 \begin{quote}
-A relativistic frame is not an abstract coordinate choice. It is the concrete embedding of an observer substructure within the event-order geometry.
+A relativistic frame, in this programme, is proposed to be represented by the embedding of an observer substructure within the event-order geometry, once the XXIV bridge (Remark~\ref{rem:xxiv_bridge}) is supplied.
 \end{quote}
 
 \subsection{No global frame}
 
-Paper~XXIII~\citep{SmartXXIII} proved that no canonical global clock exists on the event poset. In the observer-constraint framework, this has a structural explanation: no single observer region can span the entire event set while maintaining internal coherence (boundedness condition, Definition~\ref{def:observer}). A global frame would require a global observer, but the coherence constraint is inherently local.
+Paper~XXIII~\citep{SmartXXIII} showed that a canonical global clock fails to exist on event posets with incomparable events (non-unique linear extensions follow from incomparability; totally ordered posets retain a unique extension and therefore admit a canonical clock). This no-go result, in its conditional form, is structurally compatible with the present bounded-observer definition: Definition~\ref{def:observer}'s boundedness clause stipulates that no single observer region spans the entire event set, so a \emph{single-observer} global frame would be excluded by construction under any framework in which frames arise from individual bounded observers. This is a compatibility remark, not a proof that the event poset carries no global frame (totally ordered posets do, since they have a unique linear extension). The compatibility is with XXIII's conditional no-go form, and it is propagated by Definition~\ref{def:observer}'s boundedness, not derived anew here.
 
 \subsection{Structural mapping}
 
@@ -256,49 +416,49 @@ Paper~XXIII~\citep{SmartXXIII} proved that no canonical global clock exists on t
 General relativity & VFD observer-constraint \\
 \midrule
 Observer worldline & Observer region $\Ocal$ persisting through event order \\
-Reference frame & Linear extension $\leq_O$ induced by $\Ocal$ \\
-Proper time & Cumulative sampling measure $t_O(e) = \sum_{e' \leq_O e} \mu_O(e')$ \\
-No global frame & No global observer (boundedness condition) \\
+Reference frame & Linear extension $\leq_O$ \emph{intended to be} induced by $\Ocal$ (Remark~\ref{rem:xxiv_bridge}) \\
+Proper time & Cumulative sampling measure $t_O(e) = \sum_{e' \leq_O e} \mu_O(e')$, conditional on the intended $(\leq_O, \mu_O)$ \\
+No single-observer global frame & No global observer (boundedness condition) \\
 Frame-dependent quantities & $\Ocal$-dependent admissible configurations \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{remark}[Frames and consciousness]
-Every conscious observer defines a frame in this sense, but not every frame-defining substructure need be conscious. The structural requirements for frame definition (boundedness, persistence, induced linear extension) are necessary but not sufficient conditions for the kind of self-referential coherence discussed in Section~\ref{sec:consciousness}.
+Within this programme, every bounded self-referential observer-substructure is a \emph{candidate} for defining a frame (conditional on the XXIV bridge of Remark~\ref{rem:xxiv_bridge}), while not every frame-defining substructure need satisfy the further self-referential-coherence properties discussed in Section~\ref{sec:consciousness}. The structural requirements for frame definition (boundedness, persistence, intended induced linear extension) are proposed as candidate prerequisites, not proved to be necessary or sufficient, for the kind of self-referential coherence discussed there.
 \end{remark}
 
 %==================================================================
 \section{Integration with Crystallisation}\label{sec:crystallisation}
 %==================================================================
 
-The crystallisation operator $C[\Psi] = \operatorname{argmin}_\Phi \Fcal[\Phi]$ drives the system toward the stable attractor of the closure functional. The observer-constraint framework integrates with crystallisation as follows.
+The crystallisation operator of the original formalism selects from the argmin set, $C[\Psi] \in \operatorname*{arg\,min}_{\Phi \in \mathcal A} \Fcal[\Phi]$ (non-empty under the source's compactness hypotheses; an arbitrary element is selected when the minimiser is not unique, and the minimiser-uniqueness/convexity strengthening is a supplementary hypothesis, not part of the original formalism; see Paper~XXVIII~\citep{SmartXXVIII} for the full account). Under the local-minimisation reading used throughout Section~\ref{sec:localised}, $C$ drives the system toward a stable local minimiser of the closure functional; global state-space convergence is not established without additional assumptions. The observer-constraint framework integrates with crystallisation as follows.
 
 \subsection{Observer as local constraint node}
 
-Crystallisation is a global process: the entire field configuration converges toward constraint satisfaction. The observer is a \textit{local} constraint node: a substructure whose coherence requirement imposes an additional condition on the global resolution.
+The formalism models crystallisation as gradient-flow descent of $\Fcal$ toward its minimiser set (global state-space convergence is not established without additional assumptions, as noted in the preceding paragraph). The observer is a \textit{local} constraint node: a substructure whose coherence requirement imposes an additional admissibility condition that co-exists with $\Fcal$'s local-minimisation structure.
 
 \begin{itemize}
-    \item \textbf{Crystallisation without observer}: the system resolves to a minimum of $\Fcal$. Multiple minima may be equally accessible.
-    \item \textbf{Crystallisation with observer}: the system resolves to a minimum of $\Fcal$ that also satisfies $\Ccal_\Ocal \leq \epsilon$. The observer's coherence constraint biases the resolution toward configurations compatible with its persistence.
+    \item \textbf{Crystallisation without observer}: the formalism's descent targets local minima of $\Fcal$; multiple local minima are in general possible.
+    \item \textbf{Crystallisation with observer}: the observer-admissible subset of the minimiser set consists of those local minima of $\Fcal$ that also satisfy $\Ccal_\Ocal \leq \epsilon$. The observer's coherence constraint restricts the admissible minimiser set; selecting among any remaining admissible minimisers requires dynamics or a selection rule not supplied here.
 \end{itemize}
 
 \subsection{Observer participation, not determination}
 
 \begin{remark}
-The observer participates in crystallisation but does not uniquely determine the outcome. The observer constrains which configurations are admissible; the closure functional $\Fcal$ determines which admissible configuration is selected. The observer is a boundary condition, not a decision-maker.
+The observer participates in crystallisation but does not uniquely determine the outcome. The observer constrains which configurations are admissible; the closure functional $\Fcal$ constrains the minimiser-selection problem. Singling out a specific admissible minimiser is not supplied by either $\Fcal$ (argmin non-uniqueness) or by the observer (admissibility is a set-level statement, not a dynamical selection). The observer imposes a coherence sublevel constraint, not a decision rule.
 \end{remark}
 
 \subsection{Regime connection}
 
-Paper~XXVIII~\citep{SmartXXVIII} proposed that the quantum and gravitational regimes correspond to weak-ordering and strong-ordering limits of the event set. The observer-constraint framework bridges these regimes:
+Paper~XXVIII~\citep{SmartXXVIII} proposes, as a programme-level \emph{substrate-bridge hypothesis} (not a theorem), that quantum-track and gravitational-track constructions are heuristically associated with the weak-ordering and strong-ordering ends of the antichain-to-total-order spectrum, labelled by the combinatorial ordering fraction $\eta$. Paper~XXVIII is explicit that this is a suggestive programme-level mapping, not a derivational linkage. The observer-constraint framework is proposed as a candidate participant in that bridge picture, under the same hypothesis-level caveats:
 
 \begin{itemize}
-    \item In the \textbf{weak-ordering (quantum) regime}, the observer constrains which of the multiple admissible configurations are accessible. This is measurement.
-    \item In the \textbf{strong-ordering (gravitational) regime}, the observer's embedding within the ordered event set defines a frame. This is relativistic observation.
+    \item In the \textbf{weak-ordering (quantum) label} of the bridge hypothesis, the observer constrains which of the multiple admissible configurations are locally admissible. This is the observer-as-constraint-filter reading of measurement.
+    \item In the \textbf{strong-ordering (gravitational) label} of the bridge hypothesis, the observer's embedding within the ordered event set is \emph{intended to} define a frame (conditional on the XXIV bridge of Remark~\ref{rem:xxiv_bridge}). This is the observer-as-frame-definer reading of relativistic observation.
 \end{itemize}
 
-Both are instances of the same structural mechanism: the observer, as a coherent substructure, imposes constraints on the configurations accessible from its location within the event-order geometry.
+The paper proposes to place both under the same structural mechanism --- the observer, as a coherent substructure, imposing constraints on the configurations accessible from its location within the event-order geometry --- but it does \emph{not} derive the two regimes from a common proof, and the weak/strong-ordering association is used here only as a labelling consistent with Paper~XXVIII's bridge hypothesis, not as a derivational linkage.
 
 %==================================================================
 \section{Implications for the Locus of Experience}\label{sec:consciousness}
@@ -308,17 +468,17 @@ This section is brief and controlled. It addresses one narrow question: does the
 
 \subsection{What the framework provides}
 
-The observer, as defined in Section~\ref{sec:definition}, has structural properties that are commonly associated with conscious systems:
+The observer, as defined in Section~\ref{sec:definition}, has structural properties that are often invoked in structural accounts of conscious systems:
 
 \begin{itemize}
-    \item \textbf{Boundedness}: the observer is a finite, localised substructure, not a global property.
+    \item \textbf{Boundedness}: Definition~\ref{def:observer}'s boundedness clause ($\Ocal \subsetneq \Gcal$) says the observer is a proper subgraph of the transition graph, not a global substructure. Additional finiteness/locality would require strengthening the definition.
     \item \textbf{Internal coherence}: the observer maintains self-consistent internal state (stability condition).
     \item \textbf{Self-reference}: the observer's constraint functional depends on its own internal configuration.
     \item \textbf{Persistence}: the observer endures across the event ordering.
     \item \textbf{Sensitivity}: the observer is affected by its environment through boundary conditions.
 \end{itemize}
 
-The framework identifies these as necessary structural conditions for locatable experience: a substructure that is bounded, persistent, internally coherent, self-referential, and environmentally sensitive has the right structural features to serve as a natural locus of experience within the dynamics. These conditions are necessary, not sufficient: they do not by themselves explain qualia or subjective unity.
+The framework identifies these as candidate structural prerequisites for a candidate locus of experience: a substructure that is bounded, persistent, internally coherent, self-referential, and environmentally sensitive has structural features commonly associated with a candidate locus of experience. No necessity claim is established here; the conditions are proposed as candidates, not proved to be necessary, and they do not by themselves explain qualia or subjective unity.
 
 \subsection{What the framework does not provide}
 
@@ -332,11 +492,11 @@ The framework identifies these as necessary structural conditions for locatable 
 \subsection{The placement claim}
 
 \begin{quote}
-The framework identifies a class of necessary structural conditions for locatable experience: boundedness, persistence, internal coherence, self-referential organisation, and boundary-coupled environmental sensitivity. Substructures satisfying these conditions are natural candidates for the locus of experience within the dynamics. The framework does not explain experience. It makes experience \textit{locatable} within the physics, rather than external to it.
+The framework identifies a class of candidate structural prerequisites for a candidate locus of experience: boundedness, persistence, internal coherence, self-referential organisation, and boundary-coupled environmental sensitivity. Substructures satisfying these conditions are plausible candidates for such a locus within the dynamics, but no necessity claim is proved here. The framework does not explain experience. It proposes a candidate locus for experience within the physics, rather than leaving it external to it.
 \end{quote}
 
 \begin{remark}[Epistemic status]
-This section identifies a structural correspondence, not a derivation. The claim is that the observer-constraint framework provides a \textit{natural locus} for experience, not that it explains experience. The distinction between ``locatable'' and ``explained'' is the boundary of this paper.
+This section identifies a structural correspondence, not a derivation. The claim is that the observer-constraint framework provides a \textit{candidate locus} for experience, not that it explains experience. The distinction between ``a candidate locus is proposed'' and ``experience is explained'' is the boundary of this paper.
 \end{remark}
 
 %==================================================================
@@ -346,7 +506,7 @@ This section identifies a structural correspondence, not a derivation. The claim
 The following example illustrates the constraint-induced outcome restriction in the simplest possible setting. This toy model is illustrative only: it is not claimed to arise directly from the 600-cell construction or from the full event-order dynamics.
 
 \begin{example}[Two-configuration system with observer constraint]\label{ex:toy}
-Consider an event set $\Ecal$ with three events $\{e_1, e_2, e_3\}$ forming a path graph $e_1 - e_2 - e_3$. Suppose the closure functional $\Fcal$ has two locally stable configurations: $\Phi_A$ and $\Phi_B$, both satisfying $\delta \Fcal = 0$, $\delta^2 \Fcal > 0$.
+Consider an event set $\Ecal$ with three events $\{e_1, e_2, e_3\}$ forming a path graph $e_1 - e_2 - e_3$. Suppose the closure functional $\Fcal$ has two locally stable configurations: $\Phi_A$ and $\Phi_B$, both satisfying $\nabla \Fcal = 0$ and $\mathrm{Hess}\, \Fcal \succ 0$ (positive-definite Hessian in the $\Phi(e)$ coordinates; we do not specify a particular $\Fcal$ realising both minima).
 
 An observer region $\Ocal = \{e_2\}$ (the central event) carries a constraint functional:
 \begin{equation}
@@ -359,12 +519,12 @@ This measures the deviation of the observer's field value from the mean of its n
 \textbf{Constraint evaluation.}
 \begin{itemize}
     \item $\Ccal_\Ocal\!\bigl(\Phi_A|_\Ocal, \partial_\Ocal \Phi_A\bigr) = |1 - \tfrac{1}{2}(1+1)|^2 = 0 \leq \epsilon$. \quad Admissible.
-    \item $\Ccal_\Ocal\!\bigl(\Phi_B|_\Ocal, \partial_\Ocal \Phi_B\bigr) = |-1 - \tfrac{1}{2}(1+1)|^2 = 4 > \epsilon$ \quad (for any reasonable $\epsilon < 4$). \quad Not admissible.
+    \item $\Ccal_\Ocal\!\bigl(\Phi_B|_\Ocal, \partial_\Ocal \Phi_B\bigr) = |-1 - \tfrac{1}{2}(1+1)|^2 = 4 > \epsilon$ \quad (for any $0 < \epsilon < 4$). \quad Not admissible.
 \end{itemize}
 
 \textbf{Result.} Without the observer, both $\Phi_A$ and $\Phi_B$ are stable configurations. With the observer constraint, only $\Phi_A$ is admissible. The observer's coherence requirement excludes the locally inconsistent configuration.
 
-This is the minimal structural analogue of measurement-induced outcome stabilisation: the observer does not choose $\Phi_A$; its existence as a coherent substructure makes $\Phi_B$ dynamically inaccessible. The example does not establish that all physical measurement reduces to this form; it demonstrates only the minimal structural mechanism by which observer coherence can reduce admissible multiplicity.
+This is the minimal structural analogue of constraint-induced admissibility restriction: the observer does not choose $\Phi_A$; its existence as a coherent substructure makes $\Phi_B$ inadmissible (excluded by the coherence threshold $\epsilon < 4$). ``Inadmissible'' here is an admissibility-set statement, not a dynamical-accessibility theorem; whether inadmissibility implies dynamical inaccessibility requires dynamics on the combined system, which this toy does not supply. The example does not establish that all physical measurement reduces to this form; it demonstrates only the minimal structural mechanism by which observer coherence can reduce admissible multiplicity.
 \end{example}
 
 %==================================================================
@@ -377,13 +537,14 @@ This is the minimal structural analogue of measurement-induced outcome stabilisa
     \item The observer is explicitly defined as a bounded, stable, self-referential substructure within the event-order geometry (Definition~\ref{def:observer}).
     \item A constraint functional $\Ccal_\Ocal$ formalises internal coherence.
     \item Observer-admissible configurations are defined (Definition~\ref{def:admissible}).
-    \item Quantum measurement is mapped to constraint-induced reduction of configuration multiplicity.
-    \item Relativistic frame dependence is mapped to observer embedding within the event partial order.
-    \item Both roles are unified as aspects of a single constraint-placement mechanism.
+    \item A proposed structural mapping of quantum measurement to constraint-induced reduction of configuration multiplicity is stated; dynamical selection is not derived.
+    \item A specific measurement-adapted variant, the localised probe observer (Definition~\ref{def:probe}), is characterised by a probe decomposition of its coherence constraint over distinguishable outcomes. Probe observers sharing an outcome satisfy local measurement consistency (Theorem~\ref{thm:lmc}), which implies context-independence of basin admissibility (Corollary~\ref{cor:basin_admissible}).
+    \item Relativistic frame dependence is \emph{proposed} to be mapped to observer embedding within the event partial order, conditional on the XXIV bridge (Remark~\ref{rem:xxiv_bridge}).
+    \item Both roles are proposed to be treated as aspects of a single constraint-placement mechanism; no common derivation is supplied here.
     \item G\"odel's theorems are correctly scoped to formal symbolic systems.
     \item Crystallisation and observer constraint are distinguished (global vs.\ local).
-    \item Necessary structural conditions for locatable experience are identified (not sufficient for explaining qualia).
-    \item A minimal toy model demonstrates constraint-induced outcome restriction (Example~\ref{ex:toy}).
+    \item Candidate structural conditions for a candidate locus of experience are proposed (neither proved necessary nor sufficient; not an explanation of qualia).
+    \item A minimal toy model illustrates constraint-induced restriction in a pointwise instance (Example~\ref{ex:toy}); no full-basin probe-observer instance is established.
 \end{itemize}
 
 \subsection{What is not established}
@@ -424,11 +585,10 @@ VFD (this paper) & Constraint substructure & Inside the dynamics \\
 
 The observer problem in physics is not the absence of explanation but the absence of placement. Quantum mechanics registers definite outcomes relative to measurement interactions without supplying a universally agreed internal placement of the observer. General relativity defines physics relative to a frame without giving the frame-defining entity internal structure. The explanatory gap in consciousness studies shares the same structural feature: the observer is assumed to exist but not located within the dynamics.
 
-This paper proposes a placement. The observer is a bounded, dynamically stable, self-referential substructure within the event-order geometry of the VFD framework. Its internal coherence, formalised through the constraint functional $\Ccal_\Ocal$, imposes conditions on which field configurations are admissible. In the quantum regime, this constraint constrains superposed multiplicity toward definite outcomes. In the gravitational regime, the observer's embedding within the event partial order defines a relativistic frame. Both roles are aspects of a single mechanism: the observer, as a coherent substructure, constrains the accessible configurations from its position within the geometry.
+This paper proposes a placement. The observer is a bounded, dynamically stable, self-referential substructure within the event-order geometry of the VFD framework. Its internal coherence, formalised through the constraint functional $\Ccal_\Ocal$, imposes conditions on which field configurations are admissible. In the weak-ordering label of the Paper~XXVIII bridge hypothesis (quantum reading), this defines a constraint filter on multiplicity. In the strong-ordering label (gravitational reading), the observer's embedding within the event partial order is \emph{intended} to define a relativistic frame once a construction of Paper~XXIV's $(\leq_O, \mu_O)$ from the structural data is supplied (Remark~\ref{rem:xxiv_bridge}). Both roles are \emph{proposed to be treated} as aspects of a single mechanism: the observer, as a coherent substructure, constrains the accessible configurations from its position within the geometry; a common derivation is not supplied in this paper.
 
-The framework makes conscious experience locatable --- associated with bounded, persistent, self-referential constraint structures --- without claiming to explain it.
+The framework proposes candidate structural loci for experience --- bounded, persistent, self-referential constraint substructures --- without claiming necessity, sufficiency, or an explanation of qualia.
 
-What was missing was not the physics but the placement.
 
 %==================================================================
 \bibliographystyle{plainnat}

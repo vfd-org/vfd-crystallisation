@@ -1,0 +1,2986 @@
+% Compile with pdfLaTeX (utf8/textgreek provide Greek mappings) or
+% with XeLaTeX/LuaLaTeX for native Unicode handling. The source uses
+% literal Greek letters (σ, τ, etc.) and a star symbol (★) in display
+% text; under pdfLaTeX these are routed through inputenc+textgreek.
+\documentclass[11pt, a4paper]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+% Unicode character mappings for pdfLaTeX (★ used in display text)
+\DeclareUnicodeCharacter{2605}{$\star$}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\pphi}{\varphi}
+\newcommand{\zetacas}{\zeta_{\mathrm{cas}}}
+\newcommand{\spec}{\operatorname{spec}}
+
+\title{A Cascade-Native Dynamical Zeta $\widehat\zeta(z)$ on the 600-Cell: F1-Motivated Construction and a Conditional Reformulation of the Riemann Hypothesis}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Programme background — for the reader with no prior context}\addcontentsline{toc}{section}{Programme background}
+
+This paper is part of the \emph{cascade-correspondence programme},
+a research programme that organises mathematical and physical
+structure starting from the \emph{permeability axiom} F1
+($r = 1 + 1/r$, whose unique positive solution is the golden ratio
+$\varphi$) together with the $E_8$/maximality framework and the
+named structural hypotheses H-SIG and F5, which are documented in
+the cascade infrastructure papers
+\cite{CascadeFoundations,PaperXXXVI}; an additional spectral-level
+hypothesis H-Mat is introduced and used only locally in this paper
+(Lemma~\ref{lem:Fsigma-commute}) and is not derived from F5.  F1 alone yields $\varphi$
+and $\mathbb{Z}[\varphi]$ with its Galois involution $\sigma$; the
+icosahedral / pentagonal symmetry group encoded in the
+\emph{600-cell} (a regular 4-polytope with 120 vertices) and the
+\emph{seven-rung ladder} that organises further structure are
+F1-compatible geometric constructions added on top of F1, not
+implications of F1 in isolation. The reader is not required to accept the
+programme as a whole; the finite arithmetic steps in this paper's
+principal construction (clock decomposition, shell--cocycle data,
+$K$-multiset, closed-form coefficients) are computer-verified by
+self-contained Python scripts using exact rational arithmetic, and
+the reader can check them independently.
+
+\paragraph{The seven-rung ladder, briefly.}
+The cascade programme organises mathematical objects into seven
+rungs by complexity / generality: (i) Arithmetic (rings, primes,
+Galois theory — substrate); (ii) QM (quantum representations,
+the 600-cell and its $H_4$ symmetry, the binary icosahedral group
+$2I$); (iii) Life (icosahedral cycles, biological structures);
+(iv) GR (general relativity, the $D_4$ root system); (v) Info
+(information theory, $F_{16}$); (vi) Observer (self-reference,
+fixed-point logic, the $Q_O$ query algebra); (vii) Unity (the
+collapsed apex). Each rung is a specific algebraic / geometric
+object with explicit references in
+\texttt{papers/cascade-derivation/}. Mainstream mathematics
+operates within rungs but does not formalise the rung structure;
+the cascade's contribution is to make the rungs explicit and to
+construct the operators that cross between them.
+
+\paragraph{Key vocabulary used in this paper.}
+\emph{F1} = the permeability axiom $r = 1 + 1/r$, which forces
+$r = \varphi$ (golden ratio). \emph{$\mathbb{Z}[\varphi]$} = ring
+of integers of $\mathbb{Q}(\sqrt{5})$, the smallest ring
+containing $\varphi$. \emph{$\sigma$} = the Galois involution on
+$\mathbb{Z}[\varphi]$ exchanging $\sqrt{5}$ with $-\sqrt{5}$
+(equivalently $\varphi$ with $-1/\varphi$). \emph{600-cell} = the
+regular 4-polytope with 120 vertices, naturally identified with
+the binary icosahedral group $2I$ inside the unit quaternions.
+\emph{Pentagonal torsion} = the element $\tau \in 2I$ of order 10
+whose fifth power is $-1$ (the central element of $2I$);
+\emph{$\widehat\zeta(z)$} = the principal new analytic object of
+this paper, built on the cascade $\varphi$/600-cell substrate
+(which is F1-compatible under the stated $E_8$/maximality
+hypotheses, not an implication of F1 alone) using the pentagonal clock
+$T_\tau$ and the chosen cocycle $\kappa$.
+\emph{aria-chess} = an external companion repository implementing a
+quaternion-flow dynamics on the 600-cell that reports a
+torus-attractor as external dynamical context for the algebraic
+structure constructed here.
+
+\paragraph{How to read this paper.}
+The principal mathematical results are (M1)--(M3) in the abstract,
+developed in §\ref{sec:zhat}; (M4) is external empirical context
+(reported by the aria-chess companion repository) and is \emph{not}
+a main theorem of this paper.  (Note: ``M'' for \emph{main result
+on $\widehat\zeta$}; the unrelated label ``(U1)--(U3)'' in
+§\ref{sec:uniqueness} below denotes the classical
+Euler-product/functional-equation/analytic-structure conditions
+that characterise the Riemann $\zeta$.)  (M1)--(M3) are unconditional given
+the F1-motivated geometric chain $\mathbb{Z}[\varphi] \to 2I \to
+T_\tau \to \widehat\zeta$ (the icosian/$2I$ substrate is an
+F1-compatible geometric construction, not an F1 implication; see
+the programme background above), after the choice of clock
+representative $\tau$ and cocycle $\kappa$; the
+pentagonal-clock construction scripts use standard-library rational
+arithmetic, while the later spectral diagnostics
+(\S\ref{subsec:attractor}) use numerical linear algebra over the
+known $\Q(\varphi)$ closed forms. A second part of the
+paper (§\ref{sec:uniqueness}--§\ref{sec:proof}) records, separately,
+the relationship between the cascade construction and the classical
+Riemann zeta $\zeta(s)$. This second part is more technical and
+contains a precise statement of what would be required (a
+non-classical $\sigma$-fixed-point principle) for the cascade to
+imply the classical Riemann Hypothesis; it is included for
+completeness but is independent of the principal results.
+
+\paragraph{Verifying without buying the programme.}
+The sim scripts in \texttt{papers/cascade-derivation/scripts/} use
+only Python's standard library (\texttt{fractions}) and the
+explicit 600-cell vertex enumeration in
+\texttt{papers/paper-xxii/scripts/run\_icosian\_exact.py}. Any
+result claimed computer-verified can be checked by running the named
+script directly; no programme infrastructure beyond exact
+rational arithmetic is required. The classical citations
+(Neukirch's \emph{Algebraic Number Theory} for adelic compactness,
+Schafer's \emph{Nonassociative Algebras} for $\mathrm{Der}(\mathbb{O}) = g_2$,
+etc.) are mainstream and independently verifiable.
+
+\begin{abstract}
+We construct a cascade-native σ-symmetric dynamical zeta function
+$\widehat\zeta(z)$ on the F1-motivated $\varphi$/600-cell substrate
+(F1: $r = 1 + 1/r$ gives $\varphi$ and $\mathbb{Z}[\varphi]$; the
+600-cell substrate is an F1-compatible geometric construction
+added on top of F1, not an implication of F1 in isolation), after
+choosing a specific clock element $\tau$ and cocycle $\kappa$.  The finite 600-cell arithmetic steps in the
+$\widehat\zeta$ construction are computer-verified in exact
+$\mathbb{Q}(\sqrt{5})$ arithmetic. The derivation proceeds F1 $\to$ $\mathbb{Z}[\varphi]$
+$\to$ icosian ring $\mathcal{I}$ $\to$ binary icosahedral group
+$2I$ (= 120 vertices of the 600-cell) $\to$ pentagonal torsion
+element $\tau \in 2I$ of order 10 with $\tau^5 = -1$ $\to$ clock map
+$T_\tau(v) = \tau \cdot v$ giving 12 disjoint cycles of length 10
+$\to$ antipodal-even radial cocycle $\kappa(v) = (s(v) - 4)^2$ on the
+9 Euclidean shells $\to$ weighted Artin--Mazur zeta
+\[
+\widehat\zeta(z) = \prod_C (1 - \varphi^{K(C)} z^{10})^{-1} \cdot \sigma(\text{product})
+= \prod_K (1 - L_K z^{10} + z^{20})^{-m_K}
+\]
+where $K \in \{0, 20, 52, 72\}$ with multiplicities $\{1, 1, 5, 5\}$ and
+$L_K$ is the $K$-th Lucas number.  The $K$-values and
+multiplicities are computed exactly for the script-selected
+order-10 clock representative $\tau$ and the cocycle
+$\kappa(v) = (s(v)-4)^2$; no free numerical parameter remains
+\emph{after} those choices (see Theorem~\ref{thm:K_multiset} for
+the precise dependency, including the unproved class-independence
+caveat).
+
+\noindent\textbf{Main results (unconditional):}
+
+\textbf{(M1) Exact closed form.} $\widehat\zeta(z)$ is a rational
+function in $z^{10}$ with integer coefficients; the closed-form
+factorization is displayed in
+Theorem~\ref{thm:zhat_form}, and its series coefficients are
+checked to degree 30 by
+\texttt{papers/cascade-derivation/scripts/derive\_pentagonal\_clock\_B8p\_proper.py}.
+At $z^{10}$: $[z^{10}]\widehat\zeta = L_{72} + L_0 + 5L_{52} + 5L_{20} = 1{,}114{,}945{,}460{,}806{,}394$.
+
+\textbf{(M2) Mellin pole-symmetry.}
+The \emph{real parts} of the poles of $\widehat\zeta(z(s))$ under
+$z^{10} = \varphi^{10(1/2-s)}$ are
+$\{1/2 \pm K/10 : K \in \{0,20,52,72\}\}$, symmetric about
+$\mathrm{Re}(s) = 1/2$ (imaginary periodic copies arise when
+solving for $s$ via the complex logarithm).  Each Lucas factor is
+palindromic in $w = z^{10}$, so $\widehat\zeta(w^{-1}) = w^{24}
+\widehat\zeta(w)$ (with $\sum m_K = 12$ giving the exponent
+$2\sum m_K = 24$); the \emph{completed} zeta
+$\widehat\zeta_\ast(w) := w^{12} \widehat\zeta(w)$ satisfies
+$\widehat\zeta_\ast(w^{-1}) = \widehat\zeta_\ast(w)$, equivalently
+$\widehat\zeta_\ast(1-s) = \widehat\zeta_\ast(s)$ under the
+Mellin pairing.  Sim-verified in
+\texttt{derive\_pentagonal\_clock\_B11\_mellin.py}.
+
+\textbf{(M3) Obstruction to one natural Hecke matching under
+this parametrisation.}
+$\widehat\zeta(z)$ is a finite rational function in $z^{10}$ with
+weights $L_K \in \Z$.  We do \emph{not} establish an identification
+of $\widehat\zeta$ with any global Hecke $L$-function.  One specific
+would-be matching --- assigning local Euler factors with
+$|\chi(\mathfrak p)| = \varphi^K$ on split primes --- is obstructed
+because Hecke-character absolute values on the norm-one idele class
+group are unitary (Neukirch §VI.1, §VII.6) while $\varphi^K > 1$
+for $K > 0$.  This rules out only that one tentative identification;
+a complete classification of possible global $L$-function
+identifications is not derived here.  $\widehat\zeta$ is best
+regarded as an Artin--Mazur-style finite dynamical zeta of the
+pentagonal clock; its identification (or non-identification) with
+classical global $L$-function families is left open.
+
+\noindent\textbf{External empirical context (not a main result).}
+The aria-chess companion repository reports an H$_4$-native
+oscillator law on the same substrate, with claimed phenomenology
+including a torus attractor and 8 paired velocity-covariance
+eigenvalues.  These artefacts live in an external repository
+(\texttt{aria-chess/}) and are \emph{not} re-derived or audited
+in this paper; we do \emph{not} list them among the unconditional
+main results.  See Remark~\ref{rmk:aria_attractor} for the
+conditional usage of these reports as motivating external
+context, and the disclaimer that the σ-paired-pair count on the
+H$_4$O dynamics side (8) does \emph{not} match the multiplicity
+multiset $\{1,1,5,5\}$ on the analytic $\widehat\zeta$ side.
+
+\noindent\textbf{Relation to classical RH.}  Throughout this paper
+we use $\widehat\zeta(z)$ for the rational function in $z$ defined
+on the cascade side (Theorem~\ref{thm:zhat_form}) and write
+$\widehat\zeta(s) := \widehat\zeta(z(s))$ for its pull-back under the
+cascade Mellin substitution $z^{10} = \varphi^{10(1/2-s)}$
+(\S\ref{sec:mellinline}); the two notations refer to the same
+object viewed in different variables. $\widehat\zeta(s)$ is
+\emph{not} the Riemann zeta $\zeta(s)$. Under the cascade-canonical
+Mellin $N = \varphi^{10}$, the poles of $\widehat\zeta(s)$ lie on a
+staircase $\mathrm{Re}(s) = 1/2 \pm K/10$ (σ-paired, symmetric under
+$s \mapsto 1-s$), not on the single critical line. Classical RH
+on $\zeta(s)$ is a separate question; $\widehat\zeta$ is the cascade's
+own zeta-class analytic object, with closed form,
+F1-motivated exact finite construction, and reported external
+H$_4$-oscillator dynamical context.
+
+\noindent\textbf{Methodological companion.} The second part of the
+paper records, for completeness, the precise (δ)-class reformulation
+of classical $\zeta(s)$ through the cascade's $\pphi$-Mellin transform
+(inherited from Paper XXII's conjugate-600-cell structure). This
+reformulation is explicit about its limits: the classical Riemann
+Hypothesis for $\zeta(s)$ is equivalent to a cascade-internal
+σ-fixed-point principle $\textup{H}_{\sigma\text{-fix}}$. The cascade
+$\widehat\zeta(z)$ construction and the classical-$\zeta$ reformulation
+are independent infrastructure layers; neither implies the other.
+
+\noindent\textbf{Architecturally similar independent arrivals.}
+The cascade-derivation here was developed independently of two
+parallel VFD-flavoured frameworks of L.~Smart (December~2025
+and January~2026)
+\cite{SmartCanonicalFramework, SmartPaperII, SmartPaperC}.
+Smart's frameworks share the same H$_4$ polytope family
+(120-cell, dual to our 600-cell) and a $12$-related discrete
+torsion structure: Smart axiomatises a unitary $T$ with
+$T^{12} = \mathrm{id}$ on a 600-dimensional internal space, while
+this paper's pentagonal clock $T_\tau$ on $2I$ has order-$10$
+elements organised into $12$ orbits of length $10$.  These are not
+literally the same operator, but both put the integer $12$ at the
+combinatorial centre of an H$_4$-internal cyclic decomposition with
+a $\sigma$-class selection rule.  The bridge-conditional RH
+reduction shape is also analogous (ID$^\star$ in
+\cite{SmartPaperII}, Bridge Axiom in \cite{SmartPaperC},
+$\textup{H}_{\sigma\text{-fix}}$ here).  We treat the convergence
+as a suggestive observation about three independently formulated
+conditional reductions, not a meta-theorem; the precise scope is
+discussed in \S\ref{subsec:convergence}--\ref{subsec:bridge_canonical}
+and \cite{ConvergenceWithSmart}.
+\end{abstract}
+
+\tableofcontents
+
+\section*{Rung placement and geometric boundary}\addcontentsline{toc}{section}{Rung placement and geometric boundary}
+
+The cascade-correspondence programme organises mathematical
+structure into a seven-rung ladder (Unity, Observer, Info, GR,
+Life, QM, Arithmetic; explicit derivation in
+\texttt{papers/cascade-derivation/}). This paper has two parts that live at different points of the
+cascade ladder.  The principal new analytic object,
+$\widehat\zeta(z)$, is a finite Artin--Mazur-style dynamical zeta
+attached to the pentagonal clock $T_\tau$ on the binary
+icosahedral group $2I = 120$ vertices of the 600-cell, with the
+shell-sum cocycle $\kappa$.  $\widehat\zeta(z)$ does \emph{not}
+encode prime ideals of $\mathbb{Z}[\varphi]$; it is a finite
+combinatorial object whose poles form a $\sigma$-symmetric
+staircase $\mathrm{Re}(s) = 1/2 \pm K/10$ under the cascade
+Mellin substitution.  The separate Dedekind extension
+(Section~\ref{sec:zetaK}) does encode prime-ideal arithmetic, by
+indexing an Euler product directly over the prime ideals of
+$\mathbb{Z}[\varphi]$, and yields the classical factorisation
+$\zeta_K = \zeta \cdot L(s,\chi_5)$.  The two are different
+objects: $\widehat\zeta$ is the finite cascade-internal zeta and
+the Dedekind $\zeta_K$ is the classical arithmetic side; this
+paper does \emph{not} identify them, and the specific local Hecke
+matching that would reduce $\widehat\zeta$ to $\zeta_K$ in the
+obvious way is obstructed (Remark~\ref{rmk:hecke_obs});
+whether some other global $L$-function identification of
+$\widehat\zeta$ exists is left open.
+
+\section{Introduction}
+
+\subsection{The Riemann Hypothesis}
+
+The Riemann Hypothesis, conjectured by Bernhard Riemann in his 1859
+paper, asserts:
+
+\begin{quotation}
+All non-trivial zeros of the Riemann zeta function
+\[
+\zeta(s) = \sum_{n=1}^\infty n^{-s} = \prod_p (1 - p^{-s})^{-1}
+\]
+have real part $\mathrm{Re}(s) = 1/2$.
+\end{quotation}
+
+The zeta function, initially defined for $\mathrm{Re}(s) > 1$,
+admits meromorphic extension to $\C$, holomorphic on
+$\C \setminus \{1\}$ with a simple pole at $s=1$ and trivial zeros
+at $s = -2, -4, -6, \ldots$. The
+non-trivial zeros lie in the critical strip $0 < \mathrm{Re}(s) < 1$.
+
+The cited computations report verification of the Hypothesis for over
+$10^{13}$ zeros \cite{Gourdon}. Hardy (1914) proved infinitely many zeros lie
+on the critical line; Selberg and Conrey obtained positive density
+results \cite{Conrey1989}. Despite more than 165 years of effort
+since 1859, no proof has been obtained.
+
+\subsection{The Hilbert--Pólya programme}
+
+A natural strategy, attributed independently to Hilbert and Pólya,
+is to construct a self-adjoint operator $T$ on a Hilbert space
+whose eigenvalues are the imaginary parts $\{\gamma_n\}$ of the
+non-trivial zeros $\rho_n = 1/2 + i\gamma_n$. Since self-adjoint
+operators have real spectrum, $\gamma_n \in \R$ would immediately
+imply $\mathrm{Re}(\rho_n) = 1/2$.
+
+This programme has been pursued via:
+\begin{itemize}
+\item Berry--Keating's $xp$ operator \cite{BerryKeating1999};
+\item Connes' adele-class operator \cite{Connes1999};
+\item Random matrix theory analogies \cite{Montgomery1973, KeatingSnaith};
+\item Selberg trace formula approaches.
+\end{itemize}
+
+No classical construction has rigorously produced an operator whose
+spectrum is known to be the Riemann zero set.
+
+\subsection{This paper's approach}
+
+Rather than constructing an operator directly, we use a
+characterization-based approach. This paper records a
+$(\delta)$-class reformulation in which $\zetacas$ is identified
+with the classical Euler product / analytic continuation of
+$\zeta$; no cascade-native construction of $\zeta$ independent of
+the classical object is claimed here. Within that reformulation
+scope: we record unconditional identifications and conditional
+reductions as follows:
+
+\begin{enumerate}
+\item The function $\zetacas(s)$, defined as the classical Euler
+product / analytic continuation under cascade notation
+(Definition~\ref{def:zetacas}), satisfies the three properties
+(U1)--(U3) that uniquely characterise the Riemann zeta function.
+\item Hence $\zetacas \equiv \zeta$ (this is by definition together
+with classical uniqueness, not a fresh cascade derivation; see
+Remark~\ref{rmk:zetacas-delta}).
+\item Under the cascade-Mellin convention
+(Proposition~\ref{prop:sigmas}), the cascade involution $\sigma$ is
+\emph{represented} on the analytic variable by the holomorphic
+involution $\iota: s \mapsto 1-s$ (a chosen pairing convention,
+not a derived Galois action on arbitrary positive reals); its
+holomorphic fixed set is the single point $\{1/2\}$. Composed with the reality
+involution $\bar{\ }: s \mapsto \bar{s}$ (from the real Dirichlet
+coefficients of $\zetacas$), the anti-holomorphic involution
+$\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$ has fixed set equal to the critical
+line $\{s : \mathrm{Re}(s) = 1/2\}$.
+\item The natural $\Z[\pphi]$-Euler-product extension of $\zetacas$
+equals the Dedekind zeta function $\zeta_K(s)$ of $K = \Q(\sqrt{5})$.
+\end{enumerate}
+
+What remains to conclude RH is a $\sigma$-fixed-point principle
+$\textup{H}_{\sigma\text{-fix}}$ at the dynamical-spectral layer of
+the cascade framework; we formulate the hypothesis precisely
+(\S\ref{sec:sigmafix}) and discuss why it is equivalent to the
+classical Riemann Hypothesis and not presently a theorem of the
+cascade infrastructure. Theorem~\ref{thm:RH} is therefore stated
+as conditional, not unconditional.
+
+The key technical input is the \emph{cascade framework}: a
+structural theory developed in \cite{CascadeFoundations,
+PaperXXXVI} from a self-similarity axiom and $E_8$ maximality,
+together with named structural hypotheses (notably H-SIG; see
+Hypothesis~\ref{hyp:F5} for the conditional scope of F5 used in
+this paper).  This produces a closure functional with specific
+$\pphi$-adic structure and Galois symmetry $\sigma$ on the
+$\sigma$-fixed-field class, under the stated conditional scope.
+
+\subsection{Main results}
+
+This paper records the following unconditional results and one
+conditional target (Theorem~\ref{thm:RH} below, conditional on
+$\textup{H}_{\sigma\text{-fix}}$).
+
+\begin{theorem}[Cascade zeta identity]\label{thm:casczeta}
+The cascade Mellin spectral zeta $\zetacas(s)$ defined in
+Section~\ref{sec:construction} (Definition~\ref{def:zetacas}) is
+identically equal to the classical Riemann zeta function $\zeta(s)$
+on $\C \setminus \{1\}$.  This identity is in part a definitional
+choice: $\zetacas$ is \emph{defined} via the Euler product
+$\prod_p (1-p^{-s})^{-1}$ for $\mathrm{Re}(s) > 1$, then analytically
+continued.  The cascade-prime functional $\eta_p$ provides a
+$\Z[\pphi]$-graded interpretation of the Mellin transform but does
+\emph{not} reconstruct $\zetacas$ from purely cascade-internal data
+(Remark~\ref{rmk:zetacas-delta}).  The substance of the theorem is
+therefore that the cascade construction is \emph{compatible} with
+the classical $\zeta$, not that it derives $\zeta$ from new data.
+\end{theorem}
+
+\begin{theorem}[Critical line as fixed set of the composite involution]\label{thm:critline}
+Under the cascade-Mellin convention
+(Proposition~\ref{prop:sigmas}), the cascade Galois involution
+$\sigma$ is represented on the Mellin variable by the holomorphic
+involution $\iota: s \mapsto 1-s$. Combined with the
+reality involution $\bar{\ }: s \mapsto \bar{s}$ (present because
+$\zetacas$ has real Dirichlet coefficients), the composite
+anti-holomorphic involution $\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$ has
+fixed set
+\[
+\mathrm{Fix}_\C(\tau_{\mathrm{crit}}) = \{s \in \C : \mathrm{Re}(s) = 1/2\},
+\]
+the critical line. The zero set of $\zetacas$ is invariant under
+$\tau_{\mathrm{crit}}$ (Proposition~\ref{prop:zeroset-tau}) but not necessarily
+pointwise fixed (Remark~\ref{rmk:set-vs-point}).
+\end{theorem}
+
+\begin{theorem}[Dedekind reduction]\label{thm:dedekind}
+The natural $\Z[\pphi]$-Euler-product extension of $\zetacas$,
+indexed by the prime ideals of $\Z[\pphi]$ with weights chosen so
+that ramification is respected, equals the Dedekind zeta function
+$\zeta_K(s)$ of $K = \Q(\sqrt{5})$. In particular,
+\[
+\zetacas^{\,\Z[\pphi]}(s) = \zeta(s) \cdot L(s, \chi_5),
+\]
+where $\chi_5$ is the unique non-trivial \emph{quadratic} Dirichlet character modulo
+$5$ (see~\S\ref{sec:zetaK}).
+\end{theorem}
+
+\begin{proof}
+Both displayed identities are proved in
+Section~\ref{sec:zetaK}.  The first
+($\zetacas^{\,\Z[\pphi]}(s) = \zeta_K(s)$) is
+Theorem~\ref{thm:zetacas-zetaK}, by direct comparison of the
+$\Z[\pphi]$-Euler product (Definition~\ref{def:zetacasZphi}) with
+the classical Dedekind product over the prime ideals of
+$\mathcal{O}_K$.  The factorization
+$\zeta_K(s) = \zeta(s) \cdot L(s, \chi_5)$ is
+Theorem~\ref{thm:dedekind-factorization}, obtained by matching
+local factors using the standard splitting law for rational primes
+in $\Z[\pphi]$ governed by the Kronecker symbol $(5/p)$ (with the
+$p=2$ case handled separately as inert; see
+Proposition~\ref{prop:primes} and \S\ref{sec:zetaK}).  Composing these two identities yields the
+displayed equation; this is recorded as
+Corollary~\ref{cor:dedekind}.
+\end{proof}
+
+The following statement is recorded as conditional. It is the
+target a future proof would establish, and it is not proved here.
+
+\begin{theorem}[Conditional critical-line theorem]\label{thm:RH}
+Assume the cascade $\sigma$-fixed-point principle stated as
+Hypothesis~\textup{H$_{\sigma\text{-fix}}$} of \S\ref{sec:sigmafix}.
+Then all non-trivial zeros of $\zetacas$, equivalently all
+non-trivial zeros of $\zeta(s)$, lie on the critical line
+$\mathrm{Re}(s) = 1/2$.
+\end{theorem}
+
+\begin{remark}[Why Theorem~\ref{thm:RH} is conditional]\label{rmk:rh-conditional}
+Hypothesis $\textup{H}_{\sigma\text{-fix}}$ asserts \emph{pointwise}
+$\tau_{\mathrm{crit}}$-fixation of every non-trivial zero of $\zetacas$, where
+$\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$ is the composite of the cascade
+$\sigma$-action $\iota: s \mapsto 1-s$ (holomorphic) and the
+reality involution $\bar{\ }: s \mapsto \bar{s}$ (anti-holomorphic,
+present because $\zetacas$ has real coefficients). As a statement
+about zeros, this is \emph{equivalent} to the classical Riemann
+Hypothesis (Remark~\ref{rmk:Hsigmafix-RH}), so
+Theorem~\ref{thm:RH} is a conditional reformulation of RH in
+cascade language, not an unconditional proof. See
+\S\ref{sec:discussion} for further discussion.
+\end{remark}
+
+\subsection{Organization}
+
+Section~\ref{sec:cascade} summarizes the cascade framework from
+\cite{CascadeFoundations}. Section~\ref{sec:uniqueness} establishes
+the ζ-uniqueness theorem. Section~\ref{sec:construction}
+constructs $\zetacas(s)$ explicitly. Sections
+\ref{sec:euler}--\ref{sec:analytic} prove the three
+characterizing properties. Section~\ref{sec:identity}
+establishes Theorem~\ref{thm:casczeta}.
+Section~\ref{sec:zetaK} identifies the $\Z[\pphi]$-Euler-product
+extension with the Dedekind zeta of $\Q(\sqrt{5})$ and records the
+(\textdelta)-class reformulation verdict
+(Theorem~\ref{thm:dedekind}). Section~\ref{sec:sigmafix}
+formulates the $\sigma$-fixed-point hypothesis
+$\textup{H}_{\sigma\text{-fix}}$ and summarizes the partial support
+supplied by the cascade framework. Section~\ref{sec:mellinline}
+proves Theorem~\ref{thm:critline}. Section~\ref{sec:proof}
+assembles the conditional proof of Theorem~\ref{thm:RH} from
+$\textup{H}_{\sigma\text{-fix}}$. Section~\ref{sec:discussion}
+provides context and discusses the scope and limits of the
+construction.
+
+\section{The Cascade Framework}\label{sec:cascade}
+
+We summarize the relevant cascade framework results. Full derivations
+appear in \cite{CascadeFoundations}.
+
+\subsection{The cascade substrate}
+
+\begin{definition}[Cascade substrate]\label{def:substrate}
+The cascade substrate $\Omega \subset \R^8$ is the $E_8$ root system:
+the 240 vectors in $\R^8$ of squared norm $2$ given by
+\[
+\Omega = \{\mathbf{v} \in \Z^8 \cup (\Z + \tfrac{1}{2})^8 : \|\mathbf{v}\|^2 = 2, \textstyle\sum v_i \in 2\Z\}.
+\]
+\end{definition}
+
+\subsection{The icosian Galois twist}
+
+\begin{definition}[Galois twist $\sigma$]\label{def:sigma}
+The icosian Galois twist is the involution $\sigma: \mathbb{Q}(\sqrt 5)
+\to \mathbb{Q}(\sqrt 5)$ defined by $\sqrt 5 \mapsto -\sqrt 5$,
+equivalently $\pphi \mapsto \pphi^* = 1 - \pphi = -1/\pphi$.
+
+$\sigma$ extends to an involution on $\Omega$ via the Elkies icosian
+construction \cite{Elkies}: $E_8 \cong \mathcal{I} \oplus \mathcal{I}^*$
+as $\Z[\pphi]$-modules, where $\mathcal{I}$ is the icosian ring (the
+ring of integer-icosians in the quaternion algebra over
+$\mathbb{Q}(\pphi)$) and $\mathcal{I}^* = \sigma \mathcal{I}$.
+\end{definition}
+
+\subsection{The closure functional}
+
+\begin{definition}[Closure functional]\label{def:F}
+The cascade closure functional acts on sections $\Phi: \Omega \to \C$
+by
+\[
+F[\Phi] = \int_\Omega (\alpha R[\Phi] + \beta E[\Phi] - \gamma Q[\Phi]) \, dV
+\]
+where $R, E, Q$ are the rank-0 (Laplacian), rank-1 (divergence-squared),
+and rank-2 (traceless symmetric quadratic) invariants of $\Phi$, and
+$\alpha, \beta, \gamma \in \R$ are real cascade-determined
+coefficients (no rationality is assumed; see
+\cite[F5 statement]{PaperXXXVI}, which works for arbitrary real
+coefficients). Formal expressions:
+\begin{align*}
+R[\Phi] &= g^{ij}\partial_i\partial_j\Phi, \\
+E[\Phi] &= (\partial \cdot \Phi)^2, \\
+Q[\Phi] &= \Phi_{ij}\Phi^{ij} - \tfrac{1}{d}(\Phi^i_i)^2.
+\end{align*}
+\end{definition}
+
+\begin{hypothesis}[F5: discrete factor-2 finite-sum equality, conditional on H-SIG]\label{hyp:F5}
+Following Paper~XXXVI's formulation
+\cite[Theorem F5 under H-SIG]{PaperXXXVI}, we adopt as a working
+hypothesis the \emph{discrete} statement: under H-SIG, for the
+discrete cascade closure-functional surrogate $F_{\mathrm{disc}}$
+evaluated on a finite indexed family of fields supported on two
+$\sigma$-conjugate $H_4$ copies, the value of
+$F_{\mathrm{disc}}$ on the $\sigma$-fixed sub-class equals the
+value on its image under $\sigma$ up to a factor of $2$
+(``factor-2 finite-sum equality''; see
+\cite[lines 539--562]{PaperXXXVI} for the precise indexed-family
+formulation).  We do \emph{not} state F5 here as an unrestricted
+operator equivariance $F[\sigma\Phi] = F[\Phi]$ on arbitrary
+fields $\Phi$, which would be strictly stronger than what
+Paper~XXXVI establishes.  Where the present paper requires
+spectral-level Galois stability of $F|_{H_4}$ (e.g.\ in
+Lemma~\ref{lem:Fsigma-commute}), this is obtained from the
+additional (H-Mat) integer-matrix-realisation hypothesis stated
+in Lemma~\ref{lem:Fsigma-commute} below (this paper, not
+Paper~XXXVI; H-Mat is not derived from F5).  Earlier F5 formulations in
+\cite{CascadeFoundations} are marked superseded by the document's
+own banner; the proof of the discrete F5 used here is in
+Paper~XXXVI and is not re-derived in this paper.
+\end{hypothesis}
+
+\begin{remark}[Scope warning for F5 usage in this paper]\label{rmk:F5_scope}
+Subsequent invocations of Hypothesis~\ref{hyp:F5} appear in
+Section~\ref{sec:functional} (motivational/contextual reference
+only).  Note: Lemma~\ref{lem:Fsigma-commute} does \emph{not} use
+F5; it relies on the additional (H-Mat) integer-matrix
+realisation hypothesis stated there (per the explicit caveat in
+that lemma's proof).  Where the flow of the argument requires
+unrestricted $\sigma$-equivariance of $F|_{H_4}$ as an operator on
+$\R^{120}$, we note that this stronger statement is \emph{not} a
+consequence of F5 and is either introduced as a separate
+hypothesis or downgraded to a Galois statement on the spectrum
+(cf.\ Lemma~\ref{lem:Fsigma-commute},
+Remark~\ref{rmk:sigma_on_R120}).
+\end{remark}
+
+\subsection{The $\pphi$-adic structure}
+
+\begin{definition}[$\pphi$-adic scale]\label{def:valuation}
+For $x \in \R_+$, the $\pphi$-adic scale $v_\pphi(x) \in \Z$ is the
+unique integer such that
+\[
+x = \pphi^{v_\pphi(x)} u, \quad u \in [1, \pphi).
+\]
+The corresponding multiplicative metric is
+$\|x\|_\pphi = \pphi^{-v_\pphi(x)}$.
+\end{definition}
+
+\begin{remark}[Not a number-field valuation]\label{rmk:phi_not_valuation}
+$v_\pphi$ is \emph{not} a non-archimedean valuation on the number
+field $K = \Q(\sqrt 5)$: in $\Z[\pphi]$, $\pphi$ is a unit (with
+inverse $\pphi - 1$), so it does not generate a prime ideal, and
+the formula $v_\pphi(xy) = v_\pphi(x) + v_\pphi(y)$ fails for
+generic $x, y \in K$.  $v_\pphi$ is defined here only as a
+multiplicative scale on the positive real line, used in the
+$\pphi$-Mellin transform (Definition~\ref{def:mellin}); we keep
+the name ``$\pphi$-adic'' for continuity with the cascade
+infrastructure literature, but no number-theoretic valuation
+properties are claimed.
+\end{remark}
+
+\begin{definition}[$\pphi$-Mellin transform, centered Haar normalisation]\label{def:mellin}
+For a function $f: \R_+ \to \C$ with appropriate decay, the
+$\pphi$-Mellin transform is taken in the centered Haar
+normalisation:
+\[
+\mathcal{M}_\pphi[f](s) = \int_0^\infty f(x)\, x^{s-1/2}\, \frac{dx}{x}.
+\]
+This convention puts the multiplicative-inversion symmetry
+$f(x) \mapsto f(1/x)$ at the involution $s \mapsto 1 - s$:
+\[
+\mathcal{M}_\pphi[f \circ \mathrm{inv}](s)
+= \int f(1/x) x^{s - 1/2} \frac{dx}{x}
+= \int f(u) u^{-(s-1/2)} \frac{du}{u}
+= \mathcal{M}_\pphi[f](1 - s).
+\]
+The non-centered convention $\int f(x) x^{s-1} dx/x$ would put the
+inversion symmetry at $s \mapsto 2 - s$ instead and is not used
+in this paper.
+\end{definition}
+
+\subsection{Cascade primes and rational primes}
+
+\begin{proposition}[Splitting law for rational primes in $\Z[\pphi]$]\label{prop:primes}
+Every rational prime $p \in \Z$ has a determined splitting behaviour
+in the ring of integers $\Z[\pphi]$ of $K = \Q(\sqrt 5)$, governed
+by the Kronecker symbol $\left(\tfrac{5}{p}\right)$ (which agrees
+with the Legendre symbol for odd $p \neq 5$ and is defined
+separately for $p = 2$):
+\begin{itemize}
+\item $p = 5$ is the unique ramified prime, with
+$(5) = \mathfrak p_5^2$ as ideals where
+$\mathfrak p_5 = (\sqrt 5)$ has norm $N(\mathfrak p_5) = 5$;
+\item $p = 2$: since $5 \equiv 5 \pmod 8$, the Kronecker symbol
+$\left(\tfrac{5}{2}\right) = -1$ and $p = 2$ is \emph{inert};
+$(2)$ remains prime with norm $4$;
+\item odd $p \neq 5$ with $\left(\tfrac{5}{p}\right) = +1$
+(equivalently $p \equiv \pm 1 \pmod 5$): $p$ \emph{splits},
+$(p) = \mathfrak p \cdot \sigma\mathfrak p$ for two distinct
+prime ideals each of norm $p$;
+\item odd $p \neq 5$ with $\left(\tfrac{5}{p}\right) = -1$
+(equivalently $p \equiv \pm 2 \pmod 5$): $p$ remains prime
+(\emph{inert}); the prime ideal $(p)$ has norm $p^2$.
+\end{itemize}
+The rational prime $p$ is recovered from $\Z[\pphi]$-ideal data as
+the residue characteristic of the prime ideal(s) above $p$
+(\emph{not} as the norm, which equals $p^2$ in the inert case).
+\end{proposition}
+
+\begin{proof}
+Standard splitting law for the quadratic field $\Q(\sqrt 5)$
+\cite{Cox}.  Note: the converse direction --- that every prime
+element of $\Z[\pphi]$ restricts to a rational prime --- does
+\emph{not} hold, because split primes $p = \pi \cdot \sigma\pi$ in
+$\Z[\pphi]$ have $\pi$ prime in $\Z[\pphi]$ but $\pi \notin \Z$.
+The proposition is therefore a one-direction recovery statement,
+not a bijection between rational primes and $\Z[\pphi]$ primes.
+\end{proof}
+
+\begin{remark}[Scope]\label{rmk:cascade_primes_scope}
+This proposition is used elsewhere in the paper only to justify
+the $\Z[\pphi]$-Euler-product extension of \S\ref{sec:zetaK}; it is
+not required for the cascade $\widehat\zeta(z)$ construction
+(\S\ref{sec:zhat}) or for the spectral count
+(Theorem~\ref{thm:spectral_attractor}).
+\end{remark}
+
+\section{The cascade-native dynamical zeta $\widehat\zeta(z)$}\label{sec:zhat}
+
+This section constructs the paper's principal new analytic object:
+the cascade's own $\sigma$-symmetric dynamical zeta, built on the
+F1-motivated $\varphi$/600-cell substrate with the specified
+clock and cocycle.  The finite clock, shell, cocycle, and
+coefficient arithmetic are computer-verified in
+\texttt{papers/cascade-derivation/scripts/}. The sections that
+follow (\S\ref{sec:uniqueness}--\S\ref{sec:proof}) treat the
+classical $\zeta(s)$ reformulation separately as infrastructure.
+
+\subsection{The pentagonal clock}\label{subsec:clock}
+
+\begin{theorem}[Pentagonal torsion in $2I$; computer-verified]\label{thm:pent_torsion}
+Let $\tau \in 2I$ be an order-10 element in the binary icosahedral
+group (= 120 unit icosians, $2I \cong \mathrm{SL}_2(\mathbb{F}_5)$).
+Then $\tau^5 = -1$ is central, and the left-translation
+$T_\tau: 2I \to 2I$, $T_\tau(v) = \tau \cdot v$, decomposes $2I$
+into exactly 12 disjoint cycles of length 10, with
+$\mathrm{Fix}(T_\tau^n) = \emptyset$ for $1 \leq n < 10$ and
+$\mathrm{Fix}(T_\tau^{10}) = 2I$.
+\end{theorem}
+
+\begin{proof}
+$2I$ has order 120 with element-order distribution
+$\{1:1,\ 2:1,\ 3:20,\ 4:30,\ 5:24,\ 6:20,\ 10:24\}$ (classical, +
+computer-verified). The 24 order-10 elements split into 2 conjugacy
+classes of 12 each; $\tau^5$ is the unique order-2 central element
+$-1$. Left-translation by an order-10 element is a permutation of
+order 10 with all orbits of length equal to $\mathrm{ord}(\tau) = 10$
+(free action), so $2I$ decomposes into $|2I| / \mathrm{ord}(\tau) =
+12$ orbits of length 10. Sim verification:
+\texttt{derive\_pentagonal\_clock\_B5\_B6.py}.
+\end{proof}
+
+\subsection{Shell structure and cocycle}\label{subsec:shell}
+
+\begin{theorem}[Shell--class bijection; imported]\label{thm:shell_class}
+The Euclidean distance shells of $2I$ from the identity are 9 in
+number, with sizes $\{1, 12, 20, 12, 30, 12, 20, 12, 1\}$. Each
+shell coincides with exactly one $2I$-conjugacy class, under an
+explicit bijection.
+\end{theorem}
+
+\begin{proof}[Proof (imported)]
+The shell--class bijection is established locally in
+\cite[lines 204--223]{PaperXXII} (the shell-decomposition section
+of Paper XXII) and is re-verified in exact $\Z[\varphi]$
+arithmetic by
+\texttt{papers/paper-xxii/scripts/run\_icosian\_exact.py}.  No
+proof is reproduced here; this paper uses the result as an
+imported fact.
+\end{proof}
+
+\begin{definition}[Antipodal-even radial cocycle]\label{def:kappa}
+For $v \in 2I$ with shell index $s(v) \in \{0, 1, \ldots, 8\}$
+(Theorem~\ref{thm:shell_class}), define
+\[
+\kappa(v) := (s(v) - 4)^2 \in \{0, 1, 4, 9, 16\}.
+\]
+This is the chosen lowest-degree nonconstant antipodal-even
+polynomial in $s(v)$ used in the audit; it is monic-quadratic in
+$s(v)-4$.  We do \emph{not} claim canonical, cohomological, or
+normalisation-independent uniqueness: additive/multiplicative
+rescalings of $\kappa$ alter the $K$ values and hence the Lucas
+factors in the $\widehat\zeta$ formula, so the in-paper
+$K$-multiset is reported only for this fixed normalisation
+choice.  Affine-degree alternatives collapse to constant weighting
+on the shell decomposition; see
+\texttt{derive\_pentagonal\_clock\_B8p\_B9.py}.
+\end{definition}
+
+\subsection{Cycle weights}\label{subsec:K}
+
+\begin{theorem}[$K$-multiset for the script-selected $\tau$; computer-verified for the selected representative]\label{thm:K_multiset}
+Fix the script-selected order-10 representative $\tau$ in
+\texttt{derive\_pentagonal\_clock\_B8p\_proper.py}.  For each
+$T_\tau$-cycle $C$, define
+$K(C) := \sum_{v \in C} \kappa(v)$. Then, as
+\emph{computer-verified for this selected representative} (the
+Python script enumerates the 12 cycles and sums $\kappa$ along
+each, with deterministic exact arithmetic in $\Z$), the multiset
+\[
+\{K(C) : C \in \mathrm{Cycles}(T_\tau)\} = \{72:1,\ 0:1,\ 52:5,\ 20:5\}
+\]
+holds (4 distinct values with multiplicities summing to 12).  The
+present statement is therefore a computer-verified identity for
+the selected $\tau$, not a representative-independent theorem.
+Independence of this multiset across the two $2I$-conjugacy
+classes of order-10 elements is not proved here (see proof note
+below).
+The four profile types are:
+\begin{itemize}
+\item $K = 72$: one cycle with shell distribution $\{0:1, 1:2, 3:2, 5:2, 7:2, 8:1\}$
+  (the identity coset $\langle \tau \rangle$).
+\item $K = 0$: one cycle entirely in shell 4 (size 30, the equatorial).
+\item $K = 52$: five cycles with shell distribution $\{1:2, 2:2, 4:2, 6:2, 7:2\}$.
+\item $K = 20$: five cycles with shell distribution $\{2:2, 3:2, 4:2, 5:2, 6:2\}$.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+Computed exactly in $\Q(\sqrt 5)$ Fraction arithmetic in
+\texttt{derive\_pentagonal\_clock\_B8p\_proper.py} for the chosen
+order-10 representative $\tau$.  Note: the pentagonal clock has
+two $2I$-conjugacy classes of order-10 elements (one per coset
+representative under the antipodal involution); the $K$-multiset is
+verified for the script-selected representative and we do
+\emph{not} prove independence of the multiset across the two
+order-10 conjugacy classes, although class-independence is
+expected by the antipodal-even cocycle invariance of $\kappa$.
+\end{proof}
+
+\subsection{$\widehat\zeta(z)$ closed form}\label{subsec:zhat_form}
+
+\begin{theorem}[Exact closed form for the script-selected clock representative; M1]\label{thm:zhat_form}
+For the same script-selected order-10 representative $\tau \in 2I$
+as Theorem~\ref{thm:K_multiset} (i.e.\ the representative used in
+\texttt{derive\_pentagonal\_clock\_B8p\_proper.py}), let
+\[
+\zeta_+(z) := \prod_{C} (1 - \varphi^{K(C)} z^{10})^{-1}
+  \in \mathbb{Z}[\varphi][[z]]
+\]
+be the weighted Artin--Mazur zeta for the clock $T_\tau$ with cocycle
+$\kappa$. Its $\sigma$-symmetric combination
+\[
+\widehat\zeta(z) := \zeta_+(z) \cdot \sigma(\zeta_+(z))
+\]
+lies in $\mathbb{Z}[[z]]$ and factors as
+\[
+\widehat\zeta(z) = (1 - L_{72} z^{10} + z^{20})^{-1}
+  (1 - L_0 z^{10} + z^{20})^{-1}
+  (1 - L_{52} z^{10} + z^{20})^{-5}
+  (1 - L_{20} z^{10} + z^{20})^{-5},
+\]
+where $L_K$ is the $K$-th Lucas number ($L_0 = 2$, $L_{20} = 15{,}127$,
+$L_{52} = 73{,}681{,}302{,}247$, $L_{72} = 1{,}114{,}577{,}054{,}219{,}522$).
+Coefficients of $\widehat\zeta(z)$ are exact integers, computer-verified to
+degree 30.
+\end{theorem}
+
+\begin{proof}
+Each factor $(1 - L_K z^{10} + z^{20}) = (1 - \varphi^K z^{10})(1 - \varphi^{-K} z^{10})$
+by the Lucas identity $L_K = \varphi^K + \varphi^{-K}$ (valid for even $K$;
+all four $K$-values above are even). The $\sigma$-symmetric product
+$\zeta_+ \cdot \sigma(\zeta_+)$ pairs each $\varphi^K$ factor with
+$\sigma(\varphi^K) = (-1)^K \varphi^{-K} = \varphi^{-K}$ (even $K$),
+producing the quadratic Lucas factor. Integer coefficients follow
+because $L_K \in \mathbb{Z}$. Sim verification:
+\texttt{derive\_pentagonal\_clock\_B8p\_proper.py} with $[z^{10}]
+\widehat\zeta = L_{72} + L_0 + 5 L_{52} + 5 L_{20} = 1{,}114{,}945{,}460{,}806{,}394$.
+\end{proof}
+
+\subsection{$\sigma$-symmetry and Mellin pairing}\label{subsec:zhat_sym}
+
+\begin{theorem}[Mellin pole-symmetry; M2]\label{thm:zhat_sym}
+Under the cascade-canonical Mellin pairing $z^{10} = \varphi^{10(1/2-s)}$
+($N = \varphi^{10}$ the fundamental clock-period scale), the
+\emph{real parts} of the poles of $\widehat\zeta(z(s))$ are located at
+\[
+\mathrm{Re}(s) \in \left\{\tfrac{1}{2} \pm \tfrac{K}{10} : K \in \{0, 20, 52, 72\}\right\}
+\]
+and are reciprocally paired as $\{(5-K)/10, (5+K)/10\}$ summing to
+$1$.  Imaginary periodic copies arise from solving for $s$ via the
+complex logarithm in $w \mapsto z^{10}$ (the $w = z^{10}$
+substitution introduces $2\pi i / 10\log\varphi$ periodicity along
+the imaginary axis when one inverts $z = \varphi^{-s}$).  More precisely,
+$\widehat\zeta$ as a function of $w = z^{10}$ is a palindromic
+rational function:
+\[
+\widehat\zeta(w^{-1}) = w^{24}\,\widehat\zeta(w),
+\]
+and the completed zeta
+$\widehat\zeta_\ast(w) := w^{12}\,\widehat\zeta(w)$
+satisfies $\widehat\zeta_\ast(w^{-1}) = \widehat\zeta_\ast(w)$.
+Under $w = \varphi^{10(1/2-s)}$ this translates to
+$\widehat\zeta_\ast(1-s) = \widehat\zeta_\ast(s)$.
+\end{theorem}
+
+\begin{proof}
+Each Lucas factor $(1 - L_K w + w^2)$ with $w = z^{10}$ is
+palindromic in $w$: substituting $w \mapsto w^{-1}$,
+$1 - L_K w^{-1} + w^{-2} = w^{-2}(w^2 - L_K w + 1)
+= w^{-2}(1 - L_K w + w^2)$.
+Hence each factor $(1 - L_K w + w^2)^{-1}$ transforms as
+$(1 - L_K w^{-1} + w^{-2})^{-1} = w^2 (1 - L_K w + w^2)^{-1}$,
+so $\prod_K (1 - L_K w + w^2)^{-m_K}$ satisfies
+$\widehat\zeta(w^{-1}) = w^{2 \sum m_K} \widehat\zeta(w)
+= w^{24} \widehat\zeta(w)$
+since $\sum m_K = 1 + 1 + 5 + 5 = 12$.  The substitution
+$w(s) := \varphi^{10(1/2-s)}$ sends $s \mapsto 1-s$ to
+$w \mapsto w^{-1}$, giving
+$\widehat\zeta(z(1-s)) = w(s)^{24} \widehat\zeta(z(s))
+= \varphi^{240(1/2-s)}\,\widehat\zeta(z(s))$.
+Defining $\widehat\zeta_\ast(s) := w(s)^{12}\,\widehat\zeta(z(s))
+= \varphi^{120(1/2-s)}\,\widehat\zeta(z(s))$, we compute
+$\widehat\zeta_\ast(1-s) = w(1-s)^{12}\,\widehat\zeta(z(1-s))
+= w(s)^{-12} \cdot w(s)^{24}\,\widehat\zeta(z(s))
+= w(s)^{12}\,\widehat\zeta(z(s)) = \widehat\zeta_\ast(s)$,
+which is the symmetric functional equation.  Pole real-parts: at the four $K$ values, the
+quadratic factor $1 - L_K w + w^2 = (1 - \varphi^K w)(1 - \varphi^{-K} w)$
+vanishes when $w = \varphi^{\pm K}$, i.e.\ when
+$\varphi^{10(1/2-s)} = \varphi^{\pm K}$ in the principal branch,
+giving $\mathrm{Re}(s) = \tfrac{1}{2} \mp \tfrac{K}{10}$ (the
+imaginary part is determined modulo $2\pi/(10 \log\varphi)$).
+Sim-verified in
+\texttt{papers/cascade-derivation/scripts/derive\_pentagonal\_clock\_B11\_mellin.py}.
+\end{proof}
+
+\subsection{Obstruction to a specific Hecke $L$-function identification}\label{subsec:alpha_escape}
+
+\begin{remark}[Obstruction to one natural Hecke matching; no global identification established; under this
+parametrisation; M3]\label{rmk:hecke_obs}
+The cascade dynamical zeta $\widehat\zeta(z)$ is a finite rational
+function of $z^{10}$ (Theorem~\ref{thm:zhat_form}); it is not
+presented in this paper as an Euler product over the primes of any
+number field, and we do \emph{not} establish an
+identification of $\widehat\zeta$ with any global Hecke
+$L$-function $L(s, \chi)$ over $K = \Q(\sqrt 5)$.
+
+The natural would-be identification $L_K \leftrightarrow$ Hecke
+character at split primes encounters a structural obstruction: if
+one \emph{tentatively} proposed $\widehat\zeta(z) = L(s, \chi_K)$
+with the Lucas factor $(1 - L_K w + w^2)$ matching local Euler
+factors at split primes, the resulting local prescription
+$\chi_K(\mathfrak p)$ would have absolute value $\varphi^K$ on
+unramified split primes, while Hecke-character absolute values are
+determined by the archimedean type and are unitary on the
+norm-one idele class group (\cite[VI.1, VII.6]{Neukirch1999}).
+This rules out one specific would-be identification but does not
+constitute a complete classification of all possible global
+$L$-function identifications of $\widehat\zeta$, which would
+require a derivation of the Euler-factor matching from the
+$\widehat\zeta$ definition --- a step we do not supply.
+
+Thus $\widehat\zeta$ is a finite Artin--Mazur-style
+dynamical zeta of the pentagonal clock; its identification (or
+non-identification) with classical global $L$-function families is
+left open.
+\end{remark}
+
+\subsection{Empirical H$_4$-oscillator bridge}\label{subsec:h4o_bridge}
+
+The aria-chess companion repository \emph{reports} a derivation of
+an H$_4$-native oscillator law
+(\texttt{cascade-h4-oscillator-law.md}; that document claims
+Rust-verified 7/7 tests and 25+ empirical experiments, none of
+which are re-derived or audited within this paper).  The law (★) is an H$_4$-covariant quaternion
+flow on the 120 vertices of $2I$:
+\[
+\frac{dq_v}{dt} = q_v \cdot \mathrm{Im}\Bigl[ q_v^* D_c q_v +
+  \sum_{w \sim v} A_{vw} \, \Xi_{vw} \Bigr],
+\]
+with Berry term $D_c = \omega_1 J_1 \Pi_1 + \omega_{11} J_{11}
+\Pi_{11}$ (frequencies forced by Coxeter structure, $\omega_m = 2\pi
+m / (30 \Delta t)$) and pair interaction $\Xi_{vw}$ bilinear in
+$\mathrm{Im}(q_v^* q_w)$ (Frobenius-forced cross-plane PAC).
+
+\begin{remark}[M4: External empirical report on the H$_4$O dynamical bridge]\label{rmk:h4o_bridge}
+The following items are reported externally by the aria-chess
+companion repository and are \emph{not} re-derived or audited
+within this paper.  Numerical artefacts cited live at
+\texttt{aria-chess/run\_artifacts/h4\_lyapunov\_spectrum.json}
+and related files; we record them here as external context only.
+The cited simulations (\texttt{run\_h4\_lyapunov\_spectrum.py},
+\texttt{run\_h4\_20seed.py}, 25+ reported runs) report:
+\begin{enumerate}
+\item \textbf{Torus attractor.} Phase-space dynamics converge to a
+  toroidal attractor (integrable, not chaotic); Lyapunov exponent
+  $\lambda_1 = +0.00384$; 4/4 torus certification tests pass at
+  $10^5$ sub-ticks (irrational ratio $1.000154$, 2D fill 47\%,
+  linear independence $R^2 = 0.26$).
+\item \textbf{8 paired velocity-covariance eigenvalues
+  (externally reported).} The H$_4$O spectrum is reported to
+  exhibit 8 σ-paired modes with $\mathrm{PC}_2/\mathrm{PC}_1
+  = 0.9997$.  The arithmetic-side $\widehat\zeta(s)$ has
+  three nontrivial reciprocal pole-location pairs (at
+  $1/2 \pm K/10$ for $K \in \{20, 52, 72\}$, with multiplicities
+  $\{1, 5, 5\}$) plus one self-reciprocal $K=0$ location at
+  $s = 1/2$ (multiplicity $1$, with imaginary periodic copies on
+  $\mathrm{Re}(s) = 1/2$) — \emph{not} 8 pairs.  Any candidate identification
+  of the form ``8 = 3 non-trivial $K$-pair $\times$ 2 Coxeter
+  planes + 2 self-pairs'' would require a Coxeter-plane doubling
+  convention that this paper does not derive.  We therefore
+  report the two counts separately and do not claim a
+  multiplicity-level correspondence.
+\item \textbf{Frobenius-forced PAC.} $K_{11;1,1} = \varphi^{-7}$
+  produces structurally non-vanishing $\theta$-$\gamma$
+  phase-amplitude coupling with $\mathrm{MI} = 0.046 \pm 0.0001$
+  (20 seeds), matching cortical ECoG PAC range.
+\end{enumerate}
+This externally-reported physical dynamics on the same 600-cell
+substrate is reported to exhibit σ-paired spectral structure as a
+qualitative feature; the precise multiplicity counts on the
+analytic $\widehat\zeta$ side ($\{1,1,5,5\}$ over 4 $K$-values) and
+on the externally-reported H$_4$O side (8 paired modes) are not the
+same and we do not identify them.
+\end{remark}
+
+\begin{remark}[Cascade-classical relation]
+$\widehat\zeta(s)$ is \emph{not} the Riemann zeta $\zeta(s)$. Its pole
+staircase at $\mathrm{Re}(s) = 1/2 \pm K/10$ is structurally
+different from $\zeta(s)$'s hypothetical critical-line zero
+concentration. $\widehat\zeta$ is the cascade's own
+σ-symmetric dynamical zeta — a new analytic-geometric object
+built on the F1-motivated $\varphi$/600-cell substrate (with the
+chosen clock and cocycle), with its own closed form,
+σ-pole-symmetry, an obstruction to a specific Hecke $L$-function
+identification, and a reported external H$_4$O dynamical context. Whether the pole staircase
+of $\widehat\zeta$ projects (under some multi-scale or prime-detector
+bridge) to the Riemann-zero critical line of $\zeta(s)$ is a
+separate question, pursued in subsequent work.
+\end{remark}
+
+\subsection{Structural B14 bridge: $\sigma$-pairing on both sides (no mode-level identification)}\label{subsec:B14}
+
+\begin{remark}[B14: $\sigma$-pairing as a shared qualitative feature]\label{rmk:B14}
+The arithmetic side ($\widehat\zeta(s)$) and the dynamical side
+(externally-reported H$_4$O velocity-covariance spectrum) both
+exhibit $\sigma$-pairing, but the counts and multiplicities are
+\emph{different}, and we do \emph{not} claim a mode-level
+correspondence:
+\begin{itemize}
+\item \textbf{Arithmetic side ($\widehat\zeta(s)$).}
+  Three nontrivial reciprocal pole-location pairs at
+  $1/2 \pm K/10$ for $K \in \{20, 52, 72\}$ with multiplicities
+  $\{1, 5, 5\}$, plus one $K = 0$ self-reciprocal location at
+  $s = 1/2$ (multiplicity $1$) on the rational function in
+  $w = z^{10}$.
+\item \textbf{Dynamical side (H$_4$O, externally reported).}
+  8 σ-paired velocity-covariance eigenvalue pairs reported by the
+  external aria-chess H$_4$O closure-dynamics implementation
+  (Remark~\ref{rmk:aria_attractor}; values ranging from $\sim 25$
+  to $\sim 2.6 \times 10^6$ with relative splittings
+  $\sim 5 \times 10^{-4}$).  These are velocity-covariance
+  eigenvalues of the dynamics, \emph{not} adjacency Laplacian
+  eigenvalues; the latter (used in
+  Theorem~\ref{thm:spectral_attractor}) are
+  $\{0, 12-6\varphi, 12-4\varphi, 9, 12, 14, 8+4\varphi, 15, 6+6\varphi\}$.
+\end{itemize}
+The 4-vs-8 mismatch and absence of a multiplicity-level identification
+is explicit: B14 records $\sigma$-pairing as a shared qualitative
+feature of two independently-developed objects on the same 600-cell
+substrate, not as a structural theorem about coincident invariants.
+Any conjectural multiplicity-level identification would depend on
+representational conventions that this paper does not derive; we
+therefore record this only as a structural analogy.
+\end{remark}
+
+\begin{remark}[What the structural analogy establishes]
+The B14 bridge records that two independently-developed objects on
+the same 600-cell substrate — the arithmetic
+$\widehat\zeta(s)$ pole structure (multiplicities
+$\{1,1,5,5\}$ over four $K$-values) and the externally-reported
+H$_4$O velocity-covariance spectrum (8 σ-paired pairs) — both
+exhibit σ-pairing.  The shared σ-pairing is a qualitative feature;
+the multiplicity counts differ, and any $\widehat\zeta$-pole
+$\leftrightarrow$ H$_4$O-eigenvalue identification (Coxeter-plane
+$\kappa$-lift or otherwise) remains open and is not established
+here.  We do \emph{not} stage this as a Langlands-style ``dual
+witness'' theorem; it is recorded as a structural analogy on a
+shared substrate, with externally-reported empirical input on one
+side and exact $\Q(\sqrt 5)$-arithmetic on the other.
+\end{remark}
+
+\section{Uniqueness Theorem for Riemann Zeta}\label{sec:uniqueness}
+
+We establish the characterization of $\zeta(s)$ that our
+cascade construction must match.
+
+\begin{theorem}[$\zeta$ uniqueness]\label{thm:unique}
+Let $f$ be a function meromorphic on $\C$ with at most a simple
+pole at $s=1$ (and no other poles), satisfying:
+\begin{enumerate}
+\item[(U1)] \textbf{Euler product:} $f(s) = \prod_p (1 - p^{-s})^{-1}$ for
+$\mathrm{Re}(s) > 1$, where the product is over all rational primes.
+\item[(U2)] \textbf{Functional equation:} $f(s) = \chi(s) f(1-s)$ where
+\[
+\chi(s) = 2^s \pi^{s-1} \sin(\pi s/2) \Gamma(1-s).
+\]
+\item[(U3)] \textbf{Analytic structure:} $f$ is meromorphic on $\C$ with
+a simple pole at $s=1$ of residue 1, and $f(s)$ has zeros at
+$s = -2, -4, -6, \ldots$ (the ``trivial zeros'': in the functional
+equation $\zeta(s) = \chi(s)\,\zeta(1-s)$ with
+$\chi(s) = 2^s \pi^{s-1} \sin(\pi s/2)\,\Gamma(1-s)$, the
+$\sin(\pi s/2)$ factor vanishes at negative even integers
+$s = -2, -4, \ldots$, while $\zeta(1-s)$ at those points equals
+$\zeta(3), \zeta(5), \ldots$, all finite and non-zero, and
+$\Gamma(1-s)$ is also finite and non-zero there; hence
+$\zeta(s) = 0$ at those points).
+\end{enumerate}
+
+Then $f(s) = \zeta(s)$ for all $s \in \C \setminus \{1\}$.
+\end{theorem}
+
+\begin{proof}
+Property (U1) determines $f(s)$ uniquely on $\mathrm{Re}(s) > 1$:
+the Euler product converges absolutely there, and the factorization
+into primes is unique. Hence $f|_{\mathrm{Re}(s) > 1}$ is fixed
+by (U1) alone, and equals $\zeta|_{\mathrm{Re}(s) > 1}$.
+
+By analytic continuation (unique), $f(s)$ is uniquely determined on
+its full domain by its values on any non-empty open subset. Since
+$f|_{\mathrm{Re}(s) > 1} = \zeta|_{\mathrm{Re}(s) > 1}$ (both
+meromorphic, equal on an open half-plane), and both $f$ and $\zeta$
+are meromorphic on $\C \setminus \{1\}$, they agree on their common
+domain.
+
+Property (U2) then relates $f$ on $\mathrm{Re}(s) < 0$ to $f$ on
+$\mathrm{Re}(s) > 1$ via $f(s) = \chi(s) f(1-s)$. Since both $f$
+and $\zeta$ satisfy the same functional equation, they agree on
+$\mathrm{Re}(s) < 0$.
+
+By the identity theorem for meromorphic functions, agreement on
+the open half-plane $\mathrm{Re}(s) > 1$ together with meromorphic
+continuation determines $f$ uniquely on all of
+$\C \setminus \{1\}$.  Property (U3) is then a consistency
+cross-check: both $f$ and $\zeta$ have the stated pole at $s = 1$
+and trivial zeros at $s = -2, -4, \ldots$.
+
+Hence $f = \zeta$ on all of $\C \setminus \{1\}$.
+\end{proof}
+
+\begin{corollary}\label{cor:unique}
+Any meromorphic function on $\C$ with at most a simple pole at
+$s = 1$ satisfying (U1), (U2), (U3) is identically the Riemann zeta
+function.
+\end{corollary}
+
+\section{Definition of Cascade Mellin Zeta and cascade-prime
+interpretation}\label{sec:construction}
+
+We define $\zetacas(s)$ by the classical Euler product (with its
+analytic continuation), and record a cascade-prime functional
+$\eta_p$ as interpretive infrastructure linking the Mellin
+transform to a $\Z[\pphi]$-graded reading.  The classical
+verifications (U1)--(U3) in subsequent sections are then immediate
+or imported from the literature, since $\zetacas \equiv \zeta$ by
+construction (Remark~\ref{rmk:zetacas-delta}).
+
+\subsection{The cascade Hilbert space}
+
+\begin{definition}[Cascade Hilbert space]\label{def:cascHilbert}
+Let $\HH_\pphi = L^2(\R_+, dx/x)$ be the Hilbert space of square-
+integrable functions on $\R_+$ with the scale-invariant measure
+$dx/x$, with inner product
+\[
+\langle f, g \rangle = \int_0^\infty \overline{f(x)} g(x) \frac{dx}{x}.
+\]
+\end{definition}
+
+\subsection{Cascade-prime structure}
+
+For each rational prime $p$, define the cascade-prime functional
+$\eta_p$ by the formal series
+\[
+\eta_p[f] = \sum_{k=1}^\infty \frac{f(p^k)}{p^{k/2}}.
+\]
+This is a densely-defined linear functional on a suitable subspace of
+$\HH_\pphi$. We do \emph{not} claim convergence on all of $\HH_\pphi$;
+convergence depends on the test function.
+
+\begin{lemma}[Convergence domain of $\eta_p[x^{s-1/2}]$; formal test family, not in $L^2(\R_+, dx/x)$]\label{lem:etap-convergence}
+The function $f(x) = x^{s-1/2}$ is \emph{not} an element of
+$L^2(\R_+, dx/x)$ for any $s \in \C$ (its Mellin norm diverges
+identically), so what follows is a \emph{formal} computation on
+the test-family $\{x^{s-1/2}\}$ rather than a Hilbert-space inner
+product on $\HH_\pphi$.  With that caveat:
+For the test function $f(x) = x^{s-1/2}$,
+\[
+\eta_p[x^{s-1/2}] = \sum_{k=1}^\infty p^{k(s-1)},
+\]
+which is a geometric series with ratio $p^{s-1}$. It converges
+absolutely if and only if $\mathrm{Re}(s) < 1$, and on this half-plane
+\[
+\eta_p[x^{s-1/2}] = \frac{p^{s-1}}{1 - p^{s-1}} = \frac{1}{p^{1-s} - 1}.
+\]
+\end{lemma}
+
+\begin{proof}
+$|p^{k(s-1)}| = p^{k(\mathrm{Re}(s) - 1)}$. The series $\sum_k r^k$
+converges absolutely iff $|r| < 1$, i.e.\ $\mathrm{Re}(s) < 1$. On
+that domain the geometric sum gives $p^{s-1}/(1 - p^{s-1})$.
+\end{proof}
+
+\begin{remark}[Half-plane mismatch]\label{rmk:halfplane}
+Lemma~\ref{lem:etap-convergence} shows the natural domain of $\eta_p$
+on the test family $\{x^{s-1/2}\}$ is the left half-plane
+$\mathrm{Re}(s) < 1$, whereas the Euler-product domain of the
+classical Riemann zeta function is the right half-plane
+$\mathrm{Re}(s) > 1$. The two domains are disjoint; passage between
+them requires analytic continuation, not algebraic identity.
+\end{remark}
+
+\subsection{Definition of $\zetacas$}
+
+\begin{definition}[Cascade Mellin zeta]\label{def:zetacas}
+For $\mathrm{Re}(s) > 1$, define $\zetacas(s)$ by the absolutely
+convergent Euler product
+\[
+\zetacas(s) := \prod_p \frac{1}{1 - p^{-s}},
+\]
+indexed over all rational primes. Equivalently, $\zetacas$ is taken
+to be the analytic continuation of this product to
+$\C \setminus \{1\}$ (i.e.\ to the classical Riemann zeta function
+$\zeta(s)$).
+\end{definition}
+
+\begin{remark}[The cascade-prime functional does not produce
+$\zetacas$ algebraically]\label{rmk:zetacas-delta}
+A naive route would derive the identity
+$\zetacas(s) = \prod_p (1-p^{-s})^{-1}$ on $\mathrm{Re}(s) > 1$ by
+algebraic manipulation of $\eta_p[x^{s-1/2}]$. This is not
+mathematically valid: by Lemma~\ref{lem:etap-convergence}, the
+expression $\eta_p[x^{s-1/2}] = (p^{1-s} - 1)^{-1}$ is the value of
+$\eta_p$ only on the half-plane $\mathrm{Re}(s) < 1$, while the
+Euler product on the right-hand side converges only on
+$\mathrm{Re}(s) > 1$. The two are linked exclusively by analytic
+continuation of the underlying $\zeta(s)$, which is a classical
+fact independent of the cascade construction. We therefore adopt
+the Euler product as the \emph{definition} of $\zetacas$, and
+record that the cascade-prime functional $\eta_p$ supplies a
+$\Z[\pphi]$-graded interpretation of the Mellin transform but does
+\emph{not} construct $\zetacas$ from scratch. (See
+Remark~\ref{rmk:weight-choice}.) This is the (\textdelta)-reduction
+flag identified in the cascade-correspondence Round 2c audit.
+\end{remark}
+
+\begin{remark}[Why the weight $1/p^{k/2}$]\label{rmk:weight-choice}
+The weight $1/p^{k/2}$ in $\eta_p$ matches the weight appearing in
+the Weil explicit formula. With this choice, the natural
+$\Z[\pphi]$-Mellin reformulation of $\zeta(s)$ is the Dedekind zeta
+$\zeta_K(s)$ of $K = \Q(\sqrt{5})$, which factors classically as
+$\zeta_K(s) = \zeta(s) \cdot L(s, \chi_5)$ (see~\S\ref{sec:zetaK}
+below). Some standard alternative weightings $1/p^{k\alpha}$ lead
+back to classical $L$-function questions (in particular within
+the Selberg class), and no non-classical zeta is constructed in
+this paper.  The bridge presented here is therefore a
+reformulation, not an independent attack.
+\end{remark}
+
+\section{Verification of (U1): Euler Product}\label{sec:euler}
+
+\begin{proposition}[Euler product]\label{prop:euler}
+For $\mathrm{Re}(s) > 1$,
+\[
+\zetacas(s) = \prod_p (1 - p^{-s})^{-1}.
+\]
+The product is over all rational primes and converges absolutely.
+\end{proposition}
+
+\begin{proof}
+By Definition~\ref{def:zetacas} after simplification (carried out
+in the definition itself), $\zetacas(s) = \prod_p (1 - p^{-s})^{-1}$
+for $\mathrm{Re}(s) > 1$.
+
+The product is indexed by rational primes; this is the standard
+classical Euler product, here taken as the \emph{definition} of
+$\zetacas$ (see Definition~\ref{def:zetacas} above and
+Remark~\ref{rmk:zetacas-delta}).  Proposition~\ref{prop:primes}
+records the cascade-side splitting/inert/ramified picture for
+$\Z[\pphi]$-prime ideals above each rational prime; this is used
+later for the Dedekind extension (\S\ref{sec:zetaK}) but not for
+the present Euler-product domain claim.
+
+For $\mathrm{Re}(s) > 1$, the product converges absolutely because
+$\sum_p |p^{-s}| < \infty$ (standard estimate: $\sum_p p^{-\sigma}$
+converges for $\sigma > 1$, from the prime number theorem or
+direct bounds).
+\end{proof}
+
+\section{Verification of (U2): Functional Equation}\label{sec:functional}
+
+\begin{proposition}[Functional equation]\label{prop:fe}
+The function $\zetacas(s)$, initially defined by the Euler product for
+$\mathrm{Re}(s) > 1$, extends to a meromorphic function on
+$\C \setminus \{1\}$ satisfying
+\[
+\zetacas(s) = \chi(s) \zetacas(1 - s).
+\]
+\end{proposition}
+
+\begin{proof}
+By Definition~\ref{def:zetacas}, $\zetacas \equiv \zeta$ on
+$\C \setminus \{1\}$ (this is the definitional choice flagged in
+Remark~\ref{rmk:zetacas-delta}).  Hence the functional equation
+for $\zetacas$ is the classical Riemann functional equation
+\cite{Riemann1859}, viz.\
+\[
+\pi^{-s/2}\Gamma(s/2)\zeta(s)
+   = \pi^{-(1-s)/2}\Gamma((1-s)/2)\zeta(1-s),
+\]
+which can be written $\zeta(s) = \chi(s)\zeta(1-s)$ with the
+standard chi factor
+$\chi(s) = 2^s \pi^{s-1} \sin(\pi s/2)\Gamma(1-s)$.  No
+cascade-internal derivation is supplied here; in particular, a
+theta-transformation route that would assume F5 provides a
+generalised Poisson summation is not justified by what F5 actually
+delivers under H-SIG (a finite-sum factor-2 equality on
+$\sigma$-fixed fields, not an analytic Poisson identity).
+\end{proof}
+
+\begin{remark}[Cascade-internal derivation status]
+A genuinely cascade-derived functional equation --- one that does
+\emph{not} reduce to the classical Riemann argument by appeal to
+$\zetacas \equiv \zeta$ --- would require either a cascade-native
+theta-transformation analogue (not currently established by F5
+under H-SIG) or a direct $\pphi$-Mellin-pairing argument that
+simultaneously controls the archimedean Gamma factor.  Neither is
+delivered in this paper.  We record the functional equation only
+as a classical fact about $\zeta$, applied to $\zetacas$ via the
+identification of Theorem~\ref{thm:casczeta}.
+\end{remark}
+
+\section{Verification of (U3): Analytic Structure}\label{sec:analytic}
+
+\begin{proposition}[Analytic continuation]\label{prop:analytic}
+$\zetacas(s)$ extends to a meromorphic function on $\C$ with:
+\begin{enumerate}
+\item[(a)] A simple pole at $s=1$ with residue 1.
+\item[(b)] Trivial zeros at $s = -2, -4, -6, \ldots$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+By Definition~\ref{def:zetacas}, $\zetacas \equiv \zeta$ on
+$\C \setminus \{1\}$.  All assertions are then classical facts
+about the Riemann zeta function: meromorphic continuation to $\C$
+with a unique simple pole at $s = 1$ of residue $1$, and trivial
+zeros at $s = -2, -4, -6, \ldots$ produced by vanishing of the
+$\sin(\pi s/2)$ factor in the functional-equation chi-factor at
+those points (see, e.g., Riemann's original construction
+\cite{Riemann1859}).  No new analytic content is
+established here; the cascade-prime functional $\eta_p$ supplies an
+\emph{interpretation} of these classical facts (in particular the
+$\pphi$-graded reading of the Mellin transform), but does not
+\emph{construct} the meromorphic continuation, the residue at $s = 1$,
+or the trivial zeros from cascade-internal data.  A PNT-logarithmic
+route would give the asymptotic
+$\log \zetacas(s) \sim \log(1/(s-1))$ as $s \to 1^+$ but does not
+directly yield residue $1$ without invoking classical analytic
+continuation; we therefore do not pursue it.
+\end{proof}
+
+\section{Identification: $\zetacas = \zeta$}\label{sec:identity}
+
+\begin{proof}[Proof of Theorem~\ref{thm:casczeta}]
+By Proposition~\ref{prop:euler}, $\zetacas$ satisfies (U1).
+
+By Proposition~\ref{prop:fe}, $\zetacas$ satisfies (U2).
+
+By Proposition~\ref{prop:analytic}, $\zetacas$ satisfies (U3).
+
+By Theorem~\ref{thm:unique} (uniqueness), $\zetacas = \zeta$ on
+$\C \setminus \{1\}$.
+\end{proof}
+
+This concludes the identification of $\zetacas$ with the classical
+Riemann zeta function.
+
+\section{The $\Z[\pphi]$-Euler-product extension and its Dedekind reduction}\label{sec:zetaK}
+
+The cascade-prime functional $\eta_p$ of \S\ref{sec:construction}
+was indexed by rational primes only. The cascade framework
+naturally suggests a stronger construction in which one indexes by
+the prime ideals of $\Z[\pphi]$, the ring of integers of
+$K = \Q(\sqrt{5})$. We record this extension here and identify it
+with the classical Dedekind zeta function. This is what we refer
+to as the (\textdelta)-class \emph{reformulation} verdict in the
+abstract.
+
+\subsection{Prime splitting in $\Z[\pphi]$}
+
+Let $K = \Q(\sqrt{5})$ and $\mathcal{O}_K = \Z[\pphi]$ where
+$\pphi = (1+\sqrt{5})/2$. The class number of $K$ is $1$ and
+$\mathcal{O}_K$ is a Euclidean domain. The Dedekind splitting
+theorem in $\mathcal{O}_K$ for a rational prime $p$ is determined
+by the Kronecker symbol $(5/p)$ (which agrees with the Legendre
+symbol for odd $p \neq 5$ and is defined separately for $p = 2$):
+\begin{itemize}
+\item $p = 5$: ramified, $(5) = (\sqrt{5})^2$. The unique prime
+  above $5$ has norm $5$.
+\item $p = 2$: since $5 \equiv 5 \pmod 8$, the Kronecker symbol
+  $(5/2) = -1$ and $p=2$ is inert; $(2)$ remains prime with
+  norm $4$.
+\item odd $p \neq 5$ with $p \equiv \pm 1 \pmod 5$ (equivalently
+  $(5/p) = +1$): split, $(p) = \mathfrak{p}_1 \mathfrak{p}_2$ with
+  $N(\mathfrak{p}_i) = p$.
+\item odd $p \neq 5$ with $p \equiv \pm 2 \pmod 5$ (equivalently
+  $(5/p) = -1$): inert, $(p)$ remains prime in $\mathcal{O}_K$
+  with norm $p^2$.
+\end{itemize}
+
+\subsection{Definition of the $\Z[\pphi]$-extension}
+
+\begin{definition}[$\Z[\pphi]$-Euler product]\label{def:zetacasZphi}
+For $\mathrm{Re}(s) > 1$ define
+\[
+\zetacas^{\,\Z[\pphi]}(s) := \prod_{\mathfrak{p} \subset \mathcal{O}_K}
+\frac{1}{1 - N(\mathfrak{p})^{-s}},
+\]
+where the product is over the non-zero prime ideals of $\mathcal{O}_K$
+and $N(\mathfrak{p}) = |\mathcal{O}_K / \mathfrak{p}|$.
+\end{definition}
+
+\begin{theorem}[Identification with $\zeta_K$]\label{thm:zetacas-zetaK}
+$\zetacas^{\,\Z[\pphi]}(s) = \zeta_K(s)$, the Dedekind zeta
+function of $K = \Q(\sqrt{5})$.
+\end{theorem}
+
+\begin{proof}
+This is immediate from Definition~\ref{def:zetacasZphi} and the
+classical definition $\zeta_K(s) = \prod_\mathfrak{p}
+(1 - N(\mathfrak{p})^{-s})^{-1}$ of the Dedekind zeta function over
+the ring of integers $\mathcal{O}_K$ of an algebraic number field
+$K$ \cite{Neukirch1999}. The cascade product runs over the same
+ideals with the same norms.
+\end{proof}
+
+\subsection{Factorization}
+
+\begin{theorem}[Dedekind factorization]\label{thm:dedekind-factorization}
+$\zeta_K(s) = \zeta(s) \cdot L(s, \chi_5)$, where $\chi_5$ is the
+unique non-trivial \emph{quadratic} primitive Dirichlet character modulo $5$,
+defined by $\chi_5(n) = (n/5)$ (Legendre symbol).
+\end{theorem}
+
+\begin{proof}
+Combine the local factors of $\zeta_K(s)$ from the splitting data
+above:
+\begin{itemize}
+\item $p = 5$: factor $(1 - 5^{-s})^{-1}$ (one prime of norm $5$).
+\item $p$ split: factor $(1 - p^{-s})^{-2}$ (two primes of norm $p$).
+\item $p$ inert: factor $(1 - p^{-2s})^{-1} = (1-p^{-s})^{-1}(1+p^{-s})^{-1}$.
+\end{itemize}
+On the $\zeta(s) \cdot L(s, \chi_5)$ side, the local factor at $p$
+is $(1 - p^{-s})^{-1}(1 - \chi_5(p) p^{-s})^{-1}$ with
+$\chi_5(5) = 0$, $\chi_5(p) = +1$ if split, $\chi_5(p) = -1$ if
+inert. Direct match in each case.
+\end{proof}
+
+\begin{corollary}[Theorem~\ref{thm:dedekind}]\label{cor:dedekind}
+$\zetacas^{\,\Z[\pphi]}(s) = \zeta(s) \cdot L(s, \chi_5)$, and
+hence the Riemann Hypothesis for $\zetacas^{\,\Z[\pphi]}$ is
+equivalent to the joint statement of the classical Riemann
+Hypothesis for $\zeta(s)$ and the generalized Riemann Hypothesis
+for $L(s, \chi_5)$.
+\end{corollary}
+
+\begin{proof}
+The identity follows from
+Theorems~\ref{thm:zetacas-zetaK}
+($\zetacas^{\,\Z[\pphi]}(s) = \zeta_K(s)$) and
+\ref{thm:dedekind-factorization}
+($\zeta_K(s) = \zeta(s) \cdot L(s, \chi_5)$).  For
+the equivalence of Riemann hypotheses, the non-trivial zeros of
+$\zetacas^{\,\Z[\pphi]}(s)$ are exactly the union of the
+non-trivial zeros of $\zeta(s)$ and of $L(s,\chi_5)$ (with
+multiplicities added).  No zero of one factor is cancelled by a
+pole of the other in the critical strip $0 < \mathrm{Re}(s) < 1$:
+$\zeta(s)$ has its only pole at $s=1$, and $L(s,\chi_5)$ is entire
+(it is a Dirichlet $L$-function of a primitive non-principal
+character).  Hence the non-trivial zero set of the product is
+the union of the non-trivial zero sets of the factors, with
+multiplicities added (a common zero of $\zeta$ and $L(s,\chi_5)$,
+should one exist, simply contributes its summed multiplicity to
+the product); and ``all non-trivial zeros of
+$\zetacas^{\,\Z[\pphi]}$ have
+$\mathrm{Re}(s) = 1/2$'' is the conjunction of the same statement
+for $\zeta(s)$ (the classical Riemann Hypothesis) and for
+$L(s, \chi_5)$ (the generalized Riemann Hypothesis for $\chi_5$).
+\end{proof}
+
+\begin{remark}[The (\textdelta)-reduction]\label{rmk:zetacas-Zphi-delta}
+Theorems~\ref{thm:zetacas-zetaK} and \ref{thm:dedekind-factorization}
+together demonstrate that the natural $\Z[\pphi]$-extension of the
+cascade Mellin zeta is, on the nose, the Dedekind zeta of
+$K = \Q(\sqrt{5})$, and that it splits as a product of two
+classical $L$-functions. No new analytic content is produced.
+This is the (\textdelta) verdict of the cascade-correspondence
+Round~2c audit: the cascade construction provides a bijective
+re-coordinatization of $\zeta(s) \cdot L(s, \chi_5)$ but does not
+introduce any analytic input that is not already classical.
+\end{remark}
+
+\section{The $\sigma$-fixed-point hypothesis}\label{sec:sigmafix}
+
+In this section we isolate the hypothesis
+$\textup{H}_{\sigma\text{-fix}}$ that would allow the cascade
+framework to force the non-trivial zeros of $\zetacas$ onto the
+critical line, and we examine the partial support the cascade
+framework currently supplies. The hypothesis, once stated
+rigorously, is about pointwise $\tau_{\mathrm{crit}}$-fixation with
+$\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$ as in
+\S\ref{sec:mellinline}, not about the
+holomorphic $\sigma$-fixed set (which by
+Remark~\ref{rmk:sigma-fixed-point} is only the single point
+$\{1/2\}$). The hypothesis is \emph{not} proved
+below; we identify the residual gap honestly.
+
+\subsection{The spectral interpretation of zeros}
+
+$\zetacas(s)$, as a meromorphic function, would correspond (under
+a trace-formula input not supplied in this paper) to specific
+cascade-spectral data via the argument principle. We state this
+correspondence as a conjecture and do not use it as a proved input
+below.
+
+\begin{conjecture}[Spectral resonance correspondence (candidate, $\widehat\zeta$-pole side)]\label{conj:zerosreson}
+There is a multiplicity-controlled correspondence
+$\lambda \mapsto s_\lambda$ between resonance eigenvalues of the
+cascade closure operator $F|_{H_4}$ (on the 600-cell substrate)
+and \emph{poles of $\widehat\zeta(s)$} (the cascade-native
+dynamical zeta of \S\ref{sec:zhat}), mediated by the $\pphi$-Mellin
+spectral identity.  No claim about $\zeta$-zero locations is made by
+this conjecture: a further bridge would be required to relate
+$\widehat\zeta$ poles to $\zeta$ zeros, and that bridge is not
+established here.
+\end{conjecture}
+
+\begin{remark}[Status of Conjecture~\ref{conj:zerosreson}]\label{rmk:zerosreson_status}
+The pole-sided form of Conjecture~\ref{conj:zerosreson} just stated
+is the only cascade-internal version available here.  A stronger
+upgrade --- a trace-formula identification linking the cascade
+closure operator's resonance spectrum directly to non-trivial
+$\zeta$-zeros --- is \emph{not} available, since it would require
+both a further $\widehat\zeta$-pole-to-$\zeta$-zero bridge (open;
+not supplied here) and: (i) a self-adjoint or normal-operator
+realisation of $F|_{H_4}$ on a suitable Hilbert space; (ii) an
+explicit cascade trace formula relating $\sum_\lambda h(s_\lambda)$
+to a distributional sum over $\zeta$-zeros for suitable test $h$.
+The cascade-correspondence programme document
+\cite{CascadeRH} is an informal seam note rather than a formal
+source for such a trace formula; we therefore retain
+Conjecture~\ref{conj:zerosreson} as an open claim and \emph{do not}
+use it as a proved input below.
+\end{remark}
+
+\subsection{$\sigma$-action on the spectrum of $F|_{H_4}$}
+
+\begin{lemma}[Galois action on the spectrum, conditional]\label{lem:Fsigma-commute}
+Adopt the following additional hypothesis beyond F5
+(Hypothesis~\ref{hyp:F5}):
+\begin{quote}
+\textbf{(H-Mat)} \ The cascade closure operator $F|_{H_4}$ admits a
+finite-dimensional matrix model over $\Z$ — that is, a
+representation $F|_{H_4} \in \mathrm{Mat}_n(\Z)$ for some $n$
+(equivalently, $F|_{H_4}$ has a basis in which all entries are
+rational integers, so its characteristic polynomial lies in
+$\Z[x]$).
+\end{quote}
+Under (H-Mat), the characteristic polynomial of $F|_{H_4}$ lies in
+$\Z[x] \subset \Q[x]$.  Hence \emph{for every eigenvalue
+$\lambda \in \mathrm{spec}(F|_{H_4}) \cap \Q(\varphi)$}, the
+Galois conjugate $\sigma\lambda$ is again a root of the same
+$\Q$-rational characteristic polynomial, hence again an
+$F|_{H_4}$-eigenvalue.  Equivalently, the
+$\Q(\varphi)$-rational part of $\mathrm{spec}(F|_{H_4})$ is
+$\sigma$-stable, with $\Q$-irreducible factors coming in
+$\sigma$-orbits.  We do \emph{not} claim that the entire spectrum
+of $F|_{H_4}$ lies in $\Q(\varphi)$; that is an additional
+hypothesis when needed.
+\end{lemma}
+
+\begin{proof}
+For $A \in \mathrm{Mat}_n(\Z)$, the characteristic polynomial
+$\det(xI - A)$ has integer coefficients; over the algebraic closure,
+its roots split into $\Q$-irreducible factors, each of which has its
+roots permuted by the absolute Galois group of $\Q$.  In particular,
+within $\Q(\varphi)$, the involution $\sigma$ generates
+$\mathrm{Gal}(\Q(\varphi)/\Q)$ and permutes any irrational eigenvalue
+with its $\sigma$-conjugate.
+
+\noindent\emph{Caveat.} F5 alone does \emph{not} supply (H-Mat);
+F5 is a functional invariance under H-SIG and on the $\sigma$-fixed
+field class.  (H-Mat) is a strictly stronger
+\emph{finite-dimensional rational-realisation} hypothesis.  Where
+the cascade infrastructure provides such a realisation (e.g.\ on
+the 600-cell substrate via the $L$-action of
+Theorem~\ref{thm:spectral_attractor}, with
+$L \in \mathrm{Mat}_{120}(\Z)$), (H-Mat) is satisfied trivially.
+For the abstract closure operator $F|_{H_4}$, (H-Mat) is the
+additional input the lemma needs.  We do \emph{not} claim that
+$\sigma$ lifts to a linear operator on $\R^{120}$ commuting with
+$F|_{H_4}$; cf.\ Remark~\ref{rmk:sigma_on_R120}.
+
+\noindent\emph{Why a weaker hypothesis fails.}  A weaker variant
+positing only ``$F|_{H_4} \in \mathrm{Mat}_n(\Z[\pphi])$ with
+$\sigma$-stable entries'' is insufficient because, for
+example, the $1 \times 1$ matrix $[\varphi]$ has $\sigma$-stable
+entries but characteristic polynomial $x - \varphi \in \Q(\varphi)[x]
+\setminus \Q[x]$.  The correct hypothesis is $\Q$-rational
+characteristic polynomial, which (H-Mat) supplies via integer
+entries.
+\end{proof}
+
+\subsection{The $\sigma$-fixed-point hypothesis}
+
+$\sigma$-equivariance alone does not force $\sigma\lambda = \lambda$
+for a given eigenvalue. When $\sigma\lambda \neq \lambda$, the
+eigenvalues $\lambda$ and $\sigma\lambda$ are distinct and
+eigenvector pairs $(\Phi_\lambda, \sigma\Phi_\lambda)$ span a
+two-dimensional $\sigma$-invariant subspace of the $F|_{H_4}$-
+spectrum. To rule out such pairs as contributing to any future
+zero-side bridge for $\zetacas$, one needs an independent dynamical
+principle selecting $\sigma$-fixed eigenvalues. We formulate it as
+a hypothesis:
+
+\begin{quote}
+\textbf{Hypothesis $\textup{H}_{\sigma\text{-fix}}$
+($\tau_{\mathrm{crit}}$-fixed pointwise selection).} \ For every
+non-trivial zero $\rho$ of $\zetacas$, the analytic point $\rho$
+is \emph{pointwise} fixed under the composite involution
+$\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$ of
+\S\ref{sec:mellinline}: $\tau_{\mathrm{crit}}(\rho) = \rho$,
+equivalently $\rho = 1 - \bar{\rho}$, equivalently
+$\mathrm{Re}(\rho) = 1/2$.
+\end{quote}
+
+A future spectral reformulation of $\textup{H}_{\sigma\text{-fix}}$
+would require an additional pole-to-zero bridge: starting from a
+cascade eigenvalue $\lambda$ of $F|_{H_4}$, one would map (via the
+$\widehat\zeta$-pole-sided Conjecture~\ref{conj:zerosreson}) to a
+$\widehat\zeta$ pole, and then transfer (via a separate
+$\widehat\zeta$-pole-to-$\zeta$-zero bridge, not supplied here) to
+a non-trivial $\zeta$-zero $\rho$.  Under that hypothetical
+two-step bridge the pair $(\lambda, \bar{\lambda})$ would be
+simultaneously fixed by $\sigma$ and by the reality involution
+inherited from the real coefficients of $\zetacas$.  Pointwise
+$\tau_{\mathrm{crit}}$-fixation is strictly stronger than
+set-invariance of the zero set under $\tau_{\mathrm{crit}}$
+(Remark~\ref{rmk:set-vs-point}).
+
+\begin{remark}[Partial support for $\textup{H}_{\sigma\text{-fix}}$]\label{rmk:Hsigmafix-partial}
+The cascade framework supplies the following ingredients that
+together motivate, but do not prove, $\textup{H}_{\sigma\text{-fix}}$:
+\begin{enumerate}
+\item Galois-stability of the spectrum of $F|_{H_4}$ under
+  $\sigma$ (Lemma~\ref{lem:Fsigma-commute}, conditional on the
+  (H-Mat) finite-dimensional integer-matrix realisation
+  hypothesis stated there).  Note: the proof of
+  Lemma~\ref{lem:Fsigma-commute} uses (H-Mat) directly and does
+  \emph{not} invoke F5; F5 motivates the existence of a cascade
+  closure operator at all, but Galois-stability of its spectrum
+  follows from (H-Mat) alone.
+\item For an irrational eigenvalue $\lambda \in \Q(\varphi)
+  \setminus \Q$ with $\sigma$-conjugate $\sigma\lambda \neq \lambda$,
+  the trace
+  $\mathrm{Tr}_{\Q(\varphi)/\Q}(\lambda)
+  = \lambda + \sigma\lambda \in \Q$
+  is rational ($\sigma$-fixed) by construction.  Cascade-internal
+  observables that depend only on the trace
+  $\mathrm{Tr}(\lambda)$ are therefore automatically
+  $\sigma$-symmetric across each $\{\lambda, \sigma\lambda\}$ pair.
+  Note that the eigenvectors $\Phi_\lambda$ and $\Phi_{\sigma\lambda}$
+  do \emph{not} sum to an eigenvector --- this is a statement about
+  trace-level invariants, not about a $\sigma$-fixed eigenvector
+  living between the pair.
+\item \cite{AdaptiveClosureTransport} motivates an edge-space
+  equivariance / selection programme but does \emph{not} prove
+  any transient/non-attracting mechanism for non-$\sigma$-fixed
+  modes; it explicitly marks the relevant projector / edge-space
+  lift as open
+  (\cite[lines 327--328, 377--382]{AdaptiveClosureTransport}).
+  \cite{TransportLaw} provides broader transport / programme-target
+  motivation only and does not verify any such mechanism either.
+  The explicit polynomial filter flow $\Psi_t$ defined directly from
+  the $\sigma$-fixed annihilator polynomial (Definition~\ref{def:closure_flow})
+  gives a finite-dimensional toy selection mechanism: $\sigma$-paired
+  modes are exponentially suppressed under $\Psi_t$ at the
+  finite-dimensional level (Theorem~\ref{thm:H_attr_finite},
+  unconditional for the polynomial filter; not the original cascade
+  closure functional of \S\ref{sec:cascade}).
+\end{enumerate}
+A proof of $\textup{H}_{\sigma\text{-fix}}$ would require a
+$\sigma$-equivariance refinement of the closure-dynamics
+convergence theorem (P6 of the cascade infrastructure). We do not
+supply it here.
+\end{remark}
+
+\begin{remark}[Relation to the classical Riemann Hypothesis]\label{rmk:Hsigmafix-RH}
+Pointwise $\tau_{\mathrm{crit}}$-fixation of every non-trivial zero
+of $\zetacas$ (the content of $\textup{H}_{\sigma\text{-fix}}$) is
+exactly $\mathrm{Re}(\rho) = 1/2$ for every such zero — that is, the
+classical Riemann Hypothesis. Hence Theorem~\ref{thm:RH} is a
+conditional \emph{reformulation} of RH, not a proof: the cascade
+construction translates the hypothesis into dynamical language
+(pointwise $\tau_{\mathrm{crit}}$-fixation of spectral data) but does
+not produce the additional analytic content that would discharge it.
+See Remark~\ref{rmk:set-vs-point} for the gap between set-invariance
+of $Z(\zetacas)$ under $\tau_{\mathrm{crit}}$ (which is classical and
+unconditional) and pointwise $\tau_{\mathrm{crit}}$-fixation of zeros
+(which is RH).
+\end{remark}
+
+\subsection{The $\sigma$-attractor reformulation}\label{subsec:attractor}
+
+We narrow Remark~\ref{rmk:Hsigmafix-partial} item~3 (a plausibility
+argument) to a sharper sub-conjecture: the residual gap is whether
+a candidate continuum selection dynamics acts on the
+$94$-dimensional $\sigma$-fixed subspace of the cascade Laplacian
+as the spectral projector.  This subsection records the spectral
+count (unconditional), the Galois action on the spectrum (corrected),
+the new sub-conjecture splitting, and finite-noise sim diagnostics
+that probe the dynamical part.  It does \emph{not} establish
+critical-line zero-location of $\zetacas$; that remains
+$\textup{H}_{\sigma\text{-fix}}$ (Section~\ref{sec:sigmafix}) and
+the $\sigma$-paired residual discussed below.
+
+\begin{remark}[$\sigma$ acts on the spectrum, not on $\R^{120}$]\label{rmk:sigma_on_R120}
+The cascade Galois involution $\sigma: \varphi \mapsto 1 - \varphi$
+on $\Q(\sqrt 5)^4$ does \emph{not} restrict to a permutation of the
+$120$ vertices of $2I$: only the $24$ rational vertices (forming
+the binary tetrahedral subgroup $2T$) are $\sigma$-stable; the
+other $96$ are mapped to vertices of the $\sigma$-conjugate
+$600$-cell \emph{outside} $2I$ (computer-verified in
+\texttt{papers/cascade-derivation/scripts/test\_sigma\_attractor\_dynamics.py}).
+We therefore do \emph{not} attempt to lift $\sigma$ to a linear
+operator on $\R^{120}$ commuting with $L$ — such a lift cannot
+exchange the $L$-eigenspaces of $\sigma$-paired eigenvalues
+($12{-}6\varphi \leftrightarrow 6{+}6\varphi$,
+$12{-}4\varphi \leftrightarrow 8{+}4\varphi$) while commuting with
+$L$, since $L$ acts as distinct scalars on those eigenspaces.
+Instead, $\sigma$ acts on the $\Q(\varphi)$-valued spectrum of $L$
+directly via Galois, partitioning the eigenvalues into the
+$\sigma$-fixed (rational) and $\sigma$-paired (irrational) sets;
+the corresponding eigenspaces of $L$ over $\R$ live in the
+$94$-dim and $26$-dim subspaces denoted $V_{\mathrm{fix}}$ and
+$V_{\mathrm{pair}}$ below, with $L$-invariant orthogonal projectors
+$P_{\mathrm{fix}}, P_{\mathrm{pair}}$.
+\end{remark}
+
+\begin{lemma}[Eigenspace stability under $L$-polynomial flows]\label{lem:sigma_attractor_stable}
+Let $L: \R^{120} \to \R^{120}$ be the 600-cell adjacency Laplacian.
+Let $W$ be any linear flow on $\R^{120}$ that is a polynomial in
+$L$ (so $W$ is normal and shares the eigenspace decomposition of
+$L$).  Then $W$ preserves both $V_{\mathrm{fix}}$ and
+$V_{\mathrm{pair}}$ (Remark~\ref{rmk:sigma_on_R120}); and for any
+compact attractor set $A \subset V_{\mathrm{fix}}$ of the discrete
+dynamics $\psi_{t+1} = W \psi_t$ initialised in $V_{\mathrm{fix}}$,
+$A \subset V_{\mathrm{fix}}$ persists under iteration.
+\end{lemma}
+
+\begin{proof}
+$W = p(L)$ commutes with the spectral projectors of $L$, so it
+preserves each $L$-eigenspace and hence the orthogonal sums
+$V_{\mathrm{fix}}$, $V_{\mathrm{pair}}$.  Iteration leaves
+$V_{\mathrm{fix}}$-supported initial data inside $V_{\mathrm{fix}}$;
+attractor closure follows from continuity.
+\end{proof}
+
+\begin{theorem}[Spectral $\sigma$-fixed/paired decomposition; imported, computer-verified]\label{thm:spectral_attractor}
+The 600-cell adjacency Laplacian $L = D - A$ on $2I$ has
+spectrum $\mathrm{spec}(L) \subset \mathbb{Q}(\varphi)$, decomposed
+as a disjoint union of $\sigma$-fixed eigenvalues
+($\mathrm{spec}_{\mathrm{fix}}(L) \subset \mathbb{Q}$) and
+$\sigma$-paired eigenvalues
+($\mathrm{spec}_{\mathrm{pair}}(L) \subset \mathbb{Q}(\varphi)
+\setminus \mathbb{Q}$).  The closed-form spectrum is established
+in \cite[spectrum table at lines 177--193]{PaperXXII} via the
+$2I$-character / shell-class decomposition
+(Theorem~\ref{thm:shell_class}); we numerically cross-check the
+closed form (after exact construction of the 600-cell adjacency
+data) by
+\texttt{papers/cascade-derivation/scripts/test\_sigma\_attractor\_spectrum.py}
+(note: this script's stdout still contains pre-pole-side
+``Mellin-zero'' wording in some print statements; those labels
+should be read as ``Mellin shadow data'' in the current pole-side
+framing of \S\ref{sec:zhat}):
+\begin{equation*}
+\mathrm{spec}(L) = \{0^{1},\ (12{-}6\varphi)^{4},\
+(12{-}4\varphi)^{9},\ 9^{16},\ 12^{25},\ 14^{36},\
+(8{+}4\varphi)^{9},\ 15^{16},\ (6{+}6\varphi)^{4}\}
+\end{equation*}
+where the superscripts indicate multiplicities.  Of the $120$
+eigenvalues counted with multiplicity, $94$ ($78.3\%$) are
+$\sigma$-fixed (rational integers $\{0, 9, 12, 14, 15\}$) and $26$
+($21.7\%$) are $\sigma$-paired (in $\mathbb{Q}(\varphi)\setminus
+\mathbb{Q}$).
+\end{theorem}
+
+\begin{proof}
+The 600-cell is the Cayley graph of the binary icosahedral group
+$2I$ with the 12 unit-edge generators.  The closed-form spectrum
+above follows from the $2I$-character / shell-class decomposition
+established locally in Paper~XXII
+\cite[shell-class theorems, lines 175--223]{PaperXXII}:
+the 9 shells are exactly the 9 $2I$-conjugacy classes, with sizes
+$\{1,12,20,12,30,12,20,12,1\}$ summing to 120, and the adjacency
+spectrum is determined by the character values on the 12-element
+unit-edge generating set evaluated against the 9 irreducible
+representations.  Numerical eigendecomposition in the cited script
+matches this closed form to machine precision; the
+$\sigma$-fixed/paired classification depends only on the
+closed-form expressions, not on floating-point identification.
+The Galois action is $\sigma(\varphi) = 1 - \varphi$, the
+conjugate root of $x^2 = x + 1$.  Numerically
+$\sigma(\varphi) = -1/\varphi$ as well, since
+$1/\varphi = \varphi - 1$ implies
+$-1/\varphi = 1 - \varphi$; we use the conjugate-root description
+because it is what determines the Galois action on $\Q(\varphi)$.
+Hence $\sigma: a + b\varphi \mapsto (a + b) - b\varphi$ on
+$\Q(\varphi)$.  An eigenvalue $\lambda$ is $\sigma$-fixed iff its
+$\varphi$-coefficient vanishes ($\lambda \in \Q$); the
+$\sigma$-paired eigenvalues form the conjugate pairs
+$\sigma(12 - 6\varphi) = 6 + 6\varphi$ and
+$\sigma(12 - 4\varphi) = 8 + 4\varphi$, as displayed.
+\end{proof}
+
+\begin{conjecture}[Candidate spectral mode $\to$ Mellin shadow correspondence]\label{conj:spec_to_zero}
+Each $\sigma$-fixed $L$-eigenvalue contributes (with controlled
+multiplicity) one Mellin shadow datum of $\widehat\zeta$ at a
+$\tau_{\mathrm{crit}}$-fixed point of the composite involution
+$\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$ (Section~\ref{sec:mellinline});
+each $\sigma$-paired $L$-eigenvalue contributes one
+$\tau_{\mathrm{crit}}$-orbit of size two.  The eigenvalue-to-shadow
+map and its multiplicity control are not established here, and the
+shadow data are $\widehat\zeta$ poles, not $\zeta$ zeros.
+\end{conjecture}
+
+\begin{remark}[Why Conjecture~\ref{conj:spec_to_zero} is conditional]\label{rmk:cond_spec_zero}
+A trace-formula correspondence between $L$-spectrum and
+$\widehat\zeta$ Mellin shadow data ($\widehat\zeta$ poles, not
+equivalent to $\zeta$ zeros in this paper) is suggested by
+Conjecture~\ref{conj:zerosreson} via the cascade-prime functional, but
+neither the multiplicity matching nor the
+$\sigma_M$-vs-$\tau_{\mathrm{crit}}$ identification is established in this paper.
+The honest reading: the $94/120 = 78.3\%$ spectral count
+(Theorem~\ref{thm:spectral_attractor}) is exact and unconditional;
+converting it into critical-line $\widehat\zeta$ pole-shadow
+locations requires Conjecture~\ref{conj:spec_to_zero}; converting
+those further into $\zeta$-zero locations requires the additional
+$\widehat\zeta$-pole-to-$\zeta$-zero bridge that is not supplied
+here, and is itself a refinement of $\textup{H}_{\sigma\text{-fix}}$
+rather than a stand-alone proof.  In particular, no claim is made here that
+$\textup{Re}(\rho) = 1/2$ is established unconditionally for any
+fraction of the non-trivial zeros.
+\end{remark}
+
+\subsubsection*{An explicit polynomial filter flow $\Psi_t$}
+
+We define a specific polynomial filter flow $\Psi_t$ on $\R^{120}$
+intrinsic to the 600-cell adjacency Laplacian $L$, and prove that
+$\sigma$-paired modes are non-attracting under this filter. The
+flow $\Psi_t$ is \emph{not} the original cascade closure functional
+of \S\ref{sec:cascade}; it is a custom-built quadratic functional
+in $L$ designed to vanish exactly on $V_{\mathrm{fix}}$. This proves
+a designed finite-dimensional analogue of the prior attraction
+hypothesis $\textup{H}_{\mathrm{attr}}$
+(\cite{AdaptiveClosureTransport, TransportLaw} motivated only); it
+does not discharge $\textup{H}_{\mathrm{attr}}$ at the level of the
+original cascade closure functional.
+
+\begin{definition}[Polynomial filter functional and flow]\label{def:closure_flow}
+Let $\Lambda_{\mathrm{fix}} := \{0, 9, 12, 14, 15\}$ be the five
+$\sigma$-fixed (rational) eigenvalues of $L$
+(Theorem~\ref{thm:spectral_attractor}). Define the
+\emph{$\sigma$-fixed annihilator polynomial}
+\[
+p_{\mathrm{fix}}(\lambda) :=
+\prod_{\mu \in \Lambda_{\mathrm{fix}}}(\lambda - \mu)
+= \lambda(\lambda-9)(\lambda-12)(\lambda-14)(\lambda-15)
+\in \Z[\lambda].
+\]
+The \emph{polynomial filter functional} (distinct from the original
+cascade closure functional $F[\Phi]$ of \S\ref{sec:cascade}; renamed
+to avoid notation collision) is
+\[
+F_{\mathrm{filt}}(x) := \tfrac{1}{2}\,\langle x,\, p_{\mathrm{fix}}(L)^2\, x\rangle,
+\qquad x \in \R^{120}.
+\]
+The \emph{polynomial filter flow} $\Psi_t : \R^{120} \to \R^{120}$
+($t \ge 0$) is the gradient flow of $F_{\mathrm{filt}}$ in the
+standard inner product on $\R^{120}$:
+\[
+\dot{x} \;=\; -\nabla F_{\mathrm{filt}}(x) \;=\; -\, p_{\mathrm{fix}}(L)^2\, x,
+\qquad \Psi_t(x_0) := e^{-t\,p_{\mathrm{fix}}(L)^2}\,x_0.
+\]
+\end{definition}
+
+\begin{remark}[Scope of $\Psi_t$: a finite-dimensional polynomial filter, not the original closure functional]\label{rmk:closure_flow_canonical}
+$F_{\mathrm{filt}}$ is a degree-$10$ symmetric quadratic form in
+the $L$-spectral basis, vanishing exactly on $V_{\mathrm{fix}}$ and
+strictly positive on the $\sigma$-paired complement. \emph{It is
+not the same object as the cascade closure functional} $F[\Phi]$
+defined in \S\ref{sec:cascade}; we rename it $F_{\mathrm{filt}}$ to
+prevent confusion. Up to positive rescaling, $F_{\mathrm{filt}}$ is
+a low-degree non-negative $L$-symmetric polynomial functional on
+$\R^{120}$ vanishing precisely on $V_{\mathrm{fix}}$ (a degree-$5$
+analogue $\langle x, p_{\mathrm{fix}}(L) x\rangle$ would change
+sign across the $\sigma$-paired subspace and fail to be Lyapunov);
+we do not claim minimality among all such functionals. The polynomial $p_{\mathrm{fix}}$ has integer
+coefficients and is therefore Galois-stable. Theorem~\ref{thm:H_attr_finite}
+below establishes attraction to $V_{\mathrm{fix}}$ for this
+explicit polynomial filter $\Psi_t$; it is \emph{not} a derivation
+that the original cascade closure functional $F[\Phi]$ has the
+same attractor structure. We do not claim $\Psi_t$ realises a
+physical or pre-existing closure dynamics.
+\end{remark}
+
+\begin{theorem}[$\sigma$-paired mode suppression by the explicit polynomial filter flow $\Psi_t$; finite-dimensional]\label{thm:H_attr_finite}
+Let $\Psi_t$ and $F_{\mathrm{filt}}$ be as in Definition~\ref{def:closure_flow}.
+Let
+\[
+\gamma := \min_{\lambda \in \Lambda_{\mathrm{pair}}}
+   p_{\mathrm{fix}}(\lambda)^2,
+\qquad
+\Lambda_{\mathrm{pair}} =
+\{12-6\varphi,\ 12-4\varphi,\ 8+4\varphi,\ 6+6\varphi\}.
+\]
+Then $\gamma > 0$, and:
+\begin{enumerate}
+\item[(i)] $F_{\mathrm{filt}}(x) \ge 0$, with $F_{\mathrm{filt}}(x) = 0$ iff $x \in V_{\mathrm{fix}}$;
+\item[(ii)] $F_{\mathrm{filt}}$ is a strict Lyapunov function for $\Psi_t$ on
+   $\R^{120}\setminus V_{\mathrm{fix}}$:
+   $\frac{d}{dt} F_{\mathrm{filt}}(\Psi_t(x)) = -\|p_{\mathrm{fix}}(L)^2\,\Psi_t(x)\|^2
+   \le 0$, with equality iff $\Psi_t(x) \in V_{\mathrm{fix}}$;
+\item[(iii)] $\Psi_t$ preserves $V_{\mathrm{fix}}$ pointwise:
+   $\Psi_t|_{V_{\mathrm{fix}}} = \mathrm{id}_{V_{\mathrm{fix}}}$ for
+   all $t\ge 0$;
+\item[(iv)] for every $x_0 \in \R^{120}$,
+   $\Psi_t(x_0) \to P_{\mathrm{fix}}\,x_0$ as $t\to\infty$, with
+   $\|P_{\mathrm{pair}}\,\Psi_t(x_0)\| \le e^{-\gamma t}\,\|P_{\mathrm{pair}}\,x_0\|$;
+\item[(v)] every $\omega$-limit set of $\Psi_t$ lies in $V_{\mathrm{fix}}$,
+   and the only fixed-point set of $\Psi_t$ is $V_{\mathrm{fix}}$
+   itself.
+\end{enumerate}
+In particular, the basin attractors of $\Psi_t$ are contained in
+$V_{\mathrm{fix}}$, and the $\sigma$-paired modes are non-attracting.
+\end{theorem}
+
+\begin{proof}
+$L$ is real symmetric, so $p_{\mathrm{fix}}(L)$ is real symmetric and
+$p_{\mathrm{fix}}(L)^2$ is real symmetric positive semidefinite,
+sharing the $L$-eigenspace decomposition. On a $\lambda$-eigenspace,
+$p_{\mathrm{fix}}(L)^2$ acts as multiplication by
+$p_{\mathrm{fix}}(\lambda)^2$. By construction
+$p_{\mathrm{fix}}(\lambda)^2 = 0$ on $\Lambda_{\mathrm{fix}}$ and
+$p_{\mathrm{fix}}(\lambda)^2 > 0$ on $\Lambda_{\mathrm{pair}}$
+(the $\sigma$-paired eigenvalues are not roots of $p_{\mathrm{fix}}$),
+so $\gamma > 0$ and $\ker p_{\mathrm{fix}}(L)^2 = V_{\mathrm{fix}}$.
+This gives (i).
+
+For (ii), $\frac{d}{dt} F_{\mathrm{filt}}(\Psi_t x) = \langle \nabla F_{\mathrm{filt}}(\Psi_t x),
+\dot \Psi_t x\rangle = -\|\nabla F_{\mathrm{filt}}(\Psi_t x)\|^2 = -\|p_{\mathrm{fix}}(L)^2
+\Psi_t x\|^2$, vanishing iff $p_{\mathrm{fix}}(L)^2 \Psi_t x = 0$,
+i.e.\ $\Psi_t x \in V_{\mathrm{fix}}$.
+
+For (iii), if $x_0 \in V_{\mathrm{fix}}$ then
+$p_{\mathrm{fix}}(L)^2 x_0 = 0$, so $\dot x = 0$ identically and
+$\Psi_t(x_0) = x_0$.
+
+For (iv), decompose $x_0 = P_{\mathrm{fix}} x_0 + P_{\mathrm{pair}} x_0$.
+By (iii) and linearity,
+$\Psi_t(x_0) = P_{\mathrm{fix}} x_0 + e^{-t\,p_{\mathrm{fix}}(L)^2}
+P_{\mathrm{pair}} x_0$. On each $\sigma$-paired eigenspace
+$E_\lambda$ ($\lambda\in\Lambda_{\mathrm{pair}}$),
+$e^{-t\,p_{\mathrm{fix}}(L)^2}$ acts as multiplication by
+$e^{-t\,p_{\mathrm{fix}}(\lambda)^2}$, so
+$\|e^{-t\,p_{\mathrm{fix}}(L)^2} P_\lambda x_0\| \le
+e^{-t\gamma}\,\|P_\lambda x_0\|$. Summing in quadrature over
+$\Lambda_{\mathrm{pair}}$ gives the stated bound.
+
+For (v), exponential convergence to $V_{\mathrm{fix}}$ implies every
+$\omega$-limit point lies in $V_{\mathrm{fix}}$; conversely, every
+point of $V_{\mathrm{fix}}$ is fixed by $\Psi_t$ (by (iii)) and so
+is its own $\omega$-limit set. Outside $V_{\mathrm{fix}}$, $F_{\mathrm{filt}}$ is
+strictly decreasing (by (ii)), so no point of
+$\R^{120}\setminus V_{\mathrm{fix}}$ is fixed.
+\end{proof}
+
+\begin{remark}[Scope of Theorem~\ref{thm:H_attr_finite}: a finite-dimensional filter analogue of $\textup{H}_{\mathrm{attr}}$]\label{rmk:H_attr_discrete}
+Theorem~\ref{thm:H_attr_finite} proves a finite-dimensional filter
+analogue of the polynomial-filter attraction hypothesis
+$\textup{H}_{\mathrm{attr}}$: for the explicit polynomial filter
+flow $\Psi_t$ defined in Definition~\ref{def:closure_flow}, every
+basin attractor lies in $V_{\mathrm{fix}}$ and the $\sigma$-paired
+spectral modes of $L$ are exponentially suppressed.  This does
+\emph{not} discharge $\textup{H}_{\mathrm{attr}}$ at the level of
+the original cascade closure functional or any continuum closure
+dynamics; it only establishes that the analogous statement holds
+for this specific polynomial filter, which is a designed object
+rather than a cascade-derived one.
+\end{remark}
+
+\begin{remark}[What this does and does not establish for RH]\label{rmk:H_attr_scope}
+Theorem~\ref{thm:H_attr_finite} is a finite-dimensional dynamical
+result: it concerns the gradient flow of an explicit polynomial
+filter on the $120$-dimensional spectral basis of $L$.  It
+\emph{does} discharge the polynomial-filter analogue of
+$\textup{H}_{\mathrm{attr}}$ at the discrete level: the basin
+attractors of the polynomial flow $\Psi_t$ are exactly
+$V_{\mathrm{fix}}$, unconditionally for that flow.  This is a toy
+selection mechanism, not the original cascade closure functional
+of \S\ref{sec:cascade}.  It does
+\emph{not} by itself imply RH: the residual gap is the
+trace-formula-style correspondence (sketched as a candidate
+identity in the schematic ansatz of \S\ref{hyp:H_trace} below, \emph{not} proved
+here) between $L$-spectral data and $\widehat\zeta$ Mellin
+\emph{poles}, plus a cascade-prime-detector canonicity statement
+(open; not asserted in this paper).  No bridge to non-trivial
+$\zeta$-zeros is established. The chain
+\[
+\text{spectral count }(78.3\%\text{ }\sigma\text{-fixed})
+\;\to\; \text{polynomial-filter attraction to }V_{\mathrm{fix}}
+\;\to\; \text{spec($L|_{V_{\mathrm{fix}}}$)}
+       \xrightarrow{\text{trace formula}}
+       \text{Mellin shadow pole data on }\mathrm{Re}(s)=1/2
+\]
+gives the cascade-internal route to the critical-line theorem.
+\end{remark}
+
+\subsubsection*{Candidate cascade trace identity: $L$-spectrum $\to$ $\widehat\zeta$ pole structure (open)}
+
+A cascade trace identity coupling the $L$-spectrum on
+$V_{\mathrm{fix}}$ to the pole structure of $\widehat\zeta(s)$
+would extend the prior Conjecture~\ref{conj:zerosreson} to an
+explicit form. We state it as a candidate hypothesis below, using
+$\mathcal{K}$ for the index set (to avoid collision with the
+running variable $K$), and explicitly note that the notation $K^*$,
+$\lambda^\pm_K$, and the $\sigma$-paired correction terms are not
+made fully rigorous in this paper. \emph{This is not a derived
+theorem.}
+
+\paragraph{Schematic ansatz (open; symbols not made precise).}\label{hyp:H_trace}
+\emph{The display below is a schematic ansatz, not a formal
+mathematical hypothesis.  The symbols $K^*$, $\lambda^\pm_K$,
+$h^{\mathrm{pair}}_K$, and $R(h)$ are placeholders, and the
+test-function class is not aligned with the discrete spectrum of
+$L$ in the standard inner product.  We record this ansatz to fix
+the shape of a candidate future identity; no theorem below depends
+on it.}\medskip
+
+Let $L$ be the 600-cell adjacency Laplacian and let
+$\Lambda_{\mathrm{fix}} = \{0,9,12,14,15\}$ with multiplicities
+$m^L_{\mathrm{fix}} = \{1,16,25,36,16\}$ (Theorem~\ref{thm:spectral_attractor}).
+Let $\mathcal{K} = \{0,20,52,72\}$ with multiplicities
+$m^{\mathcal K} : \mathcal{K} \to \{1,1,5,5\}$ be the cascade
+$K$-multiset (Theorem~\ref{thm:K_multiset}).  A future trace
+identity for some yet-to-be-defined test class would have the
+schematic form
+\begin{equation}
+\label{eq:cascade_trace}
+\sum_{\lambda\in\Lambda_{\mathrm{fix}}}
+   m^L_{\mathrm{fix}}(\lambda)\, h(\lambda)
+\;\stackrel{?}{=}\;
+\sum_{K \in \mathcal{K}}\, m^{\mathcal K}(K) \cdot
+   \bigl[ h(\lambda^+_K) + h(\lambda^-_K) \bigr]
+\;+\; R(h),
+\end{equation}
+where $\lambda^\pm_K = (12 \pm \sqrt{12^2 - 4 K^*})/2$ would be the
+character-Lucas pole locations associated with $K$ (with $K^*$ a
+shell-class quadratic invariant to be defined precisely), and the
+residual $R(h)$ would be $\sigma$-paired-supported in the
+schematic form
+\[
+R(h) \;\stackrel{?}{=}\; \sum_{\lambda\in\Lambda_{\mathrm{pair}}}
+   m^L_{\mathrm{pair}}(\lambda)\, h(\lambda)
+   - 2\sum_{K \in \mathcal{K}\setminus\{0\}} m^{\mathcal K}(K)\,
+       h^{\mathrm{pair}}_K,
+\]
+with $h^{\mathrm{pair}}_K$ a $\sigma$-paired correction at $K$
+(also placeholder).  On the Mellin pull-back
+$h(s) := \tilde h(z(s))$ with $z^{10} = \varphi^{10(1/2-s)}$
+(\S\ref{sec:mellinline}), the right-hand side of
+\eqref{eq:cascade_trace} would --- if made rigorous --- become a
+sum over \emph{poles} (not zeros) of $\widehat\zeta(s)$ at
+$\mathrm{Re}(s) = 1/2 \pm K/10$.
+
+\begin{remark}[Status of the schematic ansatz of \S\ref{hyp:H_trace}: open]\label{rmk:trace_status}
+The cascade Mellin trace identity is sketched in
+\S\ref{hyp:H_trace} as a schematic ansatz only.  The notation $K^*$, $\lambda^\pm_K$, the
+$\sigma$-paired correction $h^{\mathrm{pair}}_K$, and the residual
+$R(h)$ are stated symbolically rather than rigorously defined.  We
+do \emph{not} prove the identity in this paper.  A full derivation
+would require: (i) precise definitions of the character-Lucas pole
+locations attached to each $K$-class, (ii) a proof that the
+$\sigma$-paired residual evaluates to the trace
+$\mathrm{Tr}_{\Q(\varphi)/\Q}$-projection of the $L$-spectral
+content on $V_{\mathrm{pair}}$, and (iii) an explicit
+trace-class/spectral-projector argument matching the $L$-trace to
+the $K$-pole sum termwise.  None of (i)--(iii) is supplied here.
+\end{remark}
+
+\begin{remark}[$\sigma$-fixed $L$-spectrum and the
+$\tau_{\mathrm{crit}}$-fixed pole, modulo the schematic ansatz of \S\ref{hyp:H_trace}]\label{rmk:sigma_fixed_to_pole}
+\emph{Were the schematic ansatz of \S\ref{hyp:H_trace} to be made
+rigorous and proved}, for test functions $h$ in some such class, the $\sigma$-fixed contribution to
+$\mathrm{Tr}\,h(L)$ is supported on Mellin pull-back data attached
+to the cascade pole staircase $\{1/2\pm K/10:K\in\{0,20,52,72\}\}$.
+All $K = 0$ self-reciprocal pole-staircase locations lie on
+$\mathrm{Re}(s) = 1/2$; this entire family lies in
+$\mathrm{Fix}(\tau_{\mathrm{crit}})$ and is pointwise fixed,
+including the imaginary periodic copies discussed in
+\S\ref{subsec:zhat_sym}.  This is recorded as a programmatic
+observation, not as a derived conclusion of this paper.
+\end{remark}
+
+\begin{remark}[What the trace identity \emph{would} close, if proved]\label{rmk:trace_closes}
+If the schematic ansatz of \S\ref{hyp:H_trace} were made rigorous and proved, it would
+sharpen Conjecture~\ref{conj:zerosreson} to an explicit identity
+linking the $L$-spectrum on $V_{\mathrm{fix}}$ to the pole
+structure of $\widehat\zeta(s)$ (\emph{not} to zeros of $\zeta$).
+Combined with Theorem~\ref{thm:H_attr_finite} (the
+finite-dimensional polynomial-filter attraction theorem), the chain
+``spectral data on $V_{\mathrm{fix}}$ $\to$ $\widehat\zeta$
+\emph{pole} locations'' would be a derived identity at the
+discrete cascade level.  No statement about the location of
+non-trivial $\zeta$-zeros follows: the bridge from
+$\widehat\zeta$-pole structure to $\zeta$-zero locations is not
+supplied by this paper, and is a separate open problem (cf.\ the
+discussion in Section~\ref{sec:discussion}).
+\end{remark}
+
+\begin{remark}[External ARIA H$_4$O context]\label{rmk:aria_attractor}
+The aria-chess H$_4$O closure-dynamics implementation
+\cite{ariaH4Olaw} \emph{is reported to produce}, on the same
+600-cell substrate, a torus attractor whose velocity-covariance
+spectrum carries 8 nearly-equal $\sigma$-paired eigenvalue pairs:
+\[
+\{(2.57{\times}10^6, 2.57{\times}10^6), (2.70{\times}10^5, 2.70{\times}10^5),
+(3.54{\times}10^4, 3.54{\times}10^4), \ldots, (25.06, 25.05)\}
+\]
+with relative splittings $\Delta\lambda / \lambda \approx 5 \times
+10^{-4}$ uniformly across $5$ orders of magnitude
+(\texttt{aria-chess/run\_artifacts/h4\_lyapunov\_spectrum.json}).
+The reported relative splittings are small and approximately
+uniform, which is not in direct conflict with the polynomial
+filter flow $\Psi_t$ of Theorem~\ref{thm:H_attr_finite}, but is
+not evidence for it: the cascade-internal $\Psi_t$ is a custom
+polynomial filter on $\R^{120}$, and the aria H$_4$O attractor is
+a separate dynamical system on the same substrate.  We treat
+the aria H$_4$O artifact as \emph{external empirical context}, not
+as evidence: the finite-dimensional content of
+$\textup{H}_{\mathrm{attr}}$ at the polynomial-filter level is now
+a theorem, proved directly for the polynomial filter functional,
+independently of any reported dynamical observation.
+\end{remark}
+
+\begin{remark}[Finite-noise computational diagnostic; sim-reported]\label{rmk:dyn_attractor}
+Let $W = I - \mathrm{d}t \cdot L$ be the discrete diffusive flow on
+$\R^{120}$ (a degree-$1$ polynomial in $L$, so it preserves the
+$L$-eigenspace decomposition $V_{\mathrm{fix}} \oplus V_{\mathrm{pair}}$).
+Let $\xi_t$ be isotropic Gaussian noise.
+The Langevin process $\psi_{t+1} = W\psi_t + \xi_t$ does \emph{not}
+have a stationary covariance because $L$ has a zero mode (the
+constant vector) on which $W$ acts as the identity, allowing
+unbounded variance accumulation.  We therefore project the dynamics
+onto the $119$-dimensional non-zero subspace via
+$\psi \mapsto P_{\mathrm{nonzero}} \psi$ at each step (acting on
+$\psi$ and $\xi$).  Let
+$C := T^{-1} \sum_{t=N}^{N+T-1} \psi_t \psi_t^\top$
+be the empirical covariance over the sampling window.
+Sim-verified
+(\texttt{papers/cascade-derivation/scripts/test\_sigma\_attractor\_dynamics.py},
+$5000$ steps, $500$ warmup, $\mathrm{d}t = 0.0318$, isotropic noise
+$\sigma_\xi = 0.1$, single-thread BLAS, seed 42):
+\begin{align*}
+&\text{R1 ($L$-polynomial flow, no closure):}
+   &\mathrm{tr}(C P_\mathrm{fix}) / \mathrm{tr}(C) &= 0.6639 \\
+&\text{R2 ($L$-polynomial flow + closure projector):}
+   &\mathrm{tr}(C P_\mathrm{fix}) / \mathrm{tr}(C) &= 1.0000 \\
+&\text{R3 (control: non-polynomial-in-$L$ flow + closure):}
+   &\mathrm{tr}(C P_\mathrm{fix}) / \mathrm{tr}(C) &= 1.0000
+\end{align*}
+where $P_\mathrm{fix}$ is the projector onto the $94$-dim
+$P_{\mathrm{fix}}$-image subspace ($V_{\mathrm{fix}}$, the sum of $L$-eigenspaces with rational eigenvalues) of $L$.  The R1 number
+matches the analytical prediction $0.6636$ for diffusive dynamics
+with isotropic noise, which weights the lowest-frequency
+$\sigma$-paired modes more heavily than the higher-frequency
+$\sigma$-fixed modes.  R2 and R3 are identical because the closure
+projector explicitly maps $\psi \mapsto P_{\mathrm{fix}} \psi$ at
+each step, forcing $V_{\mathrm{fix}}$-support regardless of the
+underlying $W$ (so R3 is not a true control: closure dominates by
+construction).
+\end{remark}
+
+\begin{remark}[Finite-noise evidence for $\textup{H}_{\mathrm{attr}}$]\label{rmk:H_attr_evidence}
+The R1/R2/R3 contrast in Remark~\ref{rmk:dyn_attractor} indicates:
+\begin{itemize}
+\item Even an $L$-polynomial flow (which preserves the
+$V_{\mathrm{fix}}/V_{\mathrm{pair}}$ decomposition) does not by
+itself concentrate stationary mass on $V_{\mathrm{fix}}$: under
+purely diffusive $W = I - \mathrm{d}t \cdot L$, the
+$P_{\mathrm{fix}}$-mass falls to $66\%$, below the $78.3\%$
+uniform spectral baseline, because the diffusive weighting
+$\sim 1/\lambda$ amplifies low-frequency $\sigma$-paired modes
+($\lambda = 12-6\varphi$, $12-4\varphi$).
+\item Inserting an explicit projection $\psi \mapsto P_{\mathrm{fix}}\psi$
+at each step concentrates mass on $V_{\mathrm{fix}}$ to $100\%$ by
+construction.  This is what would have to be proved to come from
+the cascade closure functional in the continuum limit; it is not
+established here.  The cited
+\cite{AdaptiveClosureTransport} explicitly marks the analogous
+closure-projector / edge-space lift as open
+(see \cite[lines 327--328, 377--382]{AdaptiveClosureTransport});
+\cite{TransportLaw} is a broader transport-motivation /
+hypothesis-audit source that does \emph{not} verify the specific
+edge-space-lift caveat.
+\item R3 is therefore not a true control regime in the
+sim-design sense: the explicit $P_{\mathrm{fix}}$ insertion
+dominates the dynamics regardless of the underlying $W$.  The
+informative contrast is R1 vs R2, isolating the contribution of
+the projector under otherwise identical dynamics.
+\end{itemize}
+The honest reading: $\textup{H}_{\mathrm{attr}}$ would follow,
+for example, if the continuum limit of the cascade closure
+functional attracted all basin limits into $V_{\mathrm{fix}}$
+(acting as $P_{\mathrm{fix}}$ would be one sufficient toy
+mechanism; weaker dynamical conditions selecting $V_{\mathrm{fix}}$
+asymptotically would also suffice).  Establishing any such
+sufficient condition is the residual analytic gap.  This is a
+sharper local question than the original
+$\textup{H}_{\sigma\text{-fix}}$, but it is still a conjecture,
+not a theorem.
+\end{remark}
+
+\begin{remark}[The strengthened conditional]\label{rmk:strengthened}
+Combining Theorem~\ref{thm:spectral_attractor},
+Conjecture~\ref{conj:spec_to_zero},
+Remark~\ref{rmk:dyn_attractor}, and
+Remark~\ref{rmk:H_attr_evidence}:
+\begin{itemize}
+\item $78.3\%$ of the cascade Laplacian eigenvalues
+($94/120$) are $\sigma$-fixed exactly
+(spectral test, $\Q(\sqrt 5)$ arithmetic).  This is the only
+unconditional statement; it does \emph{not} by itself locate
+Mellin shadow pole data on $\mathrm{Re}(s)=1/2$.
+\item Connecting the spectral count to critical-line $\widehat\zeta$
+pole-shadow locations requires Conjecture~\ref{conj:spec_to_zero}
+(eigenvalue-to-$\widehat\zeta$-pole-shadow map with multiplicity
+control); a further $\widehat\zeta$-pole-to-$\zeta$-zero bridge,
+not supplied here, would be required to obtain $\zeta$-zero
+locations.
+\item The finite-noise sim diagnostic
+(Remark~\ref{rmk:dyn_attractor}, R1=$0.66$, R2=$1.00$) shows
+that under diffusive dynamics with isotropic noise, an explicit
+closure projector is needed to concentrate stationary mass on
+$V_{\mathrm{fix}}$; an $L$-polynomial flow alone shifts mass
+\emph{below} the spectral baseline.  R3 is not a control in the
+sim-design sense: the explicit projector dominates regardless of
+the underlying $W$.
+\item The aria-chess H$_4$O implementation
+\cite{ariaH4Olaw} reports $8$ nearly-equal $\sigma$-paired
+velocity-covariance pairs with relative splittings
+$\sim 5 \times 10^{-4}$, not inconsistent with the broad
+$\sigma$-pairing narrative, but not evidence for the polynomial
+filter (the aria H$_4$O artifact is a separate dynamical system on
+the same substrate).  These artifacts live outside this repository; the
+numerical claim is reported as cited, not independently re-verified
+here.
+\end{itemize}
+\textbf{Net status.}  The original $\textup{H}_{\sigma\text{-fix}}$
+(Section~\ref{sec:sigmafix}, equivalent to classical RH) is
+\emph{factored} into:
+(i)~Theorem~\ref{thm:spectral_attractor}, unconditional spectral
+count of the 600-cell adjacency Laplacian on $V_{\mathrm{fix}}$;
+(ii)~the schematic ansatz of \S\ref{hyp:H_trace}, a candidate
+cascade Mellin trace identity linking the $L$-spectrum to the
+$\widehat\zeta$ \emph{pole} structure (a sharpening of
+Conjecture~\ref{conj:zerosreson}; symbols $K^*$,
+$\lambda^\pm_K$, $h^{\mathrm{pair}}_K$, $R(h)$ are placeholders;
+\emph{not} proved here);
+(iii)~Theorem~\ref{thm:H_attr_finite}, exponential suppression of
+$\sigma$-paired modes by the explicit polynomial flow
+$\Psi_t = e^{-t\,p_{\mathrm{fix}}(L)^2}$ on $\R^{120}$.
+Of these, (i) and (iii) are theorems at the discrete cascade level.
+(ii) is a candidate identity that would link cascade
+$L$-spectrum to $\widehat\zeta$ pole locations if proved; it does
+\emph{not} give zero-location information for $\zeta$.  The transfer
+from $\widehat\zeta$ pole structure to non-trivial $\zeta$-zero
+locations is a separate open problem, not established here, and
+equivalent in content to $\textup{H}_{\sigma\text{-fix}}$.
+\end{remark}
+
+\section{The $\sigma$-action on the Mellin variable and the critical line}\label{sec:mellinline}
+
+\begin{proposition}[$\sigma$-Mellin convention: $s \mapsto 1-s$]\label{prop:sigmas}
+We \emph{define} the cascade-Mellin pairing of the Galois involution
+$\sigma$ to be the convention that, on the multiplicative scale
+parameter $w = z^{10}$ (Theorem~\ref{thm:zhat_sym}), $\sigma$ acts
+by scale inversion $w \mapsto w^{-1}$.  Under the substitution
+$w = \varphi^{10(1/2-s)}$ this convention induces the holomorphic
+involution $s \mapsto 1-s$ on the Mellin variable.  Consequently,
+for any $f$ in the domain of $\mathcal{M}_\pphi$,
+$\mathcal{M}_\pphi[f \circ (w \mapsto w^{-1})](s) =
+\mathcal{M}_\pphi[f](1-s)$ via standard change of variables.
+\end{proposition}
+
+\begin{proof}
+By Definition~\ref{def:mellin}, the centered-Haar Mellin
+transform is $\mathcal{M}_\pphi[f](s) = \int_0^\infty f(x)
+x^{s-1/2}\, dx/x$, and the substitution $u = 1/x$ gives
+$\mathcal{M}_\pphi[f(1/x)](s) = \int f(1/x) x^{s-1/2}\, dx/x
+= \int f(u) u^{-(s-1/2)}\, du/u = \mathcal{M}_\pphi[f](1-s)$.
+This is the centered-Haar reflection formula and uses no Galois
+structure on $\R_+$.  The role of the cascade Galois involution
+here is solely to \emph{designate} $w \mapsto w^{-1}$ as ``the''
+$\sigma$-pairing on the multiplicative scale parameter; this is a
+convention chosen to match the palindromic structure of the
+Lucas factors in $\widehat\zeta(w)$
+(Theorem~\ref{thm:zhat_sym}), and it is consistent with the
+$\Z[\pphi]$-arithmetic action $\sigma(\varphi^k) = (-1)^k\varphi^{-k}$
+on integer powers of $\varphi$ (which holds because
+$\sigma(\varphi) = 1 - \varphi = -1/\varphi$ has the same sign-and-
+inverse content; for the Lucas factors, only $\sigma(\varphi^K) +
+\sigma(\varphi^{-K}) = (-1)^K(\varphi^{-K} + \varphi^{K}) = (-1)^K L_K$
+appears, and the four cascade $K$-values
+$\{0,20,52,72\}$ are all even, so the sign $(-1)^K = +1$ on the
+relevant index set).
+We do \emph{not} extend $\sigma$ to a Galois action on arbitrary
+positive reals --- such an action is not defined --- and we do
+\emph{not} treat the $\pphi$-adic scale $v_\pphi$ of
+Definition~\ref{def:valuation} as a number-field valuation; cf.\
+Remark~\ref{rmk:phi_not_valuation}.
+\end{proof}
+
+\begin{remark}[The holomorphic $\sigma$-fixed set is a point, not the critical line]\label{rmk:sigma-fixed-point}
+Let $\iota: s \mapsto 1-s$. Then $\mathrm{Fix}_{\C}(\iota) = \{s \in
+\C : s = 1-s\} = \{1/2\}$, a \emph{single point}. In particular,
+$\mathrm{Fix}_{\C}(\iota) \neq \{s : \mathrm{Re}(s) = 1/2\}$.
+The critical line is \emph{not} a holomorphic
+fixed set and cannot be obtained as the fixed locus of any purely
+holomorphic involution. To recover it, $\sigma$ must be combined
+with an anti-holomorphic symmetry, as we now make precise.
+\end{remark}
+
+\subsection{Why the critical line requires both $\sigma$ and complex conjugation}
+
+\begin{definition}[Reality involution $\bar{\ }$]\label{def:reality}
+Let $\bar{\ }: \C \to \C$ denote complex conjugation $s \mapsto
+\bar{s}$. The Dirichlet series defining $\zetacas$ has real
+coefficients (indeed, positive-integer numerators in the Euler
+product), so $\zetacas$ is preserved by $\bar{\ }$ in the sense
+that $\overline{\zetacas(s)} = \zetacas(\bar{s})$ on the
+half-plane of absolute convergence, and by analytic continuation
+on $\C \setminus \{1\}$. In particular, the zero set of
+$\zetacas$ is closed under $\bar{\ }$.
+\end{definition}
+
+\begin{definition}[Critical-line involution $\tau_{\mathrm{crit}}$]\label{def:tau}
+Let $\tau_{\mathrm{crit}} := \iota \circ \bar{\ } : \C \to \C$, so
+$\tau_{\mathrm{crit}}(s) = 1 - \bar{s}$.
+This is an \emph{anti-holomorphic} involution of $\C$; it is the
+composition of the holomorphic Mellin-level $\sigma$-action and
+the reality involution of Definition~\ref{def:reality}.  We use the
+subscript ``crit'' throughout to disambiguate from the pentagonal
+clock element $\tau \in 2I$ of Theorem~\ref{thm:pent_torsion}.
+\end{definition}
+
+\begin{proposition}[Fixed set of $\tau_{\mathrm{crit}}$]\label{prop:tau-fixed}
+$\mathrm{Fix}_\C(\tau_{\mathrm{crit}}) = \{s \in \C : s = 1 - \bar{s}\}
+= \{s : \mathrm{Re}(s) = 1/2\}$, the critical line.
+\end{proposition}
+
+\begin{proof}
+$s = 1 - \bar{s} \iff s + \bar{s} = 1 \iff 2\,\mathrm{Re}(s) = 1 \iff \mathrm{Re}(s) = 1/2$.
+\end{proof}
+
+\begin{proposition}[Zero set of $\zetacas$ is $\tau_{\mathrm{crit}}$-invariant as a set]\label{prop:zeroset-tau}
+For non-trivial zeros $\rho$ of $\zetacas$ in the critical strip
+$0 < \mathrm{Re}(s) < 1$, the zero set is invariant under
+$\tau_{\mathrm{crit}}$: if $\zetacas(\rho) = 0$, then
+$\zetacas(\tau_{\mathrm{crit}}(\rho)) = 0$.
+\end{proposition}
+
+\begin{proof}
+If $\zetacas(\rho) = 0$ with $\rho$ in the critical strip, then
+$\zetacas(1 - \rho) = 0$ by the functional equation
+$\zetacas(s) = \chi(s) \zetacas(1-s)$
+(Proposition~\ref{prop:fe}); for non-trivial $\rho$ in the critical
+strip the chi factor $\chi(s)$ is finite and nonzero (its trivial
+zeros and poles lie outside that strip), so the equation cleanly
+transfers vanishing. Also, $\zetacas(\bar{\rho}) = \overline{\zetacas(\rho)} = 0$
+by Definition~\ref{def:reality}. Hence
+$\zetacas(\tau_{\mathrm{crit}}(\rho)) = \zetacas(1 - \bar{\rho}) =
+\zetacas(\overline{1 - \rho}) = \overline{\zetacas(1-\rho)} = 0$.
+\end{proof}
+
+\begin{remark}[Set-invariance $\neq$ pointwise fixedness]\label{rmk:set-vs-point}
+Proposition~\ref{prop:zeroset-tau} says the zero set
+$Z(\zetacas)$ is mapped to itself by $\tau_{\mathrm{crit}}$: for each
+$\rho \in Z$, $\tau_{\mathrm{crit}}(\rho) \in Z$. It does \emph{not}
+say that each individual zero is pointwise fixed by
+$\tau_{\mathrm{crit}}$. Pointwise fixedness is
+equivalent to $\rho = 1 - \bar{\rho}$, i.e.\ $\mathrm{Re}(\rho) =
+1/2$, which is exactly the classical Riemann Hypothesis. The
+critical-line claim therefore cannot be derived from
+set-invariance alone; an additional \emph{pointwise} fixation
+principle is required. This is the role of
+$\textup{H}_{\sigma\text{-fix}}$ below, appropriately
+strengthened.
+\end{remark}
+
+\subsection{Revised hypothesis and proof of Theorem~\ref{thm:critline}}
+
+\begin{proof}[Proof of Theorem~\ref{thm:critline}, corrected]
+We prove the statement of Theorem~\ref{thm:critline} as now read:
+the critical line $\mathrm{Re}(s) = 1/2$ is the fixed set of the
+anti-holomorphic involution $\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$,
+where $\iota$ is the Mellin-level $\sigma$-action
+(Proposition~\ref{prop:sigmas}) and $\bar{\ }$ is the reality
+involution (Definition~\ref{def:reality}). By
+Proposition~\ref{prop:tau-fixed},
+$\mathrm{Fix}_\C(\tau_{\mathrm{crit}}) = \{s : \mathrm{Re}(s) = 1/2\}$,
+the critical line.
+\end{proof}
+
+\begin{remark}[Critical-line identification uses cascade $\sigma$ and classical $\bar{\ }$ jointly]\label{rmk:critline-rewriting}
+The critical-line identification of Theorem~\ref{thm:critline}
+operates on the joint fixed set of the composite involution
+$\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$, not on the holomorphic
+$\sigma$-fixed set alone (the latter is only the single point
+$\{1/2\}$; see Remark~\ref{rmk:sigma-fixed-point}). The cascade
+framework supplies the holomorphic $\iota: s \mapsto 1-s$ as the
+Mellin-level $\sigma$-action, but does \emph{not} supply the
+reality involution $\bar{\ }$ as a cascade-native object;
+$\bar{\ }$ enters via the classical fact that $\zetacas$
+has real coefficients. This is an additional (\textdelta)-layer
+of the reformulation: the critical-line identification passes
+through both cascade $\sigma$ and classical complex conjugation.
+\end{remark}
+
+\section{Conditional assembly}\label{sec:proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:RH}, conditional on
+$\textup{H}_{\sigma\text{-fix}}$]
+Let $\rho$ be a non-trivial zero of $\zeta(s)$. By
+Theorem~\ref{thm:casczeta}, $\rho$ is a non-trivial zero of
+$\zetacas$. Assuming $\textup{H}_{\sigma\text{-fix}}$
+(\S\ref{sec:sigmafix}), the analytic point $\rho$ is pointwise
+fixed by the composite involution
+$\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$ of \S\ref{sec:mellinline}.
+By Proposition~\ref{prop:tau-fixed},
+$\mathrm{Fix}_\C(\tau_{\mathrm{crit}}) = \{s : \mathrm{Re}(s) = 1/2\}$,
+the critical line, so $\mathrm{Re}(\rho) = 1/2$. As $\rho$ was
+arbitrary, every non-trivial zero of $\zeta(s)$ has real part
+$1/2$, conditional on $\textup{H}_{\sigma\text{-fix}}$.
+\end{proof}
+
+\begin{remark}[Unconditional content]
+The unconditional content of this paper is summarized by
+Theorems~\ref{thm:casczeta}, \ref{thm:critline}, and
+\ref{thm:dedekind}: $\zetacas$ is the classical Riemann zeta
+function; under the cascade-Mellin convention,
+$\sigma$ is represented by the classical $s \mapsto 1-s$
+involution; the natural $\Z[\pphi]$-Euler-product extension is
+$\zeta_K(s) = \zeta(s) L(s,\chi_5)$. The Riemann Hypothesis
+itself is not proved here; it is reformulated as the
+$\sigma$-fixed-point hypothesis $\textup{H}_{\sigma\text{-fix}}$.
+\end{remark}
+
+\section{Discussion}\label{sec:discussion}
+
+\subsection{The argument's structure}
+
+The results of this paper combine:
+\begin{enumerate}
+\item A characterization of $\zeta$: any function satisfying (U1),
+(U2), (U3) is $\zeta$ (classical, Section~\ref{sec:uniqueness}).
+\item Definition of $\zetacas$ as the classical Euler product /
+analytic continuation, with a cascade-prime functional $\eta_p$ as
+interpretive infrastructure
+(Sections~\ref{sec:construction}-\ref{sec:analytic}); the
+classical (U1)-(U3) properties hold immediately because
+$\zetacas \equiv \zeta$ by definition.
+\item Identification $\zetacas = \zeta$ (Theorem~\ref{thm:casczeta},
+unconditional).
+\item Dedekind reduction of the $\Z[\pphi]$-Euler-product extension
+to $\zeta_K(s) = \zeta(s) L(s,\chi_5)$
+(Theorem~\ref{thm:dedekind}, unconditional;
+Section~\ref{sec:zetaK}).
+\item $\sigma$ induces the holomorphic involution $\iota: s \mapsto
+1-s$ with complex fixed set $\{1/2\}$; combined with the reality
+involution $\bar{\ }$ (from real Dirichlet coefficients), the
+composite $\tau_{\mathrm{crit}} = \iota \circ \bar{\ }$ has fixed set
+equal to the critical line $\{s : \mathrm{Re}(s) = 1/2\}$
+(Theorem~\ref{thm:critline}, unconditional;
+Section~\ref{sec:mellinline}).
+\item Set-invariance of $Z(\zetacas)$ under $\tau_{\mathrm{crit}}$
+is unconditional (Proposition~\ref{prop:zeroset-tau}), but pointwise
+$\tau_{\mathrm{crit}}$-fixation of individual zeros — Hypothesis
+$\textup{H}_{\sigma\text{-fix}}$, equivalently
+$\mathrm{Re}(\rho) = 1/2$ for every non-trivial zero $\rho$ — is
+\emph{not proved} (Section~\ref{sec:sigmafix}).
+\end{enumerate}
+
+Steps (1)--(5) are rigorous as definitions, classical imports, or
+direct consequences thereof. Step (6) is where the cascade
+framework does not yet provide a proof: granting
+$\textup{H}_{\sigma\text{-fix}}$ yields Theorem~\ref{thm:RH}, but
+$\textup{H}_{\sigma\text{-fix}}$ is \emph{equivalent} to the
+classical Riemann Hypothesis for $\zeta(s)$ (see
+Remark~\ref{rmk:Hsigmafix-RH}), so the construction reformulates
+rather than proves RH.
+
+\subsection{Why this is a (\textdelta)-class reformulation}
+
+In the verdict classification of the cascade-correspondence
+programme, a result is (\textdelta) if it reduces to a classical
+theorem by a bijective re-coordinatization that supplies no new
+analytic input. The three grounds for the (\textdelta) verdict
+here are:
+\begin{enumerate}
+\item The $\Z[\pphi]$-Euler-product extension coincides with
+$\zeta_K$ for $K = \Q(\sqrt{5})$ and splits classically as
+$\zeta(s) L(s, \chi_5)$ (\S\ref{sec:zetaK}).
+\item The cascade-prime functional $\eta_p$ with the Weil weight
+$p^{-k/2}$ reconstructs $\zeta$ only via the classical analytic
+continuation of the Euler product; no cascade-native analytic tool
+bypasses this (see
+Remarks~\ref{rmk:zetacas-delta}, \ref{rmk:weight-choice}).
+\item $\textup{H}_{\sigma\text{-fix}}$ is equivalent to the
+classical Riemann Hypothesis, not a cascade-native consequence
+of it (Remark~\ref{rmk:Hsigmafix-RH}).
+\end{enumerate}
+
+None of these reductions is vacuous: the cascade framework
+proposes dynamical and representation-theoretic interpretations
+(the 600-cell closure operator, candidate selection flows, the
+$\pphi$-Mellin transform) that are new as \emph{interpretations}
+of the classical zeta function. What it does not supply is an
+\emph{additional analytic principle} absent from the classical
+theory.
+
+\subsection{Comparison with classical approaches}
+
+Classical Hilbert--Pólya attempts construct operators whose
+spectrum might be Riemann zeros.  The cascade construction supplies
+a finite $H_4$ Laplacian testbed (the 600-cell adjacency $L$ of
+Theorem~\ref{thm:spectral_attractor}) together with an abstract
+conditional closure-operator slot $F|_{H_4}$; the operator/zero
+identification (i.e.\ a self-adjoint realisation of $F|_{H_4}$ on a
+suitable Hilbert space whose spectrum maps to non-trivial
+$\zeta(s)$ zeros) is \emph{not} constructed here.  The connection
+to $\zeta$ in this paper passes through
+Theorem~\ref{thm:casczeta} (which is itself definitional, as
+$\zeta_{\rm cas} := \zeta$) rather than through direct
+spectral-operator construction. The residual gap
+$\textup{H}_{\sigma\text{-fix}}$ is of the same type as the
+obstruction in the classical Hilbert--Pólya programme:
+self-adjointness does not by itself supply the missing
+operator/zero identification.
+
+\subsection{The role of cascade}
+
+The cascade framework contributes:
+\begin{itemize}
+\item Galois-stability of the spectrum of $F|_{H_4}$ under
+  $\sigma$ as a structural symmetry (from the (H-Mat)
+  integer-matrix hypothesis;
+  Lemma~\ref{lem:Fsigma-commute}).  This is weaker than literal
+  operator $\sigma$-equivariance on $\R^{120}$, which (per
+  Remark~\ref{rmk:sigma_on_R120}) cannot hold for distinct
+  $\sigma$-conjugate eigenvalues; F5 motivates the existence of
+  a cascade closure operator but is not directly used in
+  establishing Galois-stability of its spectrum.
+\item The $\pphi$-Mellin transform as a bridge between the
+  discrete cascade spectrum and the analytic $\zeta(s)$.
+\item A candidate dynamical principle
+  (Remark~\ref{rmk:Hsigmafix-partial}) — \emph{not} supplied by
+  \cite{AdaptiveClosureTransport} — would have to show that
+  non-$\sigma$-fixed modes are non-attracting for a precisely
+  defined polynomial filter or selection dynamics. The cited adaptive-closure paper
+  motivates an edge-space equivariance programme but explicitly
+  leaves the Lyapunov/edge-lift mechanism for such a selection
+  open; if the candidate principle were strengthened to a theorem
+  inside that programme, it would close the gap.
+\end{itemize}
+These are substantive interpretive structure at the level of
+\emph{interpretation} but do not constitute an attack on the
+Riemann Hypothesis as a classical analytic problem.
+
+\subsection{Convergent independent VFD arrivals
+(\textsc{Smart}, 2025--26)}\label{subsec:convergence}
+
+The cascade-derivation of $\widehat\zeta$ presented here was
+developed independently of two parallel VFD-flavoured frameworks
+authored by Lee Smart and released January 2026:
+
+\begin{enumerate}
+\item \textbf{Structure-from-constraints} \cite{SmartCanonicalFramework, SmartPaperII}.
+Begins from an abstract operator-theoretic axiom set:
+$T^{12} = \mathrm{id}$ (12-fold cyclic torsion);
+$\dim H_{\mathrm{int}} = 600$; spectral completeness
+$H_{\mathrm{int}} = \bigoplus_{q=0}^{11} H_q$ with each
+$\dim H_q = 50$; tiling extension
+$\mathcal{H} = \bigoplus_{n \in \mathbb{Z}} H_{\mathrm{int}}^{(n)}$;
+twisted equivariance cocycle
+$T^{(n+1)} J_n = \omega \cdot J_n T^{(n)}$ with
+$\omega = e^{2\pi i / 12}$.  The Smart programme's geometric
+realisation (an H$_4$ 120-cell with 600 vertices) is associated
+with the Smart canonical framework but lives in a separate
+extracted Appendix~M document rather than the cited root file
+\cite{SmartCanonicalFramework}; we cite the architectural shape
+without committing to a specific Appendix~M locator.
+Selection rule: the torsion averaging map
+$\Pi_T(A) = \frac{1}{12}\sum_{j=0}^{11} T^j A T^{-j}$ annihilates
+all operators of torsion degree $m \not\equiv 0 \pmod{12}$
+(\cite[Theorem 6.3]{SmartCanonicalFramework}). RH reduces to a
+single named axiom \textbf{ID$^\star$} = LP-ID (operator-valued
+transport lift) plus baseline absorption of the $m \equiv 0
+\pmod{12}$ degree-$0$ sector; under ID$^\star$, the implication
+chain is theorem-driven via Bombieri--Lagarias positivity
+\cite[Thm 5.1]{SmartPaperII}.
+
+\item \textbf{rh-reduction-ID / VFD Proof Stack} \cite{SmartPaperC}.
+Develops VFD as a self-contained internal universe: internal
+primes from algebra (Paper~A), intrinsic stability theorem
+(Paper~B, ``Kernel Absoluteness''), and a Bridge Axiom architecture
+(Paper~C). Central theorems: Non-Circularity (VFD does not reference
+classical RH); Bridge Theorem (Bridge $\Rightarrow$ RH); Shadow
+Theorem (VFD survives if Bridge fails). The 120-cell again appears
+as the geometric realisation in CF Appendix~M.
+\end{enumerate}
+
+\noindent\textbf{The convergence.} The present cascade-derivation,
+Smart's structure-from-constraints, and Smart's rh-reduction-ID
+were authored independently from three different first principles:
+
+\begin{itemize}
+\item \emph{Cascade derivation} (this repository): begins from the
+F1 permeability axiom $r = 1 + 1/r$, forcing $r = \varphi$, then
+$\mathbb{Z}[\varphi] \to \mathcal{I} \to 2I \to T_\tau$ (12 cycles
+of length 10);
+\item \emph{Structure-from-constraints}: begins from abstract operator
+algebra with $T^{12} = \mathrm{id}$ as a primitive axiom;
+\item \emph{rh-reduction-ID}: begins from VFD self-contained universe
+with internal primes and intrinsic stability as primitives.
+\end{itemize}
+
+All three arrive at structurally similar skeletons:
+
+\begin{itemize}
+\item \emph{Same H$_4$ polytope family}: 600-cell (120 vertices = $2I$,
+this paper) and its dual 120-cell (600 vertices, Smart's frameworks);
+\item \emph{$12$-related cyclic structure}: in Smart, the
+distinguished operator satisfies $T^{12} = \mathrm{id}$ on a
+600-dimensional space; in this paper, the pentagonal clock $T_\tau$
+on $2I$ has order-$10$ elements organised into $12$ orbits of
+length $10$.  Both put $12$ at the centre of the discrete cyclic
+decomposition, but the operator orders differ;
+\item \emph{Analogous selection rules}: $m \not\equiv 0 \pmod{12}$
+sectors annihilate under torsion averaging in Smart ($\Pi_T = 0$);
+the cycle-class / shell projection in this paper plays a similar
+role for the cascade $\widehat\zeta$ pole structure;
+\item \emph{Analogous conditional-reduction shape}: RH reduces, in
+each framework, to a single named, falsifiable,
+canonicity-of-projection Bridge Axiom.
+\end{itemize}
+
+This convergence is a suggestive empirical observation about
+independently formulated VFD-flavoured frameworks reaching similar
+$12$-torsion / H$_4$-polytope / Bridge-conditional architecture.
+We resist the stronger reading that this is ``forced'' by VFD
+considerations: the cited Smart files are explicitly conditional
+on their own bridge axioms (\cite{SmartPaperC} marks Paper~C as
+archival/legacy and refers the reader to the current
+\cite{SmartPaperII} formulation), and the citation locators here
+are best regarded as section-level rather than precise
+definition-level pointers.  The cited documents support a broad
+architectural similarity between the three frameworks (12-related
+cyclic structure on H$_4$ polytopes, bridge-conditional RH
+reduction shape), not a formal equivalence; the strength of the
+convergence claim is correspondingly that of three independent
+arrivals at architecturally similar conditional reductions, not a
+meta-theorem of inevitability.
+
+\subsection{The Bridge Axiom Pattern in descriptive
+form}\label{subsec:bridge_canonical}
+
+The hypothesis $\textup{H}_{\sigma\text{-fix}}$ used in
+Theorem~\ref{thm:RH} is one instance of a structurally-recurring
+shape that we call here the \emph{descriptive Bridge Axiom Pattern}.
+A descriptively similar shape appears in Smart's ID$^\star$
+(\cite[ID$^\star$ postulate]{SmartPaperII}) and in Smart's Bridge Axiom
+(\cite[Bridge Axiom, paperC\_rh\_translation.tex
+lines 278--304]{SmartPaperC}).  Analogous bridge-hypothesis patterns
+also occur across the maintained Millennium drafts in the
+cascade-correspondence programme
+(papers/millennium-bsd-formal, millennium-hodge-formal,
+millennium-ym, millennium-ns-formal, and
+millennium-pnp-formal).  This is a programme-level recurrence
+of bridge-hypothesis language, not a single formal theorem
+unifying the six conditional reductions; in particular, the
+per-paper Bridge Axioms are stated separately and have not been
+shown formally equivalent here (cf.\
+Remark~\ref{rmk:consilience}).
+
+\begin{remark}[Bridge Axiom Pattern; descriptive, not formal]\label{rmk:bridge_canonical}
+The hypothesis $\textup{H}_{\sigma\text{-fix}}$ used in
+Theorem~\ref{thm:RH} (and its analogues across the cascade
+correspondence programme's other Millennium reductions in
+\texttt{papers/millennium-bsd-formal}, \texttt{millennium-hodge-formal},
+\texttt{millennium-ym}, \texttt{millennium-ns-formal}, and
+\texttt{millennium-pnp-formal}; see also Smart's
+ID$^\star$ in \cite{SmartPaperII} and the Bridge Axiom in
+\cite{SmartPaperC}) shares a recurring \emph{descriptive shape},
+which we sketch here as a pattern rather than a formal definition:
+
+\begin{quote}
+\emph{Bridge Axiom Pattern.}  For each classical analytic problem
+$\mathcal{P}$, there is a candidate cascade projection
+$L_{\mathcal{P}}$ from a classically-defined data set
+$\mathcal{O}_{\mathrm{classical}}(\mathcal{P})$ into a
+cascade-internal target $\mathcal{O}_{\mathrm{cascade}}(\mathcal{P})$,
+and the conditional reduction of $\mathcal{P}$ to the cascade
+framework requires that $L_{\mathcal{P}}$ be canonical in some
+problem-specific sense (uniquely determined up to a stated
+equivalence on the cascade side).
+\end{quote}
+
+This pattern is \emph{not a formal definition}: in particular,
+$\mathcal{O}_{\mathrm{classical}}(\mathcal{P})$,
+$\mathcal{O}_{\mathrm{cascade}}(\mathcal{P})$, and the
+``canonical'' notion must be specified \emph{per problem}.  In
+particular for RH the cascade target is already $\sigma$-fixed
+spectral data, which is structurally close to the desired
+critical-line conclusion; this circularity hazard is part of the
+reason $\textup{H}_{\sigma\text{-fix}}$ is conditional.  We list
+the recurrence of this pattern as an \emph{observation} about the
+cascade-correspondence programme, not as a meta-theorem.
+\end{remark}
+
+\begin{remark}[Falsifiability]\label{rmk:bridge_falsifiable}
+For RH, $\textup{H}_{\sigma\text{-fix}}$ is falsifiable: the
+existence of any non-trivial $\zeta$-zero off the critical line
+refutes it.  The conditional Theorem~\ref{thm:RH} reduction would
+then collapse, but the cascade $\widehat\zeta(z)$ construction
+(Section~\ref{sec:zhat}) and the spectral count
+(Theorem~\ref{thm:spectral_attractor}) would survive intact.
+This falsifiability is consistent with the Shadow Theorem of
+\cite[Section 4]{SmartPaperC}: VFD-style cascade frameworks are
+designed to remain meaningful even if their RH bridges fail.
+\end{remark}
+
+\begin{remark}[Programme-level consilience]\label{rmk:consilience}
+The substantive case of the cascade-correspondence programme is
+\emph{not} that any single Bridge Axiom can be proved here, but
+that similar Bridge-Axiom-shaped conditionals recur in: (i) three
+VFD frameworks for RH (this paper, Smart's
+structure-from-constraints, Smart's rh-reduction-ID); and
+(ii) the six Clay Millennium conditional reductions maintained in
+the cascade programme (RH, BSD, Hodge, YM, NS, P vs NP).  We do
+\emph{not} claim that all six bridges have a single rigorously
+defined shape; loosely analogous projection/selection language
+recurs across the drafts as programme-level motivation, not a
+theorem.  The five companion Millennium drafts each carry their
+own per-paper bridge hypotheses (with multiplicities and names as
+stated in the local drafts; several papers carry more than one),
+stated and discussed locally in
+\cite{MillenniumBSDformal}, \cite{MillenniumHodgeformal},
+\cite{MillenniumYM}, \cite{MillenniumNSformal}, and
+\cite{MillenniumPNPformal}; the convergence pattern across these
+drafts and the two Smart frameworks is documented in
+\cite{ConvergenceWithSmart}.  A coalgebraic abstraction is sketched
+in the programme capstone \cite{CascadeCapstoneCoalgebra}, but the
+support relevant to this paper's RH reduction is the per-paper
+list above plus the convergence note, not the capstone.
+\end{remark}
+
+\section{Programme home for the polynomial filter (non-load-bearing)}\label{sec:aria_home}
+
+\emph{This subsection is interpretive programme-level context only.
+Nothing in the load-bearing argument of \S\S\ref{sec:sigmafix}--\ref{sec:proof}
+depends on it.  Readers who treat the body as the entire paper may
+skip this subsection.}\medskip
+
+The polynomial filter $\Psi_t = e^{-t\,p_{\mathrm{fix}}(L)^2}$ of
+Definition~\ref{def:closure_flow} sits inside a broader family of
+$L$-symmetric polynomial-in-$L$ functionals on the 600-cell
+substrate.  A programme-proposed member is the
+\emph{$\varphi$-regularised closure-response operator}
+\[
+C_\varphi \;=\; L + \varphi^{-2} I,
+\]
+whose continuum projection has Green's function
+$\mathsf G_\varphi(x) = (\varphi/2)\, e^{-|x|/\varphi}$.  Within this
+family, $F_{\mathrm{filt}}(x)
+= \tfrac{1}{2}\langle x, p_{\mathrm{fix}}(L)^2 x\rangle$ is the
+\emph{$\sigma$-fix-annihilator instance}: $C_\varphi$ is the
+mass-regularised Green inverter; $F_{\mathrm{filt}}$ is the
+degree-$10$ vanishing-on-$V_{\mathrm{fix}}$ Lyapunov.  The
+``designed-not-derived'' objection to $F_{\mathrm{filt}}$ is
+\emph{classified} at the programme level by this family membership
+(not answered as a derivation): see
+\texttt{docs/aria-closure-kernel.md} for the full programme-level
+construction.  A passive-regime structural witness for the
+$V_{600} + \varphi^{-2} I$ response operator on flavour-physics
+data is now shipped in the b-anomaly preprint
+(\texttt{BANOMALY-001/vfd-b-anomaly/paper/main.pdf}): a fixed
+$V_{600}$ shell-mean kernel describes five public
+$b\to s\mu^+\mu^-$ angular datasets (LHCb 2015/2021/2025, CMS 2025,
+$B_s\!\to\!\phi$) without shape retuning, with $A>0$ and
+$\Delta C_9^{\mathrm{eff}}<0$ in 5/5 fits. AIC against a constant
+Wilson-coefficient shift remains an honest tie
+($w_{\mathrm{VFD}}=0.348$ vs $w_{\mathrm{FREE\_C9}}=0.652$);
+current data cannot resolve the model comparison.
+The b-anomaly geometry-first variant test selects the
+\emph{unweighted} $V_{600}$ Laplacian; the φ-cocycle-weighted
+variants lose, so the witness is for the unweighted operator and
+the 9-shell projection, not for the κ-cocycle as an empirical
+edge weight. \emph{Not verified here}; cited as non-load-bearing
+programme context.
+The \emph{selection-dynamics} layer ($dW/dt = -\nabla V(W)$ or
+analogous Lyapunov rule), which would upgrade the polynomial-filter
+analogue to the original cascade closure functional, remains open
+in several companion frames: this paper's
+$\textup{H}_{\mathrm{attr}}$, Adaptive Closure Transport's
+edge-space lift, and ARIA's crystallisation rule
+\cite{AdaptiveClosureTransport,ariaH4Olaw}.  This cross-frame
+recurrence is programme-level recurrence of a shared pattern, not
+a proof of equivalence.
+
+\begin{thebibliography}{99}
+
+\bibitem{BerryKeating1999}
+M.~V. Berry and J.~P. Keating, \emph{The Riemann zeros and eigenvalue asymptotics},
+SIAM Review \textbf{41} (1999), 236-266.
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations F1-F8}. papers/cascade-derivation/cascade-foundations.md.
+Note: this working note's F1-F8 statements are cross-referenced
+where current; the F4/F5/F7 material is marked superseded by
+Paper XXXVI in the document's banner, and current usages of F5 in
+this paper invoke the Paper XXXVI formulation cited below.
+
+\bibitem{PaperXXXVI}
+\emph{Paper XXXVI: Closure-functional structure under H-SIG;
+factor-2 Galois invariance for $\sigma$-fixed-class fields}.
+papers/paper-xxxvi/paper-xxxvi.tex (Theorem F5 at lines 539--562).
+
+\bibitem{PaperXXII}
+\emph{Paper XXII: $2I$-conjugacy classes, Euclidean shells, and
+character spectrum of the 600-cell adjacency operator}.
+papers/paper-xxii/paper-xxii.tex (shell-class theorem at lines
+175--223; exact verification script
+papers/paper-xxii/scripts/run\_icosian\_exact.py).
+
+\bibitem{CascadeRH}
+\emph{The Riemann Hypothesis via the Cascade Closure Functional}.
+papers/seven-seams/bridges/rh-arithmetic-analytic-seam.md.
+
+\bibitem{Connes1999}
+A.~Connes, \emph{Trace formula in noncommutative geometry and the zeros of the Riemann zeta function},
+Selecta Math. \textbf{5} (1999), 29-106.
+
+\bibitem{Conrey1989}
+J.~B. Conrey, \emph{More than two fifths of the zeros of the Riemann zeta function are on the critical line},
+J. Reine Angew. Math. \textbf{399} (1989), 1-26.
+
+\bibitem{Cox}
+D.~A. Cox, \emph{Primes of the Form $x^2 + ny^2$},
+Wiley-Interscience, 1989.
+
+\bibitem{Elkies}
+N.~D. Elkies, \emph{The E8 lattice as an icosian construction}.
+Harvard preprint (1999).
+
+\bibitem{Gourdon}
+X.~Gourdon, \emph{The first zeros of the Riemann zeta function, and zeros computation at very large height},
+Preprint (2004).
+
+\bibitem{KeatingSnaith}
+J.~P. Keating and N.~C. Snaith, \emph{Random matrix theory and $\zeta(1/2 + it)$},
+Commun. Math. Phys. \textbf{214} (2000), 57-89.
+
+\bibitem{Montgomery1973}
+H.~L. Montgomery, \emph{The pair correlation of zeros of the zeta function},
+Analytic Number Theory, Proc. Sympos. Pure Math. XXIV, Amer. Math. Soc., 1973.
+
+\bibitem{Riemann1859}
+B.~Riemann, \emph{\"Uber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse},
+Monatsberichte der Berliner Akademie (1859).
+
+\bibitem{Neukirch1999}
+J.~Neukirch, \emph{Algebraic Number Theory},
+Grundlehren der math.\ Wissenschaften \textbf{322}, Springer, 1999.
+
+\bibitem{TransportLaw}
+\emph{Transport Law: Unifying closure, $\sigma$-equivariance, and adaptive flow in the cascade framework}.
+papers/transport-law/transport-law.tex.
+
+\bibitem{AdaptiveClosureTransport}
+\emph{Adaptive Closure Transport (L1)}. papers/adaptive-closure-transport/.
+
+\bibitem{SmartCanonicalFramework}
+L.~Smart, \emph{Canonical Framework: A Pure Mathematical Foundations Document, v3.0},
+Vibrational Field Dynamics Institute (January 2026). MIT licensed.
+Repository: \texttt{structure-from-constraints-rh-as-first-constraint},
+file \texttt{canonical\_framework.tex}.
+
+\bibitem{SmartPaperII}
+L.~Smart, \emph{Torsion Character Structure, Baseline Positivity, and a Conditional
+Reduction to the Riemann Hypothesis (Paper II v3)}, Vibrational Field Dynamics
+Institute (December 2025). MIT licensed. Repository:
+\texttt{structure-from-constraints-rh-as-first-constraint},
+file \texttt{paper2\_rh\_v3.tex}.
+
+\bibitem{SmartPaperC}
+L.~Smart, \emph{VFD Proof Stack: Internal Primes, Intrinsic Stability, and the
+Shadow Bridge to RH (Papers A, B, C, v2)}, Vibrational Field Dynamics Institute
+(January 2026). MIT licensed. Repository: \texttt{rh-reduction-ID}.
+
+\bibitem{CascadeCapstoneCoalgebra}
+\emph{Cascade as Final Coalgebra of the Self-Inquiry Functor F}.
+papers/cascade-capstone-coalgebra/cascade-capstone-coalgebra.tex.
+
+\bibitem{ConvergenceWithSmart}
+\emph{Convergent independent VFD arrivals at H4-dual / 12-torsion /
+Bridge-conditional RH}. docs/convergence-with-smart.md.
+
+\bibitem{ariaH4Olaw}
+\emph{Cascade H$_4$ Oscillator Law — VFD Native Reading}
+(2026-04-24).  External companion repository
+\texttt{aria-chess/} (not part of this
+\texttt{vfd-crystalisation-paper} repo): document at
+\texttt{aria-chess/docs/cascade-h4-oscillator-law.md};
+empirical artifact at
+\texttt{aria-chess/run\_artifacts/h4\_lyapunov\_spectrum.json}.
+The numerical claims cited here ($8$ nearly-equal
+$\sigma$-paired velocity-covariance pairs with relative splittings
+$\sim 5\times 10^{-4}$) are reported as cited from this external
+repository and are not independently re-verified within the
+present paper.
+
+\bibitem{MillenniumBSDformal}
+\emph{Cascade-Correspondence Reduction of the Birch and
+Swinnerton-Dyer Conjecture (BSD)}.
+papers/millennium-bsd-formal/bsd-formal.tex.  Per-paper bridge
+hypotheses (three): $B_{\rm BSD,conv}$ (operator-norm convergence of
+$T_E(s)$ on a defined Hecke domain), $B_{\rm BSD,rank}$ (rank-order
+identification between the cascade spectral datum and
+$\mathrm{rank}\,E(\mathbb{Q})$), and $B_{\rm BSD,spec}$ (canonical
+spectral projection onto the analytic $L$-function side).  All three
+must be assumed jointly for the conditional rank-order conclusion;
+see the local paper.
+
+\bibitem{MillenniumHodgeformal}
+\emph{Cascade-Correspondence Reduction of the Hodge Conjecture}.
+papers/millennium-hodge-formal/hodge-formal.tex.  Per-paper bridge
+hypotheses: $H_{4a}$ (cascade $\sigma$-projector identifies Hodge
+classes with the $\sigma$-fixed image on the cascade substrate
+$\Omega$) and $H_{4a}^{\rm alg}$, which the local paper splits into
+two subclauses --- $H_{4a}^{\rm alg}/\Omega$ (algebraicity on the
+cascade substrate $\Omega$, with the required pullback/lifting
+statement) and $H_{4a}^{\rm alg}/X$ (algebraicity transferred to
+the target variety $X$).  All bridge inputs ($H_{4a}$,
+$H_{4a}^{\rm alg}/\Omega$, $H_{4a}^{\rm alg}/X$) are required
+jointly for the conditional Hodge conclusion.
+
+\bibitem{MillenniumYM}
+\emph{Yang--Mills Mass Gap via Cascade Closure} (file
+\texttt{ym-mass-gap.tex}, not \texttt{ym-formal.tex}).
+papers/millennium-ym/ym-mass-gap.tex.  Per-paper Bridge Axiom:
+$H_{\rm OS\text{-}lift}$ (Osterwalder--Schrader lift of the
+discrete cascade gap to the continuum).  Additional structural
+hypotheses (P8, P9) are documented locally.
+
+\bibitem{MillenniumNSformal}
+\emph{Cascade-Correspondence Reduction of Navier--Stokes
+Regularity}.  papers/millennium-ns-formal/ns-formal.tex.
+Per-paper bridge hypotheses (two): $H_{\rm NS}$ (cascade
+hydrodynamic-projection hypothesis from the cascade-internal
+regularity functional) and $B_{\rm NS}$ (cascade-vorticity bridge to
+classical Navier--Stokes vorticity control).  Both bridge
+hypotheses are required jointly for the conditional regularity
+conclusion.  In addition, the local paper requires shared cascade
+infrastructure assumptions --- in particular $H_1$ (cascade
+$\sigma$-fixed-rationality / spectral-stability hypothesis from
+Paper~XXXVI / cascade-foundations) and $H_{P6/P7}$ (Paper~XXXVI
+P6/P7 closure-dynamics convergence and refinement hypotheses) ---
+together with imported infrastructure (F2, F4, F5 with their
+associated assumption clauses).  These shared assumptions are not
+bridge axioms but are also required for the conditional NS
+conclusion; see the local paper for the full hypothesis list.
+
+\bibitem{MillenniumPNPformal}
+\emph{Restricted-Model P vs NP via Cascade Refinement}.
+papers/millennium-pnp-formal/pnp-formal.tex.  Per-paper bridge
+hypotheses: $H_{\sigma\text{-irr-NP}}$ (cascade-irreducibility of
+NP-witness structure under $\sigma$), $B_{\sigma\text{-P}}$
+(cascade-side limitation theorem on $\sigma$-symmetric P), together
+with structural completeness of the cascade refinement on a stated
+restricted model class (not unconditional P $\neq$ NP).
+
+\end{thebibliography}
+
+\end{document}

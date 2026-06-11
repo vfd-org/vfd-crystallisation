@@ -1,0 +1,481 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{hypothesis}{Hypothesis}[section]
+
+\newcommand{\twoI}{2I}
+\newcommand{\Vsixhundred}{V_{600}}
+\newcommand{\Dicfive}{\mathrm{Dic}_5}
+\newcommand{\CQ}{C_{\mathbb{Q}}}
+\newcommand{\IC}{I_{\CQ}}
+\newcommand{\PK}[1]{P_{#1}}
+\newcommand{\Hop}{\hat H}
+\newcommand{\Cop}{\hat C}
+\newcommand{\Ttau}{T_{\tau}}
+\newcommand{\Hzero}{H_0}
+\newcommand{\sigeight}{\sigma_8}
+
+\title{Two operator-trace ratios from $\Vsixhundred$ K-class structure:\\
+       $13/12$ and $11/12$, and their match to the
+       $\Hzero$ and $S_8$ benchmarks}
+\author{%
+  Lee Smart \\[3pt]
+  \textit{Institute of Vibrational Field Dynamics} \\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}}
+\date{May 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed).
+This paper has a deliberate three-layer structure: Layer~1 is exact
+mathematics, Layer~2 is a numerical observation from published data,
+Layer~3 is an explicit hypothesis. We do NOT claim Layer~2 or Layer~3
+are theorems.
+
+\begin{abstract}
+We define two operators on the $12$-dimensional rational
+$\Ttau$-cycle space $\CQ \cong \mathbb{Q}^{12}$ of the $600$-cell:
+$\Hop := \IC + \PK{72}$ and $\Cop := \IC - \PK{0}$, where $\PK{K}$ is
+the diagonal rank-$m_K$ projector onto the K-class cycles in the
+T$_\tau$-cycle decomposition with K-multiset
+$\{72{:}1,\,0{:}1,\,52{:}5,\,20{:}5\}$
+(Paper~1, \citealp{V600Paper1}). We prove (Theorem~\ref{thm:trace})
+the exact rational identities $\mathrm{tr}(\Hop) = 13$ and
+$\mathrm{tr}(\Cop) = 11$, and we prove
+(Theorem~\ref{thm:admissibility}) that within the K-saturated
+diagonal projector algebra of $\CQ$ the only rank-one projector corrections to
+$\IC$ are $\pm\PK{72}$ and $\pm\PK{0}$. Both theorems are
+phase-independent across the $\mathbb{Z}_2^5 = 32$ canonical lifts of
+$\tau_\sigma$ (Paper~3, \citealp{V600Paper3}).
+
+As a numerical observation, we then report:
+$\frac{13}{12} \cdot \Hzero^{\mathrm{Planck}} \approx 72.97\,
+\mathrm{km\,s^{-1}\,Mpc^{-1}}$ versus
+SH0ES~$73.04 \pm 1.04$~\citep{Riess2022SH0ES}
+($\approx 0.06\sigma$ residual), and
+$\frac{11}{12} \cdot S_8^{\mathrm{Planck}} \approx 0.763$ versus
+KiDS-1000~$0.766^{+0.020}_{-0.014}$~\citep{Heymans2021KiDS}
+($\approx 0.24\sigma$ directional residual using the lower KiDS
+asymmetric error; we use the lensing parameter
+$S_8 = \sigeight \sqrt{\Omega_m / 0.3}$ since published weak-lensing
+intervals are reported as $S_8$).
+We do NOT derive cosmology from operator traces; the cycle-mode
+coupling rule that would upgrade the numerical match to a derivation
+is stated in \S\ref{sec:hypothesis} as an explicit hypothesis. The
+trace identities are exact given the imported Paper~1 K-multiset and
+the definitions above.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+The Hubble tension --- the $\sim 5\sigma$ disagreement between
+early-Universe ($\Hzero \approx 67.4$~km/s/Mpc from
+Planck~2018~\citep{Planck2020}) and late-Universe
+($\Hzero = 73.04 \pm 1.04$~km/s/Mpc from
+SH0ES~2022~\citep{Riess2022SH0ES}) inferences of the present-day
+Hubble constant --- and the related $\sigeight / S_8$ tension between
+Planck and weak-lensing surveys (KiDS-1000~\citep{Heymans2021KiDS},
+DES-Y3~\citep{Abbott2022DESY3}) have driven a large literature of
+proposed
+resolutions~\citep{DiValentinoEtAl2021Tension}.
+
+This paper does \emph{not} propose a cosmological model. Instead, we
+report two finite-group facts about the binary icosahedral
+group $\twoI = \Vsixhundred$, and observe that
+the corresponding rational ratios numerically match published tension
+ratios. We organise the paper around three explicit layers of claim:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Layer~1 (Theorem-grade):} exact rational trace
+  identities on the $12$-dimensional rational $\Ttau$-cycle space.
+  \item \textbf{Layer~2 (Observation):} numerical match between those
+  ratios and currently-published tension benchmarks.
+  \item \textbf{Layer~3 (Hypothesis):} a coupling rule from the
+  operators to ΛCDM observables; \emph{stated as a hypothesis, not
+  claimed to be derived}.
+\end{itemize}
+
+The reader is invited to evaluate Layers~1 and 2 on their own merits
+and to treat Layer~3 with appropriate scepticism.
+
+\section{The $12$-dimensional cycle space and K-class projectors}\label{sec:setup}
+
+We import the following from Paper~1~\citep{V600Paper1}; the present
+paper does not re-prove any of these statements.
+
+\begin{itemize}[leftmargin=2em]
+\item $\Vsixhundred = \twoI$, the binary icosahedral group of order
+$120$, viewed as the vertex set of the regular $600$-cell.
+\item A choice of $\tau \in \twoI$ with $\mathrm{ord}(\tau) = 10$
+gives the cycle decomposition $T_\tau : g \mapsto \tau g$ of
+$\Vsixhundred$ into 12 cycles each of length 10.
+\item Each cycle is assigned a non-negative rational K-class via the
+K-multiset $\{72{:}1,\,0{:}1,\,52{:}5,\,20{:}5\}$. Concretely, of
+the $12$ cycles: one has K-class~$72$, one has K-class~$0$, five
+have K-class~$52$, and five have K-class~$20$.
+\item $H = \Dicfive \subset \twoI$ is the bulk subgroup formed by the
+$K=72$ and $K=0$ cycles ($|H| = 20$).
+\end{itemize}
+
+\begin{definition}[Cycle space]\label{def:cyclespace}
+Let $\CQ$ be the $12$-dimensional rational vector space with basis
+$\{e_i\}_{i=1}^{12}$ indexed by the $12$ $T_\tau$-cycles. Equivalently
+$\CQ \cong \mathbb{Q}^{12}$. The basis is determined by the
+deterministic cycle ordering supplied by
+\texttt{vfd\_v600.group.build\_state()}.
+\end{definition}
+
+\begin{definition}[K-class projectors]\label{def:Kproj}
+For each $K \in \{72, 0, 52, 20\}$, the \emph{K-class projector} is
+the diagonal operator $\PK{K} \in \mathrm{End}_{\mathbb{Q}}(\CQ)$
+defined by
+\[
+  \PK{K}(e_i) \;=\; \begin{cases} e_i & \text{if cycle $i$ has K-class }K, \\
+                                  0 & \text{otherwise}. \end{cases}
+\]
+The identity operator on $\CQ$ is denoted $\IC$.
+\end{definition}
+
+The ranks of the four K-class projectors are exactly the K-multiset
+multiplicities:
+\[
+  \mathrm{rk}\,\PK{72} = 1, \quad
+  \mathrm{rk}\,\PK{0}  = 1, \quad
+  \mathrm{rk}\,\PK{52} = 5, \quad
+  \mathrm{rk}\,\PK{20} = 5,
+\]
+and they sum to $\IC$:
+$\PK{72} + \PK{0} + \PK{52} + \PK{20} = \IC$.
+
+\begin{remark}[Baseline rule]\label{rem:baseline}
+We define the \emph{ΛCDM-baseline operator} as $\IC$ itself: the
+\textbf{K-blind uniform cycle weighting} that assigns coefficient $1$
+to every cycle basis vector. Once the baseline is so defined, $\IC$
+is unique by construction. We do not claim $\IC$ is the unique
+$\tau_\sigma$-invariant rank-$12$ operator on $\CQ$ --- many other
+operators commute with the $\tau_\sigma$-induced cycle action; the
+baseline is a definitional choice, not a uniqueness theorem.
+\end{remark}
+
+\section{The two operators $\Hop$ and $\Cop$}\label{sec:operators}
+
+\begin{definition}[Operators]\label{def:ops}
+\[
+  \Hop \;:=\; \IC + \PK{72}, \qquad \Cop \;:=\; \IC - \PK{0}.
+\]
+$\Hop$ is the \emph{max-K-anchor enhancement} of the baseline
+($\Hop(e_i) = 2 e_i$ on the unique K-class-$72$ cycle and $e_i$
+otherwise). $\Cop$ is the \emph{trivial-K-class suppression} of the
+baseline ($\Cop(e_i) = 0$ on the unique K-class-$0$ cycle and $e_i$
+otherwise).
+\end{definition}
+
+The two operators are diagonal in the cycle basis with entries in
+$\{0, 1, 2\}$. Both are self-adjoint with respect to the standard
+$\mathbb{Q}$-bilinear form on $\CQ$.
+
+\section{Trace theorem (Layer~1)}\label{sec:trace}
+
+\begin{theorem}[Exact trace identities]\label{thm:trace}
+\[
+  \mathrm{tr}(\Hop) \;=\; 13, \qquad
+  \mathrm{tr}(\Cop) \;=\; 11.
+\]
+Equivalently,
+$\mathrm{tr}(\Hop)/12 = 13/12$ and $\mathrm{tr}(\Cop)/12 = 11/12$,
+both exact rationals.
+\end{theorem}
+
+\begin{proof}
+For any diagonal projector $\PK{K}$, the trace equals its rank, which
+equals the K-class multiplicity $m_K$. The K-multiset gives
+$m_{72} = 1$ and $m_{0} = 1$; trace is additive on diagonal operators,
+so
+\[
+  \mathrm{tr}(\Hop) = \mathrm{tr}(\IC) + \mathrm{tr}(\PK{72}) = 12 + 1 = 13,
+\]
+\[
+  \mathrm{tr}(\Cop) = \mathrm{tr}(\IC) - \mathrm{tr}(\PK{0}) = 12 - 1 = 11.\qedhere
+\]
+\end{proof}
+
+\begin{theorem}[K-saturated admissibility]\label{thm:admissibility}
+Let $\mathcal{A}_K \subset \mathrm{End}_{\mathbb{Q}}(\CQ)$ denote the
+K-saturated diagonal projector algebra, namely the
+$\mathbb{Q}$-subalgebra generated by
+$\{\IC, \PK{72}, \PK{0}, \PK{52}, \PK{20}\}$.
+Within $\mathcal{A}_K$, the only rank-one diagonal projector
+corrections to $\IC$ --- that is, the only signed corrections of the
+form $\IC \pm Q$ with $Q \in \mathcal{A}_K$ a rank-one projector ---
+are $\IC \pm \PK{72}$ and $\IC \pm \PK{0}$.
+\end{theorem}
+
+\begin{proof}
+The four projectors $\{\PK{72}, \PK{0}, \PK{52}, \PK{20}\}$ are
+mutually orthogonal idempotents that resolve the identity, so any
+$Q \in \mathcal{A}_K$ has the unique decomposition
+\[
+  Q \;=\; a_{72}\PK{72} + a_{0}\PK{0} + a_{52}\PK{52} + a_{20}\PK{20},
+  \qquad a_K \in \mathbb{Q}.
+\]
+Idempotence $Q^2 = Q$ on the orthogonal decomposition forces
+$a_K^2 = a_K$ for each $K$, hence $a_K \in \{0, 1\}$. The rank of
+such a $Q$ is the K-multiplicity sum
+$\sum_K a_K\,m_K$ over those $K$ with $a_K = 1$. With the K-multiset
+$\{72{:}1,\,0{:}1,\,52{:}5,\,20{:}5\}$, the only $0/1$
+coefficient choices giving rank exactly~$1$ are
+$(a_{72}, a_0, a_{52}, a_{20}) = (1,0,0,0)$ and
+$(0,1,0,0)$, yielding $Q = \PK{72}$ and $Q = \PK{0}$. The signed
+rank-one corrections to $\IC$ are therefore exactly
+$\pm \PK{72}$ and $\pm \PK{0}$.
+\end{proof}
+
+\begin{remark}[Hypotheses are essential]\label{rem:hyp}
+Theorem~\ref{thm:admissibility} requires both stated hypotheses:
+``diagonal in the cycle basis'' and ``K-saturated''. Dropping either
+one introduces a large family of rank-one projectors outside
+$\mathcal{A}_K$ (for instance any rank-one orthogonal projector on
+$\CQ$ that is not K-saturated, or the rank-one $\tau_\sigma$-invariant
+projector onto $\mathrm{span}_{\mathbb{Q}}(e_{52} + e_{20})$ for any
+$\tau_\sigma$-paired pair of $K=52, K=20$ basis vectors --- this
+projector commutes with the $\tau_\sigma$ cycle action but is not
+diagonal in the cycle basis and is not in $\mathcal{A}_K$). The
+narrow theorem above is the strongest form we claim.
+\end{remark}
+
+\subsection{Phase-independence across the $\mathbb{Z}_2^5$ lifts}
+
+Paper~3~\citep{V600Paper3} produces $32$ canonical $\tau_\sigma$
+involutions on $\Vsixhundred$ differing by independent
+$\mathbb{Z}_2$ phase choices on each of the five non-bulk right
+cosets, and all 32 maps swap the K~$=52$ and K~$=20$ cycle classes
+within each coset. We show the present trace identities are
+phase-independent.
+
+\begin{lemma}[Phase-independence]\label{lem:phaseind}
+For any $\tau_\sigma$ in the $\mathbb{Z}_2^5$ orbit of canonical lifts
+of Paper~3, the induced action on the cycle space $\CQ$ exchanges
+each pair of (K~$=52$, K~$=20$) cycles within a non-bulk right coset
+of $\Dicfive$. In particular the K-class projectors $\PK{72}$ and
+$\PK{0}$ commute with the $\tau_\sigma$-induced cycle action for
+every choice of phases, and Theorem~\ref{thm:trace} and
+Theorem~\ref{thm:admissibility} are independent of phase choice.
+\end{lemma}
+
+\begin{proof}
+Each per-coset phase swap exchanges a $K=52$ cycle with a $K=20$
+cycle within the same right coset; it leaves the $K=72$ and $K=0$
+bulk cycles fixed setwise (in fact pointwise). The cycle-level
+permutation induced by any $\tau_\sigma$ in the orbit therefore acts
+trivially on the basis vectors corresponding to $K \in \{72, 0\}$
+and acts within the $K = 52 \leftrightarrow K = 20$ pair on the
+other ten basis vectors. In all cases the projectors $\PK{72}$ and
+$\PK{0}$ commute with this action, so the traces of operators built
+from them are unchanged.
+\end{proof}
+
+\section{Numerical observation (Layer~2)}\label{sec:observation}
+
+The exact rationals $13/12$ and $11/12$ from
+Theorem~\ref{thm:trace} can be compared numerically to selected
+published benchmarks. We tabulate published values, propagate the
+trace ratios, and report residuals. \emph{No statistical inference
+is claimed; this section is observational only.}
+
+We use the lensing parameter $S_8 := \sigeight \sqrt{\Omega_m / 0.3}$
+for the clustering row, since published weak-lensing tension
+intervals are reported as $S_8$ rather than bare $\sigeight$.
+
+\begin{table}[h]
+\centering
+\caption{Layer-2 numerical match. Planck~2018 baseline values from
+\citealp{Planck2020}: $\Hzero^\mathrm{Planck} = 67.36$~km/s/Mpc and
+$S_8^\mathrm{Planck} = 0.832 \pm 0.013$.}
+\label{tab:match}
+\begin{tabular}{lllll}
+\toprule
+Quantity & Trace ratio & Predicted (Layer~2) & Late-Universe value & Residual \\
+\midrule
+$\Hzero$ [km/s/Mpc] & $13/12 \approx 1.0833$ & $72.97$ & $73.04 \pm 1.04$~\citep{Riess2022SH0ES} & $\approx 0.06\sigma$ \\
+$S_8$               & $11/12 \approx 0.9167$ & $0.763$ & $0.766^{+0.020}_{-0.014}$~\citep{Heymans2021KiDS} & $\approx 0.24\sigma$ (KiDS only) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The $\Hzero$ row uses the headline SH0ES~2022 value; multiplying the
+Planck value by $13/12$ gives $72.97$, which is $\approx 0.06\sigma$
+below the SH0ES central value at SH0ES uncertainty $\pm 1.04$
+km/s/Mpc.
+
+The $S_8$ row uses the KiDS-1000 multi-probe (3$\times$2pt) headline
+$S_8 = 0.766^{+0.020}_{-0.014}$~\citep{Heymans2021KiDS}; multiplying
+Planck's $S_8 = 0.832$ by $11/12$ gives $0.763$, which is below the
+KiDS-1000 central value. Because the predicted value lies on the
+\emph{lower} side of the KiDS asymmetric interval, the directional
+residual uses the lower KiDS error $-0.014$:
+$(0.766 - 0.763)/0.014 \approx 0.24\sigma$. (Including the Planck
+$S_8$ uncertainty $\pm 0.013$ in quadrature with the lower KiDS error
+gives $\approx 0.18\sigma$.) The cosmic-shear-only KiDS-1000 result
+$S_8 = 0.759^{+0.024}_{-0.021}$~\citep{Asgari2021KiDSCS} places the
+prediction $0.763$ inside the central band on the upper side. We do
+NOT claim a sub-$0.1\sigma$ match for $S_8$.
+
+\subsection{Ablation: rank-$5$ K-class corrections}
+
+For transparency we record the rank-$5$ alternatives: the trace
+ratios that would arise from $\IC + \PK{52}$ or $\IC - \PK{20}$
+are $17/12 \approx 1.417$ and $7/12 \approx 0.583$. These rank-$5$
+corrections give trace ratios far outside the cited $\Hzero$ and
+$S_8$ bands. Within the rank-$1$ pair, the trace data alone
+do \emph{not} distinguish $\PK{72}$ from $\PK{0}$ (both have
+trace~$1$); the assignment of the two rank-one K-classes to specific
+observables is the content of Hypothesis~\ref{hyp:coupling}, not of
+the trace identity.
+
+\section{Scope and hypothesis (Layer~3)}\label{sec:hypothesis}
+
+The numerical match in Section~\ref{sec:observation} would be
+upgraded to a derivation only by an explicit \emph{coupling rule}
+between the cycle-space operators and the cosmological observables.
+We state this rule as an explicit hypothesis, and we do NOT claim it
+is forced by the trace identity.
+
+\begin{hypothesis}[Cycle-mode coupling, $S_8$ form]\label{hyp:coupling}
+There exists a coupling map
+$\Gamma : \{\text{scale-rate}, \text{clustering-amplitude}\} \to
+\mathcal{A}_K$
+such that
+\[
+  \Gamma(\text{scale-rate}) \;=\; +\PK{72}, \qquad
+  \Gamma(\text{clustering-amplitude}) \;=\; -\PK{0},
+\]
+and the observed late-Universe values of $\Hzero$ and the lensing
+parameter $S_8$ relate to the early-Universe ΛCDM values by
+\[
+  \Hzero^{\mathrm{late}}
+  \;=\;
+  \frac{\mathrm{tr}(\IC + \Gamma(\text{scale-rate}))}{\mathrm{tr}(\IC)}
+  \;\Hzero^{\mathrm{early}},
+\qquad
+  S_8^{\mathrm{late}}
+  \;=\;
+  \frac{\mathrm{tr}(\IC + \Gamma(\text{clustering-amplitude}))}{\mathrm{tr}(\IC)}
+  \;S_8^{\mathrm{early}}.
+\]
+We state the hypothesis on $S_8$ rather than on bare $\sigeight$
+because published weak-lensing tension intervals are reported as
+$S_8$. Translating the second relation to bare $\sigeight$ would
+require an additional assumption about how $\Omega_m$ enters the
+coupling, which we do not make here.
+\end{hypothesis}
+
+We emphasise:
+
+\begin{itemize}[leftmargin=2em]
+\item Hypothesis~\ref{hyp:coupling} is \emph{not} a theorem of this
+paper. It is a phenomenological postulate that, if assumed, would
+make the numerical match of Section~\ref{sec:observation} a
+parameter-free consequence of Hypothesis~\ref{hyp:coupling}.
+\item The hypothesis is falsifiable: future $\Hzero$ measurements
+landing outside the $13/12$-translated band, or $S_8$ measurements
+outside the $11/12$-translated band, would refute
+Hypothesis~\ref{hyp:coupling} but leave the trace identities
+untouched.
+\item Mode-counting alone --- e.g.\ counting orthonormal
+$\sigma$-antisymmetric modes on $\CQ$ --- does not by itself select
+the $13/12$ and $11/12$ ratios. Older notes in this repository
+(\texttt{papers/cosmological-folding-rate/dynamics/OD1\_STATUS.md}
+and \texttt{od1\_cycle\_spectrum.py}) attempted such a mode-count
+and reached different intermediate numbers (e.g.\ $17/12$ from a
+different counting). The current paper
+abandons mode-counting as a route to the coupling rule and treats
+the rule as an explicit hypothesis. A genuine derivation would
+likely require an $H_4$-representation decomposition of the
+$\sigma$-antisymmetric pair module, which is out of scope for this
+paper.
+\end{itemize}
+
+\section{Conclusion}\label{sec:conclusion}
+
+\paragraph{What is proved (Layer~1).}
+The two operators
+$\Hop = \IC + \PK{72}$ and $\Cop = \IC - \PK{0}$
+on the $12$-dimensional rational $\Ttau$-cycle space of
+$\Vsixhundred$ have exact rational traces $\mathrm{tr}(\Hop) = 13$
+and $\mathrm{tr}(\Cop) = 11$, hence ratios $13/12$ and $11/12$ over
+the baseline $\mathrm{tr}(\IC) = 12$. Within the K-saturated
+diagonal projector algebra, $\pm\PK{72}$ and $\pm\PK{0}$ are the
+only rank-one projector corrections to $\IC$. Both results are
+phase-independent across the $\mathbb{Z}_2^5$ canonical
+$\tau_\sigma$ orbit.
+
+\paragraph{What is observed (Layer~2).}
+Multiplying Planck~2018's $\Hzero = 67.36$ by $13/12$ gives
+$72.97$~km/s/Mpc, $\approx 0.06\sigma$ below the SH0ES~2022 central
+value $73.04 \pm 1.04$. Multiplying Planck~2018's
+$S_8 = 0.832 \pm 0.013$ by $11/12$ gives $0.763$. Since the
+prediction is below the KiDS-1000 multi-probe central value
+$0.766^{+0.020}_{-0.014}$, the directional residual uses the lower
+KiDS error $-0.014$:
+$(0.766 - 0.763)/0.014 \approx 0.24\sigma$. We do not claim either
+match is significant beyond the level reported here.
+
+\paragraph{What is hypothesised (Layer~3).}
+Hypothesis~\ref{hyp:coupling} would upgrade Layer~2 to a derivation;
+this paper makes no claim to have proved it. Layers 1 and 2 stand
+without Layer 3.
+
+\appendix
+
+\section{Verification certificate}\label{app:verify}
+
+The companion script \texttt{verify.py} performs the following exact
+checks using only the Python standard library and the shared
+\texttt{vfd\_v600} package:
+\begin{enumerate}[leftmargin=2em]
+\item State construction: $|\Vsixhundred| = 120$, exactly 12
+$T_\tau$-cycles each of length $10$, K-multiset
+$\{72{:}1,\,0{:}1,\,52{:}5,\,20{:}5\}$.
+\item Projector ranks: $\mathrm{rk}\,\PK{72} = \mathrm{rk}\,\PK{0} = 1$
+and $\mathrm{rk}\,\PK{52} = \mathrm{rk}\,\PK{20} = 5$.
+\item Resolution of identity:
+$\PK{72} + \PK{0} + \PK{52} + \PK{20} = \IC$.
+\item Trace identities: $\mathrm{tr}(\Hop) = 13$ and
+$\mathrm{tr}(\Cop) = 11$, both as exact \texttt{Fraction}s.
+\item Trace ratios: $\mathrm{tr}(\Hop)/12 = 13/12$ and
+$\mathrm{tr}(\Cop)/12 = 11/12$.
+\item Phase-independence (Lemma~\ref{lem:phaseind}): for the
+canonical phase-$(0,0,0,0,0)$ $\tau_\sigma$ from Paper~3, AND for
+each of the $2^5 = 32$ phase combinations enumerated explicitly,
+the induced cycle action exchanges the (K=52, K=20) pairs within
+each non-bulk right coset and fixes the K=72 and K=0 bulk cycles;
+moreover the diagonal vectors of $\Hop$ and $\Cop$ are pointwise
+fixed under the cycle permutation (a stronger statement than
+trace invariance).
+\item Ablation: the rank-$5$ alternatives $\IC + \PK{52}$ and
+$\IC - \PK{20}$ give traces $17$ and $7$, ratios
+$17/12 \approx 1.417$ and $7/12 \approx 0.583$.
+\end{enumerate}
+Reproducibility command:
+\begin{verbatim}
+PYTHONPATH=papers/v600-programme/lib \
+    python3 papers/v600-cosmic-tensions/verify.py
+\end{verbatim}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

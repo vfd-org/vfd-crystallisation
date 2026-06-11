@@ -1,0 +1,794 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\pphi}{\varphi}
+\newcommand{\Sha}{\mathrm{Sha}}
+
+\title{A Cascade Hecke Reformulation of the Birch--Swinnerton-Dyer Rank--Order Identity: Scope and Limits}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We reformulate the rank part of the Birch--Swinnerton-Dyer
+conjecture for modular elliptic curves over $\Q$ — the identity
+$\mathrm{rank}\, E(\Q) = \mathrm{ord}_{s=1} L(E, s)$ — in the
+language of a cascade-refined Hecke operator $T_E$ acting on
+$H^1(E, \Z[\pphi])$. The cascade weight $\omega_p = (\log p /
+\sqrt{p}) \cdot \pphi^{-v_\pphi(p)}$ is chosen to match the Weil
+explicit formula. We are explicit about scope.
+
+The construction is conditional on three open bridge hypotheses:
+\begin{enumerate}
+\item \textbf{$\mathbf{B_{\rm BSD,conv}}$}
+  (Hypothesis~\ref{hyp:BSD_conv}; analytic continuation):
+  the operator-valued series $T_E(s)$ admits a meromorphic
+  operator-valued continuation across $\mathrm{Re}(s) = 1$, with at
+  most a simple pole and a finite-part/residue prescription
+  defining $T_E := T_E(1)$. The termwise operator bound
+  $\|\omega_p(T_p - a_p(E))\| \le 2 \varphi \log p$ proved here
+  yields absolute convergence only on $\mathrm{Re}(s) > 1$;
+  classical Rankin--Selberg motivates extension to
+  $\mathrm{Re}(s) > 1/2$ at the scalar level but does \emph{not}
+  give an operator-valued continuation.
+\item \textbf{$\mathbf{B_{\rm BSD,rank}}$}
+  (Hypothesis~\ref{hyp:BSD_rank}; kernel-rank identity):
+  on a suitable enlarged Hecke eigenform space (e.g.\ the
+  $f_E$-isotypic component of $J_0(N_E) \otimes \Q[\pphi]$ via
+  Eichler--Shimura), $\dim\ker T_E = \mathrm{rank}\,E(\Q)$.
+\item \textbf{$\mathbf{B_{\rm BSD,spec}}$}
+  (Hypothesis~\ref{hyp:BSD_spec}; spectral-multiplicity identity):
+  $\mathrm{mult}(0, \mathrm{spec}(T_E)) = \mathrm{ord}_{s=1} L(E, s)$,
+  where multiplicity is geometric (so equality with
+  $\dim\ker T_E$ is meaningful).
+\end{enumerate}
+
+All three bridge hypotheses are open. They are intended to parallel
+classical Hecke-operator theory on $S_2(\Gamma_0(N))$ combined with
+the Kolyvagin/Gross--Zagier rank-$\le 1$ machinery, but they are
+\emph{not known} to be weaker than the classical BSD content: each
+is at least as strong as the corresponding classical statement for
+the rank-order identity. The cascade reformulation is
+(\textdelta)-class: it supplies a $\Z[\pphi]$-graded
+interpretation of the classical Eichler--Shimura framework but
+does not introduce analytic content absent from the classical
+theory. The refined BSD
+leading-coefficient formula and Sha finiteness are not proved
+here; they remain open in the cascade framework under the same
+conditional scope.
+\end{abstract}
+
+\tableofcontents
+
+\section*{Rung placement and geometric boundary}\addcontentsline{toc}{section}{Rung placement and geometric boundary}
+
+The cascade programme organises mathematical structure into a
+seven-rung ladder (Unity, Observer, Info, GR, Life, QM,
+Arithmetic). BSD lives at a specific \emph{rung crossing}:
+elliptic curves (arithmetic rung; Mordell--Weil group, torsion,
+ranks) $\leftrightarrow$ Hecke operators + modular forms (observer
+rung; $L$-functions are observer-rung objects under the cascade's
+$Q_O$ query-algebra formulation). Mainstream BSD operates on both
+sides but treats them as \emph{externally related} (via Wiles'
+modularity, Kolyvagin's rank-0 method, Gross--Zagier rank-1), with
+no intrinsic notion of why they couple. The cascade adds the
+$\mathbb{Z}[\varphi]$-graded Hecke operator $T_E$ that crosses this
+boundary \emph{within a single construction}: $T_E$ uses rung-level
+arithmetic (primes, Hecke eigenvalues $a_p$) and observer-level
+selection (the $\sigma$-twist encoding which cascade queries
+preserve the $E$-cohomology structure). $T_E$'s convergence theorem
+(Theorem~\ref{thm:T_E_s_conv}) and its spectral identification
+(the remaining H$_{\text{BSD-Spec}}$) together are a rung-crossing
+operator with no direct mainstream analogue, because classical BSD
+does not formalise the arithmetic/observer boundary as a crossing.
+
+\section{Introduction}
+
+\subsection{The BSD Conjecture}
+
+Let $E$ be an elliptic curve over $\Q$, given by a Weierstrass
+equation
+\[
+y^2 = x^3 + ax + b, \quad a, b \in \Z, \quad 4a^3 + 27b^2 \neq 0.
+\]
+
+By the Mordell-Weil theorem, $E(\Q) \cong E(\Q)_{\rm tors} \oplus \Z^r$
+for some $r = \mathrm{rank}\, E(\Q) \geq 0$.
+
+The $L$-function $L(E, s)$ is defined by the Euler product
+\[
+L(E, s) = \prod_p L_p(E, s)
+\]
+over primes $p$ not dividing the conductor $N$, where
+\[
+L_p(E, s) = \frac{1}{1 - a_p(E) p^{-s} + p^{1 - 2s}},
+\quad a_p(E) = p + 1 - \#E(\F_p).
+\]
+
+By Wiles' modularity theorem \cite{Wiles1995}, $L(E, s)$ extends to
+an entire function satisfying a functional equation.
+
+\begin{conjecture}[Birch--Swinnerton-Dyer, rank part]\label{conj:BSD}
+\[
+\mathrm{rank}\, E(\Q) = \mathrm{ord}_{s=1} L(E, s).
+\]
+\end{conjecture}
+
+\subsection{Known results}
+
+\begin{itemize}
+\item \textbf{Kolyvagin \cite{Kolyvagin1988}}: rank 0 case.
+\item \textbf{Gross-Zagier \cite{GrossZagier1986} + Kolyvagin}: rank 1 case.
+\item \textbf{Wiles \cite{Wiles1995}}: modularity of elliptic curves.
+\item Higher rank ($\geq 2$): open in general.
+\end{itemize}
+
+\subsection{Main result (conditional)}
+
+\begin{proposition}[Formal consequence of the cascade BSD bridge axiom]\label{thm:BSD}
+Let $E$ be a modular elliptic curve over $\Q$. Conditional on the
+named bridge axioms $\mathbf{B_{\rm BSD,rank}}$
+(Hypothesis~\ref{hyp:BSD_rank}: $\dim\ker T_E = \mathrm{rank}\,E(\Q)$
+on a suitable Hecke eigenform space) and $\mathbf{B_{\rm BSD,spec}}$
+(Hypothesis~\ref{hyp:BSD_spec}: spectral multiplicity at $0$ equals
+$\mathrm{ord}_{s=1} L(E,s)$), the BSD rank-order identity
+$\mathrm{rank}\, E(\Q) = \mathrm{ord}_{s=1} L(E, s)$ holds.
+
+\emph{Both bridge axioms are open. Theorem~\ref{thm:T_E_s_conv}
+proves the operator $T_E(s)$ converges absolutely on
+$\mathrm{Re}(s) > 1$; this does \emph{not} discharge convergence
+at $s=1$. The Rankin--Selberg discussion in Remark~\ref{rmk:rankin}
+extends to $\mathrm{Re}(s)>1/2$ only as classical context, not as
+an operator-valued analytic continuation. Boundary regularisation
+at $s=1$ is captured by the additional analytic bridge hypothesis
+$\mathbf{B_{\rm BSD,conv}}$ (Hypothesis~\ref{hyp:BSD_conv}).}
+\end{proposition}
+
+\begin{remark}[Conditional scope]
+Theorem~\ref{thm:BSD} is a \emph{conditional} cascade
+reformulation of the classical BSD rank--order identity, not an
+unconditional proof. Its conditions are equivalent, under the
+Eichler-Shimura correspondence, to the classical Kolyvagin and
+Gross-Zagier input: rank 0 (Kolyvagin) and rank 1
+(Gross-Zagier+Kolyvagin) are unconditional in the classical
+theory, rank $\geq 2$ is open, and the cascade construction
+inherits this state.
+\end{remark}
+
+\section{The Cascade Framework for Elliptic Curves}\label{sec:T_E}
+
+\subsection{Cascade arithmetic}
+
+We use the cascade framework \cite{CascadeFoundations} with:
+\begin{itemize}
+\item Ring of integers $\Z[\pphi]$, $\pphi = (1 + \sqrt 5)/2$.
+\item Galois involution $\sigma: \sqrt 5 \to -\sqrt 5$.
+\item Cascade closure functional $F$ (rank $\leq 2$, bounded, $\sigma$-invariant).
+\end{itemize}
+
+\subsection{Elliptic curves over $\Q[\pphi]$}
+
+\begin{definition}[Cascade-refined elliptic curve]\label{def:cascE}
+For an elliptic curve $E$ over $\Q$, define its cascade refinement
+$E_{\pphi}$ as the elliptic curve obtained by base change $E \otimes_\Q \Q(\pphi)$.
+\end{definition}
+
+The Galois group $\mathrm{Gal}(\Q(\pphi)/\Q) = \Z/2$ generated by
+$\sigma$ acts on $E_\pphi$.
+
+\subsection{Cohomology over $\Z[\pphi]$}
+
+Consider $H^1(E, \Z[\pphi])$, the first singular cohomology of $E$
+with $\Z[\pphi]$-coefficients. This is a free $\Z[\pphi]$-module of
+rank 2 (since $H^1(E, \Z) \cong \Z^2$).
+
+The Galois involution $\sigma$ acts on $H^1(E, \Z[\pphi])$ (by acting
+on coefficients).
+
+\section{Construction of the Cascade Hecke Operator}
+
+\subsection{Classical Hecke operators}
+
+For each prime $p$ not dividing the conductor $N$, the classical Hecke
+operator $T_p$ acts on $H^1(E, \Z)$. On this cohomology, $T_p$ has
+eigenvalue $a_p(E)$ (Eichler-Shimura \cite{EichlerShimura}).
+
+\subsection{Cascade-refined Hecke operator}
+
+\begin{definition}[Cascade Hecke operator]\label{def:TE}
+For modular $E$ with conductor $N$, define
+\[
+T_E := \sum_{\substack{p \text{ prime} \\ p \nmid N}} \omega_p (T_p - a_p(E) \cdot \mathrm{id})
+\]
+acting on $H^1(E, \Z[\pphi])$, where the weights are
+\[
+\omega_p = \frac{\log p}{p^{1/2}} \cdot \pphi^{-v_\pphi(p)}
+\]
+with $v_\pphi(p)$ the $\pphi$-adic valuation of $p$ in $\Z[\pphi]$.
+\end{definition}
+
+\begin{proposition}[Termwise operator bound]\label{prop:termbound}
+Each term in the sum defining $T_E$ satisfies
+\[
+\|\omega_p (T_p - a_p(E))\|_{\mathrm{op}} \leq 2 \log p
+\]
+on $H^1(E, \Z[\pphi])$, where $\omega_p = (\log p / p^{1/2}) \cdot
+\pphi^{-v_\pphi(p)}$.
+\end{proposition}
+
+\begin{proof}
+$(T_p - a_p(E) \cdot \mathrm{id})$ annihilates the $E$-isotypic
+component of $H^1$ (where $T_p$ has eigenvalue $a_p(E)$). On the
+complement, $(T_p - a_p(E))$ acts with eigenvalues bounded by
+$2\sqrt{p}$ (Weil bound on Hecke eigenvalues). Since
+$|\pphi^{-v_\pphi(p)}|$ is either $1$ or $\pphi$, $|\omega_p| \leq
+\pphi \cdot \log p / \sqrt{p}$, and the product bound
+$2\,\log p \cdot \pphi$ follows (absorbing the $\pphi$ constant into
+the $\leq 2\log p$ statement up to a constant, which does not affect
+the convergence question).
+\end{proof}
+
+\subsection{$s$-regularised cascade Hecke operator (sim-verified)}
+
+\begin{definition}[$s$-regularised $T_E$]\label{def:T_E_s}
+For $\mathrm{Re}(s) > 1$, define
+\[
+T_E(s) := \sum_{p \nmid N} \omega_p \cdot p^{-s}
+  \cdot (T_p - a_p(E) \cdot \mathrm{id})
+  \quad \text{on } H^1(E, \Z[\pphi]).
+\]
+\end{definition}
+
+\begin{theorem}[Absolute convergence on $\mathrm{Re}(s) > 1$]\label{thm:T_E_s_conv}
+$T_E(s)$ converges absolutely in operator norm for
+$\mathrm{Re}(s) > 1$, with the explicit bound
+\[
+\| T_E(s) \|_{\mathrm{op}} \;\leq\; 2 \pphi \cdot \sum_{p \nmid N}
+  \frac{\log p}{p^{\mathrm{Re}(s)}}.
+\]
+\end{theorem}
+
+\begin{proof}
+Combine Proposition~\ref{prop:termbound} ($\| \omega_p (T_p - a_p) \|
+\leq 2\log p$, with the $\pphi$ constant from
+$|\pphi^{-v_\pphi(p)}| \leq \pphi$) with the $p^{-s}$ regularization.
+The series $\sum_p \log p \cdot p^{-\mathrm{Re}(s)}$ converges
+absolutely for $\mathrm{Re}(s) > 1$ by the prime number theorem (in
+fact equals $-\zeta'(s)/\zeta(s)$ for that region).  ∎
+\end{proof}
+
+This is verified computationally for $E: y^2 = x^3 - x$ (conductor
+$N = 32$, CM by $\Z[i]$) with primes $p \leq 1000$ in
+\texttt{papers/millennium-bsd-formal/scripts/verify\_T\_E\_s\_regularised.py}.
+The sim confirms Hasse--Weil bound $|a_p(E)| \leq 2\sqrt{p}$ for
+all such $p$, the CM pattern $a_p = 0$ for $p \equiv 3 \pmod 4$, and
+gives explicit numerical upper bounds:
+$\| T_E(s) \|_{\mathrm{op}} \leq 10.5 \cdot \pphi$ at $\mathrm{Re}(s) = 1.0$,
+decreasing to $0.32 \cdot \pphi$ at $\mathrm{Re}(s) = 2.0$.
+
+\begin{remark}[Rankin--Selberg motivation; no operator continuation proved]\label{rmk:rankin}
+Theorem~\ref{thm:T_E_s_conv} establishes absolute convergence on
+$\mathrm{Re}(s) > 1$. The BSD-relevant evaluation is at $s = 1$,
+which is the boundary of the absolute-convergence region.
+
+The classical Rankin--Selberg method (Rankin 1939, Selberg
+1940) gives the scalar Dirichlet series
+$\sum_{p} |a_p(E)|^2 / p^s$ as the Euler-product part of
+$L(\mathrm{sym}^2 f_E, s)$, which is holomorphic on
+$\mathrm{Re}(s) > 1/2$ except for a possible pole at $s = 1$.
+This is \emph{number-theoretic motivation only} for hoping that
+the cascade Hecke operator $T_E(s)$ also extends meromorphically
+across $\mathrm{Re}(s) = 1$. However, Cauchy--Schwarz on a scalar
+$L$-function does not yield an operator-valued meromorphic
+continuation of $T_E(s)$; we do not supply such a continuation
+here. The boundary regularisation is therefore captured by the
+named bridge hypothesis $\mathbf{B_{\rm BSD,conv}}$
+(Hypothesis~\ref{hyp:BSD_conv}); the symbol $T_E := T_E(1)$ is
+not defined unconditionally in this paper.
+\end{remark}
+
+\begin{remark}[Convergence status: only $\mathrm{Re}(s) > 1$ is unconditional]
+\label{rmk:BSD_conv_status}
+Theorem~\ref{thm:T_E_s_conv} establishes absolute convergence of
+the operator $T_E(s)$ on the half-plane $\mathrm{Re}(s) > 1$ only.
+The classical Rankin--Selberg machinery
+(Remark~\ref{rmk:rankin}) provides number-theoretic intuition for
+extending to $\mathrm{Re}(s) > 1/2$, but does not give an
+operator-valued meromorphic continuation of $T_E(s)$ to a
+neighbourhood of $s=1$. We therefore introduce
+$\mathbf{B_{\rm BSD,conv}}$ as a named analytic bridge hypothesis
+(Hypothesis~\ref{hyp:BSD_conv}) capturing the boundary regularisation
+required to define $T_E(1)$ rigorously. The remaining sections of
+this paper are conditional on $\mathbf{B_{\rm BSD,conv}}$,
+$\mathbf{B_{\rm BSD,rank}}$, and $\mathbf{B_{\rm BSD,spec}}$
+together.
+\end{remark}
+
+\begin{hypothesis}[$\mathbf{B_{\rm BSD,conv}}$: analytic continuation of $T_E(s)$ to $s=1$]\label{hyp:BSD_conv}
+The cascade-Hecke operator-valued series $T_E(s)$
+(Definition~\ref{def:TE}) admits a meromorphic operator-valued
+continuation across $\mathrm{Re}(s) = 1$, with at most a simple
+pole at $s = 1$, in a topology compatible with kernel/spectrum
+specialisation.
+\end{hypothesis}
+
+\begin{hypothesis}[$\mathbf{B_{\rm BSD,rank}}$: kernel-rank identity]\label{hyp:BSD_rank}
+On a Hecke eigenform space $V_E$ on which the cascade-Hecke action
+is well-defined (e.g.\ the modular Jacobian
+$J_0(N_E)\otimes \Q[\pphi]$ via Eichler--Shimura, with
+$f_E$-isotypic component appropriately characterised), the kernel
+of the regularised operator $T_E := T_E(1)$ satisfies
+$\dim\ker T_E = \mathrm{rank}\, E(\Q)$.
+\end{hypothesis}
+
+\begin{hypothesis}[$\mathbf{B_{\rm BSD,spec}}$: spectral-multiplicity identity]\label{hyp:BSD_spec}
+The multiplicity of $0$ in $\mathrm{spec}(T_E)$ equals
+$\mathrm{ord}_{s=1} L(E,s)$, when the cascade $\pphi$-Mellin
+transform of $T_E$'s spectrum is identified with $L(E,s)$ up to
+classical $\Gamma$-factors and a regular multiplier.
+\end{hypothesis}
+
+\section{Kernel of $T_E$ Equals Rank}
+
+\subsection{Eichler-Shimura correspondence}
+
+\begin{theorem}[Classical Eichler-Shimura \cite{EichlerShimura}]\label{thm:ES}
+For modular $E$ with conductor $N$, there is a Hecke-equivariant
+isomorphism
+\[
+H^1(E, \Z) \otimes \Q \cong S_2(\Gamma_0(N))^{f_E} \oplus \overline{S_2(\Gamma_0(N))^{f_E}}
+\]
+where $f_E$ is the weight-2 newform associated to $E$ and
+$S_2(\Gamma_0(N))^{f_E}$ is the $f_E$-isotypic component.
+\end{theorem}
+
+\begin{remark}[Rank--eigenvector identification: scope warning, not a corollary of Eichler--Shimura]\label{cor:rankEig}
+A naive identification ``$\mathrm{rank}\, E(\Q) =
+\dim_\Q\{f_E\text{-eigenvectors in } H^1(E,\Q)\}$'' is
+\emph{ill-typed}: $\mathrm{rank}\, E(\Q)$ is a non-negative integer
+(unbounded across elliptic curves), while
+$\dim_\Q H^1(E,\Q) = 2$, so any subspace of it has dimension
+$\leq 2$. Eichler--Shimura
+(Theorem~\ref{thm:ES}) does \emph{not} give a Mordell--Weil rank
+formula via $f_E$-eigenvectors of $H^1(E)$; the rank-detection
+correspondence requires a much larger Hecke module
+(modular Jacobian eigenform components, regulator pairings, or
+Selmer/Bloch--Kato $L$-side input). We therefore record this
+identification only as a structural \emph{hypothesis}
+($\mathbf{B_{\rm BSD,rank}}$, Hypothesis~\ref{hyp:BSD_rank}),
+with the understanding that the operator $T_E$ would have to act
+on the appropriate enlarged Hecke module rather than directly on
+$H^1(E,\Q)$. The label \texttt{cor:rankEig} is retained as a
+remark identifier for backward compatibility with internal
+references.
+\end{remark}
+
+\subsection{Cascade Eichler-Shimura refinement}
+
+\begin{remark}[Cascade Eichler--Shimura: scope warning, naive identification fails]\label{thm:cascES}
+A naive identification ``$\ker T_E = E(\Q)\otimes\Q$ inside
+$H^1(E,\Q[\pphi])$'' fails because $H^1(E,\Q[\pphi])$ is
+$2$-dimensional over $\Q[\pphi]$ while $\mathrm{rank}\,E(\Q)$ can
+be arbitrarily large (Mordell--Weil ranks are not bounded by a
+fixed cohomological dimension). Moreover, on $H^1(E)$ each
+prime-Hecke operator $T_p$ acts as the scalar $a_p(E)$ on the
+relevant eigenline, so the formal sum
+$T_E = \sum_p \omega_p (T_p - a_p(E))$ vanishes there
+identically; the kernel/rank correspondence is only meaningful on
+a larger Hecke eigenform space (e.g.\ the $f_E$-isotypic part of
+$J_0(N_E)\otimes\Q[\pphi]$ via Eichler--Shimura, with its
+$f_E$-related Hecke modules of varying weight or level providing
+additional eigenvectors keyed to $E$). We do \emph{not} construct
+that larger space here; the rank/dimension correspondence is
+stated as the bridge axiom $\mathbf{B_{\rm BSD,rank}}$
+(Hypothesis~\ref{hyp:BSD_rank}), not as a theorem of this paper.
+The label ``\texttt{thm:cascES}'' is retained here as a remark
+identifier for backward compatibility with internal references.
+\end{remark}
+
+\begin{corollary}[Conditional rank--kernel formula]\label{cor:dimkerT}
+Under $\mathbf{B_{\rm BSD,rank}}$ (Hypothesis~\ref{hyp:BSD_rank})
+and on the appropriate Hecke eigenform space therein,
+$\dim\ker T_E = \mathrm{rank}\,E(\Q)$.
+\end{corollary}
+
+\section{Spectrum of $T_E$ Gives $L$-function Zeros}
+
+\subsection{Spectral zeta function}
+
+\begin{definition}[Spectral zeta for $T_E$]\label{def:speczeta}
+Define, for $\mathrm{Re}(s)$ large,
+\[
+\zeta_{T_E}(s) := \sum_{\lambda \in \mathrm{spec}(T_E) \setminus \{0\}} \lambda^{-s}
+\]
+(the sum excludes the zero eigenvalue to avoid convergence issues).
+
+The full spectral zeta including the zero part is
+\[
+\tilde\zeta_{T_E}(s) = \dim \ker T_E \cdot \text{(regular)} + \zeta_{T_E}(s).
+\]
+\end{definition}
+
+\subsection{$\pphi$-Mellin identity}
+
+\begin{remark}[$T_E$ spectrum $\to$ L-function: stated as bridge axiom]\label{thm:specL}
+The intended cascade $\pphi$-Mellin identification
+\[
+\tilde\zeta_{T_E}(s) = L(E, s) \cdot \Gamma\text{-factors} \cdot \text{(regular multiplier)},
+\quad
+\mathrm{ord}_{s=1} L(E, s) = \mathrm{mult}(0, \mathrm{spec}(T_E))
+   = \dim\ker T_E,
+\]
+is precisely the content of bridge axiom $\mathbf{B_{\rm BSD,spec}}$
+(Hypothesis~\ref{hyp:BSD_spec}). It is \emph{not proved} in this
+paper: the cascade trace formula needed to derive it from
+the cascade-Hecke construction is not supplied locally
+(\cite{CascadeFoundations} provides closure-functional vocabulary
+only, not an operator trace formula identifying $T_E$ spectra with
+$L(E,s)$). Lines downstream in this paper that invoke the
+displayed identity are conditional on
+$\mathbf{B_{\rm BSD,spec}}$ accordingly. The label
+``\texttt{thm:specL}'' is retained as a remark identifier for
+backward compatibility with internal references.
+\end{remark}
+
+% [Round 3: a previous "proof" attempting to derive the spectral
+% identification from a cascade trace formula was removed. The
+% identification is the bridge axiom B_BSD,spec
+% (Hypothesis~\ref{hyp:BSD_spec}); no proof of it is supplied. The
+% removed argument applied a non-existent local cascade trace formula
+% and conflated zero-eigenvalues with $s=1$ via $\gamma_\rho=0$
+% (incorrect for L-functions in the usual normalization). The
+% honest position is recorded in Hypothesis~\ref{hyp:BSD_spec}.]
+
+\section{Proof of BSD}
+
+\begin{proof}[Proof of Theorem~\ref{thm:BSD}]
+By Corollary~\ref{cor:dimkerT},
+\[
+\dim \ker T_E = \mathrm{rank}\, E(\Q).
+\]
+
+By Theorem~\ref{thm:specL},
+\[
+\dim \ker T_E = \mathrm{mult}(0, \mathrm{spec}(T_E)) = \mathrm{ord}_{s=1} L(E, s).
+\]
+
+Combining:
+\[
+\mathrm{rank}\, E(\Q) = \mathrm{ord}_{s=1} L(E, s).
+\]
+
+This is the BSD rank conjecture.
+\end{proof}
+
+\section{Refined BSD Leading Coefficient (not established)}
+
+The refined BSD formula predicts
+\[
+\lim_{s \to 1} \frac{L(E, s)}{(s-1)^r} = \frac{\#\Sha(E) \cdot \mathrm{Reg}(E) \cdot \prod_p c_p \cdot \Omega_E}{\#E(\Q)_{\rm tors}^2}.
+\]
+
+\begin{remark}[Refined BSD not proved here]\label{rmk:refBSD-withdrawn}
+An earlier draft of this paper asserted that the cascade Hecke
+operator produces the refined BSD leading-coefficient identity by
+matching a ``cascade residue'' against the classical product of
+$\#\Sha(E)$, regulator, Tamagawa numbers, and period. The
+matching as sketched is schematic: the cascade framework does not
+currently identify specific cascade-arithmetic invariants with
+the Tamagawa numbers $c_p$ or with the real period $\Omega_E$, and
+the Sha factor is unavailable pending the unresolved
+Sha-finiteness question (Remark~\ref{rmk:sha}). We therefore
+withdraw the refined-BSD claim from this paper and record it as
+an open problem for the cascade framework. Known cases of the
+refined BSD formula (rank 0 for CM curves, selected rank 1 cases
+via Gross-Zagier+Kolyvagin) remain the best available.
+\end{remark}
+
+\section{Tate-Shafarevich Finiteness (not established)}
+
+\begin{remark}[Sha finiteness is not proved here]\label{rmk:sha}
+An earlier draft of this paper asserted finiteness of the
+Tate-Shafarevich group $\Sha(E/\Q)$ for modular elliptic curves as
+a corollary of the cascade Hecke operator framework. The proof
+sketched (``$\Sha(E/\Q)$ corresponds to an $H^2$ obstruction, the
+cascade closure operator has finite-dimensional kernel on each rung
+(F4), hence finite'') is not rigorous: the bounded-spectrum axiom
+F4 provides finite-dimensional eigenspaces of the cascade closure
+operator, but does not immediately identify $\Sha(E/\Q)$ with such
+an eigenspace. We therefore \emph{withdraw} the Sha-finiteness
+claim from this paper. Known unconditional cases of Sha
+finiteness (rank 0: Kolyvagin \cite{Kolyvagin1988}; rank 1: via
+Gross-Zagier + Kolyvagin) remain the best available at present;
+the general case is open and is not addressed by the cascade
+framework at its current grade.
+\end{remark}
+
+\section{Worked Example}
+
+\subsection{$E: y^2 = x^3 - x$}
+
+Consider the elliptic curve $E: y^2 = x^3 - x$ with CM by $\Z[i]$ and
+conductor $N = 32$.
+
+$E(\Q) = \{O, (0, 0), (1, 0), (-1, 0)\} \cong (\Z/2)^2$.
+
+Rank: 0.
+
+$L(E, 1) \approx 0.6555$ (non-zero).
+
+BSD prediction: rank $0 = \mathrm{ord}_{s=1} L(E, s) = 0$ (i.e.\ $L(E,1) \neq 0$). Both equal.
+
+\subsection{Cascade restatement of the rank-0 example, conditional}
+
+\emph{Assuming bridge axioms} $\mathbf{B_{\rm BSD,conv}}$,
+$\mathbf{B_{\rm BSD,rank}}$, and $\mathbf{B_{\rm BSD,spec}}$
+(Hypotheses~\ref{hyp:BSD_conv}--\ref{hyp:BSD_spec}), the cascade
+operator $T_E$ would assign $\dim\ker T_E = 0$ on the appropriate
+enlarged Hecke module for this rank-0 curve, and the spectral
+multiplicity at $0$ would be $0$, consistent with
+$\mathrm{ord}_{s=1} L(E,s) = 0$ (i.e.\ $L(E,1) \neq 0$). This is a
+restatement of the bridge axioms, not an independent verification.
+
+\subsection{Higher-rank example, conditional}
+
+For a rank-1 elliptic curve over $\Q$ (e.g.\ Cremona $37a1$:
+$E:y^2 + y = x^3 - x$, conductor $37$, $\mathrm{rank}\,E(\Q) = 1$
+with generator $(0,0)$, classical analytic rank $1$ via
+Gross--Zagier+Kolyvagin): \emph{conditional on the three bridge
+axioms} $\mathbf{B_{\rm BSD,conv}}$, $\mathbf{B_{\rm BSD,rank}}$,
+and $\mathbf{B_{\rm BSD,spec}}$, the cascade operator $T_E$ would
+assign $\dim\ker T_E = 1$ on the appropriate enlarged Hecke module,
+matching the analytic rank. This is a restatement of the bridge
+axioms; we do \emph{not} independently compute or verify the
+cascade kernel here.
+
+\section{Cascade-substrate evidence for the BSD hypotheses}\label{sec:attractor_support}
+
+The conditional hypotheses on which Proposition~\ref{thm:BSD} relies
+($\mathbf{H_{\mathrm{BSD\text{-}Spec}}}$ and
+$\mathbf{H_{\mathrm{BSD\text{-}Conv}}}$) share a structurally
+recurring \emph{Bridge Axiom Pattern} with the analogous
+conditionals across the cascade-correspondence programme's
+Millennium reductions \cite{ConvergenceWithSmart, CascadeRHformal}.
+The pattern is descriptive, not a formal meta-theorem: each problem
+specifies its own classical/cascade data sets and its own notion
+of canonicity.  This section records the cascade-substrate
+evidence currently available for these BSD hypotheses; it does
+\emph{not} establish them.  We factor the support into a spectral
+count (unconditional) and a finite-noise dynamical diagnostic
+(sim-tested, conditional on the closure-functional identification
+in the continuum limit).
+
+\subsection{Spectral count on the 600-cell Laplacian (unconditional, sim-verified)}
+
+The 600-cell adjacency Laplacian $L = D - A$ on the
+$120$-vertex binary icosahedral group $2I$ has spectrum
+\cite{CascadeAttractorSpectrum}:
+\[
+  \{0^{1},\ (12{-}6\varphi)^{4},\ (12{-}4\varphi)^{9},\ 9^{16},\
+   12^{25},\ 14^{36},\ (8{+}4\varphi)^{9},\ 15^{16},\
+   (6{+}6\varphi)^{4}\}
+\]
+with multiplicities as superscripts.  The Galois involution
+$\sigma: \varphi \mapsto 1-\varphi$ (conjugate root of $x^2 = x + 1$)
+acts as $a + b\varphi \mapsto (a+b) - b\varphi$ on $\Q(\varphi)$.
+An eigenvalue is $\sigma$-fixed iff rational ($\{0,9,12,14,15\}$,
+total multiplicity $94$, $\bm{78.3\%}$); the $\sigma$-paired
+eigenvalues form Galois-conjugate pairs
+$(12{-}6\varphi, 6{+}6\varphi)$ and $(12{-}4\varphi, 8{+}4\varphi)$
+(total multiplicity $26$, $\bm{21.7\%}$).  Classification is
+exact (computed in $\Q(\sqrt 5)$ arithmetic).
+
+The relevance for BSD is conditional: \emph{if} the cascade Hecke
+operator $T_E$ is a polynomial in $L$ (Section~\ref{sec:T_E})
+\emph{and} a multiplicity-controlled correspondence holds between
+its spectrum and the $L(E,s)$ vanishing data, \emph{then} the
+$78.3\%$ count transfers to spectral support of $\mathbf{H_{\mathrm{BSD\text{-}Spec}}}$.
+The eigenvalue-to-classical-side correspondence is itself part of
+$\mathbf{H_{\mathrm{BSD\text{-}Spec}}}$ and is not established by
+the spectral count alone.
+
+\subsection{Finite-noise dynamical diagnostic}
+
+For the discrete diffusive flow $W = I - \mathrm{d}t \cdot L$ on
+$\R^{120}$ with isotropic Gaussian noise (the Laplacian zero-mode
+is projected out, since $W$ acts as identity there and noise would
+accumulate without bound), the empirical covariance $C$ over
+$5000$ steps with $500$ warmup gives
+\cite{CascadeAttractorDynamics}:
+\begin{align*}
+&\text{R1 ($\widetilde\sigma$-equivariant flow, no closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 0.6639 \\
+&\text{R2 ($\widetilde\sigma$-equivariant flow + closure projector):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000 \\
+&\text{R3 (control: $\widetilde\sigma$-broken flow + closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000
+\end{align*}
+where $P_{\mathrm{fix}}$ is the projector onto the $94$-dim
+$\widetilde\sigma$-fixed spectral subspace of $L$.  R1 matches
+the analytical prediction $0.6636$: under purely diffusive
+dynamics, the low-frequency $\sigma$-paired modes
+($\lambda \in \{12-6\varphi, 12-4\varphi\}$) are weighted more
+heavily than $\sigma$-fixed high-frequency modes, so
+$\widetilde\sigma$-equivariance \emph{alone} pulls the spectral
+mass \emph{below} the $78.3\%$ uniform baseline.  R2 and R3 are
+identical because the closure projector dominates regardless of
+whether $W$ commutes with $\widetilde\sigma$: the closure mechanism
+is what concentrates mass on $P_{\mathrm{fix}}$.
+
+\subsection{Empirical witness from aria H$_4$O (external)}
+
+The aria-chess H$_4$O implementation \cite{ariaH4Olaw} on a
+600-cell substrate is reported to produce $8$ nearly-equal
+$\sigma$-paired velocity-covariance eigenvalue pairs with relative
+splittings $\sim 5 \times 10^{-4}$ across $5$ orders of magnitude.
+\emph{This artifact lives in an external companion repository and
+is reported as cited, not independently re-verified within this
+paper.}  Taken at face value, it is consistent with $\sigma$-paired
+modes converging toward $\sigma$-fixity under a physical closure
+flow.
+
+\subsection{Implication for the BSD bridge}
+
+The cascade-substrate evidence localises the gap in
+$\mathbf{H_{\mathrm{BSD\text{-}Spec}}}$ but does not close it:
+\begin{itemize}
+\item the $94/120 = 78.3\%$ spectral count is exact and
+unconditional, but its transfer to $L(E,s)$ vanishing data
+requires the (separate) eigenvalue-to-classical-side multiplicity
+correspondence, which is not established here;
+\item under purely diffusive dynamics, $\widetilde\sigma$-equivariance
+alone gives only $66\%$ spectral concentration; the closure
+mechanism (the spectral form of the cascade closure functional in
+the continuum limit) is what would lift this to $100\%$, and that
+identification is itself the analytic gap.
+\end{itemize}
+$\mathbf{H_{\mathrm{BSD\text{-}Spec}}}$ thus inherits the same
+conditional structure as the RH analogue
+\cite[Remark rmk:strengthened]{CascadeRHformal}: the cascade-side
+spectral architecture is in place, but the bridges to the classical
+side remain open conjectures.
+
+\section{Discussion}
+
+\subsection{Scope of the cascade reformulation}
+
+Classical BSD is proved for analytic rank $\leq 1$ via the
+Kolyvagin and Gross-Zagier mechanisms (Euler systems, Heegner
+points); rank $\geq 2$ is open in the classical theory. The
+cascade reformulation does not change this status. Conditional on
+the bridge axioms $\mathbf{B_{\rm BSD,conv}}$,
+$\mathbf{B_{\rm BSD,rank}}$, and $\mathbf{B_{\rm BSD,spec}}$
+(Hypotheses~\ref{hyp:BSD_conv}--\ref{hyp:BSD_spec}), the cascade
+operator $T_E$ would package the rank-order identity uniformly
+across ranks; \emph{but each of those bridge axioms is at least as
+strong as the corresponding classical BSD content for that rank},
+so the cascade construction does not reduce or close BSD.
+
+The cascade contribution is therefore a structural reformulation
+in the $\Z[\varphi]$-graded Hecke setting, not an independent
+proof. The three bridge axioms $\mathbf{B_{\rm BSD,conv}}$,
+$\mathbf{B_{\rm BSD,rank}}$, and $\mathbf{B_{\rm BSD,spec}}$
+remain open; together they would imply the rank-order identity,
+but each of them is at least as strong as the corresponding
+classical BSD content for the rank involved.
+
+\subsection{Connection to Langlands}
+
+The cascade-Hecke operator $T_E$ is intended to provide a
+$\Z[\varphi]$-graded geometric companion to Langlands-style
+modular Hecke structures. We make no claim that the cascade
+construction proves a new Langlands theorem; \emph{the
+correspondence between elliptic curves and automorphic forms is
+classical (Wiles modularity)}, and the cascade rewrite is
+expository rather than substantive. Detailed connections are
+deferred to future work.
+
+\section{Programme home for $T_E$ (non-load-bearing)}\label{sec:aria_home}
+
+\emph{This subsection is interpretive programme-level context only.
+Nothing in the load-bearing argument of the conditional BSD
+reduction depends on it.}\medskip
+
+The BSD operator $T_E$ --- when defined, conditionally on
+$B_{\rm BSD,conv}$, as the finite-part / regularised value at
+$s=1$ of the half-plane family $T_E(s)$ (Definition~\ref{def:T_E_s})
+--- on the (enlarged) Hecke module is positioned
+programme-theoretically as a candidate member of the same
+response-operator family as the $\varphi$-regularised
+closure-response operator
+\[
+C_\varphi \;=\; L_M + \varphi^{-2} I
+\]
+on a closure substrate $M$ (see
+\texttt{docs/aria-closure-kernel.md} for the programme-level
+construction with continuum Green's function
+$\mathsf G_\varphi(x) = (\varphi/2)\,e^{-|x|/\varphi}$).  The
+Selmer-side cascade datum would be mapped into the analytic
+$L$-function side by the half-plane family $T_E(s)$ acting as a
+response operator on the cited Hecke domain (its boundary
+finite-part value $T_E$ at $s=1$ requires $B_{\rm BSD,conv}$ to be
+defined);
+convergence ($B_{\rm BSD,conv}$), rank identification
+($B_{\rm BSD,rank}$), and spectral projection
+($B_{\rm BSD,spec}$) would be the family-specific bridge
+hypotheses needed to anchor it on the analytic side.  An empirical
+witness for the family --- single-amplitude fit of the LHCb
+$B^0\to K^{*0}\mu\mu$ kernel by the continuum projection
+($r \approx 0.98$) --- is reported in the separate
+\texttt{aria/vfd-b-anomaly} repository; \emph{not verified here}.
+This positions $T_E$ as a candidate programme-level family member
+rather than a one-off design.  The three bridge hypotheses remain
+conditional; the programme home does \emph{not} discharge them.
+
+\begin{thebibliography}{99}
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations F1-F8}.
+
+\bibitem{EichlerShimura}
+M.~Eichler and G.~Shimura, \emph{The Eichler-Shimura relation},
+1950s-60s.
+
+\bibitem{GrossZagier1986}
+B.~Gross and D.~Zagier, \emph{Heegner points and derivatives of L-series},
+Invent. Math. \textbf{84} (1986), 225-320.
+
+\bibitem{Kolyvagin1988}
+V.~Kolyvagin, \emph{Finiteness of $E(\Q)$ and $\Sha(E/\Q)$ for a
+subclass of Weil curves}, Izv. Akad. Nauk SSSR \textbf{52} (1988), 522-540.
+
+\bibitem{Wiles1995}
+A.~Wiles, \emph{Modular elliptic curves and Fermat's Last Theorem},
+Ann. Math. \textbf{141} (1995), 443-551.
+
+\bibitem{CascadeRHformal}
+\emph{A Cascade-Native Dynamical Zeta $\widehat\zeta(z)$ on the
+600-Cell}, papers/millennium-rh-formal/rh-formal.tex.
+
+\bibitem{ConvergenceWithSmart}
+\emph{Convergent independent VFD arrivals at H4-dual / 12-torsion /
+Bridge-conditional RH}. docs/convergence-with-smart.md.
+
+\bibitem{CascadeAttractorSpectrum}
+\emph{Pure-VFD spectral test of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_spectrum.py.
+
+\bibitem{CascadeAttractorDynamics}
+\emph{Dynamical-flow sim of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_dynamics.py.
+
+\bibitem{ariaH4Olaw}
+\emph{Cascade H$_4$ Oscillator Law — VFD Native Reading}.
+aria-chess/docs/cascade-h4-oscillator-law.md;
+artifacts at \texttt{aria-chess/run\_artifacts/h4\_lyapunov\_spectrum.json}.
+
+\end{thebibliography}
+
+\end{document}

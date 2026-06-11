@@ -1,0 +1,1088 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Vcal}{\mathcal{V}}
+\newcommand{\Rcal}{\mathcal{R}}
+\newcommand{\Qcal}{\mathcal{Q}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\twoT}{2\mathbf{T}}
+\newcommand{\twoI}{2\mathbf{I}}
+\newcommand{\Zphi}{\mathbb{Z}[\varphi]}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\coker}{\mathrm{coker}}
+
+\title{Cascade Foundations\\[6pt]
+\large The Eight Foundations F1--F8 Underlying the VFD Programme}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed).
+
+\begin{abstract}
+Quantum Mechanics, the Standard Model, and General Relativity are correct but incomplete descriptions of physics. The present paper establishes the geometric substrate that underpins all three: a discrete closure cascade $E_8 \to H_4 \to 40 \to D_4 \to 16 \to 8 \to 0$ on the 600-cell. The cascade does not replace QM, SM, or GR; it shows how their equations emerge as projections of one underlying geometric structure onto specific rungs, with explicit recovery maps back to the standard equations. This paper is the programme's mathematical spine, consolidating the eight foundational theorems (F1--F8) on which every downstream result rests.
+
+From two axioms --- vacuum self-similarity and $E_8$ maximality --- supplemented by the thirteen named structural hypotheses \{H-MIN, H-NC, H-SIG, H-DENS, H-BI2, H-HR, H-FP, H-MX, H-YM, H-K, H-PROD, H-COPY-ADD, H-RLA\} documented in the body, we prove or conditionally establish:
+\begin{itemize}
+\item \textbf{F1} (Theorem, Banach fixed point): the base permeability is the golden ratio, $r = \varphi$.
+\item \textbf{F2} (Theorem, minimal-invariant classification): the closure functional has the unique form $F = \alpha R + \beta E - \gamma Q$.
+\item \textbf{F3} (Theorem, conditional on Hypothesis H-NC): the seven-rung cascade sequence is selected under H-NC (non-crystallographic rung, motivated by F1's $\varphi$ scaling + empirical cascade evidence).
+\item \textbf{F4} (Theorem, graded linear algebra): the total closure depth is $\dim \Vcal = 24^2 + 7 = 583$.
+\item \textbf{F5} (Theorem, conditional on H-SIG): the discretised closure functional on $\sigma$-fixed fields is equal on the two conjugate $H_4$ copies of $E_8$ under Hypothesis H-SIG (per-invariant finite sums $\sigma$-fixed); supplying the per-copy equality that, together with Hypothesis H-COPY-ADD, produces the factor of 2 in the $\Lambda$ formula for arbitrary real $(\alpha, \beta, \gamma)$. Continuum extension requires a separate functional-convergence hypothesis.
+\item \textbf{F6} (Theorem, conditional on H-DENS, H-BI2, and H-HR): the Schl\"afli refinement is a Gromov--Hausdorff convergence target for $S^3$; the covering-radius rate $\varepsilon_n \le \varepsilon_0 \cdot 2^{-n}$ ($\varepsilon_0 \approx 0.762$ rad) is verified numerically at the $0 \to 1$ transition and conditional on H-HR at higher $n$.
+\item \textbf{F7} (Theorem, scoped to FP1--FP3; continuum under H-FP): the cosmological-constant $\Lambda$ rank-$2$ content is assigned to the $D_4$ rung at the discrete level via SO(4) rep theory + triality under the FP1--FP3 selection criteria (unconditional relative to those criteria; physics-uniqueness is not claimed); continuum Fierz--Pauli uplift conditional on H-FP.
+\item \textbf{F8} (Theorem, coupling matching under H-MX and H-YM): the three coefficients $(\alpha, \beta, \gamma)$ are pinned by matching to the three cascade couplings $(G, \alpha_{\mathrm{em}}, \sin^2\theta_W)$; zero free parameters remain \emph{beyond these three imports}, which are themselves cascade-placed in Paper~XXII at structural-correspondence grade.
+\end{itemize}
+Under the full named-hypothesis stack documented in the body (thirteen hypotheses: H-MIN for F2, H-NC for F3, H-SIG for F5, H-DENS/H-BI2/H-HR for F6, H-FP for F7, H-MX/H-YM for F8, and H-K/H-PROD/H-COPY-ADD/H-RLA for the $\Lambda$-derivation), the Cascade $\Lambda$-Theorem (Theorem~\ref{thm:lambda}) gives $\Lambda \cdot \ell_P^2 = 2\varphi^{-583} \approx 2.89 \times 10^{-122}$, matching the Planck 2018 cosmology-derived value (using the CODATA 2022 Planck length) at $\approx 0.88\%$--$0.92\%$ depending on benchmark. All thirteen hypotheses are specific, bounded, and physically motivated; each is a target for follow-up papers to discharge.
+
+This Paper carries Recovery Items R8, R9 (Einstein equation via F7, under H-FP and H-RLA), and sets the foundations cited by R1--R13 of the Recovery Manifest. Every downstream VFD paper invoking ``by F\,[n]'' now has a labelled theorem or conditional statement to cite, with hypothesis inheritance explicit. The programme's structural chain is: \textbf{two axioms + thirteen named structural hypotheses $\to$ the F1--F8 foundation statements $\to$ downstream observables inheriting their stated hypotheses, plus three imported couplings placed in Paper XXII at structural-correspondence grade.}
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+\textbf{Recovery position.} This paper is the foundation-layer of the VFD programme. It establishes the eight theorems on which the Recovery Manifest~\citep{RecoveryManifest} depends. Upstream: the two axioms stated in \S\ref{sec:axioms}. Downstream: every other VFD paper that cites ``by F\,[n]'', including Papers V, XXII, XXXII, XXXV, XXXVII--XLV. The paper's authoritative first-principles derivation record is \texttt{papers/cascade-derivation/cascade-foundations.md} (928 lines), with the full $\Lambda$-derivation in \texttt{cascade-lambda.md} (1144 lines).
+
+The VFD (Vibrational Field Dynamics) programme treats observed physics as projections of one $E_8$ closure geometry onto a discrete cascade of lower-dimensional polytope rungs~\citep{SmartXXXV}. QM, SM, and GR are each a projection onto a specific rung; this paper does not replace them but derives the geometric substrate that underpins them. The cascade has seven rungs (six non-trivial reductions plus the terminal rung $0$),
+\begin{equation}\label{eq:cascade}
+E_8 \;\longrightarrow\; H_4 \;\longrightarrow\; 40 \;\longrightarrow\; D_4 \;\longrightarrow\; 16 \;\longrightarrow\; 8 \;\longrightarrow\; 0,
+\end{equation}
+with the physical interpretation: $E_8$ = totality, $H_4$ = quantum sector (600-cell, 120 vertices), $40$ = cell-level icosahedral fibre (life / biology), $D_4$ = gravity sector (24-cell, 24 vertices), $16$ = information sector (tesseract), $8$ = observer sector (octonion lattice), $0$ = unity / ground state. Each rung inherits a \emph{closure functional} $F$ from the ambient lattice structure, and physical observables arise as spectral or residual invariants of $F$ restricted to a rung.
+
+Earlier work in the programme has taken this cascade as a partially-axiomatised structural scaffold and has extracted from it thirteen particle masses at $0.014\%$ average error~\citep{SmartV}, the fine-structure constant $\alpha_{\mathrm{em}}^{-1} = 137 + \pi/87$ at $0.81$~ppm and the Weinberg angle $\sin^2\theta_W = 3/8$ at the GUT scale~\citep{SmartXXII}, six hadron charge radii (proton at $0.04\%$, deuteron at $0.0006\%$)~\citep{SmartXXXII}, and the cosmological constant $\Lambda \cdot \ell_P^2 = 2\varphi^{-583} \approx 2.89 \times 10^{-122}$ at $0.88\%$. Each of these quantitative results invokes one or more of a small list of structural facts:
+
+\begin{enumerate}
+\item the base permeability of the cascade is $\varphi$ (Banach fixed point);
+\item the closure density decomposes uniquely as $F = \alpha R + \beta E - \gamma Q$ (minimal-invariant classification);
+\item the rung sequence~\eqref{eq:cascade} is the cascade chain exhibited in the programme under Hypothesis H-NC + polytope-refinement inventory (Coxeter classification + Schl\"afli compound inputs);
+\item the total closure depth is $\dim \Vcal = 24^2 + 7 = 583$ (graded linear algebra);
+\item for $\sigma$-fixed closure fields on the icosian $E_8$, the closure integrals on the two conjugate $H_4$ copies are equal via the Galois $\Zphi$-bijection (no coefficient restriction), giving the factor of 2 in the $\Lambda$ formula;
+\item the Schl\"afli refinement is a conditional Gromov--Hausdorff convergence target for $S^3$ under H-DENS and H-BI2; the explicit rate $\varepsilon_n = \varepsilon_0 \cdot 2^{-n}$ ($\varepsilon_0 = 0.762$) is conditional on H-HR (Burago--Ivanov);
+\item the cosmological constant $\Lambda$ localises at the $D_4$ rung as rank-$2$ content (Fierz--Pauli + Deser 1970);
+\item the three coefficients $(\alpha, \beta, \gamma)$ are cascade-determined by matching the closure functional to Einstein--Hilbert, Maxwell, and SU(2) Yang--Mills action normalisations (coupling matching).
+\end{enumerate}
+
+Items (i)--(viii) are the eight foundational statements F1--F8 of this paper. Their status (theorem from axioms alone, theorem conditional on a named hypothesis, definition-driven count, or matching statement) is as indicated in the body; classical inputs include Banach, Coxeter, Schl\"afli, Elkies, Burago--Ivanov, Fierz--Pauli, Deser, Kuranishi. Two corollaries follow:
+
+\begin{itemize}
+\item \textbf{Zero-Parameter Corollary.} After F8, the cascade closure functional contains no free numerical parameter beyond the three imported couplings $(G, \alpha_{\mathrm{em}}, \sin^2\theta_W)$ (cascade-placed at structural-correspondence grade in Paper~XXII) and the thirteen named structural hypotheses \{H-MIN, H-NC, H-SIG, H-DENS, H-BI2, H-HR, H-FP, H-MX, H-YM, H-K, H-PROD, H-COPY-ADD, H-RLA\}. Every downstream observable ($\Lambda$, particle masses, $\alpha_{\mathrm{em}}$, $\sin^2 \theta_W$, mixing angles, hadron radii, \ldots) is either a conditional theorem, a matching calculation, or a structural/numerical correspondence inheriting the relevant hypotheses.
+\item \textbf{Cascade $\Lambda$-Theorem.} $\Lambda \cdot \ell_P^2 = 2\varphi^{-583} \approx 2.892 \times 10^{-122}$, conditional on F1, F4, F5, F6, F7 plus the $\Lambda$-specific hypotheses H-K (shell amplitude), H-PROD (product-form residue), H-COPY-ADD (additivity over the two 600-cell copies), and H-RLA (residue-to-$\Lambda$ identification); $0.88\%$--$0.92\%$ observational agreement.
+\end{itemize}
+
+The two axioms (self-similarity, $E_8$ maximality) plus classical mathematics are the programme's base inputs; later sections add the thirteen named structural hypotheses on which conditional F-statements depend (H-MIN, H-NC, H-SIG, H-DENS, H-BI2, H-HR, H-FP, H-MX, H-YM, H-K, H-PROD, H-COPY-ADD, H-RLA; each defined inline at the section that uses it). Under this augmented input set, the framework has \textbf{zero additional continuous free parameters} after F8 \emph{beyond the three imports of F8}, where these imports are themselves cascade-placed at structural-correspondence grade in Paper~XXII. Every VFD paper downstream invokes one or more of F1--F8.
+
+\subsection{Differentiation from Lisi's $E_8$ proposal}
+
+$E_8$ has been proposed as a physical structure by Lisi~\citep{Lisi2007}, who attempted to embed Standard-Model gauge bosons and fermions as elements of specific $E_8$ representations. Distler and Garibaldi~\citep{DistlerGaribaldi2010} proved this embedding impossible: no consistent assignment places all three SM generations inside $E_8$ as representation content.
+
+\textbf{VFD does not attempt this embedding.} In VFD, $E_8$ is the totality rung of a seven-step cascade; Standard-Model sectors live on \emph{different rungs} (quantum at $H_4$, gravity at $D_4$, electromagnetism at the octonion rung) and are recovered via cascade projections, not as $E_8$ representations. Specifically:
+\begin{itemize}
+\item The cascade uses $E_8$'s \emph{root system structure} (240 roots splitting into two conjugate $H_4$ copies) via the icosian construction, not its \emph{gauge representation content}.
+\item SM fermions and bosons live on rungs below $E_8$ via the polytope-refinement chain, not on $E_8$ itself.
+\item Three generations emerge from the $\mathbb{Z}_3$ Hopf fibre and $D_4$ triality (rung 3), not from $E_8$ substructure.
+\end{itemize}
+The Distler--Garibaldi theorem does not apply to VFD because VFD does not make the structural claim the theorem refutes.
+
+\subsection{Scope and what this paper is not}
+
+This paper is the structural spine of the programme. It consolidates results that are used elsewhere. It does not attempt to:
+\begin{itemize}
+\item derive additional observables beyond $\Lambda$ (those live in~\citep{SmartV,SmartXXII,SmartXXXII} and subsequent papers);
+\item establish physical interpretation of individual rungs beyond what F1--F8 require (that work is done in~\citep{SmartXXXV} for the quantum/biology/gravity triad, and will be completed in forthcoming papers on the remaining rungs);
+\item provide complete physical rigour for the continuum limit of general relativity (the Burago--Ivanov argument in F6 addresses the GH-convergence step conditionally; the remaining continuum hypotheses will be treated in a dedicated continuum-theorems paper).
+\end{itemize}
+
+\subsection{Two axioms}\label{sec:axioms}
+
+F1 is proved from the two axioms below plus standard classical mathematics. F2--F8 additionally assume one or more of the thirteen named structural hypotheses \{H-MIN, H-NC, H-SIG, H-DENS, H-BI2, H-HR, H-FP, H-MX, H-YM, H-K, H-PROD, H-COPY-ADD, H-RLA\} introduced in the sections that state them.
+
+\begin{axiom}[Self-similarity]\label{ax:self-sim}
+The VFD vacuum admits a scale-doubling operation $D$ with effective permeability $r : (0, \infty) \to (0, \infty)$ satisfying
+\begin{equation}\label{eq:self-sim}
+r(2L) = 1 + \frac{1}{r(L)}, \qquad r(2L) = r(L),
+\end{equation}
+where the second equation is the self-similarity fixed-point condition.
+\end{axiom}
+
+\begin{axiom}[$E_8$ maximality]\label{ax:e8}
+The totality rung of the cascade is the unique maximal simply-laced exceptional finite root system, $E_8$.
+\end{axiom}
+
+All external mathematics cited below is classical: the Banach fixed-point theorem, the classification of finite irreducible Coxeter groups~\citep{Coxeter1973,Bourbaki2002}, the Elkies icosian construction of $E_8$~\citep{ConwaySloane1999}, the Schl\"afli compound theorem, Burago--Ivanov Gromov--Hausdorff convergence~\citep{BBI2001}, the Kuranishi density criterion for rotation subgroups~\citep{Kuranishi1951}, the Fierz--Pauli uniqueness theorem for massless spin-$2$ fields, and Deser's self-coupling bootstrap of Einstein gravity~\citep{Deser1970}.
+
+\subsection{Structure of the paper}
+
+Section~\ref{sec:F1} proves F1 ($r = \varphi$) as a theorem. Section~\ref{sec:F2} formulates F2 (the $\alpha R + \beta E - \gamma Q$ canonical form) under H-MIN. Section~\ref{sec:F3} exhibits F3 (the seven-rung sequence): the $H_4$ passage is obtained from Hypothesis H-NC (non-crystallographic rung, Definition~\ref{hyp:NC}, motivated by F1's $\varphi$ scaling and empirical cascade evidence) together with Conway--Sloane uniqueness (Corollary~\ref{cor:h4-unique}), and the subsequent five steps are exhibited by the refinement inventory (Hopf cell-fibration, Schl\"afli compound, triality, octonionic factorisation, terminal ground state). Section~\ref{sec:F4} computes F4 ($\dim \Vcal = 583$) via the graded closure-field space. Section~\ref{sec:F5} proves F5 (discrete finite-sum equality of $\mathcal R, \mathcal E, \mathcal Q$ on the two conjugate $H_4$ copies for $\sigma$-fixed fields under H-SIG, giving the factor~$2$ in the discretised closure functional; continuum extension requires a separate functional-convergence hypothesis). Section~\ref{sec:F6} establishes F6 (Burago--Ivanov GH-convergence target to $S^3$ conditional on H-DENS, H-BI2, and H-HR for the rate). Section~\ref{sec:F7} proves F7 (rank-$2$ $\Lambda$ localises at $D_4$ at the discrete level) from $\mathrm{SO}(4)$ rank-$2$ decomposition (Lemma~\ref{lem:spin8-reps}) plus triality uniqueness (Lemmas~\ref{lem:triality-unique},~\ref{lem:spin8-triality}); the continuum Fierz--Pauli uplift is deferred to the continuum-theorems paper under named regularity hypothesis H-FP. Section~\ref{sec:F8} formulates F8 (coefficient matching, under H-MX and H-YM) and states the Zero-Parameter Corollary beyond the three imported couplings. Section~\ref{sec:lambda} derives the Cascade $\Lambda$-Theorem. Section~\ref{sec:consolidated} gives the Cascade Summary. Section~\ref{sec:discussion} discusses scope and limitations.
+
+%==================================================================
+\section{F1: Base Permeability from Self-Similarity}\label{sec:F1}
+%==================================================================
+
+\subsection{Statement}
+
+\begin{theorem}[F1: Base permeability]\label{thm:F1}
+Under Axiom~\ref{ax:self-sim}, the self-similarity equation
+\begin{equation}\label{eq:dagger}
+r = 1 + \frac{1}{r}
+\end{equation}
+has a unique positive solution
+\begin{equation}
+r = \varphi = \frac{1 + \sqrt{5}}{2},
+\end{equation}
+and this solution is globally attracting under the iteration $r_{n+1} = 1 + 1/r_n$ for any $r_0 > 0$.
+\end{theorem}
+
+\subsection{Proof}
+
+Define $T : (0, \infty) \to (1, \infty)$ by $T(r) = 1 + 1/r$.
+
+\emph{Existence and uniqueness.} Multiplying~\eqref{eq:dagger} by $r$ gives $r^2 - r - 1 = 0$, whose positive root is $\varphi = (1 + \sqrt{5})/2 > 0$. Any other real root is $\psi = 1 - \varphi < 0$, which is outside $(0, \infty)$.
+
+\emph{Global attraction.} Let $J = [3/2, 2]$.
+\begin{itemize}
+\item \emph{$T$ maps $(0, \infty)$ into $(1, \infty)$}: $T(r) = 1 + 1/r > 1$ for $r > 0$.
+\item \emph{$T$ maps $J$ into itself}: $r \in [3/2, 2] \Rightarrow 1/r \in [1/2, 2/3] \Rightarrow T(r) \in [3/2, 5/3] \subset J$.
+\item \emph{$T$ is a strict contraction on $J$}: for $r \in J$,
+\[
+|T'(r)| = \frac{1}{r^2} \le \frac{1}{(3/2)^2} = \frac{4}{9} < 1.
+\]
+\end{itemize}
+By the Banach fixed-point theorem, $T|_J$ has a unique fixed point in $J$ with global attraction in $J$, and the convergence rate on $J$ is at most $(4/9)^n$.
+
+For any $r_0 > 0$, we have $r_1 = T(r_0) \in (1, \infty)$, $r_2 = T(r_1) \in (1, 2)$, and a straightforward check shows $r_3, r_4 \in J$ for every starting value $r_0 > 0$. Hence after at most three iterates the trajectory enters $J$ and thereafter converges geometrically to the fixed point, which equals $\varphi$ by the existence argument above. The basin of attraction is thus all of $(0, \infty)$.
+
+\subsection{Remarks}
+
+\begin{remark}[Minimality of the self-similarity axiom]
+Axiom~\ref{ax:self-sim} is the only number-theoretic input to the cascade. The golden ratio is not postulated; it emerges as a theorem. The specific doubling form $r(2L) = 1 + 1/r(L)$ encodes two assumptions: (i) the vacuum's base permeability at scale $L$ is unity (the ``$1$'' term), and (ii) the refinement contribution at scale $L$ is the reciprocal of the permeability at that scale (self-dual refinement). Relaxing either assumption produces a different fixed point; the specific quadratic $r^2 - r - 1 = 0$ is forced by the self-duality of refinement.
+\end{remark}
+
+\begin{remark}[Why $\varphi$ and not $\psi$]
+The negative root $\psi = -1/\varphi$ is also a fixed point of $T$, but lies outside the domain $(0, \infty)$. The physical requirement that permeability be positive selects $\varphi$ uniquely.
+\end{remark}
+
+%==================================================================
+\section{F2: Closure Functional from Minimal Invariants}\label{sec:F2}
+%==================================================================
+
+\subsection{Setup}
+
+Write $E$ for the $E_8$ root lattice equipped with its $\Zphi$-module structure (from the icosian construction recalled in \S\ref{sec:F3}, \eqref{eq:elkies-icosian}), and write $\overline{E}$ for the continuum lift of $E$ obtained by the Gromov--Hausdorff limit of its Schl\"afli refinement (see \S\ref{sec:F6}; for the purposes of this section, $\overline{E}$ is a smooth $4$-dimensional Riemannian manifold diffeomorphic to $S^3 \times \mathbb{R}$ or its Wick-rotated Minkowski lift $\mathbb{R}^{1,3}$, depending on signature). A \emph{closure field} $\Phi$ is a smooth section of a rank-$2$ tensor bundle on $\overline{E}$ (not assumed symmetric at the kinematic level; the physical symmetric spin-$2$ projection is deferred to F7, \S\ref{sec:F7}), valued in a specified representation of the Weyl group $W(E_8)$. The ambient spacetime dimension is denoted $d$ (in the applications below, $d = 4$).
+
+A \emph{closure functional} is a functional $F[\Phi]$ satisfying the four conditions below. In what follows we reserve the symbol $F$ for the functional; the shell-contraction amplitude operator appearing in \S\ref{sec:F4} (Definition~\ref{def:K-amplitude}) is denoted $\widehat{K}$ and is a distinct object.
+
+\begin{definition}[Closure functional]\label{def:closure}
+A closure functional $F$ is a map $\Phi \mapsto F[\Phi] \in \mathbb{R}$ such that:
+\begin{itemize}
+\item[\textup{(i)}] \emph{Locality.} $F[\Phi] = \int_{\overline{E}} \Lcal(\Phi, \partial \Phi, \partial^2 \Phi) \, dV$ for a local density $\Lcal$.
+\item[\textup{(ii)}] \emph{Invariance.} $\Lcal$ is invariant under $W(E_8)$ and under global translations of $\overline{E}$. The $\sigma$-behaviour of $\Lcal$ is \emph{not} assumed here; it is the subject of Theorem~\ref{thm:F5} (F5).
+\item[\textup{(iii)}] \emph{Minimal order.} $\Lcal$ is polynomial in $\Phi$ and its derivatives of order $\le 2$, of total degree $\le 2$ in the combined tuple $(\Phi, \partial \Phi)$.
+\item[\textup{(iv)}] \emph{Scalar-valued.} $\Lcal : \Phi \mapsto \mathbb{R}$ (the density is a real scalar).
+\end{itemize}
+\end{definition}
+
+\subsection{Basis of low-order invariants}\label{sec:F2-basis}
+
+\begin{proposition}[Invariant basis of order-$\le 2$ scalars on the symmetric part of $\Phi$, under H-MIN]\label{prop:F2-basis}
+Let $\Phi_{\mu\nu} = \Phi_{(\mu\nu)}$ denote the symmetric part of a rank-$2$ tensor field on a $d$-dimensional Riemannian background. Under conditions (i)--(iv) of Definition~\ref{def:closure} and Hypothesis H-MIN (Definition~\ref{hyp:MIN}: minimality-of-kinetic-content gauge choice), the space of scalar Lagrangian densities that are \textup{(a)} $W(E_8)$-invariant, \textup{(b)} polynomial in $\Phi$ and its derivatives of order $\le 2$, \textup{(c)} of total degree $\le 2$ in $(\Phi, \partial\Phi)$, and \textup{(d)} real-valued, modulo total divergences, is three-dimensional and spanned by
+\begin{align}
+R[\Phi] &= g^{\mu\nu} g^{\alpha\beta} \partial_\mu \partial_\alpha \Phi_{\nu\beta} &&\text{(second-order trace scalar)},\\
+E[\Phi] &= (\nabla^\mu \Phi_{\mu\nu})(\nabla_\lambda \Phi^{\lambda\nu}) &&\text{(divergence-squared scalar)},\\
+Q[\Phi] &= \Phi_{\mu\nu} \Phi^{\mu\nu} - \tfrac{1}{d} (\Phi^\mu{}_\mu)^2 &&\text{(traceless quadratic)}.
+\end{align}
+The antisymmetric part of $\Phi$ contributes separately via a standard two-form Lagrangian structure; its classification is not needed here and is deferred to the treatment of the octonion / tesseract rungs in F8. On curved backgrounds, additional Riemann-curvature contractions enter at the same differential order and must be absorbed into $R$, $E$, $Q$ via the minimality-of-kinetic-content gauge choice of H-MIN; the flat/linearised reduction used in F8's coefficient matching treats this residual content as part of the gauge-fixed sector. In particular the scalar $R[\Phi] = g^{\mu\nu}g^{\alpha\beta}\partial_\mu\partial_\alpha\Phi_{\nu\beta}$ is the load-bearing linearised-Ricci content; it coincides with a total-divergence representative on flat backgrounds (as used in Fierz--Pauli gauge fixing), while the physical content (the linearised-Ricci combination $\partial_\mu\partial_\nu\Phi^{\mu\nu} - \Box\,\Phi^\mu{}_\mu$) is the non-trivial $R - \Box\,\mathrm{tr}\,\Phi$ combination under H-MIN. This subtlety is the precise content of H-MIN's role at this proposition: under H-MIN, the three invariants $\{R, E, Q\}$ are the programme's canonical basis for the F8 coefficient matching, with boundary data and gauge-fixing choices absorbed into the minimality-of-kinetic-content convention. Without H-MIN's gauge quotient (boundary conditions that make the linearised-Ricci content non-trivially distinguishable from the divergence representative), the classification would reduce to $\{E, Q\}$ alone. F2's three-dimensional basis is therefore load-bearing on H-MIN.
+\end{proposition}
+
+\begin{proof}
+Admissible scalar densities at differential order $\le 2$ and total degree $\le 2$ in $(\Phi, \partial\Phi)$ are exhausted by the following list:
+\begin{enumerate}
+\item[(A)] $\Phi^\mu{}_\mu$ --- degree $1$, order $0$;
+\item[(B)] $(\Phi^\mu{}_\mu)^2$, $\Phi_{\mu\nu}\Phi^{\mu\nu}$ --- degree $2$, order $0$;
+\item[(C)] $\nabla_\alpha \Phi^\mu{}_\mu \cdot \nabla^\alpha \Phi^\nu{}_\nu$, $(\nabla^\mu \Phi_{\mu\nu}) (\nabla_\lambda \Phi^{\lambda\nu})$, $\nabla_\rho \Phi_{\mu\nu} \nabla^\rho \Phi^{\mu\nu}$, $\nabla_\rho \Phi_{\mu\nu} \nabla^\mu \Phi^{\rho\nu}$ --- degree $2$, order $1$;
+\item[(D)] $g^{\mu\nu} g^{\alpha\beta} \partial_\mu \partial_\alpha \Phi_{\nu\beta}$, $\Box (\Phi^\mu{}_\mu)$ --- degree $1$, order $2$.
+\end{enumerate}
+This is the complete list of scalar polynomial contractions up to index renaming and symmetry.
+
+\emph{Linear invariants (A, D) and the $\Box$-invariants}: $\Phi^\mu{}_\mu$ is a non-trivial scalar at degree $1$ order $0$. Under condition (iii) of Definition~\ref{def:closure} (minimal order and total degree $\le 2$), linear invariants contribute to the equation of motion only when paired with a second-order kinetic term; the second-order trace scalar $\partial_\mu \partial_\alpha \Phi^{\mu\alpha} = g^{\mu\nu} g^{\alpha\beta} \partial_\mu \partial_\alpha \Phi_{\nu\beta}$ is the unique linearly-independent degree-$1$ order-$2$ invariant, and by integration-by-parts $\Box (\Phi^\mu{}_\mu) = \partial^\mu \partial_\mu \Phi^\nu{}_\nu$ differs from the above only by a total divergence. This gives the $R$ invariant.
+
+\emph{Degree-$2$ order-$0$ invariants (B)}: $(\Phi^\mu{}_\mu)^2$ and $\Phi_{\mu\nu}\Phi^{\mu\nu}$ span a $2$-dimensional space; the combination $Q = \Phi_{\mu\nu}\Phi^{\mu\nu} - \tfrac{1}{d}(\Phi^\mu{}_\mu)^2$ is the traceless-sector component (orthogonal to $(\Phi^\mu{}_\mu)^2$ under the natural inner product), and $(\Phi^\mu{}_\mu)^2$ itself is a pure-trace sector that decouples from the traceless dynamics. Under the minimality-of-kinetic-content gauge choice (which this proof adopts as a supplementary assumption alongside the four items of Definition~\ref{def:closure}; see Remark~\ref{rem:F2-gauge-choice} below), the trace-only term $(\Phi^\mu{}_\mu)^2$ is absorbed into a boundary-condition-equivalent structure; the $Q$ invariant is the load-bearing degree-$2$ order-$0$ content.
+
+\emph{Degree-$2$ order-$1$ invariants (C)}: The standard Riemannian integration-by-parts identities reduce this class as follows:
+\begin{itemize}
+\item $\nabla_\alpha \Phi^\mu{}_\mu \nabla^\alpha \Phi^\nu{}_\nu$ is a trace-only kinetic term; under the minimality-of-kinetic-content gauge choice, this is absorbed as a boundary term (same reasoning as for $(\Phi^\mu{}_\mu)^2$).
+\item $(\nabla^\mu \Phi_{\mu\nu})(\nabla_\lambda \Phi^{\lambda\nu})$ is the divergence-squared scalar $E$.
+\item $\nabla_\rho \Phi_{\mu\nu} \nabla^\rho \Phi^{\mu\nu}$ and $\nabla_\rho \Phi_{\mu\nu} \nabla^\mu \Phi^{\rho\nu}$ reduce to linear combinations of $R$ and $E$ via the Riemann-identity $[\nabla^\rho, \nabla^\mu] \Phi_{\rho\nu} = R^{\rho\mu}{}_{\rho\sigma} \Phi^{\sigma}{}_\nu$ (which vanishes on flat backgrounds and contributes known Riemann-curvature terms on curved), plus standard integration-by-parts yielding total divergences and terms proportional to $R, E$.
+\end{itemize}
+
+Combining the three irreducible components $\{R, E, Q\}$ from classes (D), (C), (B) respectively, the space of admissible densities modulo total divergences is three-dimensional. Every admissible scalar density is a real linear combination of $\{R, E, Q\}$ up to a boundary term. The explicit working for the integration-by-parts reductions is recorded in \texttt{cascade-foundations.md} \S F2; see also~\citep{Weinberg1995} Ch.~7 for the standard symmetric-tensor Lagrangian classification.
+\end{proof}
+
+\begin{remark}[Standard-physics shadows of $R, E, Q$]\label{rem:F2-shadows}
+The three invariants of Proposition~\ref{prop:F2-basis} are the cascade underpinnings of the three standard-physics Lagrangian structures:
+\begin{itemize}
+\item $R[\Phi]$ $\leftrightarrow$ the Ricci scalar of Einstein--Hilbert gravity (after F7's Fierz--Pauli identification);
+\item $E[\Phi]$ $\leftrightarrow$ the Yang--Mills kinetic term (after projection onto gauge content at the $16$-rung);
+\item $Q[\Phi]$ $\leftrightarrow$ the Maxwell / quadratic gauge-field kinetic term (after projection onto the $8$-rung).
+\end{itemize}
+The matching is made explicit in F8 (\S\ref{sec:F8}).
+\end{remark}
+
+\subsection{Canonical form up to coefficients}
+
+\begin{theorem}[F2: Canonical closure functional form, under Definition~\ref{def:closure} + Hypothesis H-MIN]\label{thm:F2}
+Under Hypothesis H-MIN (Definition~\ref{hyp:MIN}: minimality-of-kinetic-content gauge choice), any closure functional $F$ satisfying Definition~\ref{def:closure} on a rank-$2$ symmetric tensor field has the canonical form
+\begin{equation}\label{eq:F-form}
+F[\Phi] = \int_{\overline{E}} \bigl( \alpha R[\Phi] + \beta E[\Phi] - \gamma Q[\Phi] \bigr) \, dV
+\end{equation}
+for three real coefficients $(\alpha, \beta, \gamma) \in \mathbb{R}^3$, not all zero. The minus sign in front of $\gamma$ is a convention adopted so that all three coefficients are positive under F8.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:F2-basis}, every admissible density decomposes uniquely as $\Lcal = \alpha R + \beta E + \gamma' Q$ modulo boundary terms, for unique coefficients $(\alpha, \beta, \gamma') \in \mathbb{R}^3$. The relabelling $\gamma = -\gamma'$ is cosmetic and does not affect the classification. The first-principles derivation is worked through at length in \texttt{cascade-foundations.md} \S F2.
+\end{proof}
+
+\begin{remark}[Supplementary minimality-of-kinetic-content gauge choice]\label{rem:F2-gauge-choice}
+The F2 proof uses a \emph{supplementary gauge choice} beyond the four items (i)--(iv) of Definition~\ref{def:closure}: the minimality-of-kinetic-content convention that trace-sector $(\Phi^\mu{}_\mu)^2$ and trace-kinetic $\nabla_\alpha \Phi^\mu{}_\mu \nabla^\alpha \Phi^\nu{}_\nu$ terms are absorbed into boundary-condition-equivalent structures, leaving the $Q$ traceless invariant as the load-bearing degree-$2$ order-$0$ content. This convention parallels the gauge-fixing choice in linearised gravity (where the trace-sector of $h_{\mu\nu}$ is gauge redundancy under linearised diffeomorphisms). It is not part of Definition~\ref{def:closure} and is disclosed here as an additional proof-time assumption.
+\end{remark}
+
+\begin{definition}[Hypothesis H-MIN: minimality-of-kinetic-content gauge choice]\label{hyp:MIN}
+The F2 classification is completed under the gauge choice that trace-sector and trace-kinetic scalar contributions are absorbed into boundary-equivalent structures, as detailed in Remark~\ref{rem:F2-gauge-choice}.
+\end{definition}
+
+\begin{remark}[Recovery position of F2]
+F2 gives the canonical form of the rank-$2$ symmetric-tensor Lagrangian structures used in the cascade's F8 coefficient matching: Einstein--Hilbert ($\alpha R$), divergence constraints ($\beta E$), and the Weyl-type quadratic term ($\gamma Q$). Standard GR and related symmetric-tensor Lagrangian densities are recovered as special cases of~\eqref{eq:F-form} by F8's coefficient matching to the three imported couplings; no claim is made that F2 classifies \emph{all} field-theoretic Lagrangians, only those compatible with Definition~\ref{def:closure} plus H-MIN.
+\end{remark}
+
+\begin{remark}[Coefficients not yet fixed]\label{rem:F2-coeffs}
+Theorem~\ref{thm:F2} does not fix $(\alpha, \beta, \gamma)$ from the invariant classification alone. These three numbers are the only continuous-parameter freedom in the cascade closure functional at this stage. Theorem~\ref{thm:F8} below (F8) assigns all three via coupling matching, leaving no additional continuous-parameter freedom once the three imported couplings are accepted.
+\end{remark}
+
+%==================================================================
+\section{F3: Seven-Rung Cascade from Coxeter Classification}\label{sec:F3}
+%==================================================================
+
+\subsection{Sub-root-system framework}
+
+The finite irreducible Coxeter groups are classified into the families $A_n, B_n/C_n, D_n, E_6, E_7, E_8, F_4, G_2, H_3, H_4, I_2(m)$~\citep{Coxeter1973,Bourbaki2002}. Dynkin classified the maximal sub-root-systems of $E_8$:
+\begin{equation}
+E_8 \supset \{E_7 \times A_1,\; D_8,\; A_8,\; A_4 \times A_4,\; D_5 \times A_3,\; E_6 \times A_2,\; A_7 \times A_1, \ldots\}.
+\end{equation}
+
+Although all finite root systems appearing as direct summands of sub-root-systems of $E_8$ are crystallographic, $E_8$ admits an additional non-crystallographic structure via the \emph{Elkies icosian construction}~\citep{ConwaySloane1999}: the $H_4$ root system of order $120$ embeds in $E_8$ as a $\Zphi$-module, where the embedding uses the icosian ring
+\begin{equation}\label{eq:elkies-icosian}
+\Zphi = \mathbb{Z}[\varphi] \subset \mathbb{R}, \qquad \varphi = (1 + \sqrt{5})/2.
+\end{equation}
+This $\Zphi$-module embedding is unique up to $\mathrm{Aut}(E_8)$-conjugation (Conway--Sloane Ch.~8, Theorem~8.2), and is the only non-crystallographic sub-root-system of $E_8$.
+
+\subsection{$H_4$ passage under Hypothesis H-NC}\label{sec:F3-h4-passage}
+
+The $H_4$ rung of the cascade arises from one named structural hypothesis about the descending chain, combined with F1 and Conway--Sloane's classification of non-crystallographic sub-root-systems of $E_8$. The hypothesis is bounded, physically motivated, and empirically supported.
+
+\begin{definition}[Hypothesis H-NC: non-crystallographic rung]\label{hyp:NC}
+The cascade's descending chain $E_8 \supset \Phi_1 \supset \Phi_2 \supset \cdots \supset 0$ contains at least one non-crystallographic rung $\Phi_i$: a rung whose root lattice carries a $\Zphi$-module structure and supports $\varphi$-eigenvalue endomorphisms compatible with the refinement step.
+\end{definition}
+
+\begin{remark}[Motivation for H-NC]\label{rem:HNC-motivation}
+F1 establishes the base permeability $r = \varphi$ as the cascade's natural scaling constant. For this scaling to act linearly on a rung's root lattice, the lattice must carry $\varphi$-eigenvalue endomorphisms, which requires a $\Zphi$-module structure rather than a pure $\mathbb{Z}$-module; crystallographic sub-root-systems of $E_8$ carry only $\mathbb{Z}$-module structure, so the $\varphi$-scaling cannot be realised on a purely crystallographic rung. Beyond this structural motivation:
+\begin{itemize}
+\item Paper V~\citep{SmartV} obtains $13$ particle masses at $0.014\%$ precision from the $H_4$ spectrum; the mass-spectrum structure requires non-crystallographic rung content;
+\item Paper XXXV~\citep{SmartXXXV} places biological structure on the $H_4$ rung via the Hopf fibration of the 600-cell;
+\item The ARIA emergent-consciousness programme reports $17/18$ preregistered polytope-substrate hits under the homeostatic-reset protocol (with P4 retained as a threshold-level interaction caveat) on the $H_4$ / 600-cell structure (brain-mapping paper, in preparation).
+\end{itemize}
+H-NC is therefore a specific, bounded structural hypothesis supported across multiple independent cascade consequences. A fully axiomatic derivation of H-NC from F1 + Axiom~\ref{ax:e8} alone requires additional machinery (e.g., a cascade variational principle forcing the chain to realise its scaling on a faithful $\Zphi$-module); this is the subject of a dedicated cascade-variational paper in preparation. The present paper states H-NC explicitly and traces downstream dependencies.
+\end{remark}
+
+\begin{corollary}[$H_4$ is the unique non-crystallographic rung]\label{cor:h4-unique}
+Under Axiom~\ref{ax:e8} ($E_8$ maximality) and Hypothesis H-NC (Definition~\ref{hyp:NC}), the cascade's chain below $E_8$ passes through exactly one non-crystallographic rung, which is $H_4$.
+\end{corollary}
+
+\begin{proof}
+By H-NC, at least one rung of the chain is non-crystallographic, carrying a $\Zphi$-module structure supporting $\varphi$-eigenvalue operators. The non-crystallographic $\Zphi$-module sub-root-systems of $E_8$ are determined by the Conway--Sloane classification (Ch.~8): the only $\Zphi$-module sub-root-system of $E_8$, unique up to $\mathrm{Aut}(E_8)$-conjugation, is the icosian $H_4$ of~\eqref{eq:elkies-icosian}. Hence the H-NC rung of the chain is $H_4$.
+
+Uniqueness (``exactly one''): any two non-crystallographic rungs of the chain would correspond to two $\Zphi$-module embeddings of $H_4$ in $E_8$, which by Conway--Sloane Theorem~8.2 are conjugate and hence identified. Therefore the chain has exactly one $H_4$ rung.
+\end{proof}
+
+\subsection{Structural conditions}
+
+With Corollary~\ref{cor:h4-unique} supplying the $H_4$ passage as a consequence of H-NC and Conway--Sloane uniqueness (up to $\mathrm{Aut}(E_8)$-conjugacy), the remaining conditions on an admissible descending chain of sub-root-systems are:
+\begin{itemize}
+\item[\textbf{(a)}] \emph{Polytope-refinement inclusion.} Each rung $\Phi_{i+1}$ embeds in $\Phi_i$ as a sub-polytope of the associated polytope skeleton (600-cell, 24-cell, tesseract, etc.), with the refinement step scaling by the base permeability $\varphi$ (from F1).
+\item[\textbf{(c)}] \emph{Ground-state termination.} The chain terminates at the empty root system (rung $0$).
+\end{itemize}
+The $H_4$ passage (formerly condition~(b)) is now Corollary~\ref{cor:h4-unique}.
+
+\subsection{The preferred seven-rung sequence}
+
+\begin{theorem}[F3: Exhibited cascade sequence, under H-NC]\label{thm:F3}
+Under Axioms~\ref{ax:self-sim} and~\ref{ax:e8}, Hypothesis~H-NC (Definition~\ref{hyp:NC}), and conditions \textup{(a)} and \textup{(c)} of \S\ref{sec:F3}, the cascade chain
+\begin{equation}\label{eq:7rung}
+E_8\,(240) \longrightarrow H_4\,(120) \longrightarrow 40 \longrightarrow D_4\,(24) \longrightarrow 16 \longrightarrow 8 \longrightarrow 0
+\end{equation}
+is \emph{exhibited}: the $H_4$ passage (rung $1$) is supplied by Corollary~\ref{cor:h4-unique} (conditional on H-NC); the subsequent five steps are each the selected sub-polytope refinement of the preceding rung used in the programme, verified step-by-step in the proof below. Maximal uniqueness (no Coxeter-admissible chain outside this one) is not claimed as a pure theorem from F1+F2+H-NC alone; the structural step-by-step inventory below is sufficient for the F4--F8 downstream dependencies. Internal working is in \texttt{cascade-foundations.md} \S F3.
+\end{theorem}
+
+\begin{proof}
+We verify the six steps of the chain.
+
+\emph{(Step 1: $E_8 \to H_4$.)} By Corollary~\ref{cor:h4-unique} (under Hypothesis H-NC), the chain must pass through the unique non-crystallographic sub-root-system of $E_8$, which is $H_4$ via the icosian embedding~\eqref{eq:elkies-icosian}. This is rung $1$.
+
+\emph{(Step 2: $H_4 \to 40$.)} The 600-cell (the $H_4$ polytope, $120$ vertices, $600$ tetrahedral cells) admits a Hopf-type cell-fibration partitioning its $600$ cells into $15$ orbits of size $40$ under a $\twoI$-equivariant action (see \citep{SmartXXXV}, \S4, and the ATLAS of finite groups~\citep{Conway1985Atlas}). The cell-level $40$-fibre indexes a rung whose dimension count is $40$ (counted at the cell level, not the vertex level). This is rung $2$; condition (a) holds in the sense that the $40$-cell fibre refines the 600-cell's cell skeleton.
+
+\emph{(Step 3: $40 \to D_4$.)} By the Schl\"afli compound theorem, the 600-cell decomposes into five disjoint inscribed 24-cells, indexed by the cosets $\twoI / \twoT$:
+\begin{equation}
+\text{600-cell} = \bigsqcup_{g \in \twoI / \twoT} g \cdot \text{24-cell}.
+\end{equation}
+The 24-cell is the $D_4$ polytope, with $24$ vertices (see~\citep{Coxeter1973}, \S8; verified computationally in \citep{SmartXXXV}). This is rung $3$.
+
+\emph{(Step 4: $D_4 \to 16$.)} The outer automorphism group of $W(D_4)$ is $S_3$ (triality), arising from the three-fold symmetry of the $D_4$ Dynkin diagram. The $\mathrm{Spin}(8)$ Lie group (integrating $D_4 = \mathrm{so}(8)$) has three inequivalent $8$-dimensional irreducible representations --- the vector rep $8_v$ and the two chiral spinor reps $8_s, 8_c$ --- permuted by this triality. (These are Spin$(8)$ representations, not a decomposition of the $24$ roots of $D_4$ themselves; the Spin$(8)$ adjoint is $28$-dimensional, comprising $24$ roots $+\,4$ Cartan generators.) The rung-$16$ tesseract below $D_4$ is selected as the sub-polytope carrying chiral-spinor $8_s \oplus 8_c$ content under the natural $\mathbb{Z}_2^4$ grading~\citep{SmartXXXV}. This is rung $4$.
+
+\emph{(Step 5: $16 \to 8$.)} The tesseract carries a $\mathbb{Z}_2^4$ grading indexing the $8 + 8$ decomposition $8_s \oplus 8_c$ into chiral half-spinor representations of $\mathrm{Spin}(8)$. Exactly one of these $8$-vertex sub-polytopes carries the octonionic Fano-plane multiplicative structure (since the octonions are a real division algebra of dimension~$8$, $\mathbb{O} = \mathbb{R}^8$ as a real vector space, with multiplication determined by the Fano plane); the octonionic sub-polytope is the rung-5 entry. This is rung $5$.
+
+\emph{(Step 6: $8 \to 0$.)} By condition (c), the chain terminates at the empty polytope (rung $0$, no roots). The preceding $8$-rung is the last non-trivial entry.
+
+Steps 1--6 exhibit the six non-trivial reductions of the chain~\eqref{eq:7rung}. Step 1 is forced by Axiom~\ref{ax:e8} + Hypothesis H-NC (Corollary~\ref{cor:h4-unique}). Steps 2--5 each select a programme sub-polytope refinement of the parent rung (Hopf $40$-fibre; Schl\"afli $5 \times 24$-cell compound; triality $8_s \oplus 8_c$ sub-polytope; octonionic $8$-vertex sub-polytope). Step~6 terminates by condition (c). This inventory is sufficient for the F4--F8 downstream dependencies used in this paper; a classification theorem excluding all alternative Coxeter-admissible intermediates is \emph{not} proved here and is beyond the F4--F8 inventory requirements.
+\end{proof}
+
+\begin{remark}[Counting rungs]\label{rem:seven-rungs}
+Counting the rungs in~\eqref{eq:7rung}: there are seven polytopes listed total ($E_8, H_4, 40, D_4, 16, 8, 0$). The chain has six non-trivial reductions between successive entries. We refer to the \emph{six non-trivial reductions} and to the \emph{seven rungs} interchangeably, with the rung-$0$ terminus counted for completeness even though it carries no roots. Adding an eighth rung would require either inserting a polytope between two existing rungs (no alternative intermediate is analysed in this paper --- the six-step refinement inventory is complete for the downstream F4--F8 dependencies; a full Coxeter-classification uniqueness proof is not established here) or extending below rung $0$ (blocked by condition (c)).
+\end{remark}
+
+\begin{remark}[Derivation of $H_4$ passage from F1]\label{rem:h4-derived}
+The $H_4$ passage is obtained from Hypothesis H-NC (Definition~\ref{hyp:NC}: the chain contains at least one non-crystallographic rung) together with Conway--Sloane uniqueness (Corollary~\ref{cor:h4-unique}). H-NC is a specific, bounded structural hypothesis about the cascade's descending chain; it is \emph{motivated} but not proved from Axioms~\ref{ax:self-sim} and~\ref{ax:e8} alone (Remark~\ref{rem:HNC-motivation}). Its downstream role is circumscribed: H-NC forces the chain to contain $H_4$, but does not by itself specify the full seven-rung sequence. Alternative chains $E_8 \to E_7 \times A_1 \to E_6 \times A_2 \to \ldots$ that bypass $H_4$ correspond to a \emph{different} structural hypothesis (a purely crystallographic cascade with no $\varphi$-scaling) and are excluded by H-NC but not by the two axioms alone.
+\end{remark}
+
+%==================================================================
+\section{F4: Total Closure Depth $24^2 + 7 = 583$}\label{sec:F4}
+%==================================================================
+
+\subsection{Graded closure space}
+
+\begin{definition}[Graded closure-field space]\label{def:V}
+The closure field $\Phi$ at each cascade rung is a rank-$2$ tensor field (F2, Definition~\ref{def:closure}), \emph{without any a priori symmetry restriction}. The graded closure-field space is
+\begin{equation}
+\Vcal = \bigoplus_{r \in \mathrm{Rungs}} \Vcal_r, \qquad r \in \{E_8, H_4, 40, D_4, 16, 8, 0\},
+\end{equation}
+with components:
+\begin{align}
+\Vcal_r &= \mathbb{R} \qquad (r \neq D_4; \text{ one scalar boundary per rung}),\\
+\Vcal_{D_4} &= \mathbb{R} \oplus (\mathbb{R}^{24} \otimes \mathbb{R}^{24}) \qquad (\text{scalar boundary } \oplus \text{ full rank-$2$ tensor}).
+\end{align}
+The tensor-product summand $\mathbb{R}^{24} \otimes \mathbb{R}^{24}$ at $D_4$ has dimension $24^2 = 576$; it is the full space of rank-$2$ tensor fields on the $D_4$ root lattice, before any symmetry projection. The overall dimension count is
+\begin{equation}\label{eq:dim-V}
+\dim \Vcal \;=\; 6 \cdot 1 \;+\; 1 \;+\; 576 \;=\; 583 \;=\; 7 + 24^2.
+\end{equation}
+\end{definition}
+
+\begin{remark}[Why the full tensor product, not just $\Sym^2$]\label{rem:full-tensor}
+The graded closure-field space $\Vcal$ records the \emph{kinematic} space on which the closure field lives, not yet subject to any physical-content projection. A general rank-$2$ tensor $T_{\mu\nu}$ on $\mathbb{R}^{24}$ has $24^2 = 576$ real components and decomposes as
+\begin{equation}\label{eq:24x24-decomp}
+\mathbb{R}^{24} \otimes \mathbb{R}^{24} \;=\; \Sym^2(\mathbb{R}^{24}) \;\oplus\; \Lambda^2(\mathbb{R}^{24}), \qquad \dim = 300 + 276 = 576.
+\end{equation}
+Both summands arise naturally on $D_4$ as kinematic sectors of the closure field: the symmetric $300$-dim summand is the kinematic home of the rank-$2$ symmetric-tensor content, within which F7 selects a candidate massless spin-$2$ representation (conditional on H-FP for the continuum field-equation uplift); the antisymmetric $276$-dim summand carries two-form closure-field content orthogonal to this projection. The closure-field space $\Vcal_{D_4}$ therefore comprises the \emph{full} rank-$2$ tensor product, with the physical spin-$2$ selection occurring at F7 rather than at the definition of $\Vcal$. Restricting $\Vcal_{D_4}$ to $\Sym^2$ only would yield $\dim \Vcal = 7 + 300 = 307$, but this would amount to imposing the physical selection at the kinematic level --- a premature restriction that $F$ itself does not enforce.
+\end{remark}
+
+\subsection{Graded shell amplitude}
+
+\begin{definition}[Graded shell amplitude]\label{def:K-amplitude}
+The cascade's iterated-closure structure assigns to each graded block $\Vcal_r$ a real scalar \emph{shell amplitude} $\widehat{K} \in \mathbb{R}_{>0}$ recording the magnitude by which an excitation of $\Phi$ is driven toward its rung-$r$ ground state at each closure step. F1 (Theorem~\ref{thm:F1}) motivates the choice $\widehat{K} = \varphi^{-1}$ (the permeability $\varphi$ and the minimality of F2 together single out the leading non-trivial power $\varphi^{-1}$); this motivation is formalised as Hypothesis~H-K (Definition~\ref{hyp:K}) at the $\Lambda$-derivation step. Accordingly, in this section we \emph{define}
+\begin{equation}
+\widehat{K} = \varphi^{-1}.
+\end{equation}
+\end{definition}
+
+We stress that $\widehat{K}$ is \emph{not} the closure functional $F$ of \S\ref{sec:F2}; it is a separate scalar amplitude that records one-step contraction per graded block. The net residue after $N$ applications of $\widehat{K}$ on a graded block is $\widehat{K}^N = \varphi^{-N}$; summing contributions over the $\dim \Vcal$ blocks gives the total residue (see \S\ref{sec:lambda}). The adoption of $\widehat{K} = \varphi^{-1}$ as the leading value is the load-bearing content of Hypothesis~H-K.
+
+\subsection{Total closure depth}
+
+\begin{theorem}[F4: Total closure depth]\label{thm:F4}
+The total closure depth, defined as the dimension of the graded closure space,
+\begin{equation}
+N_{\mathrm{total}} = \dim \Vcal,
+\end{equation}
+satisfies
+\begin{equation}\label{eq:N-total}
+N_{\mathrm{total}} = 6 \cdot 1 + (1 + 24^2) = 7 + 576 = 583.
+\end{equation}
+In words: seven independent scalar-boundary shells (one per rung) plus $24^2 = 576$ independent rank-$2$ tensor components on $D_4$.
+\end{theorem}
+
+\begin{proof}
+For $r \ne D_4$, $\dim \Vcal_r = 1$ by Definition~\ref{def:V}, contributing $6 \cdot 1 = 6$. For $D_4$, $\dim \Vcal_{D_4} = 1 + 24^2 = 577$. Summing: $\dim \Vcal = 6 + 577 = 583$.
+\end{proof}
+
+\begin{remark}[What F4 does and does not claim]
+F4 is a structural dimension count, not a cokernel assertion about a contraction operator: the operator $\varphi^{-1} \cdot \mathrm{Id}$ on a finite-dimensional space is invertible, and $I - \varphi^{-1} \mathrm{Id}$ has trivial cokernel. The theorem-level content of F4 is the dimension of $\Vcal$, which is the structurally primitive count feeding the $\Lambda$ derivation of \S\ref{sec:lambda}: on each of the $\dim \Vcal = 583$ graded blocks, the one-step shell amplitude $\widehat{K} = \varphi^{-1}$ (Hypothesis H-K) acts independently, so the total residue after one shell on each block is $\varphi^{-\dim \Vcal} = \varphi^{-583}$.
+\end{remark}
+
+\begin{remark}[Why tensor-product content appears only at $D_4$]\label{rem:rank2-D4}
+The assignment $\mathbb{R}^{24} \otimes \mathbb{R}^{24} \subset \Vcal_{D_4}$ (and nowhere else) is justified by Theorem~\ref{thm:F7} below: $D_4$ is the unique cascade rung whose polytope lives in the ambient $\mathbb{R}^4$ AND whose Weyl group carries outer $S_3$ triality (Lemma~\ref{lem:triality-unique}). The rank-$2$ symmetric tensor content of the closure field on this rung is the $\mathbf{9}_{\mathrm{TS}}$ irrep of $\mathrm{SO}(4)$ on $\mathbb{R}^4$ (Lemma~\ref{lem:spin8-reps}), which after Wick rotation becomes the Fierz--Pauli massless spin-$2$ graviton content. The antisymmetric summand $\Lambda^2(\mathbb{R}^{24})$ is orthogonal to this projection and carries two-form closure-field content. See \S\ref{sec:F7}.
+\end{remark}
+
+\begin{remark}[Decomposition $583 = 24^2 + 7$]
+The split $583 = 576 + 7$ is structural: the $576$ counts the full tensor-product space on $D_4$ (both symmetric and antisymmetric summands), and the $7$ counts one scalar per rung (the scalar closure boundary of each rung, including $D_4$ itself). Both contributions are structurally primitive in the sense that neither reduces to the other under the rung-content assignment of Definition~\ref{def:V}.
+\end{remark}
+
+%==================================================================
+\section{F5: Factor 2 from $\sigma$-Conjugate $H_4$ Decomposition}\label{sec:F5}
+%==================================================================
+
+\subsection{The Galois twist as a $\Zphi$-linear bijection}
+
+Let $\sigma$ denote the non-trivial element of the Galois group $\mathrm{Gal}(\mathbb{Q}(\varphi) / \mathbb{Q}) \cong \mathbb{Z}/2$, acting on $\mathbb{Q}(\varphi)$ by $\sqrt{5} \mapsto -\sqrt{5}$, and hence on the icosian ring $\Zphi \subset \mathbb{Q}(\varphi)$ by
+\begin{equation}
+\sigma : a + b \varphi \longmapsto a + b \psi, \qquad \psi = 1 - \varphi = -1/\varphi, \qquad a, b \in \mathbb{Z}.
+\end{equation}
+Under the icosian construction of $E_8$~\citep{ConwaySloane1999} Ch.~8, $\sigma$ extends to a $\mathbb{Z}$-linear (but not $\Zphi$-linear) involution of the root lattice that swaps two conjugate copies of the 600-cell. Concretely, the $240$ roots of $E_8$ decompose as the disjoint union
+\begin{equation}\label{eq:E8-H4-decomp}
+E_8 \;=\; H_4 \;\sqcup\; H_4', \qquad H_4' := \sigma(H_4), \qquad |H_4| = |H_4'| = 120,
+\end{equation}
+and $\sigma|_{H_4} : H_4 \to H_4'$ is a bijection preserving the Euclidean inner product on $\mathbb{R}^8$ (classical; see~\citep{ConwaySloane1999} Ch.~8, Theorem~8.2). Let $\psi_\sigma : H_4 \to H_4'$ denote this bijection.
+
+\subsection{Discretised closure functional at the root level}\label{sec:F5-discrete}
+
+We formulate F5 at the discrete root-level, bypassing any continuum-integral-restriction issue: the factor-$2$ claim is established on the finite $E_8$ root set. A continuum extension would require a separate functional-convergence hypothesis beyond F6's GH-convergence of metric spaces, and is deferred to the continuum-theorems paper.
+
+\begin{definition}[Discretised closure functional]\label{def:F-discrete}
+Let $\Phi$ be a $\Zphi$-valued rank-$2$ tensor field assigned to each $E_8$ lattice site. For a root subset $S \subset E_8$, the \emph{discretised closure functional on $S$} is the finite sum
+\begin{equation}\label{eq:F-discrete}
+F_{\mathrm{disc}}[\Phi]\bigl|_S \;:=\; \sum_{v \in S} \bigl(\alpha\, \mathcal R(\Phi)(v) + \beta\, \mathcal E(\Phi)(v) - \gamma\, \mathcal Q(\Phi)(v)\bigr),
+\end{equation}
+where $\mathcal R, \mathcal E, \mathcal Q$ are the discrete lattice analogues of the continuum densities $R, E, Q$ of Proposition~\ref{prop:F2-basis}, defined as integer-structure-constant polynomials in $\Phi(v)$ and its discrete lattice differences.
+\end{definition}
+
+The discretised functional is well-defined as a finite sum for every $S \subset E_8$. The continuum integral used in~\eqref{eq:F-form} is \emph{formally} the $n \to \infty$ limit of $F_{\mathrm{disc}}$ on the Schl\"afli-refined lattice; existence of this functional limit is not supplied by F6's Gromov--Hausdorff convergence of metric spaces alone and requires a separate functional-convergence hypothesis, which is deferred to the continuum-theorems paper. The factor-$2$ claim of this section is therefore established at the discrete level only.
+
+\begin{definition}[$\sigma$-fixed closure field]\label{def:sigma-fixed}
+A $\Zphi$-valued closure field $\Phi$ on $E_8$ is \emph{$\sigma$-fixed} if for every root $v \in E_8$,
+\begin{equation}\label{eq:sigma-fixed}
+\Phi(\sigma(v)) \;=\; \sigma(\Phi(v)),
+\end{equation}
+where $\sigma$ acts on roots via $\psi_\sigma : H_4 \to H_4'$ and on $\Zphi$-valued tensor data via coefficient-wise Galois conjugation.
+\end{definition}
+
+\begin{definition}[Hypothesis H-SIG: per-invariant sum is $\sigma$-fixed]\label{hyp:SIG}
+For a $\sigma$-fixed closure field $\Phi$, each of the three per-invariant finite sums $\sum_{v \in H_4} P(\Phi)(v)$ for $P \in \{\mathcal R, \mathcal E, \mathcal Q\}$ is $\sigma$-fixed as a $\Zphi$-valued scalar, equivalently, lies in the $\sigma$-fixed subring $\mathbb{Z} \subset \Zphi$.
+\end{definition}
+
+\begin{remark}[Motivation for H-SIG]\label{rem:HSIG-motivation}
+H-SIG asserts that each $\mathcal R, \mathcal E, \mathcal Q$ sum over a single $H_4$ copy is an integer, not an element of $\Zphi$ with non-zero $\varphi$-part. Motivation:
+\begin{itemize}
+\item For $\sigma$-fixed $\Phi$, the full-$E_8$ sum $\sum_{v \in E_8} P(\Phi)(v)$ is automatically $\sigma$-fixed (since $E_8 = H_4 \sqcup H_4'$ is $\sigma$-invariant as a set and $\sigma\Phi = \Phi$), hence $\in \mathbb{Z}$.
+\item The Euclidean structure of $E_8$ is $\sigma$-invariant (Conway--Sloane Ch.~8); the invariants $\mathcal R, \mathcal E, \mathcal Q$ (integer-coefficient polynomials in $\Phi$ and its discrete derivatives) respect this Euclidean structure. Under W(E_8)-equivariance of the ground state, each $H_4$-sum of an invariant evaluated on the ground state inherits the integer-trace property of a $W(E_8)$-invariant pairing.
+\item Explicit cascade ground states checked in this paper (the cascade vacuum and the lowest-excitation closure fields appearing in Papers V, XXII) satisfy H-SIG by direct computation on the $\Zphi$-basis of the icosian $E_8$.
+\end{itemize}
+A fully general derivation of H-SIG from Axioms~\ref{ax:self-sim}--\ref{ax:e8} would require additional machinery on the cascade variational principle; this is deferred. The present paper states H-SIG explicitly and uses it as the named hypothesis discharging the factor-$2$ equality.
+\end{remark}
+
+\begin{remark}[$\sigma$-fixedness of the cascade ground state]\label{rem:sigma-fixed-ground-disc}
+The cascade's ground-state closure field is the $W(E_8)$-equivariant closure-minimiser with $\Zphi$-valued coefficients. Since $W(E_8)$ contains the $\sigma$ involution as a generator in the icosian representation (Conway--Sloane~\citep{ConwaySloane1999} Ch.~8), the ground state is automatically $\sigma$-fixed (Definition~\ref{def:sigma-fixed}) and, by the direct-computation argument of Remark~\ref{rem:HSIG-motivation}, satisfies H-SIG. Closure fields that break $\sigma$-symmetry (excited states localised asymmetrically between $H_4$ and $H_4'$) do not satisfy the factor-$2$ theorem below; they are outside this paper's scope.
+\end{remark}
+
+\subsection{Equality of the discretised functional on the two $H_4$ copies}
+
+\begin{lemma}[$\mathcal R, \mathcal E, \mathcal Q$ sums equal on $H_4$ and $H_4'$, under H-SIG]\label{lem:F5-invariants}
+Let $\Phi$ be a $\sigma$-fixed closure field satisfying Hypothesis H-SIG (Definition~\ref{hyp:SIG}). Then
+\begin{equation}\label{eq:F5-invariant-equality}
+\sum_{v \in H_4'} \mathcal R(\Phi)(v) \;=\; \sum_{v \in H_4} \mathcal R(\Phi)(v), \qquad \text{and similarly for } \mathcal E, \mathcal Q.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Each of $\mathcal R, \mathcal E, \mathcal Q$ is an integer-coefficient polynomial $P$ in $\Phi(v)$ and its discrete lattice differences, evaluated per lattice site. The Galois-conjugation bijection $\psi_\sigma : H_4 \to H_4'$ is a $\mathbb{Z}$-linear Euclidean isometry (Conway--Sloane Theorem~8.2) that commutes with integer-coefficient polynomial operations. For $\sigma$-fixed $\Phi$,
+\begin{align}
+\sum_{v' \in H_4'} P(\Phi)(v') &= \sum_{v \in H_4} P(\Phi)(\psi_\sigma(v)) && \text{(change of summation index)}\\
+&= \sum_{v \in H_4} P\bigl(\Phi(\psi_\sigma(v))\bigr) && \text{($P$ commutes with isometries)}\\
+&= \sum_{v \in H_4} P\bigl(\sigma(\Phi(v))\bigr) && \text{(by \eqref{eq:sigma-fixed})}\\
+&= \sum_{v \in H_4} \sigma\bigl(P(\Phi)(v)\bigr) && \text{(integer structure constants commute with } \sigma\text{)}\\
+&= \sigma\!\left(\sum_{v \in H_4} P(\Phi)(v)\right) && \text{($\sigma$ is } \mathbb{Z}\text{-linear on } \Zphi\text{).}
+\end{align}
+This establishes that $\sum_{H_4'} P(\Phi) = \sigma\bigl(\sum_{H_4} P(\Phi)\bigr)$ in $\Zphi$. In general, $\sigma(x) = x$ holds if and only if $x \in \mathbb{Z} \subset \Zphi$ (the $\sigma$-fixed subring); for $x \in \Zphi \setminus \mathbb{Z}$, $\sigma(x) \neq x$.
+
+Hypothesis H-SIG (Definition~\ref{hyp:SIG}) asserts precisely that $\sum_{H_4} P(\Phi) \in \mathbb{Z}$ for $P \in \{\mathcal R, \mathcal E, \mathcal Q\}$. Under H-SIG, therefore, $\sigma\bigl(\sum_{H_4} P(\Phi)\bigr) = \sum_{H_4} P(\Phi)$, and combined with the $\sigma$-conjugacy derived above, $\sum_{H_4'} P(\Phi) = \sum_{H_4} P(\Phi)$.
+
+Applied to $P = \mathcal R, \mathcal E, \mathcal Q$ separately (H-SIG is stated for each), this yields~\eqref{eq:F5-invariant-equality}.
+\end{proof}
+
+\begin{theorem}[F5: Factor 2 for $\sigma$-fixed closure fields, under H-SIG]\label{thm:F5}
+Let $\Phi$ be a $\sigma$-fixed closure field satisfying Hypothesis H-SIG (Definition~\ref{hyp:SIG}), and let $F_{\mathrm{disc}}[\Phi]$ be the discretised closure functional (Definition~\ref{def:F-discrete}) with any real coefficients $(\alpha, \beta, \gamma) \in \mathbb{R}^3$. Then
+\begin{equation}\label{eq:factor-2}
+F_{\mathrm{disc}}[\Phi]\bigr|_{E_8} \;=\; F_{\mathrm{disc}}[\Phi]\bigr|_{H_4} + F_{\mathrm{disc}}[\Phi]\bigr|_{H_4'} \;=\; 2\,F_{\mathrm{disc}}[\Phi]\bigr|_{H_4}.
+\end{equation}
+The continuum analogue of this factor-$2$ for the continuum closure functional $F$ would require a separate functional-convergence hypothesis beyond F6's Gromov--Hausdorff convergence of metric spaces; GH convergence of vertex sets does not by itself imply continuity of these closure functionals. The continuum bridge is deferred to the continuum-theorems paper.
+\end{theorem}
+
+\begin{proof}
+The first equality is finite-sum additivity over the disjoint decomposition~\eqref{eq:E8-H4-decomp}. For the second, by Lemma~\ref{lem:F5-invariants} applied to each of $\mathcal R, \mathcal E, \mathcal Q$,
+\begin{equation}
+F_{\mathrm{disc}}[\Phi]\bigr|_{H_4'} \;=\; \alpha \!\sum_{v' \in H_4'}\! \mathcal R(\Phi)(v') + \beta \!\sum_{v' \in H_4'}\! \mathcal E(\Phi)(v') - \gamma \!\sum_{v' \in H_4'}\! \mathcal Q(\Phi)(v') \;=\; F_{\mathrm{disc}}[\Phi]\bigr|_{H_4}.
+\end{equation}
+The real coefficients $\alpha, \beta, \gamma$ simply multiply the sum-level equalities of Lemma~\ref{lem:F5-invariants}; no rationality is required. The continuum limit is \emph{not} supplied by F6's GH-convergence alone; it requires a separate functional-convergence hypothesis (deferred to the continuum-theorems paper).
+\end{proof}
+
+\begin{remark}[What F5 does and does not depend on]\label{rem:F5-hypotheses}
+Theorem~\ref{thm:F5} has exactly three hypotheses:
+\begin{itemize}
+\item[(i)] the $\Zphi$-module decomposition $E_8 = H_4 \sqcup H_4'$ with isometry $\psi_\sigma$ (classical, Conway--Sloane Ch.~8);
+\item[(ii)] $\sigma$-fixedness of the closure field $\Phi$ (Definition~\ref{def:sigma-fixed}), satisfied by the cascade ground state by Remark~\ref{rem:sigma-fixed-ground-disc};
+\item[(iii)] Hypothesis H-SIG (Definition~\ref{hyp:SIG}): per-invariant sums are $\sigma$-fixed ($\in \mathbb{Z}$), motivated in Remark~\ref{rem:HSIG-motivation}.
+\end{itemize}
+The theorem holds for \emph{arbitrary real coefficients} $(\alpha, \beta, \gamma) \in \mathbb{R}^3$, including the irrational values $\alpha = 1/(16\pi)$, $\beta = \sin^2\theta_W / (16\pi\alpha_{\mathrm{em}})$, $\gamma = 1/(16\pi\alpha_{\mathrm{em}})$ supplied by F8 (\S\ref{sec:F8}). The earlier formulation of F5 as a $\sigma$-intertwining statement $F[\sigma\Phi] = \sigma(F[\Phi])$ required rational coefficients; that formulation was stronger than needed. The factor-$2$ statement~\eqref{eq:factor-2} is the only F5 consequence used in the $\Lambda$-derivation of \S\ref{sec:lambda}; under hypotheses (i)--(iii), it holds unconditionally in $(\alpha, \beta, \gamma)$.
+\end{remark}
+
+\begin{remark}[$\sigma$-fixedness of the ground-state closure field]\label{rem:sigma-fixed-ground}
+Hypothesis (ii) of Remark~\ref{rem:F5-hypotheses} is satisfied by the cascade's ground-state closure field because the icosian construction of $E_8$ embeds the two $H_4$ copies symmetrically via $\sigma$; the ground state, defined as the unique closure-minimiser respecting all $W(E_8)$-symmetries, is $\sigma$-fixed by construction. For excited closure fields that break this symmetry (e.g., localised defects breaking the dual 600-cell symmetry), $\sigma$-fixedness is not automatic and must be verified case-by-case.
+\end{remark}
+
+
+%==================================================================
+\section{F6: Burago--Ivanov Hypotheses for the Schl\"afli Refinement}\label{sec:F6}
+%==================================================================
+
+\subsection{The Burago--Ivanov theorem}
+
+We restate the convergence theorem we will apply~\citep{BBI2001}.
+
+\begin{theorem}[Burago--Ivanov, \emph{A Course in Metric Geometry}, \S7.2]\label{thm:BI}
+Let $(X, d)$ be a compact metric space. Let $X_n \subset X$ be a sequence of finite subsets, and equip each $X_n$ with an \emph{intrinsic} metric $\delta_n$ (e.g., the graph-geodesic distance on a specified edge set connecting neighbouring points of $X_n$). If:
+\begin{itemize}
+\item[\textup{(BI1)}] $X_n$ is an $\varepsilon_n$-net of $X$ with $\varepsilon_n \to 0$;
+\item[\textup{(BI2)}] for all $p, q \in X_n$, the intrinsic distance $\delta_n(p, q)$ approximates the ambient distance $d(p, q)$ up to a multiplicative factor $1 + o(1)$, uniformly in $p, q$;
+\end{itemize}
+then $(X_n, \delta_n) \to (X, d)$ in the Gromov--Hausdorff sense.
+\end{theorem}
+
+\subsection{Application to the Schl\"afli refinement}
+
+Take $X = S^3$ with the round metric $d_{\mathrm{round}}$. Let $X_n$ be the $n$-th iterate of the Schl\"afli refinement starting from the 24-cell: $X_0 = $ 24-cell vertex set, $X_1 = $ 600-cell vertex set (= five shifted copies of $X_0$, by the Schl\"afli compound), and $X_{n+1}$ obtained from $X_n$ by applying the Schl\"afli compound step inside each inherited 24-cell sub-polytope. Equip each $X_n$ with the intrinsic graph-geodesic distance $\delta_n$ defined by the nearest-neighbour edge set on $S^3$ (two vertices connected iff their angular distance is below a fixed multiple of the covering radius at level $n$).
+
+\begin{theorem}[F6: Schl\"afli refinement GH-convergence target; conditional on H-HR for the rate and on the stated Kuranishi-density and BI2 metric-compatibility hypotheses]\label{thm:F6}
+Conditional on Hypothesis H-HR (Remark~\ref{rem:rate-status} below, formalising the Schl\"afli self-similarity halving rule at levels $n \ge 2$) and on the stated Kuranishi-density and BI2 metric-compatibility hypotheses (\S\ref{sec:F6}, proof below), the sequence $(X_n, \delta_n)$ is a Gromov--Hausdorff convergence target for $(S^3, d_{\mathrm{round}})$, with explicit covering-radius rate
+\begin{equation}\label{eq:eps-rate}
+\varepsilon_n \le \varepsilon_0 \cdot 2^{-n} \qquad (n \ge 0),
+\end{equation}
+where $\varepsilon_0 \approx 0.762\,\mathrm{rad}$ is the covering radius of the 24-cell on $S^3$. Numerical verification holds at levels $0 \to 1$ (ratio $0.499$); higher-level extension is conditional on H-HR. A full first-principles derivation including closed-form error bounds is deferred to the continuum-theorems paper.
+\end{theorem}
+
+\begin{proof}
+We reduce (BI1) and (BI2) of Theorem~\ref{thm:BI} to the named hypotheses H-DENS, H-BI2, and H-HR; the verifications proper are deferred to the continuum-theorems paper.
+
+\emph{(BI1) $\varepsilon$-net property.} The Schl\"afli step $X_n \to X_{n+1}$ replaces each sub-24-cell by five shifted 24-cell copies, by the Schl\"afli compound theorem (\S\ref{sec:F3}, Step 3). Direct computation at levels $0$ and $1$ (verified by \texttt{papers/cascade-derivation/scripts/GH\_continuum\_limit.py}) gives
+\begin{equation}
+\varepsilon_0 = 0.7621\,\mathrm{rad}\ (43.7^\circ), \qquad \varepsilon_1 = 0.3805\,\mathrm{rad}\ (21.8^\circ), \qquad \varepsilon_1/\varepsilon_0 = 0.499,
+\end{equation}
+which matches the halving rule $\varepsilon_{n+1} = \varepsilon_n / 2$ to three decimal places at the $0 \to 1$ transition. That the halving persists at higher $n$ is \emph{conditional on Schl\"afli self-similarity at higher levels} (hypothesis H-HR, formalised below); a full closed-form proof is deferred to the continuum-theorems paper. The $\varepsilon_n \to 0$ conclusion is plausible under Kuranishi density for rotation subgroups~\citep{Kuranishi1951}: \emph{if} the iterated $\twoI/\twoT$-coset shifts generate a dense subgroup of $\mathrm{SO}(4)$, then the iterated Schl\"afli refinement converges to a dense subset of $S^3$. Verification that the specific generator set supplied by the compound step satisfies Kuranishi's hypothesis is not completed here; it is listed among F6's deferred ingredients. Under this density hypothesis, any $\varepsilon_n \to 0$ sequence suffices for (BI1) without invoking the halving rate.
+
+\emph{(BI2) Metric compatibility.} A geodesic arc on $S^3$ of length $L$ is approximated by a polygonal path on the refinement graph $X_n$ using at most $L / \varepsilon_n$ edges, each of angular length at most $2\varepsilon_n$. The excess length of the polygonal approximation compared to the geodesic is bounded by the standard sphere-polygonal estimate, giving multiplicative error $1 + O(\varepsilon_n)$ in $\delta_n(p, q)$ versus $d(p, q)$, uniformly in $p, q$.
+
+The argument for (BI1) uses Kuranishi's density criterion \emph{conditionally}: \emph{if} the iterated $\twoI/\twoT$-coset shifts are verified to satisfy the hypothesis of Kuranishi's theorem (density of the generated subgroup in $\mathrm{SO}(4)$), then the refinement covers $S^3$. Verification for the specific generator set supplied by the Schl\"afli compound step is \emph{not} completed here; it is a deferred ingredient (Hypothesis H-DENS, Remark~\ref{rem:rate-status}). The argument for (BI2) uses the standard sphere-polygonal estimate as a plausibility sketch; uniform multiplicative control $1 + O(\varepsilon_n)$ in $\delta_n$ versus $d_{\mathrm{round}}$ across the whole refinement graph requires additional technical conditions (Hypothesis H-BI2) that are not verified here. Under the combined hypotheses H-HR (rate), H-DENS (Kuranishi density), and H-BI2 (metric compatibility), Theorem~\ref{thm:BI} yields $(X_n, \delta_n) \to (S^3, d_{\mathrm{round}})$ in the Gromov--Hausdorff sense; a fully closed-form proof of each ingredient is deferred to the continuum-theorems paper.
+\end{proof}
+
+\begin{definition}[Hypothesis H-DENS: Kuranishi density for the Schl\"afli-compound generators]\label{hyp:DENS}
+The iterated $\twoI/\twoT$-coset shifts generated by the Schl\"afli compound step satisfy Kuranishi's hypothesis~\citep{Kuranishi1951}: the generated subgroup of $\mathrm{SO}(4)$ is dense. Under H-DENS, the Schl\"afli refinement sequence covers $S^3$ densely as $n \to \infty$.
+\end{definition}
+
+\begin{definition}[Hypothesis H-BI2: uniform BI2 metric compatibility]\label{hyp:BI2}
+For all $p, q \in X_n$ uniformly over the refinement level $n$, the intrinsic graph-geodesic metric $\delta_n(p, q)$ on the Schl\"afli-refined lattice approximates the $S^3$ ambient round-metric $d_{\mathrm{round}}(p, q)$ with multiplicative factor $1 + o(1)$: $\delta_n(p, q) / d_{\mathrm{round}}(p, q) \to 1$ as $n \to \infty$, uniformly in $(p, q)$.
+\end{definition}
+
+\begin{definition}[Hypothesis H-HR: Schl\"afli halving rate at higher levels]\label{hyp:HR}
+The Schl\"afli compound refinement step is self-similar at every level $n \ge 0$, so that the covering-radius sequence satisfies $\varepsilon_{n+1} = \varepsilon_n / 2$ and hence $\varepsilon_n \le \varepsilon_0 \cdot 2^{-n}$ uniformly in $n$. The $0 \to 1$ base case is numerically verified (ratio $0.499$, \texttt{scripts/GH\_continuum\_limit.py}); extension to $n \ge 2$ is the content of H-HR.
+\end{definition}
+
+\begin{remark}[Status of the rate $2^{-n}$ --- Hypothesis H-HR]\label{rem:rate-status}
+The closed-form halving rate $\varepsilon_n = \varepsilon_0 \cdot 2^{-n}$ is numerically verified at the $0 \to 1$ transition ($\varepsilon_1/\varepsilon_0 = 0.499$, Script \texttt{GH\_continuum\_limit.py}) and is \emph{conditional} at higher $n$ on the following hypothesis:
+\begin{itemize}
+\item[\textbf{(H-HR)}] The Schl\"afli compound step is self-similar at every level $n \ge 0$: applying the compound step to each sub-24-cell of $X_n$ at scale $\varepsilon_n$ yields five shifted 24-cell copies at scale $\varepsilon_n / 2$, uniformly in the level.
+\end{itemize}
+The $0 \to 1$ numerical verification establishes (H-HR) at the base level. A closed-form proof of (H-HR) for all $n \ge 2$ --- equivalently, that the compound step is a true self-similar refinement at each level --- is deferred to the dedicated continuum-theorems paper. The Gromov--Hausdorff convergence conclusion of Theorem~\ref{thm:F6} --- the only F6 consequence fed into the $\Lambda$-derivation in \S\ref{sec:lambda} --- does \emph{not} require (H-HR) specifically, only that $\varepsilon_n \to 0$; the latter follows conditionally on H-DENS (Definition~\ref{hyp:DENS}) via Kuranishi density.
+\end{remark}
+
+\subsection{Extension to Lorentzian signature}
+
+\begin{remark}[Lorentzian extension]\label{rem:lorentzian}
+The Riemannian GH convergence result is expected to transfer to the Lorentzian case $\mathbb{R}^{1,3} \subset \mathbb{R} \times S^3$ by Wick rotation: Wick rotation is a bijection at the level of real-analytic tensor fields, and the discrete-to-smooth correspondence on the spatial $S^3$ slice formally lifts to the Lorentzian ambient space. A rigorous Lorentzian version of F6 --- including light-cone structure and spacelike/timelike distinction --- is beyond this paper's scope; it is the subject of a dedicated forthcoming continuum-theorems paper.
+\end{remark}
+
+%==================================================================
+\section{F7: Rank-2 Character of $\Lambda$ on $D_4$}\label{sec:F7}
+%==================================================================
+
+\subsection{Fierz--Pauli uniqueness and the Deser bootstrap}
+
+We use two classical results from linearised and non-linear gravity.
+
+(The Fierz--Pauli uniqueness theorem is stated below as Theorem~\ref{thm:FP}.)
+
+\begin{theorem}[Deser 1970, \citep{Deser1970}]\label{thm:deser}
+Let $h_{\mu\nu}$ be a massless Fierz--Pauli field coupled to its own stress-energy tensor $T_{h, \mu\nu}$ by a universal self-coupling bootstrap. The unique self-consistent non-linear completion is Einstein's general relativity, with $h$ reinterpreted as the metric perturbation $g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$ satisfying
+\begin{equation}\label{eq:einstein-lambda}
+G_{\mu\nu} + \Lambda g_{\mu\nu} = 8\pi G T_{\mu\nu}.
+\end{equation}
+\end{theorem}
+
+\subsection{Triality uniqueness: $D_4$ is the unique rank-2 rung}
+
+The rank-$2$ symmetric tensor content of the cascade localises at $D_4$ as a consequence of three classical facts, applied in sequence:
+
+\begin{lemma}[$D_4$ is the unique cascade rung with outer triality]\label{lem:triality-unique}
+Among the non-trivial cascade rungs $\{E_8, H_4, 40, D_4, 16, 8\}$, the $D_4$ rung is the unique one whose outer automorphism group contains a three-fold element. Specifically, $\mathrm{Out}(W(D_4)) \cong S_3$ (triality;~\citep{Bourbaki2002} Ch.~IV, \S4), while for the other rungs
+\begin{equation}
+\mathrm{Out}(W(E_8)) = 1, \quad \mathrm{Out}(W(H_4)) = 1, \quad \mathrm{Out}(W(A_n)) = \mathbb{Z}/2 \ (n \ge 2),
+\end{equation}
+and the remaining rungs ($40, 16, 8, 0$) are index-fibres or sub-polytopes without independent Coxeter-group status.
+\end{lemma}
+
+\begin{proof}
+The outer automorphism groups of irreducible finite Coxeter groups are classical: $S_3$ for $D_4$, $\mathbb{Z}/2$ for $A_n$ and $D_n$ ($n \ge 5$), and trivial for $E_8, E_7, E_6, H_3, H_4, F_4$ (Bourbaki Ch.~IV, \S4, Exercise~2, or~\citep{Humphreys1990}~\S2.15). Only $D_4$ has $|\mathrm{Out}| = 6$ (= $|S_3|$), the outer-automorphism triality.
+\end{proof}
+
+\begin{lemma}[Rank-$2$ symmetric content on the $D_4$ ambient space]\label{lem:spin8-reps}
+The $D_4$ polytope (the 24-cell) lives in the Euclidean ambient space $\mathbb{R}^4$; its Weyl group $W(D_4)$ is a finite subgroup of $\mathrm{O}(4)$ acting on this $\mathbb{R}^4$. Consider rank-$2$ symmetric tensor fields $h_{\mu\nu}$ on $\mathbb{R}^4$, transforming in the $\Sym^2(V)$ representation where $V = \mathbb{R}^4$ is the defining $\mathrm{O}(4)$-module. Under $\mathrm{SO}(4)$,
+\begin{equation}\label{eq:sym2-R4}
+\Sym^2(V) \;=\; \mathbf{1}_t \;\oplus\; \mathbf{9}_{\mathrm{TS}},
+\end{equation}
+where $\mathbf{1}_t$ is the trace (scalar) component and $\mathbf{9}_{\mathrm{TS}}$ is the symmetric traceless (spin-$2$) irreducible representation of $\mathrm{SO}(4)$, of dimension $4 \cdot 5/2 - 1 = 9$. The $\mathbf{9}_{\mathrm{TS}}$ is the $4$-dimensional graviton content on Riemannian $\mathbb{R}^4$.
+\end{lemma}
+
+\begin{proof}
+Classical $\mathrm{SO}(n)$ representation theory: $V \otimes V = \Sym^2(V) \oplus \Lambda^2(V)$, with $\dim \Sym^2(V) = n(n+1)/2$ and further decomposition $\Sym^2(V) = \mathbf{1} \oplus (\Sym^2(V) / \mathbf{1})$ under the trace map, where the traceless piece has dimension $n(n+1)/2 - 1$. For $n = 4$: $\dim \Sym^2(V) = 10$, decomposing as $1 + 9$. See~\citep{FultonHarris1991} \S4 or~\citep{Adams1996} Ch.~5.
+\end{proof}
+
+\begin{remark}[The $\mathrm{SO}(4)$ graviton and Fierz--Pauli after Wick rotation]\label{rem:spin8-R4}
+The $\mathbf{9}_{\mathrm{TS}}$ of Lemma~\ref{lem:spin8-reps} is the Euclidean-signature analogue of the 4D graviton. A Wick rotation of $\mathbb{R}^4$ to Minkowski $\mathbb{R}^{1,3}$ (bijection on real-analytic tensor fields) maps $\mathrm{SO}(4) \to \mathrm{SO}(1,3)$ and $\mathbf{9}_{\mathrm{TS}}$ to the corresponding symmetric traceless massless-spin-$2$ representation of the Lorentz group, which is precisely the content selected by Fierz--Pauli uniqueness (Theorem~\ref{thm:FP}). The $\mathrm{Spin}(8)$ machinery of $\mathrm{so}(8) = D_4$ at the Lie algebra level is orthogonal to this argument: the $D_4$ polytope is placed in $\mathbb{R}^4$ by its natural embedding, and the rank-$2$ symmetric tensor content on $\mathbb{R}^4$ is supplied by $\mathrm{SO}(4)$ representation theory directly, not by a Spin$(8)$ restriction operation.
+\end{remark}
+
+\begin{lemma}[$\mathrm{Spin}(8)$ outer triality distinguishes $D_4$]\label{lem:spin8-triality}
+The Lie algebra $D_4 = \mathrm{so}(8)$ integrates to the compact Lie group $\mathrm{Spin}(8)$, which has three inequivalent $8$-dimensional irreducible representations --- the vector rep $8_v$, the two chiral spinor reps $8_s, 8_c$ --- permuted by outer-automorphism triality $\mathrm{Out}(\mathrm{Spin}(8)) = S_3$. Among the cascade's non-trivial rungs $\{E_8, H_4, 40, D_4, 16, 8\}$, the $D_4$ rung is the unique one whose Weyl group carries outer triality; this is the content of Lemma~\ref{lem:triality-unique}. In particular, $D_4$ is the unique rung whose Lie-algebraic structure distinguishes a natural vector direction (``spacetime direction'') via the $S_3$-permutation $8_v \leftrightarrow 8_s \leftrightarrow 8_c$.
+\end{lemma}
+
+\begin{proof}
+Classical Lie theory; see~\citep{Bourbaki2002} Ch.~VIII, \S13, Proposition~4, and~\citep{Adams1996} Ch.~5. The outer triality of $D_4$ is the only non-trivial Dynkin-diagram automorphism beyond $\mathbb{Z}/2$ among simple Lie algebras; combined with Lemma~\ref{lem:triality-unique}, this singles out $D_4$ as the cascade's vector-spacetime rung.
+\end{proof}
+
+\subsection{Rank-$2$ $\Lambda$ localisation at $D_4$}
+
+We use two classical results from linearised and non-linear gravity.
+
+\begin{theorem}[Fierz--Pauli uniqueness, \citep{Weinberg1995} \S7.6]\label{thm:FP}
+The unique free Lorentz-invariant action for a massless spin-$2$ field $h_{\mu\nu}$ on a $(3+1)$-dimensional Minkowski background is (up to total divergence) the linearised Einstein--Hilbert action.
+\end{theorem}
+
+(Theorem~\ref{thm:deser} above, Deser's bootstrap, gives the non-linear form $G_{\mu\nu} + \Lambda g_{\mu\nu} = 8\pi G T_{\mu\nu}$ from a Fierz--Pauli massless spin-$2$ field.) We now derive the discrete rank-$2$ candidate-representation selection at $D_4$; the continuum field-equation content remains conditional on H-FP and H-RLA.
+
+\begin{theorem}[F7: $D_4$ selection under FP1--FP3; continuum field under H-FP]\label{thm:F7}
+Under the FP1--FP3 selection criteria stated in the proof below, the $D_4$ rung is the unique candidate rank-$2$ representation site for a cosmological-constant $\Lambda$ term among the rungs of~\eqref{eq:7rung}. The claim is uniqueness \emph{under FP1--FP3} (dim-$4$ ambient space, symmetric rank-$2$ tensor content, outer-triality Lie-algebraic distinction); no claim is made that physics uniquely requires the FP1--FP3 criteria. Identification of this candidate with a Fierz--Pauli massless-spin-$2$ field (and subsequent Deser completion to Einstein-with-$\Lambda$) requires Hypothesis H-FP, Hypothesis H-RLA, and the continuum-GR inputs of the continuum-theorems paper.
+\end{theorem}
+
+\begin{proof}
+We show that $D_4$ is the unique rung satisfying the three necessary conditions for Fierz--Pauli massless spin-$2$ content:
+
+\emph{Condition (FP1): ambient dimension $4$.} Fierz--Pauli uniqueness (Theorem~\ref{thm:FP}) requires a $(3+1)$-dimensional Minkowski background. Among the cascade rungs, exactly those whose associated polytope lives in $\mathbb{R}^4$ have this ambient dimension: $H_4$ (600-cell in $\mathbb{R}^4$), $D_4$ (24-cell in $\mathbb{R}^4$), and $16$ (tesseract in $\mathbb{R}^4$). Rungs $E_8$ (8D), $40$ (cell-fibre, structurally 3D via the icosahedral fibre), $8$ (octonion lattice, effectively 8-real-dim before signature), and $0$ (point) do not satisfy (FP1). Rungs satisfying (FP1): $\{H_4, D_4, 16\}$.
+
+\emph{Condition (FP2): symmetric rank-$2$ tensor content at ambient dim $4$.} The closure-field content at each $\mathbb{R}^4$-rung is:
+\begin{itemize}
+\item $H_4$ (rung $1$): the $120$-root icosian structure carries $\varphi$-eigenvalue $\Zphi$-module content, not a canonical symmetric rank-$2$ real tensor. No Fierz--Pauli spin-$2$ field lives on $H_4$ without an additional projection from the $\Zphi$-module to a real-valued rank-$2$ representation.
+\item $D_4$ (rung $3$): the $D_4$ polytope (the 24-cell) lives in $\mathbb{R}^4$ by its natural embedding; rank-$2$ symmetric tensor fields on this $\mathbb{R}^4$ decompose under $\mathrm{SO}(4)$ as $\mathbf{1}_t \oplus \mathbf{9}_{\mathrm{TS}}$ (Lemma~\ref{lem:spin8-reps}). The $\mathbf{9}_{\mathrm{TS}}$ irreducible representation is a \emph{candidate} symmetric traceless rank-$2$ content, of the dimension and tensor type required by a Fierz--Pauli massless spin-$2$ field. A representation by itself is not a field equation: the Fierz--Pauli dynamics (Lorentzian structure, gauge redundancy, constraint structure, linearised Einstein equation) requires Hypothesis H-FP (Remark~\ref{rem:F7-theorem}) supplying the continuum regularity that promotes the $\mathbf{9}_{\mathrm{TS}}$ representation on the lifted smooth $4$D manifold to a Fierz--Pauli-equation-satisfying field.
+\item $16$ (rung $4$): the tesseract carries the $8_s \oplus 8_c$ spinor doublet content, not a symmetric rank-$2$ content. No Fierz--Pauli spin-$2$ field lives on the tesseract.
+\end{itemize}
+Hence $D_4$ is the unique rung satisfying both (FP1) and (FP2).
+
+\emph{Condition (FP3): outer triality distinguishing $D_4$ among cascade rungs.} The $\mathrm{SO}(4)$ rank-$2$ graviton content of Lemma~\ref{lem:spin8-reps} exists on any $\mathbb{R}^4$-ambient rung; the extra ingredient selecting $D_4$ over $H_4$ or $16$ is the outer-$S_3$ triality of $\mathrm{Spin}(8)$, which distinguishes $D_4$'s Lie-algebraic structure (Lemma~\ref{lem:spin8-triality}) and in particular singles out a canonical ``spacetime direction'' within the chain: rung $16$ below $D_4$ inherits the $8_s \oplus 8_c$ chiral-spinor content from triality, complementing $D_4$'s rank-$2$ vector content. $H_4$ carries the Weyl group $W(H_4)$, which has trivial outer-automorphism group; $16$ is a descendant sub-polytope of $D_4$, not an independent Weyl-group carrier. Combining with (FP2), $D_4$ is the unique cascade rung admitting both the $\mathbb{R}^4$-ambient rank-$2$ graviton content and the outer-triality Lie-algebraic distinction.
+
+Combining (FP1)--(FP3), $D_4$ is the rung carrying the selected $\mathbf{9}_{\mathrm{TS}}$ rank-$2$ traceless-symmetric candidate representation for a Fierz--Pauli spin-$2$ content. Under Hypothesis H-FP (Definition~\ref{hyp:FP}), the continuum uplift of this representation satisfies the linearised Fierz--Pauli equation on the smooth $4$D manifold. Deser's bootstrap (Theorem~\ref{thm:deser}) then gives a self-consistent non-linear theory of the form $G_{\mu\nu} + \Lambda g_{\mu\nu} = 8\pi G T_{\mu\nu}$; the \emph{value} of $\Lambda$ (as opposed to its tensor rank) is supplied separately by the cascade closure residue under H-RLA (Definition~\ref{hyp:RLA}), not by Deser's theorem. Without H-FP the conclusion weakens to ``$D_4$ carries the candidate rank-$2$ representation''; without H-RLA, Deser gives only the tensor structure without pinning $\Lambda$; without the continuum-GR hypotheses of the continuum-theorems paper, the full Einstein equation is a target rather than an established consequence.
+\end{proof}
+
+\begin{definition}[Hypothesis H-FP: continuum Fierz--Pauli uplift on the $D_4$ rung]\label{hyp:FP}
+Under the Gromov--Hausdorff continuum limit of F6, the $\mathrm{SO}(4)$ symmetric-traceless rank-$2$ candidate representation $\mathbf{9}_{\mathrm{TS}}$ on the discrete $D_4$ polytope (Lemma~\ref{lem:spin8-reps}) uplifts to a continuum field $h_{\mu\nu}$ on the smooth $4$D manifold that satisfies the linearised Fierz--Pauli equation (Theorem~\ref{thm:FP}); equivalently, the discrete representation admits the gauge redundancy, constraint structure, and field-equation content of a physical massless spin-$2$ field after Wick rotation to Minkowski signature.
+\end{definition}
+
+\begin{remark}[Status of F7 and the remaining continuum step]\label{rem:F7-theorem}
+F7 as stated (Theorem~\ref{thm:F7}) identifies the rank-$2$ content of the cascade as the $\mathbf{9}_{\mathrm{TS}}$ irrep of $\mathrm{SO}(4)$ on the $\mathbb{R}^4$ ambient space of the $D_4$ polytope, with $D_4$'s outer triality (Lemma~\ref{lem:spin8-triality}) singling it out from other $\mathbb{R}^4$-ambient rungs. The identification of this discrete-polytope rank-$2$ content with the Fierz--Pauli massless spin-$2$ field on the continuum limit depends on the Gromov--Hausdorff lift (F6) plus a continuum-regularity hypothesis (H-FP): the lifted rank-$2$ field satisfies the Fierz--Pauli linearised equation on the smooth $4$D manifold. H-FP is standard under Wick rotation from Riemannian $\mathbb{R}^4$ to Minkowski $\mathbb{R}^{1,3}$ for real-analytic tensor fields, but a fully rigorous continuum-regularity proof is deferred to the continuum-theorems paper. The discrete-level uniqueness of $\mathbf{9}_{\mathrm{TS}}$ at $D_4$ (Lemma~\ref{lem:spin8-reps} + Lemma~\ref{lem:triality-unique}) is unconditional; the continuum uplift to Fierz--Pauli is conditional on H-FP.
+\end{remark}
+
+\begin{remark}[Combining F4 and F7]
+Theorem~\ref{thm:F4} (closure-depth count as a definitional dimension count on $\Vcal$) and Theorem~\ref{thm:F7} (rank-$2$ localisation, conditional on H-FP) together motivate the structural choice to place the $\mathbb{R}^{24} \otimes \mathbb{R}^{24}$ tensor-product summand at $D_4$ and not elsewhere: F7 provides the physical rationale (dim-$4$ ambient $+$ SO(4) rank-$2$ content $+$ triality uniqueness), and F4 records the resulting closure-depth count $24^2 + 7 = 583$. The alternative definitional choices ($24^2 \cdot 7$, tensor content replicated at every rung; or $7$, no tensor content anywhere) are excluded by F7's structural argument combined with the cascade's rung-content inventory.
+\end{remark}
+
+\begin{remark}[Relationship between $\mathbb{R}^{24}\otimes\mathbb{R}^{24}$ and $\mathrm{SO}(4)$ on $\mathbb{R}^4$]\label{rem:R24-vs-R4}
+$\Vcal_{D_4}$ is indexed by the $24$ root vectors of $D_4$, living in the $4$-dimensional ambient space $\mathbb{R}^4$. The $24^2 = 576$ component count of the kinematic closure-field space $\mathbb{R}^{24}\otimes\mathbb{R}^{24}$ reflects the number of rank-$2$ tensor entries on the root-indexed basis (inner-product-like pairings between pairs of roots), not the dimension of a rank-$2$ tensor field on $\mathbb{R}^4$ itself (which is $16$ for general rank-$2$, $10$ for symmetric, $9$ for traceless-symmetric). The $\mathrm{SO}(4)$ rank-$2$ decomposition of Lemma~\ref{lem:spin8-reps} specifies the \emph{physical} content at the ambient-space level; the $\mathbb{R}^{24}\otimes\mathbb{R}^{24}$ count of F4 specifies the \emph{kinematic} count over the root basis. The two are distinct layers of the same construction; the physical spin-$2$ content selected by F7 sits inside the kinematic $\Vcal_{D_4}$ as a subrepresentation under the natural $W(D_4) \subset \mathrm{O}(4)$ action on both spaces.
+\end{remark}
+
+%==================================================================
+\section{F8: Coefficient-Matching Scheme}\label{sec:F8}
+%==================================================================
+
+\subsection{Setup}
+
+By F2 (Theorem~\ref{thm:F2}), the closure functional is $F = \alpha R + \beta E - \gamma Q$ with three real coefficients. In what follows we work in natural units $c = \hbar = 1$, and adopt the cascade's intrinsic Planck-length convention $\ell_P^2 = G$, so that $G = 1$ in these units and lengths are measured in Planck units. The three target actions (in these units) are:
+
+\begin{itemize}
+\item The Einstein--Hilbert action $S_{\mathrm{EH}} = (16\pi)^{-1} \int (R - 2\Lambda) \sqrt{-g}\, d^4 x$ on $D_4$ (metric content).
+\item The Maxwell action $S_M = -(4e^2)^{-1} \int F_{\mu\nu} F^{\mu\nu} \sqrt{-g}\, d^4 x = -(16\pi \alpha_{\mathrm{em}})^{-1} \int F_{\mu\nu} F^{\mu\nu} \sqrt{-g}\, d^4 x$ on the octonion rung $8$ (electromagnetic content).
+\item The SU(2) Yang--Mills action $S_W = -(4 g_W^2)^{-1} \int W^a_{\mu\nu} W^{a,\mu\nu} \sqrt{-g}\, d^4 x$ on the tesseract rung $16$ (weak content).
+\end{itemize}
+
+\subsection{Coefficient $\alpha$ from Einstein--Hilbert}
+
+Matching the $R$-term in $F$ to the Ricci scalar in $S_{\mathrm{EH}}$ on the $D_4$ rung (where the rank-$2$ cascade tensor, denoted $h_{\mu\nu}$ in the Fierz--Pauli hypothesis of F7, uplifts to the metric perturbation $g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$ via Deser's bootstrap) gives
+\begin{equation}\label{eq:alpha-match}
+\alpha = \frac{1}{16\pi} \approx 0.01989,
+\end{equation}
+in the units introduced above.
+
+\subsection{Coefficient $\gamma$ from Maxwell}
+
+Using $e^2 = 4\pi \alpha_{\mathrm{em}}$ and matching the $Q$-term on the octonion rung to the Maxwell Lagrangian yields
+\begin{equation}\label{eq:gamma-match}
+\gamma = \frac{1}{16 \pi \alpha_{\mathrm{em}}}.
+\end{equation}
+Substituting the Paper~XXII cascade-placement $\alpha_{\mathrm{em}}^{-1} = 137 + \pi / 87$ (structural-correspondence grade)~\citep{SmartXXII}:
+\begin{equation}
+\gamma = \frac{137 + \pi / 87}{16 \pi} \approx 2.72625.
+\end{equation}
+
+\subsection{Coefficient $\beta$ from SU(2) Yang--Mills}
+
+The weak coupling satisfies $g_W^2 = 4 \pi \alpha_{\mathrm{em}} / \sin^2 \theta_W$. Matching the $E$-term on the tesseract rung gives
+\begin{equation}\label{eq:beta-match}
+\beta = \frac{\sin^2 \theta_W}{16 \pi \alpha_{\mathrm{em}}}.
+\end{equation}
+Substituting the Paper~XXII cascade-placements $\sin^2 \theta_W = 3/8$~\citep{SmartXXII} and $\alpha_{\mathrm{em}}^{-1} = 137 + \pi / 87$ (both at structural-correspondence grade):
+\begin{equation}
+\beta = \frac{3(137 + \pi / 87)}{128 \pi} \approx 1.02234.
+\end{equation}
+
+\subsection{Coefficient matching and conditional zero-parameter result}
+
+\begin{theorem}[F8: Coefficient matching to imported couplings]\label{thm:F8}
+The three coefficients of the closure functional $F = \alpha R + \beta E - \gamma Q$ are cascade-determined by matching to the physics actions at their native cascade rungs (Einstein--Hilbert at $D_4$, Maxwell at the octonion rung, SU(2) Yang--Mills at the tesseract rung):
+\begin{align}
+\alpha &= \frac{1}{16 \pi},\\
+\beta &= \frac{\sin^2 \theta_W}{16 \pi \alpha_{\mathrm{em}}} = \frac{3(137 + \pi / 87)}{128 \pi} \approx 1.02234,\\
+\gamma &= \frac{1}{16 \pi \alpha_{\mathrm{em}}} = \frac{137 + \pi / 87}{16 \pi} \approx 2.72625.
+\end{align}
+None is a free parameter after the three imported couplings are accepted. The cascade-placed values of $\alpha_{\mathrm{em}}^{-1} = 137 + \pi/87$ and $\sin^2 \theta_W = 3/8$ enter from Paper XXII~\citep{SmartXXII} as \emph{structural/numerical correspondences} rather than first-principles derivations (Paper XXII's own scope statement). The coefficient matching is worked through in \texttt{cascade-foundations.md} \S F8.
+\end{theorem}
+
+\begin{proof}[Argument]
+Apply the three matching equations~\eqref{eq:alpha-match}, \eqref{eq:gamma-match}, \eqref{eq:beta-match} to the three rung-content assignments using the imported couplings. Each matching is the canonical action-normalisation in its sector: $1/(16\pi)$ for Einstein--Hilbert, $1/(16 \pi \alpha_{\mathrm{em}})$ for Maxwell, and $\sin^2 \theta_W / (16 \pi \alpha_{\mathrm{em}})$ for SU(2) Yang--Mills (using $g_W^2 = 4\pi \alpha_{\mathrm{em}} / \sin^2 \theta_W$). Substituting the imported values of $\alpha_{\mathrm{em}}$ and $\sin^2 \theta_W$ yields the explicit formulae.
+\end{proof}
+
+\begin{corollary}[Zero additional continuous parameters, beyond three imports and structural hypotheses]\label{cor:zero-param}
+After F1--F8, the cascade closure functional contains no additional free continuous parameter beyond the three imported couplings $(G, \alpha_{\mathrm{em}}, \sin^2\theta_W)$ and the thirteen named structural hypotheses \{H-MIN, H-NC, H-SIG, H-DENS, H-BI2, H-HR, H-FP, H-MX, H-YM, H-K, H-PROD, H-COPY-ADD, H-RLA\}. The normalisations appearing in F8 and the $\Lambda$ calculation introduce no additional continuous fitted parameter beyond these imports and hypotheses. Downstream observables (particle masses, radii, mixings, $\Lambda$) inherit their sector-specific assumptions from Papers V, XXII, XXXII, and this paper, at the structural-correspondence grades documented in each source.
+\end{corollary}
+
+\begin{proof}
+The two axioms (Axioms~\ref{ax:self-sim}, \ref{ax:e8}) introduce no free numerical parameter: the self-similarity law is a symmetry condition and $E_8$ is a specific finite root system. The cascade rung structure is fixed by F3 under Hypothesis H-NC (Corollary~\ref{cor:h4-unique}, supplying the $H_4$ passage) plus conditions (a) and (c). The shell amplitude $\widehat{K} = \varphi^{-1}$ of Definition~\ref{def:K-amplitude} is fixed by Hypothesis H-K (motivated by F1 and F2's minimality, but formally stated as H-K). The coefficients $(\alpha, \beta, \gamma)$ of F2 are fixed by F8 once the three couplings $(G, \alpha_{\mathrm{em}}, \sin^2\theta_W)$ are imported. Hence no additional numerical freedom remains \emph{beyond the three imported couplings and the thirteen named structural hypotheses \{H-MIN, H-NC, H-SIG, H-DENS, H-BI2, H-HR, H-FP, H-MX, H-YM, H-K, H-PROD, H-COPY-ADD, H-RLA\}}.
+\end{proof}
+
+\begin{remark}[Zero free parameters beyond imports: honest scope]\label{rem:zero-param-scope}
+F8 does \emph{not} derive Newton's constant $G$, the fine-structure constant $\alpha_{\mathrm{em}}$, or the Weinberg angle $\sin^2 \theta_W$ from the two cascade axioms in this paper. It \emph{matches} to these constants. Paper XXII~\citep{SmartXXII} argues for $\alpha_{\mathrm{em}}^{-1} = 137 + \pi / 87$ and $\sin^2 \theta_W = 3/8$ from cascade structure, but presents these as \emph{structural correspondences} rather than fully independent first-principles derivations from the two axioms; the present paper does not upgrade their epistemic status. The Planck-intrinsic $G$ is a consequence of the cascade's self-similarity scale setting under the unit convention $\ell_P^2 = G$.
+
+The Corollary's ``no additional free parameters'' claim is therefore the statement: \emph{no parameter in F1--F8 beyond the three imports $(G, \alpha_{\mathrm{em}}, \sin^2\theta_W)$, which are themselves cascade-placed in Paper XXII at structural-correspondence grade}. This is a parameter-chain closure claim, not an absolute free-of-inputs claim. Upgrading the three imports to unconditional first-principles derivations is the subject of dedicated papers in the programme (Paper XXII for $\alpha_{\mathrm{em}}$ and $\sin^2\theta_W$; a forthcoming Newtonian-constant paper for the Planck-intrinsic $G$).
+\end{remark}
+
+\begin{remark}[Rung-content assignments: derivation status]\label{rem:rung-assignments}
+Of the three rung-content assignments in F8:
+\begin{itemize}
+\item The $D_4$ rank-$2$ candidate-representation localisation is derived by Theorem~\ref{thm:F7} (F7): (FP1)--(FP3) identify $D_4$ as the selected rank-$2$ candidate. The full Einstein--Hilbert dynamics (linearised field equation, gauge redundancy, Deser bootstrap) at $D_4$ requires the additional hypotheses H-FP and H-RLA plus the continuum-GR inputs of the continuum-theorems paper.
+\item The Maxwell assignment at rung $8$ and the SU(2) Yang--Mills assignment at rung $16$ are \emph{structural hypotheses} H-MX and H-YM (Definitions~\ref{hyp:MX}--\ref{hyp:YM} below), motivated by representation-content compatibility: the octonionic vector content of rung $8$ matches Maxwell's $U(1)$ gauge field (H-MX), and the spinor-doublet content $8_s \oplus 8_c$ of rung $16$ matches SU(2)'s fundamental representation (H-YM). A first-principles derivation of these two assignments analogous to F7's treatment of $D_4$ is deferred to a forthcoming electroweak-dynamics paper.
+\end{itemize}
+\end{remark}
+
+\begin{definition}[Hypothesis H-MX: Maxwell-at-rung-$8$ assignment]\label{hyp:MX}
+The Maxwell $U(1)$ gauge action on the cascade is assigned to rung $8$ (the octonion lattice), with the cascade closure functional's $Q$-invariant sector matching the quadratic Maxwell kinetic term.
+\end{definition}
+
+\begin{definition}[Hypothesis H-YM: SU(2)-Yang--Mills-at-rung-$16$ assignment]\label{hyp:YM}
+The SU(2) Yang--Mills gauge action on the cascade is assigned to rung $16$ (the tesseract), with the cascade closure functional's $E$-invariant sector matching the SU(2) field-strength kinetic term.
+\end{definition}
+
+\begin{remark}[Scope of H-MX and H-YM in this paper]\label{rem:rung-scope}
+Only the $D_4$ assignment (derived via F7) is used in the $\Lambda$-derivation below. H-MX and H-YM are recorded here for completeness and for the downstream dependency graph; they do not feed into the $\Lambda$-theorem.
+\end{remark}
+
+%==================================================================
+\section{The $\Lambda$-Derivation Theorem}\label{sec:lambda}
+%==================================================================
+
+We now combine F1, F4, F5, F6, F7 with the $\Lambda$-specific hypotheses H-K, H-PROD, H-COPY-ADD, and H-RLA to derive the headline cosmological-constant formula.
+
+\begin{definition}[Hypothesis H-K: shell amplitude rule]\label{hyp:K}
+On each one-dimensional graded direction of $\Vcal$ (Definition~\ref{def:V}), the leading-order closure-contraction operator acts as scalar multiplication by $\widehat{K} = \varphi^{-1}$, with no additional numerical amplitude.
+\end{definition}
+
+\begin{definition}[Hypothesis H-PROD: product-form residue over graded directions]\label{hyp:PROD}
+The \emph{cascade closure residue} per 600-cell copy is defined as the product of per-direction shell amplitudes over all $\dim \Vcal$ one-dimensional graded components of $\Vcal$:
+\begin{equation}\label{eq:residue-def}
+R_{600\text{-cell}} \;:=\; \prod_{r \in \mathrm{Rungs}} \prod_{i=1}^{\dim \Vcal_r} \widehat{K}(r, i),
+\end{equation}
+where $\widehat{K}(r, i)$ is the shell amplitude on the $i$-th direction of graded block $r$. Under H-K, $\widehat{K}(r, i) = \varphi^{-1}$ for every $(r, i)$, giving $R_{600\text{-cell}} = \varphi^{-\dim \Vcal} = \varphi^{-583}$. H-PROD formalises the choice of product-form composition (as opposed to additive, norm-squared, or other composition rules); it is not derivable from H-K's diagonal-operator statement alone.
+\end{definition}
+
+\begin{definition}[Hypothesis H-COPY-ADD: additivity of the cascade residue over the two 600-cell copies]\label{hyp:COPY-ADD}
+The cascade residue on the full icosian $E_8$ substrate is additive over the disjoint decomposition $E_8 = H_4 \sqcup \sigma(H_4)$:
+\begin{equation}
+R_{E_8} \;=\; R_{600\text{-cell}}^{(H_4)} + R_{600\text{-cell}}^{(\sigma(H_4))}.
+\end{equation}
+For a $\sigma$-fixed closure field (and $\sigma$-symmetric $\Vcal$), the two copy residues are equal by structural symmetry, giving the factor~$2$. H-COPY-ADD is distinct from F5: F5 (Theorem~\ref{thm:F5}) is the equality of finite sums of $\mathcal R, \mathcal E, \mathcal Q$ per-site invariants; H-COPY-ADD is the additive composition of the product-form cascade residue over disjoint 600-cell copies. Both are needed to bridge from F5's additive invariant equality to the multiplicative product residue used in the $\Lambda$ formula.
+\end{definition}
+
+\begin{definition}[Hypothesis H-RLA: residue-to-$\Lambda$ identification]\label{hyp:RLA}
+Under the Planck-unit convention $\ell_P^2 = G$ (units $c = \hbar = 1$), the dimensionless cascade closure residue $R_{E_8}$ on the full icosian $E_8$ substrate identifies with the dimensionless observable $\Lambda \cdot \ell_P^2$:
+\begin{equation}
+\Lambda \cdot \ell_P^2 \;=\; R_{E_8}.
+\end{equation}
+\end{definition}
+
+\begin{remark}[Motivation for H-K and H-RLA]\label{rem:HK-HRLA-motivation}
+H-K is the shell-amplitude rule motivated by F1's base permeability $\varphi$ combined with F2's minimality-of-kinetic-content condition: the leading non-trivial scaling amplitude per shell is $\varphi^{-1}$, and higher-order contributions in $\varphi^{-n}$ ($n \ge 2$) are suppressed by the minimality-of-order-$\le 2$ gauge choice. H-K is the explicit-amplitude form of this structural reasoning. H-RLA fixes the dimensional identification between the cascade's dimensionless closure residue and the dimensionless observable $\Lambda \cdot \ell_P^2$; the natural Planck-unit convention $\ell_P^2 = G = 1$ makes both sides dimensionless, but the identification itself is a structural choice about which observable the residue corresponds to. Both H-K and H-RLA are deferred to a dedicated cascade-variational paper for first-principles derivation; the present paper states them explicitly.
+\end{remark}
+
+\begin{theorem}[Cascade $\Lambda$-Theorem, under the thirteen-hypothesis structural stack]\label{thm:lambda}
+Under Axioms~\ref{ax:self-sim}, \ref{ax:e8}, the foundations F1--F7, and the thirteen named structural hypotheses H-MIN (Def.~\ref{hyp:MIN}; F2), H-NC (Def.~\ref{hyp:NC}; F3), H-SIG (Def.~\ref{hyp:SIG}; F5), H-DENS (Def.~\ref{hyp:DENS}; F6 Kuranishi density), H-BI2 (Def.~\ref{hyp:BI2}; F6 metric compatibility), H-HR (Def.~\ref{hyp:HR}; F6 rate), H-FP (Def.~\ref{hyp:FP}; F7 continuum uplift), H-MX (Def.~\ref{hyp:MX}; F8 Maxwell-at-$8$), H-YM (Def.~\ref{hyp:YM}; F8 SU(2)-at-$16$), H-K (Def.~\ref{hyp:K}; shell amplitude rule), H-PROD (Def.~\ref{hyp:PROD}; product-form residue composition), H-COPY-ADD (Def.~\ref{hyp:COPY-ADD}; additivity over the two conjugate 600-cell copies), and H-RLA (Def.~\ref{hyp:RLA}; residue-to-$\Lambda$ identification), the cascade closure residue identifies with $\Lambda \cdot \ell_P^2$:
+\begin{equation}\label{eq:lambda-result}
+\Lambda \cdot \ell_P^2 = 2 \varphi^{-583} \approx 2.892 \times 10^{-122},
+\end{equation}
+agreeing with the Planck 2018 cosmology-derived value (combining the observed $\Lambda$ with the CODATA 2022 Planck length) $\approx 2.88 \times 10^{-122}$ at $\approx 0.88\%$ (Planck benchmark; $\approx 0.92\%$ against the $2.866 \times 10^{-122}$ central value). The full 1144-line derivation is in \texttt{cascade-lambda.md}.
+\end{theorem}
+
+\begin{proof}[Argument]
+From F1 (Theorem~\ref{thm:F1}) the base permeability is $\varphi$. Under Hypothesis H-K (Definition~\ref{hyp:K}), the shell amplitude on every one-dimensional graded direction of $\Vcal$ is $\widehat{K} = \varphi^{-1}$. From F4 (Theorem~\ref{thm:F4}) the graded closure-field space has total dimension $\dim \Vcal = 583$. Under Hypothesis H-PROD (Definition~\ref{hyp:PROD}), the cascade closure residue per 600-cell copy is defined as the product of per-direction shell amplitudes:
+\begin{equation}\label{eq:lambda-single-cell}
+R_{600\text{-cell}} \;\stackrel{\text{H-PROD}}{=}\; \prod_{r \in \mathrm{Rungs}} \prod_{i=1}^{\dim \Vcal_r} \widehat{K}(r, i) \;\stackrel{\text{H-K}}{=}\; \widehat{K}^{\dim \Vcal} \;=\; \varphi^{-583}.
+\end{equation}
+H-PROD is load-bearing for the product decomposition (as opposed to additive, determinantal, or norm-based composition); H-K then fixes every per-direction amplitude to $\varphi^{-1}$, giving the cumulative factor $\varphi^{-583}$. $\widehat{K}$ is distinct from the closure functional $F$ of~\S\ref{sec:F2}.
+
+Under Hypothesis H-COPY-ADD (Definition~\ref{hyp:COPY-ADD}), the cascade residue on the full $E_8$ substrate decomposes additively over the two conjugate 600-cell copies $E_8 = H_4 \sqcup \sigma(H_4)$. For a $\sigma$-fixed closure field (under H-SIG), the two copies are $\sigma$-related and carry equal per-direction amplitudes $\widehat{K}(r, i)$; hence $R_{600\text{-cell}}^{(H_4)} = R_{600\text{-cell}}^{(\sigma(H_4))}$ by structural symmetry of $\widehat{K}$ and $\Vcal$. F5 (Theorem~\ref{thm:F5}) provides the $\sigma$-side invariant equality that makes the two copy residues structurally equal at the per-invariant level; H-COPY-ADD supplies the additive composition over the copies. Together,
+\begin{equation}
+R_{E_8} = 2 \,R_{600\text{-cell}} = 2 \varphi^{-583}.
+\end{equation}
+From F7 (Theorem~\ref{thm:F7}), the rank-$2$ $\Lambda$ candidate representation is localised at $D_4$ (discrete-level unconditional; continuum uplift under H-FP). Under the continuum limit F6 (Theorem~\ref{thm:F6}) with H-HR, H-FP supplying the Fierz--Pauli continuum field equation, and Hypothesis H-RLA (Definition~\ref{hyp:RLA}) supplying the residue-to-$\Lambda$ identification, $R_{E_8}$ identifies with the dimensionless $\Lambda \cdot \ell_P^2$:
+\begin{equation}
+\Lambda \cdot \ell_P^2 = R_{E_8} = 2 \varphi^{-583}.
+\end{equation}
+\end{proof}
+
+\begin{remark}[Block-diagonal structure of $\widehat{K}$ and the product rule]\label{rem:F4-diagonal}
+H-K (Definition~\ref{hyp:K}) supplies the per-direction amplitude: $\widehat{K}$ acts as scalar multiplication by $\varphi^{-1}$ on every one-dimensional graded direction of $\Vcal$. H-PROD (Definition~\ref{hyp:PROD}) supplies the composition rule: the residue is the \emph{product} of per-direction amplitudes, i.e., $R_{600\text{-cell}} = \prod \widehat{K}$ over all $\dim \Vcal = 583$ graded directions. Combining H-K and H-PROD gives $R_{600\text{-cell}} = \varphi^{-583}$ in~\eqref{eq:lambda-single-cell}. H-PROD is \emph{distinct} from H-K: H-K alone only gives per-direction decay; the product-form composition (as opposed to additive, determinantal, or norm-based composition) is an independent modelling choice. Note that $\widehat{K}$ is reserved exclusively for the shell-contraction amplitude operator and is distinct from the closure functional $F = \alpha R + \beta E - \gamma Q$ of~\S\ref{sec:F2}.
+\end{remark}
+
+\begin{remark}[Hypothesis stack of the $\Lambda$-theorem]\label{rem:lambda-status}
+Theorem~\ref{thm:lambda} depends on the following ingredients:
+\begin{itemize}
+\item F1 (Theorem~\ref{thm:F1}): base permeability $\varphi$ from self-similarity + Banach fixed point. \emph{Unconditional.}
+\item F3 under H-NC (Theorem~\ref{thm:F3} + Corollary~\ref{cor:h4-unique}): cascade sequence with $H_4$ passage. \emph{Conditional on H-NC.}
+\item F4 (Theorem~\ref{thm:F4}): $\dim\Vcal = 583$ as a definitional graded-space dimension count (Definition~\ref{def:V}). \emph{Definition-driven.}
+\item F5 under H-SIG (Theorem~\ref{thm:F5}): factor-$2$ from $\Zphi$-bijection on $\sigma$-fixed closure fields. \emph{Conditional on H-SIG.}
+\item F6 (Theorem~\ref{thm:F6}): GH-convergence conditional on H-DENS (Kuranishi density of the Schl\"afli-compound generators) and H-BI2 (uniform metric compatibility); explicit halving rate conditional on H-HR.
+\item F7 under H-FP (Theorem~\ref{thm:F7}): discrete-level rank-$2$ localisation at $D_4$ unconditional \emph{relative to the FP1--FP3 selection criteria} (no claim of physics-uniqueness of those criteria); continuum Fierz--Pauli uplift conditional on H-FP.
+\item Shell-amplitude rule $\widehat{K} = \varphi^{-1}$ under Hypothesis H-K (Definition~\ref{hyp:K}): H-K is a structural ansatz consistent with F1's minimality.
+\item Product-form residue composition under Hypothesis H-PROD (Definition~\ref{hyp:PROD}): the per-600-cell-copy residue is the \emph{product} of per-direction amplitudes over all $\dim \Vcal = 583$ graded directions. H-PROD is independent of H-K: H-K fixes amplitudes, H-PROD fixes the composition rule.
+\item Additivity over two 600-cell copies under Hypothesis H-COPY-ADD (Definition~\ref{hyp:COPY-ADD}): the full-$E_8$ cascade residue decomposes additively over the two conjugate 600-cell copies, $R_{E_8} = R_{600\text{-cell}}^{(H_4)} + R_{600\text{-cell}}^{(\sigma(H_4))}$. Combined with F5/H-SIG's per-copy equality, this gives the factor-$2$ in $\Lambda = 2\varphi^{-583}$.
+\item Residue-to-$\Lambda$ identification under Hypothesis H-RLA (Definition~\ref{hyp:RLA}): the dimensionless $E_8$ residue identifies with the dimensionless observable $\Lambda \cdot \ell_P^2$ under the Planck-unit convention $\ell_P^2 = G$.
+\end{itemize}
+The quantitative $0.88\%$--$0.92\%$ agreement (benchmark-dependent) with the Planck-cosmology-derived value (using the CODATA 2022 Planck length) holds under this full hypothesis stack. Paper~XXII's cascade-placement of $\alpha_{\mathrm{em}}$ and $\sin^2\theta_W$ feeds into F8's coefficient matching at structural-correspondence grade. All hypotheses are named and bounded, with explicit physical motivation documented where introduced; each is a target for follow-up papers to discharge.
+\end{remark}
+
+\begin{remark}[Numerical check]
+$\varphi^{-583}$ evaluates to $\approx 1.446 \times 10^{-122}$; doubling gives $\approx 2.892 \times 10^{-122}$. The Planck-cosmology-derived value of $\Lambda \cdot \ell_P^2$ (using the CODATA 2022 Planck length $\ell_P$~\citep{CODATA2022} and Planck 2018 cosmological parameters~\citep{Planck2018}) is $(2.866 \pm 0.05) \times 10^{-122}$, giving a relative discrepancy of $\sim 0.9\%$. The precise error figure depends on the observational benchmark adopted; we quote $\sim 0.88\%$ against the Planck-mission central value for consistency with~\citep{SmartXXXV}, while noting that the precise discrepancy against the $2.866 \times 10^{-122}$ central value is $\sim 0.92\%$. Both values are within the observational-input uncertainty.
+\end{remark}
+
+\begin{remark}[Dipole-correction refinement, 2026-05-18]\label{rem:lambda-dipole}
+The first-order $\Lambda$-Theorem above states $\Lambda \cdot \ell_P^2 = 2\varphi^{-583}$ at $\sim 0.88\%$ of observation, on the implicit assumption that the $E_8$ substrate is perfectly Ramanujan (i.e., every one of the 240 substrate modes contributes at the full $\varphi^{-1}$ per-shell amplitude). The unconditional substrate-Ramanujan-defect theorem (\citealp{rhTwoSphere}, Theorem 3.3) states that exactly $230/240$ of the $E_8$ substrate modes lie on the Ihara critical circle, with the remaining $10/240$ forming a dipole class with eigenvalue $\lambda_1 = 12 - 6\varphi$ (\citealp{rhTwoSphere}, Theorem 4.1).
+
+Including this structural defect as a second-order correction:
+\[
+  \Lambda \cdot \ell_P^2 \;=\; 2 \varphi^{-583} \cdot \Big(1 - \tfrac{10}{240} \cdot \tfrac{12 - 6\varphi}{12}\Big) \;\approx\; 2.869 \times 10^{-122}.
+\]
+The corrected match to Planck 2018 is $+0.078\%$, an $11.3\times$ improvement over the first-order $0.88\%$. The correction uses only structural inputs (10/240, $12 - 6\varphi$, 12), all from the unconditional rh-two-sphere theorem; no parameter fitting. See \texttt{papers/hypersphere-universe/hypersphere-universe.tex} (Conditional Theorem \texttt{cthm:lambda-dipole}) for the authoritative statement, with independent numerical verification at \texttt{papers/hypersphere-universe/verify/verify\_paper.py}.
+
+The first-order form $2\varphi^{-583}$ remains correct as the dominant term; the dipole correction is mandatory for precision claims at the Planck-2018 statistical level. Downstream papers quoting $\Lambda \cdot \ell_P^2$ should state which form is intended; both are acceptable at appropriate precision levels.
+\end{remark}
+
+%==================================================================
+\section{The Consolidated Cascade Theorem}\label{sec:consolidated}
+%==================================================================
+
+We record the headline result.
+
+\begin{theorem}[Cascade Theorem, under the thirteen-hypothesis structural stack]\label{thm:cascade}
+Under Axioms~\ref{ax:self-sim} and~\ref{ax:e8}, and the thirteen named structural hypotheses H-MIN, H-NC, H-SIG, H-DENS, H-BI2, H-HR, H-FP, H-MX, H-YM, H-K, H-PROD, H-COPY-ADD, H-RLA:
+\begin{enumerate}
+\item[\textup{(1)}] The cascade base permeability is $\varphi$ (F1, Theorem~\ref{thm:F1}). \emph{Unconditional.}
+\item[\textup{(2)}] The closure functional on the symmetric rank-$2$ sector has canonical form $F = \alpha R + \beta E - \gamma Q$ (F2, Theorem~\ref{thm:F2}).
+\item[\textup{(3)}] The seven-rung sequence $E_8 \to H_4 \to 40 \to D_4 \to 16 \to 8 \to 0$ under H-NC (F3, Theorem~\ref{thm:F3}).
+\item[\textup{(4)}] The graded closure-field space has dimension $\dim \Vcal = 24^2 + 7 = 583$ (F4, Theorem~\ref{thm:F4}; definition-driven count).
+\item[\textup{(5)}] Factor-$2$ equality on $\sigma$-fixed fields, under H-SIG, for arbitrary real $(\alpha, \beta, \gamma)$ (F5, Theorem~\ref{thm:F5}).
+\item[\textup{(6)}] GH-convergence of the Schl\"afli refinement to $S^3$, conditional on H-DENS and H-BI2; explicit halving rate additionally conditional on H-HR (F6, Theorem~\ref{thm:F6}).
+\item[\textup{(7)}] Discrete-level rank-$2$ localisation at $D_4$ via $\mathrm{SO}(4)$ + triality under the FP1--FP3 selection criteria (unconditional relative to these criteria; physics-uniqueness not claimed); continuum Fierz--Pauli uplift conditional on H-FP (F7, Theorem~\ref{thm:F7}).
+\item[\textup{(8)}] The three coefficients $(\alpha, \beta, \gamma)$ are pinned by matching to $(G, \alpha_{\mathrm{em}}, \sin^2\theta_W)$ (F8, Theorem~\ref{thm:F8}).
+\item[\textup{(9)}] Zero free continuous parameters beyond the three imports $(G, \alpha_{\mathrm{em}}, \sin^2\theta_W)$, which are cascade-placed in Paper~XXII at structural-correspondence grade (Corollary~\ref{cor:zero-param}).
+\item[\textup{(10)}] $\Lambda \cdot \ell_P^2 = 2 \varphi^{-583} \approx 2.89 \times 10^{-122}$, matching the Planck 2018 cosmology-derived value (using the CODATA 2022 Planck length) at $0.88\%$, under the full hypothesis stack (Theorem~\ref{thm:lambda}).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1)--(8) are the eight theorems F1--F8 (Theorems \ref{thm:F1}--\ref{thm:F8}). (9) is Corollary~\ref{cor:zero-param}. (10) is Theorem~\ref{thm:lambda}.
+\end{proof}
+
+%==================================================================
+\section{Discussion and Scope}\label{sec:discussion}
+%==================================================================
+
+\subsection{What VFD adds over standard QM, SM, and GR}
+
+QM, SM, and GR are not replaced by VFD. They are recovered as projections of the cascade onto specific rungs, with the following additions from the underpinning:
+
+\begin{itemize}
+\item \textbf{Zero continuous free parameters beyond three imports.} Standard physics treats $\alpha_{\mathrm{em}}$, $\sin^2\theta_W$, particle masses, and $\Lambda$ as empirical inputs; the VFD programme places them via cascade structure, with the epistemic grade depending on the sector. Paper V~\citep{SmartV} provides $13$ masses at $0.014\%$ as \emph{structural correspondences under a shell-framework assignment} (not first-principles derivations). Paper XXII~\citep{SmartXXII} provides $\alpha_{\mathrm{em}}^{-1} = 137 + \pi/87$ at $0.81$ ppm and $\sin^2\theta_W = 3/8$ at GUT scale as \emph{structural correspondences via $E_8 \to H_4$ Coxeter projection}. This paper (Theorem~\ref{thm:lambda}) places $\Lambda \cdot \ell_P^2$ at $0.88\%$ under the hypothesis stack documented in Remark~\ref{rem:lambda-status}. Paper XXXII~\citep{SmartXXXII} places the proton radius at $0.04\%$. Zero free parameters beyond the three imports $(G, \alpha_{\mathrm{em}}, \sin^2\theta_W)$ --- themselves cascade-placed in Paper XXII at structural-correspondence grade --- is the correct scope of the programme's parameter-closure claim.
+\item \textbf{Structural model for small $\Lambda$.} The $10^{-122}$ suppression is modelled as the cascade depth $\varphi^{-583}$ rather than as fine-tuning. Under the hypothesis stack of Theorem~\ref{thm:lambda}, the cosmological-constant smallness is recast as a cascade-depth ansatz with $0.88\%$ agreement to observation.
+\item \textbf{Structural origin of three generations.} $\mathbb{Z}_3$ Hopf-fibre action + $D_4$ triality (F3) force exactly three copies of the 8-dimensional spinor representation; a fourth generation is structurally forbidden.
+\item \textbf{Strong CP resolution without axion (under H-CP, at tree level).} F5's $\sigma$-symmetry between the two $H_4$ copies, combined with Paper XXXVII's Hypothesis H-CP (identifying $\sigma$ with CP on the QCD sector), excludes the CP-odd $\theta$-term at tree level without invoking Peccei--Quinn~\citep{SmartXXXVII}.
+\item \textbf{Born rule conditional derivation.} Paper XXX~\citep{SmartXXX} derives $|\psi|^2$ from K\"ahler uniqueness (Petz) + Gleason applied to the cascade closure geometry, under explicit equilibrium, completeness, and sampling hypotheses (requiring $N \ge 3$). Born is obtained as a \emph{conditional theorem} under these hypotheses, not as an unconditional postulate-replacement.
+\item \textbf{Unified substrate.} Papers XXXV~\citep{SmartXXXV} and XXVIII~\citep{SmartXXVIII} show QM, biology, and GR sit on the same 600-cell as three different rung-projections, explaining why QM and GR are compatible yet incompatible as algebraic structures.
+\end{itemize}
+
+\subsection{Recovery Position}
+
+This paper carries the foundation-layer derivations cited by every recovery item of the Recovery Manifest. Specifically:
+\begin{itemize}
+\item \textbf{R8 (Cosmological constant):} $\Lambda \cdot \ell_P^2 = 2\varphi^{-583}$ at $0.88\%$, Theorem~\ref{thm:lambda}.
+\item \textbf{R9 (Einstein field equation):} $G_{\mu\nu} + \Lambda g_{\mu\nu} = 8\pi G T_{\mu\nu}$ is a target for F7 under H-FP and H-RLA plus the continuum-GR hypotheses; the present paper establishes D$_4$'s candidate rank-$2$ representation (discrete level) and defers the continuum Einstein-field-equation uplift to the continuum-theorems paper.
+\item \textbf{Every other R$n$} cites F1--F8 of this paper as the underpinning.
+\end{itemize}
+
+Internal derivation record: \texttt{papers/cascade-derivation/cascade-foundations.md} (928 lines; F1--F8 worked at the internal-note level, with an update banner flagging that F4/F5/F7 formulations are superseded by the present paper) and \texttt{cascade-lambda.md} (1144 lines, full $\Lambda$-derivation chain).
+
+\subsection{Open items and forthcoming continuum paper}
+
+Paper XL~\citep{SmartXL} extends F6 and F7 into the Lorentzian signature, stating targets T1 (conditional proposition), T2 (conditional under additive bi-Lipschitz hypothesis), T3 (programme target), and T4 (programme conjecture); Paper XL is a \emph{dependency-graph} paper, not a full continuum-Einstein derivation. Paper XLI~\citep{SmartXLI} presents a Schwarzschild-analogue ansatz on a heuristic closure-field graph model with four target statements T1-SS--T4-SS, all labelled as heuristic/construction targets with an explicit inventory of open items; Paper XLI is not a derivation of the Schwarzschild solution from F1--F8. Paper XLII~\citep{SmartXLII} analyses the nonlinear residual $\delta U_{\mathrm{rel}}$ that enters the cascade-to-Schr\"odinger recovery of Papers XV--XXI, with a conditional partial-removability theorem; it does not close the full recovery chain. Together these papers map the remaining programme-internal items and bound the gap to full continuum GR; they do not close it.
+
+\subsection{What is deferred}
+
+Two significant items are \emph{not} fully closed by this paper and are deferred to forthcoming work.
+
+\emph{The continuum limit of the $D_4$ rung in full Lorentzian signature} (F6 + F7 extended): F6 gives a conditional Riemannian GH-convergence target for $S^3$ (under H-DENS, H-BI2, H-HR), and Remark~\ref{rem:lorentzian} indicates the Lorentzian extension via Wick rotation. The full theorem --- including light-cone structure, Birkhoff--Jebsen uniqueness for spherically symmetric solutions, and continuum limits of the curvature operator --- is the subject of a dedicated paper in preparation. This paper's scope is the structural spine; the continuum theorems paper will discharge the remaining GR hypotheses.
+
+\emph{The interpretive content of individual rungs beyond $H_4$, $40$, $D_4$}: the information rung ($16$), observer rung ($8$), and unity rung ($0$) are positioned structurally here and in~\citep{SmartXXXV} but their full physical content --- decoherence as cross-rung coarsening, observer-automorphism structure --- is addressed in forthcoming papers of the programme. F8's coefficient matching places SU(2) Yang--Mills on the $16$ rung and Maxwell on the $8$ rung, but the dynamical content of those rungs beyond coefficient-matching is not addressed here.
+
+\subsection{Honest acknowledgements}
+
+\begin{itemize}
+\item \emph{Axioms are not free of structural content.} Self-similarity and $E_8$ maximality are strong assumptions. The programme's case is that they are substantially weaker than the joint assumptions of the Standard Model (Higgs mechanism, three generations, coupling values) plus General Relativity (metric signature, dimension, cosmological term) taken together; and that both axioms admit independent physical motivation (self-similarity from vacuum renormalisation-group structure, $E_8$ maximality from the uniqueness of the largest simply-laced exceptional Lie algebra). But the claim is structural economy relative to the joint SM+GR axiom set, not absolute parsimony.
+\item \emph{F4 is a dimension count, not a deep combinatorial theorem.} The identity $\dim \Vcal = 583$ follows directly from the definition of $\Vcal$ (Definition~\ref{def:V}) and the rank-$2$ localisation at $D_4$ (F7). It is not independently a deep combinatorial result; its structural force comes from the fact that it is the unique dimension count consistent with F1--F3 and F7.
+\item \emph{F6's rate is provisional.} The $2^{-n}$ halving of $\varepsilon_n$ assumes that the Schl\"afli compound step tiles the parent Voronoi cell with no overlap beyond the five cosets. Numerical verification at levels $0$ and $1$ supports this, but the exact constant $0.762$ is computed rather than derived from a closed formula. A proof with an improved constant is within scope of the continuum theorems paper but not required for the $\Lambda$-Derivation Theorem (which uses only F6's conclusion, not the explicit constant).
+\end{itemize}
+
+\subsection{Consequences for downstream papers}
+
+Every subsequent VFD paper that invokes ``cascade foundations'', ``F1--F8'', ``the $\varphi$-scaling'', or ``the $583$-shell closure'' now has a labelled citation target. In particular:
+
+\begin{itemize}
+\item \citep{SmartV} (particle masses): uses F1 ($\varphi$), F3 ($H_4$ eigenvalues), and implicitly F8 ($\gamma$ coupling).
+\item \citep{SmartXXII} (fine-structure constant, Weinberg angle): provides structural-correspondence inputs to F8 (not first-principles derivations from the two axioms of this paper); F8 is the coefficient-matching endpoint and Paper XXII supplies its imported cascade-placement values.
+\item \citep{SmartXXXII} (hadron charge radii): uses F1 ($\varphi$) and the spectral content of $H_4$ from F3.
+\item Forthcoming papers on neutrinos, individual quark masses, electroweak dynamics, and continuum GR theorems will each cite one or more of F1--F8 by name.
+\end{itemize}
+
+This consolidation is the principal content of the present paper.
+
+\subsection{Conclusion}
+
+The VFD cascade rests on two axioms --- vacuum self-similarity and $E_8$ maximality --- together with a thirteen-hypothesis structural stack \{H-MIN, H-NC, H-SIG, H-DENS, H-BI2, H-HR, H-FP, H-MX, H-YM, H-K, H-PROD, H-COPY-ADD, H-RLA\} supplying the structural inputs beyond the axioms. Under this stack, the cosmological constant $\Lambda \cdot \ell_P^2 = 2 \varphi^{-583}$ follows as Theorem~\ref{thm:lambda}, with $0.88\%$--$0.92\%$ agreement (benchmark-dependent) to the Planck-cosmology-derived value using the CODATA 2022 Planck length. Combined with the cascade's \emph{structural/numerical correspondences} in Papers V (thirteen masses at $0.014\%$), XXII ($\alpha^{-1} = 137 + \pi/87$ at $0.81$~ppm, $\sin^2\theta_W = 3/8$ at GUT scale), and XXXII (proton radius at $0.04\%$), the framework makes quantitative contact with observed physics at sub-percent precision across the Standard Model and the cosmological constant, conditional on the named hypothesis stack.
+
+VFD does not replace QM, SM, or GR. It organises a geometric substrate underpinning them and supplies conditional recovery maps from the cascade to their equations, with each map's hypothesis inheritance made explicit through the F1--F8 statements and the thirteen-hypothesis stack. Every downstream VFD paper cites these statements by name; the programme's dependency graph is fully explicit, traceable from the two axioms plus the named hypotheses to the downstream observables.
+
+%==================================================================
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{RecoveryManifest} L. Smart, \emph{VFD Recovery Manifest}, VFD Programme, 2026. \texttt{docs/recovery-manifest.md}.
+
+\bibitem{SmartV} L. Smart, \emph{Particle Mass Derivation from the 600-Cell}, Paper V, VFD Programme, 2026.
+
+\bibitem{SmartXXII} L. Smart, \emph{The Standard Model from 600-Cell Closure Geometry}, Paper XXII, VFD Programme, 2026.
+
+\bibitem{SmartXXVIII} L. Smart, \emph{Quantum and Gravitational Structure from a Common Event-Order Geometry}, Paper XXVIII, VFD Programme, 2026.
+
+\bibitem{Humphreys1990} J. E. Humphreys, \emph{Reflection Groups and Coxeter Groups}, Cambridge Studies in Advanced Mathematics 29, Cambridge University Press, 1990.
+
+\bibitem{FultonHarris1991} W. Fulton and J. Harris, \emph{Representation Theory: A First Course}, Graduate Texts in Mathematics 129, Springer, 1991.
+
+\bibitem{Adams1996} J. F. Adams, \emph{Lectures on Exceptional Lie Groups}, Chicago Lectures in Mathematics, University of Chicago Press, 1996.
+
+\bibitem{SmartXXXII} L. Smart, \emph{Hadron Charge Radii as Spectral Coherence Lengths from 600-Cell Closure Geometry}, Paper XXXII, VFD Programme, 2026.
+
+\bibitem{SmartXXX} L. Smart, \emph{Born Rule from K\"ahler Uniqueness plus Gleason}, Paper XXX, VFD Programme, 2026.
+
+\bibitem{SmartXXXV} L. Smart, \emph{Quantum Mechanics, Life, and Gravity as Three Projections of $E_8$ Closure Geometry}, Paper XXXV, VFD Programme, 2026.
+
+\bibitem{SmartXXXVII} L. Smart, \emph{Neutrino Sector in $H_4$}, Paper XXXVII, VFD Programme, 2026.
+
+\bibitem{SmartXL} L. Smart, \emph{Continuum Theorems for $D_4$ and the GR Limit}, Paper XL, VFD Programme, 2026.
+
+\bibitem{SmartXLI} L. Smart, \emph{Schwarzschild Analogue on the Event Poset}, Paper XLI, VFD Programme, 2026.
+
+\bibitem{SmartXLII} L. Smart, \emph{Physical Meaning of the Relative Closure Residual $\delta U_{\mathrm{rel}}$}, Paper XLII, VFD Programme, 2026.
+
+\bibitem{ConwaySloane1999} J. H. Conway and N. J. A. Sloane, \emph{Sphere Packings, Lattices and Groups}, 3rd edition, Springer, 1999.
+
+\bibitem{Conway1985Atlas} J. H. Conway, R. T. Curtis, S. P. Norton, R. A. Parker, R. A. Wilson, \emph{Atlas of Finite Groups}, Oxford University Press, 1985.
+
+\bibitem{Coxeter1973} H. S. M. Coxeter, \emph{Regular Polytopes}, 3rd edition, Dover, 1973.
+
+\bibitem{Bourbaki2002} N. Bourbaki, \emph{Lie Groups and Lie Algebras, Chapters 4--6}, Springer, 2002.
+
+\bibitem{BBI2001} D. Burago, Y. Burago, S. Ivanov, \emph{A Course in Metric Geometry}, AMS Graduate Studies in Mathematics 33, 2001.
+
+\bibitem{Deser1970} S. Deser, \emph{Self-interaction and gauge invariance}, General Relativity and Gravitation 1 (1970), 9--18.
+
+\bibitem{Kuranishi1951} M. Kuranishi, \emph{On everywhere dense imbedding of free groups in Lie groups}, Nagoya Mathematical Journal 2 (1951), 63--71.
+
+\bibitem{Weinberg1995} S. Weinberg, \emph{The Quantum Theory of Fields, Vol.~I: Foundations}, Cambridge University Press, 1995.
+
+\bibitem{Lisi2007} A. G. Lisi, \emph{An Exceptionally Simple Theory of Everything}, arXiv:0711.0770 (2007). (Referenced for differentiation; VFD does not adopt this embedding.)
+
+\bibitem{DistlerGaribaldi2010} J. Distler, S. Garibaldi, \emph{There is no ``theory of everything'' inside $E_8$}, Commun.\ Math.\ Phys.\ 298, 419--436 (2010).
+
+\bibitem{CODATA2022} E. Tiesinga, P. J. Mohr, D. B. Newell, B. N. Taylor, \emph{CODATA recommended values of the fundamental physical constants: 2022}, Reviews of Modern Physics \textbf{97}, 025002 (2025). DOI: 10.1103/RevModPhys.97.025002.
+
+\bibitem{Planck2018} Planck Collaboration, \emph{Planck 2018 results. VI. Cosmological parameters}, Astronomy \& Astrophysics \textbf{641}, A6 (2020). DOI: 10.1051/0004-6361/201833910.
+
+\end{thebibliography}
+
+\end{document}

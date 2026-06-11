@@ -35,32 +35,37 @@
 \noindent\textbf{Status:} Preprint (not peer-reviewed)
 
 \begin{abstract}
-Papers~XXIII--XXVI derived temporal ordering, observer kinematics, separation geometry, and curvature precursors from event-order structure without assuming spacetime. The present paper takes the final step: introducing source content and showing how it drives geometric response.
+Papers~XXIII--XXVI derived temporal ordering, observer kinematics, separation geometry, and three candidate graph-curvature indicators from event-order structure without assuming spacetime. The present paper takes the next step: introducing source candidates and exhibiting a discrete Poisson response on toy graphs.
 
-A \textit{source field} $S(e)$ is defined from local event-content deviation, with density, overlap, and geodesic-traffic candidates compared explicitly. An \textit{accessibility potential} $u(e)$ is introduced on the transition graph, governed by the discrete graph Laplacian equation $\Delta_\Gcal u(e) = S(e) - \bar{S}$. Curvature indicators from Paper~XXVI are shown to respond to the potential: regions of concentrated source produce nonzero curvature and increased geodesic focusing. A global balance law $\sum S(e) = \mathrm{const}$ provides a discrete conservation principle.
+A \textit{source field} $S(e)$ is defined from local event-content deviation, with three candidates (density, signed overlap, signed geodesic traffic) compared explicitly. An \textit{accessibility potential} $u(e)$ is introduced on the transition graph, governed by the discrete graph Laplacian equation $\Delta_\Gcal u(e) = S(e) - \bar{S}$ (with $u$ determined up to an additive constant). A potential-gradient curvature indicator $K_{\mathrm{pot}}$ is constructed from $u$; in the bowtie toy model below, $K_{\mathrm{pot}}$ is largest at the same event where Paper~XXVI's $K_{\mathrm{branch}}$ and $K_{\mathrm{geo}}$ are largest, with the caveat that the source used there and $K_{\mathrm{branch}}$ are built from the same degree data. No such comparison is claimed for the perturbation example. A global identity $\sum_e [S(e) - \bar{S}] = 0$ provides the compatibility condition required for the Poisson equation to be solvable.
 
-Three toy models are worked explicitly: a uniform vacuum (zero source, flat geometry, uniform geodesics), a static localised source (bottleneck with excess density, nonzero curvature, geodesic concentration), and a perturbative model where adding a single event to a symmetric graph creates measurable curvature response and increased geodesic traffic. The discrete field law $\Delta_\Gcal u = S - \bar{S}$ provides the bridge: source tells geometry how to distort, geometry tells geodesics how to propagate.
+Three toy models are worked explicitly: a uniform vacuum ($K_{5,5}$ pentagon truncation: zero source, constant potential, uniform betweenness), a static localised source (bowtie: nonzero potential, high $K_{\mathrm{pot}}$ at the bottleneck, and, independently, geodesic concentration at the bottleneck), and a perturbative model (adding one event to $K_{5,5}$: closed-form Poisson solve over four symmetry orbits, largest $K_{\mathrm{pot}}$ at the new event). In the bowtie example, large potential gradients coincide with concentrated geodesic traffic; in the perturbation example only new shortest paths are exhibited (no full betweenness recomputation is done). No general geodesic law from $u$ is derived.
 
-The paper does not derive the Einstein equations or continuous field dynamics. It establishes a discrete, principled analogue in which source content drives geometric response through the event-order framework.
+The paper does not derive the Einstein equations or continuous field dynamics. It defines and analyzes a discrete graph-Poisson source-to-potential model on the event-order framework.
 \end{abstract}
 
 %==================================================================
 \section{Introduction}\label{sec:intro}
 %==================================================================
 
-Paper~XXVI~\citep{SmartXXVI} established curvature precursors on the event-order framework: volume-growth distortion, branching asymmetry, and geodesic concentration, all vanishing in flat reference models and nonzero in distorted models. But curvature without a source is geometry without physics. The present paper addresses: \textit{what drives the distortion?}
+Paper~XXVI~\citep{SmartXXVI} constructed three candidate curvature indicators on the event-order framework: volume-growth distortion $K_{\mathrm{grow}}$ (reference-dependent), branching asymmetry $K_{\mathrm{branch}}$, and geodesic concentration $K_{\mathrm{geo}}$. In the flat $K_{5,5}$ toy model, all three vanish under the reference $V_{\mathrm{ref}} = \bar V$ at radius 1; in the asymmetric bowtie, $K_{\mathrm{branch}}$ and $K_{\mathrm{geo}}$ are nonzero (reference-independent) and $K_{\mathrm{grow}}$ is nonzero under the same reference choice at radius 1. But geometry without a source has no physics. The present paper addresses: \textit{what drives the distortion?}
+
+\medskip
+\noindent\textbf{Standing assumptions and imported notation.} Throughout this paper, $\Ecal$ is a finite event set, $\Gcal = (\Ecal, E_H)$ is the connected undirected Hasse graph of Paper~XXV~\citep{SmartXXV}, and $d_{\mathrm{trans}}$ is the associated shortest-path metric. Finiteness and connectedness of $\Gcal$ are standing; both toy models below are finite and connected by inspection. All sums over $\Ecal$ are finite.
+\medskip
+
 
 In general relativity, the answer is the stress-energy tensor: matter and energy tell geometry how to curve. In the event-order framework, the analogue is: \textit{non-uniform event content tells the accessibility geometry how to distort.}
 
 \subsection*{Central principle}
 
 \begin{quote}
-Source is non-uniform event content. Field dynamics are the geometric response of accessibility to that non-uniformity.
+Source is non-uniform event content. The field response is modelled as a geometric response of accessibility to that non-uniformity.
 \end{quote}
 
 \subsection*{Scope}
 
-This paper constructs source quantities, a graph-Laplacian field equation, conservation laws, and demonstrates them on toy models. It does not derive the Einstein equations, continuous dynamics, or stress-energy tensors. It establishes a discrete field-equation analogue on the event-order framework.
+This paper constructs source candidates, poses a graph-Poisson field equation, proves the required compatibility and boundary-flux identities, and evaluates the construction on three toy graphs. It does not derive the Einstein equations, continuous dynamics, or stress-energy tensors. The graph-Poisson equation is introduced as a model on the event-order framework, not derived from prior VFD structure.
 
 %==================================================================
 \section{Source Quantities}\label{sec:source}
@@ -71,23 +76,23 @@ Three candidate source constructions are developed and compared.
 \subsection{Source A: Event density}
 
 \begin{definition}[Density source]\label{def:rho}
-For event $e$ at radius $r$, with reference volume profile $V_{\mathrm{ref}}(r)$:
+Fix a radius $r \in \mathbb{Z}_{\geq 0}$ and a reference volume profile $V_{\mathrm{ref}}(r) > 0$ (e.g.\ the event-set average $\bar V(r)$). For each $e \in \Ecal$, define
 \begin{equation}\label{eq:rho}
-    S_\rho(e; r) = \frac{V_e(r)}{V_{\mathrm{ref}}(r)} - 1
+    S_\rho(e) \;=\; \frac{V_e(r)}{V_{\mathrm{ref}}(r)} - 1,
 \end{equation}
-where $V_e(r) = |B_r(e)|$ is the metric-ball size from Paper~XXVI.
+where $V_e(r) = |B_r(e)|$ is the metric-ball size in the Hasse graph (Paper~XXVI). With $r$ and $V_{\mathrm{ref}}$ fixed once and for all, $S_\rho$ is a scalar field $\Ecal \to \mathbb{R}$ suitable for use as the right-hand side of the field equation below.
 \end{definition}
 
-$S_\rho = 0$: locally matches the reference (vacuum-like). $S_\rho > 0$: denser than reference (positive source). $S_\rho < 0$: sparser than reference (negative source / deficit).
+$S_\rho = 0$: $e$'s radius-$r$ ball matches the reference (vacuum-like at that radius). $S_\rho > 0$: denser than reference. $S_\rho < 0$: sparser than reference.
 
 \subsection{Source B: Overlap multiplicity}
 
 \begin{definition}[Overlap source]\label{def:overlap_source}
-For event $e = (v_i, w_j)$, define:
+For each $e \in \Ecal$, define
 \begin{equation}
-    S_\Omega(e) = |\{e' \in \Ecal : d_{\mathrm{trans}}(e, e') = 1\}| - \overline{\deg}
+    S_\Omega(e) \;=\; \deg_\Gcal(e) - \overline{\deg},
 \end{equation}
-the excess of immediate neighbors beyond the mean degree.
+the signed degree deviation in $\Gcal$, where $\deg_\Gcal(e) = |\{e' \in \Ecal : d_{\mathrm{trans}}(e, e') = 1\}|$ and $\overline{\deg} = |\Ecal|^{-1} \sum_e \deg_\Gcal(e)$. By construction $\bar S_\Omega = 0$.
 \end{definition}
 
 This measures local interaction load: events with many admissible neighbors carry more ``content'' than average.
@@ -104,7 +109,7 @@ where $\beta(e)$ is the geodesic betweenness centrality from Paper~XXVI.
 Regions with concentrated geodesic traffic act as sources: they carry disproportionate flow, analogous to energy-momentum flux.
 
 \begin{remark}[Source comparison]
-$S_\rho$ measures static local density; $S_\Omega$ measures local connectivity excess; $S_J$ measures dynamic path-flow concentration. In the toy models below, $S_\Omega$ coincides with $K_{\mathrm{branch}}$ from Paper~XXVI (since both use degree deviation), while $S_J$ coincides with $K_{\mathrm{geo}}$ (since both use betweenness). The density source $S_\rho$ provides an independent signal. The framework permits any of these source choices in the field equation. In the explicit toy-model solutions below, we use the degree-based source $S_\Omega$ because it yields closed-form computations on the small graphs while preserving the same structural source--response pattern.
+$S_\rho$ measures static local density; $S_\Omega$ measures signed local connectivity excess; $S_J$ measures signed geodesic-traffic concentration. These are \emph{related to but not identical to} the curvature indicators of Paper~XXVI~\citep{SmartXXVI}: $K_{\mathrm{branch}}(e) = |\deg(e) - \overline{\deg}|$ is the \emph{absolute} degree deviation while $S_\Omega(e) = \deg(e) - \overline{\deg}$ is signed; $K_{\mathrm{geo}}(e) = (\beta(e) - \bar\beta)/\bar\beta$ is normalised while $S_J(e) = \beta(e) - \bar\beta$ is unnormalised. The sign information is essential for the Poisson equation below, which requires a signed right-hand side that integrates to zero. The framework permits any of these source choices in the field equation; in the worked examples we use whichever yields the cleanest closed-form, and we flag each choice explicitly.
 \end{remark}
 
 %==================================================================
@@ -124,11 +129,11 @@ where the sum is over neighbors of $e$ in $\Gcal$.
 \subsection{The discrete field equation}
 
 \begin{definition}[Accessibility potential]\label{def:potential}
-The \textit{accessibility potential} $u: \Ecal \to \mathbb{R}$ is defined as the solution to:
+Given a source field $S: \Ecal \to \mathbb{R}$, the \textit{accessibility potential} is any function $u: \Ecal \to \mathbb{R}$ satisfying
 \begin{equation}\label{eq:field}
     \boxed{\Delta_\Gcal\, u(e) = S(e) - \bar{S}}
 \end{equation}
-where $S(e)$ is the source field and $\bar{S} = |\Ecal|^{-1}\sum_{e'} S(e')$ is the mean source.
+with $\bar{S} = |\Ecal|^{-1}\sum_{e'} S(e')$. The potential is determined only up to an additive constant (Proposition~\ref{prop:existence}); when a specific representative is required for arithmetic, we impose the zero-mean gauge $\sum_{e \in \Ecal} u(e) = 0$ or a pointwise gauge such as $u(e_0) = 0$ at a chosen base event $e_0$.
 \end{definition}
 
 \begin{remark}[Why $S - \bar{S}$]
@@ -136,20 +141,16 @@ The graph Laplacian satisfies $\sum_e (\Delta_\Gcal f)(e) = 0$ for any $f$. Ther
 \end{remark}
 
 \begin{proposition}[Existence of the potential]\label{prop:existence}
-If $\Gcal$ is connected, the equation $\Delta_\Gcal u = S - \bar{S}$ has a solution $u$, unique up to an additive constant.
+Let $\Gcal$ be a finite connected undirected graph (in particular, $|\Ecal|$ is finite). The equation $\Delta_\Gcal u = S - \bar{S}$ has a solution $u: \Ecal \to \mathbb{R}$, unique up to an additive constant.
 \end{proposition}
 
 \begin{proof}
-The graph Laplacian $\Delta_\Gcal$ on a connected graph has kernel $\mathrm{span}\{\mathbf{1}\}$ (the constant functions). The right-hand side $S - \bar{S}$ satisfies $\sum(S - \bar{S}) = 0$, so it is orthogonal to the kernel. By the Fredholm alternative, a solution exists, unique modulo constants.
+On a finite graph, the Laplacian $\Delta_\Gcal$ is a symmetric $|\Ecal| \times |\Ecal|$ matrix acting on $\mathbb{R}^\Ecal$, and its kernel equals $\mathrm{span}\{\mathbf{1}\}$ on a connected graph (the constant functions). The right-hand side satisfies $\sum_e [S(e)-\bar S] = 0$ (Proposition~\ref{prop:balance} below), so it lies in the image of $\Delta_\Gcal$ (which is the orthogonal complement of $\ker\Delta_\Gcal$). A solution therefore exists and is unique modulo constants.
 \end{proof}
 
-\subsection{Curvature response}
+\subsection{Potential-gradient curvature}
 
-The accessibility potential $u(e)$ encodes the geometric distortion produced by the source. Curvature indicators from Paper~XXVI respond to $u$:
-\begin{itemize}
-    \item High $|u(e)|$: the event is far from the mean accessibility level, indicating local distortion.
-    \item High $|\nabla_\Gcal u|$: the potential varies rapidly near $e$, indicating strong local curvature.
-\end{itemize}
+The accessibility potential $u(e)$ is a scalar function on $\Ecal$; its local variation gives a natural candidate curvature indicator that sits alongside the three indicators of Paper~XXVI. We do not prove a general comparison theorem between $K_{\mathrm{pot}}$ (defined below) and $K_{\mathrm{grow}}, K_{\mathrm{branch}}, K_{\mathrm{geo}}$. In the bowtie toy model below, large $K_{\mathrm{pot}}$ occurs at the same event $b$ where Paper~XXVI found large $K_{\mathrm{branch}}$ and $K_{\mathrm{geo}}$; note that in that example $S = S_\Omega$ is built from signed degree deviation, so the $K_{\mathrm{pot}}$--$K_{\mathrm{branch}}$ alignment is a same-data alignment (both driven by $\deg - \overline{\deg}$), not an independent cross-check. The $K_{\mathrm{pot}}$--$K_{\mathrm{geo}}$ co-location is not a same-data alignment.
 
 \begin{definition}[Potential-gradient curvature]\label{def:Kpot}
 \begin{equation}
@@ -163,7 +164,7 @@ $K_{\mathrm{pot}} = 0$ iff $u$ is locally constant (no gradient, flat potential 
 \end{remark}
 
 %==================================================================
-\section{Conservation and Balance}\label{sec:conservation}
+\section{Compatibility and Boundary-Flux Identities}\label{sec:conservation}
 %==================================================================
 
 \begin{proposition}[Global source balance]\label{prop:balance}
@@ -178,62 +179,66 @@ $\sum(S - \bar{S}) = \sum S - |\Ecal| \cdot \bar{S} = \sum S - \sum S = 0$.
 \end{proof}
 
 \begin{remark}
-This is the discrete analogue of energy-momentum conservation: the total source deviation is identically zero. Regions of positive source (excess content) are balanced by regions of negative source (deficit). The field equation~\eqref{eq:field} redistributes this imbalance through the accessibility potential.
+This is the compatibility identity for the centred source term in the graph Poisson equation, not a dynamical conservation law: it is forced by the definition of $\bar S$, independent of any field dynamics. Structurally, regions of positive source (excess content) are balanced by regions of negative source (deficit), and the field equation~\eqref{eq:field} redistributes this imbalance through the accessibility potential.
 \end{remark}
 
-\begin{proposition}[Local flow conservation]\label{prop:flow}
-For any function $u$ satisfying $\Delta_\Gcal u = S - \bar{S}$, the net ``flow'' across any boundary is determined by the enclosed source:
+\begin{proposition}[Discrete divergence theorem]\label{prop:flow}
+Let $R \subset \Ecal$ be any (not necessarily connected) subset of the undirected Hasse graph $\Gcal$, and let
+\[
+    \partial^{\mathrm{out}} R \;=\; \{\,(e, e') \in \Ecal \times \Ecal : e \in R,\; e' \notin R,\; \{e,e'\} \in E_H\,\}
+\]
+be the \textit{oriented edge-boundary} of $R$: ordered pairs whose underlying undirected edge lies in $E_H$ and which point from inside $R$ to outside. For any function $u: \Ecal \to \mathbb{R}$ satisfying $\Delta_\Gcal u = S - \bar{S}$,
 \begin{equation}
-    \sum_{e \in \partial R} \sum_{e' \sim e, e' \notin R} [u(e') - u(e)] = \sum_{e \in R} [S(e) - \bar{S}]
+    \sum_{(e,e') \in \partial^{\mathrm{out}} R} [u(e') - u(e)] \;=\; \sum_{e \in R} [S(e) - \bar{S}].
 \end{equation}
-for any connected region $R \subset \Ecal$ with boundary $\partial R$.
 \end{proposition}
 
 \begin{proof}
-Sum the field equation over $R$. Interior edges cancel in the Laplacian sum; boundary edges remain. The result is the discrete divergence theorem.
+Sum the field equation over $e \in R$ and expand the Laplacian: $\sum_{e \in R} \sum_{e' \sim e} [u(e') - u(e)]$. For each undirected edge $\{e, e'\}$ with both endpoints in $R$, the two terms $[u(e') - u(e)]$ (from summing at $e$) and $[u(e) - u(e')]$ (from summing at $e'$) cancel. The remaining terms are exactly those with $e \in R$ and $e' \notin R$, i.e.\ $(e, e') \in \partial^{\mathrm{out}} R$. This is the discrete divergence theorem on an undirected graph.
 \end{proof}
 
 %==================================================================
 \section{The Source--Curvature--Geodesic Bridge}\label{sec:bridge}
 %==================================================================
 
-The complete dynamical picture is:
+The structural picture (to be read as a \emph{correspondence} in toy models, not a derived chain of theorems) is:
 \begin{enumerate}
-    \item \textbf{Source content} $S(e)$ measures local event-density deviation.
-    \item \textbf{The field equation} $\Delta_\Gcal u = S - \bar{S}$ determines the accessibility potential.
-    \item \textbf{Curvature} $K_{\mathrm{pot}}(e)$ measures the gradient of the potential.
-    \item \textbf{Geodesics} in the modified geometry concentrate toward regions of high potential gradient.
+    \item \textbf{Source content} $S(e)$ measures a chosen local event-content deviation (density, signed overlap, or signed geodesic traffic).
+    \item \textbf{The field equation} $\Delta_\Gcal u = S - \bar{S}$ determines the accessibility potential $u$ up to an additive constant (Proposition~\ref{prop:existence}).
+    \item \textbf{Potential curvature} $K_{\mathrm{pot}}(e)$ is the squared discrete gradient of $u$ at $e$ (Definition~\ref{def:Kpot}).
+    \item \textbf{Geodesics} in $\Gcal$ are independently defined as shortest paths (not modified by $u$); in the bottleneck toy model below, their concentration pattern is found to align with large $K_{\mathrm{pot}}$, but no geodesic equation is derived from $u$.
 \end{enumerate}
 
-\begin{quote}
-\textit{Source tells geometry how to distort; geometry tells geodesics how to propagate.}
-\end{quote}
-
-This is the discrete analogue of the Einstein programme:
-\begin{equation*}
+Heuristically, this is the analogue of the Einstein programme
+\[
     T_{\mu\nu} \;\xrightarrow{\text{field eq.}}\; G_{\mu\nu} \;\xrightarrow{\text{geodesic eq.}}\; \text{motion}
-\end{equation*}
-replaced by:
-\begin{equation*}
-    S(e) \;\xrightarrow{\Delta_\Gcal u = S - \bar{S}}\; u(e), K_{\mathrm{pot}}(e) \;\xrightarrow{\text{shortest paths}}\; \text{geodesic concentration}
-\end{equation*}
+\]
+replaced by the discrete pattern
+\[
+    S(e) \;\xrightarrow{\Delta_\Gcal u = S - \bar{S}}\; u(e),\, K_{\mathrm{pot}}(e) \;\xrightarrow{\text{observed correlation in toy models}}\; \text{geodesic concentration},
+\]
+with the final arrow being an observation about the examples computed below, not a theorem about general graphs.
 
 %==================================================================
 \section{Toy Model 1: Uniform Vacuum}\label{sec:vacuum}
 %==================================================================
 
 \begin{example}[Vacuum: symmetric $K_{5,5}$]\label{ex:vacuum}
-The two-layer pentagon model from Papers~XXIII--XXVI.
+The first-two-layer truncation of the dual-pentagon event set of Papers~XXIII--XXVI, with
+\[
+    L_1 = \{(0,4),(1,0),(2,1),(3,2),(4,3)\}, \qquad L_2 = \{(0,3),(1,4),(2,0),(3,1),(4,2)\},
+\]
+and Hasse graph $K_{5,5}$ (every $L_2$ event covers every $L_1$ event).
 
-\textbf{Source.} All events have the same degree and neighborhood profile, so $S_\rho(e) = 0$ for all $e$. $S - \bar{S} = 0$ everywhere.
+\textbf{Source.} Every vertex of $K_{5,5}$ has degree $5$; every ball $B_r(e)$ has the same size as every other ball of the same radius; so for any fixed $r$ and reference $V_{\mathrm{ref}} = \bar V$ the field $S_\rho(e)$ of Definition~\ref{def:rho} is identically zero. Similarly $S_\Omega(e) = \deg(e) - \overline{\deg} = 0$ and $S_J(e) = \beta(e) - \bar\beta = 0$ (vertex-transitivity). Thus $S - \bar S \equiv 0$ for all three source choices, and $\bar S = 0$.
 
-\textbf{Field equation.} $\Delta_\Gcal u = 0$. Solution: $u = \mathrm{const}$.
+\textbf{Field equation.} $\Delta_\Gcal u = 0$. Solution: $u \equiv \mathrm{const}$ (unique modulo constants).
 
-\textbf{Curvature.} $K_{\mathrm{pot}}(e) = 0$ for all $e$: zero potential gradient everywhere.
+\textbf{Curvature.} $K_{\mathrm{pot}}(e) = 0$ for every $e$: zero potential gradient everywhere.
 
-\textbf{Geodesics.} Uniform distribution (by graph symmetry).
+\textbf{Geodesics.} By vertex-transitivity, every vertex carries the same geodesic betweenness; no concentration.
 
-\textbf{Conclusion.} Uniform source $\Rightarrow$ flat potential $\Rightarrow$ zero curvature $\Rightarrow$ uniform geodesics. The vacuum is stable and flat.
+\textbf{Conclusion.} In this symmetric graph, zero source, constant potential, vanishing $K_{\mathrm{pot}}$, and uniform geodesic betweenness all coincide. The first three implications follow immediately from the displayed computation and Proposition~\ref{prop:existence}; the vanishing of betweenness non-uniformity follows independently from vertex-transitivity of $K_{5,5}$ (imported from Paper~XXVI).
 \end{example}
 
 %==================================================================
@@ -243,20 +248,20 @@ The two-layer pentagon model from Papers~XXIII--XXVI.
 \begin{example}[Localised source: bottleneck graph]\label{ex:bottleneck}
 The three-layer bottleneck model from Paper~XXVI: 4 outer events in Layer~0, 1 bottleneck $b$ in Layer~1, 4 outer events in Layer~2.
 
-\textbf{Source.} Using degree-based density: $\deg(a_i) = 1$, $\deg(b) = 8$, $\deg(c_j) = 1$. Mean degree: $\overline{\deg} = 16/9$. Source: $S_\Omega(b) = 8 - 16/9 = 56/9 \approx 6.2$. Outer events: $S_\Omega(a_i) = 1 - 16/9 = -7/9 \approx -0.78$.
+\textbf{Source (overlap $S_\Omega$).} Degrees: $\deg(a_i) = 1$, $\deg(b) = 8$, $\deg(c_j) = 1$. Mean degree: $\overline{\deg} = 16/9$, so $\bar S_\Omega = 0$. Sources: $S_\Omega(b) = 8 - 16/9 = 56/9 \approx 6.22$; $S_\Omega(a_i) = S_\Omega(c_j) = 1 - 16/9 = -7/9 \approx -0.78$.
 
 \textbf{Field equation.} $\Delta_\Gcal u = S_\Omega - \bar{S}_\Omega$. Since $\bar{S}_\Omega = 0$ (by construction of degree-deviation source), the equation is $\Delta_\Gcal u(e) = S_\Omega(e)$.
 
 Solve on the bottleneck graph (9 nodes). By symmetry, $u(a_i) = u_a$ for all $i$ and $u(c_j) = u_c$ for all $j$. The equations are:
 \begin{align}
-    \Delta_\Gcal u(a_i) &= u(b) - u(a_i) = -7/9 \\
-    \Delta_\Gcal u(b) &= 4[u_a - u(b)] + 4[u_c - u(b)] = 56/9 \\
-    \Delta_\Gcal u(c_j) &= u(b) - u(c_j) = -7/9
+    \Delta_\Gcal u(a_i) &= u(b) - u(a_i) = -7/9 \label{eq:bowtie-a}\\
+    \Delta_\Gcal u(b) &= 4[u_a - u(b)] + 4[u_c - u(b)] = 56/9 \label{eq:bowtie-b}\\
+    \Delta_\Gcal u(c_j) &= u(b) - u(c_j) = -7/9 \label{eq:bowtie-c}
 \end{align}
 
-From equations 1 and 3: $u(b) - u_a = -7/9$ and $u(b) - u_c = -7/9$, so $u_a = u_c = u(b) + 7/9$.
+From~\eqref{eq:bowtie-a} and~\eqref{eq:bowtie-c}: $u(b) - u_a = -7/9$ and $u(b) - u_c = -7/9$, so $u_a = u_c = u(b) + 7/9$.
 
-Check equation 2: $4[(u(b) + 7/9) - u(b)] + 4[(u(b) + 7/9) - u(b)] = 4(7/9) + 4(7/9) = 56/9$. $\checkmark$
+Check~\eqref{eq:bowtie-b}: $4[(u(b) + 7/9) - u(b)] + 4[(u(b) + 7/9) - u(b)] = 4(7/9) + 4(7/9) = 56/9$. $\checkmark$
 
 Setting $u(b) = 0$ (gauge choice): $u_a = u_c = 7/9$.
 
@@ -266,7 +271,7 @@ Setting $u(b) = 0$ (gauge choice): $u_a = u_c = 7/9$.
 
 \textbf{Geodesics.} All shortest paths between non-bottleneck events pass through $b$ (Paper~XXVI). The potential gradient points toward $b$. Geodesic concentration and potential-flow direction are aligned.
 
-\textbf{Conclusion.} Localised source $\Rightarrow$ nonzero potential $\Rightarrow$ nonzero curvature $\Rightarrow$ geodesic concentration. The source-geometry-geodesic bridge is demonstrated.
+\textbf{Conclusion.} This example exhibits a nontrivial source $S_\Omega$, a nonconstant Poisson solution $u$ with $K_{\mathrm{pot}}(b) \gg K_{\mathrm{pot}}(\text{leaves})$, and, independently (from Paper~XXVI), geodesic concentration through $b$. All three features coexist on this single toy graph; no general theorem linking the three is proved.
 \end{example}
 
 %==================================================================
@@ -274,28 +279,51 @@ Setting $u(b) = 0$ (gauge choice): $u_a = u_c = 7/9$.
 %==================================================================
 
 \begin{example}[Perturbation of the flat model]\label{ex:perturb}
-Start with the symmetric $K_{5,5}$ model (flat, Example~\ref{ex:vacuum}). Add one extra event $f$ connected to a single Layer-0 event $(0,0)$ and a single Layer-1 event $(0,4)$. The graph now has 11 events and is no longer vertex-transitive.
+Start from the symmetric $K_{5,5}$ pentagon truncation of Example~\ref{ex:vacuum}. Add one extra event $f$ to $\Gcal$ with two new undirected edges: $f \sim (0,4)$ and $f \sim (1,0)$, attaching $f$ to two elements of $L_1$. The graph now has $11$ events and $27$ edges, is connected, and is no longer vertex-transitive.
 
-\textbf{Source.} $\deg(0,0)$ increases from 5 to 6; $\deg(0,4)$ increases from 5 to 6; $\deg(f) = 2$. All other events retain degree 5. New mean degree: $(8 \times 5 + 2 \times 6 + 1 \times 2)/11 = 54/11 \approx 4.91$.
-
-Source deviations:
+\textbf{Symmetry classes of the perturbed graph.} The residual automorphism group of the perturbed $\Gcal$ consists of arbitrary permutations of $L_2$, the $\mathbb{Z}_2$ swap $(0,4) \leftrightarrow (1,0)$, and arbitrary permutations of the three unperturbed $L_1$ events $\{(2,1),(3,2),(4,3)\}$. Four orbits result:
 \begin{itemize}
-    \item $(0,0)$ and $(0,4)$: $S = 6 - 54/11 = 12/11 \approx 1.09$ (positive source).
-    \item $f$: $S = 2 - 54/11 = -32/11 \approx -2.91$ (deficit).
-    \item Others: $S = 5 - 54/11 = 1/11 \approx 0.09$ (near zero).
+    \item $\mathcal{A} = \{(0,4),(1,0)\}$ (the two perturbed $L_1$ events, $|\mathcal{A}|=2$, $\deg = 6$);
+    \item $\mathcal{B} = \{(2,1),(3,2),(4,3)\}$ (the unperturbed $L_1$ events, $|\mathcal{B}|=3$, $\deg = 5$);
+    \item $\mathcal{C} = L_2$ (the five $L_2$ events, $|\mathcal{C}|=5$, $\deg = 5$);
+    \item $\{f\}$ ($\deg = 2$).
 \end{itemize}
 
-\textbf{Curvature response.} The previously flat geometry now has nonzero source at $(0,0)$, $(0,4)$, and $f$. Solving $\Delta_\Gcal u = S - \bar{S}$ (numerically or by symmetry reduction) gives a nontrivial potential landscape with $u$ elevated near the perturbation and flat elsewhere.
+\textbf{Source $S_\Omega$.} Mean degree $\overline{\deg} = (2\cdot 6 + 3\cdot 5 + 5\cdot 5 + 1\cdot 2)/11 = 54/11$, so $\bar S_\Omega = 0$. Sources by class:
+\[
+    S_\Omega(\mathcal{A}) = 6 - \tfrac{54}{11} = \tfrac{12}{11}, \;
+    S_\Omega(\mathcal{B}) = S_\Omega(\mathcal{C}) = 5 - \tfrac{54}{11} = \tfrac{1}{11}, \;
+    S_\Omega(f) = 2 - \tfrac{54}{11} = -\tfrac{32}{11}.
+\]
+Total: $2\cdot\tfrac{12}{11} + 8\cdot\tfrac{1}{11} + \bigl(-\tfrac{32}{11}\bigr) = 0$, consistent with Proposition~\ref{prop:balance}.
 
-\textbf{Geodesic traffic.} Before the perturbation, all Layer-0 to Layer-1 paths had distance 1. After adding $f$, a new shortest path exists: $(0,0) \to f \to (0,4)$ (length 2). The direct path $(0,0) \to (0,4)$ still has length 1, so existing geodesics are not rerouted. However, paths from other events to $f$ (e.g.\ $(1,1) \to (0,0) \to f$, length 2) now exist, creating increased geodesic traffic through the attachment region and new accessible pathways.
+\textbf{Explicit Poisson solve.} On a perturbed $\Gcal$ respecting these four orbits, any solution of $\Delta_\Gcal u = S_\Omega$ is constant on each orbit. Let $u_\mathcal{A}, u_\mathcal{B}, u_\mathcal{C}, u_f$ denote the orbit values. Fix the gauge $u_f = 0$. Writing out the Laplacian at one representative of each orbit:
+\begin{align}
+    \Delta_\Gcal u \big|_{\mathcal{A}} &= 5 u_\mathcal{C} + u_f - 6 u_\mathcal{A} = \tfrac{12}{11}, \label{eq:pert-A}\\
+    \Delta_\Gcal u \big|_{\mathcal{B}} &= 5 u_\mathcal{C} - 5 u_\mathcal{B} = \tfrac{1}{11}, \label{eq:pert-B}\\
+    \Delta_\Gcal u \big|_{\mathcal{C}} &= 2 u_\mathcal{A} + 3 u_\mathcal{B} - 5 u_\mathcal{C} = \tfrac{1}{11}, \label{eq:pert-C}\\
+    \Delta_\Gcal u \big|_{f} &= 2 u_\mathcal{A} - 2 u_f = -\tfrac{32}{11}. \label{eq:pert-f}
+\end{align}
+Equation~\eqref{eq:pert-f} gives $u_\mathcal{A} = -\tfrac{16}{11}$. Substituting in~\eqref{eq:pert-A} yields $u_\mathcal{C} = -\tfrac{84}{55}$, and~\eqref{eq:pert-B} then gives $u_\mathcal{B} = -\tfrac{17}{11}$. Equation~\eqref{eq:pert-C} is satisfied as a consistency check: $2\cdot\bigl(-\tfrac{16}{11}\bigr) + 3\cdot\bigl(-\tfrac{17}{11}\bigr) - 5\cdot\bigl(-\tfrac{84}{55}\bigr) = -\tfrac{32}{11} - \tfrac{51}{11} + \tfrac{84}{11} = \tfrac{1}{11}$. Summary: $u_f = 0$, $u_\mathcal{A} = -16/11 \approx -1.45$, $u_\mathcal{C} = -84/55 \approx -1.53$, $u_\mathcal{B} = -17/11 \approx -1.55$.
 
-\textbf{Conclusion.} Adding a single event to a flat graph creates:
-\begin{itemize}
-    \item nonzero source at the attachment points,
-    \item nontrivial accessibility potential,
-    \item increased geodesic traffic and new accessible pathways through the attachment region.
-\end{itemize}
-This demonstrates \textit{geometric response to perturbation}: the field equation translates local content changes into global geometry changes.
+\textbf{Potential-gradient curvature.} Direct computation of $K_{\mathrm{pot}}(e) = \sum_{e' \sim e} [u(e') - u(e)]^2$ at one representative of each orbit:
+\[
+    K_{\mathrm{pot}}(f) = 2 (u_\mathcal{A} - u_f)^2 = \tfrac{512}{121} \approx 4.23,
+\]
+\[
+    K_{\mathrm{pot}}(\mathcal{A}) = 5 (u_\mathcal{C} - u_\mathcal{A})^2 + (u_f - u_\mathcal{A})^2 = \tfrac{1296}{605} \approx 2.14,
+\]
+\[
+    K_{\mathrm{pot}}(\mathcal{B}) = 5 (u_\mathcal{C} - u_\mathcal{B})^2 = \tfrac{1}{605} \approx 0.0017,
+\]
+\[
+    K_{\mathrm{pot}}(\mathcal{C}) = 2 (u_\mathcal{A} - u_\mathcal{C})^2 + 3 (u_\mathcal{B} - u_\mathcal{C})^2 = \tfrac{7}{605} \approx 0.0116.
+\]
+The perturbation event $f$ has the largest potential-gradient curvature; the two attached events $\mathcal{A}$ have the next largest. The unperturbed classes $\mathcal{B}, \mathcal{C}$ have $K_{\mathrm{pot}}$ three orders of magnitude smaller.
+
+\textbf{Geodesics.} The new edges open a length-$2$ shortest path $f \to (0,4) \to L_2$ and a length-$3$ shortest path $f \to (0,4) \to L_2 \to \mathcal{B}$-event; the existing $K_{5,5}$ geodesics between $L_1$ and $L_2$ are unchanged. A full betweenness recomputation on the $11$-vertex perturbed graph is not given here.
+
+\textbf{Conclusion.} Adding a single event to $K_{5,5}$ produces a closed-form Poisson solution with nonzero source at four orbits, a potential landscape with a localised well at $\mathcal{B}$ and a pronounced gradient at $f$, and $K_{\mathrm{pot}}$ concentrated at the perturbation event. In this example the source-to-potential-to-$K_{\mathrm{pot}}$ arithmetic is fully checked; the geodesic-level claims are restricted to the existence of the new shortest paths exhibited above, not to a betweenness redistribution theorem.
 \end{example}
 
 %==================================================================
@@ -314,7 +342,7 @@ Source & Local event-content deviation $S(e)$ & Stress-energy $T_{\mu\nu}$ \\
 Field variable & Accessibility potential $u(e)$ & Metric $g_{\mu\nu}$ \\
 Field equation & $\Delta_\Gcal u = S - \bar{S}$ & $G_{\mu\nu} = 8\pi G\, T_{\mu\nu}$ \\
 Curvature & Potential gradient $K_{\mathrm{pot}}$ & Riemann tensor $R^\alpha{}_{\beta\gamma\delta}$ \\
-Conservation & $\sum(S - \bar{S}) = 0$ & $\nabla_\mu T^{\mu\nu} = 0$ \\
+Compatibility / conservation & $\sum_e [S(e) - \bar{S}] = 0$ (algebraic) & $\nabla_\mu T^{\mu\nu} = 0$ (dynamical) \\
 Geodesic response & Shortest-path concentration & Geodesic equation \\
 Vacuum solution & $u = \mathrm{const}$, flat & Minkowski spacetime \\
 \bottomrule
@@ -322,7 +350,7 @@ Vacuum solution & $u = \mathrm{const}$, flat & Minkowski spacetime \\
 \end{table}
 
 \begin{remark}[Epistemic status]
-The structural parallels in Table~\ref{tab:einstein} are exhibited, not derived from the Einstein equations. The VFD field equation $\Delta_\Gcal u = S - \bar{S}$ is a discrete Poisson equation on a graph, which is a standard mathematical object. Its physical interpretation as a gravity analogue is structural: it shows that the event-order framework supports the same qualitative dynamical pattern (source $\to$ geometry $\to$ motion) as general relativity. Whether the discrete dynamics converges to the Einstein equations in a continuum limit is an open question of significant interest.
+The structural parallels in Table~\ref{tab:einstein} are exhibited, not derived from the Einstein equations. The VFD field equation $\Delta_\Gcal u = S - \bar{S}$ is a discrete Poisson equation on a graph, a standard mathematical object~\citep{Chung1997}. Its physical interpretation as a gravity analogue is structural: it shows that the event-order framework supports a source-to-potential construction and, in the bowtie toy model, a correlation between large potential gradients and concentrated geodesic traffic. No motion law is derived from $u$, and no continuum limit is claimed. Whether this discrete graph-Poisson model converges to any continuum Einstein-type limit in an appropriate refinement is an open question of significant interest.
 \end{remark}
 
 %==================================================================
@@ -336,12 +364,12 @@ The structural parallels in Table~\ref{tab:einstein} are exhibited, not derived 
     \item Accessibility potential defined via graph Laplacian (Definition~\ref{def:potential}).
     \item Discrete field equation $\Delta_\Gcal u = S - \bar{S}$: existence and uniqueness (up to constant) proved (Proposition~\ref{prop:existence}).
     \item Global balance law: total source deviation vanishes (Proposition~\ref{prop:balance}).
-    \item Local flow conservation: discrete divergence theorem (Proposition~\ref{prop:flow}).
+    \item Integrated boundary-flux identity for solutions of the Poisson equation: discrete divergence theorem (Proposition~\ref{prop:flow}).
     \item Potential-gradient curvature $K_{\mathrm{pot}}$ defined and computed (Definition~\ref{def:Kpot}).
     \item Vacuum model: flat, zero source, constant potential, uniform geodesics.
     \item Bottleneck model: localised source, nontrivial potential, geodesic concentration.
     \item Perturbation model: single-event addition creates measurable geometric response.
-    \item Source--curvature--geodesic bridge demonstrated explicitly.
+    \item Partial source-to-potential correspondence exhibited explicitly, with geodesic alignment verified only in the bowtie example.
 \end{itemize}
 
 \subsection{What is not established}
@@ -358,29 +386,29 @@ The structural parallels in Table~\ref{tab:einstein} are exhibited, not derived 
 \subsection{Programme position}
 
 \begin{itemize}
-    \item Paper~XXIII: event ordering (derived).
-    \item Paper~XXIV: observer kinematics (derived).
-    \item Paper~XXV: separation geometry (derived).
-    \item Paper~XXVI: curvature precursor (constructed).
-    \item Paper~XXVII (this paper): source-driven field dynamics (constructed).
+    \item Paper~XXIII: event ordering (derived); the no-canonical-clock conclusion is conditional on incomparable events, a hypothesis verified only in the pentagon model.
+    \item Paper~XXIV: observer kinematics; observer definition unconditional, simultaneity conditional on incomparable events, endpoint-interval (time-dilation) theorem conditional on unequal weight sums along a shared linear extension.
+    \item Paper~XXV: separation geometry; global metric on the event set requires connectedness of the Hasse graph (verified for the pentagon truncation, open for the full 600-cell set).
+    \item Paper~XXVI: three candidate graph-curvature indicators; no comparison theorem among them is proved.
+    \item Paper~XXVII (this paper): discrete graph-Poisson analogue and a potential-gradient curvature indicator, exhibited on three toy graphs; no Einstein equation, no stress-energy tensor, no continuum limit, and no geodesic equation derived from $u$.
 \end{itemize}
 
 %==================================================================
 \section{Conclusion}\label{sec:conclusion}
 %==================================================================
 
-The event-order framework now carries the full structure of a field theory: source content drives geometric distortion, and geometric distortion directs geodesic propagation. The discrete field equation $\Delta_\Gcal u = S - \bar{S}$ provides a principled, solvable relation between source and geometry, with conservation guaranteed by the Laplacian structure.
+The event-order framework is equipped with a discrete graph-Poisson source-to-potential model: the graph Laplacian maps a signed source field $S - \bar S$ (from the chosen source family) to an accessibility potential $u$ on the Hasse graph, determined up to an additive constant. In the bowtie toy model, the associated potential-gradient curvature $K_{\mathrm{pot}}$ is maximal at the same bottleneck $b$ where Paper~XXVI found maximal $K_{\mathrm{branch}}$ and $K_{\mathrm{geo}}$; the $K_{\mathrm{pot}}$--$K_{\mathrm{branch}}$ alignment is a same-degree-data coincidence (both built from $\deg - \overline{\deg}$), while the $K_{\mathrm{pot}}$--$K_{\mathrm{geo}}$ co-location is not. In the perturbation toy model, closed-form $K_{\mathrm{pot}}$ values are computed by symmetry reduction, but a geodesic-betweenness recomputation on the perturbed graph is not provided. The field equation is introduced as a model definition, not deduced from the earlier VFD papers; no Einstein equation, no stress-energy tensor, no geodesic equation derived from $u$, and no continuum limit is established.
 
-The GR programme is now complete at the scaffold level:
+At the level proved so far, the GR-leg programme now has a discrete scaffold for each of the following structural themes, subject to the standing conditionals inherited from the earlier papers:
 \begin{itemize}
-    \item \textbf{Time}: event ordering from phase-overlap admissibility.
-    \item \textbf{Observers}: frame-dependent kinematics from linear extensions.
-    \item \textbf{Metric}: separation from chain length and graph distance.
-    \item \textbf{Curvature}: non-uniformity of local accessibility.
-    \item \textbf{Dynamics}: source-driven accessibility distortion via graph Laplacian.
+    \item \textbf{Time}: event ordering from phase-overlap admissibility (XXIII; no-canonical-clock conditional on incomparable events, verified in the pentagon model).
+    \item \textbf{Observers}: frame-dependent kinematics from linear extensions (XXIV; simultaneity conditional on incomparable events, endpoint-interval theorem conditional on unequal weight sums along a shared linear extension).
+    \item \textbf{Metric}: separation constructions including a transition-cost metric on connected components of the Hasse graph (XXV).
+    \item \textbf{Curvature}: three candidate graph indicators on the Hasse graph, no comparison theorem (XXVI).
+    \item \textbf{Source-field analogue}: the discrete Poisson equation $\Delta_\Gcal u = S - \bar S$ and the associated potential-gradient indicator $K_{\mathrm{pot}}$ (this paper).
 \end{itemize}
 
-Each layer is derived from the event-order structure without assuming spacetime. Whether this discrete scaffold converges to the continuum Einstein dynamics in an appropriate limit is the defining open question for the next stage of the programme.
+Whether any of this discrete scaffold converges to the continuum Einstein dynamics in an appropriate refinement limit is the defining open question for the next stage of the programme.
 
 %==================================================================
 \bibliographystyle{plainnat}

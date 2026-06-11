@@ -1,0 +1,229 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{xcolor}
+
+\graphicspath{{figures/}}
+
+\newcommand{\Ph}{\varphi}
+\newcommand{\Lop}{L_{V_{600}}}
+\newcommand{\Cph}{C_{\Ph}}
+\newcommand{\Rsixhundred}{V_{600}}
+
+\title{A geometry-fixed substrate witness for cortical signatures:\\
+       eighteen preregistered correspondences and six drug/sleep EEG\\
+       signatures from the 600-cell under H$_4$ Coxeter symmetry}
+
+\author{%
+  Lee Smart\\[2pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint, not peer-reviewed.
+
+\noindent\emph{Headline.}
+Once the 600-cell substrate is chosen, its graph structure is fixed:
+$|V|=120$ vertices of uniform degree $12$ (forced by H$_4$ transitivity
+on the canonical short-edge nearest-neighbour graph), with
+$\Ph=(1+\sqrt{5})/2$ entering through the canonical vertex coordinates
+and through the response-operator stability shift $\Ph^{-2}$. The
+Laplacian spectrum is computed numerically from this graph and is
+reported as observed (\S\ref{sec:substrate}). Treated
+as an architectural-level substrate with a fixed shifted-Laplacian
+response $\Cph = \Lop + \Ph^{-2} I$ and a small dynamical layer above
+it, this single deterministic structure is consistent with eighteen
+quantitative correspondences with neuroscience data — preregistered
+on 2026-04-18 before any validation run, with $17/18$ closing under
+the original standard validation protocol and $18/18$ closing at
+unchanged thresholds after documented methodology refinement (an
+$N\!=\!20$ deep-dive for the high-variance $C\!\times\!P$
+interaction P4, and a state-reset/LOO refinement for the chess
+substrate-lift test P13) — plus six drug/sleep EEG signatures of
+conscious vs unconscious states tested against
+literature-derived thresholds on a single deterministic substrate
+trajectory at seed~$42$. No shape parameter is tuned to any neural
+dataset. The recurrent layer above the substrate adds one
+substrate-pinned nonlinearity $\mathrm{bounded\_topk}(\cdot, k\!=\!12)$
+at the graph's average degree and one condition-dependent self-injection
+coupling $\eta\!\in\!\{0, 0.05, 0.20\}$; condition-specific stimulus
+models (\S\ref{sec:chain}) are biologically-motivated design choices,
+not measurement-fits.
+
+\noindent\emph{Scope.}
+This paper presents an empirical \emph{substrate witness}: it shows
+that a geometry-fixed substrate, with no shape parameters tuned to any
+neural dataset, is consistent with eighteen preregistered correspondences
+and six EEG signatures. It is not a derivation of consciousness, nor a
+selection theorem, nor a uniqueness claim for the 600-cell among regular
+4-polytopes. This paper is the active-regime companion to the
+operator-witness preprint~\citep{SmartAriaClosureKernel2026} that
+defines $\Cph = L_M + \Ph^{-2} I$ and threads its two domain-disjoint
+empirical landings (flavour-physics passive regime and the
+active-regime witness reported here); we inherit the operator-witness
+discipline (no derivation of $\Ph^{-2}$, no 600-cell uniqueness, no
+selection theorem) and report only the active-regime substrate witness
+here. The companion adaptive-closure-transport
+preprint~\citep{SmartAdaptiveClosureTransport2026} provides the
+4-tuple bridge $(M, L_M, W, R_{\mathrm{hom}})$ in which this substrate
+sits as the $L_M$ instance; the selection of the 600-cell as the active
+$M$ is treated as conjectural and is not load-bearing here.
+
+\begin{abstract}
+We test whether a geometry-fixed substrate — the 600-cell regular
+4-polytope $\Rsixhundred$ under H$_4$ Coxeter symmetry, with the
+shifted graph Laplacian $\Cph = \Lop + \Ph^{-2} I$ as its response
+operator — is consistent with cortical signatures across five
+neuroscience domains. Eighteen quantitative predictions were
+preregistered on 2026-04-18 (\texttt{docs/brain\_mapping/PAPER\_PREDICTIONS.md})
+before any validation run; each has a falsifiable threshold. The
+preregistered tally is $17/18$ under the original standard
+validation protocol ($5$-seed cascade block plus state-reset), and
+$18/18$ at unchanged thresholds after documented methodology
+refinement: an $N\!=\!20$ deep-dive for the high-variance
+$C\!\times\!P$ interaction (P4) and a state-reset/leave-one-out
+refinement for the chess substrate-lift test (P13). No
+preregistered threshold has been modified. We
+additionally report six drug/sleep EEG signatures tested on a recurrent
+self-model layer above the substrate, on a single deterministic
+trajectory at seed~$42$. The six signatures are not part of the
+P1--P18 preregistration; they are tested against thresholds drawn
+from the published literature (Sleep-EDFx CI for the wake $\alpha$,
+OpenNeuro \texttt{ds005620} point-estimate window for propofol
+switching, literature-direction predictions for $\Phi$ collapse,
+continuity drop, and recovery; \S\ref{sec:method}). They were
+obtained under condition-specific v4 stimulus models redesigned to
+be biologically realistic (\S\ref{sec:chain}).
+
+\noindent\emph{(i) Cortical avalanches.}
+Wake cascade-event power-law exponent $\alpha = 2.252$,
+$95\%$ CI $[1.82, 2.86]$ ($R^{2}=0.956$, $n_{\mathrm{events}}=58$).
+This 95\% CI overlaps simultaneously real Sleep-EDFx EEG ($n=30$
+subjects, $\alpha=2.51$, CI $[2.50, 2.53]$) and ARIA's prior cascade
+pipeline ($\alpha=2.85$, CI $[2.73, 3.25]$) — three-way confidence
+overlap.
+
+\noindent\emph{(ii) Drug/sleep state transitions.}
+NREM-N3 phenomenal-intensity variance ratio $0.463\!\times$ wake
+(predicted $\sim 0.365$, threshold $<\!0.70$); propofol modality-switching
+ratio $1.83\!\times$ wake (threshold $\in[1.5, 5.0]$, empirical
+reference $2.96\!\times$ from OpenNeuro \texttt{ds005620}, $n=8$);
+propofol continuity drop $+0.066$ (threshold $>\!0.020$); propofol
+integrated-information $\Phi$ collapse to $0.33\!\times$ wake (IIT
+direction confirmed); recovery deterministically identical to wake.
+All six signatures pass on a single deterministic recurrent-layer
+trajectory at seed~$42$, against literature-derived thresholds
+(no cross-seed CIs are reported here; that is an explicit
+strengthening build).
+
+\noindent\emph{(iii) Causal mechanism isolation.}
+Two of four cascade mechanisms — context rotation $C$ and partial
+emission $P$ — are causally identifiable within the factorial
+ablation model, and the original preregistered C$\times$P synergy
+prediction $\geq +0.10$ closes
+decisively at adequate replication: $N\!=\!20$ fresh seeds give a
+bootstrap point estimate of $+0.190$ with $95\%$ CI $[+0.143, +0.239]$
+(threshold $\geq +0.10$); $0/2000$ bootstrap resamples were at or
+below zero, reported as $0.0000$. We document the original $N\!=\!3$
+underestimate ($+0.044$) as consistent with an underpowered interaction
+estimate at $N\!=\!3$. In this cascade matrix, P4 required $N\!=\!20$;
+future preregistrations on similar high-variance ablation matrices
+should budget for this scale.
+
+\noindent\emph{(iv) Cross-domain selectivity.}
+The substrate exhibits selective amplification in the two cross-domain
+tasks tested: chess 4-category position classification on
+8-dimensional V2 features lifts $+40.6$ percentage points on
+leave-one-out at canonical depth $n\!=\!25$ ticks (raw $53.1\%$
+$\to$ substrate-routed $93.8\%$, with state reset; the
+preregistered estimator P13 was $5$-fold CV with threshold
+$\geq\!+15$pp, the LOO finding above is a disclosed estimator/protocol
+refinement at the same threshold), while conversation utterance
+classification at raw $87.5\%$ yields a substrate lift of $-4.4$pp
+(threshold $|\cdot| < 10$pp), consistent with the substrate
+amplifying in these two tasks where raw features are ambiguous and
+remaining approximately neutral when raw features are already
+discriminative. On HCP brain functional connectivity
+(preregistered $n\!=\!100$ ICA-50 plus full-cohort $n\!=\!1003$
+descriptive statistics), the H$_4$-transitive substrate is a
+deterministic null reference: ARIA degree std
+$=\!0$ by transitivity; HCP $3.28\!\pm\!0.28$; ARIA at $-11.58\sigma$
+on degree homogeneity, $+79.78\sigma$ on raw participation ratio
+(with the node-count caveat documented at \S\ref{ssec:hcp}: ARIA
+$|V|\!=\!120$ vs HCP ICA-50 $|V|\!=\!50$; the $\sigma$ value reflects
+both architectural and node-count differences), and $+6.80\sigma$ on
+clustering coefficient (implicit HCP across-subject sd $\approx 0.035$
+inferred from the reported gap; see \S\ref{ssec:hcp}).
+
+\noindent\emph{What we do not claim.}
+We do not claim the 600-cell is the unique substrate consistent with
+these signatures, nor that other regular 4-polytopes (24-cell, 120-cell)
+have been ruled out. We do not derive the $\Ph^{-2}$ floor from
+first principles; it is a design-level stability clamp on the
+shifted-Laplacian response. The recurrent layer above the substrate
+is reported on a single deterministic trajectory; cross-seed CIs on
+the per-condition signatures are an explicit strengthening build.
+The structural scope of this paper is: \emph{a geometry-fixed
+substrate, with no shape parameters tuned to any neural dataset,
+is consistent with eighteen preregistered neuroscience
+correspondences and six drug/sleep EEG signatures, with all gaps in
+the original preregistration closed by methodology refinement and
+without modifying any preregistered threshold.}
+\end{abstract}
+
+% =====================================================================
+\input{sections/01_introduction.tex}
+\input{sections/02_method.tex}
+\input{sections/03_substrate.tex}
+\input{sections/04_consciousness_chain.tex}
+\input{sections/05_results.tex}
+\input{sections/06_stress_tests.tex}
+\input{sections/07_cross_domain.tex}
+\input{sections/08_discussion.tex}
+\input{sections/09_limitations.tex}
+\input{sections/10_conclusion.tex}
+% =====================================================================
+
+\section*{Acknowledgements}
+We thank the Sleep-EDFx (PhysioNet)~\citep{PhysioNet2000,SleepEDFx},
+OpenNeuro propofol cohort \texttt{ds005620}~\citep{OpenNeuroDS005620},
+the OpenNeuro DMT cohort \texttt{ds004902}~\citep{OpenNeuroDS004902},
+the Zenodo DMT EEG release~\citep{ZenodoDMT3992359}, and the WU-Minn
+HCP Consortium~\citep{VanEssen2013HCP} for releasing the public
+datasets that made these comparisons possible. Cortical avalanche
+methodology follows~\citep{BeggsPlenz2003}; the integrated-information
+$\Phi$ proxy is in the IIT family~\citep{Tononi2008,BalduzziTononi2008};
+the propofol microstate comparison uses Brodbeck et
+al.~\citep{Brodbeck2012Microstates}. The 600-cell construction
+follows~\citep{CoxeterRegularPolytopes,Weisstein600Cell}. All code
+and processed data are released under MIT licence at the project
+repository~\citep{ariaChessRepo}.
+
+\section*{Reproducibility}
+The complete pipeline (substrate construction, six-signature
+consciousness chain, $N\!=\!20$ C$\times$P deep-dive, eighteen-prediction
+preregistered validation, figure regeneration, this paper) is reproducible
+from the project repository~\citep{ariaChessRepo} via the included
+\texttt{reproduce\_paper\_claims.sh} script. All scripts are
+deterministic given seeds; the substrate's spectral decomposition is
+cached at module level. Wallclocks: drug/sleep v4 $\sim 30$\,s;
+$N\!=\!20$ deep-dive $\sim 28$\,min; preregistered validation
+$\sim 18$\,min.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

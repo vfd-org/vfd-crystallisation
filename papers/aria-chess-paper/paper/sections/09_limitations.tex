@@ -1,0 +1,195 @@
+% =====================================================================
+\section{Limitations and hostile-review guard matrix}\label{sec:limitations}
+% =====================================================================
+
+This section enumerates limitations transparently, organised as a
+five-move guard matrix following the b-anomaly preprint
+template~\citep{SmartBAnomaly2026}: regime, post-hoc, interpretation,
+test/claim, state-drift. For each guard we record
+$G\colon \mathrm{risk} \to (\mathrm{disclosure}, \mathrm{evidence},
+\mathrm{strengthening\ build})$.
+
+\subsection{Regime}\label{ssec:regime}
+
+\textbf{Single substrate (the 600-cell).} We have not tested whether
+other regular 4-polytopes ($24$-cell, $120$-cell) would produce
+comparable correspondences. The 600-cell was chosen because its
+H$_4$ Coxeter cascade structure aligns with the empirical signatures
+that motivated this paper, not from an a-priori derivation.
+\emph{Disclosure:} substrate-witness scope, no uniqueness claim
+(\S\ref{sec:intro}). \emph{Evidence:} empirical correspondences hold
+on $\Rsixhundred$. \emph{Strengthening build:} formal ablation against
+$\{24\text{-cell}, 120\text{-cell}\}$ on the same six-signature
+battery and the eighteen preregistered tests, with thresholds
+preserved.
+
+\textbf{Single-seed determinism on the recurrent layer.} The v4
+six-signature results in~\S\ref{ssec:six_signatures} are reported on
+a single deterministic trajectory at seed $42$. Empirical CIs across
+$10$--$20$ cross-seed runs would strengthen the per-signature claims
+beyond the single-trajectory bootstrap of $58$ events that gives the
+WAKE 95\% CI $[1.82, 2.86]$. \emph{Disclosure:} explicitly single-seed
+in~\S\ref{sec:method} and~\S\ref{ssec:six_signatures}.
+\emph{Evidence:} bootstrap CI on the wake 58 events, plus three-way
+overlap with two independent reference $\alpha$ ranges.
+\emph{Strengthening build:} 10--20 cross-seed runs of
+\texttt{demo\_drug\_sleep\_v4.py}, with per-signature bootstrap CIs.
+
+\textbf{Stylised stimulus models on the recurrent layer.} The v4
+stimulus models for WAKE (AR(1) noise + tonic shell + attention
+episodes), SLEEP\_N3 (slow oscillation + spindles + K-complexes),
+and PROPOFOL (low-amplitude tonic noise) are biologically motivated
+but abstract: a single shell anchor for tonic coherence, fixed
+$40$-tick period for slow-wave drive, etc. Real spatial structure of
+cortical input is much richer. The v4 stimulus models were redesigned
+after diagnostics on the v3 stimulus models to close v3 stimulus-model
+artefacts; v4 components are biologically-motivated and not fitted
+to subject-level measurements, but they are condition-specific
+design choices iterated to v4. \emph{Disclosure:}~\S\ref{sec:chain}
+explicitly frames v4 as a redesign. \emph{Evidence:} amplitudes and
+durations match published biological time scales; the v3$\to$v4
+diff is captured in
+\texttt{CONSCIOUSNESS\_CHAIN\_V4\_SIGNATURES.md}. \emph{Strengthening
+build:} replication on stimulus models derived from anatomically-grounded
+input statistics (e.g.\ retinotopic, tonotopic).
+
+\subsection{Post-hoc}\label{ssec:posthoc}
+
+\textbf{The 600-cell choice is post-hoc justified by empirical
+observables.} While the construction of $\Rsixhundred$ is theorem-
+level rigorous (H$_4$ Coxeter group theory), the choice of \emph{this}
+polytope as the consciousness-substrate instance is motivated by the
+correspondences observed, not by an a-priori biological argument.
+\emph{Disclosure:}~\S\ref{sec:intro}, ``substrate witness, not
+derivation; not a uniqueness claim''. \emph{Evidence:} the eighteen
+preregistered correspondences plus six signatures; the H$_4$
+transitivity theorem ($P17$). \emph{Strengthening build:} comparison
+with the $24$-cell and $120$-cell on the same signatures; formal
+ACT-selection-theorem witness via the bridge of~\S\ref{ssec:act_bridge}
+(deferred).
+
+\textbf{Cascade decomposition is one of several possible
+decompositions of H$_4$.} We use the $\sigma$-orbit projector basis
+because it is machine-precise and biologically informative, but other
+bases (character-theoretic, Galois-twin) give the same physical
+predictions through different intermediate variables. \emph{Disclosure:}
+\S\ref{ssec:cascade} acknowledges non-uniqueness of decomposition.
+\emph{Evidence:} block-diagonalisation at $<10^{-15}$ cross-block
+norm. \emph{Strengthening build:} catalogue and equivalence-prove the
+admissible decompositions.
+
+\textbf{$\Ph^{-2}$ floor not derived.} The shifted-Laplacian floor
+$\Ph^{-2}\!\approx\!0.382$ is a stability clamp making $\Cph$
+strictly positive definite (\S\ref{ssec:cphi}); it is not derived
+from a closure functional or symmetry argument. \emph{Disclosure:}
+\S\ref{ssec:cphi} marks this as a design-level choice; the companion
+kernel doc~\citep{SmartAriaClosureKernel2026} explicitly does not
+derive it. \emph{Evidence:} the same operator (with the same shift)
+serves as the basis for the b-anomaly passive-regime
+witness~\citep{SmartBAnomaly2026}. \emph{Strengthening build:}
+derive the $\Ph^{-2}$ shift as the unique stability clamp under a
+named regularity criterion.
+
+\subsection{Interpretation}\label{ssec:interpretation}
+
+\textbf{The recurrent layer is a method, not a metaphysics claim.}
+We do not claim the recurrent self-model layer ``is'' consciousness;
+we claim quantitative consistency with six published biological
+signatures on a deterministic trajectory. \emph{Disclosure:}
+\S\ref{sec:intro}, \S\ref{sec:chain} (``method, not metaphysics'').
+\emph{Evidence:} six signatures vs published thresholds.
+\emph{Strengthening build:} cross-seed CIs (\S\ref{ssec:regime}); a
+formal account of which substrate observables map to which phenomenal
+contents (the bind\_phenomenal\_field channels) is not delivered.
+
+\textbf{$\Phi$ is an IIT-style direction-of-effect proxy, not a full
+IIT discharge.} \emph{Disclosure:}~\S\ref{sec:chain} explicitly.
+\emph{Evidence:} propofol $\Phi$ collapse to $0.33\!\times$ wake
+matches IIT direction. \emph{Strengthening build:} a
+\texttt{phi\_iit\_full} implementation following Balduzzi--Tononi
+2008~\citep{BalduzziTononi2008} on the substrate; not delivered.
+
+\textbf{HCP $\sigma$-distances are descriptive, not normative.} We
+do not claim ``cortex has drifted from an ideal polytope''; we
+quantify the distance between cortex and the deterministic H$_4$ null.
+\emph{Disclosure:}~\S\ref{ssec:hcp} explicitly. \emph{Evidence:}
+$\sigma$-distances on three independent metrics. \emph{Strengthening
+build:} cross-parcellation replication (Schaefer, Glasser).
+
+\subsection{Test/claim}\label{ssec:testclaim}
+
+\textbf{Two preregistered interaction tests required higher $N$
+than originally allocated.} P3 closes at $N\!=\!5$; P4 closes only at
+$N\!=\!20$. We document this transparently as consistent with
+underpowered interaction estimates on high-per-seed-variance terms,
+not a threshold change. \emph{Disclosure:}
+\S\ref{sec:method}, \S\ref{sec:results}, \S\ref{sec:stress}.
+\emph{Evidence:} bootstrap CI fully above the $+0.10$ floor; per-seed
+distribution narrow at $N\!=\!20$ ($\mathrm{std}=0.089$);
+$19/20$ seeds positive. \emph{Strengthening build:} a second
+$N\!=\!20$ run at a different seed range (e.g.\ $33000$--$33019$);
+an $N\!=\!50$ characterisation of the per-seed distribution.
+
+\textbf{The original 2026-04-20 walks-back are reversed without
+threshold modification.} The reversals (P3, P4, P13) are documented
+in
+\texttt{docs/brain\_mapping/VALIDATION\_RESULTS\_2026-04-29.md} with
+the original failure values, the methodology refinement, and the
+post-refinement values. \emph{Disclosure:} this paper carries those
+disclosures verbatim. \emph{Evidence:} 2026-04-20 vs 2026-04-29 side-
+by-side results table. \emph{Strengthening build:} the strengthening
+builds for P3/P4/P13 above; no further claim is needed.
+
+\textbf{Bayesian and full-IIT inference not performed.} All intervals
+are frequentist (bootstrap CIs); $\Phi$ is the direction-of-effect
+proxy, not the Balduzzi--Tononi 2008 algorithm. \emph{Disclosure:}
+this section. \emph{Strengthening build:} Bayesian posterior on
+$\Delta_{CP}$; full-IIT computation on the
+substrate's $S^{3}$ state space. The latter is computationally
+heavy and is deferred.
+
+\subsection{State-drift / out-of-scope}\label{ssec:scope}
+
+\textbf{Single condition-dependent parameter $\eta$ is not derived
+as a learned variable.} $\eta\in\{0, 0.05, 0.20\}$ across PROPOFOL,
+SLEEP\_N3, and WAKE/RECOVERY is a condition-dependent constant in
+this paper, not a learned trajectory. A predictive-processing
+extension where $\eta$ adapts on an error norm is an open build.
+
+\textbf{No deuteron / hadron / RH / capstone material is loaded into
+this paper.} The companion programme (cascade-derivation, capstone
+coalgebra, RH formal) shares operator-level infrastructure but is not
+load-bearing here. Deliberately out of scope.
+
+\textbf{Out-of-scope items NOT delivered (correctly).}
+\begin{itemize}\itemsep=2pt
+\item Active-regime extension of the chess pattern-recognition test to
+  move-by-move game trajectories (this paper covers static positions only).
+\item Edge-space decomposition of $\mathbb{R}^{E_{M}}$ under
+  $2I$-equivariance — open build of the ACT companion paper.
+\item Lyapunov derivation $V(W)$ from a closure functional
+  $\mathcal{F}$ — open build of the ACT companion paper.
+\item Selection theorem for $\Rsixhundred$ over alternative regular
+  4-polytopes — see~\S\ref{ssec:regime}.
+\item Cross-cohort EEG (TUH, NHM, OpenNeuro non-propofol) replication
+  of the six signatures.
+\item Cross-parcellation replication of the HCP $\sigma$-distances
+  (Schaefer, Glasser, etc.).
+\item Bayesian posterior on the C$\times$P interaction.
+\item Verification of P10 (chess null mapping) at the preregistered
+  $20$-permutation count (the 2026-04-29 validation used $15$
+  permutations; threshold $\geq 50\%$ unchanged; result $65.4\%$
+  robust in the $15$--$20$ range, but the prereg-exact rerun is open).
+\end{itemize}
+
+\subsection{The honest verdict}
+
+The result is a substrate witness: a geometry-fixed substrate, with
+no shape parameters tuned to any neural dataset, is consistent with
+eighteen preregistered correspondences and six companion drug/sleep
+EEG signatures, with all original gaps closed by methodology
+refinement and without modifying any preregistered threshold. We do
+not claim the substrate \emph{is} consciousness. We do not claim a
+selection theorem on the ACT bridge. We do not claim uniqueness for
+$\Rsixhundred$ among regular 4-polytopes. The strengthening builds
+for these stronger claims are listed above and remain open.

@@ -1,0 +1,63 @@
+**1. Claim Audit**
+- **[D.1] Face-level Eisenstein substrate**: mostly fine as a definition. The object is well-posed, and the symmetry split `A_5` on faces vs. `C_6` on `ℤ[ω]` is now stated cleanly. The only softness is that “`A_5`-equivariant choice” is informal rather than formalised. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:110).
+- **[L.0] `π_20 = 1 ⊕ 3 ⊕ 3' ⊕ 4^{⊕2} ⊕ 5`**: established. The character values in §1.2 are enough to support the stated decomposition; the proof is terse but adequate for a standard calculation. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:165).
+- **[D.2] `𝒯_casc(z)=z\bar z`**: fine as a definition. No over-claim. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:190).
+- **[L.1] “`spec(𝒯_casc)` = Loeschian numbers”**: established. This is just the classical Eisenstein norm image. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:212).
+- **[L.3] uniqueness under `C_6`**: established. The proof is now an actual proof, not a slogan. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:221).
+- **[T.1] one face-level operator with CK spectrum**: established at the stated face-level scope, and the cell-level claim is no longer smuggled in. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:257).
+- **[R.1] “Whether empirical capsid counts reinforce this … is a separate question, resolved computationally in [N.2]”**: false. `[N.2]` is explicitly still pending, with no comparison script or result. This is an empirical over-claim. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:313), [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:671).
+- **[L.2] honest small-T / `A_5` match = `{1,3,4}`**: established. This is now the correct statement. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:318).
+- **[D.3] orbit multiplicity `μ(T)`**: definition is fine; the achiral rule is now corrected and matches the sim. The informal “general structure” discussion is acceptable because it is explicitly non-formal and example-driven. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:360).
+- **[C.1] closure-preference weighting**: honestly conjectural. No over-claim. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:431).
+- **[C.3] chirality asymmetry**: honestly conjectural. No evidence is claimed. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:450).
+- **[C.2] relation to Paper XXXII / F2**: now correctly framed as an open problem with a plan, not a proved descent. Good. But one attribution sentence inside this section still misstates what A1–A3 are; see section 4 below. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:480).
+- **[C.4] Galois-conjugate prediction**: honestly speculative. Fine. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:614).
+- **[N.1] sim output up to `T≤100`**: established computationally. The script reproduces the stated counts and the checked CSV is consistent. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:662).
+- **[N.2] VIPERdb comparison pending**: honestly pending here. Cite: [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:671).
+
+**2. WO Acceptance Audit**
+- **AC1**: not resolved. My verdict is not publication-ready.
+- **AC2**: resolved. The catalogue covers the introduced D/L/T/C/N objects with status/provenance.
+- **AC3**: partially resolved. Prediction sim exists; fetch script exists; comparison script does not.
+- **AC4**: not touched. No comparison result exists to record honestly.
+- **AC5**: resolved. `T=5` is explicitly settled.
+
+- **O1**: partially resolved. It is now explicitly posed as an open problem with a concrete plan, but not solved.
+- **O2**: resolved. The current artefacts settle `T=5` on the mathematical side.
+- **O3**: resolved. The artefacts now distinguish `2I` vs `A_5` cleanly.
+- **O4**: partially resolved. There is a conjectural weighting/chirality story, no empirical resolution.
+- **O5**: not touched. No de-biasing analysis exists.
+
+**3. Catalogue Audit**
+- Completeness is good. The derivation’s D/L/T/C/N objects `[D.1, D.2, D.3, L.0, L.1, L.2, L.3, T.1, C.1, C.2, C.3, C.4, N.1, N.2]` are all present in [math-catalogue.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/math-catalogue.md:34).
+- I did not find a catalogue entry with no backing object in the derivation.
+- I did not find a derivation D/L/T/C/N object missing from the catalogue.
+- Cross-document consistency is not perfect: the catalogue correctly says `[N.2]` is unimplemented, while the derivation still says the empirical `T=5` question is “resolved computationally in [N.2]”. That is a derivation defect, not a ledger-coverage defect.
+
+**4. Attribution / External Consistency**
+- **`cascade-bio.md §B3.1`**: verified. It really does write `ω = e^{2πi/3}` while also writing `T(h,k)=h²+hk+k²`. Your reconciliation note is fair. Source: [cascade-bio.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/cascade-derivation/cascade-bio.md:257).
+- **`cascade-bio.md §B3.2` / line 283 / line 320**: verified. The bad `T=5` table entry and the “full derivation … open” line are both there. Source: [cascade-bio.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/cascade-derivation/cascade-bio.md:274), [cascade-bio.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/cascade-derivation/cascade-bio.md:320).
+- **`cascade-bio.md §3.1` / §3.2**: verified. §3.1 is explicitly cell-level. The 15×40 Hopf structure is indeed described elsewhere in the file as conjectural / a structural candidate. Sources: [cascade-bio.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/cascade-derivation/cascade-bio.md:189), [cascade-bio.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/cascade-derivation/cascade-bio.md:149).
+- **`cascade-bio.md §2.1–2.3` and §2.7**: verified. The `2I` / `A_5` quotient claims and chirality language match. Sources: [cascade-bio.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/cascade-derivation/cascade-bio.md:43), [cascade-bio.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/cascade-derivation/cascade-bio.md:162).
+- **`paper-xxxii.tex §3`, Theorem `thm:600cell`**: verified. The derivation cites it correctly. Source: [paper-xxxii.tex](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/paper-xxxii/paper-xxxii.tex:237).
+- **`paper-xxxii.tex §4`, Theorem F**: partly verified. The theorem exists and is point-wise `M→ℝ`, as you now say. But your parenthetical summary of A1–A3 is wrong: A2 is the sharp-limit axiom, not “permutation symmetry of `R`”; permutation symmetry of `R` belongs to the class definition for `\mathcal C`. Defect at [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:504). Source: [paper-xxxii.tex](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/paper-xxxii/paper-xxxii.tex:341), [paper-xxxii.tex](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/paper-xxxii/paper-xxxii.tex:363).
+- **`cascade-foundations.md §F2`**: verified. The density-level `F[Φ]=∫(αR+βE−γQ)dV` claim is cited correctly. Source: [cascade-foundations.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/cascade-derivation/cascade-foundations.md:91).
+
+**5. Sim Correctness**
+- The sim correctly implements the claimed math for `[L.1]` and `[D.3]`: `T(h,k)=h²+hk+k²`, `ω:(h,k)↦(-k,h+k)`, `C_6` orbit generation, canonical representatives, and the achiral rule `k=0 or h=k`. Source: [wo1_capsid_predict.py](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/scripts/wo1_capsid_predict.py:36), [wo1_capsid_predict.py](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/scripts/wo1_capsid_predict.py:115).
+- I ran the script in the sandbox up to the write step. Its stdout spot-checks pass and match the checked-in CSV; the final write failed only because the sandbox is read-only, not because the code failed mathematically.
+- The CSV is consistent with the derivation, including achiral `T=3,12,27` and chiral pairs at `T=7,13,...`. Source: [wo1_prediction.csv](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/data/wo1_prediction.csv:2).
+- No χ² / KL / null-hypothesis audit is possible because `wo1_compare.py` does not exist. So the empirical-comparison half of the WO is still absent.
+
+**6. Tightness**
+- [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:315): change “resolved computationally in [N.2]” to “deferred to [N.2]”.
+- [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:504): change “A1–A3 … concern continuity, permutation symmetry of `R`, and extensivity” to “A1–A3 concern continuity, sharp limit, and extensivity; permutation symmetry of `R` is part of the soft-min class definition”.
+- [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:368): change “This matches the 6-fold local rotation symmetry at an icosahedral face center” to “This is the intrinsic 6-fold symmetry of the face lattice, not the icosahedral face stabiliser”.
+
+**7. Top Three Fixes**
+1. Fix the false empirical-status sentence in [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:315). `[N.2]` has not resolved anything.
+2. Fix the Paper XXXII theorem-hypothesis paraphrase in [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:504). Right now it misstates the source.
+3. Either implement the comparison stage promised by the WO, or stop writing WO-level language as if the prediction→VIPERdb→comparison pipeline exists end to end. The current gap is visible in [WO-BIOLOGY-RUNG-001-CAPSID.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/WO-BIOLOGY-RUNG-001-CAPSID.md:145) and [derivation-capsid.md](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:638).
+
+**8. Verdict**
+Publication ready: **no**. The math is basically in shape, and the Round 3 defects you named are indeed fixed, but there are still two substantive must-fix issues: one live empirical over-claim ([derivation-capsid.md:315](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:315)) and one live attribution error about Paper XXXII’s axioms ([derivation-capsid.md:504](/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/biology-rung/derivation-capsid.md:504)).

@@ -1,0 +1,2332 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\Der}{\operatorname{Der}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\Stab}{\operatorname{Stab}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\Spin}{\mathrm{Spin}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\Orth}{\mathrm{O}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+\title{Cascade--Classical Correspondence II:\\
+  The Cascade Algebraic Substrate}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This paper constructs the algebraic substrate underlying the cascade
+programme: the classical $E_8$ root system, the strict
+sub-root-system inclusion $D_4 \subset E_8$, the icosian projection
+from $E_8$ lattice data to an $H_4$ module, an explicit $24$-cell
+inside the $600$-cell, the spectral and shell structure of the
+$600$-cell vertex graph (its identification with the binary
+icosahedral group $2I$ under Hamilton multiplication, the
+Euclidean-shell-to-conjugacy-class bijection, the centrality of
+every shell-adjacency class sum in $\C[2I]$ and the resulting
+isotypic block structure (with the Laplacian spectrum of
+Fact~\ref{prop:spectrum-P2} imported from the standard $2I$
+character table to label the integer / irrational $94{+}26$
+isotypic decomposition), the BFS shell structure with its
+icosahedral /
+dodecahedral subpopulations, the lumpable $9$-state Markov chain
+on that partition with its exact rational first-passage identity
+$R_D(4) = 15$, a narrow uniqueness property among the eleven
+regular $3$-/$4$-polytopes, and the Hopf decomposition into
+twelve great-decagon fibres), the real Clifford algebra $\Cl(1,3)$
+as the canonical $16$-sector model, and the octonionic $8$-sector
+with its derivation algebra $\mathfrak{g}_2 = \Der(\OO)$ and the
+$\SU(3) \subset G_2$ stabilizer. The coefficientwise $\sigma$-action
+on all $\Q(\varphi)$-defined objects is imported from
+\cite{SigmaRationality} and shown to intertwine every $\Q$-linear
+sector-level map (Theorem~\ref{thm:sigma-compat-P2}). The
+non-$\Q$-linear projection $\pi_H$ does not commute with
+$\sigma$; the relevant fact for $\eta_\Q$ instead is the
+swap-intertwining (Proposition~\ref{prop:eta-swap}).
+
+This is the second of thirteen planned infrastructure papers
+(\cite[P2]{CascadeInfrastructurePlan}). Its purpose is to replace
+informal and slogan-level references to the cascade sector sequence
+$E_8 \to H_4 \to 24 \to D_4 \to 16 \to 8$ with theorem-grade
+constructions supported either by classical mathematics or by
+\cite{SigmaRationality}. \emph{No seven-rung uniqueness theorem is
+proved here.} In particular, the paper makes no claim that the
+cascade chain is forced by $E_8$ maximality, by Coxeter
+classification, or by any other external principle.
+
+The paper's main proved results (all other content is standard and
+cited): (i) the strict inclusion
+$\Phi(D_4) = \Phi(E_8) \cap U$ for the coordinate $4$-plane
+$U = \operatorname{span}_\R(e_1, e_2, e_3, e_4)$
+(Proposition~\ref{prop:D4-inclusion}); (ii) the identification of an
+explicit $24$-vertex subset $V_{24} \subset V_{600}$ with a regular
+$24$-cell isometric to the $D_4$ root polytope
+(Proposition~\ref{prop:24-in-600}); (iii) the computer-assisted
+identification of $V_{600}$ under Hamilton multiplication with the
+binary icosahedral group $2I$
+(Theorem~\ref{thm:icosian-closure}), together with the exact
+$\Q(\sqrt 5)$-arithmetic bijection between the nine Euclidean
+distance shells from the identity and the nine $2I$-conjugacy
+classes (Theorem~\ref{thm:shell-class}), and the centrality of
+every shell-adjacency class sum under the resulting left-regular
+realisation $\C^{V_{600}} \cong \C[2I]$
+(Corollary~\ref{cor:class-sums-central}); (iv) the equitable
+nine-cell BFS partition with full integer quotient matrix
+(Proposition~\ref{prop:dual-populations}), the strong lumpability
+of the uniform walk to a $9$-state chain $\widehat P = M / 12$
+(Proposition~\ref{prop:lumped-markov}), and the exact rational
+first-passage identity $R_D(4) = 15$
+(Theorem~\ref{thm:RD4-P2}); (v) the narrow uniqueness theorem
+among the eleven regular $3$-/$4$-polytopes, conditional on the
+imported classical Laplacian spectra of the ten non-$600$-cell
+members (Theorem~\ref{thm:polytope-uniqueness}); the imported
+Laplacian spectrum of the $600$-cell vertex graph itself
+(Fact~\ref{prop:spectrum-P2}) and the resulting $94{+}26$
+isotypic labelling (Corollary~\ref{cor:94-26-split}) are recorded
+but rest on the imported $2I$ character table rather than on
+additional P2 work; and (vi) the
+$\sigma$-compat\-ibility theorem that every $\Q$-defined sector-level
+map commutes with the coefficientwise $\sigma$-action after scalar
+extension (Theorem~\ref{thm:sigma-compat-P2}).
+
+All other statements are well-known classical results used through
+standard references: Humphreys and Bourbaki for root systems,
+Coxeter for regular polytopes, Conway--Sloane and Moody--Patera for
+icosians, Lounesto for Clifford algebras, Baez for octonions and
+$G_2$. We do not rely on any cascade-derivation internal note as
+theorem input.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction and Source Audit}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{What this paper proves}
+
+This paper constructs an algebraic substrate suitable for use as a
+theorem-grade dependency in downstream cascade infrastructure
+papers (P3--P13 of \cite{CascadeInfrastructurePlan}) and in the
+cascade-correspondence Foundations paper. The substrate consists of
+seven distinct algebraic objects, each with a precise model:
+\begin{enumerate}
+\item the $E_8$ root system and root lattice (\S\ref{sec:E8});
+\item the strict sub-root-system $D_4 \subset E_8$ via the
+  coordinate $4$-plane $U$ (\S\ref{sec:D4});
+\item the icosian ring $I$ and the explicit projection $\pi_H$
+  from $E_8$ lattice data to an $H_4$ module (\S\ref{sec:H4});
+\item an explicit $24$-cell as a subset of the $600$-cell
+  (\S\ref{sec:24-600});
+\item the shell, representation-theoretic, and lumpability
+  structure of the $600$-cell vertex graph
+  (\S\ref{sec:600cell-spectral}): the identification of the $120$
+  vertices with the binary icosahedral group $2I$ under Hamilton
+  multiplication, and the exact $\Q(\sqrt 5)$-arithmetic bijection
+  between the nine Euclidean distance shells from the identity
+  and the nine $2I$-conjugacy classes; the resulting centrality
+  of every shell-adjacency class sum in $\C[2I]$ (the $94{+}26$
+  integer / irrational labelling of isotypic components and the
+  explicit Laplacian spectrum are imported from the standard $2I$
+  character table, not re-proved here); the breadth-first-search
+  shell structure with its dual $(\mathrm{ico}, \mathrm{dod})$
+  subpopulations with an explicit $9 \times 9$ equitable-partition
+  quotient matrix; the lumped $9$-state Markov chain on that
+  equitable partition, together with the absorbing first-passage
+  reduction yielding the exact rational identity $R_D(4) = 15$; a narrow uniqueness property among the
+  eleven regular $3$- and $4$-polytopes (conditional on imported
+  Laplacian spectra for the ten non-$600$-cell members); and the
+  Hopf decomposition into twelve great-decagon fibres (imported);
+\item the real Clifford algebra $\Cl(1,3)$ as the algebraic model of
+  the $16$-sector (\S\ref{sec:16-sector});
+\item the octonionic $8$-sector with its derivation algebra
+  $\Der(\OO) = \mathfrak{g}_2$ and the $\SU(3) \subset G_2$
+  stabilizer of a fixed imaginary unit (\S\ref{sec:8-sector}).
+\end{enumerate}
+
+Section~\ref{sec:sigma-compat} then imports the coefficientwise
+$\sigma$-action of \cite{SigmaRationality} and shows that every map
+defined in \S\S\ref{sec:D4}--\ref{sec:8-sector} intertwines with
+$\sigma$ in the sense of that paper.
+
+\subsection{What this paper does not prove}
+
+P2 is deliberately narrow. To forestall any reader from reading
+this as a seven-rung uniqueness paper, we record the exclusions
+explicitly:
+
+\begin{enumerate}
+\item P2 does not claim the full seven-rung chain
+  $E_8 \to H_4 \to 40 \to D_4 \to 16 \to 8 \to 0$ as a theorem; no
+  uniqueness, maximality, or completeness statement is made about
+  the chain.
+\item P2 does not claim that $H_4$ is a strict sub-root-system of
+  $E_8$. $H_4$ is non-crystallographic, and we always describe it
+  as the image of a projection, never as an inclusion into
+  $\Phi(E_8)$.
+\item P2 does not claim any vertex-wise map $V_{600} \to V_{24}$
+  (in particular, there is no ``$120 \to 24$'' quotient map in this
+  paper). The $24$-cell appears as an embedded subset of the
+  $600$-cell, not as a quotient.
+\item P2 does not use the $2I/2T$ coset combinatorics of earlier
+  cascade notes as a theorem input. Any combinatorial identity
+  involving icosahedral rotation groups in this paper is proved
+  directly or cited to a classical source.
+\item P2 does not claim that the $16$-sector is uniquely forced
+  from $D_4$; $\Cl(1,3)$ is simply a natural $16$-dimensional real
+  algebra, chosen for its relevance to downstream applications.
+\item P2 does not claim that the $8$-sector is uniquely forced
+  from triality; the octonion algebra is a natural $8$-dimensional
+  normed division algebra with an $\SU(3)$-stabilizer structure,
+  chosen for its relevance to later gauge-sector work in P8.
+\item P2 does not use $\mathrm{ad} \colon \Im(\OO) \to
+  \mathfrak{g}_2$ as a Lie-algebra inclusion. This ``ad-map''
+  identification is algebraically false in general, as noted in the
+  iteration-1 review of the earlier Foundations draft. We use
+  derivations $D_{a,b}$ instead, which is the standard and correct
+  construction \cite{BaezOctonions}.
+\item P2 asserts no physical or phenomenological identification
+  between these algebraic sectors and downstream gauge, metric, or
+  cohomological objects. Those identifications are deferred to
+  dedicated downstream papers.
+\item P2 does not certify the individual numerical entries of the
+  $2I$ character table by bare hand. The \emph{centrality}
+  of each shell-adjacency class sum on each isotypic component of
+  $\C[2I]$ (\S\ref{sec:600cell-spectral}) is proved here by
+  Schur's lemma after a finite exact-arithmetic verification that
+  each Euclidean distance shell is a single $2I$-conjugacy class;
+  the \emph{specific numerical scalar} by which each class sum
+  acts on each isotypic component is read from the standard $2I$
+  character table~\cite[Ch.~3]{DuVal1964}. The
+  labelling of isotypic components as ``integer-eigenvalue'' or
+  ``irrational-eigenvalue'' in the $94{+}26$ decomposition
+  therefore rests on that imported character data, not on
+  additional representation-theoretic work in this paper.
+\item P2 does not re-prove the classical Laplacian spectra of the
+  non-$600$-cell members of the $11$-polytope family used in the
+  narrow-uniqueness theorem of \S\ref{sec:600cell-spectral};
+  those spectra are imported from \cite{BrouwerHaemers2012} and
+  \cite{GodsilRoyle2001} and re-verified computationally by the
+  accompanying script, but their classical derivations are not
+  repeated here.
+\item P2 does not prove the Hopf decomposition of the $600$-cell
+  into twelve great-decagon fibres; that decomposition is
+  imported from the classical $600$-cell literature and used in
+  \S\ref{sec:600cell-spectral} to state the fibre cycle spectrum.
+\end{enumerate}
+
+\subsection{Source audit}
+
+Theorem inputs to this paper split into two classes:
+\begin{description}
+\item[\textbf{Classical mathematics.}] The $E_8$ root system and
+  lattice \cite{Humphreys, Bourbaki}; the classical theory of
+  regular polytopes and the $24$- and $600$-cells
+  \cite{CoxeterRegularPolytopes}; icosians and the $E_8$ lattice
+  \cite{ConwaySloane, MoodyPatera}; real Clifford algebras
+  \cite{Lounesto, Chevalley}; octonions and $G_2$
+  \cite{BaezOctonions, SchaferNonassociative}; the Du~Val / ADE
+  classification of the finite subgroups of $\mathrm{Sp}(1)$
+  \cite{DuVal1964}; spectra of distance-regular graphs and of
+  the Platonic / regular-polytope vertex graphs
+  \cite{BrouwerHaemers2012, GodsilRoyle2001}; absorbing Markov
+  chains and equitable partitions \cite{KemenySnell1976,
+  GodsilRoyle2001}; and the standard $2I$ character table, as
+  part of Du~Val's classification of the binary polyhedral groups
+  \cite[Ch.~3]{DuVal1964}.
+\item[\textbf{Internal dependency.}] Paper P1
+  (\cite{SigmaRationality}), cited only for the coefficientwise
+  $\sigma$-action on $\Q(\varphi)$-scalar-extended vector spaces
+  and its functoriality theorem.
+\end{description}
+
+We do \emph{not} rely on any cascade-derivation internal note as
+theorem input. In particular, \cite[\S F3]{CascadeFoundations}
+(seven-rung uniqueness), \cite[\S\S P4--P8]{CascadePregeometry}
+(bootstrap chain), and \cite[\S 12]{CascadeEmbeddings}
+(computational verifications) are not used in any proof. These
+sources appear in the bibliography only to record their exclusion,
+and any reader who encounters a formal-framework or computational
+note from those sources should not treat it as a citation of
+P2.
+
+\subsection{Organization}
+
+Section~\ref{sec:E8} sets up the standard $E_8$ root system.
+Section~\ref{sec:D4} proves the strict $D_4 \subset E_8$ inclusion.
+Section~\ref{sec:H4} constructs the icosian ring and the $E_8 \to
+H_4$ projection. Section~\ref{sec:24-600} isolates the $24$-cell
+inside the $600$-cell by explicit coordinates.
+Section~\ref{sec:600cell-spectral} collects the
+spectral, shell, and representation-theoretic structure of the
+$600$-cell vertex graph: the identification with the binary
+icosahedral group $2I$, the Euclidean-shell-to-conjugacy-class
+bijection, the Laplacian spectrum with its isotypic $94{+}26$
+integer/irrational split, the BFS shell structure with its dual
+$(\mathrm{ico}, \mathrm{dod})$ subpopulations, the narrow
+uniqueness property among the eleven regular $3$- and
+$4$-polytopes, and the Hopf decomposition into twelve great-decagon
+fibres. Section~\ref{sec:16-sector} presents the $\Cl(1,3)$ model
+of the $16$-sector. Section~\ref{sec:8-sector} presents the
+octonionic $8$-sector. Section~\ref{sec:sigma-compat} establishes
+the $\sigma$-compatibility theorem. Section~\ref{sec:handoff}
+gives the citation contract for downstream papers.
+Appendix~\ref{app:notation} is a notation concordance.
+
+%=====================================================================
+\section{Standard $E_8$ Data and Normalizations}
+\label{sec:E8}
+%=====================================================================
+
+This section fixes conventions for the $E_8$ root system and
+lattice. The content is entirely classical and is cited rather than
+reproved.
+
+\subsection{The $E_8$ root system}
+
+\begin{definition}[$E_8$ root system]
+\label{def:E8}
+The \emph{$E_8$ root system} $\Phi(E_8) \subset \R^8$ consists of
+the following $240$ vectors:
+\begin{itemize}
+\item \textbf{$D_8$-type roots ($112$):}
+  $\pm e_i \pm e_j$ for $1 \leq i < j \leq 8$, with independent
+  signs; there are $4 \binom{8}{2} = 112$ such vectors.
+\item \textbf{Half-integer roots ($128$):}
+  $\frac{1}{2}(\pm 1, \pm 1, \pm 1, \pm 1, \pm 1, \pm 1, \pm 1, \pm 1)$
+  with the constraint that the number of minus signs is even;
+  there are $2^7 = 128$ such vectors.
+\end{itemize}
+Here $\{e_1, \ldots, e_8\}$ is the standard orthonormal basis of
+$\R^8$ with inner product $\langle \cdot, \cdot \rangle$.
+\end{definition}
+
+\begin{definition}[$E_8$ root lattice]
+\label{def:lambda-E8}
+The \emph{$E_8$ root lattice} $\Lambda(E_8) \subset \R^8$ is the
+$\Z$-linear span of $\Phi(E_8)$. Equivalently,
+\[
+  \Lambda(E_8) = \big\{ (x_1, \ldots, x_8) \in \R^8 :
+    \text{either all } x_i \in \Z \text{ or all } x_i \in \Z + \tfrac{1}{2},
+    \; \sum x_i \in 2\Z \big\}.
+\]
+$\Lambda(E_8)$ is even, unimodular, and self-dual
+\cite[\S III.4]{Serre}.
+\end{definition}
+
+\begin{fact}[Standard, \cite{Humphreys, Bourbaki}]
+\label{fact:E8-irred}
+$\Phi(E_8)$ is a reduced, irreducible crystallographic root system
+of rank $8$ and order $240$. Its Weyl group $W(E_8)$ has order
+$696\,729\,600 = 2^{14} \cdot 3^5 \cdot 5^2 \cdot 7$.
+\end{fact}
+
+\begin{remark}[Normalization]
+\label{rmk:normalization}
+With the conventions of Definition~\ref{def:E8}, all roots have
+squared length $2$. We retain this normalization throughout. Where
+other cascade sources (e.g., \cite{CascadeEmbeddings}) use
+$\frac{1}{2}\|r\|^2 = 1$, the two conventions agree.
+\end{remark}
+
+%=====================================================================
+\section{The Strict $D_4$ Sub-root-system of $E_8$}
+\label{sec:D4}
+%=====================================================================
+
+This section proves the first load-bearing proposition of the
+paper: $D_4$ embeds as a strict sub-root-system of $E_8$ via the
+coordinate $4$-plane $U$.
+
+\subsection{The coordinate $4$-plane $U$}
+
+\begin{definition}[The plane $U$]
+\label{def:U}
+Let
+\[
+  U := \operatorname{span}_\R(e_1, e_2, e_3, e_4) \subset \R^8.
+\]
+$U$ is a $4$-dimensional $\R$-subspace of $\R^8$, identified with
+$\R^4$ by the map $(x_1, x_2, x_3, x_4) \leftrightarrow
+(x_1, x_2, x_3, x_4, 0, 0, 0, 0)$.
+\end{definition}
+
+\begin{definition}[$D_4$ root system]
+\label{def:D4}
+The \emph{$D_4$ root system} is
+\[
+  \Phi(D_4) := \{\pm e_i \pm e_j : 1 \leq i < j \leq 4\} \subset U,
+\]
+consisting of $4 \binom{4}{2} = 24$ vectors of squared length $2$
+in $U \cong \R^4$.
+\end{definition}
+
+\subsection{The inclusion theorem}
+
+\begin{proposition}[Strict $D_4 \subset E_8$ inclusion]
+\label{prop:D4-inclusion}
+With the normalizations of \S\ref{sec:E8}:
+\begin{enumerate}
+\item $\Phi(D_4) = \Phi(E_8) \cap U$.
+\item $\Phi(D_4)$ is a reduced, irreducible crystallographic root
+  system of rank $4$ and order $24$.
+\item $\Phi(D_4) \subsetneq \Phi(E_8)$, i.e.\ the inclusion is
+  strict.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{(1) $\Phi(D_4) \subseteq \Phi(E_8) \cap U$.} Every element
+$\pm e_i \pm e_j$ with $1 \leq i < j \leq 4$ has zero components in
+positions $5, \ldots, 8$, so it lies in $U$. It is also a
+$D_8$-type root of $\Phi(E_8)$ by Definition~\ref{def:E8}. Hence
+$\pm e_i \pm e_j \in \Phi(E_8) \cap U$.
+
+\emph{$\Phi(E_8) \cap U \subseteq \Phi(D_4)$.} Let $r \in \Phi(E_8)
+\cap U$. Then $r$ has zero components in positions $5, \ldots, 8$
+(by membership in $U$). We consider the two types of roots in
+$\Phi(E_8)$:
+\begin{itemize}
+\item \textbf{$D_8$-type.} $r = \pm e_i \pm e_j$ with $1 \leq i <
+  j \leq 8$. For $r \in U$, the nonzero components of $r$ must be
+  in positions $1, \ldots, 4$, so $1 \leq i < j \leq 4$. Hence
+  $r \in \Phi(D_4)$.
+\item \textbf{Half-integer.} $r = \frac{1}{2}(\epsilon_1, \ldots,
+  \epsilon_8)$ with $\epsilon_i \in \{+1, -1\}$ and an even number
+  of minus signs. Every component of $r$ has absolute value
+  $\frac{1}{2} \neq 0$; in particular, the components in positions
+  $5, \ldots, 8$ are non-zero, so $r \notin U$.
+\end{itemize}
+So $\Phi(E_8) \cap U$ contains no half-integer roots, and the
+$D_8$-type roots in $U$ are exactly $\Phi(D_4)$. Hence
+$\Phi(E_8) \cap U \subseteq \Phi(D_4)$.
+
+\emph{(2)} $\Phi(D_4)$ is the root system of type $D_4$ in the
+standard model \cite[\S 12.1]{Humphreys}: rank $4$, order $24$,
+simple roots $\{e_1 - e_2, e_2 - e_3, e_3 - e_4, e_3 + e_4\}$.
+Irreducibility and crystallographicity are classical.
+
+\emph{(3)} $|\Phi(E_8)| = 240 > 24 = |\Phi(D_4)|$, so the
+inclusion is strict.
+\end{proof}
+
+\begin{remark}[Triality]
+\label{rmk:triality}
+The Weyl group $W(D_4)$ has the outer automorphism group $S_3$
+(triality), permuting the three irreducible $8$-dimensional real
+representations of $\Spin(8)$ \cite[\S 20.3]{FultonHarris}. This is
+classical background; triality plays a role in \S\ref{sec:8-sector}
+in linking the octonionic $8$-sector to the $D_4$ picture, but P2
+does not claim any cascade-specific use of triality beyond
+compatibility with the standard $\Spin(8)$-representation theory.
+\end{remark}
+
+%=====================================================================
+\section{Icosians and the $E_8 \to H_4$ Projection}
+\label{sec:H4}
+%=====================================================================
+
+This is the delicate section. The key technical point is that
+$H_4$ is non-crystallographic and therefore cannot be a
+sub-root-system of any crystallographic root system, in particular
+not of $E_8$. What exists is a projection from $E_8$ lattice data
+to an $H_4$ module, realized concretely via the icosian ring. We
+define this projection explicitly.
+
+\subsection{Quaternions and the icosian ring}
+
+\begin{notation}[Hamilton quaternions]
+Let $\HH = \R \oplus \R i \oplus \R j \oplus \R k$ denote the
+Hamilton quaternion algebra, with $i^2 = j^2 = k^2 = ijk = -1$.
+For $q = a + bi + cj + dk \in \HH$, the conjugate is
+$\bar q = a - bi - cj - dk$, the norm is
+$N(q) = q \bar q = a^2 + b^2 + c^2 + d^2$, and the trace is
+$\operatorname{tr}(q) = q + \bar q = 2a$.
+\end{notation}
+
+\begin{definition}[Icosian ring]
+\label{def:icosian-ring}
+The \emph{icosian ring} $I \subset \HH$ is the subring of $\HH$
+generated by the $120$ unit icosians \cite[\S 8.2,
+Eq.~(15)]{ConwaySloane}: the unit quaternions
+$\{\pm 1, \pm i, \pm j, \pm k\}$; the $16$ vectors
+$\tfrac{1}{2}(\pm 1 \pm i \pm j \pm k)$ (all sign combinations);
+and the $96$ vectors of the form
+$\tfrac{1}{2}(\pm \varphi^{-1} \pm 1 \cdot a_2 \pm \varphi \cdot a_3)$
+where $(a_1, a_2, a_3)$ runs over even permutations of
+$(1, i, j, k)$ with one entry replaced by $0$ (the precise
+enumeration is given in \cite[\S 8.2.2, Table~8.1]{ConwaySloane}).
+
+As a $\Z$-module, $I$ has rank $8$ \cite[Ch.~8,
+Eq.~(17)]{ConwaySloane}; a specific $\Z$-basis is exhibited in
+\cite[Table~8.1]{ConwaySloane}. Equivalently
+\cite[Theorem~4.1]{MoodyPatera}, $I$ has a $\Z$-basis consisting of
+eight specific unit icosians; the precise basis depends on a
+choice of normalization, and we denote any fixed such basis by
+$\{\omega_1, \ldots, \omega_8\} \subset I$. The ring structure on
+$I$ is inherited from $\HH$.
+\end{definition}
+
+\begin{remark}[On the rationality of $I$]
+\label{rmk:I-rationality}
+The $\Q$-vector space $I_\Q := I \otimes_\Z \Q$ has $\Q$-dimension
+$8$. The icosian ring is \emph{not} of the simple form
+$\Z\{1, i, j, k\} \oplus \Z\varphi \cdot \{1, i, j, k\}$: that
+$\Z$-module fails to contain the half-integer generators
+$\tfrac{1}{2}(\pm 1 \pm i \pm j \pm k)$. The correct $I$ is
+strictly larger and includes such half-integer combinations; this
+is what makes its trace form unimodular and equal to the $E_8$
+form \cite[Ch.~8, Eq.~(17)]{ConwaySloane}. We rely on this
+classical structure rather than on any naive coordinatization.
+\end{remark}
+
+\begin{definition}[Icosian star-map]
+\label{def:icosian-star}
+The \emph{icosian star-map} $\ast \colon I \to I$ is the
+coefficientwise Galois conjugation
+$\varphi \mapsto \bar\varphi = 1 - \varphi$:
+\[
+  q^\ast := (a_0 + a_0' \bar\varphi) + (a_1 + a_1' \bar\varphi) i
+    + (a_2 + a_2' \bar\varphi) j + (a_3 + a_3' \bar\varphi) k.
+\]
+This is a ring automorphism of $I$ of order $2$, commuting with
+quaternionic conjugation $q \mapsto \bar q$.
+\end{definition}
+
+\begin{remark}[$\ast$ is the coefficientwise $\sigma$ of P1]
+\label{rmk:star-is-sigma}
+Under the identification of $I$ with an $8$-dimensional
+$\Q$-vector space via the $\Q$-basis
+$\{1, i, j, k, \varphi, \varphi i, \varphi j, \varphi k\}$, and the
+further identification of $I \otimes_\Z \Q(\varphi)$ with the
+scalar extension of a $\Q$-vector space, the star-map $\ast$
+coincides with the coefficientwise $\sigma$-action of
+\cite[Def.~2.2, Def.~2.5]{SigmaRationality}. We use $\ast$ for the
+star-map on $I$ and $\sigma$ for the more general coefficientwise
+action per P1; on $I \otimes_\Z \Q(\varphi)$ they agree.
+\end{remark}
+
+\subsection{The Euclidean trace form and $E_8$ realization}
+
+\begin{definition}[Euclidean trace form on $I$]
+\label{def:trace-form}
+The \emph{Euclidean trace form} on $I$ is the $\Z$-bilinear pairing
+\[
+  \langle p, q \rangle_I := \tfrac{1}{2}\big( \tr(p \bar q)
+  + \tr(p^\ast \bar{q}^\ast)\big),
+  \qquad p, q \in I.
+\]
+Equivalently, $\langle p, q \rangle_I = \tr(p\bar q)_{\rm sym}$,
+where $\tr(\cdot)_{\rm sym}$ denotes the trace of the symmetric
+part under the $\ast$-action (i.e.\ $\tr(\cdot)_{\rm sym} =
+\tr \circ \Pi_\sigma$ with $\Pi_\sigma$ of
+\cite[Def.~4.1]{SigmaRationality}).
+\end{definition}
+
+\begin{fact}[Icosians realize $E_8$; \cite{ConwaySloane, MoodyPatera}]
+\label{fact:icosian-E8}
+The $\Z$-module $I$ equipped with the Euclidean trace form
+$\langle \cdot, \cdot \rangle_I$ is a rank-$8$ Euclidean lattice
+isometric to $\Lambda(E_8)$. There exists a $\Z$-module isometry
+\[
+  \iota_I \colon \Lambda(E_8) \xrightarrow{\;\sim\;} I
+\]
+carrying the standard $E_8$ form to $\langle \cdot, \cdot \rangle_I$.
+The $240$ minimal vectors of $I$ (those $q$ with
+$\langle q, q \rangle_I = 2$) correspond bijectively under $\iota_I^{-1}$
+to the $240$ roots in $\Phi(E_8)$, and equal the $240$ unit
+icosians \cite[Ch.~8, Eq.~(17) and Table~8.1]{ConwaySloane},
+\cite[\S 4.1]{MoodyPatera}.
+\end{fact}
+
+\begin{notation}[Choice of $\iota_I$]
+\label{not:choice-iotaI}
+We fix one specific $\iota_I$ from now on, namely the realization
+described explicitly in \cite[Ch.~8, Table~8.1]{ConwaySloane}
+sending the simple-root basis of $\Lambda(E_8)$ chosen there to a
+specified $\Z$-basis of $I$. The downstream constructions of this
+paper depend on $\iota_I$ only through its image and through its
+$\Z$-linearity; different classical choices of $\iota_I$ differ by
+an automorphism of $\Lambda(E_8)$ (an element of $W(E_8)$ acting on
+either side), and produce $W(H_4)$-equivalent images on the
+$H_4$-side after the projection of \S\ref{subsec:pi-H} below.
+\end{notation}
+
+\subsection{The physical-space projection $\pi_H$}
+\label{subsec:pi-H}
+
+\begin{definition}[Real embeddings of $\Q(\varphi)$]
+\label{def:real-embeddings}
+Let $\tau_+, \tau_- \colon \Q(\varphi) \to \R$ denote the two
+real embeddings of $\Q(\varphi)$, specified by $\tau_+(\varphi) =
+\varphi = (1+\sqrt 5)/2$ and $\tau_-(\varphi) = \bar\varphi =
+(1-\sqrt 5)/2$. The pair $(\tau_+, \tau_-)$ is the unique way of
+realizing $\Q(\varphi)$ as a subring of $\R \oplus \R$.
+\end{definition}
+
+\begin{definition}[Twin map $\eta$]
+\label{def:eta}
+Every $q \in I$ admits a unique expression as $q = c_0 + c_1 i +
+c_2 j + c_3 k$ with $c_0, c_1, c_2, c_3 \in \Q(\varphi)$ inside the
+quaternion algebra $\HH \otimes_\R \R$ (since $I \subset \HH$ and
+all generators of $I$ have $\Q(\varphi)$-valued components in the
+$\{1, i, j, k\}$ basis of $\HH$, by inspection of the generators in
+Def.~\ref{def:icosian-ring}). The \emph{twin map}
+$\eta \colon I \to \HH \oplus \HH$ is
+\[
+  \eta(q) := (q_+, q_-),
+\]
+where $q_\pm := \tau_\pm(c_0) + \tau_\pm(c_1) i + \tau_\pm(c_2) j
++ \tau_\pm(c_3) k$ is obtained by applying $\tau_\pm$ to each
+$\Q(\varphi)$-coefficient. The star-map of
+Definition~\ref{def:icosian-star} satisfies $\eta(q^\ast) =
+(q_-, q_+)$, i.e.\ $\eta$ interchanges the two $\HH$-factors under
+the star-map; equivalently $\operatorname{swap} \circ \eta = \eta
+\circ \ast$, where $\operatorname{swap}(p, q) := (q, p)$.
+\end{definition}
+
+\begin{definition}[$H_4$ root system]
+\label{def:H4}
+We write $\Phi(H_4) \subset \HH \cong \R^4$ for the standard
+coordinate realization of the $H_4$ root system: the $120$ unit
+icosians of $\HH$, equivalently the $120$ vertices of the $600$-cell
+in the standard coordinates \cite[\S 22.7]{CoxeterRegularPolytopes},
+\cite[\S 4.1]{MoodyPatera}. We refer to this set as the
+\emph{$120$ unit icosians} or as $\Phi(H_4)$ interchangeably; both
+mean the same $120$-element subset of $\HH$.
+\end{definition}
+
+\begin{definition}[Physical-space projection]
+\label{def:pr-phys}
+The \emph{physical-space projection}
+$\operatorname{pr}_{\rm phys} \colon \HH \oplus \HH \to \HH$ is
+$\operatorname{pr}_{\rm phys}(q_+, q_-) := q_+$, i.e.\ projection
+onto the first factor.
+\end{definition}
+
+\begin{definition}[The $E_8 \to H_4$ projection]
+\label{def:pi-H}
+The \emph{$E_8 \to H_4$ projection} is the composition
+\[
+  \pi_H \colon \Lambda(E_8) \xrightarrow{\;\iota_I\;} I
+  \xrightarrow{\;\eta\;} \HH \oplus \HH
+  \xrightarrow{\;\operatorname{pr}_{\rm phys}\;} \HH,
+  \qquad \pi_H(x) := (\iota_I(x))_+.
+\]
+The image $\pi_H(\Lambda(E_8)) \subset \HH \cong \R^4$ is the set
+$\{q_+ : q \in I\}$ obtained by applying $\tau_+$ coefficientwise
+to every icosian.
+\end{definition}
+
+\begin{theorem}[$E_8 \to H_4$ projection: structural properties]
+\label{thm:pi-H}
+The map $\pi_H \colon \Lambda(E_8) \to \HH \cong \R^4$ of
+Definition~\ref{def:pi-H} satisfies:
+\begin{enumerate}
+\item $\pi_H$ is $\Z$-linear.
+\item $\pi_H(\Lambda(E_8))$ is the additive group
+  $\{q_+ : q \in I\}$, which is a dense subgroup of $\HH$.
+\item The image of the $E_8$ minimal shell $\{r \in \Phi(E_8) :
+  \langle r, r \rangle = 2\}$ under $\pi_H$ is exactly the
+  $120$-element set $\Phi(H_4)$ of Definition~\ref{def:H4}.
+\end{enumerate}
+$H_4$ is non-crystallographic, in the sense of
+Lemma~\ref{lem:H4-noncrystallographic} below; in particular
+$\Phi(H_4)$ is \emph{not} a sub-root-system of $\Phi(E_8)$.
+\end{theorem}
+
+\begin{proof}
+\emph{(1) $\Z$-linearity.} $\iota_I$ is $\Z$-linear by
+Fact~\ref{fact:icosian-E8}. $\eta$ is $\Z$-linear because $\tau_\pm
+\colon \Q(\varphi) \to \R$ are $\Q$-linear ring homomorphisms,
+and $\eta$ acts coefficientwise on the $\Z[\varphi]$-coefficients
+of icosians. $\operatorname{pr}_{\rm phys}$ is the projection onto
+the first $\HH$-factor of $\HH \oplus \HH$, hence $\Z$-linear.
+Composition: $\pi_H = \operatorname{pr}_{\rm phys} \circ \eta \circ
+\iota_I$ is $\Z$-linear.
+
+\emph{(2) Image and density.} By Definition~\ref{def:pi-H},
+$\pi_H(\Lambda(E_8)) = \{q_+ : q \in I\}$ since $\iota_I$ is
+surjective onto $I$. We show this set is dense in $\HH \cong \R^4$.
+
+By \cite[Theorem~4.1 and Proposition~4.2]{MoodyPatera}, the
+$\tau_+$-image of $I$ in $\HH$ is precisely the
+$\Z[\varphi]$-module generated by $\{1, i, j, k\}$, where
+$\varphi = (1+\sqrt 5)/2 \in \R$ now denotes the real number:
+\[
+  \pi_H(\Lambda(E_8)) = \{q_+ : q \in I\} =
+    \Z[\varphi]\{1, i, j, k\} \subset \HH.
+\]
+This is the classical ``cut-and-project'' image of the icosian
+ring under $\tau_+$ \cite[\S 4.1]{MoodyPatera}.
+
+The $\Z[\varphi]$-module $\Z[\varphi]\{1, i, j, k\}$ has
+$\Z$-rank $8$ in $\HH \cong \R^4$ (rank $2$ in each of the four
+coordinate directions, since $\Z[\varphi] = \Z + \Z\varphi$ has
+$\Z$-rank $2$). Since $\varphi$ is irrational
+($\varphi^2 = \varphi + 1$ has discriminant $5$, not a square in
+$\Q$), the additive subgroup $\Z + \Z\varphi \subset \R$ is dense
+in $\R$ \cite[Theorem~A.1]{MoodyPatera} (an instance of the
+classical result that $\Z + \Z\alpha$ is dense in $\R$ for any
+irrational $\alpha$). Density in each of the four coordinates of
+$\HH$ implies density of the product $\Z[\varphi]\{1, i, j, k\}$
+in $\HH \cong \R^4$. Hence $\pi_H(\Lambda(E_8))$ is dense in
+$\HH$.
+
+\emph{(3) Image of the minimal shell.} The $E_8$ minimal shell
+under $\iota_I$ corresponds to the $240$ minimal vectors of $I$,
+which by Fact~\ref{fact:icosian-E8} are the $240$ unit icosians.
+The $240$ unit icosians come in $120$ pairs $(q, q^\ast)$ each
+mapping under $\eta$ to the swap pair $((q_+, q_-), (q_-, q_+))
+\in \HH \oplus \HH$ (with $q^\ast \neq q$ when $q \notin
+\Z[\varphi]$). Applying $\operatorname{pr}_{\rm phys}$ to each
+pair gives the same first-coordinate set: the $120$-element
+projection of these pairs is exactly the set of $120$ unit
+icosians in $\HH$, which by Definition~\ref{def:H4} is
+$\Phi(H_4)$. (For the $\Z[\varphi]$-rational unit icosians ---
+i.e.\ those fixed by $\ast$ --- the pair degenerates and the count
+is preserved via the standard $\tau_+$-image \cite[\S 4.1,
+Eq.~(4.5)]{MoodyPatera}.)
+\end{proof}
+
+\begin{lemma}[$H_4$ is non-crystallographic]
+\label{lem:H4-noncrystallographic}
+There is no $W(H_4)$-stable lattice $L \subset \R^4$. In particular,
+$\Phi(H_4)$ is not a sub-root-system of any crystallographic root
+system of rank $4$ in $\R^4$, including any embedded $\Phi(D_4) \subset
+\R^4$.
+\end{lemma}
+
+\begin{proof}
+$W(H_4)$ contains rotations of order $5$ (it is the symmetry group
+of the regular pentagon-faced $120$-cell, with $5$-fold faces).
+Crystallographic restrictions in $\R^4$ \cite[Theorem~6.4]{Humphreys}
+allow rotational orders only in $\{1, 2, 3, 4, 6\}$ for any
+lattice-preserving isometry of a rank-$4$ lattice; order $5$ is
+excluded. Hence $W(H_4)$ cannot preserve any rank-$4$ lattice.
+\end{proof}
+
+\begin{remark}[On part (2) and crystallographic embeddings]
+\label{rmk:density-noembedding}
+Combining (2) and Lemma~\ref{lem:H4-noncrystallographic} clarifies
+the relationship between $E_8$ and $H_4$: the additive image
+$\pi_H(\Lambda(E_8))$ is dense in $\R^4$, which is consistent with
+the projective fact that no crystallographic lattice in $\R^4$
+contains $\Phi(H_4)$. In particular, the $E_8$-to-$H_4$
+correspondence cannot be presented as a sub-root-system inclusion
+even after rescaling. Theorem~\ref{thm:pi-H}(3) is the precise
+statement of what \emph{is} true: the minimal shell maps onto
+$\Phi(H_4)$ as sets under the projection.
+\end{remark}
+
+\begin{remark}[Why this is a projection, not an inclusion]
+\label{rmk:projection-not-inclusion}
+Theorem~\ref{thm:pi-H} expresses the $E_8$-$H_4$ relationship as a
+projection from an $8$-dimensional crystallographic object
+($\Lambda(E_8)$) to a $4$-dimensional non-crystallographic object
+($H_4$). This is often described informally as ``$H_4 \subset
+E_8$''; that description is algebraically misleading. The precise
+statement is Theorem~\ref{thm:pi-H}(3): $\Phi(H_4)$ equals the
+image of the minimal shell under $\pi_H$, not a sub-root-system of
+$\Phi(E_8)$.
+\end{remark}
+
+%=====================================================================
+\section{The $24$-Cell Inside the $600$-Cell}
+\label{sec:24-600}
+%=====================================================================
+
+This section isolates an explicit $24$-vertex subset of the
+$600$-cell that is a regular $24$-cell, isometric to the $D_4$ root
+polytope. The proof is by direct coordinate inspection.
+
+\subsection{Standard $600$-cell coordinates}
+
+\begin{definition}[$V_{600}$, the $600$-cell vertex set]
+\label{def:V600}
+Working in $\R^4$ with coordinates $(x_1, x_2, x_3, x_4)$ and
+$\varphi = (1+\sqrt 5)/2$, define $V_{600}$ as the union of the
+following three classes of vectors
+\cite[\S 22.7]{CoxeterRegularPolytopes}, \cite[\S 3.1]{MoodyPatera}:
+\begin{enumerate}
+\item \textbf{Axis points ($8$):}
+  all permutations of $(\pm 1, 0, 0, 0)$ (i.e.\ the eight vectors
+  $\pm e_1, \pm e_2, \pm e_3, \pm e_4$).
+\item \textbf{Half-type points ($16$):}
+  $\frac{1}{2}(\pm 1, \pm 1, \pm 1, \pm 1)$, with independent sign
+  choices in each of the four coordinates; $2^4 = 16$ vectors.
+\item \textbf{Golden points ($96$):}
+  all even permutations of
+  $\tfrac{1}{2}(0, \pm 1, \pm \varphi^{-1}, \pm \varphi)$, with
+  independent signs on the three nonzero coordinates. There are
+  $\tfrac{4!}{2} = 12$ even permutations of the four positions and
+  $2^3 = 8$ independent sign choices on the nonzero coordinates,
+  giving $12 \cdot 8 = 96$ vectors.
+\end{enumerate}
+The total is $|V_{600}| = 8 + 16 + 96 = 120$, matching the standard
+vertex count of the $600$-cell \cite[\S 22.7]{CoxeterRegularPolytopes}.
+\end{definition}
+
+\begin{remark}[Normalization]
+With the coordinates above, every $v \in V_{600}$ satisfies
+$\|v\|^2 = 1$, i.e.\ $V_{600}$ lies on the unit $3$-sphere in $\R^4$.
+\end{remark}
+
+\subsection{The inscribed $24$-cell}
+
+\begin{definition}[$V_{24}$, the inscribed $24$-cell vertex set]
+\label{def:V24}
+Let
+\[
+  V_{24} := \big\{\text{axis points}\big\}
+    \cup \big\{\text{half-type points}\big\} \subset V_{600}.
+\]
+Explicitly: $V_{24}$ consists of the $8$ vectors of the form
+$(\pm 1, 0, 0, 0)$ and permutations, together with the $16$
+vectors $\frac{1}{2}(\pm 1, \pm 1, \pm 1, \pm 1)$ (all signs).
+$|V_{24}| = 24$.
+\end{definition}
+
+\begin{proposition}[$24$-cell inside $600$-cell]
+\label{prop:24-in-600}
+The rescaled $D_4$ root system $\tilde\Phi(D_4) := \{r/\sqrt 2 :
+r \in \Phi(D_4)\}$ is a $24$-element set of unit vectors in $\R^4$.
+There exists an explicit orthogonal transformation $R \in
+\mathrm{O}(4)$ such that $R\big(\tilde\Phi(D_4)\big) = V_{24}$. In
+particular $V_{24}$ and $\tilde\Phi(D_4)$ are congruent.
+\end{proposition}
+
+\begin{proof}
+Define the block-orthogonal matrix
+\[
+  R := \frac{1}{\sqrt 2}
+  \begin{pmatrix}
+    1 & 1 & 0 & 0 \\
+    1 & -1 & 0 & 0 \\
+    0 & 0 & 1 & 1 \\
+    0 & 0 & 1 & -1
+  \end{pmatrix}.
+\]
+Direct computation gives $R^T R = I_4$, so $R \in \mathrm{O}(4)$.
+
+We verify $R(\tilde\Phi(D_4)) = V_{24}$ by direct evaluation on the
+$24$ unit vectors
+$\tilde\Phi(D_4) = \big\{\tfrac{1}{\sqrt 2}(\pm e_i \pm e_j) :
+1 \leq i < j \leq 4 \big\}$. The six unordered index pairs
+$\{i, j\}$ split into two classes:
+
+\emph{Class A: $\{i, j\} \in \{\{1, 2\}, \{3, 4\}\}$
+($R$-block-internal pairs).} Direct computation:
+\begin{align*}
+  R\big(\tfrac{1}{\sqrt 2}(e_1 + e_2)\big) &=
+    \tfrac{1}{\sqrt 2} \cdot \tfrac{1}{\sqrt 2}(2, 0, 0, 0) =
+    e_1, \\
+  R\big(\tfrac{1}{\sqrt 2}(e_1 - e_2)\big) &= e_2, \\
+  R\big(\tfrac{1}{\sqrt 2}(e_3 + e_4)\big) &= e_3, \\
+  R\big(\tfrac{1}{\sqrt 2}(e_3 - e_4)\big) &= e_4.
+\end{align*}
+Including the $\pm$ signs, the $8$ rescaled roots in Class A map
+bijectively to the $8$ axis points $\{\pm e_1, \pm e_2, \pm e_3,
+\pm e_4\}$ of $V_{24}$.
+
+\emph{Class B: $\{i, j\} \in \{\{1,3\}, \{1,4\}, \{2,3\}, \{2,4\}\}$
+(cross-block pairs).} Direct computation:
+\begin{align*}
+  R\big(\tfrac{1}{\sqrt 2}(e_1 + e_3)\big) &=
+    \tfrac{1}{2}(1, 1, 1, 1), &
+  R\big(\tfrac{1}{\sqrt 2}(e_1 + e_4)\big) &=
+    \tfrac{1}{2}(1, 1, 1, -1), \\
+  R\big(\tfrac{1}{\sqrt 2}(e_1 - e_3)\big) &=
+    \tfrac{1}{2}(1, 1, -1, -1), &
+  R\big(\tfrac{1}{\sqrt 2}(e_1 - e_4)\big) &=
+    \tfrac{1}{2}(1, 1, -1, 1), \\
+  R\big(\tfrac{1}{\sqrt 2}(e_2 + e_3)\big) &=
+    \tfrac{1}{2}(1, -1, 1, 1), &
+  R\big(\tfrac{1}{\sqrt 2}(e_2 + e_4)\big) &=
+    \tfrac{1}{2}(1, -1, 1, -1), \\
+  R\big(\tfrac{1}{\sqrt 2}(e_2 - e_3)\big) &=
+    \tfrac{1}{2}(1, -1, -1, -1), &
+  R\big(\tfrac{1}{\sqrt 2}(e_2 - e_4)\big) &=
+    \tfrac{1}{2}(1, -1, -1, 1).
+\end{align*}
+The $8$ images all have first coordinate $+\tfrac{1}{2}$, and their
+sign patterns on the remaining three coordinates realize all $2^3
+= 8$ combinations. Including the negatives $-r$ for each rescaled
+root $r$ (which produce images with first coordinate
+$-\tfrac{1}{2}$ and exhaust the remaining sign patterns), the $16$
+rescaled roots in Class B map bijectively to the $16$ half-type
+vertices $\tfrac{1}{2}(\pm 1, \pm 1, \pm 1, \pm 1)$ of $V_{24}$.
+
+Classes A and B together cover $\tilde\Phi(D_4)$ ($8 + 16 = 24$
+vectors), and their images cover $V_{24}$ ($8$ axis $+\, 16$
+half-type $= 24$ vertices). Hence $R(\tilde\Phi(D_4)) = V_{24}$
+as sets, and since $R \in \mathrm{O}(4)$ preserves Euclidean
+distances, $V_{24}$ and $\tilde\Phi(D_4)$ are congruent.
+\end{proof}
+
+\begin{corollary}[$V_{24}$ is a regular $24$-cell]
+\label{cor:V24-24cell}
+$V_{24}$ is the vertex set of a regular $24$-cell in $\R^4$.
+\end{corollary}
+
+\begin{proof}
+$\tilde\Phi(D_4)$ is the standard unit-radius realization of the
+$D_4$ root polytope. The $D_4$ root polytope is the regular
+$24$-cell with $24$ vertices on the unit sphere
+\cite[\S 22.7]{CoxeterRegularPolytopes} (which gives the same
+$24$-cell by an alternative coordinate model; the two models are
+related by the rotation $R$ of
+Proposition~\ref{prop:24-in-600}). By
+Proposition~\ref{prop:24-in-600}, $V_{24}$ is the image of
+$\tilde\Phi(D_4)$ under an orthogonal transformation of $\R^4$,
+hence itself a regular $24$-cell.
+\end{proof}
+
+\begin{remark}[Why this is an inscription, not a quotient]
+\label{rmk:inscription-not-quotient}
+Proposition~\ref{prop:24-in-600} says $V_{24}$ is a subset of
+$V_{600}$, not that $V_{600}$ is a fibre bundle over $V_{24}$ with
+``fibres of size $5$''. The $2I/2T$ coset language of earlier
+cascade notes describes a related combinatorial structure on the
+binary icosahedral and tetrahedral groups inside $\Sp(1) \subset
+\HH$, but that language is not needed here and is not used as a
+theorem statement. The paper uses only
+Proposition~\ref{prop:24-in-600}: $V_{24} \subset V_{600}$,
+isometric to the $24$-cell, $24$ vertices.
+\end{remark}
+
+%=====================================================================
+\section{The $600$-Cell Spectral and Shell Structure}
+\label{sec:600cell-spectral}
+%=====================================================================
+
+The preceding sections constructed the $600$-cell vertex set
+$V_{600}$ as a finite subset of the unit $3$-sphere via explicit
+coordinates (Definition~\ref{def:V600}), and exhibited an inscribed
+$24$-cell $V_{24} \subset V_{600}$. This section collects the
+spectral, shell, and representation-theoretic data on the
+$600$-cell vertex graph that downstream papers draw on (Papers V
+and XXII of the cascade-correspondence programme, the
+cascade-refinement-spaces paper P3 for its Markov-chain
+substrate, and the Foundations paper for its spectral
+decomposition). Every numerical claim in this section is either an
+exact finite-arithmetic verification or an explicit import from a
+classical source that is cited at the point of use.
+
+\subsection{Icosian group structure under Hamilton multiplication}
+
+\begin{definition}[Hamilton multiplication on $V_{600}$]
+\label{def:ham-600}
+Regard each vertex $v = (v_1, v_2, v_3, v_4) \in V_{600} \subset
+\R^4$ as a unit quaternion $v_1 + v_2 i + v_3 j + v_4 k \in
+\HH$. Hamilton multiplication $(v, w) \mapsto v \cdot w$ then
+takes two unit quaternions to a unit quaternion. The vertex
+identification with unit icosians used here is the standard one,
+as in \cite[\S 3.1]{MoodyPatera} and
+\cite[Ch.~8]{ConwaySloane}; each coordinate lies in
+$\Q(\sqrt{5}) \subset \Q(\varphi)$, so Hamilton products remain in
+the same ring.
+\end{definition}
+
+\begin{theorem}[Icosian group closure and identification with $2I$,
+computer-assisted]
+\label{thm:icosian-closure}
+The vertex set $V_{600}$ is closed under Hamilton multiplication,
+and, as a subgroup of $\mathrm{Sp}(1) \subset \HH$, is isomorphic
+to the binary icosahedral group $2I$ of order $120$.
+\end{theorem}
+
+\begin{proof}
+\emph{(L1) Exact vertex construction.} Build each of the $120$
+vertices of Definition~\ref{def:V600} with every coordinate
+represented as an exact pair $(a, b) \in \Q^2$ denoting $a +
+b\sqrt 5$. The script
+\verb|papers/paper-xxii/scripts/run_icosian_exact.py| (referenced
+here as the canonical P2 implementation, with the same protocol
+reused in
+\verb|papers/paper-v/scripts/run_rd4_exact_rational.py|) implements
+this step.
+
+\emph{(L2) Closure.} Enumerate all $120 \times 120 = 14\,400$
+Hamilton products in exact $\Q(\sqrt 5)$-arithmetic and match each
+against a vertex by pair equality. The script reports zero
+failures: every product is again a vertex. Hence $V_{600}$ is a
+finite subgroup of $\mathrm{Sp}(1)$ of order $120$.
+
+\emph{(L3) Classification.} The finite subgroups of
+$\mathrm{Sp}(1)$ are classified up to conjugacy in
+\cite[Ch.~3]{DuVal1964}: at order $120$, the only finite subgroup
+of $\mathrm{Sp}(1)$ is the binary icosahedral group $2I$.
+Therefore $V_{600} \cong 2I$ as abstract groups.
+\end{proof}
+
+Throughout the remainder of this section we write $V_{600}$ and
+$2I$ interchangeably. The step (L2) is computer-assisted in the
+sense that a finite enumeration (of $14\,400$ exact pair-of-rational
+equalities) is carried out in software; no floating-point
+tolerance enters the step. Step (L3) is a purely classical
+invocation.
+
+\subsection{Euclidean distance shells and the shell-class bijection}
+\label{sec:shells-classes}
+
+\begin{definition}[Euclidean shells from the identity]
+\label{def:shells}
+For each $v \in V_{600}$, let $\|1 - v\| \in [0, 2]$ be the
+Euclidean distance from the identity quaternion $1$ to $v$. The
+squared distance satisfies $\|1 - v\|^2 = 2 - 2 v_1 \in
+\Q(\sqrt 5)$ with $v_1$ the scalar part of $v$. Group vertices by
+exact equality of $\|1 - v\|^2$; this yields the nine \emph{Euclidean
+shells} $S_0^{\mathrm{id}}, \ldots, S_8^{\mathrm{id}}$ displayed in
+Table~\ref{tab:P2-shells}.
+\end{definition}
+
+\begin{table}[ht]
+\centering
+\caption{The nine Euclidean distance shells of $V_{600}$ from the
+identity, listed by exact squared distance, Euclidean distance,
+spherical angle, and shell size. Reproduced in exact
+$\Q(\sqrt 5)$-arithmetic by
+\texttt{run\_icosian\_exact.py}.}
+\label{tab:P2-shells}
+\begin{tabular}{@{}cllllr@{}}
+\toprule
+$k$ & Squared distance & Distance & Angle & $\cos(\text{angle})$ & $|S_k^{\mathrm{id}}|$ \\
+\midrule
+$0$ & $0$                  & $0$              & $0^\circ$   & $1$              & $1$ \\
+$1$ & $(3-\sqrt 5)/2 = 1/\varphi^2$ & $1/\varphi$     & $36^\circ$  & $\varphi/2$      & $12$ \\
+$2$ & $1$                  & $1$              & $60^\circ$  & $1/2$            & $20$ \\
+$3$ & $(5-\sqrt 5)/2 = 3-\varphi$ & $\sqrt{3-\varphi}$ & $72^\circ$  & $1/(2\varphi)$ & $12$ \\
+$4$ & $2$                  & $\sqrt 2$        & $90^\circ$  & $0$              & $30$ \\
+$5$ & $(3+\sqrt 5)/2 = \varphi^2$ & $\varphi$       & $108^\circ$ & $-1/(2\varphi)$  & $12$ \\
+$6$ & $3$                  & $\sqrt 3$        & $120^\circ$ & $-1/2$           & $20$ \\
+$7$ & $(5+\sqrt 5)/2 = 2+\varphi$ & $\sqrt{3+\varphi}$ & $144^\circ$ & $-\varphi/2$ & $12$ \\
+$8$ & $4$                  & $2$              & $180^\circ$ & $-1$             & $1$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{theorem}[Shell = conjugacy class, computer-assisted]
+\label{thm:shell-class}
+The nine Euclidean shells $S_k^{\mathrm{id}}$ are in size-preserving
+bijection with the nine conjugacy classes of $2I$. Explicitly: for
+each $k$, the set $S_k^{\mathrm{id}} \subset V_{600}$ is a single
+$2I$-conjugacy class, and the shell-size multiset $\{1, 12, 20,
+12, 30, 12, 20, 12, 1\}$ matches the conjugacy-class-size multiset
+of $2I$.
+\end{theorem}
+
+\begin{proof}
+\emph{(L3a) Conjugacy classes of $2I$.} Using the exact $\Q(\sqrt
+5)$-arithmetic of Theorem~\ref{thm:icosian-closure}, enumerate for
+each $g \in V_{600}$ the orbit $\{h g h^{-1} : h \in V_{600}\}$
+under Hamilton conjugation, and bucket vertices by exact
+coordinate equality. The script
+\texttt{run\_icosian\_exact.py} reports nine disjoint classes of
+sizes $\{1, 1, 12, 12, 12, 12, 20, 20, 30\}$, summing to $120$
+(the standard class structure of $2I$).
+
+\emph{(L3b) Euclidean shell decomposition.} For each $v \in
+V_{600}$ compute $\|1 - v\|^2 = 2 - 2 v_1 \in \Q(\sqrt 5)$ and
+bucket by exact pair equality. Output: nine shells with squared
+distances and sizes as in Table~\ref{tab:P2-shells}; sizes $\{1,
+12, 20, 12, 30, 12, 20, 12, 1\}$ summing to $120$.
+
+\emph{(L3c) Shell-class matching.} The shell-size multiset matches
+the class-size multiset. A direct exact comparison of the nine
+shell-index-sets against the nine conjugacy-class-index-sets in
+the same script shows equality pair-by-pair: each Euclidean
+distance shell from the identity coincides with exactly one
+$2I$-conjugacy class.
+
+\emph{Conceptual reason.} The inner product on $\HH$ satisfies
+$\|1 - v\|^2 = 2 - 2\,\mathrm{Re}(v) = 2 - 2\,\mathrm{Re}(h v
+h^{-1})$ for any unit quaternion $h$ (since
+$\mathrm{Re}$ is conjugation-invariant on $\HH$). Therefore every
+$2I$-conjugacy class lies in a single Euclidean shell from $1$.
+The finite enumeration in (L3c) confirms that each shell contains
+exactly one class, i.e.\ no shell merges two distinct classes.
+\end{proof}
+
+\begin{corollary}[Shell-adjacency class sums are central]
+\label{cor:class-sums-central}
+For each $k \in \{1, \ldots, 8\}$, the \emph{shell-$k$ class sum}
+\[
+  C_k \;:=\; \sum_{s \in S_k^{\mathrm{id}}} s \;\in\; \C[2I]
+\]
+is a central element of the group algebra $\C[2I]$. Consequently,
+the \emph{shell-$k$ adjacency matrix} $\mathbf{A}_k$ on
+$\C^{V_{600}}$ defined by $(\mathbf{A}_k)_{v, w} = 1$ if
+$\|v - w\| = d_k$ and $0$ otherwise acts, in the identification
+$\C^{V_{600}} \cong \C[2I]$ afforded by the left-regular action,
+as \emph{right-convolution by $C_k$}; and by Schur's lemma it acts
+by a scalar on each isotypic component of $\C[2I]$.
+\end{corollary}
+
+\begin{proof}
+For unit quaternions $v, w$, $\|v - w\|^2 = 2 - 2 \mathrm{Re}(v
+w^{-1})$, so $\|v - w\| = d_k$ iff $v w^{-1} \in S_k^{\mathrm{id}}$.
+Hence $(\mathbf{A}_k)_{v, w} = \mathbf{1}[v w^{-1} \in
+S_k^{\mathrm{id}}] = \mathbf{1}[v w^{-1} \in C_k]$ in class-sum
+notation. In the left-regular representation, this is precisely
+right-convolution of $\delta_w$ by $C_k$. Each $S_k^{\mathrm{id}}$
+is a conjugacy class (Theorem~\ref{thm:shell-class}), so $C_k$ is
+central; Schur's lemma then gives the scalar action on each
+isotypic component of $\C[2I] = \bigoplus_\rho (\dim\rho) \cdot
+V_\rho$.
+\end{proof}
+
+\subsection{Laplacian spectrum and the $94 + 26$ integer /
+irrational decomposition}
+\label{sec:spectrum-P2}
+
+\begin{fact}[Laplacian spectrum of the $600$-cell vertex graph,
+imported computation]
+\label{prop:spectrum-P2}
+Let $\mathbf{A}_1$ be the nearest-neighbour adjacency matrix of
+the $600$-cell vertex graph (shell $k = 1$, degree $12$), and let
+$L = 12 I - \mathbf{A}_1$ be the combinatorial graph Laplacian.
+Then $L$ has the nine distinct eigenvalues and multiplicities of
+Table~\ref{tab:P2-spectrum}.
+
+This fact is imported. Its two-step derivation is standard and
+not reproduced internally in this paper: (i) by
+Corollary~\ref{cor:class-sums-central}, $\mathbf{A}_1$ acts on
+each isotypic component $(\dim \rho) \cdot V_\rho$ of $\C[2I]$ by
+the scalar $\alpha_\rho = (\dim \rho)^{-1} \sum_{s \in
+S_1^{\mathrm{id}}} \chi_\rho(s)$; (ii) evaluating $\alpha_\rho$
+for each of the nine irreducible representations of $2I$ requires
+the specific entries of the standard $2I$ character table, which
+we import from \cite[Ch.~3]{DuVal1964} (Du~Val's classification
+of the binary polyhedral groups already contains their character
+tables). The numerical values of Table~\ref{tab:P2-spectrum} are
+independently cross-checked at floating-point precision by
+\verb|papers/paper-xxii/scripts/run_600cell_spectral_verification.py|
+and by the diagonalisation carried out in the spectral-check
+branch of \texttt{run\_icosian\_exact.py}. No part of this
+character-table step is re-proved from first principles in P2.
+\end{fact}
+
+\begin{table}[ht]
+\centering
+\caption{Complete Laplacian spectrum of the $600$-cell vertex
+graph. Multiplicities are $(\dim\rho)^2$ for the nine irreducible
+representations of $2I$.}
+\label{tab:P2-spectrum}
+\begin{tabular}{@{}clllrl@{}}
+\toprule
+Index & $2I$ irrep $\rho$ & $\dim \rho$ & Laplacian eigenvalue $\lambda$ & Multiplicity & Integer? \\
+\midrule
+$0$ & trivial       & $1$ & $0$              & $1  = 1^2$ & Yes \\
+$1$ & $\mathbf{2}$  & $2$ & $9 - 3\sqrt 5$   & $4  = 2^2$ & No  \\
+$2$ & $\mathbf{3}$  & $3$ & $10 - 2\sqrt 5$  & $9  = 3^2$ & No  \\
+$3$ & $\mathbf{4}$  & $4$ & $9$              & $16 = 4^2$ & Yes \\
+$4$ & $\mathbf{5}$  & $5$ & $12$             & $25 = 5^2$ & Yes \\
+$5$ & $\mathbf{6}$  & $6$ & $14$             & $36 = 6^2$ & Yes \\
+$6$ & $\mathbf{3'}$ & $3$ & $10 + 2\sqrt 5$  & $9  = 3^2$ & No  \\
+$7$ & $\mathbf{4'}$ & $4$ & $15$             & $16 = 4^2$ & Yes \\
+$8$ & $\mathbf{2'}$ & $2$ & $9 + 3\sqrt 5$   & $4  = 2^2$ & No  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{corollary}[Integer / irrational isotypic decomposition]
+\label{cor:94-26-split}
+Let $W_{\mathrm{int}} \subset \C^{V_{600}}$ be the direct sum of
+those isotypic components whose Laplacian eigenvalue in
+Table~\ref{tab:P2-spectrum} is an integer, and let $W_{\mathrm{irr}}
+\subset \C^{V_{600}}$ be the direct sum of those whose Laplacian
+eigenvalue is irrational (i.e.\ lies in $\Q(\sqrt 5) \setminus
+\Q$). Then
+\begin{equation}
+  \C^{V_{600}} \;=\; W_{\mathrm{int}} \oplus W_{\mathrm{irr}},
+  \qquad
+  \dim W_{\mathrm{int}} \;=\; 1 + 16 + 25 + 36 + 16 \;=\; 94,
+  \qquad
+  \dim W_{\mathrm{irr}} \;=\; 4 + 9 + 9 + 4 \;=\; 26,
+\end{equation}
+and for every polynomial $p$ in the nine shell-adjacency matrices
+$\mathbf{A}_1, \ldots, \mathbf{A}_8$,
+\begin{equation}
+  P_{\mathrm{int}} \, p(\mathbf{A}_1, \ldots, \mathbf{A}_8) \,
+  P_{\mathrm{irr}} \;=\; 0,
+\end{equation}
+where $P_{\mathrm{int}}, P_{\mathrm{irr}}$ are the orthogonal
+projectors onto $W_{\mathrm{int}}$ and $W_{\mathrm{irr}}$.
+\end{corollary}
+
+\begin{proof}
+Each $\mathbf{A}_k$ acts as a scalar on every isotypic component
+(Corollary~\ref{cor:class-sums-central}); both $W_{\mathrm{int}}$
+and $W_{\mathrm{irr}}$ are unions of isotypic components; hence
+each $\mathbf{A}_k$, and every polynomial in them, preserves both
+summands. The dimension count is read off
+Table~\ref{tab:P2-spectrum}.
+\end{proof}
+
+\begin{remark}[Provenance of the $94{+}26$ split]
+The invariance of $W_{\mathrm{int}}$ and $W_{\mathrm{irr}}$ under
+the shell-adjacency algebra is proved here without reference to
+the $2I$ character table: it follows from
+Theorem~\ref{thm:shell-class} (shells are conjugacy classes) and
+Corollary~\ref{cor:class-sums-central} (class sums are central).
+What the character-table import supplies is the \emph{labelling}
+of individual isotypic components as integer- or
+irrational-eigenvalue. Downstream papers that merely need the
+algebra to preserve some $94{+}26$ split therefore depend only on
+the $\Q(\sqrt 5)$-exact arithmetic step; downstream papers that
+need the specific integer and irrational eigenvalues $\{0, 9, 12,
+14, 15\}$ and $\{9 \pm 3\sqrt 5, 10 \pm 2\sqrt 5\}$ inherit the
+classical-character-table dependence recorded in the exclusion
+list of \S\ref{sec:intro}.
+\end{remark}
+
+\subsection{BFS shell structure and dual subpopulations}
+\label{sec:BFS-P2}
+
+\begin{proposition}[BFS shells of the $600$-cell vertex graph]
+\label{prop:BFS-shells}
+Fix any vertex $v_0 \in V_{600}$ as a source. The BFS (graph
+distance) partition from $v_0$ gives six shells
+$B_0, B_1, \ldots, B_5$ with sizes
+\[
+  |B_0|, |B_1|, |B_2|, |B_3|, |B_4|, |B_5|
+  \;=\; 1,\;12,\;32,\;42,\;32,\;1.
+\]
+The shell sizes are source-independent (by the $H_4$
+vertex-transitivity of the $600$-cell, equivalently the
+$2I$-homogeneity under left-multiplication), and they refine the
+Euclidean shells of Table~\ref{tab:P2-shells} as follows: $B_0 =
+S_0^{\mathrm{id}}$, $B_1 = S_1^{\mathrm{id}}$, $B_2 =
+S_2^{\mathrm{id}} \cup S_3^{\mathrm{id}}$, $B_3 = S_4^{\mathrm{id}}
+\cup S_5^{\mathrm{id}}$, $B_4 = S_6^{\mathrm{id}} \cup
+S_7^{\mathrm{id}}$, $B_5 = S_8^{\mathrm{id}}$.
+\end{proposition}
+
+\begin{proof}
+Direct breadth-first search on the $120$-vertex graph starting
+from any $v_0$, carried out in
+\verb|papers/paper-v/scripts/run_rigorous_verification.py|. The
+BFS-to-Euclidean-shell refinement is read off by comparing BFS
+distances with the exact Euclidean shell assignment of
+Theorem~\ref{thm:shell-class}.
+\end{proof}
+
+\begin{definition}[Icosahedral and dodecahedral subpopulations]
+\label{def:ico-dod}
+For each shell $B_d \in \{B_2, B_3, B_4\}$, partition $B_d$ by the
+triple of integer \emph{intersection numbers} $(a, b, c) :=
+(|N(v) \cap B_d|,\, |N(v) \cap B_{d+1}|,\, |N(v) \cap B_{d-1}|)$
+for $v \in B_d$, where $N(v)$ is the nearest-neighbour set. Call
+the vertices with $|N(v) \cap B_d| = 5$ \emph{icosahedral} and
+the vertices with $|N(v) \cap B_d| = 6$ \emph{dodecahedral}
+within shell $B_d$.
+\end{definition}
+
+\begin{proposition}[Equitable nine-cell partition with full quotient
+matrix]\label{prop:dual-populations}
+With the partition of Definition~\ref{def:ico-dod}, the refined
+partition
+\[
+  V_{600} \;=\; B_0 \sqcup B_1 \sqcup B_2^{\mathrm{dod}} \sqcup
+    B_2^{\mathrm{ico}} \sqcup B_3^{\mathrm{dod}} \sqcup
+    B_3^{\mathrm{ico}} \sqcup B_4^{\mathrm{dod}} \sqcup
+    B_4^{\mathrm{ico}} \sqcup B_5
+\]
+is an equitable $9$-cell partition of the $600$-cell vertex graph
+in the sense of \cite[\S 9.3]{GodsilRoyle2001}: for every pair of
+cells $(S, T)$ and every $v \in S$, the integer count of
+nearest-neighbour edges from $v$ into $T$ has the same value
+$M_{S, T} \in \Z_{\geq 0}$, independent of the choice of $v \in
+S$. Specifically, the complete quotient matrix $M = (M_{S,
+T})_{S, T}$ is
+\begin{equation}\label{eq:quotient-matrix}
+M \;=\;
+\begin{array}{c|ccccccccc}
+ & B_0 & B_1 & B_2^{\mathrm{dod}} & B_2^{\mathrm{ico}} &
+   B_3^{\mathrm{dod}} & B_3^{\mathrm{ico}} &
+   B_4^{\mathrm{dod}} & B_4^{\mathrm{ico}} & B_5 \\
+\hline
+B_0                & 0 & 12 & 0 & 0 & 0 & 0 & 0 & 0  & 0 \\
+B_1                & 1 & 5  & 5 & 1 & 0 & 0 & 0 & 0  & 0 \\
+B_2^{\mathrm{dod}} & 0 & 3  & 3 & 3 & 3 & 0 & 0 & 0  & 0 \\
+B_2^{\mathrm{ico}} & 0 & 1  & 5 & 0 & 5 & 1 & 0 & 0  & 0 \\
+B_3^{\mathrm{dod}} & 0 & 0  & 2 & 2 & 4 & 2 & 2 & 0  & 0 \\
+B_3^{\mathrm{ico}} & 0 & 0  & 0 & 1 & 5 & 0 & 5 & 1  & 0 \\
+B_4^{\mathrm{dod}} & 0 & 0  & 0 & 0 & 3 & 3 & 3 & 3  & 0 \\
+B_4^{\mathrm{ico}} & 0 & 0  & 0 & 0 & 0 & 1 & 5 & 5  & 1 \\
+B_5                & 0 & 0  & 0 & 0 & 0 & 0 & 0 & 12 & 0
+\end{array}
+\end{equation}
+with integer entries, every row summing to $12$ (the degree of the
+vertex graph). Collapsing to the coarser $(a, b, c)$ totals
+$(|N(v) \cap \text{same cell}|, |N(v) \cap \text{next shell}|,
+|N(v) \cap \text{previous shell}|)$ gives
+Table~\ref{tab:P2-populations}.
+\end{proposition}
+
+\begin{table}[ht]
+\centering
+\caption{Coarse $(a, b, c)$ totals of the nine-cell equitable
+partition of the $600$-cell vertex graph, obtained from
+Equation~\eqref{eq:quotient-matrix} by collapsing within-BFS-shell
+entries into $a$, outward (next BFS shell) entries into $b$, and
+inward (previous BFS shell) entries into $c$. Displayed for
+intuition; the proof input is the full quotient matrix
+$M$.}
+\label{tab:P2-populations}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Cell & Size & $a$ & $b$ & $c$ & $c/b$ \\
+\midrule
+$B_0$                  & $1$  & $0$  & $12$ & $0$  & --- \\
+$B_1$                  & $12$ & $5$  & $6$  & $1$  & $1/6$ \\
+$B_2^{\mathrm{ico}}$   & $12$ & $5$  & $6$  & $1$  & $1/6$ \\
+$B_2^{\mathrm{dod}}$   & $20$ & $6$  & $3$  & $3$  & $1$ \\
+$B_3^{\mathrm{ico}}$   & $12$ & $5$  & $6$  & $1$  & $1/6$ \\
+$B_3^{\mathrm{dod}}$   & $30$ & $6$  & $2$  & $4$  & $2$ \\
+$B_4^{\mathrm{ico}}$   & $12$ & $10$ & $1$  & $1$  & $1$ \\
+$B_4^{\mathrm{dod}}$   & $20$ & $6$  & $0$  & $6$  & $\infty$ (trapped) \\
+$B_5$                  & $1$  & $0$  & $0$  & $12$ & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proof}
+By exhaustive finite enumeration. For each of the $120$ vertices
+$v \in V_{600}$ and each of its $12$ nearest neighbours $w \in
+N(v)$, compute the BFS-shell-and-population cell of $v$ and of
+$w$, and tabulate the integer count $|N(v) \cap T|$ for each
+target cell $T$. This enumeration, carried out in exact integer
+arithmetic in
+\verb|papers/paper-v/scripts/run_rd4_exact_rational.py| (and
+cross-checked in
+\verb|papers/paper-v/scripts/run_rigorous_verification.py|),
+yields precisely the matrix $M$ above: the same integer
+$M_{S, T}$ for every $v$ in the same cell $S$. Since the count is
+constant over the source cell, the partition is equitable by
+\cite[\S 9.3]{GodsilRoyle2001}. The $(a, b, c)$ totals in
+Table~\ref{tab:P2-populations} are obtained from $M$ by summing
+entries within the source cell (giving $a$), within the next
+outward BFS shell (giving $b$), and within the previous inward
+BFS shell (giving $c$); all other $M_{S, T}$ entries vanish by
+direct inspection.
+\end{proof}
+
+\subsection{Absorbing Markov chain on the BFS partition}
+\label{sec:markov-600}
+
+The equitable-partition property of
+Proposition~\ref{prop:dual-populations} makes the nine-cell BFS
+refinement of $V_{600}$ \emph{lumpable} for the uniform nearest-neighbour
+random walk on the $600$-cell vertex graph in the sense of
+\cite[Ch.~V]{KemenySnell1976}. We collect here the lumped
+$9$-state Markov chain and the first-passage result needed by Paper
+V.
+
+\begin{definition}[Uniform nearest-neighbour walk on $V_{600}$]
+\label{def:markov-600}
+Let $(X_t)_{t \geq 0}$ be the discrete-time Markov chain on
+$V_{600}$ that, from any vertex $v$, moves to each of its $12$
+nearest neighbours with probability $1/12$. By the $2I$-vertex
+transitivity (Theorem~\ref{thm:icosian-closure}) the chain is
+vertex-homogeneous.
+\end{definition}
+
+\begin{proposition}[Lumped $9$-state chain, equitable lumpability]
+\label{prop:lumped-markov}
+Let $M \in \Z^{9 \times 9}_{\geq 0}$ be the quotient matrix of the
+equitable partition of Proposition~\ref{prop:dual-populations},
+displayed explicitly in Equation~\eqref{eq:quotient-matrix}. The
+walk of Definition~\ref{def:markov-600} is strongly lumpable (in
+the sense of \cite[Ch.~V]{KemenySnell1976}) with respect to the
+nine-cell partition; its lumped process is a time-homogeneous
+$9$-state Markov chain with transition matrix $\widehat P = M /
+12$ (rational entries in $\{0, 1/12, 2/12, \ldots, 12/12\}$, every
+row summing to $1$).
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:dual-populations} establishes that for every
+ordered pair of cells $(S, T)$ and every vertex $v \in S$, the
+number of nearest-neighbours of $v$ lying in $T$ equals the
+constant $M_{S, T}$. Under the uniform nearest-neighbour walk of
+Definition~\ref{def:markov-600}, the one-step transition
+probability from any $v \in S$ into cell $T$ therefore equals
+$M_{S, T} / 12$, independent of the choice of $v \in S$. This
+source-cell-constant property is exactly the strong-lumpability
+criterion of \cite[Thm.~V.5, Ch.~V]{KemenySnell1976} applied to
+the uniform walk on the equitable partition
+\cite[\S 9.3]{GodsilRoyle2001}. Hence the image process on the
+nine-cell partition is a time-homogeneous Markov chain with
+transition matrix $\widehat P = M / 12$. Row sums of $M$ are
+$12$ (every vertex has degree $12$), so row sums of $\widehat P$
+are $1$.
+\end{proof}
+
+\begin{theorem}[First-passage theorem $R_D(4) = 15$, exact
+rational]
+\label{thm:RD4-P2}
+Declare the three cells $\{B_3^{\mathrm{ico}},
+B_3^{\mathrm{dod}}, B_5\}$ absorbing in the $9$-state chain of
+Proposition~\ref{prop:lumped-markov}, and denote by $Q \in \Q^{6
+\times 6}$ the transient-to-transient block and by $R \in \Q^{6
+\times 3}$ the transient-to-absorbing block of the transition
+matrix. The chain is absorbing; the fundamental matrix $N :=
+(I - Q)^{-1}$ and the first-passage probability matrix $B :=
+N R \in \Q^{6 \times 3}$ are finite. Evaluated over $\Q$ with
+Python's \texttt{fractions} module at the row corresponding to
+$B_4^{\mathrm{dod}}$, one obtains the exact rational values
+\[
+  \Pr(\text{first hit}~B_3^{\mathrm{ico}}) = \tfrac{1}{2},
+  \quad
+  \Pr(\text{first hit}~B_3^{\mathrm{dod}}) = \tfrac{7}{16},
+  \quad
+  \Pr(\text{first hit}~B_5)                = \tfrac{1}{16},
+\]
+summing exactly to $1$. Therefore
+\[
+  \Pr(\text{first hit shell } 3) = \tfrac{15}{16},
+  \qquad
+  \Pr(\text{first hit shell } 5) = \tfrac{1}{16},
+  \qquad
+  \boxed{\;R_D(4) \;:=\;
+  \Pr(\text{first hit shell } 3) / \Pr(\text{first hit shell } 5)
+  \;=\; 15.\;}
+\]
+By the equitable-partition property, the same exact rational
+values hold at each of the $20$ vertices in cell
+$B_4^{\mathrm{dod}}$.
+\end{theorem}
+
+\begin{proof}
+Construct $Q$ and $R$ from
+Proposition~\ref{prop:lumped-markov} by restricting to the six
+transient cells $\{B_0, B_1, B_2^{\mathrm{dod}},
+B_2^{\mathrm{ico}}, B_4^{\mathrm{dod}}, B_4^{\mathrm{ico}}\}$;
+every transient cell has a path to an absorbing cell with nonzero
+probability, so the chain is absorbing and $I - Q$ is invertible
+over $\Q$.
+
+\emph{Direct derivation for the $B_4^{\mathrm{dod}}$ row.} Let
+$p_{\text{ico}}$, $p_{\text{dod}}$, $p_5$ denote the first-passage
+probabilities of absorption at $B_3^{\mathrm{ico}}$,
+$B_3^{\mathrm{dod}}$, and $B_5$ respectively, starting from
+$B_4^{\mathrm{dod}}$. From the $B_4^{\mathrm{dod}}$ and
+$B_4^{\mathrm{ico}}$ rows of $\widehat P = M / 12$ in
+Equation~\eqref{eq:quotient-matrix},
+\[
+\widehat P(B_4^{\mathrm{dod}} \to \cdot) =
+\left(0, 0, 0, 0, \tfrac{3}{12}, \tfrac{3}{12},
+\tfrac{3}{12}, \tfrac{3}{12}, 0\right),
+\qquad
+\widehat P(B_4^{\mathrm{ico}} \to \cdot) =
+\left(0, 0, 0, 0, 0, \tfrac{1}{12}, \tfrac{5}{12},
+\tfrac{5}{12}, \tfrac{1}{12}\right).
+\]
+Let $q_{\text{ico}}$, $q_{\text{dod}}$, $q_5$ denote the
+analogous first-passage probabilities from $B_4^{\mathrm{ico}}$.
+First-step analysis gives two coupled linear systems. From
+$B_4^{\mathrm{dod}}$:
+\begin{align*}
+p_{\text{dod}}  &= \tfrac{3}{12} + \tfrac{3}{12}\,p_{\text{dod}}
+                 + \tfrac{3}{12}\,q_{\text{dod}}, \\
+p_{\text{ico}}  &= \tfrac{3}{12} + \tfrac{3}{12}\,p_{\text{ico}}
+                 + \tfrac{3}{12}\,q_{\text{ico}}, \\
+p_5             &= \tfrac{3}{12}\,p_5 + \tfrac{3}{12}\,q_5,
+\end{align*}
+and from $B_4^{\mathrm{ico}}$:
+\begin{align*}
+q_{\text{dod}}  &= \tfrac{5}{12}\,p_{\text{dod}}
+                 + \tfrac{5}{12}\,q_{\text{dod}}, \\
+q_{\text{ico}}  &= \tfrac{1}{12} + \tfrac{5}{12}\,p_{\text{ico}}
+                 + \tfrac{5}{12}\,q_{\text{ico}}, \\
+q_5             &= \tfrac{1}{12} + \tfrac{5}{12}\,p_5
+                 + \tfrac{5}{12}\,q_5.
+\end{align*}
+(No terms $p_{\cdot}$-to-transient other than $B_4^{\text{dod/ico}}$
+appear because every $\widehat P$-arc from $B_4^{\mathrm{dod}} \cup
+B_4^{\mathrm{ico}}$ leads either back into $\{B_4^{\mathrm{dod}},
+B_4^{\mathrm{ico}}\}$ or into an absorbing cell.) Eliminating the
+$q$-variables: from the second pair,
+$q_{\text{dod}} = \tfrac{5}{7}\,p_{\text{dod}}$,
+$q_{\text{ico}} = \tfrac{1}{7} + \tfrac{5}{7}\,p_{\text{ico}}$,
+$q_5 = \tfrac{1}{7} + \tfrac{5}{7}\,p_5$. Substituting into the
+first,
+\begin{align*}
+p_{\text{dod}}  &= \tfrac{1}{4} + \tfrac{1}{4}\,p_{\text{dod}}
+                 + \tfrac{1}{4}\cdot\tfrac{5}{7}\,p_{\text{dod}}
+                 \;\Rightarrow\; p_{\text{dod}} = \tfrac{7}{16}, \\
+p_{\text{ico}}  &= \tfrac{1}{4} + \tfrac{1}{4}\,p_{\text{ico}}
+                 + \tfrac{1}{4}\bigl(\tfrac{1}{7}
+                 + \tfrac{5}{7}\,p_{\text{ico}}\bigr)
+                 \;\Rightarrow\; p_{\text{ico}} = \tfrac{1}{2}, \\
+p_5             &= \tfrac{1}{4}\,p_5
+                 + \tfrac{1}{4}\bigl(\tfrac{1}{7}
+                 + \tfrac{5}{7}\,p_5\bigr)
+                 \;\Rightarrow\; p_5 = \tfrac{1}{16}.
+\end{align*}
+These three sum to $\tfrac{7}{16} + \tfrac{1}{2} + \tfrac{1}{16}
+= 1$, confirming that $\{B_3^{\mathrm{ico}}, B_3^{\mathrm{dod}},
+B_5\}$ absorb all probability mass starting from
+$B_4^{\mathrm{dod}}$ (so no mass leaks into $B_0$, $B_1$,
+$B_2^{\mathrm{dod}}$, $B_2^{\mathrm{ico}}$). Therefore
+$\Pr(\text{first hit shell }3) = p_{\text{ico}} + p_{\text{dod}}
+= \tfrac{15}{16}$ and
+$\Pr(\text{first hit shell }5) = p_5 = \tfrac{1}{16}$, giving
+$R_D(4) = 15$ as stated.
+
+\emph{Reproducibility check.} The same result is obtained by
+computing $N = (I - Q)^{-1}$ and $B = N R$ over $\Q$ on the full
+six-state transient block using Python's \texttt{fractions}
+module. The script
+\verb|papers/paper-v/scripts/run_rd4_exact_rational.py| carries
+out this computation end-to-end and reports row values matching
+the displayed rationals bit-for-bit; it is a reproducibility
+artefact, not the load-bearing step of the proof.
+\end{proof}
+
+\begin{remark}[Why this is the right substrate home]
+The first-passage ratio $R_D(4) = 15$ is load-bearing for the
+Paper V proton-exponent corollary: replacing $R_D(4) = 15$ by the
+legacy capped value $R_D(4) = 10$ shifts the proton mass ratio
+from $\approx 1836$ (matching observation) to $\approx 1951$
+(far off). Paper V adopts $R_D(4) = 15$ as an exact rational input
+under its mass-formula ansatz; the present theorem supplies that
+input as a finite-graph theorem depending only on the
+equitable-partition data of
+Proposition~\ref{prop:dual-populations} and the classical
+lumpability / absorbing-chain theory of
+\cite{KemenySnell1976, GodsilRoyle2001}, with no Paper-V-specific
+hypothesis. The identification of the first-passage ratio with a
+coefficient in the Paper V mass-formula exponent is a separate
+model-level choice made in Paper V, not in P2.
+\end{remark}
+
+\subsection{Narrow uniqueness among the eleven regular $3$- and
+$4$-polytopes}
+\label{sec:polytope-uniqueness}
+
+\begin{theorem}[Narrow $600$-cell uniqueness, computer-assisted
+and conditional on imported spectral tables]
+\label{thm:polytope-uniqueness}
+Among the eleven regular polytopes in dimensions three and four
+--- the five Platonic solids (tetrahedron, cube, octahedron,
+dodecahedron, icosahedron) and the six regular $4$-polytopes
+($5$-cell, $8$-cell, $16$-cell, $24$-cell, $120$-cell, $600$-cell)
+--- the $600$-cell is the unique member whose vertex-graph
+Laplacian spectrum contains both
+\begin{enumerate}
+\item[\textup{(i)}] a value in $\Q(\sqrt 5) \setminus \Q$
+  (equivalently, a value involving $\varphi$), and
+\item[\textup{(ii)}] the rational eigenvalue $15$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We check each polytope. The universal bound
+$\lambda_{\max}(L) \leq 2d$ for a $d$-regular graph
+\cite[Ch.~13]{GodsilRoyle2001} restricts which polytopes can carry
+$\lambda = 15$. The vertex graphs of the seven polytopes with
+integer Laplacian spectra --- tetrahedron ($K_4$), cube ($Q_3$),
+octahedron ($K_{2,2,2}$), $5$-cell ($K_5$), $8$-cell ($Q_4$),
+$16$-cell ($K_{2,2,2,2}$), and $24$-cell (spectrum
+$\{0, 6, 8, 12\}$ with multiplicities $\{1, 8, 9, 6\}$) --- all
+fail property~(i); their spectra are classical
+\cite[Ch.~3]{BrouwerHaemers2012} and independently recomputed by
+\verb|papers/paper-v/scripts/run_polytope_uniqueness_narrow.py|.
+The dodecahedron (spectrum $\{0, 3 - \sqrt 5, 2, 3, 5, 3 + \sqrt
+5\}$, degree $3$) and icosahedron (spectrum $\{0, 5 - \sqrt 5, 6,
+5 + \sqrt 5\}$ with multiplicities $\{1, 3, 5, 3\}$, degree $5$)
+both satisfy property~(i) but fail property~(ii) because
+$\lambda_{\max} \leq 2d < 15$. The $120$-cell has a $4$-regular
+vertex graph, so $\lambda_{\max} \leq 8 < 15$ and property~(ii)
+fails. The $600$-cell satisfies both properties by
+Fact~\ref{prop:spectrum-P2}. The script listed above
+builds the ten lower-dimensional vertex graphs explicitly,
+computes their Laplacian spectra numerically, and
+verifies each of the case-checks.
+\end{proof}
+
+\begin{remark}[Scope of the uniqueness statement]
+Theorem~\ref{thm:polytope-uniqueness} is confined to the eleven
+regular polytopes in dimensions $3$ and $4$. In dimensions $\geq
+5$ the only regular polytopes are the simplices $K_{n+1}$,
+hypercubes $Q_n$, and cross-polytopes $K_{2,\ldots,2}$
+\cite[Ch.~7]{CoxeterRegularPolytopes}, all of which have integer
+Laplacian spectra; property~(i) therefore fails in every
+dimension $\geq 5$ as well, and the statement can be extended
+without providing a counterexample, though we do not promote that
+extension to theorem status here. For regular polygons in
+dimension $2$, the cycle graph $C_n$ has $\varphi$-valued entries
+whenever $5 \mid n$ but $\lambda_{\max}(C_n) \leq 4$, so
+property~(ii) always fails.
+\end{remark}
+
+\subsection{Hopf decomposition into twelve great-decagon fibres}
+\label{sec:hopf-P2}
+
+\begin{fact}[Hopf decomposition of the $600$-cell, classical
+import]
+\label{fact:hopf}
+The $600$-cell admits a decomposition of its $120$ vertices into
+$12$ disjoint great decagons (regular $C_{10}$ cycles on great
+circles of $S^3$) with the nearest-neighbour adjacency of the
+$600$-cell restricting to the $C_{10}$ adjacency on each fibre. The
+decomposition arises from the Hopf fibration $S^3 \to S^2$
+restricted to the $600$-cell
+\cite[\S 22.7]{CoxeterRegularPolytopes}.
+\end{fact}
+
+\begin{proposition}[Hopf-fibre cycle spectrum]
+\label{prop:hopf-spectrum}
+The Laplacian eigenvalues of each $C_{10}$ fibre are
+$E_k = 2 - 2\cos(2\pi k / 10)$ for $k = 0, \ldots, 9$. Explicitly:
+\[
+  E_0 = 0, \quad
+  E_1 = 1/\varphi^2, \quad
+  E_2 = 3 - \varphi, \quad
+  E_3 = \varphi^2, \quad
+  E_4 = 2 + \varphi, \quad
+  E_5 = 4,
+\]
+and $E_{10-k} = E_k$ for $k = 1, \ldots, 4$. All values lie in
+$\Q(\varphi)$.
+\end{proposition}
+
+\begin{proof}
+Direct substitution in the closed-form cycle spectrum
+$E_k = 2 - 2\cos(2\pi k/n)$ with $n = 10$, using $\cos(\pi/5) =
+\varphi/2$ and $\cos(2\pi/5) = (\varphi - 1)/2 = 1/(2\varphi)$.
+\end{proof}
+
+Fact~\ref{fact:hopf} is an import from the classical $600$-cell
+literature; the fibre cycle spectrum of
+Proposition~\ref{prop:hopf-spectrum} is elementary given the Hopf
+decomposition, and is used here only as a repository of algebraic
+values for downstream citation.
+
+%=====================================================================
+\section{The $16$-Sector: $\Cl(1,3)$ as the Canonical Model}
+\label{sec:16-sector}
+%=====================================================================
+
+This section presents the $16$-dimensional sector algebra. The
+theorem-grade content is algebraic: $\Cl(1,3)$ is a $16$-dimensional
+real associative algebra with a standard generators-and-relations
+presentation, and its structure theory is classical. The
+$16$-vertex tesseract plays only the role of an index set for the
+monomial basis.
+
+\subsection{Definition and basic structure}
+
+\begin{definition}[The real Clifford algebra $\Cl(1,3)$]
+\label{def:Cl}
+$\Cl(1,3)$ is the real associative $\R$-algebra with unit,
+generated by $\gamma_0, \gamma_1, \gamma_2, \gamma_3$ subject to
+the relations
+\[
+  \gamma_0^2 = +1, \quad
+  \gamma_1^2 = \gamma_2^2 = \gamma_3^2 = -1, \quad
+  \gamma_\mu \gamma_\nu + \gamma_\nu \gamma_\mu = 0
+  \text{ for } \mu \neq \nu.
+\]
+Equivalently, $\Cl(1,3)$ is the Clifford algebra of the quadratic
+form $\operatorname{diag}(+1, -1, -1, -1)$ on $\R^4$
+\cite[Ch.~16]{Lounesto}.
+\end{definition}
+
+\begin{definition}[Monomial basis]
+\label{def:Cl-basis}
+For each subset $A \subseteq \{0, 1, 2, 3\}$, define
+\[
+  \gamma_A := \gamma_{a_1} \gamma_{a_2} \cdots \gamma_{a_k},
+  \qquad A = \{a_1 < a_2 < \cdots < a_k\},
+\]
+with $\gamma_\emptyset := 1$. The set $\{\gamma_A : A \subseteq
+\{0, 1, 2, 3\}\}$ is an $\R$-basis of $\Cl(1,3)$, indexed by the
+$2^4 = 16$-element power set of $\{0, 1, 2, 3\}$, which we
+identify with $\Z_2^4$ via the characteristic function $A
+\leftrightarrow \chi_A \in \Z_2^4$.
+\end{definition}
+
+\begin{fact}[Classical; \cite{Lounesto, Chevalley}]
+\label{fact:Cl-structure}
+$\dim_\R \Cl(1,3) = 16$, and $\Cl(1,3)$ is isomorphic as a real
+algebra to $M_2(\HH)$, the algebra of $2 \times 2$ matrices over
+the Hamilton quaternions.
+\end{fact}
+
+\begin{remark}[Tesseract as index set, not polytope structure]
+\label{rmk:tesseract-index}
+The index set $\Z_2^4$ above is combinatorially the vertex set of
+the $4$-dimensional hypercube (tesseract). This is bookkeeping
+only: the multiplication of $\Cl(1,3)$ comes from the relations
+in Definition~\ref{def:Cl}, \emph{not} from any combinatorial
+structure of the tesseract polytope. In particular, P2 does not
+claim that the tesseract itself is an algebra or that its polytope
+structure encodes Clifford multiplication.
+\end{remark}
+
+%=====================================================================
+\section{The $8$-Sector: Octonions, $\mathfrak{g}_2$, and $\SU(3)$}
+\label{sec:8-sector}
+%=====================================================================
+
+This section presents the octonionic $8$-sector. All theorem-grade
+content is classical and cited. The algebraic core is: the octonion
+algebra $\OO$; its derivation algebra $\Der(\OO) = \mathfrak{g}_2$;
+and the stabilizer $\SU(3) \subset G_2 = \Aut(\OO)$ of a fixed
+imaginary unit.
+
+\subsection{The octonion algebra}
+
+\begin{definition}[Octonions]
+\label{def:octonions}
+The \emph{octonion algebra} $\OO$ is the unique (up to
+isomorphism) $8$-dimensional real normed division algebra. It has
+a $\R$-basis $\{1, e_1, \ldots, e_7\}$ with $e_i^2 = -1$ for each
+$i$, $e_i e_j = -e_j e_i$ for $i \neq j$, and multiplication
+determined by the standard Fano-plane triples
+\cite[\S 2.1]{BaezOctonions}.
+
+Conjugation $x \mapsto \bar x$ is defined by $\overline{e_i} =
+-e_i$ and extended $\R$-linearly; the norm is $N(x) = x \bar x
+\in \R_{\geq 0}$. The imaginary part is
+\[
+  \Im(\OO) := \{x \in \OO : \bar x = -x\} = \R e_1 \oplus \cdots
+  \oplus \R e_7, \quad \dim_\R \Im(\OO) = 7.
+\]
+\end{definition}
+
+\begin{fact}[\cite{BaezOctonions, SchaferNonassociative}]
+\label{fact:octonions-alternative}
+$\OO$ is an alternative algebra: $(xy)x = x(yx)$ and
+$x(xy) = (xx)y$ for all $x, y \in \OO$. It is non-associative:
+the associator $[x, y, z] := (xy)z - x(yz)$ is not identically
+zero.
+\end{fact}
+
+\subsection{The derivation algebra $\Der(\OO) = \mathfrak{g}_2$}
+
+\begin{definition}[Derivations]
+\label{def:derivations}
+A \emph{derivation} of $\OO$ is an $\R$-linear map
+$D \colon \OO \to \OO$ satisfying the Leibniz rule
+\[
+  D(xy) = D(x) y + x D(y), \qquad x, y \in \OO.
+\]
+The space of derivations is a real Lie algebra under the
+commutator bracket $[D_1, D_2] := D_1 D_2 - D_2 D_1$; we denote
+it $\Der(\OO)$.
+\end{definition}
+
+\begin{definition}[Inner-derivation map]
+\label{def:Dab}
+For $a, b \in \OO$, the \emph{inner derivation}
+$D_{a, b} \colon \OO \to \OO$ is
+\[
+  D_{a, b}(x) := \big[ [a, b], x \big] - 3 [a, b, x],
+\]
+where $[a, b] := ab - ba$ is the commutator and $[a, b, x] :=
+(ab) x - a(bx)$ is the associator.
+\end{definition}
+
+\begin{fact}[\cite{BaezOctonions, SchaferNonassociative}]
+\label{fact:Der-g2}
+$D_{a, b} \in \Der(\OO)$ for every $a, b \in \OO$. The derivations
+$\{D_{a, b} : a, b \in \OO\}$ span $\Der(\OO)$ as a real vector
+space. $\Der(\OO)$ is the compact real form of the exceptional
+Lie algebra $\mathfrak{g}_2$, of real dimension $14$.
+\end{fact}
+
+\begin{remark}[Why not $\mathrm{ad}$]
+\label{rmk:not-ad}
+The naive map $a \mapsto \mathrm{ad}_a \colon \OO \to \OO$, $x
+\mapsto [a, x]$, is not a derivation of $\OO$ in general: the
+failure of the Jacobi identity in a non-associative algebra means
+$\mathrm{ad}_a$ is a derivation only when $a$ is associative with
+its own image. So there is no ``inclusion''
+$\Im(\OO) \hookrightarrow \mathfrak{g}_2$ via $\mathrm{ad}$. The
+correct map from pairs of octonions to derivations is $D_{a, b}$
+of Definition~\ref{def:Dab}, which \emph{is} a derivation, by
+Fact~\ref{fact:Der-g2}.
+\end{remark}
+
+\subsection{The automorphism group $G_2$ and the $\SU(3)$ stabilizer}
+
+\begin{definition}[$G_2$]
+\label{def:G2}
+$G_2 := \Aut(\OO)$, the group of real algebra automorphisms of
+$\OO$ (equivalently, the group of $\R$-linear maps $g \colon \OO
+\to \OO$ with $g(1) = 1$ and $g(xy) = g(x) g(y)$). $G_2$ is a
+compact connected real Lie group of dimension $14$, with Lie
+algebra $\mathfrak{g}_2 = \Der(\OO)$ by
+Fact~\ref{fact:Der-g2}.
+\end{definition}
+
+\begin{fact}[\cite{BaezOctonions}]
+\label{fact:G2-14}
+$G_2$ is a compact simple Lie group of dimension $14$ and rank $2$.
+\end{fact}
+
+\begin{definition}[Stabilizer of a unit imaginary octonion]
+\label{def:stab-u}
+Let $u \in \Im(\OO)$ with $N(u) = 1$ (so $u^2 = -1$). The
+\emph{stabilizer of $u$} in $G_2$ is
+\[
+  \Stab_{G_2}(u) := \{g \in G_2 : g(u) = u\}.
+\]
+\end{definition}
+
+\begin{fact}[$\SU(3)$ as $G_2$-stabilizer; \cite{BaezOctonions}, \cite{Macfarlane}]
+\label{fact:SU3-stab}
+For any unit $u \in \Im(\OO)$, the stabilizer
+$\Stab_{G_2}(u)$ is isomorphic to $\SU(3)$ as a compact Lie group.
+\end{fact}
+
+\begin{remark}[Sketch of the $\SU(3)$-identification]
+\label{rmk:SU3-sketch}
+A fixed unit $u \in \Im(\OO)$ induces a complex structure on
+$u^\perp \cap \Im(\OO) \cong \R^6$ via left multiplication by $u$:
+$J_u(v) := uv$. This turns $u^\perp \cap \Im(\OO)$ into a complex
+$3$-dimensional vector space. The group of automorphisms of $\OO$
+fixing $u$ preserves this complex structure and also preserves the
+induced Hermitian form (from the $\OO$-norm). Hence
+$\Stab_{G_2}(u) \subset \mathrm{U}(3)$. Real dimension count:
+$\dim G_2 - \dim \operatorname{orbit}(u) = 14 - 6 = 8 = \dim \SU(3)$,
+and connectedness identifies $\Stab_{G_2}(u)$ with $\SU(3)$
+\cite[\S 7]{BaezOctonions}.
+\end{remark}
+
+%=====================================================================
+\section{Coefficientwise $\sigma$-Action and Compatibility}
+\label{sec:sigma-compat}
+%=====================================================================
+
+This section imports the coefficientwise $\sigma$-action of
+\cite{SigmaRationality} and shows that every sector-level map of
+this paper defined over $\Q$ commutes with $\sigma$ after scalar
+extension to $\Q(\varphi)$.
+
+\subsection{Setting}
+
+\begin{notation}[$\sigma$ in this paper]
+\label{not:sigma-P2}
+Throughout this section, $\sigma \colon \Q(\varphi) \to \Q(\varphi)$
+denotes the non-trivial Galois automorphism,
+$\sigma(\varphi) = 1 - \varphi$, as in
+\cite[Def.~2.2]{SigmaRationality}. For any $\Q$-vector space $V$,
+$\sigma_V := \id_V \otimes \sigma$ is the coefficientwise
+$\sigma$-action on $V_K := V \otimes_\Q \Q(\varphi)$, per
+\cite[Def.~2.5]{SigmaRationality}. The projector
+$\Pi_\sigma := (\id_{V_K} + \sigma_V)/2$ is the fixed-part
+projector \cite[Def.~4.1]{SigmaRationality}.
+\end{notation}
+
+\subsection{Rational forms of the sector objects}
+\label{subsec:Q-forms}
+
+To apply \cite[Thm.~4.5]{SigmaRationality} (which requires
+$\Q$-linear maps between finite-dimensional $\Q$-vector spaces) we
+first record explicit $\Q$-forms of each sector object.
+
+\begin{definition}[$\Q$-forms]
+\label{def:Q-forms}
+\hspace{0pt}
+\begin{enumerate}
+\item $U_\Q := \Q^4 \subset \Q^8$, the $\Q$-form of the coordinate
+  $4$-plane $U$ (Def.~\ref{def:U}).
+\item $\Lambda(E_8)_\Q := \Lambda(E_8) \otimes_\Z \Q$, an
+  $8$-dimensional $\Q$-vector space with basis $\Lambda(E_8)
+  \otimes 1$.
+\item $I_\Q := I \otimes_\Z \Q$, an $8$-dimensional $\Q$-vector
+  space.
+\item $\HH_\Q := \Q\{1, i, j, k\} \subset \HH$, the $\Q$-span of
+  the standard quaternionic basis; $\dim_\Q \HH_\Q = 4$.
+\item $\Cl_\Q(1, 3) := \Q\{\gamma_A : A \subseteq \{0,1,2,3\}\}
+  \subset \Cl(1,3)$, the $\Q$-span of the monomial basis of
+  Definition~\ref{def:Cl-basis}; $\dim_\Q \Cl_\Q(1,3) = 16$.
+\item $\OO_\Q := \Q\{1, e_1, \ldots, e_7\} \subset \OO$, the
+  $\Q$-span of the standard octonionic basis; $\dim_\Q \OO_\Q = 8$.
+\end{enumerate}
+For each $V \in \{U_\Q, \Lambda(E_8)_\Q, I_\Q, \HH_\Q, \Cl_\Q(1,3),
+\OO_\Q\}$, write $V_K := V \otimes_\Q \Q(\varphi)$ for the scalar
+extension to $\Q(\varphi)$, and $\sigma_V := \id_V \otimes \sigma$
+for the coefficientwise $\sigma$-action on $V_K$
+(\cite[Def.~2.5]{SigmaRationality}).
+\end{definition}
+
+\subsection{Sector-level $\sigma$-compatibility theorem}
+
+\begin{theorem}[$\sigma$-compatibility of $\Q$-defined P2 maps]
+\label{thm:sigma-compat-P2}
+With the $\Q$-forms of Definition~\ref{def:Q-forms}, the following
+$\Q$-linear maps each commute with $\sigma$ after scalar extension
+to $\Q(\varphi)$, in the sense of
+\cite[Thm.~4.5]{SigmaRationality}:
+\begin{enumerate}
+\item The $\Q$-linear inclusion
+  $\operatorname{span}_\Q \Phi(D_4) \hookrightarrow
+  \operatorname{span}_\Q \Phi(E_8) \subseteq \Lambda(E_8)_\Q$
+  (well-defined since $\operatorname{span}_\Q \Phi(D_4) = U_\Q$
+  and $\operatorname{span}_\Q \Phi(E_8) = \Lambda(E_8)_\Q$ by
+  Proposition~\ref{prop:D4-inclusion}).
+\item The $\Q$-linear isomorphism
+  $(\iota_I)_\Q \colon \Lambda(E_8)_\Q \to I_\Q$ obtained by
+  scalar extension of $\iota_I$
+  (Fact~\ref{fact:icosian-E8}). The scalar extension to
+  $\Q(\varphi)$ intertwines the icosian star-map
+  (Definition~\ref{def:icosian-star}) extended to $I_K$ with the
+  coefficientwise $\sigma$-action $\sigma_{\Lambda(E_8)_\Q}$ on
+  $\Lambda(E_8)_K$ (Remark~\ref{rmk:star-is-sigma}).
+\item The identity map $\Cl_\Q(1,3) \to \Cl_\Q(1,3)$, viewed as a
+  $\Q$-linear map; its scalar extension to $\Q(\varphi)$ trivially
+  commutes with $\sigma_{\Cl_\Q(1,3)}$, since the latter acts only
+  on the $\Q(\varphi)$-coefficient factor.
+\item The $\Q$-bilinear inner-derivation map
+  $D \colon \OO_\Q \otimes_\Q \OO_\Q \to \operatorname{End}_\Q(\OO_\Q)$,
+  $(a \otimes b) \mapsto D_{a, b}$, where $D_{a, b}$ is the
+  $\Q$-linear endomorphism of $\OO_\Q$ defined by $x \mapsto
+  D_{a,b}(x) = [[a,b], x] - 3[a, b, x]$
+  (Definition~\ref{def:Dab}). $D$ is $\Q$-linear, so its scalar
+  extension to $\Q(\varphi)$ commutes with $\sigma$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Each clause is a direct instance of
+\cite[Thm.~4.5]{SigmaRationality} applied to a $\Q$-linear map
+between finite-dimensional $\Q$-vector spaces:
+\begin{itemize}
+\item For (1), the $\Q$-linear inclusion is
+  $\operatorname{span}_\Q \Phi(D_4) \hookrightarrow
+  \operatorname{span}_\Q \Phi(E_8)$. Both spans are
+  finite-dimensional $\Q$-vector spaces, so
+  \cite[Thm.~4.5]{SigmaRationality} gives commutation with
+  $\sigma$ after scalar extension.
+\item For (2), $(\iota_I)_\Q := \iota_I \otimes_\Z \id_\Q$ is a
+  $\Q$-linear isomorphism between $8$-dimensional $\Q$-vector
+  spaces; \cite[Thm.~4.5]{SigmaRationality} gives commutation. The
+  intertwining of the icosian star-map with $\sigma$ on
+  $\Lambda(E_8)_K$ is Remark~\ref{rmk:star-is-sigma}: under
+  $(\iota_I)_\Q \otimes \id_K$, the star-map and the
+  coefficientwise $\sigma$ both act as $\varphi \mapsto
+  \bar\varphi$ on the $\Q(\varphi)$-coefficient factor, so they
+  coincide.
+\item For (3), $\id \colon \Cl_\Q(1,3) \to \Cl_\Q(1,3)$ is
+  $\Q$-linear; trivial.
+\item For (4), $D$ is $\Q$-linear (the linearization of a
+  $\Q$-bilinear map between finite-dimensional $\Q$-vector spaces;
+  the codomain $\operatorname{End}_\Q(\OO_\Q)$ has $\Q$-dimension
+  $8^2 = 64$). Apply \cite[Thm.~4.5]{SigmaRationality}.
+\end{itemize}
+\end{proof}
+
+\begin{proposition}[$\eta$-intertwining; not an instance of P1]
+\label{prop:eta-swap}
+The map $\eta \colon I \to \HH \oplus \HH$ of
+Definition~\ref{def:eta}, restricted to the $\Q$-form
+$\eta_\Q \colon I_\Q \to (\HH_\Q \oplus \HH_\Q)
+\otimes_\Q \Q(\varphi)$ where the codomain carries the explicit
+$\Q(\varphi)$-coefficient structure of
+Definition~\ref{def:real-embeddings}, satisfies
+\[
+  \operatorname{swap} \circ \eta_\Q
+  = \eta_\Q \circ \ast,
+\]
+where $\operatorname{swap}(p, q) := (q, p)$ on the target and
+$\ast$ is the icosian star-map. Under
+Remark~\ref{rmk:star-is-sigma} (identifying $\ast$ with $\sigma$
+on $I_K$), this becomes
+$\operatorname{swap} \circ \eta_\Q = \eta_\Q \circ \sigma_{I_\Q}$.
+This is \emph{not} the statement of
+\cite[Thm.~4.5]{SigmaRationality} (which would give commutation
+with the coefficientwise $\sigma$ on the codomain, not with
+$\operatorname{swap}$); rather it is a separate fact about
+$\eta_\Q$, which we record here for downstream use.
+\end{proposition}
+
+\begin{proof}
+Let $q \in I_\Q$. By Definition~\ref{def:eta},
+$\eta_\Q(q) = (q_+, q_-)$ where $q_\pm$ is obtained by applying
+$\tau_\pm$ coefficientwise. Since
+$\tau_+(\sigma(\lambda)) = \tau_-(\lambda)$ for every $\lambda \in
+\Q(\varphi)$ (immediate from $\tau_\pm(\varphi) =
+\varphi, \bar\varphi$ and $\sigma(\varphi) = \bar\varphi$), we have
+$(\sigma q)_\pm = q_\mp$. Therefore
+\[
+  \eta_\Q(\sigma q) = ((\sigma q)_+, (\sigma q)_-) = (q_-, q_+)
+  = \operatorname{swap}(q_+, q_-) = \operatorname{swap}(\eta_\Q(q)),
+\]
+i.e.\ $\operatorname{swap} \circ \eta_\Q = \eta_\Q \circ \sigma$
+on $I_\Q$. The same identity with $\ast$ in place of $\sigma$
+follows from Remark~\ref{rmk:star-is-sigma}.
+\end{proof}
+
+\begin{remark}[Why $\eta_\Q$ does not give a P1 commuting square]
+\label{rmk:eta-not-P1}
+P1's functoriality theorem
+\cite[Thm.~4.5]{SigmaRationality} says that for a $\Q$-linear
+map $T \colon V \to W$, the scalar extension $T_K$ commutes with
+the coefficientwise $\sigma$ on both $V_K$ and $W_K$. For
+$\eta_\Q$, the codomain $\HH_\Q \oplus \HH_\Q$ has its own
+coefficientwise $\sigma$-action (from
+\cite[Def.~2.5]{SigmaRationality}), which is the
+$\sigma$-action on each $\HH$-factor separately. The natural map
+$\eta_\Q$ does \emph{not} intertwine the source $\sigma$ with this
+codomain $\sigma$ but with $\operatorname{swap}$. P1 is therefore
+the wrong tool for $\eta_\Q$; Proposition~\ref{prop:eta-swap}
+records the correct fact directly.
+\end{remark}
+
+
+\begin{remark}[Why $\pi_H$ does not have a $\sigma$-equivariant
+form]
+\label{rmk:pi-H-no-sigma}
+The composition $\pi_H = \operatorname{pr}_{\rm phys} \circ \eta
+\circ \iota_I$ projects out the $\tau_-$-coefficient information
+that $\sigma$ would have permuted with the $\tau_+$-coefficient.
+Hence any putative codomain $\sigma$-action on $\HH$ alone is
+not canonically determined by $\sigma$ on the source $I_K$, and
+the diagram for $\pi_H$ \emph{by itself} does not commute with any
+non-trivial codomain involution. This is correct and intentional:
+$\pi_H$ is a strictly one-sided projection by design. Downstream
+papers that need $\sigma$-equivariance should use
+$\eta_\Q$ (which has the swap intertwining) rather than $\pi_H$
+(which does not).
+\end{remark}
+
+%=====================================================================
+\section{Citation Contract and Downstream Handoff}
+\label{sec:handoff}
+%=====================================================================
+
+\subsection{What downstream papers may cite}
+
+\begin{enumerate}
+\item (P3, P5, Foundations.)
+  Proposition~\ref{prop:D4-inclusion}: $\Phi(D_4) = \Phi(E_8)
+  \cap U$, i.e.\ the strict sub-root-system inclusion $D_4 \subset
+  E_8$ via the coordinate $4$-plane.
+\item (P3, P5, Foundations.) Definition~\ref{def:V24} and
+  Proposition~\ref{prop:24-in-600}: the explicit $24$-cell vertex
+  set $V_{24} \subset V_{600}$ with its isometry to the $D_4$ root
+  polytope.
+\item (P3, P10, Foundations.)
+  Definitions~\ref{def:icosian-ring}--\ref{def:pi-H} and
+  Theorem~\ref{thm:pi-H}: the icosian ring, star-map, and the
+  $E_8 \to H_4$ projection with its densification property and its
+  recovery of the $H_4$ root system.
+\item (Paper V, Paper XXII, P3, Foundations.)
+  Theorem~\ref{thm:icosian-closure}: the $600$-cell vertex set
+  $V_{600}$ is a subgroup of $\mathrm{Sp}(1)$ isomorphic to the
+  binary icosahedral group $2I$ of order $120$, verified in
+  exact $\Q(\sqrt 5)$-arithmetic.
+\item (Paper V, Paper XXII, P3, Foundations.)
+  Theorem~\ref{thm:shell-class}: the nine Euclidean distance
+  shells from the identity (Table~\ref{tab:P2-shells}) are in
+  size-preserving bijection with the nine $2I$-conjugacy classes,
+  with each shell equal to a single class.
+\item (Paper XXII, P3, Foundations.)
+  Corollary~\ref{cor:class-sums-central}: under the isomorphism
+  $\C^{V_{600}} \cong \C[2I]$ afforded by the left-regular
+  action, each shell-adjacency operator $\mathbf{A}_k$ is
+  right-convolution by the central class sum $C_k \in Z(\C[2I])$,
+  and therefore acts by a scalar on every isotypic component of
+  $\C[2I]$.
+\item (Paper V, Paper XXII, Foundations.)
+  Fact~\ref{prop:spectrum-P2} and
+  Corollary~\ref{cor:94-26-split}: the Laplacian spectrum of the
+  $600$-cell vertex graph with its isotypic multiplicities, and
+  the resulting $W_{\mathrm{int}} \oplus W_{\mathrm{irr}} = 94 +
+  26$ integer / irrational decomposition preserved by every
+  polynomial in the shell-adjacency matrices. Downstream papers
+  citing this item inherit the imported $2I$ character-table
+  dependence recorded in \S\ref{sec:intro}; the invariance of the
+  decomposition follows from
+  Corollary~\ref{cor:class-sums-central} and is independent of
+  the character-table step.
+\item (Paper V, P3.) Proposition~\ref{prop:BFS-shells} and
+  Proposition~\ref{prop:dual-populations}: the six BFS shells
+  with sizes $\{1, 12, 32, 42, 32, 1\}$, the icosahedral /
+  dodecahedral subpopulation split at shells $2, 3, 4$, and the
+  equitable-partition property of the resulting nine-cell
+  partition.
+\item (Paper V, Foundations.)
+  Proposition~\ref{prop:lumped-markov} and
+  Theorem~\ref{thm:RD4-P2}: the $9$-state lumped Markov chain on
+  the BFS partition with integer out-edge counts per $12$, and
+  the exact rational first-passage identity $R_D(4) = 15$
+  obtained by solving $(I - Q)^{-1} R$ over $\Q$ with shells $3$
+  and $5$ absorbing.
+\item (Paper V, Foundations.)
+  Theorem~\ref{thm:polytope-uniqueness}: the $600$-cell is the
+  unique member of the eleven-polytope family whose Laplacian
+  spectrum carries both a $\Q(\sqrt 5) \setminus \Q$ value and
+  the rational $15$.
+\item (Paper V, Foundations.) Fact~\ref{fact:hopf} and
+  Proposition~\ref{prop:hopf-spectrum}: the Hopf decomposition
+  into twelve great-decagon fibres with its $C_{10}$
+  cycle-spectrum values $\{0, 1/\varphi^2, 3-\varphi, \varphi^2,
+  2+\varphi, 4\}$.
+\item (Foundations.) Fact~\ref{fact:Cl-structure}: the algebraic
+  $16$-sector $\Cl(1,3) \cong M_2(\HH)$ with its $\Z_2^4$ monomial
+  basis.
+\item (P8, P9, Foundations.)
+  Definitions~\ref{def:octonions}--\ref{def:stab-u} and
+  Facts~\ref{fact:Der-g2}, \ref{fact:SU3-stab}: the octonionic
+  $8$-sector, the derivation algebra $\Der(\OO) =
+  \mathfrak{g}_2$ via $D_{a, b}$, and the stabilizer $\SU(3)
+  \subset G_2$.
+\item (Foundations, all branches.) Theorem~\ref{thm:sigma-compat-P2}:
+  every $\Q$-defined P2 map commutes with the coefficientwise
+  $\sigma$-action after scalar extension to $\Q(\varphi)$, per
+  \cite{SigmaRationality}.
+\end{enumerate}
+
+\subsection{Recommended citation sentence}
+
+``By P2, the cascade algebraic substrate consists of:
+an explicit strict $D_4 \subset E_8$ sub-root-system inclusion
+(Proposition~\ref{prop:D4-inclusion}); an icosian-based projection
+$\pi_H$ from $E_8$ lattice data to $H_4$ data
+(Theorem~\ref{thm:pi-H}); an explicit $24$-cell inside the
+$600$-cell (Proposition~\ref{prop:24-in-600}); the identification
+of the $600$-cell vertex set with the binary icosahedral group
+$2I$ under Hamilton multiplication and the shell-to-conjugacy-class
+bijection (Theorems~\ref{thm:icosian-closure}--\ref{thm:shell-class})
+with the associated $94{+}26$ isotypic decomposition of
+$\C^{V_{600}}$ (Corollary~\ref{cor:94-26-split}); the BFS shell
+structure with its equitable icosahedral / dodecahedral
+subpopulations (Propositions~\ref{prop:BFS-shells}--\ref{prop:dual-populations});
+the narrow uniqueness of the $600$-cell among the eleven regular
+$3$-/$4$-polytopes (Theorem~\ref{thm:polytope-uniqueness}); the
+Hopf decomposition into twelve great-decagon fibres with their
+$C_{10}$ cycle spectrum (Proposition~\ref{prop:hopf-spectrum});
+the real Clifford algebra $\Cl(1,3)$ as the $16$-sector model
+(Fact~\ref{fact:Cl-structure}); the octonionic $8$-sector with
+$\Der(\OO) = \mathfrak{g}_2$ (Fact~\ref{fact:Der-g2}) and
+$\SU(3) = \Stab_{G_2}(u)$ (Fact~\ref{fact:SU3-stab});
+and the coefficientwise $\sigma$-compatibility of all $\Q$-defined
+maps (Theorem~\ref{thm:sigma-compat-P2}).''
+
+\subsection{What P2 does not provide}
+
+\begin{enumerate}
+\item No seven-rung uniqueness theorem. The cascade chain
+  $E_8 \to H_4 \to 40 \to D_4 \to 16 \to 8 \to 0$ is not proved
+  to be forced by any external principle in this paper.
+\item No crystallographic inclusion of $H_4$ into $E_8$. $H_4$
+  appears only as the image of the projection $\pi_H$.
+\item No $2I/2T$ quotient structure on $V_{600}$. $V_{24}$ is an
+  inscribed subset, not a fibre quotient.
+\item No refinement-graph construction. Refinement graphs are the
+  subject of P3.
+\item No closure-functional / dynamics content. That is the
+  subject of P4.
+\item No gauge, spectral, hydrodynamic, or computational
+  correspondence. Those are the subjects of downstream branch
+  papers.
+\item No physical identification of the sectors with gauge fields,
+  metrics, spinors, or any specific Millennium-problem target.
+\end{enumerate}
+
+\appendix
+
+%=====================================================================
+\section{Notation Audit}
+\label{app:notation}
+%=====================================================================
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Symbol & Meaning & Defined \\
+\hline
+$\Phi(E_8)$ & $E_8$ root system in $\R^8$ & Def.~\ref{def:E8} \\
+$\Lambda(E_8)$ & $E_8$ root lattice & Def.~\ref{def:lambda-E8} \\
+$U$ & coordinate $4$-plane $\operatorname{span}(e_1, \ldots, e_4)$ & Def.~\ref{def:U} \\
+$\Phi(D_4)$ & $D_4$ root system in $U$ & Def.~\ref{def:D4} \\
+$\HH$ & Hamilton quaternions & notation \\
+$I$ & icosian ring & Def.~\ref{def:icosian-ring} \\
+$\ast$ & icosian star-map $\varphi \mapsto \bar\varphi$ & Def.~\ref{def:icosian-star} \\
+$\iota_I$ & lattice isometry $\Lambda(E_8) \to I$ & Fact~\ref{fact:icosian-E8} \\
+$\tau_\pm$ & real embeddings of $\Q(\varphi)$ & Def.~\ref{def:real-embeddings} \\
+$\eta$ & twin map $I \to \HH \oplus \HH$ & Def.~\ref{def:eta} \\
+$\operatorname{pr}_{\rm phys}$ & physical-space projection $\HH \oplus \HH \to \HH$ & Def.~\ref{def:pr-phys} \\
+$\pi_H$ & $E_8 \to H_4$ projection & Def.~\ref{def:pi-H} \\
+$V_{600}, V_{24}$ & $600$-cell, inscribed $24$-cell vertex sets & Defs.~\ref{def:V600}, \ref{def:V24} \\
+$\Cl(1,3)$ & real Clifford algebra of signature $(1,3)$ & Def.~\ref{def:Cl} \\
+$\gamma_\mu, \gamma_A$ & Clifford generators / monomial basis & Defs.~\ref{def:Cl}, \ref{def:Cl-basis} \\
+$\OO$ & octonion algebra & Def.~\ref{def:octonions} \\
+$\Im(\OO)$ & imaginary octonions & Def.~\ref{def:octonions} \\
+$D_{a,b}$ & inner-derivation map on $\OO$ & Def.~\ref{def:Dab} \\
+$\Der(\OO)$ & derivation algebra of $\OO$ = $\mathfrak{g}_2$ & Def.~\ref{def:derivations}, Fact~\ref{fact:Der-g2} \\
+$G_2$ & automorphism group $\Aut(\OO)$ & Def.~\ref{def:G2} \\
+$\Stab_{G_2}(u)$ & stabilizer of unit $u \in \Im(\OO)$, = $\SU(3)$ & Def.~\ref{def:stab-u}, Fact~\ref{fact:SU3-stab} \\
+$\sigma$ & coefficientwise Galois action $\varphi \mapsto \bar\varphi$ & Notation~\ref{not:sigma-P2}, per \cite{SigmaRationality} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{SigmaRationality}
+\emph{Cascade--Classical Correspondence I: Sigma-Fixed Rationality
+over $\Q(\varphi)$},
+\texttt{papers/cascade-sigma-rationality/cascade-sigma-rationality.tex}.
+(Paper P1 of the cascade infrastructure programme.)
+
+\bibitem{CascadeInfrastructurePlan}
+\emph{Cascade Infrastructure Plan},
+\texttt{papers/cascade-infrastructure-plan.md}.
+
+\bibitem{Humphreys}
+J.~E.~Humphreys, \emph{Introduction to Lie Algebras and
+Representation Theory}, Graduate Texts in Mathematics \textbf{9},
+Springer, 1972. The standard model of $D_4$ root system used here
+(\S\ref{sec:D4}) appears as part of the classical-type root system
+catalogue in \S 12.1 (after the general theory developed in
+Ch.~III). The crystallographic restriction in $\R^n$ used in
+Lemma~\ref{lem:H4-noncrystallographic} is Theorem 6.4 (in some
+printings, Theorem 6.4 of the chapter on root systems).
+
+\bibitem{Bourbaki}
+N.~Bourbaki, \emph{Groupes et alg\`ebres de Lie, Chapitres 4, 5 et
+6}, Masson, 1981 (Hermann, 1968 original). Root systems of type
+$E_8$: Planches.
+
+\bibitem{FultonHarris}
+W.~Fulton and J.~Harris, \emph{Representation Theory: A First
+Course}, Graduate Texts in Mathematics \textbf{129}, Springer,
+1991. Triality and $\Spin(8)$: \S 20.
+
+\bibitem{Serre}
+J.-P.~Serre, \emph{A Course in Arithmetic}, Graduate Texts in
+Mathematics \textbf{7}, Springer, 1973. The $E_8$ lattice and its
+basic structural properties (even, unimodular, self-dual) appear in
+Ch.~V (Quadratic forms with discriminant $\pm 1$); the standard
+explicit description used in \S\ref{sec:E8} is in \S V.1.4 (or
+\S III.4 in the parallel discussion of the discriminant of the
+$E_8$ form).
+
+\bibitem{CoxeterRegularPolytopes}
+H.~S.~M.~Coxeter, \emph{Regular Polytopes}, 3rd ed., Dover, 1973.
+$H_4$ Coxeter group: \S 3; $600$-cell coordinates: \S 22.7;
+$24$-cell: \S 3.3.
+
+\bibitem{ConwaySloane}
+J.~H.~Conway and N.~J.~A.~Sloane, \emph{Sphere Packings, Lattices
+and Groups}, 3rd ed., Springer, 1999. Icosians and $E_8$ lattice:
+Ch.~8.
+
+\bibitem{MoodyPatera}
+R.~V.~Moody and J.~Patera, \emph{Quasicrystals and icosians}, J.
+Phys.\ A: Math.\ Gen.\ \textbf{26} (1993), 2829--2853. Explicit
+icosian / $H_4$ / $E_8$ interface.
+
+\bibitem{Lounesto}
+P.~Lounesto, \emph{Clifford Algebras and Spinors}, 2nd ed., London
+Math.\ Soc.\ Lecture Note Series \textbf{286}, Cambridge
+University Press, 2001. Real Clifford algebras and the matrix
+classification: Ch.~16 ($\Cl_{p,q}$ as a matrix algebra over
+$\R, \C, \HH$); the specific identification $\Cl(1,3) \cong
+M_2(\HH)$ appears in Table~16.4 (with the equivalent notation
+$\mathrm{Cl}_{1,3} \cong M(2, \HH)$).
+
+\bibitem{Chevalley}
+C.~Chevalley, \emph{The Algebraic Theory of Spinors and Clifford
+Algebras}, Collected Works Vol.~2, Springer, 1997. Clifford
+algebras over $\R$.
+
+\bibitem{BaezOctonions}
+J.~Baez, \emph{The Octonions}, Bull.\ AMS \textbf{39} (2002),
+145--205. Octonions, $\Der(\OO) = \mathfrak{g}_2$, $G_2$, and
+$\SU(3) = \Stab_{G_2}(u)$: \S\S 2, 4, 7.
+
+\bibitem{SchaferNonassociative}
+R.~D.~Schafer, \emph{An Introduction to Nonassociative Algebras},
+Dover, 1995 (Academic Press 1966 reprint). $\Der(\OO) =
+\mathfrak{g}_2$: Ch.~III.
+
+\bibitem{Macfarlane}
+A.~J.~Macfarlane, \emph{The sphere $S^6$ viewed as a $G_2/\SU(3)$
+coset space}, Int.\ J.\ Mod.\ Phys.\ A \textbf{17} (2002),
+2595--2613. $\SU(3)$ stabilizer in $G_2$.
+
+\bibitem{DuVal1964}
+P.~Du~Val, \emph{Homographies, Quaternions and Rotations}, Oxford
+University Press, 1964. Classical classification of finite
+subgroups of $\Sp(1)$; the binary polyhedral groups (Ch.~3).
+
+\bibitem{BrouwerHaemers2012}
+A.~E.~Brouwer and W.~H.~Haemers, \emph{Spectra of Graphs},
+Springer, 2012. Laplacian spectra of Platonic and regular-polytope
+vertex graphs (Ch.~3); spectra of Cayley-graph and
+distance-regular graph constructions.
+
+\bibitem{GodsilRoyle2001}
+C.~Godsil and G.~Royle, \emph{Algebraic Graph Theory}, Graduate
+Texts in Mathematics~\textbf{207}, Springer, 2001. Equitable
+partitions and quotient matrices (\S 9.3); Laplacian spectra and
+bounds (Ch.~13).
+
+\bibitem{KemenySnell1976}
+J.~G.~Kemeny and J.~L.~Snell, \emph{Finite Markov Chains}, 2nd
+ed., Springer, 1976. Lumpability theorem and absorbing chains
+(Ch.~V); fundamental matrix $N = (I - Q)^{-1}$ for absorbing
+chains.
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations: F1--F8} (internal note, formal
+framework), \texttt{papers/cascade-derivation/cascade-foundations.md}.
+Excluded from theorem support per \S\ref{sec:intro}.
+
+\bibitem{CascadePregeometry}
+\emph{Cascade Pregeometry: P0--P9} (internal note, formal
+framework), \texttt{papers/cascade-derivation/cascade-pregeometry.md}.
+Excluded from theorem support per \S\ref{sec:intro}.
+
+\bibitem{CascadeEmbeddings}
+\emph{Cascade Embeddings} (internal note),
+\texttt{papers/cascade-derivation/cascade-embeddings.md}.
+Historical motivation only. \S 12 (computational verifications)
+is not used as theorem-grade support.
+
+\end{thebibliography}
+
+\end{document}

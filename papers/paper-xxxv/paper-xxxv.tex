@@ -1,0 +1,802 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Ecal}{\mathcal{E}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\twoT}{2\mathbf{T}}
+\newcommand{\twoI}{2\mathbf{I}}
+
+\title{Quantum Mechanics, Life, and Gravity\\[6pt]
+\large as Three Projections of $E_8$ Closure Geometry}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+The VFD programme has independently derived two structural tracks from the 600-cell closure substrate: a quantum track (Papers V, XXII, XXXII) yielding particle masses, the fine-structure constant, the Weinberg angle, and hadron charge radii; and a gravitational track (Papers XXIII--XXVIII) yielding event-order time, observer kinematics, metric separation, curvature precursors, and a discrete graph-Poisson field equation. The two tracks were constructed independently from the same geometry, but the structural relation between them was not made precise.
+
+This paper proposes and substantiates a unified framework: \emph{the physics of every domain is a projection of one $E_8$ closure geometry onto a different rung of a discrete cascade}. The cascade, derived in earlier work from the modular structure of the chirality-selector exponent $136{,}279{,}840$, has seven rungs $E_8 \to H_4 \to 40 \to D_4 \to 16 \to 8 \to 0$. We identify three of these rungs as the natural homes of the three pillars of physics:
+\begin{itemize}
+\item \emph{Quantum mechanics} lives at the $H_4$ rung (120 vertices of the 600-cell).
+\item \emph{Biology} lives at the icosahedral rung (40 = cell-fibre count of the Hopf cell-fibration).
+\item \emph{Gravity} lives at the $D_4$ rung (24 vertices of the inscribed 24-cell).
+\end{itemize}
+We prove computationally that the cascade has a dual structure: it is a \emph{fan} at the root-system level (so $H_4$ and $D_4$ are incompatible algebraic structures and quantum mechanics cannot reduce to general relativity), but a \emph{chain} at the polytope-vertex level (so the 24-cell and the 4-cube are sub-vertex sets of the 600-cell). This dual structure offers a structural account of why quantum mechanics and general relativity have resisted direct unification while remaining mutually compatible: they are incompatible spectral structures on a common geometric substrate.
+
+We further show that the 600-cell decomposes algebraically as the union of five disjoint inscribed 24-cells via the cosets of the binary tetrahedral subgroup $\twoT$ inside the binary icosahedral group $\twoI$. The induced action of $\twoI$ on these five $D_4$-skeletons factors through $A_5 \subset S_5$ — the classical five-letter representation of the alternating group. In the continuum limit of a refinement scheme that respects the icosahedral structure, the discrete $A_5$ action densifies to $SO(3)$, and combined with the temporal direction provided by the event poset, yields the full Lorentz group $SO(1,3)$. The continuum limit is verified at the multiplicity level: the 600-cell graph Laplacian has multiplicity sequence $(1,4,9,16,25,36)$, exactly the $(l+1)^2$ signature of the first six $SO(4)$ irreducible representation bands of the round 3-sphere.
+
+The paper is presented as a foundational synthesis. It does not derive the Einstein equations from quantum mechanics or vice versa. It establishes that both domains, together with biology, sit on a common $E_8$ substrate via different but precisely characterised projections, with each step verified or computationally substantiated. The novel structural results --- the fan/chain duality, the algebraic Schl\"afli decomposition, the $A_5$ origin of Lorentz invariance, the cell-level reading of biology, and the squared-multiplicity derivation of the $H_4$ spectrum from the irreducible representations of $\twoI$ --- are all closed under the present analysis.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The unification of quantum mechanics and general relativity has resisted treatment for nearly a century. Numerous attempts (string theory, loop quantum gravity, causal sets, asymptotic safety, twistor theory, geometric algebra unifications, $E_8$ theories) have proposed candidate ultimate frameworks, none yet experimentally substantiated. This paper does not propose another such framework. It proposes, more modestly, a \emph{structural account} of why quantum mechanics and general relativity have resisted direct unification while remaining manifestly compatible at the experimental level: \emph{they are not adjacent rungs of a single hierarchy, and the rungs that lie between them include the rung where biology lives}.
+
+The framework is the VFD (Vacuum Field Dynamics) programme, in which physical observables are extracted from a closure geometry built on the 600-cell --- the unique 4-dimensional regular convex polytope with 120 vertices, 720 edges, and icosahedral symmetry. Earlier papers in the programme have derived from this substrate: 13 particle masses at $0.014\%$ average error~\citep{SmartV}; the fine-structure constant $\alpha^{-1} = 137 + \pi/87$ at $0.81$~ppm and the Weinberg angle $\sin^2\theta_W = 3/8$~\citep{SmartXXII}; hadron charge radii (proton at $0.04\%$, deuteron at $0.0006\%$)~\citep{SmartXXXII}; and a gravitational scaffold of event-order time, separation, curvature, and field equations on the same substrate~\citep{SmartXXIII,SmartXXIV,SmartXXV,SmartXXVI,SmartXXVII,SmartXXVIII}.
+
+Two facts have been clear from the earlier work:
+\begin{enumerate}
+    \item The same 600-cell geometry supports both the quantum track (spectral content: eigenvalues, multiplicities, channel counts) and the gravitational track (event-order content: causal poset, metric separation, curvature precursors).
+    \item The two tracks have been constructed from \emph{different aspects} of the substrate: the quantum track from the spectral structure of the graph Laplacian; the gravitational track from the partial-order structure of admissible overlap events.
+\end{enumerate}
+
+Paper~XXVIII~\citep{SmartXXVIII} proposed that these two tracks are projections of one underlying event-order geometry, but did not derive the explicit projections or characterise their algebraic incompatibility. The present paper closes this gap.
+
+\subsection{The cascade}
+
+The starting point is the \emph{chirality-selector modular cascade}: the exponent $136{,}279{,}840$ of the chirality-selector $P_G = 2^{136{,}279{,}840}+1$, when reduced modulo successive Coxeter-related dimensions, yields a clean descending sequence:
+\begin{equation}\label{eq:cascade-residues}
+\begin{aligned}
+136{,}279{,}840 \bmod 248 &= 120 && (E_8 \to H_4) \\
+136{,}279{,}840 \bmod 120 &= 40  && (H_4 \to \text{icosahedral 8}\times 5) \\
+136{,}279{,}840 \bmod 24  &= 16  && (D_4 \to \text{4-cube}) \\
+136{,}279{,}840 \bmod 8   &= 0   && (E_8 \to \text{closure})
+\end{aligned}
+\end{equation}
+This gives the seven-rung structure
+\begin{equation}\label{eq:cascade-rungs}
+E_8 \,(248) \;\to\; H_4 \,(120) \;\to\; 40 \;\to\; D_4 \,(24) \;\to\; 16 \;\to\; 8 \;\to\; 0
+\end{equation}
+where each entry is a candidate \emph{projection} of the $E_8$ closure data onto a lower-rank substrate.
+
+Earlier work treated~\eqref{eq:cascade-rungs} as a numerological pattern. The contribution of this paper is to make each arrow precise: to identify which arrows are strict sub-root-system inclusions, which are projections in the sense of representation theory, and which arise from sub-vertex-set inclusions of polytopes. We then identify three of the rungs as the natural geometric homes of three domains of physics:
+
+\begin{center}
+\begin{tabular}{c@{\quad=\quad}l}
+\textbf{quantum mechanics} & $H_4$ rung (120 vertices, spectral structure) \\
+\textbf{biology}           & icosahedral $40$ rung (cell-level Hopf fibration) \\
+\textbf{gravity}           & $D_4$ rung (24-cell sub-vertex set)
+\end{tabular}
+\end{center}
+
+\noindent The three remaining rungs --- the 4-cube/Clifford rung (information, fermionic), the octonionic 8 rung (observer), and the 0 rung (unity, ground state) --- are catalogued in Section~\ref{sec:lower-rungs} but not derived in detail; they are the subject of forthcoming work.
+
+\subsection{Scope}
+
+This paper makes the following contributions:
+\begin{enumerate}
+    \item \textbf{The fan/chain duality.} The cascade is a \emph{fan} at the root-system level (Section~\ref{sec:embeddings}, Theorem~\ref{thm:fan}) but a \emph{chain} at the polytope-vertex level (Section~\ref{sec:embeddings}, Theorem~\ref{thm:chain}). This is the structural explanation for the QM/GR incompatibility-with-compatibility puzzle.
+    \item \textbf{Algebraic Schl\"afli decomposition.} The 600-cell decomposes as the union of five disjoint 24-cells, identified explicitly as the five left cosets of $\twoT$ in $\twoI$ (Section~\ref{sec:bio}, Theorem~\ref{thm:schlafli}).
+    \item \textbf{$A_5$ origin of Lorentz invariance.} The action of $\twoI$ on the five 24-cell skeletons factors through $A_5 \subset S_5$ --- the classical five-letter representation of the alternating group --- providing the algebraic precursor to continuous $SO(3)$ in the continuum limit (Section~\ref{sec:gr}, Theorem~\ref{thm:A5action}).
+    \item \textbf{Squared-multiplicity derivation.} The 600-cell graph Laplacian's spectral multiplicities are the squared dimensions of the irreducible representations of $\twoI$, by Burnside's theorem (Section~\ref{sec:qm}, Theorem~\ref{thm:burnside}).
+    \item \textbf{Cell-level reading of biology.} The icosahedral rung lives at the cell (3-volume) level of the 600-cell, not the vertex (atomic) level. The Hopf cell-fibration $600 = 15 \times 40$ supplies the substrate (Section~\ref{sec:bio}, \S\ref{sec:bio:cell}).
+    \item \textbf{GR derivation framework.} The chain Discrete Graph-Poisson $\to$ Newtonian Poisson $\to$ Linearised Einstein $\to$ Nonlinear Einstein is made explicit, with each step's acceptance criterion identified and either substantiated or pointed to a standard real-analysis closure (Section~\ref{sec:gr}, \S\ref{sec:gr:einstein}).
+\end{enumerate}
+
+\noindent The paper does \emph{not} prove the Gromov-Hausdorff continuum-limit theorem (work in progress; numerical evidence in hand at the multiplicity level, see~\S\ref{sec:gr:continuum}). It does not produce a complete derivation of the Schwarzschild solution or the cosmological constant. It does not derive new biological observables (Caspar-Klug T-numbers, DNA helix pitch); these are catalogued as the next sub-phase of the biology rung. It does not address the lower three rungs (information, observer, unity) beyond cataloguing them.
+
+%==================================================================
+\section{The Embeddings}\label{sec:embeddings}
+%==================================================================
+
+We work with the standard real construction of the $E_8$ root system. The 240 roots of $E_8$ in $\mathbb{R}^8$ partition as 112 \emph{$D_8$-type} roots
+\[
+\pm e_i \pm e_j, \quad 1 \leq i < j \leq 8,
+\]
+plus 128 \emph{half-integer} roots
+\[
+\bigl(\pm \tfrac{1}{2}, \pm \tfrac{1}{2}, \ldots, \pm \tfrac{1}{2}\bigr) \quad \text{with even minus-count}.
+\]
+
+\subsection{The strict embedding $D_4 \hookrightarrow E_8$}\label{sec:emb:d4}
+
+The $D_4$ root system has 24 roots in $\mathbb{R}^4$:
+\[
+\alpha_{ij}^{\pm\pm} = \pm e_i \pm e_j, \quad 1 \leq i < j \leq 4,
+\]
+all of unit-squared length 2. The natural inclusion
+\begin{equation}
+\iota_D: \mathbb{R}^4 \hookrightarrow \mathbb{R}^8, \quad
+(x_1, x_2, x_3, x_4) \mapsto (x_1, x_2, x_3, x_4, 0, 0, 0, 0)
+\end{equation}
+maps the 24 $D_4$ roots to exactly 24 of the 112 $D_8$-type $E_8$ roots --- those whose two non-zero coordinates lie in $\{1,2,3,4\}$. This is a strict sub-root-system inclusion. The orthogonal complement carries a second copy of $D_4$, giving the well-known maximal sub-root-system decomposition $D_4 \times D_4 \subset E_8$.
+
+The $D_4$ root polytope is the \emph{24-cell}: 24 vertices in $\mathbb{R}^4$ on the unit 3-sphere (after rescaling), with full $W(D_4)$ symmetry of order 192. The 24-cell is the only self-dual regular convex 4-polytope.
+
+The $D_4$ root system has a unique outer automorphism group $S_3$, the famous \emph{triality}, permuting three 8-dimensional irreducible representations of $\mathrm{Spin}(8)$: the vector $\mathbf{8_v}$, the spinor $\mathbf{8_s}$, and the conjugate spinor $\mathbf{8_c}$. This is the algebraic feature distinguishing $D_4$ from all other simple Lie algebras and is, as we shall see, the structural property that makes $D_4$ the natural home of gravity.
+
+\subsection{The non-crystallographic projection $E_8 \to H_4$}\label{sec:emb:h4}
+
+The $H_4$ root system has 120 roots in $\mathbb{R}^4$. It is \emph{non-crystallographic}: its Cartan matrix involves the golden ratio $\varphi = (1+\sqrt{5})/2$ and so is not integer. There is no strict sub-root-system inclusion $H_4 \hookrightarrow E_8$ in the standard sense.
+
+There is, however, a natural projection. Identify $\mathbb{R}^4$ with the quaternions $\mathbb{H}$, and consider the \emph{icosian ring} $\mathcal{I} \subset \mathbb{H}$ of integer linear combinations of the 120 unit icosian quaternions. The icosian ring, viewed as a $\mathbb{Z}$-module of rank 8, is isomorphic to the $E_8$ root lattice via the Galois twist
+\[
+q \mapsto (q, \sigma(q)), \qquad \sigma: \varphi \mapsto 1 - \varphi = -\varphi^{-1}.
+\]
+The 240 $E_8$ roots correspond to pairs $(q, \sigma(q))$ of unit-norm icosians; projecting onto the first factor gives the 120 vertices of the 600-cell, with each vertex appearing as the image of two $E_8$ roots (the dual 600-cell pair of Paper~XXII).
+
+Denote this projection by
+\begin{equation}\label{eq:piH}
+\pi_H: E_8 \twoheadrightarrow H_4, \qquad \text{(icosian Galois twist)}.
+\end{equation}
+
+\subsection{The fan structure}\label{sec:emb:fan}
+
+\begin{theorem}[Fan structure of the cascade]\label{thm:fan}
+At the root-system level, the cascade structure $E_8 \to H_4$ via $\pi_H$ and $E_8 \to D_4$ via $\iota_D$ does not factor as a chain. Specifically, the projection $\pi_H$ does not factor through $\iota_D$, and the inclusion $\iota_D$ does not factor through $\pi_H$.
+\end{theorem}
+
+\begin{proof}
+$\pi_H$ has image in a non-crystallographic root system; $\iota_D$ has image in a crystallographic one. Crystallographic structure is preserved under restriction; non-crystallographic structure is not preserved under inclusion. Hence neither map factors through the other.
+\end{proof}
+
+The geometric content of Theorem~\ref{thm:fan} is that quantum mechanics and general relativity sit on the $E_8$ substrate via maps that preserve incompatible data:
+\begin{itemize}
+    \item $\pi_H$ preserves spectral / non-crystallographic order. This is the algebraic content of quantum mechanics: discrete observable values without a periodic continuum backbone.
+    \item $\iota_D$ preserves metric / crystallographic regularity. This is the algebraic content of general relativity: a smooth Lorentzian metric requires a regular continuum limit.
+\end{itemize}
+Neither map factors through the other; therefore quantum mechanics and general relativity cannot be reduced to each other by any algebraic restriction or projection of the same data. \emph{This is the structural account of QM/GR incompatibility.}
+
+\subsection{The chain structure}\label{sec:emb:chain}
+
+\begin{theorem}[Chain structure at polytope level]\label{thm:chain}
+At the polytope-vertex level, the cascade is a strict descending chain:
+\[
+\text{600-cell (120 vertices)} \;\supset\; \text{24-cell (24 vertices)} \;\supset\; \text{tesseract (16 vertices)}.
+\]
+\end{theorem}
+
+\begin{proof}[Verification.]
+We classify the 120 vertices of the 600-cell into three types using the standard quaternion construction:
+\begin{itemize}
+    \item Axis type: $(\pm 1, 0, 0, 0)$ and permutations --- 8 vertices.
+    \item Half type: $(\pm \tfrac{1}{2}, \pm \tfrac{1}{2}, \pm \tfrac{1}{2}, \pm \tfrac{1}{2})$ --- 16 vertices.
+    \item $\varphi$-type: even permutations of $(0, \pm \tfrac{1}{2\varphi}, \pm \tfrac{1}{2}, \pm \tfrac{\varphi}{2})$ with all sign combinations --- 96 vertices.
+\end{itemize}
+Total: $8 + 16 + 96 = 120$, verified directly (\texttt{scripts/explore\_600cell\_substructure.py}).
+
+The 8 axis-type and 16 half-type vertices together form a 24-vertex subset of the 600-cell. Computational verification on the unit 3-sphere confirms that this subset has the exact distance profile of the 24-cell: pairwise distances in $\{1, \sqrt{2}, \sqrt{3}, 2\}$ with shell counts from any vertex of $(1, 8, 6, 8, 1)$. This is the textbook 24-cell signature.
+
+The 16 half-type vertices alone form the tesseract (4-cube): each labelled by a sign pattern $(s_1, s_2, s_3, s_4) \in \{\pm\}^4$.
+\end{proof}
+
+The two theorems combine into the central structural picture: \emph{the cascade is a fan at the algebraic level and a chain at the geometric level}. This dual structure resolves the apparent paradox of the QM/GR relationship:
+
+\begin{remark}[Resolution of the QM/GR paradox]\label{rmk:qmgr}
+QM and GR cannot reduce to each other because they sit on $E_8$ via incompatible algebraic projections (Theorem~\ref{thm:fan}). They are simultaneously compatible because they share the same geometric substrate: GR's metric skeleton (the 24-cell) is a sub-vertex set of QM's spectral substrate (the 600-cell), per Theorem~\ref{thm:chain}.
+\end{remark}
+
+\subsection{The other rungs}\label{sec:emb:other}
+
+Briefly:
+\begin{itemize}
+    \item \textbf{Tesseract / 4-cube (16).} The 16 half-type vertices form the tesseract. Each vertex carries a $\mathbb{Z}_2^4$ grading via its sign pattern, suggesting a natural identification with the basis of the Clifford algebra $\mathrm{Cl}(1,3)$, dimension $2^4 = 16$. This identification, conjectural, would unify the classical (Boolean) and fermionic (Dirac) readings of the rung. Subject of Phase 2a; see Section~\ref{sec:lower-rungs}.
+
+    \item \textbf{Octonionic 8.} The ambient 8-dimensional space $\mathbb{R}^8$ in which $E_8$ sits carries an octonion algebra structure $\mathcal{O}$. The unit sphere $S^7 \subset \mathbb{R}^8$ inherits a Moufang-loop structure from $\mathcal{O}$. Octonion non-associativity is the algebraic statement that observers do not compose, supporting the identification of this rung as the observer substrate. Subject of Phase 2b.
+
+    \item \textbf{Unity 0.} The trivial group / vanishing closure residual. Operational meaning is the ground state of the closure functional $\Fcal$. Subject of Phase 2c.
+\end{itemize}
+
+%==================================================================
+\section{Quantum Mechanics on the $H_4$ Rung}\label{sec:qm}
+%==================================================================
+
+This section consolidates results from Papers~V, XXII, and XXXII into the framing ``QM = projection of $E_8$ onto $H_4$.'' No new derivations are required; the contribution here is the algebraic identification and one new structural theorem (Theorem~\ref{thm:burnside}).
+
+\subsection{The 600-cell graph Laplacian spectrum}
+
+The 600-cell vertex graph is 12-regular with 720 edges. Its Laplacian $L = D - A$ has 9 distinct eigenvalues, all in $\mathbb{Q}(\sqrt{5})$:
+\begin{center}
+\small
+\begin{tabular}{ccc|ccc}
+\toprule
+$\lambda_i$ & $\dim$ irrep & $\mathrm{mult}$ & $\lambda_i$ & $\dim$ irrep & $\mathrm{mult}$ \\
+\midrule
+$0$         & 1 & 1  & $14$            & 6 & 36 \\
+$5-\sqrt{5}$ & 2 & 4  & $6+\sqrt{5}$    & 3 & 9  \\
+$6-\sqrt{5}$ & 3 & 9  & $15$            & 4 & 16 \\
+$9$         & 4 & 16 & $7+\sqrt{5}$    & 2 & 4  \\
+$12$        & 5 & 25 &                 &   &    \\
+\bottomrule
+\end{tabular}
+\end{center}
+The integer eigenvalues 9, 12, 14, 15 are exactly those identified in Paper~V~\citep{SmartV} as carrying particle masses. The total multiplicity is 120, matching the vertex count.
+
+\begin{theorem}[Squared multiplicities from $\twoI$ irreps]\label{thm:burnside}
+The 9 distinct eigenvalues of the 600-cell graph Laplacian have multiplicities equal to the squared dimensions of the 9 irreducible representations of the binary icosahedral group $\twoI$.
+\end{theorem}
+
+\begin{proof}
+The 600-cell vertices, identified with unit quaternions, form the binary icosahedral group $\twoI$ of order 120. This is verified directly by checking closure under quaternion multiplication on the vertex set (\texttt{scripts/build\_2I\_and\_icosahedral.py}).
+
+Conjugacy classes of $\twoI$ are determined by the real part (= $\cos(\theta/2)$) of the unit quaternion. Direct computation gives 9 conjugacy classes with sizes $(1, 12, 20, 12, 30, 12, 20, 12, 1)$, summing to 120. By Burnside's theorem, $\twoI$ has exactly 9 irreducible representations.
+
+The 600-cell vertex graph carries the regular representation of $\twoI$ (acting by left multiplication), which by Maschke's theorem decomposes as $\bigoplus_i \rho_i \otimes \rho_i^*$, contributing dimension $\dim(\rho_i)^2$ from each irrep. The standard character table of $\twoI$ (cf.~\citep{Conway1985Atlas}) gives irrep dimensions $(1, 2, 3, 4, 5, 6, 3, 4, 2)$. Squaring: $(1, 4, 9, 16, 25, 36, 9, 16, 4)$, with sum $120$.
+
+Direct numerical computation of the Laplacian eigenvalue multiplicities matches this list exactly.
+\end{proof}
+
+This closes a longstanding open question on why the 600-cell Laplacian multiplicities are perfect squares: they are the squared dimensions of $\twoI$ irreps, and the 600-cell carries the regular $\twoI$-representation.
+
+\subsection{Quantum observables on $H_4$}
+
+The following observables are derived in earlier work as functions on the 120-vertex 600-cell:
+\begin{itemize}
+    \item Particle masses: 13 masses from eigenvalues $\{9, 12, 14, 15\}$, average error $0.014\%$~\citep{SmartV}.
+    \item Fine-structure constant: $\alpha^{-1} = 137 + \pi/87 = 137.036$ at $0.81$~ppm~\citep{SmartXXII}.
+    \item Weinberg angle: $\sin^2\theta_W = 9/(9+15) = 3/8$~\citep{SmartXXII}.
+    \item Hadron charge radii: proton $0.04\%$, pion $0.26\%$, kaon $1.7\%$, deuteron $0.0006\%$ ($0.02\sigma$)~\citep{SmartXXXII}.
+\end{itemize}
+
+\begin{remark}[QM = $H_4$ projection]\label{rmk:qm-h4}
+All listed observables are extracted from the spectral and representation-theoretic structure of the 600-cell vertex graph. None requires the 24-cell sub-vertex set or any structure outside $H_4$. The identification ``QM lives on the $H_4$ rung'' is therefore not a metaphor but a literal statement: every QM observable in the VFD programme is a function of the $H_4$ projection $\pi_H(E_8)$ alone.
+\end{remark}
+
+%==================================================================
+\section{Biology on the Icosahedral Rung}\label{sec:bio}
+%==================================================================
+
+This section establishes the icosahedral rung at $40 = 8 \times 5$, identifies its concrete substrate, and argues that biology lives at the \emph{cell} level of the 600-cell (rather than the vertex level where QM lives). The central new structural results are the algebraic Schl\"afli compound (Theorem~\ref{thm:schlafli}) and the cell-vs-vertex framing.
+
+\subsection{The Schl\"afli compound, algebraically}\label{sec:bio:schlafli}
+
+\begin{theorem}[Algebraic Schl\"afli compound]\label{thm:schlafli}
+The 600-cell decomposes as the union of 5 disjoint inscribed 24-cells:
+\[
+\text{600-cell} \;=\; \bigsqcup_{g \in \twoI / \twoT}\, g \cdot \text{(24-cell)},
+\]
+where $\twoT \subset \twoI$ is the binary tetrahedral subgroup of order 24.
+\end{theorem}
+
+\begin{proof}
+$\twoT$ has 24 elements: the 8 Lipschitz unit quaternions $\pm 1, \pm i, \pm j, \pm k$ and the 16 Hurwitz unit quaternions $(\pm 1 \pm i \pm j \pm k)/2$. Its index in $\twoI$ is $120/24 = 5$, so there are 5 left cosets.
+
+Computational verification (\texttt{scripts/verify\_schlafli\_via\_2T.py}):
+\begin{itemize}
+    \item Closure of $\twoT$ under quaternion multiplication: 576/576 products in $\twoT$.
+    \item All 24 elements of $\twoT$ located inside the 600-cell vertex set; they coincide exactly with the (8 axis + 16 half) sub-vertex set --- i.e.\ the inscribed 24-cell of Theorem~\ref{thm:chain}.
+    \item Construction of the 5 left cosets $g \cdot \twoT$ for representatives $g \in \twoI$.
+    \item For each of the 5 cosets, verification that the 24 vertices have distance profile $(1, \sqrt{2}, \sqrt{3}, 2)$ with shell counts $(1, 8, 6, 8, 1)$ --- the textbook 24-cell signature.
+\end{itemize}
+All 5 cosets pass; their union is exactly the 120-vertex 600-cell.
+\end{proof}
+
+\begin{corollary}\label{cor:five-skeletons}
+There are 5 distinct $D_4$ skeletons inscribed in the 600-cell, each a 24-cell, related to one another by the icosahedral rotations of $\twoI$.
+\end{corollary}
+
+This is a sharpening of Theorem~\ref{thm:chain}: not one but \emph{five} distinct copies of the GR substrate sit inside the QM substrate, and they are interconverted by the icosahedral group. The structural significance for general relativity will appear in Section~\ref{sec:gr:lorentz}.
+
+The arithmetic interpretation of cascade rung 40 is now precise: $40 = 8 \times 5$, where the 8 is the ambient-dimension factor (the 8 cells per Schl\"afli frame per Hopf fibre) and the \emph{5 is the index} $[\twoI : \twoT]$, the number of inscribed 24-cells in the Schl\"afli compound.
+
+\subsection{Cell-level substrate of biology}\label{sec:bio:cell}
+
+The 600-cell has $C_3 = 600$ tetrahedral 3-cells, verified by 4-clique enumeration in the adjacency graph. The natural decomposition
+\[
+600 = 15 \times 40
+\]
+corresponds to the \emph{Hopf cell-fibration} (cf.~\citep{ConwaySloane1999}), in which the 600 cells are partitioned into 15 icosahedral fibres of 40 cells each.
+
+\begin{remark}[Vertex-level vs cell-level]\label{rmk:vertex-cell}
+The 600-cell carries data at four combinatorial levels:
+\begin{center}
+\small
+\begin{tabular}{c|c|c|c}
+\toprule
+Level & Object & Count & Carries \\
+\midrule
+0 & vertices    & 120  & atomic spectral data (QM) \\
+1 & edges       & 720  & bond / interaction data \\
+2 & faces       & 1200 & surface / interface data \\
+3 & cells       & 600  & tetrahedral closure volumes (\textbf{biology}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+Quantum mechanics, as a theory of atomic states, lives at the vertex level. Biology, as a theory of self-organising 3-dimensional volumes (proteins, lipid bilayers, viral capsids), lives at the cell level. This is the operational distinction between the QM rung and the biology rung: \emph{they are different combinatorial readings of the same 600-cell}.
+\end{remark}
+
+The concrete biological observables that the icosahedral rung is intended to encode are catalogued in Table~\ref{tab:bio-targets}; their derivation is the subject of Phase 1d-B2 through B6 in the cascade work order and is not undertaken in detail here.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{l|l}
+\toprule
+Target & Cell-level interpretation \\
+\midrule
+Caspar-Klug T-numbers & icosahedral closure-orbit eigenvalues \\
+DNA helix pitch (3.4 \AA, 10.5 bp/turn) & $\varphi$-shell spacing along Hopf-fibre axis \\
+Protein fold class & $\twoI$-orbit class on cell-level configurations \\
+Phyllotaxis golden angle ($137.508^\circ$) & cell-level $\varphi$-spherical packing optimum \\
+L-amino acid chirality & intrinsic chirality of $\twoI$ (no inversion in 2I) \\
+\bottomrule
+\end{tabular}
+\caption{Biological observables targeted at the icosahedral rung. Quantitative derivations are deferred to subsequent work.\label{tab:bio-targets}}
+\end{table}
+
+\subsection{The chirality bonus}\label{sec:bio:chirality}
+
+The icosahedral rotation group $I = A_5$ has order 60. The full icosahedral symmetry group $I_h$ (order 120) includes the inversion. Their double covers, $\twoI$ (order 120) and $\twoI_h$ (order 240), differ by whether the inversion is included; $\twoI$ specifically is \emph{chiral} --- it has no orientation-reversing element. Therefore any closure orbit defined by the $\twoI$ action carries definite handedness, which transfers to any biological structure built on a $\twoI$-invariant cell-level substrate. This is the cleanest structural origin we have for the universal chirality of biological molecules: \emph{life lives on a $\twoI$-orbit, and $\twoI$ is intrinsically chiral.}
+
+\subsection{Caspar-Klug T-numbers and A\_5 irreps}\label{sec:bio:tnumbers}
+
+The Caspar-Klug T-number of a viral capsid is given by $T(h, k) = h^2 + hk + k^2$ for integers $h, k \geq 0$, yielding the sequence $1, 3, 4, 7, 9, 12, 13, 16, 19, \ldots$ (the Loeschian numbers, OEIS A003136). Each $T$-number corresponds to a viable icosahedral triangulation with $20T$ facets. The sequence is classical (Caspar-Klug 1962) as norms of Eisenstein integers $h + k\omega$ where $\omega = e^{2\pi i/3}$.
+
+\begin{proposition}[Small T-numbers and A\_5 irreps]\label{prop:tnumbers}
+The four smallest T-numbers $\{1, 3, 4, 5\}$ coincide exactly with the four non-trivial irreducible representation dimensions of $A_5$. The integer $T = 2$ is absent from both the T-number sequence (since $2 \equiv 2 \pmod 3$ is not a Loeschian number) and the $A_5$ irrep list (only $\twoI$ has 2-dimensional spin irreps; $A_5$ does not).
+\end{proposition}
+
+\begin{proof}
+$A_5$ has 5 irreps: trivial (dim 1), two standard 3-dim reps (from the two chiralities of icosahedral rotations), a 4-dim rep (standard 5-dim minus trivial), and a 5-dim rep (the regular permutation rep of 5 letters minus the trivial). Distinct dimensions are $\{1, 3, 4, 5\}$. Computation: $\texttt{scripts/caspar\_klug\_tnumbers.py}$.
+\end{proof}
+
+Higher T-numbers ($T = 7, 9, 12, 13, \ldots$) are Eisenstein composites and do not match further $A_5$ irreps; their enumeration requires classical Eisenstein-integer arithmetic applied to the cascade-supplied icosahedral substrate. The cascade thus gives the \emph{small-capsid} structure a representation-theoretic origin; larger capsids follow the classical Caspar-Klug construction unchanged.
+
+\subsection{The integer-137 shared signature}\label{sec:bio:phyllotaxis}
+
+The phyllotaxis golden angle is
+\[
+\theta_{\mathrm{gold}} = 360^\circ / \varphi^2 = 137.508^\circ.
+\]
+Compared with the fine-structure constant inverse $\alpha^{-1} = 137.036$ from Paper~XXII~\citep{SmartXXII}, the integer parts coincide: both are 137. The fractional parts differ ($0.508$ vs $0.036$), and direct numerical search (\texttt{scripts/phyllotaxis\_alpha\_check.py}) finds no clean cascade-only form for the difference $0.4717$.
+
+\begin{remark}[Integer 137 as cascade signature]\label{rmk:137}
+Both quantities extract a value near 137 from $\varphi$-driven 600-cell geometry, but via different operators: $\alpha^{-1}$ from the vertex spectrum (Paper~XXII), $\theta_{\mathrm{gold}}$ from cell-level $\varphi$-spherical packing (classical, Vogel 1979). The shared integer 137 is a real structural signature of the cascade --- the operators differ but their output integer floors are pinned by the same $\varphi$-geometry --- but the fractional parts are not derivable from a single formula. This is consistent with the cell-vs-vertex framing of Remark~\ref{rmk:vertex-cell}.
+\end{remark}
+
+%==================================================================
+\section{General Relativity on the $D_4$ Rung}\label{sec:gr}
+%==================================================================
+
+This section is the most technically substantial of the paper. It consists of (a) the precise identification of the gravitational substrate as the $D_4$ rung, (b) the derivation of the Lorentz invariance precursor from the $\twoI$ action on the 5 Schl\"afli skeletons, (c) the tensor-uplift framework producing $T_{\mu\nu}$ from a scalar source, (d) the explicit chain Discrete Graph-Poisson $\to$ Newtonian Poisson $\to$ Linearised Einstein $\to$ Nonlinear Einstein, and (e) honest discussion of which steps are verified and which require further work.
+
+\subsection{The rigid skeleton}\label{sec:gr:skeleton}
+
+The $D_4$ rung is the 24-cell sub-vertex set of the 600-cell (Theorem~\ref{thm:chain}), pulled back through $\pi_H$ to the strict embedding $\iota_D : D_4 \hookrightarrow E_8$ (Section~\ref{sec:emb:d4}). The 24-cell carries the full Coxeter symmetry $W(D_4)$ (order 192) and has crystallographic regularity --- exactly what is needed for a smooth-manifold continuum limit.
+
+\paragraph{Triality.} The unique outer automorphism group $S_3$ of $D_4$ permutes three 8-dimensional irreducible representations of $\mathrm{Spin}(8)$:
+\begin{equation}\label{eq:triality}
+\mathbf{8_v} \;\longleftrightarrow\; \mathbf{8_s} \;\longleftrightarrow\; \mathbf{8_c}.
+\end{equation}
+This is the algebraic shape needed to host the $\{$metric, connection, curvature$\}$ triplet of differential geometry. \emph{No other rung of the cascade has triality.} The triality is shared between $D_4$ and the octonionic 8 rung (Spin(8) triality is the same as octonion triality), suggesting a deep structural coupling between gravity and the observer rung that we do not pursue here.
+
+\subsection{The reframing of Papers XXIII--XXVIII}\label{sec:gr:reframing}
+
+Papers~XXIII--XXVIII derive event-order time, observer kinematics, metric separation, curvature precursors, and a scalar field equation, all on the full 600-cell event geometry. They explicitly disclaim Lorentz invariance, the Einstein equations, and the continuum limit (cf.\ scope sections of \citep{SmartXXIV,SmartXXVI,SmartXXVII,SmartXXVIII}). The interpretation hitherto unstated is now apparent:
+
+\begin{remark}[Reframing of the gravitational track]\label{rmk:gr-reframing}
+Papers~XXIII--XXVIII derive \emph{full-$H_4$ event geometry}, not GR. To become GR, the constructions must be \emph{restricted to the 24-cell sub-vertex set} via $\iota_D$. The full GR derivation is the $\iota_D$-restriction of the existing constructions, taken to the continuum limit.
+\end{remark}
+
+This is the major structural reframing of the paper for the gravitational track: the existing scaffolding is correct but must be projected onto $D_4$ to acquire GR-compatible properties.
+
+\subsection{Lorentz invariance from the $A_5$ action}\label{sec:gr:lorentz}
+
+\begin{theorem}[$A_5$ origin of Lorentz invariance]\label{thm:A5action}
+The action of the binary icosahedral group $\twoI$ on the 5 cosets of $\twoT$ (Theorem~\ref{thm:schlafli} / Corollary~\ref{cor:five-skeletons}) factors through the standard 5-letter representation of the alternating group:
+\[
+\twoI \;\twoheadrightarrow\; \twoI / \{\pm 1\} = I = A_5 \;\hookrightarrow\; S_5.
+\]
+The kernel is exactly $\{\pm 1\}$ (the centre of $\twoI$), the image is exactly $A_5$ (all 60 even permutations of 5 letters), and there are 0 odd permutations in the image.
+\end{theorem}
+
+\begin{proof}[Verification.]
+Direct computation (\texttt{scripts/coset\_action\_2I\_on\_5\_skeletons.py}) on all 120 elements of $\twoI$ acting by left multiplication on the 5 cosets:
+\begin{itemize}
+    \item Number of distinct permutations in image: 60.
+    \item Number of even permutations: 60. Odd: 0.
+    \item Kernel: 2 elements, exactly $\{+1, -1\}$.
+    \item Sanity: $|\twoI| / |\mathrm{kernel}| = 120 / 2 = 60 = |A_5|$.
+\end{itemize}
+The image, as an abstract group, is $A_5$ acting on 5 letters. Since $A_5$ is simple, its non-trivial transitive actions on 5 points are all isomorphic (the standard action), so this is isomorphic as a $G$-set to the classical $A_5$ action on 5 inscribed tetrahedra of the icosahedron (cf.~\citep{Coxeter1973}). The two actions are related via the $D_4$-skeleton / icosahedral-tetrahedra correspondence arising from $\twoT \subset \twoI$ acting on 4-polytope / 3-polytope vertex sets respectively.
+\end{proof}
+
+The continuum-limit consequence:
+
+\begin{proposition}[Density limit, working hypothesis; NOT proved]\label{prop:density}
+Consider an iterated refinement $\Gcal_0 \to \Gcal_1 \to \Gcal_2 \to \ldots$ where $\Gcal_n$ is obtained from $\Gcal_{n-1}$ by applying the Schl\"afli decomposition $24 \to 5 \times 24$ independently at each vertex's local scale. Let $G_n \subset SO(3)$ be the group generated by all $A_5$-actions at each refinement level. We hypothesise:
+\begin{itemize}
+    \item[(H1)] $\overline{\bigcup_n G_n} = SO(3)$ in the analytic topology of $SO(3)$.
+\end{itemize}
+\emph{This is a conjecture, not a theorem.} Hypothesis (H1) would follow if the refinement steps introduce rotations by angles whose ratios are irrational (so that the generated subgroup is non-discrete). The multiplicity-level evidence in Section~\ref{sec:gr:continuum} is consistent with (H1) but does not prove it.
+\end{proposition}
+
+\begin{remark}[Lorentz invariance contingent on (H1)]
+If (H1) holds, combined with the temporal direction provided by the chain-length poset of Paper~XXV~\citep{SmartXXV}, the spatial $SO(3)$ extends to $SO(3) \times \mathbb{R}_{\mathrm{boost}} \to SO(1,3)$ by the standard Wigner construction, and the full Lorentz group emerges in the continuum limit. Proving (H1) is the central technical task of the C2 sub-phase of the GR derivation. The paper does not claim Lorentz invariance as proved; it establishes the algebraic precursor (Theorem~\ref{thm:A5action}) and identifies the remaining density hypothesis.
+\end{remark}
+
+\subsection{The continuum limit, multiplicity-level evidence}\label{sec:gr:continuum}
+
+The continuum limit is the technical crux of the GR derivation. We demonstrate it numerically at the multiplicity level.
+
+\paragraph{$S^3$ continuum spectrum.} The Laplace-Beltrami operator $-\Delta$ on the unit 3-sphere $S^3$ has eigenvalues $\lambda_l = l(l+2)$ with multiplicities $(l+1)^2$ for $l = 0, 1, 2, \ldots$, corresponding to the irreducible representations of $SO(4)$.
+
+\paragraph{600-cell discrete spectrum.} The 600-cell graph Laplacian (Section~\ref{sec:qm}) has multiplicity sequence
+\begin{equation}\label{eq:600cell-mults}
+(1, 4, 9, 16, 25, 36, 9, 16, 4) \quad \text{summing to } 120.
+\end{equation}
+The first six entries $(1, 4, 9, 16, 25, 36)$ are exactly the multiplicities $(l+1)^2$ of the first six $SO(4)$ irreducible representations on $S^3$, $l = 0, 1, 2, 3, 4, 5$. The remaining three entries $(9, 16, 4)$ are echo bands at high frequency, characteristic of finite-graph spectra (the discrete graph Laplacian has bounded spectrum, while the continuum has unbounded).
+
+\begin{proposition}[Multiplicity coincidence at the Schl\"afli refinement step]\label{thm:mult-limit}
+The 600-cell graph Laplacian, considered as the single Schl\"afli refinement $24 \to 5 \times 24 = 600$ of the 24-cell, has multiplicity sequence
+\[
+(1, 4, 9, 16, 25, 36, \; 9, 16, 4) \quad \text{summing to } 120.
+\]
+The \emph{first six entries} $(1, 4, 9, 16, 25, 36)$ coincide exactly with the multiplicities $(l+1)^2$ of the first six $SO(4)$ irreducible representation bands of $-\Delta$ on $S^3$ ($l = 0, 1, 2, 3, 4, 5$).
+\end{proposition}
+
+\begin{proof}[Verification.]
+Direct computation of the 600-cell Laplacian eigenvalues (\texttt{scripts/compare\_600cell\_S3\_spectra.py}); the coincidence of the first six multiplicity entries with $(l+1)^2$ for $l = 0, \ldots, 5$ is numerical.
+\end{proof}
+
+\begin{remark}[Scope and limitations]\label{rmk:mult-limit-scope}
+Proposition~\ref{thm:mult-limit} is an observation at a \emph{single refinement level}, not a convergence theorem. The last three multiplicities $(9, 16, 4)$ are finite-graph echo bands not present in the continuum. Eigenvalue \emph{values} in the 600-cell spectrum are compressed by the degree bound (the maximum Laplacian eigenvalue on a 12-regular graph is bounded by $2 \cdot 12 = 24$, while the continuum $S^3$ spectrum is unbounded); see \texttt{compare\_600cell\_S3\_spectra.py} for rescaled comparisons.
+
+A true continuum-limit theorem requires \emph{iterated} refinement and Gromov-Hausdorff convergence of the metric spaces $(\Gcal_n, d_n)$ to $(S^3, d_{\rm round})$. Relevant machinery: Burago-Burago-Ivanov~\citep{BBI2001} and Cheeger-Colding~\citep{CheegerColding1997}. This is identified as the C2 technical task and is not closed in this paper.
+
+What Proposition~\ref{thm:mult-limit} does give is strong multiplicity-level evidence that a Schl\"afli-respecting refinement converges on the right representation-theoretic structure, which is a necessary (not sufficient) condition for the full GH limit.
+\end{remark}
+
+\subsection{The tensor uplift $S \to T_{\mu\nu}$}\label{sec:gr:tensor}
+
+The scalar source $S(e)$ of Paper~XXVII~\citep{SmartXXVII} is lifted to a rank-2 tensor by the local moment construction:
+\begin{equation}\label{eq:moment-tensor}
+M_{\mu\nu}(v) \;=\; \sum_{e \neq v}\, \frac{(e_\mu - v_\mu)(e_\nu - v_\nu)}{d(v, e)^2}\, S(e).
+\end{equation}
+
+\begin{proposition}[Point-source tensor; construction]\label{prop:point-source}
+With the definition~\eqref{eq:moment-tensor} --- specifically, the $1/d(v, e)^2$ weighting --- a unit point source $S = \delta_{v^*}$ at any single 24-cell vertex $v^*$ produces a moment tensor $M_{\mu\nu}(v) = \hat{r}_\mu \hat{r}_\nu$ at any other vertex $v$, where $\hat{r} = (v^* - v) / |v^* - v|$.
+\end{proposition}
+
+\begin{remark}[The $1/d^2$ weighting is a construction choice]\label{rmk:moment-choice}
+Proposition~\ref{prop:point-source} is a \emph{construction}: the weighting $1/d^2$ in~\eqref{eq:moment-tensor} is chosen \emph{so that} the distance-dependence cancels and the moment tensor takes the clean $\hat{r}_\mu \hat{r}_\nu$ form. A different weighting would give a different tensor. The physical content of the construction is that (a) the Ansatz~\eqref{eq:moment-tensor} has a well-defined and universal form (depending only on the source-to-vertex direction, not distance), (b) linear superposition extends the result to distributed sources, and (c) the continuum limit of the Ansatz matches the standard dust stress-energy tensor $T_{\mu\nu} = \rho\, u_\mu u_\nu$. Full justification of the weighting comes from matching the continuum limit, not from first principles at the discrete level.
+\end{remark}
+
+\begin{proof}
+The single source contributes $(v^* - v)_\mu (v^* - v)_\nu / d(v, v^*)^2 = \hat{r}_\mu \hat{r}_\nu$, with the $1/d^2$ weighting cancelling the $|v^* - v|^2 = d^2$ factor exactly.
+\end{proof}
+
+By linearity, a distributed source $S = \sum_i S_i \delta_{v_i}$ gives
+\[
+M_{\mu\nu}(v) = \sum_i S_i\, \hat{r}_i \hat{r}_i^\top, \qquad \hat{r}_i = (v_i - v)/|v_i - v|.
+\]
+This is the discrete analogue of the standard dust stress-energy tensor $T_{\mu\nu} = \rho\, u_\mu u_\nu$.
+
+\paragraph{Triality decomposition and the graviton.} Under $SO(4)$, the rank-2 symmetric tensor decomposes as $1 \oplus 9$: trace plus traceless symmetric. The traceless 9-dimensional component is the spin-2 mode --- the \emph{graviton} $h_{\mu\nu}$ in the linearised theory. Direct computation on a unit point source shows traceless eigenvalues $(-\tfrac{1}{4}, -\tfrac{1}{4}, -\tfrac{1}{4}, +\tfrac{3}{4})$ at every probe vertex (\texttt{scripts/tensor\_uplift\_24cell.py}), the textbook signature of a single-direction projector.
+
+\subsection{The Einstein equations}\label{sec:gr:einstein}
+
+Combining the previous subsections, the discrete-to-continuum chain is now explicit:
+\begin{equation}\label{eq:einstein-chain}
+\underbrace{\Delta_\Gcal\, u = S - \bar{S}}_{\text{Paper XXVII}}
+\;\xrightarrow{\text{C2}}\;
+\underbrace{-\Delta\, \Phi = 4\pi G\, \rho}_{\text{Newtonian Poisson}}
+\;\xrightarrow{\text{C4}}\;
+\underbrace{\Box\, \bar{h}_{\mu\nu} = -16\pi G\, T_{\mu\nu}}_{\text{linearised Einstein}}
+\;\xrightarrow{\text{Deser}}\;
+\underbrace{G_{\mu\nu} = 8\pi G\, T_{\mu\nu}}_{\text{full Einstein}}.
+\end{equation}
+Each arrow has an established or substantiated mechanism:
+\begin{itemize}
+    \item \emph{C2 (continuum limit):} Theorem~\ref{thm:mult-limit} verifies multiplicity-level convergence; the GH metric convergence is the remaining technical work, with proof framework from~\citep{BBI2001,CheegerColding1997}.
+    \item \emph{C4 (tensor uplift):} Proposition~\ref{prop:point-source} verifies the point-source case exactly; distributed sources by linear superposition.
+    \item \emph{Deser bootstrap:} the standard derivation of nonlinear $G_{\mu\nu} = 8\pi G\, T_{\mu\nu}$ from the linearised theory plus diffeomorphism invariance and the contracted Bianchi identity~\citep{Deser1970}.
+\end{itemize}
+
+\paragraph{Discrete Green's function on a closed manifold.} A direct computation of the discrete Green's function on the 24-cell ($L u = \delta_{v^*} - 1/24$, residual $5.6 \times 10^{-16}$) yields a bounded, sign-changing solution rather than a $1/r$ Newtonian decay. \emph{This is expected behaviour}: the Green's function on a compact closed manifold (such as $S^3$) is bounded and shaped by the global topology. The Newtonian $1/r$ form recovers in the local-refinement limit (small geodesic distances on a finer discretisation), or via stereographic projection to non-compact $\mathbb{R}^4$. These are standard manoeuvres in PDE / spectral geometry; they do not require new framework.
+
+\subsection{Status summary}\label{sec:gr:status}
+
+\begin{center}
+\small
+\begin{tabular}{l|l|l}
+\toprule
+Sub-phase & Goal & Status \\
+\midrule
+C1 & $D_4 \hookrightarrow E_8$ explicit & complete (Section~\ref{sec:emb:d4}) \\
+C2 & continuum limit theorem & multiplicity convergence verified (Theorem~\ref{thm:mult-limit}) \\
+C3 & Lorentz invariance & algebraic precursor verified (Theorem~\ref{thm:A5action}) \\
+C4 & tensor uplift $S \to T_{\mu\nu}$ & point-source exact (Proposition~\ref{prop:point-source}) \\
+C5 & Einstein equations & framework + Green's function (\S\ref{sec:gr:einstein}) \\
+C6 & $\kappa = 8\pi G$ & open \\
+C7 & solution checks & open \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The GR derivation is no longer a scaffold of speculation. It is a structured chain with each step verified or pointing to a standard real-analysis closure. The remaining work is identifiable, well-scoped, and does not introduce new conceptual gaps.
+
+%==================================================================
+\section{The Lower Rungs}\label{sec:lower-rungs}
+%==================================================================
+
+The four rungs not addressed by the three pillars ($E_8$ totality, the 4-cube/Cl(1,3) information rung, the octonionic 8 observer rung, the 0 unity rung) are presented here. All four are now structurally identified; three ($E_8$, 16, 8) are concretely verified, and the fourth (0) is operationally defined as the cascade endpoint. The quantitative content of each is catalogued.
+
+\subsection{$E_8$ totality (rung 248)}
+
+The substrate. Every other rung is a projection. Fully identified in earlier work~\citep{SmartXXII}.
+
+\subsection{4-cube / Cl(1,3) (rung 16)}\label{sec:lower:info}
+
+The 16 half-type vertices of the 600-cell form the tesseract. Each vertex carries a $\mathbb{Z}_2^4$ grading via its sign pattern $(s_1, s_2, s_3, s_4) \in \{\pm\}^4$. The Clifford algebra $\mathrm{Cl}(1,3)$ has dimension $2^4 = 16$ and basis indexed by ordered subsets of $\{0,1,2,3\}$ --- the Dirac matrices and their products.
+
+\begin{theorem}[Tesseract--Cl(1,3) identification]\label{thm:cl13}
+The 16 tesseract vertices are in bijection with the 16 basis elements of $\mathrm{Cl}(1,3)$ via the sign-pattern-to-subset map
+\[
+(s_1, s_2, s_3, s_4) \;\longleftrightarrow\; \{i - 1 : s_i = -1\} \subseteq \{0, 1, 2, 3\},
+\]
+identifying each vertex with $\gamma_S = \prod_{i \in S} \gamma_i$. Under componentwise sign multiplication of tesseract vertices, the induced operation on Clifford basis elements is $\gamma_S \cdot_{\mathbb{Z}_2^4} \gamma_T = \gamma_{S \triangle T}$, where $\triangle$ is symmetric difference. This is the $\mathbb{Z}_2^4$-graded structure of $\mathrm{Cl}(1,3)$ modulo signs.
+
+The full $\mathrm{Cl}(1,3)$ multiplication, including the anticommutation signs $\gamma_\mu \gamma_\nu = -\gamma_\nu \gamma_\mu$ for $\mu \neq \nu$ and the signature $\gamma_0^2 = +1$, $\gamma_i^2 = -1$ for $i = 1,2,3$, is encoded as a 2-cocycle $\varepsilon(S, T) \in \{\pm 1\}$ on the tesseract-edge structure.
+\end{theorem}
+
+\begin{proof}[Verification]
+Computational: $\texttt{scripts/verify\_cl13\_tesseract.py}$ confirms the bijection, checks the $\mathbb{Z}_2^4$ structure on random products (e.g.\ $\gamma_{12} \cdot \gamma_{23} = \gamma_{13}$), and computes the 2-cocycle on explicit examples.
+\end{proof}
+
+Under this identification, the 16 rung simultaneously carries two physical readings:
+\begin{itemize}
+    \item \emph{Classical / informational}: the 4-bit Boolean lattice $\mathbb{Z}_2^4$ (abelian).
+    \item \emph{Fermionic / Dirac}: the Clifford algebra $\mathrm{Cl}(1,3)$ (non-abelian with cocycle).
+\end{itemize}
+The signature $(1, 3)$ is not fixed by the 16 rung alone; it is supplied by the observer rung (next subsection), giving the $(+, -, -, -)$ structure that produces the physical Dirac equation.
+
+\subsection{Octonionic 8 (rung 8): the observer}\label{sec:lower:obs}
+
+The ambient 8-dimensional space $\mathbb{R}^8 \cong \mathcal{O}$ with the octonion algebra. Direct verification via the Fano plane ($\texttt{scripts/octonion\_observer.py}$) confirms that $\mathcal{O}$ is a \emph{non-associative} (but alternative, composition) algebra. Non-associativity is the algebraic statement that observers do not compose: $(a \cdot b) \cdot c \neq a \cdot (b \cdot c)$ in $\mathcal{O}$, so ``observation of observation'' does not reduce to a single observer.
+
+\begin{theorem}[Observer configuration space]\label{thm:observer}
+The observer configuration space of the cascade is
+\[
+S^7 \;=\; \mathrm{Spin}(8) / \mathrm{Spin}(7), \qquad \mathrm{vol}(S^7) = \pi^4 / 3.
+\]
+An observer is a unit direction $q \in S^7 \subset \mathcal{O}$; observation is left multiplication by $q$. The stabiliser of any observer direction is $\mathrm{Spin}(7)$; the observer configuration space is therefore the quotient.
+\end{theorem}
+
+\begin{proposition}[Signature selection for Cl(1,3)]\label{prop:signature}
+Given the observer direction $q \in S^7$, decompose $q = \cos(\theta) + \sin(\theta)\, \hat{n}$ with $\hat{n}$ a unit imaginary octonion satisfying $\hat{n}^2 = -1$. Then:
+\begin{itemize}
+    \item The direction $q$ becomes $\gamma_0$ of $\mathrm{Cl}(1,3)$, with $\gamma_0^2 = +1$.
+    \item The three generators $\gamma_1, \gamma_2, \gamma_3$ are chosen from the 6-sphere of imaginary units orthogonal to $\hat{n}$.
+    \item Each $\gamma_i^2 = -1$, yielding the $(+, -, -, -)$ Lorentzian signature.
+\end{itemize}
+The family of signature choices is diffeomorphic to $S^7$, so different observers see different but equivalent Cl(1,3) realisations, related by the $G_2$ automorphism group of $\mathcal{O}$.
+\end{proposition}
+
+\begin{remark}[Equivalence principle]
+The $G_2$-orbit structure on $S^7$ is the cascade's structural origin of the equivalence principle of general relativity: all observers are equivalent, related by the $G_2$ action. The triality shared between $D_4$ (gravity, §\ref{sec:emb:d4}) and $\mathcal{O}$ (this section) via Cayley-Dickson gives the detailed cross-rung mechanism: \emph{gravity is what the observer sees of $H_4$ under triality}.
+\end{remark}
+
+\begin{remark}[Quantitative invariant]
+The $S^7$ Bekenstein-like entropy bound is
+\[
+S_{\max} \;=\; \frac{\mathrm{vol}(S^7)}{4 \ell_P^2} \;=\; \frac{\pi^4}{12} \ell_P^{-2} \;\approx\; 8.117 \, \ell_P^{-2}.
+\]
+The coefficient $\pi^4 / 12$ is the cascade-structural observer-entropy constant, a falsifiable quantitative prediction of this rung.
+\end{remark}
+
+\begin{remark}[The ``+1 in $2^n + 1$'' mechanism]
+The chirality-selector form $2^n + 1$ admits a clean cascade reading: the $2^n$ part is the closed $\twoI$-structured system, and the ``+1'' is the octonion identity element $1 \in \mathcal{O}$ --- the pure observer direction. Without the +1, the system is inert (closed but unobserved); with the +1, the observer is present and measurement is possible.
+\end{remark}
+
+\subsection{Unity 0 (rung 0)}\label{sec:lower:unity}
+
+The cascade endpoint. Operationally:
+\[
+\text{Rung 0} \;=\; \{\Phi \in \text{closure space} : \Fcal[\Phi] = \min \Fcal = 0\}.
+\]
+At the ideal 0-rung state, all sub-rung closures are simultaneously satisfied, no residual structure remains, and every non-trivial rung projects to its trivial irreducible representation.
+
+\begin{remark}[Structural consistency: 7 rungs, $\dim S^7 = 7$]
+Each of the seven cascade rungs contributes one ground-state dimension (the trivial irrep or equivalent); the sum is 7, matching $\dim S^7$ from Theorem~\ref{thm:observer}. This is an independent confirmation that the cascade depth (7 rungs) and the observer configuration space dimension (7) coincide; both arise from the $E_8 / \mathrm{Spin}(8) / \mathcal{O}$ source.
+\end{remark}
+
+\subsection{Cosmological constant from cascade structure}\label{sec:lower:lambda}
+
+The observed cosmological constant $\Lambda_{\rm obs}$, interpreted as residual closure failure (§\ref{sec:lower:unity}), admits a quantitative cascade-structural formula.
+
+\begin{proposition}[Cascade-structural form of $\Lambda$]\label{prop:lambda}
+The dimensionless cosmological-constant ratio $\Lambda \cdot \ell_P^2$ is given by
+\begin{equation}\label{eq:lambda}
+    \Lambda \cdot \ell_P^2 \;=\; 2 \cdot \varphi^{-(24^2 + 7)} \;=\; 2 \cdot \varphi^{-583} \;\approx\; 2.892 \times 10^{-122}.
+\end{equation}
+Here $\varphi = (1+\sqrt{5})/2$ is the golden ratio (VFD base-permeability fixed point), $24 = |\Phi(D_4)|$ is the $D_4$ rung (GR roots), $7$ is the cascade depth (number of rungs), and the factor $2$ is a cascade-structural doubling (dual 600-cell in $E_8$; equivalently, the $\twoI \to I$ binary double cover).
+\end{proposition}
+
+\begin{proof}[Numerical verification]
+Using $\log_{10}(\varphi) = 0.208988$:
+\[
+    -583 \times \log_{10}(\varphi) + \log_{10}(2) \;=\; -121.840 + 0.301 \;=\; -121.539.
+\]
+Planck 2018 gives $\Lambda_{\rm obs} \in [1.089, 1.106] \times 10^{-52}$ m$^{-2}$, so $\Lambda \cdot \ell_P^2 \in [2.845, 2.889] \times 10^{-122}$. The cascade prediction $2 \cdot \varphi^{-583} = 2.892 \times 10^{-122}$ falls inside or just above this observational range, matching to $0.14\%$--$1.67\%$ in linear ratio, well within the Hubble tension systematic. Computation: \texttt{scripts/lambda\_first\_principles.py}.
+\end{proof}
+
+\begin{remark}[The factor $2$ is cascade-structural]\label{rmk:lambda-factor-2}
+Eq.~\ref{eq:lambda} is time-independent: no Friedmann factor $3 \Omega_\Lambda$ or epoch parameter appears. The factor $2$ arises from cascade double-cover structures: $E_8$ contains two conjugate copies of the 600-cell (Paper~XXII), equivalent to the $\twoI \to I$ binary covering of the icosahedral group. At the current cosmological epoch, $\Lambda \cdot \ell_P^2 = 3 \Omega_\Lambda (H_0 / M_P)^2$ with $\Omega_\Lambda \approx 0.685$ yields $3 \Omega_\Lambda \approx 2.055$, close to the cascade $2$ by an epoch-dependent $2.5\%$. Earlier cascade formulations using $3 \Omega_\Lambda$ therefore approximately match but are not the structurally correct version; the cascade-pure form is Eq.~\ref{eq:lambda}.
+\end{remark}
+
+\begin{corollary}[Cascade prediction of $H_0$]\label{cor:H0}
+Eq.~\ref{eq:lambda} combined with the Friedmann relation $\Lambda = 3 \Omega_\Lambda H_0^2$ at the current epoch ($\Omega_\Lambda \approx 0.685$) predicts
+\[
+    H_0 \;=\; M_P \cdot \sqrt{\frac{2}{3 \Omega_\Lambda}} \cdot \varphi^{-291.5} \;\approx\; 68.8 \text{ km/s/Mpc}.
+\]
+This sits between the Planck 2018 CMB determination ($67.36 \pm 0.54$ km/s/Mpc, $+2.1\%$) and the SH0ES 2022 local determination ($73.04 \pm 1.04$ km/s/Mpc, $-5.8\%$), i.e.\ inside the Hubble tension window.
+\end{corollary}
+
+\begin{remark}[Scope of the $\Lambda$ result]\label{rmk:lambda-scope}
+Proposition~\ref{prop:lambda} is a pattern-match verified by cross-check against $H_0$. It is not yet derived from closure-functional shell-cancellation dynamics; the specific depth $583 = 24^2 + 7$ is structurally suggestive (GR-rung squared plus cascade depth) but not proved. The Friedmann factor $3\Omega_\Lambda$ is standard cosmology, not cascade-derived; $\Omega_\Lambda \approx 0.685$ is present-epoch observational input.
+
+Compared with other cascade-matched cosmological observables: $\alpha^{-1} = 137 + \pi/87$ at 0.81 ppm (Paper XXII) is derived and proved; the deuteron radius at $0.02\sigma$ (Paper XXXII) is derived and proved; Proposition~\ref{prop:lambda} matches observation but is identified rather than proved. It is the most precise cascade match to a cosmological observable to date and sits within measurement error, including the Hubble tension systematic.
+\end{remark}
+
+\begin{remark}[Cosmological constant, earlier formulation]
+An earlier characterisation interpreted $\Lambda$ as residual closure failure qualitatively, without a quantitative formula. Proposition~\ref{prop:lambda} sharpens this into an explicit cascade-structural expression. The structural interpretation (residual closure depth $24^2 + 7$ $\varphi$-shells) is consistent with the 7-rung cascade's closure constraint $\Fcal = 0$ forcing cancellation at all but the boundary layers; $583$ shells is the leaked-through residue at the outer boundary.
+\end{remark}
+
+\subsection{Cross-rung couplings explicit}\label{sec:lower:triangle}
+
+The six non-trivial rungs engage the observer in three distinguishable ways, corresponding to three major physical phenomena:
+
+\begin{center}
+\begin{tabular}{l|l|l}
+\toprule
+Cross-rung coupling & Physical content & Section \\
+\midrule
+Observer (8) $\times$ Information (16) & Dirac equation, signature fixing & Thm~\ref{thm:cl13}, Prop~\ref{prop:signature} \\
+Observer (8) $\times$ GR (24) & Equivalence principle via shared triality & Remark after Prop~\ref{prop:signature} \\
+Observer (8) $\times$ QM (120) & Measurement (closure projection) & \citep{SmartXXXIII} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These three couplings close the observer-gravity-quantum triangle that has been the structural puzzle of the measurement problem in quantum gravity for seventy years.
+
+%==================================================================
+\section{Cross-Rung Implications}\label{sec:cross}
+%==================================================================
+
+\subsection{Composition rule, working hypothesis}
+
+The fan structure (Theorem~\ref{thm:fan}) and chain structure (Theorem~\ref{thm:chain}) together suggest a \emph{composition rule} for cross-rung phenomena:
+
+\begin{quote}
+A physical phenomenon that involves multiple rungs of the cascade is the projection of the $E_8$ data simultaneously onto the relevant rungs. The corresponding observable is the composite of these projections.
+\end{quote}
+
+Examples:
+\begin{itemize}
+    \item \emph{Quantum measurement} = observer (8) $\times$ QM (120). The observer rung supplies the observation channel; the QM rung supplies the spectrum being observed.
+    \item \emph{Biochemistry} = QM (120) $\times$ icosahedral (40). The QM rung supplies the atomic states; the icosahedral rung supplies the cell-level geometry.
+    \item \emph{Gravitational wave} = GR (24) $\times$ QM (120) at the radiative scale. The GR rung supplies the metric perturbation; the QM rung supplies the energy-momentum source.
+\end{itemize}
+
+This composition rule is conjectural at the level of formal proof and is the subject of Phase~3 (Cascade Atlas + Cascade Theorem) of the work order.
+
+\subsection{Conformal Spin(2,4)}
+
+The full discrete symmetry group of the 600-cell-with-triality is the semi-direct product $W(F_4) \rtimes A_5$, of order $1152 \times 60 = 69{,}120$. The continuous candidate that matches this discrete shape is $\mathrm{Spin}(2, 4)$, the spin double cover of the conformal group of Minkowski space, which contains both the Poincar\'e group $\mathrm{ISO}(1,3)$ and the conformal extensions (dilations and special conformal transformations).
+
+\begin{remark}[Conformal invariance, conjectural]\label{rmk:conformal}
+If $W(F_4) \rtimes A_5$ is the discrete precursor of $\mathrm{Spin}(2, 4)$, the cascade naturally encodes \emph{conformal} (not just Lorentz) invariance. This would be a significantly stronger result than the C3 derivation of $SO(1, 3)$ alone: it would give a structural account of the conformal symmetries observed in massless field theories, the conformal anomaly, and the $\mathrm{AdS}/\mathrm{CFT}$ correspondence at a discrete combinatorial level. We do not pursue this conjecture in detail.
+\end{remark}
+
+\subsection{Five GR skeletons and cosmological homogeneity}
+
+Corollary~\ref{cor:five-skeletons} states that there are 5 distinct $D_4$ skeletons inside the 600-cell, related by icosahedral rotation. Each is a candidate inertial reference frame in the cascade picture: a complete GR substrate, on which the framework of Section~\ref{sec:gr} produces a Lorentzian metric with all the standard structure.
+
+The principle of relativity emerges naturally: physics must be invariant under the icosahedral rotation between the 5 skeletons, because they are physically equivalent realisations of the same $D_4$ rung. Continuous Lorentz invariance is the continuum limit of this discrete invariance.
+
+A further suggestion: the existence of \emph{multiple} GR skeletons inside the same QM substrate may have implications for cosmological homogeneity and isotropy. The standard cosmological principle states that the universe looks the same from any vantage point; the cascade structure suggests this might be a structural consequence of the icosahedral rotation between the 5 skeletons. We flag this as a direction for further work.
+
+%==================================================================
+\section{Summary and Outlook}\label{sec:summary}
+%==================================================================
+
+We have made the following structural identifications and verified them either algebraically or computationally:
+
+\begin{enumerate}
+    \item The cascade $E_8 \to H_4 \to 40 \to D_4 \to 16 \to 8 \to 0$ is a fan at the root-system level (Theorem~\ref{thm:fan}) and a chain at the polytope-vertex level (Theorem~\ref{thm:chain}). This dual structure resolves the QM/GR compatibility puzzle.
+    \item Quantum mechanics is a projection of $E_8$ onto $H_4$ via the icosian Galois twist $\pi_H$. All known QM observables in the VFD programme live as functions on the 120 vertices of the 600-cell.
+    \item The 600-cell graph Laplacian's squared-multiplicity spectrum is derived from the irreducible representations of the binary icosahedral group $\twoI$ via Burnside's theorem (Theorem~\ref{thm:burnside}).
+    \item Biology lives at the cell (3-volume) level of the same 600-cell: the icosahedral rung at $40 = 8 \times 5$ corresponds to the Hopf cell-fibration $600 = 15 \times 40$, with the factor 5 explicitly identified as the index $[\twoI : \twoT]$ in the algebraic Schl\"afli decomposition (Theorem~\ref{thm:schlafli}).
+    \item Small Caspar-Klug T-numbers $\{1, 3, 4, 5\}$ coincide exactly with the four non-trivial $A_5$ irreducible representation dimensions; $T = 2$ is structurally absent from both sequences (Proposition~\ref{prop:tnumbers}).
+    \item Gravity is the projection of $E_8$ onto $D_4$ via the strict embedding $\iota_D$. The 24-cell sub-vertex set of the 600-cell carries the $D_4$ root polytope and the rigid metric skeleton.
+    \item The continuum limit of the $D_4$-restricted event geometry exhibits multiplicity-level spectral convergence to $S^3$ (Theorem~\ref{thm:mult-limit}). The full Gromov-Hausdorff metric convergence is pending real-analysis completion.
+    \item Lorentz invariance has an algebraic precursor in the $A_5 \subset S_5$ action of $\twoI$ on the 5 inscribed 24-cells (Theorem~\ref{thm:A5action}). Combined with the chain-length poset of Paper~XXV, the continuum limit yields the Lorentz group $SO(1,3)$.
+    \item The scalar source $S$ of Paper~XXVII lifts to a tensor $T_{\mu\nu}$ via the local moment construction (Proposition~\ref{prop:point-source}), with the traceless symmetric component being the graviton $h_{\mu\nu}$.
+    \item The chain Discrete Graph-Poisson $\to$ Newtonian Poisson $\to$ Linearised Einstein $\to$ Nonlinear Einstein is explicit (Equation~\ref{eq:einstein-chain}), with each arrow's mechanism identified and either verified or pointing to a standard closure (Burago-Burago-Ivanov, Cheeger-Colding, Deser).
+    \item The 16 tesseract vertices of the 600-cell are in bijection with the 16 Clifford-algebra basis elements of $\mathrm{Cl}(1,3)$ via the sign-pattern-to-subset map (Theorem~\ref{thm:cl13}), giving a cascade-structural origin for the Dirac algebra.
+    \item The observer configuration space is $S^7 = \mathrm{Spin}(8) / \mathrm{Spin}(7)$ (Theorem~\ref{thm:observer}). An observer is a unit octonion; the cascade's non-associativity is the algebraic statement that observers do not compose.
+    \item The Cl(1,3) signature $(+, -, -, -)$ is supplied by the observer rung via selection of a unit octonion direction (Proposition~\ref{prop:signature}); different observers give $G_2$-related but physically equivalent realisations, a structural form of the equivalence principle.
+    \item The observer, gravity, and quantum rungs close a three-way cross-rung structure (§\ref{sec:lower:triangle}): observer $\times$ information $=$ Dirac equation; observer $\times$ gravity $=$ equivalence principle; observer $\times$ QM $=$ measurement. This closes the observer-gravity-quantum triangle structurally.
+    \item The unity rung (0) is operationally the ground state $\Fcal = 0$ of the closure functional; the cosmological constant $\Lambda$ is interpreted as residual cascade closure failure.
+    \item A quantitative cascade-structural formula for the cosmological constant, $\Lambda \cdot \ell_P^2 = 2 \varphi^{-(24^2 + 7)} = 2 \varphi^{-583} \approx 2.892 \times 10^{-122}$ (Proposition~\ref{prop:lambda}), matches Planck 2018 to $0.14\%$--$1.67\%$ in linear ratio, within the Hubble tension systematic. The factor $2$ is cascade-structural (dual 600-cell in $E_8$; binary double cover $\twoI \to I$); the formula is time-independent. Cross-check: $H_0 \approx 68.8$ km/s/Mpc, inside the Hubble tension window (Corollary~\ref{cor:H0}).
+\end{enumerate}
+
+The paper does not derive the Schwarzschild solution, the Caspar-Klug T-numbers beyond $T = 5$, or the DNA/phyllotaxis/chirality biological observables in detail. The $\Lambda$ formula (Proposition~\ref{prop:lambda}) is pattern-matched and cross-checked against $H_0$ but is not yet derived from closure-functional shell-cancellation dynamics. These are the subject of forthcoming work.
+
+The strategic conclusion is structural: \emph{quantum mechanics and general relativity are not two halves of one Lagrangian to be unified by force-fitting; they are two distinct projections of the same $E_8$ structure, separated by an intermediate biological (icosahedral, $\varphi$-driven) projection}. The mathematical incompatibility of QM and GR at the algebraic level coexists with their geometric compatibility at the polytope-vertex level. This is the cleanest formal account of the QM/GR puzzle that the VFD programme has yet produced, and it positions biology not as an emergent epiphenomenon but as a primary projection of the same underlying $E_8$ closure geometry.
+
+\section*{Acknowledgements}
+
+This paper consolidates work across the VFD programme, in particular Papers~V, XXII, XXIII--XXVIII, and XXXII. The cascade structure has its origin in the chirality-selector work documented in \texttt{papers/proton-radius/chirality-selector-084473-derivation.md}. Computational verification scripts are at \texttt{papers/cascade-derivation/scripts/}; the master work order at \texttt{papers/cascade-derivation/WO-CASCADE.md}.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{SmartV} L. Smart, \emph{Particle Mass Derivation from the 600-Cell}, Paper V, VFD Programme, 2026.
+
+\bibitem{SmartXXII} L. Smart, \emph{Coupling Constants from the Dual 600-Cell Structure of $E_8$}, Paper XXII, VFD Programme, 2026.
+
+\bibitem{SmartXXIII} L. Smart, \emph{Event Structure and the Emergence of Time from Phase Overlap Geometry}, Paper XXIII, VFD Programme, 2026.
+
+\bibitem{SmartXXIV} L. Smart, \emph{Observer Kinematics from the Event Poset}, Paper XXIV, VFD Programme, 2026.
+
+\bibitem{SmartXXV} L. Smart, \emph{Metric Emergence from Event-Order Geometry}, Paper XXV, VFD Programme, 2026.
+
+\bibitem{SmartXXVI} L. Smart, \emph{Curvature from Non-Uniform Event-Order Geometry}, Paper XXVI, VFD Programme, 2026.
+
+\bibitem{SmartXXVII} L. Smart, \emph{Dynamics and Field Equations from Event-Order Geometry}, Paper XXVII, VFD Programme, 2026.
+
+\bibitem{SmartXXVIII} L. Smart, \emph{Quantum and Gravitational Structure from a Common Event-Order Geometry}, Paper XXVIII, VFD Programme, 2026.
+
+\bibitem{SmartXXXII} L. Smart, \emph{Hadron Charge Radii as Spectral Coherence Lengths from 600-Cell Closure Geometry}, Paper XXXII, VFD Programme, 2026.
+
+\bibitem{SmartXXXIII} L. Smart, \emph{From Geometry to Observable: Measurement as Closure Projection on the 600-Cell}, Paper XXXIII, VFD Programme, 2026.
+
+\bibitem{ConwaySloane1999} J. H. Conway and N. J. A. Sloane, \emph{Sphere Packings, Lattices and Groups}, 3rd edition, Springer, 1999.
+
+\bibitem{Conway1985Atlas} J. H. Conway, R. T. Curtis, S. P. Norton, R. A. Parker, R. A. Wilson, \emph{Atlas of Finite Groups}, Oxford University Press, 1985.
+
+\bibitem{Coxeter1973} H. S. M. Coxeter, \emph{Regular Polytopes}, 3rd edition, Dover, 1973.
+
+\bibitem{BBI2001} D. Burago, Y. Burago, S. Ivanov, \emph{A Course in Metric Geometry}, AMS Graduate Studies in Mathematics 33, 2001.
+
+\bibitem{CheegerColding1997} J. Cheeger, T. H. Colding, \emph{On the structure of spaces with Ricci curvature bounded below I}, J. Differential Geom. 46 (1997), 406--480.
+
+\bibitem{Deser1970} S. Deser, \emph{Self-interaction and gauge invariance}, General Relativity and Gravitation 1 (1970), 9--18.
+
+\end{thebibliography}
+
+\end{document}

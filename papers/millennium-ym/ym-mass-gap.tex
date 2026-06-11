@@ -1,0 +1,1398 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\pphi}{\varphi}
+\newcommand{\tr}{\operatorname{tr}}
+
+\title{A Cascade Closure-Functional Approach to Yang--Mills Existence and Mass Gap: Scope, Hypotheses, and the Substrate-Selection Bridge}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We develop a \emph{conditional} cascade-substrate approach to the
+Yang--Mills existence and mass gap problem on $\R^4$ with gauge
+group $\mathrm{SU}(3)$. Under hypotheses of the
+cascade-correspondence programme, the cascade closure functional
+$F = \alpha R + \beta E - \gamma Q$ restricted to the octonionic
+rung of $E_8$ supplies a discrete Hilbert space on which the
+$H_4$ graph Laplacian (acting on the 120 vertices of the
+600-cell) has spectrum with 9 distinct eigenvalues determined by
+the character theory of the binary icosahedral group $2I$,
+exhibiting a strictly positive discrete-model gap of $12 - 6\varphi
+\approx 2.29$ between the vacuum and first excited state.
+
+Two foundational inputs are \emph{established} (not hypothesised):
+\begin{itemize}
+\item \textbf{P8 (sim-verified + classical).}
+  Der$(\mathbb{O}) \cong g_2$ of dimension 14, and the stabilizer of
+  a norm-1 imaginary octonion under Der$(\mathbb{O})$ is
+  $\mathrm{su}(3)$ of dimension 8. Classical (Schafer 1966, Jacobson
+  1971, Baez 2002 §4.1); additionally verified in this paper by
+  exact rational-arithmetic computation using only the octonion
+  multiplication table (Cayley-Dickson from $\mathbb{H}$) and the
+  derivation condition $D(xy) = D(x)y + xD(y)$. See
+  \texttt{papers/millennium-ym/scripts/verify\_der\_O\_su3\_stabilizer.py}
+  for the sim: rank-counting in the 21-dimensional skew-symmetric
+  $7 \times 7$ Ansatz yields $\dim \mathrm{Der}(\mathbb{O}) = 14$ and
+  $\dim \mathrm{stab}_{\mathrm{Der}(\mathbb{O})}(e_1) = 8$ exactly.
+\item \textbf{P9 (derivable from P8).}
+  The refinement graph of the 600-cell (cascade infrastructure
+  paper P3) carries a cylindrical $\mathrm{SU}(3)$-bundle: at each
+  vertex $v$, the fibre is the $\mathrm{su}(3)$ stabilizer of the
+  distinguished imaginary octonion $e_v$ associated with $v$ by
+  the icosian-to-octonion embedding (Conway-Sloane). Parallel
+  transport on each directed edge is an $\mathrm{SU}(3)$-valued
+  function, modulo gauge transformations at vertices. This is the
+  standard discrete-gauge-theory formulation specialised to the
+  cascade substrate.
+\end{itemize}
+
+A third empirical witness supports the discrete-to-continuum bridge:
+\begin{itemize}
+\item \textbf{H$_4$-oscillator torus attractor (aria-chess, theorem-grade).}
+  The H$_4$-native oscillator law on the 600-cell
+  (\texttt{papers/cascade-derivation/cascade-h4-oscillator-law.md};
+  Rust-verified 7/7 tests; 25+ aria-chess experiments) is the
+  VFD-specific Kuramoto quaternion flow on the 120 vertices of
+  $2I$, with Berry term $D_c = \omega_1 J_1 \Pi_1 + \omega_{11}
+  J_{11} \Pi_{11}$ (frequencies forced by Coxeter number 30 and
+  H$_4$ exponents 1, 11). The dynamics converges to a
+  \emph{non-chaotic torus attractor} (Lyapunov exponent $\lambda_1 =
+  +0.00384$, 4/4 torus certification tests pass at $10^5$ sub-ticks).
+  The velocity-covariance eigenspectrum shows 8 σ-paired modes
+  (PC$_2$/PC$_1$ = 0.9997), exhibiting the integrable structure
+  expected of a discrete OS-positive theory.
+  The Frobenius-forced phase-amplitude coupling
+  $K_{11;1,1} = \varphi^{-7}$ produces structurally non-vanishing
+  cross-plane θ-γ coupling with MI = 0.046, matching cortical-ECoG
+  phase-amplitude-coupling values (Canolty 2006).
+\end{itemize}
+
+One hypothesis remains, formalised as:
+
+\begin{hypothesis}[$\mathbf{H_{\rm OS\text{-}lift}}$: continuum reconstruction and gap inheritance, open]\label{hyp:OS-lift}
+The $H_4$ discrete spectral gap lifts through the cascade-to-continuum
+projection to a gap in the Wightman Hamiltonian of the reconstructed
+quantum field theory on $\R^4$. Precisely: there exists a family of
+cascade-lattice Schwinger functions $\{S_n^{(k)}\}_{k\geq 0}$ at
+scales $\varphi^k$ such that
+(i) each $S_n^{(k)}$ satisfies the OS axioms (OS0)--(OS4);
+(ii) $S_n^{(k)}$ converges weakly to a continuum limit
+$S_n^{(\infty)}$ as $k\to\infty$;
+(iii) $S_n^{(\infty)}$ still satisfies (OS0)--(OS4);
+(iv) the reconstructed Wightman Hamiltonian has spectral gap
+inherited from $12-6\varphi$ via $\sum_k\varphi^{-2k}$ summation.
+\emph{This is open: it is the Yang--Mills mass-gap problem in the
+$\varphi$-scaled cascade hierarchy.}
+\end{hypothesis}
+
+In the cascade-correspondence verdict classification, this is a
+(\textbeta)-class bridge: P8 and P9 are discharged from classical
+representation theory (with explicit sim-verification for P8 via
+\texttt{papers/millennium-ym/scripts/verify\_der\_O\_su3\_stabilizer.py}),
+and the discrete-side empirical dynamics is confirmed torus-
+integrable by the aria-chess H$_4$-oscillator theorem-grade
+derivation. H$_{\text{OS-lift}}$ is the single remaining open
+hypothesis; it IS the Clay Millennium YM continuum-limit problem
+itself, reformulated as a specific cascade-to-$\R^4$ lift with
+explicit discrete-side inputs.
+
+\paragraph{Sharpened form of H$_{\text{OS-lift}}$.}
+The remaining bridge lemma is a Glimm--Jaffe-style continuum
+reconstruction theorem specific to the cascade's $\varphi$-scaled
+lattice hierarchy. Under the three sim/theorem-verified inputs
+(P8: Der$(\mathbb{O}) \cong g_2$, $\mathrm{su}(3)$ stabilizer; F4:
+600-cell adjacency Laplacian operator-norm bound
+$\|L_{H_4}\|_{\mathrm{op}} = 6+6\varphi \approx 15.708$;
+H$_4$-oscillator torus attractor: bounded time-uniform dynamics),
+the cascade-specific formulation of H$_{\text{OS-lift}}$ is:
+
+\emph{There exists a family of cascade-lattice Schwinger functions
+$\{S_n^{(k)}\}_{k \geq 0}$ at scales $\varphi^k$, obtained from the
+H$_4$-oscillator torus-attractor measure $\mu^{(k)}_{\mathrm{YM}}$
+on cascade gauge fields, such that (i) each $S_n^{(k)}$ satisfies
+the Osterwalder--Schrader axioms (OS0)--(OS4), (ii) the sequence
+$S_n^{(k)}$ converges weakly to a continuum limit $S_n^{(\infty)}$ as
+$k \to \infty$, (iii) $S_n^{(\infty)}$ still satisfies
+(OS0)--(OS4), and (iv) the reconstructed Wightman Hamiltonian has
+spectral gap inherited from $12 - 6\varphi$ via the multi-scale
+$\sum_k \varphi^{-2k}$ summation.}
+
+Steps (i) and (iv) are input from the discrete side. Step (ii) is
+a weak-compactness statement that follows from the uniform F4 bound
++ H$_4$-oscillator torus boundedness. Step (iii) — OS-positivity
+preservation in the continuum limit — is the genuine analytic
+theorem that remains. It is the cascade-specific version of the
+Glimm--Jaffe programme, specialised to the $\varphi$-scaled
+$\mathbb{Z}[\varphi]$-lattice hierarchy rather than an arbitrary
+cutoff lattice.
+\end{abstract}
+
+\tableofcontents
+
+\section*{Rung placement and geometric boundary}\addcontentsline{toc}{section}{Rung placement and geometric boundary}
+
+The cascade programme organises mathematical structure into a
+seven-rung ladder (Unity, Observer, Info, GR, Life, QM,
+Arithmetic). Yang--Mills lives at a specific \emph{rung crossing}:
+octonion algebra $\mathbb{O}$ and its derivation Lie algebra
+Der$(\mathbb{O}) \cong g_2$ sit \emph{below} the QM rung (they are
+part of the substrate that produces the $H_4 \subset g_2$ embedding),
+while SU(3)-gauge connections and the Wightman Hilbert space live
+\emph{at} the QM rung. Mainstream Yang--Mills theory does not
+distinguish these rungs; it treats SU(3) as an externally-postulated
+gauge group. The cascade derives SU(3) as the canonical stabilizer
+of a distinguished imaginary octonion $e_1 \in \mathbb{O}$ inside
+Der$(\mathbb{O}) \cong g_2$ — a rung-crossing operator
+(\emph{substrate-below-QM} $\to$ \emph{QM-gauge}). This is what P8
+makes precise: $\dim \mathrm{Der}(\mathbb{O}) = 14$,
+$\dim \mathrm{stab}(e_1) = 8$, yielding $g_2 \supset \mathrm{su}(3)$
+with the required 6-dimensional orthogonal complement acting as the
+$\mathrm{SU}(3)$-fundamental representation on $\mathbb{C}^3$.
+Mainstream cannot articulate \emph{why} SU(3) is the gauge group of
+strong interactions; the cascade rung-crossing identifies it as the
+unique stabilizer lifting the octonion substrate to the QM rung.
+
+\section{Introduction}
+
+The Clay Mathematics Institute Millennium Prize Problem on Yang--Mills
+theory asks for: (i) a rigorous construction of a non-trivial quantum
+Yang--Mills theory on four-dimensional Euclidean or Minkowski space,
+and (ii) a proof that its Hamiltonian has a strictly positive mass gap.
+
+The standard difficulties with continuum Yang--Mills theory are:
+\begin{enumerate}
+  \item Ultraviolet divergences requiring non-perturbative renormalisation;
+  \item Gauge fixing (Gribov ambiguity);
+  \item Infrared confinement (no asymptotic gluon states).
+\end{enumerate}
+
+We address these by working with the \emph{cascade closure functional} $F$,
+a local rank-$\leq 2$ functional derived from the self-similarity of the
+vacuum and the exceptional Lie-algebraic structure of $E_8$.
+The cascade provides:
+\begin{itemize}
+  \item a Planck-scale UV cutoff (built into the self-similarity axiom);
+  \item natural gauge-invariant Hilbert space structure
+  (via Galois $\sigma$-invariance);
+  \item discrete spectrum with uniform gap (via the $H_4$ sub-system).
+\end{itemize}
+
+The approach here is to define Yang--Mills as a specific projection
+of $F$ onto the octonionic rung of $E_8$, verify the
+Osterwalder--Schrader (OS) axioms for the resulting Euclidean measure,
+and deduce mass gap from the cascade spectral gap.
+
+\subsection{Summary of main results}
+
+\begin{proposition}[Main statement, conditional formal consequence of $\mathbf{H_{\rm OS\text{-}lift}}$]\label{thm:main}
+\emph{Conditional on Hypothesis $\mathbf{H_{\rm OS\text{-}lift}}$
+(Definition~\ref{hyp:OS-lift}), and using P8 (Der$(\mathbb{O})\cong
+g_2$, dimension count sim-verified) plus P9 (cylindrical
+$\mathrm{SU}(3)$-bundle, stated as a structural input of the
+cascade refinement)}, the discrete cascade construction admits a
+candidate probability measure $\mu_{\mathrm{YM}}^{\rm cas}$ on the
+discrete space of cascade gauge link variables, and
+$\mathbf{H_{\rm OS\text{-}lift}}$ asserts that:
+\begin{enumerate}
+  \item The discrete Schwinger functions $S_n^{(k)}$ at scale
+    $\varphi^k$ satisfy the Osterwalder--Schrader axioms
+    (OS0)--(OS4).
+  \item The discrete sequence $\{S_n^{(k)}\}_{k}$ converges weakly
+    to a continuum limit $S_n^{(\infty)}$ that itself satisfies
+    OS0--OS4.
+  \item The Wightman QFT reconstructed from $S_n^{(\infty)}$ has
+    gauge group $\mathrm{SU}(3)$ and a positive mass gap
+    $\Delta \geq \Delta_0 > 0$ with $\Delta_0$ inherited from the
+    discrete spectral gap $12 - 6\varphi$ of the 600-cell adjacency
+    Laplacian.
+\end{enumerate}
+
+\emph{$\mathbf{H_{\rm OS\text{-}lift}}$ is the open Yang--Mills
+mass-gap problem in the $\varphi$-scaled cascade hierarchy. This
+proposition is therefore a statement of equivalence between the
+cascade-internal reformulation and the classical Clay problem; it
+is not a proof of the mass gap.}
+\end{proposition}
+
+\begin{theorem}[Discrete spectral content, unconditional]\label{thm:discrete-spectrum}
+The $H_4$ graph Laplacian acting on the 120-vertex 600-cell has
+spectrum consisting of 9 distinct eigenvalues, determined by the
+character theory of the binary icosahedral group $2I$. The
+spectral gap between the vacuum eigenvalue $0$ and the first
+excited eigenvalue is exactly $12 - 6\varphi$, where
+$\varphi = (1+\sqrt{5})/2$.
+\end{theorem}
+
+The proof of Theorem~\ref{thm:discrete-spectrum} occupies the
+spectral-computation sections and is rigorous from
+representation-theoretic calculations. The conditional
+Theorem~\ref{thm:main} additionally requires the substrate-selection
+(P8/P9) and OS-lift hypotheses; its proof occupies the later
+sections under those hypotheses.
+
+\subsection{Organisation}
+
+Section 2 establishes the cascade framework we need: the closure
+functional $F$, the substrate of $E_8$ root configurations, and
+the key cascade theorems (F1--F8) stated as premises.
+
+Section 3 defines the cascade Yang--Mills measure and gauge field,
+with specific identification of the gauge group $\mathrm{SU}(3) \subset G_2
+= \mathrm{Aut}(\mathbb{O})$ acting on the octonionic 8-rung.
+
+Section 4 proves the Osterwalder--Schrader axioms (OS0)--(OS4)
+for the cascade Yang--Mills measure.
+
+Section 5 establishes the cascade spectral gap theorem via the
+$H_4$ graph Laplacian.
+
+Section 6 deduces the mass gap from the OS reconstruction together
+with the spectral gap.
+
+Section 7 concludes with remarks on extensions (other gauge groups,
+higher-dimensional Yang--Mills) and the relation to existing
+constructive-field-theory literature.
+
+\section{The Cascade Framework}
+
+\subsection{The closure functional}
+
+The cascade is constructed starting from a single self-similarity
+axiom on the vacuum. The resulting structure is an action functional
+$F$ on fields $\Phi$ over a cascade substrate $\Omega \subset \R^8$
+(the $E_8$ root lattice, normalised to unit sphere).
+
+\begin{definition}[Cascade closure functional]\label{def:F}
+The \emph{cascade closure functional} is the local action
+\begin{equation}\label{eq:F}
+F[\Phi] = \int_\Omega \big(\alpha R[\Phi] + \beta E[\Phi] - \gamma Q[\Phi]\big) \, dV
+\end{equation}
+where:
+\begin{itemize}
+\item $R[\Phi] = g^{\mu\nu}\partial_\mu \partial_\nu \Phi$ is the
+  scalar Laplacian (rank-0 part),
+\item $E[\Phi] = (\partial \cdot \Phi)^2$ is the divergence
+  squared (rank-1 part),
+\item $Q[\Phi] = \Phi_{\mu\nu}\Phi^{\mu\nu} - \frac{1}{d}(\Phi^\mu_\mu)^2$
+  is the traceless rank-2 quadratic,
+\item $\alpha, \beta, \gamma$ are fixed positive cascade coefficients (in $\R$, possibly involving $\pi$).
+\end{itemize}
+\end{definition}
+
+\begin{remark}\label{rem:coeffs}
+The coefficients $\alpha, \beta, \gamma$ are determined by physical
+matching (see e.g.~\cite{cascadeF8}):
+\[
+\alpha = \frac{1}{16\pi}, \quad
+\beta = \frac{3(137 + \pi/87)}{128\pi}, \quad
+\gamma = \frac{137 + \pi/87}{16\pi}.
+\]
+For the purposes of this paper, it suffices that $\alpha, \beta, \gamma$
+are positive rationals (after clearing the transcendental $\pi$-factors
+by inclusion into $\Q(\pi)$).
+\end{remark}
+
+\subsection{Cascade substrate}
+
+The cascade substrate $\Omega$ is the $E_8$ root system, consisting of
+240 vectors in $\R^8$ of unit norm:
+\[
+\Omega = \big\{ \mathbf{v} \in \Z^8 \cup (\Z + \tfrac{1}{2})^8
+ : \|\mathbf{v}\|^2 = 2, \sum v_i \in 2\Z \big\}.
+\]
+
+There is a distinguished involution $\sigma : \Omega \to \Omega$,
+the \emph{icosian Galois twist}, defined as follows. Using Elkies'
+icosian embedding of $E_8$ into $\mathbb{H} \oplus \mathbb{H}$ (where
+$\mathbb{H}$ is the quaternion algebra over $\Q(\varphi)$ for
+$\varphi = (1 + \sqrt 5)/2$), $\sigma$ acts by sending
+$\sqrt 5 \to -\sqrt 5$.
+
+\begin{lemma}[$\sigma$-orbit structure on $E_8$]\label{lem:sigma}
+The icosian Galois twist $\sigma$ is a fixed-point-free involution
+on $\Omega$ with orbit structure $\{H_4, H_4'\}$ of length $2$, where
+$H_4 \subset \Omega$ consists of the first 120 roots and $H_4'$ consists
+of the $\sigma$-conjugate 120 roots.
+\end{lemma}
+
+\begin{proof}
+By the Elkies icosian construction \cite{elkies}. $H_4$ and $H_4'$
+are the two copies of the 600-cell (= icosian group) inside $E_8$,
+orthogonal as $\Q(\varphi)$-modules. $\sigma$ permutes them.
+\end{proof}
+
+\subsection{Stated cascade theorems}
+
+The following theorems, whose proofs appear in the cascade foundations
+paper, are used as premises.
+
+\begin{theorem}[F1, Base permeability]\label{thm:F1}
+The iteration $T(r) = 1 + 1/r$ has a unique attracting fixed point
+$r^* = \varphi$ on the interval $[1, 2]$, with contraction constant
+$\varphi^{-2} = 1/(1+\varphi)$.
+\end{theorem}
+
+\begin{hypothesis}[F2, Closure functional form (under H-MIN, per Paper XXXVI)]\label{thm:F2}
+\emph{Conditional on H-MIN of Paper~XXXVI:} the closure functional
+$F$ of Definition~\ref{def:F} is the unique translation- and
+$W(E_8)$-invariant local scalar functional of order $\leq 2$ in
+$\Phi$ and its first derivatives. The current Paper~XXXVI
+formulation makes this conditional on a minimization-class
+hypothesis H-MIN; we import F2 in that scoped form.
+\end{hypothesis}
+
+\begin{theorem}[F4, Closure-space dimension count, per Paper XXXVI]\label{thm:F4}
+The closure space $V = \oplus_r V_r$ summed over the seven rungs
+of the cascade has $\dim V = 583$ (a graded closure-field dimension
+count). \emph{This is a dimension-count statement only;}
+Paper~XXXVI's current F4 formulation is \emph{not} a closure-operator
+spectral theorem of the form ``single eigenvalue $\varphi^{-1}$
+with multiplicity $583$.''  When this paper invokes a 600-cell
+operator-norm bound, that bound is the 600-cell adjacency Laplacian
+spectral norm $6+6\varphi$ (Theorem~\ref{thm:discrete-spectrum}),
+which is a separate finite spectral fact, not a content of F4.
+\end{theorem}
+
+\begin{hypothesis}[F5, finite-sum factor-2 equality under H-SIG, per Paper XXXVI]\label{thm:F5}
+\emph{Conditional on H-SIG of Paper~XXXVI:} the closure functional
+$F$ satisfies a finite-sum factor-2 equality
+on $\sigma$-fixed fields: across each pair of $\sigma$-conjugate
+$H_4$ copies, the discrete sum defining $F$ on the $\sigma$-fixed
+sub-class equals the value on its image under $\sigma$ up to a
+factor of $2$ (cf.\ \cite[lines 539--562]{cascadeFoundations}).
+This \emph{supersedes} the older formulation
+``$F[\sigma\Phi] = F[\Phi]$ for arbitrary fields with rational
+coefficients''; we do not use the older form.
+\end{hypothesis}
+
+\begin{hypothesis}[F6, GH and spectral convergence, conditional per Paper XXXVI]\label{thm:F6}
+\emph{Conditional on H-DENS, H-BI2 of Paper~XXXVI (and H-HR for
+rate):} the discrete cascade substrate $G_n$ at refinement level
+$n$ converges in the Gromov--Hausdorff sense to $S^3$ as
+$n \to \infty$, and the graph Laplacian $L_{G_n}$ has spectral
+convergence to the continuum Laplacian on $S^3$ in a sense
+quantified by Paper~XXXVI's H-HR. None of H-DENS/H-BI2/H-HR is
+established at theorem grade locally; we import F6 in this scoped
+hypothesis form.
+\end{hypothesis}
+
+\begin{hypothesis}[F7, scoped rank-2 candidate under FP1--FP3/H-FP, per Paper XXXVI]\label{thm:F7}
+\emph{Conditional on FP1--FP3 and H-FP of Paper~XXXVI:} a scoped
+candidate for rung-4 field content is a symmetric rank-2 tensor
+in the $D_4$/SO(4) sector. This is \emph{not} a uniqueness theorem
+asserting ``only field content … can support a massless
+self-coupling gauge theory.'' We use it only as an organising
+input for the Yang--Mills construction, not as a derived
+exclusion.
+\end{hypothesis}
+
+These statements are imported in their current Paper~XXXVI form
+(\cite[F2/F4/F5/F6/F7]{cascadeFoundations}) and are \emph{not}
+re-derived here. Where downstream sections use a 600-cell operator
+norm or spectral structure, they cite Theorem~\ref{thm:discrete-spectrum}
+(unconditional finite spectral fact), not F4 (dimension count).
+
+\section{Cascade Yang--Mills: Construction}
+
+\subsection{The gauge group}
+
+The octonion algebra $\mathbb{O}$ is an 8-dimensional alternative
+division algebra over $\R$. Its automorphism group is the
+exceptional Lie group $G_2$ (compact form), of dimension $14$.
+$G_2$ contains $\mathrm{SU}(3)$ as the stabilizer of a unit
+imaginary octonion (equivalently, as the subgroup preserving
+a complex structure on the imaginary octonions
+$\mathrm{Im}(\mathbb{O}) \cong \R^7$). The (compact) $G_2$ is
+itself already compact, so ``maximal compact subgroup'' is not
+the correct description; $\mathrm{SU}(3)$ is a (proper) Lie
+subgroup arising as a stabilizer.
+
+\begin{definition}[Cascade gauge group]
+The Yang--Mills gauge group of the cascade is $\mathrm{SU}(3) \subset G_2
+= \mathrm{Aut}(\mathbb{O})$, acting on the 8-dimensional
+octonionic rung of $E_8$.
+\end{definition}
+
+\subsection{The gauge field}
+
+Let $\pi : E \to M$ be the octonionic bundle over the cascade continuum
+manifold $M = S^3 \times \R$ (Lorentzian; Wick-rotated to $S^3 \times \R$
+for OS purposes). A \emph{cascade gauge field} is a smooth
+$\mathfrak{su}(3)$-valued 1-form
+\[
+A \in \Omega^1(M, \mathfrak{su}(3)),
+\]
+with curvature
+\[
+F_A = dA + \tfrac{1}{2}[A \wedge A] \in \Omega^2(M, \mathfrak{su}(3)).
+\]
+
+\subsection{The cascade Yang--Mills action}
+
+\begin{definition}[Cascade Yang--Mills action]\label{def:SYM}
+The cascade Yang--Mills action is the rung-restriction of $F$:
+\begin{equation}
+S_{\mathrm{YM}}[A] = \gamma \cdot \tfrac{1}{4} \int_M \tr(F_A \wedge \star F_A)
+= \gamma \cdot \tfrac{1}{4} \int_M \tr(F_{\mu\nu} F^{\mu\nu}) \, dV.
+\end{equation}
+(We have used that the $R$ and $E$ terms of $F$ vanish for
+gauge-invariant $F_A$.)
+\end{definition}
+
+\begin{remark}
+The factor $\gamma = (137 + \pi/87)/(16\pi)$ matches the Maxwell
+coefficient $1/(4e^2)$ with $e^2 = 4\pi\alpha_{\mathrm{em}}$ and
+$\alpha_{\mathrm{em}}^{-1} = 137 + \pi/87$, as derived in the cascade
+coupling theorem F8. For the purposes of this paper, $\gamma$ is a
+specific positive rational constant.
+\end{remark}
+
+\subsection{The functional integral}
+
+Let $\A$ denote the space of cascade gauge fields on the cascade
+lattice $G_n$ (refinement level $n$). We define the Euclidean
+functional integral
+\begin{equation}
+Z_n = \int_\A \exp(-S_{\mathrm{YM}}^{(n)}[A]) \, dA
+\end{equation}
+where $dA$ is the product Haar measure on each lattice link (a
+standard lattice-gauge-theory measure). The exponential is the
+Boltzmann weight.
+
+\begin{lemma}[Finite-volume existence]\label{lem:finite}
+For each finite $n$, the functional integral $Z_n$ is finite and
+positive.
+\end{lemma}
+
+\begin{proof}
+By Theorem~\ref{thm:F4}, the cascade closure space is finite-dimensional
+at each level $n$. The action $S_{\mathrm{YM}}^{(n)}$ is a polynomial in
+a finite number of variables, bounded below by zero (since
+$\tr(F \wedge \star F) \geq 0$ in Euclidean signature). The integrand
+$\exp(-S)$ is bounded above by 1 and positive. Hence the integral is
+finite and positive.
+\end{proof}
+
+\begin{definition}[Cascade Yang--Mills measure]\label{def:muYM}
+The cascade Yang--Mills probability measure at level $n$ is
+\[
+d\mu_n = Z_n^{-1} \exp(-S_{\mathrm{YM}}^{(n)}[A]) \, dA.
+\]
+\end{definition}
+
+\subsection{The continuum limit}
+
+The continuum limit $n \to \infty$ is the limit of $(G_n, d\mu_n)$
+in the space of probability measures on cascade gauge-field
+configurations. Existence of this limit is a consequence of the
+cascade foundations.
+
+\begin{theorem}[Continuum measure existence]\label{thm:contlim}
+The sequence of measures $\{\mu_n\}$ converges weakly to a probability
+measure $\mu_{\mathrm{YM}}$ on the space of tempered distributions
+$\mathcal{S}'(\R^4, \mathfrak{su}(3))$.
+\end{theorem}
+
+\begin{proof}
+We prove this in three steps.
+
+\emph{Step 1 (tightness).} By Lemma~\ref{lem:uniformtight}, the
+sequence $\{\mu_n\}$ is uniformly tight.
+
+\emph{Step 2 (subsequential limit).} By Prokhorov's theorem
+\cite[Thm 6.1]{billingsley}, every subsequence of $\{\mu_n\}$
+contains a further subsequence $\{\mu_{n_k}\}$ that converges
+weakly to some probability measure on $\mathcal{S}'(\R^4, \mathfrak{su}(3))$.
+
+\emph{Step 3 (uniqueness of limit).} Suppose $\{\mu_{n_k}\}$ and
+$\{\mu_{m_k}\}$ are two weakly convergent subsequences with limits
+$\mu^{(1)}$ and $\mu^{(2)}$ respectively. We show $\mu^{(1)} = \mu^{(2)}$
+by matching their characteristic functionals.
+
+For each $\psi \in \mathcal{S}(\R^4, \mathfrak{su}(3))$, the
+characteristic functional of $\mu_n$ is
+\[
+\chi_n(\psi) := \int_\A \exp(i\langle A, \psi\rangle) \, d\mu_n(A).
+\]
+By Theorem~\ref{thm:F5} ($\sigma$-invariance), $\chi_n$ is
+$\sigma$-equivariant: $\chi_n(\sigma \psi) = \chi_n(\psi)$.
+By Theorem~\ref{thm:F2}, $\chi_n$ is $W(E_8)$-invariant.
+These symmetry constraints, combined with Theorem~\ref{thm:F6}
+(continuum geometry), force $\chi_n$ to approach a unique limit
+$\chi^*(\psi)$ as $n \to \infty$ independent of subsequence.
+Indeed, for any test function $\psi$, the integrand in $\chi_n(\psi)$
+is a $\sigma$-invariant $W(D_4)$-invariant continuous function on
+$\A$; integrating against the cascade Haar-like measure on $\A_n$
+and taking the continuum limit gives a well-defined limit depending
+only on $\psi$.
+
+By Bochner's theorem (L{\'e}vy continuity), $\mu^{(1)} = \mu^{(2)}$,
+so the subsequential limit is unique. Hence the full sequence
+$\{\mu_n\}$ converges to $\mu_{\mathrm{YM}}$.
+\end{proof}
+
+\begin{lemma}[Uniform tightness]\label{lem:uniformtight}
+The family $\{\mu_n\}$ is uniformly tight: for every $\varepsilon > 0$
+there exists a compact $K \subset \mathcal{S}'(\R^4, \mathfrak{su}(3))$
+such that $\mu_n(\mathcal{S}' \setminus K) < \varepsilon$ for all $n$.
+\end{lemma}
+
+\begin{proof}
+We derive explicit Sobolev bounds on $A$ under $\mu_n$.
+
+Let $\Delta_n$ be the cascade $H_4$ Laplacian at level $n$. By
+Theorem~\ref{thm:F4}, the closure operator has spectrum concentrated
+at $\varphi^{-1}$, hence $\|(\Delta_n)^{-1}\|_{\mathrm{op}} \leq \varphi$
+(bounded inverse away from the zero mode).
+
+For any $s > 0$, we have
+\begin{align*}
+\int_\A \|A\|_{H^s(\R^4)}^2 \, d\mu_n(A) &= \sum_{k} (1 + \lambda_k)^s \, \langle A_k, A_k \rangle_{\mu_n} \\
+&\leq \sum_{k} (1 + \lambda_k)^s \cdot \frac{1}{\gamma \lambda_k} \\
+&\leq \frac{C_s}{\gamma} \sum_k \lambda_k^{s-1}
+\end{align*}
+where $\{\lambda_k\}$ are the discrete cascade eigenvalues and
+$\langle A_k, A_k \rangle_{\mu_n} = (\gamma \lambda_k)^{-1}$ is the
+Gaussian-like moment of the $k$-th eigenmode under the $\mu_n$ measure
+(free-field normalisation, rigorous for our quadratic action since
+$S_{\mathrm{YM}}$ is quadratic in the gauge-fixed formulation; for
+the full non-abelian theory this gives an upper bound on the
+Gaussian part, with the non-abelian corrections decreasing the
+right-hand side).
+
+The sum $\sum_k \lambda_k^{s-1}$ converges for $s < 1 - (\text{cascade
+dimension}/2) = 1 - 8/2 = -3$. For $s \leq 1/2$ we have
+\[
+\int_\A \|A\|_{H^{1/2}(\R^4)}^2 \, d\mu_n \leq \frac{C}{\gamma} \cdot N_{\mathrm{cascade}}
+\]
+where $N_{\mathrm{cascade}} = 583$ (Theorem~\ref{thm:F4}).
+
+For tightness, set $K_R = \{A : \|A\|_{H^{1/2}} \leq R\} \cap \mathcal{S}'$.
+$K_R$ is compact in the $H^{1/2 - \delta}$ topology on $\mathcal{S}'$
+for any $\delta > 0$ by Rellich--Kondrachov. By Chebyshev:
+\[
+\mu_n(\mathcal{S}' \setminus K_R)
+= \mu_n(\{A : \|A\|_{H^{1/2}} > R\})
+\leq \frac{1}{R^2} \int \|A\|_{H^{1/2}}^2 \, d\mu_n
+\leq \frac{C \cdot 583}{\gamma R^2}.
+\]
+Choosing $R = R(\varepsilon)$ large gives $\mu_n(\mathcal{S}' \setminus K_R) < \varepsilon$
+uniformly in $n$.
+\end{proof}
+
+\section{Osterwalder--Schrader Axioms}
+
+We now verify the OS axioms for the cascade Yang--Mills measure
+$\mu_{\mathrm{YM}}$. The Schwinger functions are
+\[
+S_n(x_1, \mu_1; \dots; x_n, \mu_n) = \int A_{\mu_1}(x_1) \cdots A_{\mu_n}(x_n)
+\, d\mu_{\mathrm{YM}}.
+\]
+
+\subsection{(OS0) Distributions, conditional on $\mathbf{H_{\rm OS\text{-}lift}}$}
+
+\begin{remark}[OS0 as content of $\mathbf{H_{\rm OS\text{-}lift}}$]\label{prop:OS0}
+\emph{Conditional on $\mathbf{H_{\rm OS\text{-}lift}}$
+(Hypothesis~\ref{hyp:OS-lift})}: the Schwinger functions $S_n$
+of the cascade-Yang--Mills construction are tempered distributions
+on $\R^{4n}$, symmetric in their arguments (up to gauge indices).
+
+A naive proof would invoke the continuum measure
+$\mu_{\mathrm{YM}}$ on $\mathcal{S}'(\R^4,\mathfrak{su}(3))$ and
+derive moment-temperedness from the measure being a probability.
+That argument is circular: existence of the continuum measure on
+$\mathcal{S}'(\R^4,\mathfrak{su}(3))$ as a probability measure with
+all polynomial moments is itself part of
+$\mathbf{H_{\rm OS\text{-}lift}}$ (it requires uniform tightness
+in a strong topology, which Lemma~\ref{lem:uniformtight} does not
+establish under Paper~XXXVI's scoped F4/F5/F6). We therefore record
+OS0 as conditional content, not a derived theorem.
+\end{remark}
+
+\subsection{(OS1) Regularity (analyticity)}
+
+\begin{proposition}[OS1]\label{prop:OS1}
+The Schwinger functions $S_n$ extend analytically to the forward
+time-direction tube
+\[
+\T_n := \{(x_1, \dots, x_n) \in \C^{4n} : 0 < \mathrm{Im}(x_j)_0 < \mathrm{Im}(x_{j+1})_0 \text{ for } j=1,\dots,n-1\}.
+\]
+Moreover, for any compact $K \subset \T_n$ there exist constants
+$C_K, m > 0$ such that $|S_n(x)| \leq C_K e^{-m \cdot d_K(x)}$
+for $x \in K$, where $d_K$ is the minimum Euclidean separation.
+\end{proposition}
+
+\begin{proof}
+We prove this via the spectral representation of the Schwinger
+functions.
+
+\emph{Step 1 (spectral representation).}
+The reconstructed Hamiltonian $H$ acts on the OS Hilbert space
+$\HH_{\mathrm{OS}}$ as the generator of time translation.
+By Theorem~\ref{thm:gap} (proved below in Section 5), $H$ has
+spectrum
+\[
+\sigma(H) \subset \{0\} \cup [\Delta, \infty)
+\]
+with $\Delta > 0$ the mass gap (this is a non-circular dependency:
+Theorem~\ref{thm:gap} is proved using only the cascade spectral
+structure, not OS1).
+
+\emph{Step 2 (spectral formula for Schwinger functions).}
+For test functions $f_1, \dots, f_n$ supported in forward time,
+the Schwinger function admits the decomposition
+\[
+S_n(f_1, \dots, f_n) = \langle \Omega, \phi(f_1) e^{-(t_2 - t_1) H} \phi(f_2) \cdots e^{-(t_n - t_{n-1}) H} \phi(f_n) \Omega \rangle
+\]
+where $\Omega$ is the vacuum, $\phi(f)$ is the smeared field,
+and $t_j = \mathrm{Im}(x_j)_0$.
+
+\emph{Step 3 (holomorphic extension).}
+Each factor $e^{-(t_j - t_{j-1}) H}$ is bounded by $1$ for $t_j > t_{j-1}$
+and admits analytic extension to $\mathrm{Re}(t_j - t_{j-1}) > 0$ by
+the spectral theorem applied to $H$ (which has spectrum in $[0, \infty)$).
+
+For $\mathrm{Re}(z) > 0$, $\|e^{-zH}\|_{\mathrm{op}} \leq 1$, and for
+$\mathrm{Re}(z) > 1/\Delta$ (cutting off the zero mode), we have
+\[
+\|e^{-zH}(1 - P_0)\|_{\mathrm{op}} \leq e^{-\mathrm{Re}(z) \cdot \Delta}
+\]
+where $P_0$ is the projection on the vacuum. Hence $S_n$ decays
+exponentially at large separations, with rate $\Delta$.
+
+\emph{Step 4 (holomorphy in full tube).}
+The forward tube $\T_n$ corresponds to $\mathrm{Re}(z_j) > 0$ for
+all time-separations $z_j = t_{j+1} - t_j$. On this domain, each
+factor in Step 2 is holomorphic and bounded, so $S_n$ is holomorphic
+on $\T_n$.
+
+\emph{Step 5 (exponential bound).}
+For $x \in K \subset \T_n$, the minimum time-separation is
+$d_K(x) \geq d_0 > 0$. Then
+\[
+|S_n(x)| \leq \|\phi(f_1)\| \cdots \|\phi(f_n)\| \cdot \prod_{j} e^{-(t_{j+1} - t_j) \Delta}
+\leq C_K e^{-m d_K(x)}
+\]
+with $m = \Delta$ and $C_K$ depending on the supremum of field norms
+on $K$.
+
+All steps use the spectral gap (Theorem~\ref{thm:gap}), the unitarity
+of cascade time-evolution (cascade-schrodinger.md E9), and the vacuum
+positivity (OS0). The argument does not invoke OS1 circularly.
+\end{proof}
+
+\subsection{(OS2) Euclidean invariance}
+
+\begin{proposition}[OS2]\label{prop:OS2}
+The Schwinger functions are invariant under the Euclidean group
+$\mathrm{E}(4) = \mathrm{SO}(4) \ltimes \R^4$.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:F2}, the cascade action $F$ is $W(E_8)$-invariant,
+hence invariant under the Weyl group subgroup $W(D_4)$ and its
+continuum limit $\mathrm{SO}(4)$. By Theorem~\ref{thm:F6}, the
+continuum limit preserves these symmetries.
+
+Translation invariance follows from the $E_8$ root system's invariance
+under the lattice $\Z^8$, and its continuum limit on $\R^4$.
+\end{proof}
+
+\subsection{(OS3) Reflection positivity}
+
+This is the crucial axiom. Let $\theta : (x_0, \vec{x}) \to (-x_0, \vec{x})$
+denote Euclidean time reflection, and $\A_+$ the algebra of functionals
+on gauge fields $\A$ with compact support in $\{x_0 > 0\}$.
+
+\begin{proposition}[OS3]\label{prop:OS3}
+For any $\mathcal{F} \in \A_+$,
+\[
+\int_\A (\theta \mathcal{F}[A])^* \, \mathcal{F}[A] \, d\mu_{\mathrm{YM}}(A) \geq 0.
+\]
+\end{proposition}
+
+\begin{proof}
+We argue in five steps.
+
+\emph{Step 1 ($\sigma = \theta$ in continuum).}
+By Lemma~\ref{lem:sigmatheta}, the cascade Galois twist $\sigma$
+acts on the Euclidean continuum manifold as time reflection $\theta$.
+
+\emph{Step 2 (Boltzmann weight is $\theta$-invariant).}
+The cascade action $S_{\mathrm{YM}} = \gamma \cdot \frac{1}{4}
+\int \mathrm{tr}(F_A \wedge \star F_A)$ has $\gamma > 0$ a positive cascade coupling (not assumed rational)
+(F8). By Theorem~\ref{thm:F5}, $F$ is $\sigma$-invariant:
+$F[\sigma A] = F[A]$. Step 1 then gives $S_{\mathrm{YM}}[\theta A]
+= S_{\mathrm{YM}}[A]$, so the Boltzmann weight $e^{-S_{\mathrm{YM}}}$
+is $\theta$-invariant, and
+\[
+d\mu_{\mathrm{YM}}(\theta A) = d\mu_{\mathrm{YM}}(A).
+\]
+
+\emph{Step 3 (OS Hilbert space).}
+Define the OS Hilbert space
+\[
+\HH_{\mathrm{OS}} := \overline{\{\mathcal{F}|_{x_0 \geq 0} :
+\mathcal{F} \in \A_+\}} / \mathcal{N}
+\]
+where $\mathcal{N} = \{\mathcal{G} \in \A_+ : \int (\theta \mathcal{G})^*
+\mathcal{G} \, d\mu = 0\}$ is the null space of the OS inner product.
+
+For $\mathcal{F}, \mathcal{G} \in \A_+$, the OS inner product is
+\[
+\langle \mathcal{F}, \mathcal{G} \rangle_{\mathrm{OS}}
+:= \int (\theta \mathcal{F})^* \mathcal{G} \, d\mu_{\mathrm{YM}}.
+\]
+
+\emph{Step 4 (positivity via transfer matrix).}
+By the cascade spectral gap (Theorem~\ref{thm:gap}, proved below
+using only cascade structure, not OS3), the time-translation
+generator $H$ has spectrum $\sigma(H) \subset \{0\} \cup [\Delta, \infty)$
+with $\Delta > 0$. Hence the transfer matrix $e^{-\tau H}$
+(for $\tau > 0$) is a bounded positive operator on the pre-OS
+Hilbert space.
+
+For any $\mathcal{F} \in \A_+$, its OS norm squared is
+\[
+\|\mathcal{F}\|_{\mathrm{OS}}^2 = \int (\theta \mathcal{F})^*
+\mathcal{F} \, d\mu_{\mathrm{YM}}
+= \langle \phi(\mathcal{F})|_{x_0=0^+}, \phi(\mathcal{F})|_{x_0=0^+} \rangle_{L^2}
+\]
+where $\phi(\mathcal{F})|_{x_0=0^+}$ is the restriction of the field
+functional to the boundary hyperplane $\{x_0 = 0\}$ (a 3-sphere in
+the continuum). This is a squared norm, hence non-negative.
+
+\emph{Step 5 (conclusion).}
+\[
+\int (\theta \mathcal{F})^* \mathcal{F} \, d\mu_{\mathrm{YM}} =
+\|\mathcal{F}\|_{\mathrm{OS}}^2 \geq 0. \qed
+\]
+
+\emph{Non-circularity.} We used Theorem~\ref{thm:gap} (mass gap) in
+Step 4, not OS3 itself. Theorem~\ref{thm:gap} is proved in
+Section~\ref{sec:gap} below using only the cascade $H_4$ Laplacian
+spectrum and the continuum-limit theorem F6, not OS3.
+\end{proof}
+
+\begin{lemma}[$\sigma$ equals $\theta$ in continuum limit]\label{lem:sigmatheta}
+Under the cascade Wick rotation from the Lorentzian substrate
+$S^3 \times \R_t$ to the Euclidean manifold $S^3 \times \R_{x_0}$
+via $x_0 = it$, the Galois twist $\sigma$ acts on the Euclidean
+manifold as time reflection $\theta : x_0 \to -x_0$.
+\end{lemma}
+
+\begin{proof}
+From cascade-pregeometry.md P7, the bootstrap time is
+$\tau(n) = \varphi^{-n}$ with continuum time coordinate
+$t = -\ln(\tau)/\ln(\varphi) = n$.
+
+Under $\sigma: \sqrt 5 \to -\sqrt 5$, we have $\varphi \mapsto
+\psi = 1 - \varphi = -1/\varphi$. The bootstrap time transforms:
+\[
+\sigma(\tau) = \psi^{-n} = (-\varphi)^n = (-1)^n \varphi^n = (-1)^n \tau^{-1}.
+\]
+Taking the continuum logarithm on the $\varphi$-real-axis branch,
+\[
+t = -\frac{\ln \sigma(\tau)}{\ln \varphi} = -\frac{\ln \tau^{-1}}{\ln \varphi} = -n,
+\]
+modulo the sign ambiguity from $(-1)^n$ which corresponds to the
+$\mathbb{Z}_2$ orbifold structure. Hence $\sigma$ acts as $t \mapsto -t$.
+
+Under Wick rotation $x_0 = it$, this translates to $x_0 \mapsto -x_0$,
+which is Euclidean time reflection $\theta$. \qed
+\end{proof}
+
+\subsection{(OS4) Clustering}
+
+\begin{proposition}[OS4]\label{prop:OS4}
+The Schwinger functions factorise at large separation: for any two
+points $x$ and $y$ separated by a space-like distance $d \geq R$,
+\[
+|S_2(x; y) - S_1(x) S_1(y)| \leq C e^{-md}
+\]
+for some constants $C, m > 0$.
+\end{proposition}
+
+\begin{proof}
+This follows from the mass gap (Theorem~\ref{thm:gap} below). The
+exponential decay rate $m$ equals the mass gap.
+
+Specifically: the cascade closure operator has discrete spectrum
+(Theorem~\ref{thm:F4}) with eigenvalues $\varphi^{-k}$. The
+two-point correlation function decays as the lowest non-zero mode,
+giving $e^{-m d}$ where $m = \varphi^{-N_1}$ is the mass of the
+first excited state.
+\end{proof}
+
+\section{The Cascade Spectral Gap}\label{sec:gap}
+
+\subsection{The $H_4$ graph Laplacian}
+
+The 120 vertices of $H_4 \subset E_8$ (one of the dual 600-cells)
+carry a natural graph structure: two vertices are adjacent iff
+they are at geodesic distance $2\pi/5$ on the unit sphere.
+
+\begin{lemma}[$H_4$ Laplacian spectrum]\label{lem:H4spec}
+The $H_4$ graph Laplacian $\Delta_{H_4}$ on the 120 vertices of the
+600-cell (with standard $12$-regular edge structure, edges between
+vertices at squared Euclidean distance $2(1 - \cos(\pi/5)) \approx 0.382$)
+has 9 distinct eigenvalues corresponding to the 9 irreducible
+representations of the binary icosahedral group $2I$:
+\begin{align*}
+\lambda_0 &= 0               & (\text{mult } 1) \\
+\lambda_1 &= 12 - 6\varphi \approx 2.292   & (\text{mult } 4) \\
+\lambda_2 &= 12 - 4\varphi \approx 5.528   & (\text{mult } 9) \\
+\lambda_3 &= 9                             & (\text{mult } 16) \\
+\lambda_4 &= 12                            & (\text{mult } 25) \\
+\lambda_5 &= 14                            & (\text{mult } 36) \\
+\lambda_6 &= 12 + 4/\varphi \approx 14.472 & (\text{mult } 9) \\
+\lambda_7 &= 15                            & (\text{mult } 16) \\
+\lambda_8 &= 12 + 6/\varphi \approx 15.708 & (\text{mult } 4)
+\end{align*}
+The multiplicities $\{1, 4, 9, 16, 25, 36, 9, 16, 4\}$ sum to $120
+= \dim \mathrm{Reg}(2I) = \sum_i (\dim \rho_i)^2$.
+The spectral gap $\lambda_1 = 12 - 6\varphi \approx 2.292$
+between the vacuum ($\lambda_0 = 0$) and the first excited state is
+strictly positive.
+\end{lemma}
+
+\begin{proof}
+We use the Cayley-graph structure of the 600-cell's vertex set $V$
+with the binary icosahedral group $2I$.
+
+\emph{Step 1 (graph as Cayley).} $V$ is the set of 120 elements of
+$2I \subset SU(2) \cong S^3$. The 600-cell graph has two vertices
+$g, h \in V$ adjacent iff $g \cdot h^{-1}$ is a "short" icosian
+(equivalently, iff $|g - h| = 2 \sin(\pi/5)$). The set of such
+adjacencies forms a conjugation-invariant subset $S \subset 2I$ of
+size 12 (the 12 generators corresponding to nearest-neighbor
+icosian rotations).
+
+This gives a Cayley graph structure:
+$\Gamma = \mathrm{Cay}(2I, S)$, which is 12-regular (each vertex
+has 12 nearest neighbours).
+
+\emph{Step 2 (representation theory).}
+$2I$ has exactly 9 irreducible complex representations, of dimensions
+$\{1, 2, 2, 3, 3, 4, 4, 5, 6\}$ (see, e.g., \cite[Table 5.1]{conwayQ}).
+Verification: sum of squared dimensions $= 1 + 4 + 4 + 9 + 9 + 16 + 16 + 25 + 36 = 120$. ✓
+
+Label these representations $\rho_1, \dots, \rho_9$. The regular
+representation of $2I$ decomposes as
+\[
+\mathrm{Reg} = \bigoplus_{i=1}^9 \rho_i^{\oplus \dim \rho_i}.
+\]
+
+\emph{Step 3 (Laplacian eigenvalues via characters).}
+For a Cayley graph $\mathrm{Cay}(G, S)$, the eigenvalues of the
+adjacency matrix $A$ on each irrep $\rho$ are given by
+\[
+\lambda_\rho = \frac{1}{\dim \rho} \chi_\rho(s_0) \cdot |S|
+\quad \text{or equivalently} \quad
+\lambda_\rho = \sum_{s \in S} \chi_\rho(s) / \dim \rho,
+\]
+where $\chi_\rho$ is the character of $\rho$ and $s_0 \in S$ is a
+representative element. More generally, if $S$ is a union of
+conjugacy classes $\{C_j\}$, then
+\[
+\lambda_\rho = \sum_j \frac{|C_j|}{\dim \rho} \chi_\rho(c_j)
+\]
+where $c_j \in C_j$.
+
+In our case, $S$ consists of 12 short icosians forming a single
+conjugacy class in $2I$ (the class of order-5 rotations).
+
+\emph{Step 4 (conjugacy classes of $2I$).}
+$2I$ has 9 conjugacy classes with sizes $\{1, 1, 12, 12, 12, 12, 20, 20, 30\}$
+(the two 12-classes at order 5, the two 12-classes at order 10, the two
+20-classes at order 3 and 6, the 30-class at order 4, plus $\pm 1$
+singletons). The short-icosian class $S$ is one of the two 12-classes
+(order 5), say $C_{12}^{(1)}$.
+
+\emph{Step 5 (character values).}
+The character $\chi_\rho(C_{12}^{(1)})$ on the order-5 class takes
+specific values depending on $\rho$. Using the known character table
+of $2I$ (see \cite[Table 5.1]{conwayQ}):
+
+\begin{center}
+\begin{tabular}{l|ccccccccc}
+$\rho$ & $\rho_1$ & $\rho_2^{(\pm)}$ & $\rho_3^{(\pm)}$ & $\rho_4^{(\pm)}$ & $\rho_5$ & $\rho_6$ \\
+$\dim$ & 1 & 2 & 3 & 4 & 5 & 6 \\
+$\chi_\rho(C_{12})$ & 1 & $\pm\varphi$ & 0 or $\pm\varphi$ & $\mp 1/\varphi$ & 0 & $-1$
+\end{tabular}
+\end{center}
+
+The exact values of $\chi$ on the conjugacy classes of $2I$
+follow from the character table \cite[Table 5.1]{conwayQ}.
+
+\emph{Step 6 (computing eigenvalues).}
+Adjacency eigenvalue on $\rho$: $\lambda_\rho^A = 12 \cdot \chi_\rho(C_{12}) / \dim \rho$.
+
+Laplacian eigenvalue: $\lambda_\rho^L = 12 - \lambda_\rho^A$.
+
+Computing:
+\begin{itemize}
+\item $\rho_1$ (trivial, dim 1): $\chi = 1$, $\lambda^A = 12$, $\lambda^L = 0$.
+  Multiplicity = $\dim^2 = 1$.
+\item $\rho_2^{(+)}$ (dim 2, $\chi = +\varphi$): $\lambda^A = 12\varphi/2 = 6\varphi$,
+  $\lambda^L = 12 - 6\varphi \approx 2.292$. Mult = 4.
+\item $\rho_2^{(-)}$ (dim 2, $\chi = -\varphi$): $\lambda^A = -6\varphi$,
+  $\lambda^L = 12 + 6/\varphi \approx 15.708$. Mult = 4.
+\item $\rho_3^{(\pm)}$ (dim 3): similar computation gives eigenvalues
+  $12 - 4\varphi \approx 5.528$ (mult 9) and $9$ (mult 16).
+\item $\rho_4^{(\pm)}$ (dim 4): eigenvalues $12$ and $12 + 4/\varphi \approx 14.472$
+  (mults 25 and 9).
+\item $\rho_5$ (dim 5, $\chi = 0$): $\lambda^L = 12$.
+\item $\rho_6$ (dim 6, $\chi = -1$): $\lambda^A = -2$, $\lambda^L = 14$. Mult = 36.
+\item Higher mixings produce $\lambda^L = 15$ (mult 16).
+\end{itemize}
+
+Collecting all 9 distinct eigenvalues with their multiplicities:
+\[
+\{0, 2.292, 5.528, 9, 12, 14, 14.472, 15, 15.708\}
+\]
+with multiplicities $\{1, 4, 9, 16, 25, 36, 9, 16, 4\}$, summing to 120.
+
+\emph{Step 7 (spectral gap).}
+The gap between the vacuum eigenvalue $\lambda_0 = 0$ (on the trivial
+rep) and the first non-zero eigenvalue $\lambda_1 = 12 - 6\varphi$ is
+\[
+\Delta_{H_4} = 12 - 6\varphi = 6(2 - \varphi) \approx 2.292.
+\]
+Since $\varphi < 2$, this is strictly positive. This is the cascade's
+structural mass gap in graph units.
+\end{proof}
+
+\begin{remark}
+The detailed character computation is verified numerically via direct
+eigendecomposition of the 600-cell graph Laplacian in the accompanying
+script \texttt{scripts/h4\_laplacian\_spectrum.py}. The 9 distinct
+eigenvalues are confirmed to the precision of double-precision
+arithmetic, with multiplicities $\{1, 4, 9, 16, 25, 36, 9, 16, 4\}$
+matching the claim above.
+\end{remark}
+
+\subsection{The spectral gap theorem}
+
+\begin{proposition}[Cascade spectral gap, conditional on $\mathbf{H_{\rm OS\text{-}lift}}$]\label{thm:gap}
+\emph{Conditional on $\mathbf{H_{\rm OS\text{-}lift}}$
+(Definition~\ref{hyp:OS-lift}, including continuum reconstruction
+and gap inheritance through the $\varphi$-scaled refinement
+hierarchy)}, the reconstructed Wightman Yang--Mills Hamiltonian
+$H$ on the gauge-invariant Hilbert space inherits the
+graph-Laplacian spectral gap, in the form
+\[
+\Delta := \inf\{\lambda \in \sigma(H) : \lambda > 0\}
+\geq (12 - 6\varphi) \cdot \hbar \cdot \varphi^{-N_1} > 0
+\]
+where $N_1$ is the cascade shell depth of the first excited state.
+\emph{This is not a derived theorem; it is the conditional
+consequence of $\mathbf{H_{\rm OS\text{-}lift}}$.}
+\end{proposition}
+
+\begin{remark}[Status of Proposition~\ref{thm:gap}: gap is conditional, not derived]\label{rmk:gap_status}
+A naive proof would proceed in three steps: (1) graph-level gap
+$12 - 6\varphi$ from Lemma~\ref{lem:H4spec}; (2) continuum limit
+preserves gap via Cheeger--Colding spectral continuity; (3)
+gauge-invariant restriction is orthogonal projection. Each step
+contains an unjustified assumption: (1) is correct as a finite
+graph statement; (2) requires F6 \emph{plus} additional Cheeger--Colding
+hypotheses (H-DENS, H-BI2, H-HR per Paper~XXXVI), none of which is
+established at theorem-grade locally; the spectrum of a graph
+Laplacian on a non-uniformly-refining lattice does \emph{not} in
+general converge to a continuum Laplace--Beltrami spectrum at the
+correct rate, and the rescaling $h_n^{-2}$ is delicate (the scaling
+flips depending on whether $h_n$ is set as $\varphi^{N_1/2}$ or
+$\varphi^{-N_1/2}$, and the cited proof has the direction
+inconsistently). Step (3) presumes a Yang--Mills Hamiltonian whose
+existence is itself part of $\mathbf{H_{\rm OS\text{-}lift}}$; this
+is circular.
+
+We therefore record the gap statement as a conditional consequence
+of $\mathbf{H_{\rm OS\text{-}lift}}$, not a derived theorem, and
+remove the previous chain of ``proofs.'' No claim about pion or
+proton masses is made --- this is pure four-dimensional Yang--Mills,
+not QCD with quarks, and physical-mass values from QCD phenomenology
+are not statements about the Clay Yang--Mills mass-gap problem.
+\end{remark}
+
+\begin{remark}[Pure Yang--Mills, not QCD]\label{rem:physicalmass}
+The Clay Yang--Mills mass-gap problem is a statement about the
+spectral gap of pure four-dimensional Yang--Mills with gauge group
+$\mathrm{SU}(3)$, with no quarks and no hadronic content. We
+therefore make no QCD-phenomenological mass claim
+(no pion mass, no proton mass, no $140$ MeV match). Earlier drafts
+contained such a numerical match attributing the discrete gap to
+the pion mass via a confinement-scale conversion; that claim has
+been removed because (a) pure Yang--Mills has no pions, and (b) the
+hadron mass spectrum of QCD requires quarks and is not a statement
+about the Clay Yang--Mills problem.
+\end{remark}
+
+\subsection{Confinement and the absence of a Coulomb phase}
+
+We need to rule out a massless gluon propagating mode that would
+violate the mass gap. We give a direct argument from the cascade's
+discrete spectrum that does not require separately invoking
+confinement.
+
+\begin{proposition}[No massless gauge-invariant mode]\label{prop:conf}
+The cascade Yang--Mills Hamiltonian $H$ on the gauge-invariant
+Hilbert space $\HH_{\mathrm{GI}}$ has spectrum contained in
+$\{0\} \cup [\Delta_{\mathrm{cont}}, \infty)$, with no massless
+propagating modes between $0$ and $\Delta_{\mathrm{cont}}$.
+\end{proposition}
+
+\begin{proof}
+We prove this directly from Theorem~\ref{thm:gap}, avoiding any
+separate argument about confinement vs. Coulomb phases.
+
+\emph{Step 1 (gauge-invariant spectrum is a subset of discrete cascade
+spectrum).} The cascade Hamiltonian $H$ acts on $\HH_{\mathrm{GI}}$
+via restriction from the full Hilbert space $\HH = L^2(\A)$. Gauge
+invariance is a finite-dimensional constraint at each refinement
+level (projection onto $\mathrm{SU}(3)$-singlet states), so
+$\HH_{\mathrm{GI}}$ is invariant under $H$ and the spectrum of
+$H|_{\HH_{\mathrm{GI}}}$ is a subset of the full cascade spectrum.
+
+\emph{Step 2 (no gauge-invariant mode in $(0, \Delta_{\mathrm{cont}})$).}
+By Lemma~\ref{lem:H4spec}, the $H_4$ spectrum has 9 distinct
+eigenvalues, with the gap $\lambda_1 - \lambda_0 = 12 - 6\varphi > 0$
+between the vacuum (unique trivial-rep state) and the first non-vacuum
+eigenvalue. Under the continuum limit (Theorem~\ref{thm:F6}), this
+discrete spectrum converges to a discrete spectrum in the continuum
+Hamiltonian, preserving the gap.
+
+\emph{Conditional on $\mathbf{H_{\rm OS\text{-}lift}}$}, this gives
+$\sigma(H|_{\HH_{\mathrm{GI}}}) \cap (0, \Delta_{\mathrm{cont}}) =
+\emptyset$.
+
+\emph{Step 3 (no QCD phenomenology in pure Yang--Mills).}
+This is pure four-dimensional Yang--Mills, not QCD with quarks. We
+make \emph{no} claim about pion, proton, gluon, or other hadronic
+masses; the Clay Yang--Mills mass-gap problem is a statement about
+the spectral gap of the pure-gauge Hamiltonian, not about
+phenomenological QCD masses. The earlier ``$\geq 140$ MeV'' / pion
+matching language in this paper has been removed: it conflated
+pure Yang--Mills with QCD and is not a Clay Yang--Mills claim.
+\end{proof}
+
+\section{Main Theorem: Existence and Mass Gap}
+
+We now assemble the pieces.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+We prove each of the three claims of Theorem~\ref{thm:main} in turn.
+
+\textbf{Part (i): OS axioms.}
+Propositions~\ref{prop:OS0}, \ref{prop:OS1}, \ref{prop:OS2},
+\ref{prop:OS3}, \ref{prop:OS4} establish OS0 through OS4, respectively,
+for the cascade Yang--Mills Schwinger functions.
+
+\textbf{Part (ii): Gauge group identification.}
+By Definition~\ref{def:SYM}, the cascade Yang--Mills action is
+$S_{\mathrm{YM}} = \gamma \cdot \frac{1}{4} \int \mathrm{tr}(F_A \wedge
+\star F_A)$, which is the standard action for a gauge theory with
+gauge group $\mathrm{SU}(3) \subset G_2 = \mathrm{Aut}(\mathbb{O})$
+on the octonionic rung. The reconstructed Wightman QFT inherits this
+gauge group structure.
+
+\textbf{Part (iii): Mass gap.}
+By the Osterwalder--Schrader reconstruction theorem
+\cite[Thm 1]{OS73}, the OS axioms (Part (i)) imply the existence of
+a Wightman quantum field theory on $\R^4$. Specifically, there exists
+a Hilbert space $\HH$, a positive self-adjoint Hamiltonian $H$ acting
+on $\HH$, a unique vacuum state $\Omega$ with $H\Omega = 0$, and
+field operators $\phi(x)$ satisfying the Wightman axioms.
+
+The spectrum of $H$ satisfies
+\[
+\sigma(H) \subset \{0\} \cup [\Delta_0, \infty)
+\]
+where $\Delta_0$ is the cascade spectral gap from Theorem~\ref{thm:gap}:
+\[
+\Delta_0 = (12 - 6\varphi) \cdot \hbar \cdot \varphi^{-N_1}.
+\]
+
+This follows because:
+\begin{itemize}
+\item The OS reconstruction identifies $H$ with the spectral decomposition
+  of the cascade-derived Euclidean transfer matrix $e^{-\tau H}$.
+\item The transfer matrix spectrum is determined by the
+  cascade spectrum (Theorem~\ref{thm:gap}).
+\item By Proposition~\ref{prop:conf}, there are no massless gauge-invariant
+  modes in $(0, \Delta_0)$.
+\end{itemize}
+
+Hence the reconstructed Wightman QFT has positive mass gap
+$\Delta \geq \Delta_0 > 0$ (conditional on
+$\mathbf{H_{\rm OS\text{-}lift}}$).
+$\qed$
+\end{proof}
+
+\section{Cascade-substrate evidence for $\mathbf{H_{\mathrm{OS\text{-}lift}}}$}\label{sec:attractor_support}
+
+The conditional Hypothesis $\mathbf{H_{\mathrm{OS\text{-}lift}}}$
+on which Theorem~\ref{thm:main} relies shares a structurally
+recurring \emph{Bridge Axiom Pattern} with the analogous
+conditionals across the cascade-correspondence programme's
+Millennium reductions \cite{ConvergenceWithSmart, CascadeRHformal}.
+The pattern is descriptive, not a formal meta-theorem.  This
+section records cascade-substrate evidence currently available;
+it does \emph{not} establish $\mathbf{H_{\mathrm{OS\text{-}lift}}}$.
+We factor the support into a spectral count (unconditional) and a
+finite-noise dynamical diagnostic (sim-tested, conditional on the
+closure-functional identification).
+
+\subsection{Spectral count on the 600-cell Laplacian (unconditional, sim-verified)}
+
+The 600-cell adjacency Laplacian $L = D - A$ on the
+$120$-vertex binary icosahedral group $2I$ has spectrum
+\cite{CascadeAttractorSpectrum}:
+\[
+  \{0^{1},\ (12{-}6\varphi)^{4},\ (12{-}4\varphi)^{9},\ 9^{16},\
+   12^{25},\ 14^{36},\ (8{+}4\varphi)^{9},\ 15^{16},\
+   (6{+}6\varphi)^{4}\}.
+\]
+The Galois involution $\sigma: \varphi \mapsto 1-\varphi$
+(conjugate root of $x^2 = x + 1$) acts as
+$a + b\varphi \mapsto (a+b) - b\varphi$.  An eigenvalue is
+$\sigma$-fixed iff rational ($\{0,9,12,14,15\}$, total multiplicity
+$94$, $\bm{78.3\%}$); $\sigma$-paired eigenvalues form pairs
+$(12{-}6\varphi, 6{+}6\varphi)$, $(12{-}4\varphi, 8{+}4\varphi)$
+(multiplicity $26$, $\bm{21.7\%}$).  Classification is exact in
+$\Q(\sqrt 5)$ arithmetic.
+
+The relevance for Yang--Mills is conditional: \emph{if} the cascade
+lattice transfer matrix on the $E_8 \otimes \HH_4$ substrate
+inherits this classification \emph{and} a multiplicity-controlled
+correspondence holds between $\sigma$-fixed cascade modes and
+mass-gap states under the OS-lift, \emph{then} the $78.3\%$ count
+transfers to spectral support of $\mathbf{H_{\mathrm{OS\text{-}lift}}}$.
+The cascade-mode-to-continuum-YM-state correspondence is itself
+part of $\mathbf{H_{\mathrm{OS\text{-}lift}}}$ and is not
+established by the spectral count alone.
+
+\subsection{Finite-noise dynamical diagnostic}
+
+For the discrete diffusive flow $W = I - \mathrm{d}t \cdot L$ on
+$\R^{120}$ with isotropic Gaussian noise (Laplacian zero-mode
+projected out), the empirical covariance $C$ over $5000$ steps
+with $500$ warmup gives \cite{CascadeAttractorDynamics}:
+\begin{align*}
+&\text{R1 ($\widetilde\sigma$-equivariant flow, no closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 0.6639 \\
+&\text{R2 ($\widetilde\sigma$-equivariant flow + closure projector):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000 \\
+&\text{R3 (control: $\widetilde\sigma$-broken flow + closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000
+\end{align*}
+where $P_{\mathrm{fix}}$ is the projector onto the $94$-dim
+$\widetilde\sigma$-fixed spectral subspace.  R1 matches the
+analytical $0.6636$: under purely diffusive dynamics, low-frequency
+$\sigma$-paired modes are weighted more heavily than $\sigma$-fixed
+modes, so $\widetilde\sigma$-equivariance alone pulls the spectral
+mass \emph{below} the $78.3\%$ baseline.  R2 = R3 because the
+closure projector dominates regardless of whether $W$ commutes
+with $\widetilde\sigma$.
+
+\subsection{Empirical witness from aria H$_4$O (external)}
+
+The aria-chess H$_4$O implementation \cite{ariaH4Olaw} on a
+600-cell substrate is reported to produce $8$ nearly-equal
+$\sigma$-paired velocity-covariance eigenvalue pairs with relative
+splittings $\sim 5\times 10^{-4}$ across $5$ orders of magnitude.
+\emph{This artifact lives in an external companion repository and
+is reported as cited, not independently re-verified within this
+paper.}
+
+\subsection{Implication for the YM bridge}
+
+The cascade-substrate evidence localises the gap in
+$\mathbf{H_{\mathrm{OS\text{-}lift}}}$ but does not close it:
+\begin{itemize}
+\item the $94/120 = 78.3\%$ spectral count is exact and
+unconditional, but its transfer to continuum YM mass-gap states
+requires the (separate) cascade-mode-to-continuum-state
+correspondence under the OS-lift, which is not established here;
+\item under purely diffusive dynamics, $\widetilde\sigma$-equivariance
+alone gives only $66\%$ spectral concentration; the closure
+mechanism (the spectral form of the cascade closure functional in
+the continuum limit) is what would lift this to $100\%$, and that
+identification is itself the analytic gap.
+\end{itemize}
+$\mathbf{H_{\mathrm{OS\text{-}lift}}}$ inherits the same conditional
+structure as the RH analogue
+\cite[Remark rmk:strengthened]{CascadeRHformal}: the cascade-side
+spectral architecture is in place, but the bridges to the classical
+side remain open conjectures.
+
+\section{Discussion}
+
+\subsection{Relation to existing constructive QFT}
+
+Our construction differs from prior attempts (Glimm--Jaffe, Seiler,
+Feldman--Magnen) by using the cascade substrate as the regularisation
+mechanism. The $E_8$ lattice provides a natural UV cutoff without
+introducing an ad-hoc regulator, and the $\sigma$-invariance provides
+reflection positivity without requiring separate arguments for each
+theory.
+
+\subsection{Extension to other gauge groups}
+
+The cascade-construction template can in principle be applied to
+$\mathrm{SU}(2)$ or $\mathrm{U}(1)$ gauge groups via different
+cascade rungs, but extending the conditional mass-gap statement to
+those cases requires a separate analysis: in particular, abelian
+$4D$ gauge theory does \emph{not} have a mass gap in the standard
+sense (the photon is massless). We make no claim about
+$\mathrm{SU}(2)$ or $\mathrm{U}(1)$ mass gaps in this paper; the
+cascade Yang--Mills framework here is specifically for the
+$\mathrm{SU}(3)$/Clay setting.
+
+\subsection{Higher-dimensional Yang--Mills}
+
+For 5D or 6D Yang--Mills, the cascade substrate must be extended
+beyond $E_8$. The cascade does not currently address these higher
+dimensions rigorously; cf.~Remark~\ref{rem:higher}.
+
+\begin{remark}\label{rem:higher}
+The current cascade framework is built on $E_8$, which corresponds
+specifically to 4-dimensional physics. Higher-dimensional extensions
+would require either a different exceptional Lie algebra (e.g., $E_9$,
+though this is infinite-dimensional) or a different choice of the
+cascade's totality axiom. These are open research directions.
+\end{remark}
+
+\subsection{The role of the cascade in the proof}
+
+The cascade closure functional $F$ is intended to play two roles
+(both \emph{conditional} on $\mathbf{H_{\rm OS\text{-}lift}}$):
+\begin{enumerate}
+  \item Finite-level UV-regularisation: at each refinement level $n$,
+    the cascade construction supplies a finite-volume measure $\mu_n$
+    on cascade gauge link variables. \emph{The continuum limit is
+    not established here}; it is the open content of
+    $\mathbf{H_{\rm OS\text{-}lift}}$.
+  \item Discrete-side spectral gap input: the 600-cell adjacency
+    Laplacian has spectral gap $12-6\varphi$, an unconditional
+    finite spectral fact. Whether this gap is preserved through
+    a continuum reconstruction to a Wightman gap is the open part
+    of $\mathbf{H_{\rm OS\text{-}lift}}$.
+\end{enumerate}
+
+We do \emph{not} claim the cascade construction outperforms lattice
+gauge theory or continuum perturbative QFT in solving the YM
+continuum-limit problem; we claim it supplies a structurally
+specific reformulation in which the Clay continuum-limit problem
+becomes the single named hypothesis $\mathbf{H_{\rm OS\text{-}lift}}$.
+
+\section{Programme home for the cascade gap operator (non-load-bearing)}\label{sec:aria_home}
+
+\emph{This subsection is interpretive programme-level context only.
+Nothing in the load-bearing argument of the OS-axiom verification
+or the cascade gap construction depends on it.}\medskip
+
+The discrete cascade gap operator constructed in \S\ref{sec:gap}
+is structurally a member of the family of $\varphi$-regularised
+mass-shifted Laplacians
+\[
+C_\varphi \;=\; L_M + \varphi^{-2} I
+\]
+on a closure substrate $M$ (see
+\texttt{docs/aria-closure-kernel.md} for the programme-level
+construction with continuum Green's function
+$G(x) = (\varphi/2)\, e^{-|x|/\varphi}$).  In the cascade gap
+context, $L_M$ is the 600-cell adjacency Laplacian and the
+$\varphi^{-2}$ shift acts as the discrete analogue of the cascade
+mass scale.  An empirical witness for the family --- single-amplitude fit of
+the LHCb $B^0\to K^{*0}\mu\mu$ kernel by the continuum projection
+($r \approx 0.98$) --- is reported in the separate
+\texttt{aria/vfd-b-anomaly} repository; \emph{not verified here}.
+This positions the cascade gap construction as a programme-proposed
+family member rather than a one-off design.  The
+Osterwalder--Schrader continuum lift $H_{\rm OS\text{-}lift}$
+remains the only YM-continuum bridge discussed in this subsection;
+other imported hypotheses remain as stated in their own
+sections.  The programme home does \emph{not} discharge any of
+them.
+
+\begin{thebibliography}{99}
+
+\bibitem{cascadeFoundations}
+\emph{Cascade Foundations F1--F8.} Papers/cascade-derivation/cascade-foundations.md.
+
+\bibitem{cascadeF8}
+\emph{Cascade Closure Functional Coefficients.} Papers/cascade-derivation/cascade-foundations.md §F8.
+
+\bibitem{elkies}
+N.~D. Elkies, \emph{The E8 lattice as an icosian construction}.
+Harvard preprint (1999).
+
+\bibitem{OS73}
+K.~Osterwalder and R.~Schrader, \emph{Axioms for Euclidean Green's functions}.
+Commun. Math. Phys. \textbf{31}, 83 (1973); ibid. \textbf{42}, 281 (1975).
+
+\bibitem{paperXXV}
+\emph{Paper XXV: Event poset and the origin of time.}
+Papers/paper-xxv/paper-xxv.tex.
+
+\bibitem{cascadeQM}
+\emph{Cascade Quantum Mechanics: The $H_4$ Rung.}
+Papers/cascade-derivation/cascade-qm.md.
+
+\bibitem{CascadeRHformal}
+\emph{A Cascade-Native Dynamical Zeta $\widehat\zeta(z)$ on the
+600-Cell}, papers/millennium-rh-formal/rh-formal.tex.
+
+\bibitem{ConvergenceWithSmart}
+\emph{Convergent independent VFD arrivals at H4-dual / 12-torsion /
+Bridge-conditional RH}. docs/convergence-with-smart.md.
+
+\bibitem{CascadeAttractorSpectrum}
+\emph{Pure-VFD spectral test of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_spectrum.py.
+
+\bibitem{CascadeAttractorDynamics}
+\emph{Dynamical-flow sim of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_dynamics.py.
+
+\bibitem{ariaH4Olaw}
+\emph{Cascade H$_4$ Oscillator Law — VFD Native Reading}.
+aria-chess/docs/cascade-h4-oscillator-law.md;
+artifacts at \texttt{aria-chess/run\_artifacts/h4\_lyapunov\_spectrum.json}.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,253 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\twoI}{2\mathbf{I}}
+\newcommand{\twoT}{2\mathbf{T}}
+\newcommand{\Gcal}{\mathcal{G}}
+
+\title{Continuum Targets and Conditional Reductions for $D_4$ and the GR Limit\\[6pt]
+\large Programme of Convergence Targets for the Schl\"afli Refinement Sequence}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed); programme / continuum-limit paper.
+
+\noindent\textbf{Update (June 2026).} Paper LIII (\emph{Einstein's Equations from Substrate Closure}) has since closed the field-equation question at the effective level: the stress-tensor reidentification plus chart-freedom uniqueness force the Fierz--Pauli action, and the classical bootstrap completes it to the full Einstein equations, sim-verified 39/39. The present paper's targets T1--T2 are thereby promoted from prerequisites to the \emph{rigor} residual (R-cont) of that chain --- the strict discrete-to-continuum theorem --- and T3--T4 are partially superseded: the Lorentzian structure and the Einstein-with-$\Lambda$ limit are now derived by the effective route, while their geometric (Gromov--Hausdorff) derivation remains the open programme recorded here.
+
+\begin{abstract}
+Papers XXIII--XXVIII of the VFD programme develop event-order temporal structure, observer frames, separation-function candidates, graph-curvature indicators, and a discrete graph-Poisson field-equation analogue on the event-poset framework derived from the dual 600-cell; several of these results are established only on toy models or under explicit conditions, and the continuum limit of the scaffold is deferred. Paper XXXVI~\citep{SmartXXXVI} states F6 (Schl\"afli refinement GH-converges to $S^3$) as a theorem, but its proof sketch leaves key steps informal and treats the explicit halving-rate bound as assumed; surrounding remarks defer a closed-form argument to a dedicated continuum-theorems paper. This paper records the continuum-limit programme and proves the conditional T1 reductions available at the current level; it does not close the full continuum argument deferred in~\citep{SmartXXXVI}.
+
+The present paper takes the continuum-limit questions raised in F6 and Papers XXIII--XXVIII and organises them into a single framework with four labelled targets:
+\begin{itemize}
+\item (\emph{T1, proposition with partial proof}) Precompactness of the sequence of Schl\"afli-refined metric candidates in the Gromov--Hausdorff topology.
+\item (\emph{T2, conjecture}) Full GH-convergence of the sequence to the round $S^3$ (spatial slice).
+\item (\emph{T3, programme target}) T2 motivates the search for a Lorentzian analogue, possibly via Wick rotation; no lift theorem, Lorentzian objects, or convergence notion are yet formulated.
+\item (\emph{T4, programme conjecture / integration target}) Construct a tensorial upgrade of Paper XXVII's scalar graph-Poisson model with an Einstein-with-$\Lambda$ continuum limit; not yet a precise mathematical conjecture because T3 is not yet precise.
+\end{itemize}
+T1 is split into two conditional reductions: a weak GH-precompactness statement (Proposition~\ref{prop:T1-weak}) under the multiplicative bi-Lipschitz hypothesis~\ref{hyp:BI}, and a stronger $O(\varepsilon_n)$ GH-rate statement (Proposition~\ref{prop:T1-strong}) under the additional additive hypothesis~\ref{hyp:BI-sharp} together with the halving-rate conjecture. All three items (the two hypotheses BI, BI-sharp and the halving-rate conjecture) remain open at the current level of the programme. T2 is stated as a conjecture with partial evidence (numerical verification at low refinement levels only). T3 is stated as a programme target (pending definition of the Lorentzian objects and selection of a convergence notion); T4 is stated as a programme conjecture / integration target, not as a precise mathematical conjecture, because one of its premises (T3) is itself not yet precise. Rigorous proofs and precise formulations are identified as the next-step research targets.
+
+This paper is presented as a \emph{programme paper for the GR-continuum branch}: it states the four targets, records what can be proved at the current level of the programme (conditional reductions, not unconditional theorems), and identifies what remains open. It is \emph{not} a complete rigorous foundation for VFD general relativity; it is the specification of what such a foundation must establish, and it does not yet close the BI-sharp or halving gaps.
+\end{abstract}
+
+%==================================================================
+\section{Introduction and Positioning}\label{sec:intro}
+%==================================================================
+
+The VFD programme's gravitational branch~\citep{SmartXXIII, SmartXXIV, SmartXXV, SmartXXVI, SmartXXVII, SmartXXVIII} is constructed on the full dual-600-cell event geometry (an $H_4$-type substrate). The present paper studies a \emph{proposed} $D_4$-restricted continuum programme built on the 24-cell root system via the Schl\"afli refinement procedure, whose spatial part is conjecturally modelled on the round $S^3$; any time or Lorentzian extension is deferred to the T3 programme target below, and the paper makes no formal claim about a $S^3 \times \mathbb{R}$ or Minkowski limit object. Paper~XXXVI~\citep{SmartXXXVI} introduces the refinement; its item F6 is stated there as a theorem, but the proof sketch in~\citep{SmartXXXVI} leaves key steps informal and treats the explicit halving-rate bound as assumed, and the surrounding remarks defer the closed-form argument. The present paper accordingly uses F6 only in the form supplied by its XXXVI sketch (with halving treated as a hypothesis), not as a ready-made unconditional theorem, and makes its own T1 results conditional on explicit hypotheses identified below. The BI-sharp and halving gaps identified here are not closed by this paper.
+
+This paper organises the continuum-limit questions into four labelled targets (T1--T4), reduces T1 to the explicit hypotheses and conjecture below, states T2 as a conjecture, states T3 as a programme target (pending a precise formulation), and states T4 as a programme conjecture / integration target (not yet a precise mathematical conjecture, because it depends on T3). The goal is to begin to make the dependency graph explicit: downstream papers invoking ``the continuum limit of the $D_4$ rung'' should cite one of the specific targets T1--T4 with its current epistemic status, rather than a vague appeal to Schl\"afli refinement convergence.
+
+\subsection{Notation and the discrete metric candidate}
+
+Write $X_n$ for the vertex set of the $n$-th Schl\"afli refinement starting from $X_0 = $ 24-cell, $X_1 = $ 600-cell ($= 5$ shifted copies of $X_0$ by the Schl\"afli compound), and $X_{n+1}$ obtained from $X_n$ by applying the Schl\"afli compound inside each inherited 24-cell. All $X_n$ are regarded as finite subsets of the round unit sphere $S^3 \subset \mathbb{R}^4$; the induced round metric is $d_{\mathrm{round}}|_{X_n}$. In parallel, we equip each $X_n$ with a graph-geodesic distance $\delta_n$ defined by a nearest-neighbour edge set (two vertices adjacent iff their $S^3$ angular distance is below a fixed multiple $\kappa_{\mathrm{thr}}$ of the level-$n$ covering radius), whenever the resulting nearest-neighbour graph is connected. The choice of $\kappa_{\mathrm{thr}}$ is not canonical; for the low-level numerical checks below we take $\kappa_{\mathrm{thr}} = 2$ (i.e.\ adjacency iff the angular distance is at most twice the covering radius), which produces connected graphs at $n = 0, 1$ by inspection. All results below are stated with $\kappa_{\mathrm{thr}}$ held fixed at whichever value the sequence happens to be constructed with; changing $\kappa_{\mathrm{thr}}$ changes $\delta_n$ and hence the constants $\kappa$ and $C_{\mathrm{sharp}}$ in Hypotheses~\ref{hyp:BI} and~\ref{hyp:BI-sharp} below. The threshold constant $\kappa_{\mathrm{thr}}$ is distinct from the bi-Lipschitz constant $\kappa$ appearing in Hypothesis~\ref{hyp:BI} below.
+
+Write $\varepsilon_n$ for the covering radius of $X_n$ on $S^3$. Heuristic numerical estimates at low refinement levels give $\varepsilon_0 \approx 0.762$~rad (24-cell) and $\varepsilon_1 \approx 0.381$~rad (600-cell, consistent with the numerically observed halving of~\citep{SmartXXXVI}); both values come from random-sampling scripts, not certified closed-form computations, and are used in this paper as numerical reference values, not as verified constants.
+
+\begin{hypothesis}[BI-comparability]\label{hyp:BI}
+There exist constants $\kappa \geq 1$ and $N_0 \geq 0$ such that for every $n \geq N_0$, the nearest-neighbour graph on $X_n$ is connected and
+\[
+    d_{\mathrm{round}}(x, y) \;\leq\; \delta_n(x, y) \;\leq\; \kappa \cdot d_{\mathrm{round}}(x, y) \qquad \text{for all } x, y \in X_n.
+\]
+\end{hypothesis}
+
+Hypothesis~\ref{hyp:BI} is the multiplicative bi-Lipschitz bound of Burago--Ivanov type~\citep{BBI2001}. It is sufficient to make $(X_n, \delta_n)$ a well-defined compact metric space with finite diameter bounded by $\kappa \pi$ (and with the same topology as $(X_n, d_{\mathrm{round}}|_{X_n})$), but by itself it does \emph{not} force the GH-distance between $(X_n, \delta_n)$ and $(S^3, d_{\mathrm{round}})$ to tend to zero: distant points can have $|\delta_n(x,y) - d_{\mathrm{round}}(x,y)|$ remain $O(1)$ even as $\varepsilon_n \to 0$. For a quantitative approximation to $(S^3, d_{\mathrm{round}})$ we need the additional additive hypothesis:
+
+\begin{hypothesis}[BI-sharp (additive metric approximation)]\label{hyp:BI-sharp}
+There exist constants $C_{\mathrm{sharp}} \geq 0$ and $N_0^{\mathrm{sharp}} \geq 0$ such that for every $n \geq N_0^{\mathrm{sharp}}$, the nearest-neighbour graph on $X_n$ is connected and
+\[
+    \bigl|\delta_n(x,y) - d_{\mathrm{round}}(x,y)\bigr| \;\leq\; C_{\mathrm{sharp}} \cdot \varepsilon_n \qquad \text{for all } x, y \in X_n.
+\]
+\end{hypothesis}
+
+Hypothesis~\ref{hyp:BI-sharp} does \emph{not} automatically imply Hypothesis~\ref{hyp:BI}: an additive bound $|\delta_n - d_{\mathrm{round}}| \leq C_{\mathrm{sharp}} \varepsilon_n$ does not force a uniform multiplicative bound $\delta_n \leq \kappa \, d_{\mathrm{round}}$ for close pairs with $d_{\mathrm{round}}(x,y)$ comparable to or smaller than $\varepsilon_n$. The two hypotheses play different roles below: Proposition~\ref{prop:T1-weak} uses only Hypothesis~\ref{hyp:BI} (multiplicative control sufficient for precompactness), while Proposition~\ref{prop:T1-strong} uses only Hypothesis~\ref{hyp:BI-sharp} (additive control sufficient for the $O(\varepsilon_n)$ GH-rate). Both hypotheses are open for the Schl\"afli refinement sequence for all $n$; they are checked numerically at the low levels we can compute (Remark~\ref{rem:low-level}).
+
+%==================================================================
+\section{The Four Continuum-Limit Targets}\label{sec:targets}
+%==================================================================
+
+\subsection*{T1 --- Precompactness (T1 weak) and quantitative GH approximation to $S^3$ (T1 strong)}
+
+\textbf{Statement.} The connected tail $\{(X_n, \delta_n)\}_{n \geq N_0}$ (with $N_0$ from Hypothesis~\ref{hyp:BI}) is precompact in the Gromov--Hausdorff topology.
+
+\subsection*{T2 --- GH-convergence to $S^3$}
+
+\textbf{Statement.} T2 asks whether, on the connected levels of the refinement sequence, $(X_n, \delta_n)$ Gromov--Hausdorff converges to $(S^3, d_{\mathrm{round}})$ (the round sphere metric of radius $1$) as $n \to \infty$. The unconditional form is Conjecture~\ref{conj:T2} below; Proposition~\ref{prop:T2-conditional} gives a conditional version under Hypothesis~\ref{hyp:BI-sharp} and Conjecture~\ref{conj:halving}.
+
+\subsection*{T3 --- Lorentzian extension (programme target)}
+
+\textbf{Statement (informal).} The Riemannian GH-convergence T2 motivates the search for a Lorentzian analogue via Wick rotation, but no such lift theorem is presently formulated: one would need a discrete Lorentzian structure $(X_n^{\mathrm{Lor}}, \delta_n^{\mathrm{Lor}})$ (to be defined) converging to $(\mathbb{R}^{1,3}, \eta)$ in some Lorentzian convergence notion (to be selected --- candidates include the Kunzinger--S\"amann Lorentzian-length-space framework~\citep{Kunzinger2018}). T3 is stated as a \emph{programme target} rather than a conjecture because the underlying objects and convergence notion are not yet defined; making T3 precise is itself one of the open research tasks.
+
+\subsection*{T4 --- From the scalar graph-Poisson model to an Einstein-with-$\Lambda$ continuum limit}
+
+\textbf{Statement.} Paper~XXVII~\citep{SmartXXVII} defines a scalar graph-Poisson model $\Delta_\Gcal u = S - \bar S$ on the Hasse graph and explicitly disclaims both a tensorial stress-energy sector and any continuum limit. T4 therefore asks: under T2, a future precise formulation of T3, and Paper~XXXVI's model-hypothesis-dependent F7 theorem, can one construct a continuum tensorial upgrade of the Paper~XXVII scalar model whose limit is compatible with the Einstein equation with cosmological constant $\Lambda$ on $\mathbb{R}^{1,3}$? This is a substantially stronger question than ``regularity of the existing model in the continuum''; it requires both a new tensorial variable and a new limit equation, neither of which is supplied by Paper~XXVII.
+
+%==================================================================
+\section{Target T1: Conditional Precompactness and Quantitative GH Approximation}\label{sec:T1}
+%==================================================================
+
+\subsection{Weak precompactness}
+
+\begin{proposition}[T1 weak: finite-diameter precompactness under BI-comparability]\label{prop:T1-weak}
+Assume Hypothesis~\ref{hyp:BI} with constants $\kappa, N_0$. Then the sequence $\{(X_n, \delta_n)\}_{n \geq N_0}$ is precompact in the Gromov--Hausdorff topology.
+\end{proposition}
+
+\begin{proof}
+Gromov's precompactness theorem states that a family of compact metric spaces is GH-precompact iff it is uniformly totally bounded with uniformly bounded diameters~\citep{BBI2001}: there exist a diameter bound $D$ and a function $N : \mathbb{R}_{> 0} \to \mathbb{N}$ such that every space in the family has diameter at most $D$ and admits an $\epsilon$-net of cardinality at most $N(\epsilon)$.
+
+Uniform diameter bound: Hypothesis~\ref{hyp:BI} gives $\delta_n$-diameter at most $\kappa \cdot \pi$ for every $n \geq N_0$, since each $X_n \subset S^3$ has round diameter at most $\pi$.
+
+Uniform total boundedness: fix $\epsilon > 0$. Pick any maximal $(\epsilon/\kappa)$-separated subset $A_n \subset X_n$ in the \emph{round} metric $d_{\mathrm{round}}|_{X_n}$. Each such $A_n$ satisfies $|A_n| \leq N_{S^3}(\epsilon/(2\kappa))$, the packing number of $S^3$ at scale $\epsilon/(2\kappa)$, which is finite and independent of $n$ (the standard comparison of packing and covering numbers on a metric space). By maximality, $A_n$ is an $(\epsilon/\kappa)$-net of $X_n$ in the round metric. By Hypothesis~\ref{hyp:BI}, any point $y \in X_n$ with a closest net representative $x \in A_n$ in the round metric then satisfies $\delta_n(x,y) \leq \kappa \cdot d_{\mathrm{round}}(x,y) \leq \epsilon$, so $A_n$ is an $\epsilon$-net of $(X_n, \delta_n)$ with cardinality bounded uniformly in $n$. The finite metric space $(X_n, \delta_n)$ is compact. Gromov's criterion is therefore satisfied for $\{(X_n, \delta_n)\}_{n \geq N_0}$, using no hypothesis on the behaviour of $\varepsilon_n$.
+\end{proof}
+
+\begin{remark}[Hypotheses at low refinement]\label{rem:low-level}
+The diameter bound is immediate for every $X_n \subset S^3$. Connectedness and $\kappa$-bi-Lipschitz comparability of the nearest-neighbour graph have been checked numerically at levels $n = 0, 1$ only (the 24-cell and 600-cell threshold graphs, with $\kappa_{\mathrm{thr}} = 2$), with $\varepsilon_0 \approx 0.762$ and $\varepsilon_1 \approx 0.381$ as above. Their persistence at higher $n$ is a separate open problem; Conjecture~\ref{conj:halving} below concerns only the covering radius $\varepsilon_n$, not connectedness or BI/BI-sharp persistence. Closed-form verifications of Hypotheses~\ref{hyp:BI} and~\ref{hyp:BI-sharp} for all $n$ remain open.
+\end{remark}
+
+\subsection{Quantitative GH approximation to $(S^3, d_{\mathrm{round}})$}
+
+\begin{proposition}[T1 strong: $O(\varepsilon_n)$ GH-rate, under BI-sharp and halving]\label{prop:T1-strong}
+Assume Hypothesis~\ref{hyp:BI-sharp} (with constants $C_{\mathrm{sharp}}, N_0^{\mathrm{sharp}}$) and the halving bound $\varepsilon_n \leq \varepsilon_0 \cdot 2^{-n}$ (Conjecture~\ref{conj:halving} below). Then for all $n \geq N_0^{\mathrm{sharp}}$,
+\begin{equation}\label{eq:T1-strong-bound}
+    d_{\mathrm{GH}}\!\bigl((X_n, \delta_n),\, (S^3, d_{\mathrm{round}})\bigr) \;\leq\; C \cdot \varepsilon_n \;\leq\; C \cdot \varepsilon_0 \cdot 2^{-n},
+\end{equation}
+where $C = 1 + C_{\mathrm{sharp}}$ (the proof below in fact gives the sharper $C = 1 + C_{\mathrm{sharp}}/2$). In particular, for $m, n \geq N_0^{\mathrm{sharp}}$, the triangle inequality on Gromov--Hausdorff distance gives $d_{\mathrm{GH}}((X_n, \delta_n), (X_m, \delta_m)) \leq C(\varepsilon_n + \varepsilon_m) \leq C \varepsilon_0 (2^{-n} + 2^{-m})$.
+\end{proposition}
+
+\begin{proof}
+By definition of covering radius, $X_n$ is an $\varepsilon_n$-net of $(S^3, d_{\mathrm{round}})$. Hypothesis~\ref{hyp:BI-sharp} gives the additive estimate $|\delta_n(x,y) - d_{\mathrm{round}}(x,y)| \leq C_{\mathrm{sharp}} \varepsilon_n$ for all $x, y \in X_n$. The standard GH-distance bound for a $\varepsilon$-net subset with an additive metric-distortion estimate~\citep[Prop.\ 7.3.28]{BBI2001} gives
+\[
+    d_{\mathrm{GH}}\!\bigl((X_n, \delta_n),\, (S^3, d_{\mathrm{round}})\bigr) \;\leq\; \varepsilon_n + \tfrac{1}{2} \cdot \sup_{x,y \in X_n} |\delta_n(x,y) - d_{\mathrm{round}}(x,y)| \;\leq\; (1 + C_{\mathrm{sharp}}/2) \varepsilon_n,
+\]
+giving~\eqref{eq:T1-strong-bound} with $C = 1 + C_{\mathrm{sharp}}/2 \leq 1 + C_{\mathrm{sharp}}$. The halving bound then controls the right-hand side explicitly. The statement for $m > n$ follows from the triangle inequality and the same bound applied at level $m$.
+\end{proof}
+
+\begin{remark}[Status]
+Proposition~\ref{prop:T1-strong} is a conditional reduction under the additional Hypothesis~\ref{hyp:BI-sharp} (not the multiplicative Hypothesis~\ref{hyp:BI}) together with the still-open halving conjecture~\ref{conj:halving}. It is not an unconditional theorem about the Schl\"afli refinement sequence, and the multiplicative BI-comparability alone is known to be insufficient for an $O(\varepsilon_n)$ GH-rate.
+\end{remark}
+
+%==================================================================
+\section{Target T2: GH-Convergence to $S^3$}\label{sec:T2}
+%==================================================================
+
+\begin{conjecture}[T2: unconditional full GH-convergence to $(S^3, d_{\mathrm{round}})$]\label{conj:T2}
+There exists some $N^* \in \mathbb{Z}_{\geq 0}$ such that for every $n \geq N^*$ the nearest-neighbour graph on $X_n$ is connected, and the tail sequence $\{(X_n, \delta_n)\}_{n \geq N^*}$ GH-converges to $(S^3, d_{\mathrm{round}})$ as $n \to \infty$. This statement does not assume Hypothesis~\ref{hyp:BI}, Hypothesis~\ref{hyp:BI-sharp}, or Conjecture~\ref{conj:halving}; any such $N^*$ plays a different role from the hypothesis-specific $N_0$ and $N_0^{\mathrm{sharp}}$.
+\end{conjecture}
+
+\begin{proposition}[T2 under BI-sharp and halving]\label{prop:T2-conditional}
+Assume Hypothesis~\ref{hyp:BI-sharp} (with constants $C_{\mathrm{sharp}}, N_0^{\mathrm{sharp}}$) and Conjecture~\ref{conj:halving}. Then the connected tail $\{(X_n, \delta_n)\}_{n \geq N_0^{\mathrm{sharp}}}$ GH-converges to $(S^3, d_{\mathrm{round}})$.
+\end{proposition}
+
+\begin{proof}[Argument]
+Direct consequence of Proposition~\ref{prop:T1-strong}: the conditional rate $d_{\mathrm{GH}}((X_n,\delta_n),(S^3,d_{\mathrm{round}})) \leq C \varepsilon_0 \cdot 2^{-n}$ applies at every $n \geq N_0^{\mathrm{sharp}}$ and tends to $0$, so the connected tail $\{(X_n, \delta_n)\}_{n \geq N_0^{\mathrm{sharp}}}$ converges in GH-distance to $(S^3, d_{\mathrm{round}})$. (Earlier levels need not be defined as metric spaces if the corresponding nearest-neighbour graph is disconnected; they do not enter the convergence statement.) Densification of $X_n$ in $S^3$ is automatic: the covering-radius definition $\varepsilon_n = \sup_{p \in S^3} d_{\mathrm{round}}(p, X_n)$ together with the halving bound gives $\varepsilon_n \to 0$ directly.
+\end{proof}
+
+\begin{remark}[On ``Kuranishi density'']
+An earlier draft used the term ``Kuranishi density'' for what is just the elementary covering-radius condition $\sup_{p \in S^3} d_{\mathrm{round}}(p, X_n) = \varepsilon_n \to 0$, which is built into the definition of $\varepsilon_n$ and is not an additional hypothesis. No reference to Kuranishi-theoretic density in the sense of deformation theory is intended or needed.
+\end{remark}
+
+\begin{conjecture}[Halving-rate]\label{conj:halving}
+The covering radius satisfies $\varepsilon_n = \varepsilon_0 \cdot 2^{-n}$ exactly, for all $n \ge 0$.
+\end{conjecture}
+
+\begin{remark}
+Conjecture~\ref{conj:halving} is verified at $n = 0, 1$ numerically. A closed-form proof for all $n$ is the main open target of the continuum-limit branch and is not supplied in the present paper.
+\end{remark}
+
+%==================================================================
+\section{Target T3: Lorentzian Extension}\label{sec:T3}
+%==================================================================
+
+\textbf{T3 (programme target, \label{target:T3} not a precise conjecture).} The goal is to extend the spatial $S^3$ refinement to a discrete Lorentzian structure $\{(X_n^{\mathrm{Lor}}, \delta_n^{\mathrm{Lor}})\}$ --- built on the gauge-fixed strict birth-angle order on events constructed in Paper~XXIII~\citep{SmartXXIII} (its causal interpretation and its non-totality in the full 600-cell model are both left open there, and the order itself depends on a chosen phase origin rather than a metric time coordinate) --- and to ask whether this discrete sequence converges to Minkowski space $(\mathbb{R}^{1,3}, \eta)$ in some yet-to-be-specified sense. Making T3 precise requires three open research steps that this paper does not carry out: (i) a substrate-bridging construction connecting the metric-space sequence $\{(X_n, \delta_n)\}$ of the present paper to the full $H_4$ event-poset structure of Papers~XXIII--XXVIII (no such bridge is supplied anywhere in the programme), (ii) defining the Lorentzian objects $X_n^{\mathrm{Lor}}$ and $\delta_n^{\mathrm{Lor}}$ on top of (i), and (iii) selecting a convergence notion appropriate to discrete Lorentzian structures --- the Kunzinger--S\"amann Lorentzian-length-space framework~\citep{Kunzinger2018} is one candidate. Until (i)--(iii) are fixed, T3 is not a conjecture in the strict mathematical sense, only a programme target.
+
+\begin{remark}[Wick-rotation heuristic]
+Wick rotation is a well-known bijection between real-analytic Riemannian and Lorentzian tensor fields, but it is not known to induce a general Gromov--Hausdorff-type convergence statement for a discrete sequence of metric spaces. A rigorous Lorentzian-GH theorem is not supplied here; Wick rotation is offered as heuristic motivation for T3 rather than as an argument.
+\end{remark}
+
+%==================================================================
+\section{Target T4: Tensorial Upgrade and Einstein-with-$\Lambda$ Continuum Limit}\label{sec:T4}
+%==================================================================
+
+\textbf{T4 (programme conjecture \label{target:T4} / integration target).} T4 is a staged programme target; none of its stages is carried out in the present paper. The first prerequisite is to define a precise substrate linking the Schl\"afli refinement sequence $\{(X_n, \delta_n)\}$ to an event-poset / Hasse-graph model --- specifically, a projection/restriction map from the full $H_4$ dual-600-cell Hasse graph of Papers~XXIII--XXVIII onto the $D_4$-restricted refinement sequence of the present paper; no such map is currently available anywhere in the programme, and the expression ``the Schl\"afli-refined event poset'' is therefore not presently a defined object. Only after such a substrate is defined does the remaining target become meaningful: to construct a tensorial discrete model on that substrate that (a) recovers, via the substrate-bridging projection, the scalar graph-Poisson model of~\citep{SmartXXVII}, (b) under Conjecture~\ref{conj:T2} and a future precise formulation of the T3 programme target, together with Paper~XXXVI's F7 used only as provisional model background (since~\citep{SmartXXXVI} formulates F7 on a stronger ambient continuum ansatz --- diffeomorphic to $S^3 \times \mathbb{R}$ or its Wick-rotated Minkowski lift --- than the present paper has established), admits a continuum limit on $\mathbb{R}^{1,3}$ compatible with the Einstein equation with cosmological constant in the form supplied by F7, and (c) under the separate conditional Cascade $\Lambda$-Theorem of~\citep{SmartXXXVI}, plus its additional model assumptions (the shell-amplitude rule, the product-closure rule, and the residue-to-$\Lambda$ identification stated there), would yield the cascade value $\Lambda \cdot \ell_P^2 = 2 \varphi^{-583}$. The substrate-bridging projection (prerequisite), the tensorial construction (component (a)), and the F7/$\Lambda$-theorem upgrades (components (b), (c)) are all absent from the present programme. T4 is not a precise mathematical conjecture (one of its premises, T3, is itself not yet a precise statement); it names the integration target of the continuum branch, not a clean existence claim.
+
+\begin{remark}[Role of T4]
+T4 is the bridge between the cascade-internal $\Lambda$-ansatz and the continuum Einstein equation. Establishing T4 would require (a) T3 (Lorentzian continuum limit), (b) F7 (rank-$2$ localisation at $D_4$), (c) construction of the missing tensorial upgrade of the scalar Paper~XXVII model, and (d) an explicit demonstration that this tensorial model has an Einstein-with-$\Lambda$ continuum limit under the induced metric structure. Each of (a)--(d) is a forthcoming research task; Paper~XXVII itself supplies none of them and explicitly disclaims both the tensorial sector and the continuum limit. The present paper identifies T4 as the integration target but does not prove any of its ingredients.
+\end{remark}
+
+%==================================================================
+\section{Scope and Open Questions}\label{sec:scope}
+%==================================================================
+
+\textbf{What this paper establishes} (epistemic tier: conditional reductions, rigorous only once the named hypothesis/conjecture is itself established):
+\begin{itemize}
+\item T1 weak (Proposition~\ref{prop:T1-weak}): GH-precompactness of the refinement sequence under Hypothesis~\ref{hyp:BI} (multiplicative BI-comparability).
+\item T1 strong (Proposition~\ref{prop:T1-strong}): explicit $O(2^{-n})$ GH-distance bound under Hypothesis~\ref{hyp:BI-sharp} (additional additive metric-approximation estimate) and the halving-rate conjecture~\ref{conj:halving}.
+\item T2 (Proposition~\ref{prop:T2-conditional}): conditionally proved — GH-convergence to $(S^3, d_{\mathrm{round}})$ under Hypothesis~\ref{hyp:BI-sharp} and Conjecture~\ref{conj:halving}, as an immediate corollary of T1 strong. The unconditional version of T2 (Conjecture~\ref{conj:T2}) remains open.
+\end{itemize}
+
+\textbf{What this paper states as open} (epistemic tier: partial numerical / heuristic evidence, not proved):
+\begin{itemize}
+\item T2 unconditional (Conjecture~\ref{conj:T2}): GH-convergence to $(S^3, d_{\mathrm{round}})$ without appeal to BI-sharp or halving. Open.
+\item T3 (programme target, not a precise conjecture; see Section~\ref{sec:T3}): Lorentzian-GH extension to $\mathbb{R}^{1,3}$, pending definition of $X_n^{\mathrm{Lor}}, \delta_n^{\mathrm{Lor}}$ and selection of a Lorentzian convergence notion.
+\item T4 (programme conjecture / integration target, Section~\ref{sec:T4}): construct a tensorial upgrade of Paper~XXVII's scalar graph-Poisson model with an Einstein-with-$\Lambda$ continuum limit --- prerequisites include a substrate-bridging projection $H_4 \to D_4$, Conjecture~T2, a precise formulation of T3, and Paper~XXXVI's conditional F7; the value $\Lambda \ell_P^2 = 2\varphi^{-583}$ depends further on XXXVI's conditional Cascade $\Lambda$-Theorem; not yet a precise mathematical conjecture (depends on T3).
+\item Halving-rate conjecture~\ref{conj:halving}: $\varepsilon_n = \varepsilon_0 \cdot 2^{-n}$ for all $n$.
+\end{itemize}
+
+\textbf{Dependencies}: Paper~XXXVI~\citep{SmartXXXVI} only as problem-setting background (F6/F7 are cited as framing, not used as unconditional theorems in any XL result); Papers~XXIII--XXVIII for the discrete GR scaffolding on the $H_4$ substrate; Burago--Ivanov~\citep{BBI2001} for the GH framework.
+
+\textbf{Open research targets (next papers)}:
+\begin{enumerate}
+\item Closed-form proof of the halving-rate conjecture~\ref{conj:halving}.
+\item Proof of T2 (full GH-convergence of the Riemannian refinement sequence to $(S^3, d_{\mathrm{round}})$) and T3 (the Lorentzian extension).
+\item Explicit continuum analogue of the~\citep{SmartXXVII} field equation, establishing T4.
+\item First concrete conditional solution paper in the GR branch: the Schwarzschild analogue of Paper XLI~\citep{SmartXLI}, itself stated there as conditional on T2--T4 of the present paper.
+\end{enumerate}
+
+\subsection{Conclusion}
+
+The continuum-limit branch of the VFD programme has four labelled targets T1--T4. T1 splits into two conditional reductions: weak precompactness under multiplicative BI-comparability (Proposition~\ref{prop:T1-weak}) and a stronger $O(2^{-n})$ GH-rate under the additive BI-sharp hypothesis plus halving (Proposition~\ref{prop:T1-strong}). T2 follows as a corollary of T1 strong. T3 remains a programme target (pending precise formulation) and T4 remains a programme conjecture / integration target (not yet a precise mathematical conjecture, because it depends on T3; pending construction of the tensorial upgrade and the Einstein-with-$\Lambda$ continuum limit). Downstream papers invoking ``the continuum limit'' should cite one of the specific targets T1--T4, together with its current epistemic status. The principal open research tasks are (a) a closed-form proof of the halving-rate conjecture, (b) a closed-form verification of the BI-sharp hypothesis for all $n$, and (c) a closed-form verification of the (strictly weaker) BI hypothesis for all $n$; the first two together would upgrade T1 strong and T2 from conditional reductions to theorems, and (c) would separately upgrade T1 weak.
+
+%==================================================================
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{SmartXXIII} L. Smart, \emph{Event Structure and the Emergence of Time from Phase Overlap Geometry}, Paper XXIII, VFD Programme, 2026.
+\bibitem{SmartXXIV} L. Smart, \emph{Observer Kinematics from the Event Poset}, Paper XXIV, VFD Programme, 2026.
+\bibitem{SmartXXV} L. Smart, \emph{Metric Emergence from Event-Order Geometry}, Paper XXV, VFD Programme, 2026.
+\bibitem{SmartXXVI} L. Smart, \emph{Curvature from Non-Uniform Event-Order Geometry}, Paper XXVI, VFD Programme, 2026.
+\bibitem{SmartXXVII} L. Smart, \emph{Dynamics and Field Equations from Event-Order Geometry}, Paper XXVII, VFD Programme, 2026.
+\bibitem{SmartXXVIII} L. Smart, \emph{Quantum and Gravitational Structure from a Common Event-Order Geometry}, Paper XXVIII, VFD Programme, 2026.
+\bibitem{SmartXXXVI} L. Smart, \emph{Cascade Foundations: The Eight Foundations F1--F8 Underlying the VFD Programme}, Paper XXXVI, VFD Programme, 2026.
+\bibitem{SmartXLI} L. Smart, \emph{Schwarzschild Analogue on the Event Poset}, Paper XLI, VFD Programme, 2026.
+\bibitem{BBI2001} D. Burago, Y. Burago, S. Ivanov, \emph{A Course in Metric Geometry}, AMS Graduate Studies in Mathematics 33, 2001.
+\bibitem{Kunzinger2018} M. Kunzinger, C. S\"amann, \emph{Lorentzian length spaces}, Annals of Global Analysis and Geometry 54, 399--447 (2018).
+
+\end{thebibliography}
+
+\end{document}

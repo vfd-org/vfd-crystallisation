@@ -1,0 +1,819 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{observation}[theorem]{Observation}
+
+\newcommand{\Tcasc}{\mathcal{T}_{\mathrm{casc}}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Zom}{\mathbb{Z}[\omega]}
+
+\title{Caspar--Klug Triangulation Numbers from a Face-Level Cascade Operator\\[6pt]
+\large Uniqueness under Local Hexagonal-Lattice Symmetry and the $T\neq5$ Correction}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+The Caspar--Klug (1962) classification assigns each icosahedral viral
+capsid a triangulation number $T = h^2 + hk + k^2$ attained by a
+hexagonal-lattice subdivision of the icosahedron's twenty faces; the
+integers so realised are the positive Loeschian numbers (OEIS
+A003136).
+Upstream cascade documents~\cite{CascadeBio} identify the biological
+substrate with the binary icosahedral group $2I$ acting on the 600-cell
+and observe that the dimensions of the smallest $A_5$ irreducible
+representations match the smallest Caspar--Klug $T$-values, with
+$T = 2$ absent from both sequences. That partial observation has two
+gaps: (i)~no single cascade operator is identified whose spectrum is
+the full $T$-sequence; and (ii)~the claim extends the irrep/$T$ match
+to include $T = 5$, which is not a Loeschian number.
+
+This paper isolates the classical Eisenstein norm as the canonical
+face-level quadratic form under a precise $C_6$-invariance
+hypothesis, notes that its positive-valued spectrum coincides with
+the Caspar--Klug $T$-numbers, and corrects the $T = 5$ attribution
+in upstream~\cite{CascadeBio}. No cell-level descent is proved; that
+is left explicitly open. We define $\Tcasc : \Zom \to
+\mathbb{Z}_{\ge 0}$ as the Eisenstein norm; its image on
+$\Zom\setminus\{0\}$ is exactly the positive Loeschian numbers
+(equivalently, the Caspar--Klug $T$-values), and within the class
+of positive-definite quadratic forms on $\Zom$ extending to
+$C_6$-invariant forms on $\mathbb{R}^2$ it is unique up to positive
+scale. We also restate the small-$T$ / $A_5$-irrep
+match as a precise overlap
+$\{\text{distinct }A_5\text{ irrep dimensions}\}\cap
+\{\text{positive Loeschians}\le 5\} = \{1, 3, 4\}$. The $T = 5$
+entry in~\cite{CascadeBio} is identified as a misattribution: the
+$5$-dimensional $A_5$ irrep is a summand of the face permutation
+representation, not an Eisenstein-norm value, and yields no
+face-level $T = 5$ value in the present model. A numerical enumeration of $C_6$-orbits up to $T \le 100$ reproduces
+the listed small-$T$ multiplicities and produces one new numerical
+observation in this work: $\mu(91) = 4$, the first Loeschian value
+in that enumeration range admitting four distinct $C_6$-orbits,
+consistent with the factorisation pattern $91 = 7 \times 13$ where
+both prime factors admit chiral representatives in the wedge
+picture of Section~\ref{sec:mu}.
+
+Whether $\Tcasc$ is the face-level residue of a cell-level 600-cell
+closure functional in the sense of Paper XXXII~\cite{SmartXXXII}
+(pointwise) or the density-level closure form~\cite[\S F2]{CascadeFoundations}
+(field) is left as an explicit open problem with a four-step plan of
+attack. Two conjectural predictions for empirical capsid data are
+flagged and will be tested in a follow-up note once a VIPERdb
+observed-$T$ histogram is assembled. Every step is classified as
+\textbf{derived} (proved), \textbf{identified} (structural
+correspondence), or \textbf{open}, so the reader can locate exactly
+where the chain rests on which type of support.
+\end{abstract}
+
+%==================================================================
+\section{Introduction and Scope}\label{sec:intro}
+%==================================================================
+
+The Caspar--Klug theory of icosahedral virus capsids~\cite{CasparKlug}
+classifies capsid subdivisions by a triangulation number
+\[
+    T(h, k) = h^2 + hk + k^2, \qquad (h, k) \in \mathbb{Z}^2 \setminus \{(0, 0)\},
+\]
+arising from replicating a hexagonal-lattice vector $h + k\omega$
+(with $\omega$ a primitive sixth root of unity) across the twenty
+faces of the underlying icosahedron. The integers realised by this
+form are the \emph{positive} Loeschian numbers, i.e.\ the image
+of the non-trivial Eisenstein-norm form on $\Zom\setminus\{0\}$.
+(The Loeschian set as an arithmetic sequence includes $0 = 0^2 +
+0\cdot 0 + 0^2$, but the trivial $(h, k) = (0, 0)$ subdivision is
+not an admissible capsid $T$-value, so throughout this paper we
+identify Caspar--Klug $T$-values with \emph{positive} Loeschian
+numbers.) Characterisation: a non-negative integer $n$ is
+Loeschian iff every rational prime $p \equiv 2 \pmod 3$ appearing
+in its factorisation does so with even exponent; see
+e.g.~\cite[Ch.\,15]{HardyWright} or~\cite[Ch.\,4]{ConwaySloane}.
+The explicit positive-Loeschian sequence (OEIS A003136~\cite{OEIS-A003136})
+is
+\[
+    1,\; 3,\; 4,\; 7,\; 9,\; 12,\; 13,\; 16,\; 19,\; 21,\; 25,\; 27,\; 28,\; 31,\;\ldots
+\]
+The absence of $2$, $5$, $6$, $8$, $10$, $11$, $\ldots$ from this
+sequence follows from the same characterisation (each of these
+non-Loeschians is divisible by an inert prime $p \equiv 2 \pmod 3$
+with odd exponent).
+
+The Vibrational Field Dynamics (VFD) cascade programme~\cite{CascadeBio}
+identifies the biological substrate with the binary icosahedral group
+$2I \subset \mathrm{SU}(2)$ of order $120$ acting as the vertex set of
+the 600-cell, and its quotient $I = 2I/\{\pm 1\} \cong A_5$ acting as
+the face-permutation group of the icosahedron. At the level of small
+Caspar--Klug triangulation numbers, \cite{CascadeBio} observes:
+\begin{quote}\it
+The four smallest viral capsid $T$-numbers $(1, 3, 4, 5)$ are exactly
+the dimensions of the four non-trivial irreducible representations of
+$A_5$. And $T = 2$ is absent from both sequences \ldots\ A_5 has no
+two-dimensional irrep.
+\end{quote}
+The quoted statement has two mathematical defects that we address in
+this paper. First, $T = 5$ is \emph{not} a Loeschian number and is
+therefore not a Caspar--Klug $T$-value at all. Second, the
+dimension $1$ is the \emph{trivial} irreducible representation of
+$A_5$, not a non-trivial one; so the phrase ``four non-trivial
+irreducible representations'' conflates the four distinct non-unit
+dimensions $\{3, 3', 4, 5\}$ with the four values $\{1, 3, 4, 5\}$
+listed. We audit and extend the underlying observation:
+\begin{enumerate}
+\item[(i)] The stated match is \emph{almost} correct but includes
+$T = 5$, which is \emph{not} a Loeschian number and is therefore
+not a Caspar--Klug $T$-value. The honest overlap of distinct $A_5$
+irrep dimensions $\{1, 3, 4, 5\}$ (four distinct values, with $1$
+being the trivial representation) with the small Loeschian numbers
+$\le 5$ is $\{1, 3, 4\}$ (Section~\ref{sec:t5}).
+\item[(ii)] The full Caspar--Klug $T$-sequence is the spectrum of
+a single face-level quadratic form on $\Zom$, unique up to positive
+scale among positive-definite $C_6$-invariant quadratic forms
+(Section~\ref{sec:operator}).
+\item[(iii)] The cell-level extension --- whether that operator is
+the face-level residue of a 600-cell closure construction --- is
+left open with a four-step plan (Section~\ref{sec:open}).
+\end{enumerate}
+
+\paragraph{Scope.} All results in this paper are \emph{face-level}:
+they concern the hexagonal lattice $\Zom$ living on a single
+icosahedral face, with $A_5$ acting only by replicating the face-level
+data across the twenty faces. We make no claim about a 600-cell
+closure operator at the cell level; such an upgrade would require
+establishing a principled $2I$-invariant projection that we sketch in
+Section~\ref{sec:open} but do not execute.
+
+\paragraph{Typographic conventions.} Symbol $\omega$ denotes a
+primitive \emph{sixth} root of unity, $\omega = e^{i\pi/3}$, satisfying
+$\omega^2 = \omega - 1$. This choice makes the Caspar--Klug norm
+formula $T(h, k) = h^2 + hk + k^2$ the literal Eisenstein norm of
+$h + k\omega$. The alternative convention $\omega = e^{2\pi i/3}$ (a
+primitive \emph{third} root, used in~\cite[\S B3.1]{CascadeBio})
+requires a basis change $k \mapsto -k$ or an alternative generator to
+reproduce the plus-sign form; both attain the same Loeschian set, so
+the choice is purely notational.
+
+%==================================================================
+\section{Preliminaries}\label{sec:prelim}
+%==================================================================
+
+\subsection{The icosahedral rotation group and its face representation}
+
+$I \cong A_5$ acts on the twenty faces of the icosahedron with
+point-stabiliser $C_3$ (three-fold rotation about each face's normal
+axis). The permutation character $\chi_{\mathrm{perm}}$ evaluates as
+\[
+\chi_{\mathrm{perm}}(e) = 20,\;
+\chi_{\mathrm{perm}}(3A) = 2,\;
+\chi_{\mathrm{perm}}(5A) = \chi_{\mathrm{perm}}(5B) = \chi_{\mathrm{perm}}(2A) = 0,
+\]
+on the five $A_5$ conjugacy classes $(e, 3A, 5A, 5B, 2A)$ of sizes
+$(1, 20, 12, 12, 15)$.
+
+\begin{lemma}[$\blacktriangleright$ Decomposition of the face representation]\label{lem:L0}
+The $A_5$ permutation representation on the twenty faces decomposes as
+\[
+\pi_{20} = \mathbf{1} \oplus \mathbf{3} \oplus \mathbf{3}' \oplus \mathbf{4}^{\oplus 2} \oplus \mathbf{5}
+\]
+with multiplicities $(1, 1, 1, 2, 1)$ on the irreducibles of dimensions
+$(1, 3, 3, 4, 5)$. Total dimension $1 + 3 + 3 + 8 + 5 = 20$.
+\end{lemma}
+
+\begin{proof}
+We apply the Frobenius inner product
+$\langle \chi_{\mathrm{perm}}, \chi_\rho\rangle
+= \tfrac{1}{|A_5|}\sum_c |c|\,\chi_{\mathrm{perm}}(c)\,\overline{\chi_\rho(c)}$
+(the $A_5$ characters are real-valued, so the complex conjugate
+reduces to $\chi_\rho(c)$). The permutation character values in
+§1.2 are $\chi_{\mathrm{perm}} = (20, 2, 0, 0, 0)$ on the class
+sizes $(1, 20, 12, 12, 15)$, so for any irrep $\rho$
+\[
+\langle \chi_{\mathrm{perm}}, \chi_\rho\rangle
+= \tfrac{1}{60}\bigl(\,1\cdot 20\cdot \chi_\rho(e)
++ 20\cdot 2\cdot \chi_\rho(3A)\,\bigr)
+= \tfrac{1}{3}\bigl(\chi_\rho(e) + 2\chi_\rho(3A)\bigr),
+\]
+since $\chi_{\mathrm{perm}}$ vanishes on the other three classes.
+With the standard $A_5$ character table (e.g.~\cite{ATLAS}), whose
+3A-class values are $(\chi_{\mathbf{1}}, \chi_{\mathbf{3}},
+\chi_{\mathbf{3}'}, \chi_{\mathbf{4}}, \chi_{\mathbf{5}})(3A) =
+(1, 0, 0, 1, -1)$, the inner products evaluate to
+$(1, 1, 1, 2, 1)$ on the irreps of dimensions $(1, 3, 3, 4, 5)$.
+Summation of $(\text{dim})\cdot(\text{mult})$ yields
+$1 + 3 + 3 + 8 + 5 = 20$, matching $\dim\pi_{20}$.
+\end{proof}
+
+\subsection{The cascade substrate (as we use it)}
+
+Upstream~\cite[\S 3.1]{CascadeBio} places biology at the cell
+(3-volume) level of the 600-cell: $600$ tetrahedral cells. The same
+document also discusses a $15$-fibre Hopf cell-fibration with $40$
+cells per fibre: \cite[\S 3.2]{CascadeBio} explains the internal
+arithmetic $40 = 8 \cdot 5$ of the candidate fibre size, while
+\cite[\S 2.6]{CascadeBio} gives the explicit ``structural
+candidate'' / ``conjectured'' status --- the fibration is
+\emph{not} proved as a partition. We mirror that status. The
+face-level results below do \emph{not} depend on the conjectured
+Hopf fibration; the cell-level upgrade of Section~\ref{sec:open}
+would.
+
+Solidly established (\cite[\S 2.1--2.3]{CascadeBio}): $2I$ is of
+order $120$ and forms the 600-cell vertex set; $I = 2I/\{\pm 1\}
+\cong A_5$ is of order $60$ and acts on antipodal vertex pairs.
+
+%==================================================================
+\section{The Face-Level Cascade Operator}\label{sec:operator}
+%==================================================================
+
+\subsection{Substrate and operator}
+
+\begin{definition}[$\blacktriangleright$ Face-level Eisenstein substrate]\label{def:D1}
+The \emph{face-level icosahedral Eisenstein substrate} is the pair
+\[
+\mathbb{S} := (\Zom, A_5 \curvearrowright \mathcal{F}_{20}),
+\]
+where $\Zom$ is the ring of Eisenstein integers (hexagonal lattice on a
+single icosahedral face, basis $\{1, \omega\}$ with $\omega = e^{i\pi/3}$
+a primitive sixth root of unity), and $\mathcal{F}_{20}$ is the twenty-face
+set carrying the $A_5$ permutation representation $\pi_{20}$ of
+Lemma~\ref{lem:L0}. We model a Caspar--Klug subdivision as a single choice of
+Eisenstein vector $v = h + k\omega \in \Zom \setminus \{0\}$ replicated
+coherently across all twenty faces --- the same $(h, k)$ per face, up
+to the local unit-ambiguity of $\Zom$.
+\end{definition}
+
+\paragraph{Two symmetries, kept distinct.} The substrate carries two
+separate symmetry groups, treated throughout as independent inputs:
+\begin{itemize}
+\item The icosahedral group $I \cong A_5$ acts on $\mathcal{F}_{20}$
+  by permuting faces, with face-stabiliser $C_3$ rotationally (or
+  $D_3$ under the extended symmetry group $I_h$ of order $120$).
+  \emph{Not} $C_6$.
+\item The hexagonal-lattice rotation group $C_6$ acts on $\Zom$ by
+  multiplication by the six Eisenstein units. This is intrinsic to
+  the lattice itself, not a face-stabiliser in the icosahedral group.
+\end{itemize}
+
+\begin{definition}[$\blacktriangleright$ Face-level cascade T-operator]\label{def:D2}
+The \emph{face-level cascade T-operator} is the map
+\[
+\Tcasc : \Zom \to \mathbb{Z}_{\ge 0},\qquad
+\Tcasc(z) := z\cdot\bar{z} = |z|^2.
+\]
+For $z = h + k\omega$ with $\omega$ the primitive sixth root,
+$\Tcasc(z) = h^2 + hk + k^2$. $\Tcasc$ is invariant under
+multiplication by the six Eisenstein units (the $C_6$ action). It is
+scalar-valued; no further equivariance claim is made.
+\end{definition}
+
+\subsection{Spectrum and uniqueness}
+
+\begin{lemma}[$\blacktriangleright$ Spectrum of $\Tcasc$ = positive Loeschian numbers]\label{lem:L1}
+\[
+\mathrm{spec}(\Tcasc) := \Tcasc(\Zom\setminus\{0\})
+= \{\text{positive Loeschian numbers}\}
+= \text{Caspar--Klug}\;T\text{-values}.
+\]
+\end{lemma}
+
+\begin{proof}
+By construction, $\Tcasc(h + k\omega) = h^2 + hk + k^2$. The image
+of this norm form on $\Zom\setminus\{0\}$ is exactly the positive
+Loeschian numbers — the positive integers $n$ for which every
+rational prime $p \equiv 2\pmod 3$ in the factorisation of $n$
+appears with even exponent. This characterisation follows from the
+structure of primes in $\Zom$, which is a Euclidean (hence
+principal) domain: rational primes $p \equiv 1\pmod 3$ split as
+$p = \pi\bar{\pi}$ with $N(\pi) = N(\bar{\pi}) = p$ (each a
+permissible norm); rational primes $p \equiv 2\pmod 3$ are inert
+with $N(\pi) = p^2$ (so any norm-factor $p$ in $n$ must appear with
+even exponent); the ramified prime $3 = -\omega^2(1 - \omega)^2$
+has $N(1 - \omega) = 3$. See Hardy and Wright,
+\emph{An Introduction to the Theory of Numbers}~\cite{HardyWright},
+Chapter~15 \S15.5 ``Primes in $\mathbb{Q}(\rho)$'', Theorems~254
+and~255, for the $\Zom$ prime structure.
+
+From this, both directions of the characterisation follow.
+(\emph{Necessity.}) If $n = N(z)$ for $z \in \Zom\setminus\{0\}$,
+factor $z$ into $\Zom$-primes; multiplicativity of the norm then
+forces every inert-prime factor $p \equiv 2\pmod 3$ to appear with
+even exponent in $n$, because each contributes $N(\pi) = p^2$.
+(\emph{Sufficiency.}) Conversely, if every rational prime
+$p \equiv 2\pmod 3$ in the factorisation of a positive integer $n$
+appears with even exponent, then $n$ is a norm: multiply the norms
+of split primes $p \equiv 1\pmod 3$ (each contributing $p = N(\pi)$
+for some $\pi$ above $p$), even powers of inert primes (each
+contributing $p^{2k} = N(p^k)$), and powers of the ramified prime
+($3^k = N((1-\omega)^k)$), and obtain a $\Zom$-element with norm
+$n$. Equivalently, see Conway and Sloane~\cite[Ch.\,4 \S4.5]{ConwaySloane}
+for the Eisenstein lattice $A_2$ viewpoint. The positive-valued
+enumerated sequence is OEIS A003136~\cite{OEIS-A003136}.
+\end{proof}
+
+\begin{lemma}[$\blacktriangleright$ Uniqueness under $C_6$ symmetry]\label{lem:L3}
+Let $Q : \Zom \to \mathbb{R}_{\ge 0}$ be any positive-definite quadratic
+form on $\Zom$ extending to a $C_6$-invariant quadratic form on
+$\mathbb{R}^2 \cong \mathbb{C}$, where $C_6$ acts by rotations through
+angle $\pi/3$ (equivalently, by multiplication by the six Eisenstein
+units). Then $Q = c \cdot \Tcasc$ for some $c > 0$.
+\end{lemma}
+
+\begin{proof}
+Write $Q(x) = x^\top M x$ with $M$ a symmetric positive-definite
+$2\times 2$ matrix. Invariance under the generator $R_{\pi/3}$
+(rotation by $\pi/3$) requires $R_{\pi/3}^\top M R_{\pi/3} = M$.
+Writing $M = \begin{pmatrix} a & b \\ b & c\end{pmatrix}$ and
+$R_{\pi/3} = \tfrac{1}{2}\begin{pmatrix} 1 & -\sqrt{3} \\ \sqrt{3} & 1 \end{pmatrix}$,
+entry-by-entry comparison yields $a = c$ and $b = 0$. Equivalently,
+viewing $M$ as a complex-linear operator on $\mathbb{C}$, $R_{\pi/3}$
+has eigenvalues $e^{\pm i\pi/3}$ which are non-real; so the
+centraliser of $R_{\pi/3}$ in the space of symmetric forms on
+$\mathbb{R}^2$ is one-dimensional, consisting of scalar multiples of
+the identity quadratic form. Hence $M = a\,I_2$ and $Q(x) = a|x|^2$.
+Restricting to $z \in \Zom$ gives $Q(z) = a \cdot (z\bar{z}) =
+a\cdot \Tcasc(z)$. Setting $c := a > 0$ completes the proof.
+\end{proof}
+
+\begin{theorem}[$\blacktriangleright$ Face-level $T$-number sequence from a unique quadratic form]\label{thm:T1}
+There exists a face-level quadratic form $\Tcasc$ on $\Zom$
+(Definitions~\ref{def:D1}--\ref{def:D2}), unique up to positive scale
+within the class of positive-definite quadratic forms on $\Zom$ that
+extend to $C_6$-invariant quadratic forms on $\mathbb{R}^2$
+(Lemma~\ref{lem:L3}), whose spectrum is exactly the Caspar--Klug
+$T$-number sequence (Lemma~\ref{lem:L1}).
+\end{theorem}
+
+\begin{proof}
+Take $\Tcasc$ as in Definition~\ref{def:D2}. Apply Lemma~\ref{lem:L1}
+for the spectrum identity and Lemma~\ref{lem:L3} for the
+uniqueness-up-to-scale claim.
+\end{proof}
+
+\paragraph{Scope of Theorem~\ref{thm:T1}.} This is a face-level
+statement. Whether $\Tcasc$ is the face-level residue of a
+\emph{cell-level} 600-cell closure functional is the content of the
+open problem in Section~\ref{sec:open}.
+
+\paragraph{Relation to upstream~\cite[\S B3.4]{CascadeBio}.} The last
+row of the B3.4 status table reads ``Full derivation of all $T$-numbers
+from one cascade operator'' with status ``$\times$ open''.
+Theorem~\ref{thm:T1} isolates the unique face-level quadratic
+form, among those extending to $C_6$-invariant forms on
+$\mathbb{R}^2$, with the Caspar--Klug spectrum. This is a
+normal-form / canonical-operator statement at face level and does
+\emph{not} constitute a descent from the cell-level 600-cell
+machinery; the latter remains open per Section~\ref{sec:open}.
+
+%==================================================================
+\section{Settling the $T = 5$ Question}\label{sec:t5}
+%==================================================================
+
+\begin{remark}[$\triangleright$ The upstream $T = 5$ entry is misleading]\label{rem:R1}
+The B3.2 table in~\cite[\S B3.2]{CascadeBio} lists
+\[
+\text{``}T = 5 \;\leftrightarrow\; A_5\ \text{5-dim irrep''}
+\]
+as part of the small-$T$ / $A_5$-irrep match. This entry is not
+supported by either of the following two mathematical facts:
+\begin{enumerate}
+\item[(i)] The classical Caspar--Klug sequence: $5$ is not a Loeschian
+number (no $(h, k) \in \mathbb{Z}^2$ satisfies $h^2 + hk + k^2 = 5$,
+because $5$ is inert in $\Zom$ with odd exponent in its factorisation,
+equivalently $5 \equiv 2 \pmod 3$).
+\item[(ii)] The spectrum of $\Tcasc$: by Lemma~\ref{lem:L1}, $5
+\notin \mathrm{spec}(\Tcasc)$.
+\end{enumerate}
+What the $A_5$ 5-dim irrep \emph{is} is a summand of the face
+permutation rep $\pi_{20}$ (Lemma~\ref{lem:L0}); it is a
+representation-theoretic invariant, not an Eisenstein-norm value,
+and yields no face-level $T = 5$ value in the present model. (The
+empirical question of whether observed capsid counts additionally
+reinforce this absence is distinct and is deferred to a follow-up
+test against a VIPERdb observed-$T$ histogram.)
+\end{remark}
+
+\begin{lemma}[$\blacktriangleright$ Honest small-$T$ / $A_5$ match]\label{lem:L2}
+$A_5$ has five irreducible representations with \emph{four} distinct
+dimensions: $1, 3, 4, 5$; the dimension $3$ occurs twice, for a
+Galois-conjugate pair usually written $\mathbf{3}$ and $\mathbf{3}'$
+(swapped under $\varphi \leftrightarrow 1 - \varphi$). The Loeschian
+numbers $\le 5$ are $\{1, 3, 4\}$. Hence
+\[
+\{\text{distinct } A_5 \text{ irrep dims}\} \cap \{\text{Loeschians} \le 5\} = \{1, 3, 4\}.
+\]
+Three of the four distinct $A_5$ irrep dimensions coincide with small
+Loeschian numbers. The dimension $5$ is not Loeschian; the duplicate
+dimension in $\mathbf{3}'$ carries the same value as $\mathbf{3}$ and
+contributes no new $T$-value.
+\end{lemma}
+
+\begin{proof}
+First claim: Lemma~\ref{lem:L0} and the standard $A_5$ character
+table (e.g.~\cite{ATLAS}). Second claim: among positive integers
+$n\le 5$, the Loeschian criterion selects exactly those $n$ in
+whose prime factorisation every prime $p\equiv 2\pmod 3$ appears
+with even exponent. This excludes $2$ (prime, inert, odd exponent)
+and $5$ (prime, inert, odd exponent), leaving $\{1, 3, 4\}$.
+Intersecting with the distinct $A_5$ irrep dimensions $\{1, 3, 4, 5\}$
+yields $\{1, 3, 4\}$.
+\end{proof}
+
+\paragraph{Downstream edit.} \cite[\S B3.2]{CascadeBio}'s table should
+be amended per Remark~\ref{rem:R1} and Lemma~\ref{lem:L2}. We do not
+rewrite the upstream document here; the edit is flagged for a future
+revision of the bio document.
+
+\paragraph{Galois remark.} $\mathbf{3}'$ has the same dimension as
+$\mathbf{3}$, contributing no new $T$-value, but character values on
+the 5-cycle classes are Galois-conjugate swapped under
+$\varphi \leftrightarrow 1 - \varphi$. Conjecture~\ref{conj:C4}
+in~\S\ref{sec:open} records the possibility of a corresponding
+structural dimorphism at $T = 3$; no claim is made here.
+
+%==================================================================
+\section{Orbit Multiplicity and Chirality}\label{sec:mu}
+%==================================================================
+
+\begin{definition}[$\blacktriangleright$ Orbit multiplicity $\mu(T)$]\label{def:D3}
+For each positive Loeschian integer $T$,
+\[
+\mu(T) := \#\{\, C_6\text{-orbits of } (h, k) \in \mathbb{Z}^2\setminus\{0\}
+\text{ with } h^2 + hk + k^2 = T\,\},
+\]
+where $C_6$ acts on $\Zom$ by multiplication by the six Eisenstein
+units. We do \emph{not} quotient by the reflection $h \leftrightarrow
+k$: this is a modelling choice, treating mirror-related wedge
+representatives as distinct oriented face-level classes, so that the
+resulting orbit structure carries the laevo/dextro (left-handed /
+right-handed) distinction present in empirical capsid catalogues.
+(The ambient icosahedral rotation group $I \cong A_5$ is a proper
+rotation group containing no reflections, which makes this
+convention structurally consistent with the face-level substrate
+but does not by itself prove that it is the correct empirical
+choice; that is a modelling assumption tested downstream by
+Conjecture~\ref{conj:C3}.)
+\end{definition}
+
+\paragraph{Sample values} (verified by direct enumeration; see
+Section~\ref{sec:num}):
+\begin{align*}
+\mu(1) &= \mu(3) = \mu(4) = \mu(9) = \mu(12) = \mu(16) = \mu(25) = \mu(27) = 1,\\
+\mu(7) &= \mu(13) = \mu(19) = \mu(21) = \mu(28) = \mu(31) = \mu(37) = \mu(39) = 2,\\
+\mu(49) &= 3 \quad\text{representatives } (7,0), (5,3), (3,5),\\
+\mu(91) &= 4 \quad\text{representatives } (1,9), (5,6), (6,5), (9,1).
+\end{align*}
+
+\begin{observation}[Heuristic structure; direct enumeration verifies the listed finite cases]\label{obs:mu-structure}
+$\mu(T)$ counts distinct $C_6$-orbits at $T$. Heuristically, a single
+norm-factorisation contributes one orbit ($\mu = 1$) when its
+canonical wedge representative lies on a hexagonal-lattice reflection
+axis --- either $k = 0$ or $h = k$ --- because such an orbit coincides
+with its mirror image under the $h \leftrightarrow k$ reflection
+(achiral, laevo and dextro indistinguishable). A factorisation with
+a wedge representative in the open positive sextant ($h, k > 0$,
+$h \neq k$) contributes two orbits ($\mu = 2$), a laevo/dextro
+chiral pair. $T$ with multiple independent norm-factorisations can
+yield $\mu(T) \ge 3$: $T = 49 = 7^2$ gives $\mu = 3$ (one axis
+orbit from $(7, 0)$ plus one chiral pair from $7\times 7$);
+$T = 91 = 7\cdot 13$ gives $\mu = 4$ (two chiral pairs, one per prime
+factor's contribution). This is heuristic explanation, not a proved
+classification; the direct enumeration in Section~\ref{sec:num}
+verifies the listed finite cases.
+\end{observation}
+
+\begin{conjecture}[$\circ$ Closure-preference weighting]\label{conj:C1}
+Let $Z(T)$ denote a cascade closure-preference weight on capsid
+$T$-numbers at equilibrium. Then
+\[
+Z(T) \propto \mu(T) \cdot \exp\!\big(-\beta \cdot c(T)\big),
+\]
+where $c(T)$ is a monotone non-decreasing assembly cost and $\beta$
+a positive cascade constant of order unity. The $\mu(T)$ factor is
+the natural degeneracy weight once one adopts an equal-weight-per-
+$C_6$-orbit modelling assumption; it is not forced by
+Definition~\ref{def:D3} itself, since a definition of an orbit-count
+does not determine a probability weight without an additional
+weighting choice. The exponential ansatz on $c(T)$ is a separate
+modelling choice. Status: untested; test deferred to a follow-up
+comparison against a VIPERdb observed-$T$ histogram.
+\end{conjecture}
+
+\begin{conjecture}[$\circ$ Chirality asymmetry from $2I$ handedness]\label{conj:C3}
+For chiral $T$-numbers (those with $\mu(T) \ge 2$ and a
+non-axis-aligned representative), the cascade predicts a non-zero
+laevo/dextro empirical asymmetry in observed capsid counts,
+\[
+\frac{N_{\mathrm{laevo}} - N_{\mathrm{dextro}}}{N_{\mathrm{laevo}} + N_{\mathrm{dextro}}} \neq 0,
+\]
+with sign set by the ambient biological chirality (L-amino-acid
+world). Magnitude not derived from first principles. Extends the $2I$
+handedness / L-amino-acid-preference thread in~\cite[\S 2.7]{CascadeBio}
+from the amino-acid scale to the capsid scale. Qualitative only.
+\end{conjecture}
+
+%==================================================================
+\section{Open Problem: Relation to the 600-Cell Closure Machinery}\label{sec:open}
+%==================================================================
+
+We ask whether $\Tcasc$ is the face-level residue of a cell-level
+600-cell closure construction. The question splits by which upstream
+closure object is the target of the restriction.
+
+\paragraph{The two candidate upstream objects.}
+\begin{itemize}
+\item \textbf{Paper XXXII~\cite{SmartXXXII}, \S 4, Theorem
+``Uniqueness of the closure functional'':} within the class
+$\mathcal{C}$ of continuous regularised soft-min functionals
+$\Fcal^V_\varepsilon(x) = \mathrm{opt}_p\!\left[
+\sum_i p_i\, |x - v_i|^2/2 + \varepsilon^2 R(p)\right]$ with
+permutation-symmetric $R$ satisfying $R(\delta_i) = 0$ at each
+vertex simplex and $\mathrm{opt} \in \{\min, \max\}$ (all part of
+the class definition), axioms~\textbf{A1} continuity, \textbf{A2}
+sharp limit, and \textbf{A3} extensivity under independent
+composition force, up to reparametrisation of $\varepsilon$ and
+additive constants,
+$\Fcal_\varepsilon(x) = -\varepsilon^2 \log \sum_i \exp(-|x - v_i|^2/(2\varepsilon^2))$,
+i.e.~the log-sum-exp closure functional with Gibbs minimiser. $\Fcal$
+is \emph{pointwise} on the manifold: $\Fcal^V_\varepsilon : M \to
+\mathbb{R}$.
+\item \textbf{\cite[\S F2]{CascadeFoundations}}: density-level
+closure functional $\Fcal[\Phi] = \int (\alpha R + \beta E - \gamma Q)\,dV$,
+the unique form \emph{up to the coefficients} $\alpha, \beta, \gamma$
+under locality, $W(E_8)$-/Galois-twist-/translation invariance,
+order at most $2$, and scalar-valuedness. This is a \emph{field}
+functional on $\Phi \in C^\infty(\cdot, \mathcal{A})$ for a
+suitable target bundle $\mathcal{A}$.
+\end{itemize}
+The two upstream objects are related but not identical; an earlier
+draft of this work mistakenly attributed field-theoretic properties
+to Paper XXXII's pointwise $\Fcal$. We now keep them distinct.
+
+\begin{conjecture}[$\circ$ Face-level residue; open problem]\label{conj:C2}
+The conjecture splits into two interpretations:
+\begin{itemize}
+\item[(C.2-a)] \emph{Point-wise form}: is there a principled
+$2I$-invariant restriction of $\Fcal^V_\varepsilon : S^3 \to \mathbb{R}$
+to a face-level operator on $\Zom$? As stated this is ill-posed --- a
+pointwise function on $S^3$ does not directly give a quadratic form
+on the face lattice --- so (C.2-a) reduces in practice to (C.2-b)
+after a field-theoretic lift.
+\item[(C.2-b)] \emph{Field / density form}: does the density-level
+closure functional $\Fcal[\Phi] = \int(\alpha R + \beta E - \gamma Q)\,dV$
+of~\cite[\S F2]{CascadeFoundations}, restricted to $2I$-invariant
+fields and face-level-averaged via a principled Hopf cell-fibre map,
+reduce on each face to $\lambda\cdot\Tcasc$ for some $\lambda > 0$?
+\end{itemize}
+A four-step plan of attack for (C.2-b):
+\begin{enumerate}
+\item Identify the $2I$-invariant subspace of F2 field configurations
+on which $\Fcal[\Phi]$ restricts coherently.
+\item Construct a principled face-level projection from that subspace
+to $\Zom$-valued face data. A natural candidate average is the
+conjectured Hopf cell-fibre partition, with fibre arithmetic
+$40 = 8 \cdot 5$ per~\cite[\S 3.2]{CascadeBio} and the explicit
+conjectural / structural-candidate status per~\cite[\S 2.6]{CascadeBio};
+any face-level projection built on it inherits conjectural status
+until the fibration is established. Alternative averaging schemes
+may exist.
+\item Show $\Fcal[\Phi]$ restricts along this projection to a
+positive-definite quadratic form on $\Zom$. F2 gives a quadratic
+density, but quadratic density does not automatically yield
+quadratic-on-slice after averaging; this step is the real technical
+obstacle.
+\item Apply Lemma~\ref{lem:L3} to identify the projected form with
+$c \cdot \Tcasc$ for some $c > 0$.
+\end{enumerate}
+Only step~(4) is established here; steps~(1)--(3) are open. The
+conjecture is therefore recorded as an open problem with a concrete
+plan, not as a proved descent theorem.
+\end{conjecture}
+
+\begin{conjecture}[$\circ$ Galois-conjugate structural dimorphism at $T = 3$]\label{conj:C4}
+The Galois pair $\mathbf{3}, \mathbf{3}'$ of $A_5$ (Lemma~\ref{lem:L0})
+may manifest as a discrete structural feature of $T = 3$ capsids:
+coat-protein orientation dimorphism, golden-ratio / silver-ratio
+radius bistability, or a pair of near-degenerate conformations
+separated by the Galois symmetry. Speculative; no experimental handle
+proposed. Recorded for future attention.
+\end{conjecture}
+
+%==================================================================
+\section{Numerical Verification and Planned Empirical Test}\label{sec:num}
+%==================================================================
+
+\subsection{Enumeration output (present)}
+
+A Python enumeration script at
+\texttt{papers/biology-rung/scripts/wo1\_capsid\_predict.py}
+enumerates $(h, k) \in \mathbb{Z}^2$ within the non-negative wedge,
+generates $C_6$-orbits via the action $(h, k)\mapsto(-k, h+k)$, and
+emits a per-orbit CSV at
+\texttt{papers/biology-rung/data/wo1\_prediction.csv}. With default
+cutoff $T \le 100$:
+
+\begin{itemize}
+\item $36$ distinct Loeschian $T$-values $\le 100$;
+\item $61$ distinct $C_6$-orbits summed over those $T$;
+\item Direct enumeration up to $T \le 100$ gives $\mu(91) = 4$,
+with orbit representatives $(1, 9), (5, 6), (6, 5), (9, 1)$ --- the
+first Loeschian value up to $T \le 100$ with four $C_6$-orbits.
+This is consistent with the factorisation pattern $91 = 7 \cdot 13$
+where both prime factors admit chiral representatives in the wedge
+picture (heuristic reading, not a proved classification theorem).
+\end{itemize}
+
+All spot-check assertions against the sample $\mu(T)$ values
+following Definition~\ref{def:D3} and Observation~\ref{obs:mu-structure}
+pass ($18$ checks); all forbidden-$T$ absence checks pass
+($11$ checks on $T \in \{2, 5, 6, 8, 10, 11, 14, 15, 17, 18, 20\}$).
+
+\subsection{Planned empirical test (VIPERdb, future work)}
+
+A companion script \texttt{wo1\_viperdb\_fetch.py} provides two data
+modes, \texttt{-{}-fetch} (public VIPERdb API) and
+\texttt{-{}-from-literature} (curated CSV). At the time of writing,
+the four candidate VIPERdb endpoints coded into the fetcher return
+HTTP 404 (VIPERdb's API has evolved past the attempted URLs), so an
+empirical observed-$T$ histogram has not yet been assembled. The
+comparison script \texttt{wo1\_compare.py} is itself present and
+operational; when invoked with no observed dataset it emits a
+\texttt{WAITING\_FOR\_DATA} report at
+\texttt{data/wo1\_comparison.md} rather than fabricating output. A
+follow-up note, once the observed dataset is obtained (endpoint
+refresh or literature-mode population), will carry out the
+$\chi^2$ / KL / chirality-asymmetry tests against three successive
+null hypotheses:
+\begin{itemize}
+\item[$H_0$] $T$ uniform over positive integers (expected strongly
+falsified by the Loeschian mathematical confinement);
+\item[$H_1$] $T$ uniform over Loeschians (expected weakly falsified
+by empirical over-representation of small $T$);
+\item[$H_2$] $T$ distributed as
+$Z(T) \propto \mu(T)\exp(-\beta c(T))$ per Conjecture~\ref{conj:C1},
+with $c(T)$ either a monotone ansatz or an empirical fit.
+\end{itemize}
+No empirical claim is made in the present paper; this section
+describes the test design, not the result.
+
+%==================================================================
+\section{Summary and Logical Chain}\label{sec:chain}
+%==================================================================
+
+\paragraph{What is derived ($\blacktriangleright$).}
+\begin{itemize}
+\item Theorem~\ref{thm:T1}: face-level quadratic form $\Tcasc$ on
+$\Zom$ with $\mathrm{spec}(\Tcasc) = $ Loeschian numbers, unique up
+to positive scale within the class of positive-definite quadratic
+forms on $\Zom$ extending to $C_6$-invariant forms on $\mathbb{R}^2$.
+\item Lemma~\ref{lem:L3}: matrix-centraliser uniqueness proof, via
+the matrix centraliser of the $C_6$ rotation.
+\item Lemma~\ref{lem:L1}: spectrum identity, from the classical
+Eisenstein-norm characterisation of Loeschian integers.
+\item Lemma~\ref{lem:L0}: $\pi_{20}$ decomposition via Frobenius
+inner product on $A_5$.
+\item Remark~\ref{rem:R1} and Lemma~\ref{lem:L2}: $T = 5$ entry
+in~\cite[\S B3.2]{CascadeBio} is mathematically unsupported;
+the honest overlap is $\{1, 3, 4\}$.
+\end{itemize}
+
+\paragraph{What is identified ($\triangleright$).}
+\begin{itemize}
+\item The face-level $C_6$ is the hexagonal lattice's own rotational
+symmetry, not an icosahedral face stabiliser (which is only $C_3$).
+\item $\Tcasc$ is the classical Eisenstein norm; the cascade-specific
+content is its uniqueness under $C_6$ (Lemma~\ref{lem:L3}) and its
+identification as the face-level candidate for a cell-level cascade
+operator.
+\item New numerical observation in this work: $\mu(91) = 4$, the
+first Loeschian $T$ up to $T \le 100$ with four distinct
+$C_6$-orbits ($T = 91$ itself; exhaustive enumeration over that
+range).
+\end{itemize}
+
+\paragraph{What is open ($\circ$).}
+\begin{itemize}
+\item Conjecture~\ref{conj:C2}: whether $\Tcasc$ descends from a
+cell-level 600-cell closure functional (Paper XXXII~\cite{SmartXXXII}
+or~\cite[\S F2]{CascadeFoundations}). Four-step plan; only step~(4)
+established.
+\item Conjecture~\ref{conj:C1}: closure-preference weighting ansatz
+and the form of the assembly cost $c(T)$. Untested.
+\item Conjecture~\ref{conj:C3}: magnitude of the chirality asymmetry.
+Sign predicted qualitatively, magnitude not derived.
+\item Conjecture~\ref{conj:C4}: Galois-conjugate structural
+dimorphism at $T = 3$. Speculative.
+\item Empirical: $\chi^2$ / KL / chirality tests against a VIPERdb
+observed-$T$ histogram. The comparison script
+\texttt{wo1\_compare.py} is present and operational; the remaining
+blocker is the observed-$T$ dataset itself (candidate VIPERdb
+endpoints returned 404 at the time of writing; see §7).
+\item Downstream edit: \cite[\S B3.2]{CascadeBio} table revision per
+Remark~\ref{rem:R1}.
+\end{itemize}
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+This manuscript lives at
+\texttt{papers/biology-rung-capsid/biology-rung-capsid.tex}; the
+accompanying mathematical and computational artefacts (derivation
+notes, math-catalogue ledger, enumeration and comparison scripts,
+data artefacts, and the WO spec) are all kept in the sibling
+directory \texttt{papers/biology-rung/} of the VFD repository to
+reflect the umbrella-programme structure. All claims and numerical
+statements in this paper can be reproduced from the artefacts in
+\texttt{papers/biology-rung/}:
+\begin{itemize}
+\item \texttt{derivation-capsid.md}: Markdown derivation source from
+which this paper is distilled.
+\item \texttt{math-catalogue.md}: ledger of every $D_i, L_i, T_i,
+C_i, R_i, N_i$ object introduced, with provenance and status.
+\item \texttt{scripts/wo1\_capsid\_predict.py}: orbit enumeration
+and spot-check script. Run with \texttt{python3 wo1\_capsid\_predict.py}
+(default cutoff $T \le 100$).
+\item \texttt{data/wo1\_prediction.csv}: canonical per-orbit output
+with columns \texttt{T, mu, representative, chirality}.
+\item \texttt{scripts/wo1\_viperdb\_fetch.py}: fetch infrastructure
+(API mode and curated-CSV mode) for the future empirical comparison.
+\item \texttt{WO-BIOLOGY-RUNG-001-CAPSID.md}: work order specifying
+acceptance criteria and open items.
+\end{itemize}
+
+\begin{thebibliography}{9}
+
+\bibitem{CasparKlug}
+Caspar, D.~L.~D.\ and Klug, A.,
+\emph{Physical Principles in the Construction of Regular Viruses},
+Cold Spring Harbor Symposia on Quantitative Biology \textbf{27}
+(1962), 1--24.
+
+\bibitem{OEIS-A003136}
+OEIS Foundation Inc.,
+\emph{The On-Line Encyclopedia of Integer Sequences}, Sequence
+A003136 (Loeschian numbers), \url{https://oeis.org/A003136}.
+
+\bibitem{HardyWright}
+Hardy, G.~H.\ and Wright, E.~M.,
+\emph{An Introduction to the Theory of Numbers}, 6th ed.\ (revised
+by D.~R.~Heath-Brown and J.~H.~Silverman), Oxford University
+Press, 2008. Chapter~15 (quadratic fields) contains the
+characterisation of integers representable as $h^2 + hk + k^2$ via
+the arithmetic of $\mathbb{Z}[\omega]$.
+
+\bibitem{ConwaySloane}
+Conway, J.~H.\ and Sloane, N.~J.~A.,
+\emph{Sphere Packings, Lattices and Groups}, 3rd ed., Springer
+Grundlehren der mathematischen Wissenschaften \textbf{290}, 1999.
+Chapter~4 (§4.5) and Chapter~7 cover the Eisenstein lattice $A_2$
+and its norm form.
+
+\bibitem{ATLAS}
+Conway, J.~H., Curtis, R.~T., Norton, S.~P., Parker, R.~A., and
+Wilson, R.~A.,
+\emph{ATLAS of Finite Groups}, Oxford University Press, 1985.
+
+\bibitem{CascadeBio}
+\emph{Cascade Biology Rung: The 600-Cell Cell-Level Substrate},
+internal manuscript,
+\texttt{papers/cascade-derivation/cascade-bio.md}. Preprint, Institute
+of Vibrational Field Dynamics.
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations: F1--F8}, internal manuscript,
+\texttt{papers/cascade-derivation/cascade-foundations.md}. Preprint,
+Institute of Vibrational Field Dynamics.
+
+\bibitem{SmartXXXII}
+Smart, L.,
+\emph{The Closure Functional from First Principles: Self-Similar
+Permeability, the 600-Cell, and the Derived Interaction},
+\texttt{papers/paper-xxxii/paper-xxxii.tex} (Paper XXXII).
+Preprint, Institute of Vibrational Field Dynamics, 2026.
+
+\end{thebibliography}
+
+\end{document}

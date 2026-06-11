@@ -1,0 +1,399 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+
+\newcommand{\twoI}{2I}
+\newcommand{\Vsixhundred}{V_{600}}
+\newcommand{\Dicfive}{\mathrm{Dic}_5}
+\newcommand{\Vtwentyfour}{V_{24}}
+\newcommand{\sigmaG}{\sigma}
+\newcommand{\Eq}{E_q}
+\newcommand{\Tcasc}{T_{\mathrm{casc}}}
+
+\title{A Discrete Hawking Quantum from $\sigma$-Pair Excitations\\
+       on the Binary Icosahedral Group}
+\author{%
+  Lee Smart \\[3pt]
+  \textit{Institute of Vibrational Field Dynamics} \\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}}
+\date{May 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed).
+
+\begin{abstract}
+We define the $\sigma$-Galois pair-excitation observable
+$E(v) := |v - \sigmaG(v)|^2_{\mathrm{Eucl}}$ on the binary icosahedral
+group $\twoI = \Vsixhundred$, where $\sigmaG : \sqrt{5} \mapsto -\sqrt{5}$
+acts componentwise on icosian quaternions. We prove that
+$E(v) = 0$ for the $24$ $\sigmaG$-fixed vertices (the $24$-cell sublattice
+$\Vtwentyfour$) and $E(v) = 5/2$ \emph{exactly} for each of the
+remaining $96$ $\sigmaG$-mobile vertices. The numerical value $5/2$
+follows from a direct coordinate calculation; constancy of $E$ on the
+$\sigmaG$-mobile sector additionally follows from a symmetry-grade
+argument: the bilateral action of $\Vtwentyfour$,
+$v \mapsto g v h$ for $g, h \in \Vtwentyfour$, is transitive on
+$\sigmaG$-mobile vertices and commutes with $\sigmaG$.
+Combined with the Paper~1~\citep{V600Paper1} per-coset incidence
+$|gH \cap \Vtwentyfour|/|gH \setminus \Vtwentyfour| = 4/16 = 1/4$ for
+$H = \Dicfive$, this yields an exact discrete first-law identity per
+coset (left or right, bulk or non-bulk):
+\(
+  E_C = \Tcasc \cdot A_C, \quad S_C = A_C/4, \quad
+  \Tcasc \cdot S_C = E_C / 4,
+\)
+with $\Tcasc = \Eq = 5/2$ in Euclidean cascade units and $A_C = 16$,
+$S_C = 4$, $E_C = 40$. Interpreting $\sigmaG$-mobile vertices as Hawking radiation
+channels and $\sigmaG$-fixed vertices as horizon anchor states gives a
+discrete monochromatic analogue of Hawking radiation. The semiclassical
+recovery of a Planck continuum from the discrete gap and the calibration
+of $\Eq$ to $\hbar c^3 / (8 \pi G M k_B)$ are stated as Tier-2 work.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+The Hawking temperature $T_H = \hbar c^3/(8 \pi G M k_B)$
+\citep{Hawking1975}, in conjunction with the Bekenstein--Hawking entropy
+$S_{\mathrm{BH}} = A/4$ in natural units \citep{Bekenstein1973}, defines
+a thermodynamic structure for black-hole horizons. In the semiclassical
+formulation the radiation spectrum is approximately Planckian: the
+horizon emits a continuum of modes with thermal occupation at temperature
+$T_H$. The continuum nature is fundamental in QFT in curved spacetime.
+
+This paper reports a structurally distinct picture: in the finite
+arithmetic of the binary icosahedral group $\twoI$ — equivalently the
+$120$ vertices of the $600$-cell $\Vsixhundred$ — the natural
+$\sigmaG$-pair excitation observable yields a single quantum gap
+$\Eq = 5/2$ shared by all $\sigmaG$-mobile vertices, not a continuum.
+Constancy of the spectrum on the $\sigmaG$-mobile sector is explained
+by a transitive symmetry — the bilateral action of the
+$\sigmaG$-fixed sublattice $\Vtwentyfour$ on $\Vsixhundred$ — and the
+numerical value is computed in coordinates.
+Combined with the Paper~1~\citep{V600Paper1} coset-incidence identity
+$S/A = 1/4$, this produces an exact discrete first-law analogue
+$\Tcasc \cdot S = E/4$ with $\Tcasc = \Eq$.
+
+The paper does not derive physical Hawking radiation. It claims a
+finite-arithmetic identity in $\Vsixhundred$ that has the algebraic
+shape of a discrete Hawking quantum, with the semiclassical recovery
+of the Planck continuum and the calibration to physical units stated
+as future work. Section~\ref{sec:setup} fixes notation and imports the
+$\Vsixhundred$/$\Dicfive$/$\Vtwentyfour$ structure from Paper~1.
+Section~\ref{sec:obs} defines the $\sigmaG$-pair excitation observable.
+Section~\ref{sec:main} states and proves the monochromatic-spectrum
+theorem. Section~\ref{sec:firstlaw} derives the per-coset first-law
+identity. Section~\ref{sec:scope} sets the scope.
+
+\section{Setup}\label{sec:setup}
+
+We import the following from Paper~1~\citep{V600Paper1}; the present
+paper does not re-prove any of these statements.
+
+\begin{itemize}[leftmargin=2em]
+\item $K := \mathbb{Q}(\sqrt{5})$ with Galois twist
+$\sigmaG : a + b\sqrt{5} \mapsto a - b\sqrt{5}$, extended componentwise
+to the icosian quaternion algebra $\mathbb{H}_K$.
+\item $\Vsixhundred = \twoI \subset \mathrm{Sp}(1, K)$: the $120$ unit
+icosians forming the binary icosahedral group, partitioned into
+$8$~axis, $16$~half-type, and $96$~even-permutation vertices.
+\item $\Vtwentyfour := \{ v \in \Vsixhundred : \sigmaG(v) = v \}$: the
+$\sigmaG$-fixed sublattice, equal to the $8$ axis vertices plus the $16$
+half-type vertices and forming the regular $24$-cell. This is also
+$\Vsixhundred \cap \sigmaG(\Vsixhundred)$.
+\item $\sigmaG$-\emph{mobile} vertices: $\Vsixhundred \setminus \Vtwentyfour$,
+the $96$ even-permutation vertices.
+\item $H := \Dicfive \subset \twoI$: the bulk subgroup of order $20$,
+the union of the $K=72$ and $K=0$ cycles of $T_\tau$. $H$ is
+self-normalizing in $\twoI$.
+\item Per-coset incidence (Paper~1, Theorem on coset incidence):
+for every left coset $gH$ and right coset $Hg$,
+$|gH \cap \Vtwentyfour| = |Hg \cap \Vtwentyfour| = 4$ and
+$|gH \setminus \Vtwentyfour| = |Hg \setminus \Vtwentyfour| = 16$.
+\end{itemize}
+
+\section{The $\sigmaG$-pair excitation}\label{sec:obs}
+
+\begin{definition}[$\sigmaG$-pair excitation]\label{def:Eobs}
+For each vertex $v \in \Vsixhundred$, define
+\[
+  E(v) \;:=\; |v - \sigmaG(v)|^2_{\mathrm{Eucl}},
+\]
+the squared icosian-Euclidean distance between $v$ and its $\sigmaG$-image,
+computed exactly in $K = \mathbb{Q}(\sqrt{5})$. The value lies in
+$\mathbb{Q}$ because the $\sqrt{5}$-component of $|v - \sigmaG(v)|^2$
+vanishes by $\sigmaG$-equivariance of the squared norm.
+\end{definition}
+
+\begin{lemma}[Vanishing on $\Vtwentyfour$]\label{lem:vanish}
+$E(v) = 0$ if and only if $v \in \Vtwentyfour$.
+\end{lemma}
+
+\begin{proof}
+$E(v) = 0$ iff $v - \sigmaG(v) = 0$ iff $\sigmaG(v) = v$ iff
+$v \in \Vtwentyfour$ by Definition of the $24$-cell.
+\end{proof}
+
+\begin{lemma}[Coordinate identity on $\sigmaG$-mobile vertices]\label{lem:coord}
+For every $\sigmaG$-mobile vertex $v \in \Vsixhundred \setminus \Vtwentyfour$,
+the difference $v - \sigmaG(v)$ has exactly \emph{two} nonzero coordinates,
+each of value $\pm \sqrt{5}/2 \in K$.
+\end{lemma}
+
+\begin{proof}
+The $\sigmaG$-mobile vertices are precisely the $96$ even-permutation
+vertices, with coordinate orbit $(0,\, \pm 1/(2\varphi),\, \pm 1/2,\,
+\pm \varphi/2)$ up to even permutation. Recall the $K$-arithmetic
+identities $1/(2\varphi) = (\sqrt{5}-1)/4$ and
+$\varphi/2 = (1+\sqrt{5})/4$. Applied componentwise:
+\begin{align*}
+\sigmaG(0) &= 0, \\
+\sigmaG(1/2) &= 1/2, \\
+\sigmaG\bigl(1/(2\varphi)\bigr) &= -(1+\sqrt{5})/4 = -\varphi/2, \\
+\sigmaG\bigl(\varphi/2\bigr) &= (1-\sqrt{5})/4 = -1/(2\varphi),
+\end{align*}
+so $\sigmaG$ sends the golden coordinate values $1/(2\varphi)$ and
+$\varphi/2$ to their conjugate partners ($-\varphi/2$ and $-1/(2\varphi)$
+respectively) in the same coordinate slots, while leaving $0$ and
+$\pm 1/2$ slots invariant.
+Subtracting,
+\[
+  1/(2\varphi) - \sigmaG(1/(2\varphi)) =
+  (\sqrt{5}-1)/4 + (1+\sqrt{5})/4 = \sqrt{5}/2,
+\]
+\[
+  \varphi/2 - \sigmaG(\varphi/2) =
+  (1+\sqrt{5})/4 - (1-\sqrt{5})/4 = \sqrt{5}/2,
+\]
+and the $0$ and $\pm 1/2$ coordinates contribute zero to $v - \sigmaG(v)$.
+So exactly two coordinates of $v - \sigmaG(v)$ are nonzero, each of
+value $\pm \sqrt{5}/2$ depending on the original sign convention.
+\end{proof}
+
+\section{Main theorem: monochromatic spectrum}\label{sec:main}
+
+\begin{theorem}[Hawking quantum]\label{thm:Eq}
+The $\sigmaG$-pair excitation observable $E$ takes exactly two values on
+$\Vsixhundred$: $E(v) = 0$ for all $24$ vertices in $\Vtwentyfour$ and
+\[
+  E(v) \;=\; \Eq \;:=\; \tfrac{5}{2}
+\]
+for each of the remaining $96$ $\sigmaG$-mobile vertices. The spectrum
+is the discrete distribution
+\(
+  24\,\delta_{0} + 96\,\delta_{5/2}.
+\)
+\end{theorem}
+
+\begin{proof}
+Vanishing on $\Vtwentyfour$ is Lemma~\ref{lem:vanish}.
+
+For $\sigmaG$-mobile $v$, Lemma~\ref{lem:coord} gives $v - \sigmaG(v)$
+having exactly two nonzero coordinates each of value $\pm \sqrt{5}/2$.
+Computing the squared Euclidean norm:
+\[
+  E(v) \;=\; |v - \sigmaG(v)|^2 \;=\; (\sqrt{5}/2)^2 + (\sqrt{5}/2)^2
+  \;=\; \tfrac{5}{4} + \tfrac{5}{4} \;=\; \tfrac{5}{2}.
+\]
+This holds for every $\sigmaG$-mobile vertex regardless of which two
+coordinate positions are nonzero, so $E(v) = 5/2$ uniformly across all
+$96$ such vertices.
+
+Symmetry corroboration. Define the bilateral action $\Gamma$ on
+$\Vsixhundred$ by $\Gamma := \{ v \mapsto g v h : g, h \in \Vtwentyfour \}$.
+Each generator is a quaternionic isometry (left- and right-multiplication
+by unit quaternions preserve $|\cdot|^2$) and commutes with $\sigmaG$
+because $g, h \in \Vtwentyfour$ have $\sigmaG(g) = g$ and $\sigmaG(h) = h$,
+so $\sigmaG(g v h) = g \sigmaG(v) h$. Therefore $E$ is constant on
+$\Gamma$-orbits. The $\Gamma$-orbits on $\Vsixhundred$ are the
+$\Vtwentyfour$-double cosets $\Vtwentyfour \cdot v \cdot \Vtwentyfour$;
+the certificate \texttt{verify.py} confirms that there are exactly two
+such orbits — $\Vtwentyfour$ itself (of size $24$) and a single orbit of
+size $96$ (the $\sigmaG$-mobile sector). Constancy of $E$ on the
+$96$-orbit is therefore implied by $\Gamma$-invariance.
+\end{proof}
+
+We refer to $\Eq = 5/2$ as the \emph{cascade Hawking quantum}.
+
+\section{First-law identity}\label{sec:firstlaw}
+
+\begin{definition}[Coset thermodynamic content]\label{def:coset_thermo}
+For a left coset $C = gH$ of $H = \Dicfive$ in $\twoI$, set
+\[
+  S(C) := |C \cap \Vtwentyfour|, \quad
+  A(C) := |C \setminus \Vtwentyfour|, \quad
+  E(C) := \!\sum_{v \in C \setminus \Vtwentyfour}\! E(v),
+  \quad \Tcasc(C) := E(C) / A(C).
+\]
+The same definitions apply to right cosets $Hg$.
+\end{definition}
+
+\begin{theorem}[Discrete first law]\label{thm:firstlaw}
+For every coset $C$ of $H$ in $\twoI$ — left or right, bulk or
+non-bulk —
+\[
+  S(C) = 4, \quad A(C) = 16, \quad E(C) = 40, \quad
+  \Tcasc(C) = \Eq = \tfrac{5}{2},
+\]
+and the following identities hold exactly:
+\[
+  E(C) = \Tcasc(C) \cdot A(C), \qquad
+  S(C) = A(C) / 4, \qquad
+  \Tcasc(C) \cdot S(C) = E(C) / 4.
+\]
+Aggregating over the five non-bulk left cosets:
+\(
+  S_{\mathrm{tot}} = 20,\; A_{\mathrm{tot}} = 80,\;
+  E_{\mathrm{tot}} = 200,\;
+  \Tcasc \cdot S_{\mathrm{tot}} = E_{\mathrm{tot}} / 4 = 50.
+\)
+\end{theorem}
+
+\begin{proof}
+$S(C) = 4$ and $A(C) = 16$ are the per-coset incidence counts of
+Paper~1~\citep{V600Paper1}. By Theorem~\ref{thm:Eq}, every $\sigmaG$-mobile
+vertex contributes $\Eq = 5/2$ to $E(C)$, so
+\(
+  E(C) = A(C) \cdot \Eq = 16 \cdot 5/2 = 40,
+\)
+and $\Tcasc(C) = E(C)/A(C) = 5/2$. The three identities are direct
+substitutions:
+$E(C) = \Tcasc(C) \cdot A(C)$ by definition of $\Tcasc(C)$;
+$S(C) = 4 = 16/4 = A(C)/4$ by Paper~1;
+$\Tcasc(C) \cdot S(C) = (5/2) \cdot 4 = 10 = 40/4 = E(C)/4$. The bulk
+coset $C = H$ itself satisfies the same per-coset identity because
+$|H \cap \Vtwentyfour| = 4$ (Paper 1, $24$-cell incidence with $H$).
+
+The aggregate values follow by summing over the five disjoint non-bulk
+cosets.
+\end{proof}
+
+\begin{remark}[Bekenstein--Hawking analogy, interpretive]\label{rem:BH}
+Under the interpretive identification of $\sigmaG$-mobile vertices as
+horizon channels (``area'') and $\sigmaG$-fixed vertices as anchor
+states (``entropy'' bits), Theorem~\ref{thm:firstlaw} produces three
+formal relations within this finite model that echo the structural
+shape of the Bekenstein--Hawking entropy formula: a sum
+$E = \Tcasc \cdot A$ that records $E$ as the channel count times a
+common per-channel quantum, the ratio $S = A/4$ that mirrors the
+Bekenstein coefficient (this part is genuinely standard, by
+Paper~1~\citep{V600Paper1}), and a derived identity
+$\Tcasc \cdot S = E/4$ that follows from those two by direct
+substitution. None of these is the standard physical first law
+$dE = T\,dS$ of black-hole thermodynamics; the present finite model
+does not address dynamical changes. Calibration of $\Eq = 5/2$ to the
+physical Hawking temperature
+$T_H^{\mathrm{phys}} = \hbar c^3 / (8\pi G M k_B)$ is also not
+constructed here.
+\end{remark}
+
+\section{Scope}\label{sec:scope}
+
+\noindent
+\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+\textbf{Scope.}
+\begin{itemize}
+\item \textbf{Established (exact, unconditional):} the $\sigmaG$-pair
+spectrum on $\Vsixhundred$ is $24\,\delta_0 + 96\,\delta_{5/2}$
+(Theorem~\ref{thm:Eq}); the per-coset first-law identity
+$\Tcasc \cdot S = E/4$ with $\Tcasc = \Eq = 5/2$, $A = 16$, $S = 4$,
+$E = 40$ (Theorem~\ref{thm:firstlaw}); the bilateral $\Vtwentyfour$
+symmetry orbit certificate confirms the $96$-orbit structure.
+\item \textbf{Interpretive:} the identification of $\sigmaG$-mobile
+vertices as Hawking radiation channels and $\sigmaG$-fixed vertices
+as horizon anchor states (Remark~\ref{rem:BH}). A different
+identification would attach different physical content to the same
+arithmetic identity.
+\item \textbf{Out of scope:} cascade-unit calibration to physical
+Planck units; semiclassical recovery of a Planck continuum from the
+discrete gap; quantitative primordial-black-hole evaporation cutoff;
+the canonical involution $\tau_\sigma$ (Paper~3); cosmological
+applications (Paper~4); ontology of $\Vsixhundred$. The formal
+analogy between $\Eq$ and a Hawking-temperature parameter is
+observed without claim; the unit calibration required to lift
+$\Tcasc$ from a structural finite identity to a quantitative
+physical Hawking temperature is not constructed here.
+\end{itemize}}}
+
+\section{Toward a calibrated continuum limit}\label{sec:pbh}
+
+The finite spectrum derived here is qualitatively unlike a smooth
+Planck continuum. To connect the present arithmetic identity to a
+physical observable would require (i) a calibration that maps the
+cascade unit $\Eq$ to a physical energy scale, (ii) a mechanism by
+which sums over many cascade resolutions broaden the discrete gap
+into an approximately thermal distribution, and (iii) an observational
+model that distinguishes a discrete cutoff from a thermal tail in any
+candidate setting (for instance, late-stage primordial black-hole
+evaporation \citep{CarrEtAlPBH2021}). None of (i)--(iii) is
+constructed here, and we make no quantitative observational claim. We
+note the qualitative shape of the gap as a target for future
+calibration work.
+
+\section{Conclusion}\label{sec:concl}
+
+The $\sigmaG$-Galois pair-excitation observable on the binary
+icosahedral group $\twoI$ admits a closed-form spectrum:
+$24$~zero modes (the $\sigmaG$-fixed $24$-cell sublattice) and
+$96$~mobile modes at the single quantum value $\Eq = 5/2$
+(Theorem~\ref{thm:Eq}). Combined with the Paper~1 coset-incidence
+identity, this produces a per-coset first-law identity
+$\Tcasc \cdot S = E/4$ with $\Tcasc = \Eq$ (Theorem~\ref{thm:firstlaw}). The
+result is exact, parameter-free, and verifiable by the accompanying
+script. We frame this as a discrete arithmetic analogue of the
+Hawking-radiation thermodynamic structure, deferring physical-unit
+calibration and semiclassical-continuum recovery to future work.
+
+\appendix
+
+\section{Verification certificate}\label{app:verify}
+
+The companion script \texttt{verify.py} performs the following exact
+checks and exits with status $0$ when all assertions hold:
+\begin{enumerate}
+\item $|\Vsixhundred| = 120$, $|\Vtwentyfour| = 24$,
+$|\Vsixhundred \setminus \Vtwentyfour| = 96$.
+\item For all $24$ $\sigmaG$-fixed vertices, $E(v) = 0$ exactly.
+\item For all $96$ $\sigmaG$-mobile vertices, $E(v) = 5/2$ exactly,
+with the rational value computed in $\mathbb{Q}(\sqrt{5})$.
+\item Coordinate proof: for each of the $96$ $\sigmaG$-mobile
+vertices, the difference $v - \sigmaG(v)$ has exactly two nonzero
+coordinates with rational part $0$ and $\sqrt{5}$-part $\pm 1/2$.
+\item Bilateral $\Vtwentyfour$ symmetry: $\sigmaG$ commutes with
+left-multiplication by every $g \in \Vtwentyfour$ (24 generators), and
+the bilateral action $\Gamma = \{v \mapsto g v h : g, h \in \Vtwentyfour\}$
+on $\Vsixhundred$ has exactly two orbits — $\Vtwentyfour$ (size $24$)
+and the $\sigmaG$-mobile sector (size $96$).
+\item Per-coset first-law identity for all $6$ left cosets and all $6$
+right cosets (bulk and non-bulk): $A=16$, $S=4$, $E=40$, $\Tcasc = 5/2$,
+$\Tcasc \cdot S = E/4 = 10$.
+\item Aggregate first law: $A_{\mathrm{tot}} = 80$, $S_{\mathrm{tot}} = 20$,
+$E_{\mathrm{tot}} = 200$, $\Tcasc \cdot S_{\mathrm{tot}} = E_{\mathrm{tot}}/4 = 50$.
+\end{enumerate}
+
+The script depends only on the Python standard library and the shared
+\texttt{vfd\_v600} package
+(\texttt{papers/v600-programme/lib}). Reproducibility command:
+\begin{verbatim}
+PYTHONPATH=papers/v600-programme/lib \
+    python3 papers/v600-hawking-quantum/verify.py
+\end{verbatim}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

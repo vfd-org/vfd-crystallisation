@@ -1,0 +1,491 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+
+\newcommand{\twoI}{2I}
+\newcommand{\Vsixhundred}{V_{600}}
+\newcommand{\Dicfive}{\mathrm{Dic}_5}
+\newcommand{\Vtwentyfour}{V_{24}}
+\newcommand{\sigmaG}{\sigma}
+\newcommand{\tausigma}{\tau_{\!\sigmaG}}
+\newcommand{\tausigmaj}[1]{\tau^{(#1)}_{\!\sigmaG}}
+\newcommand{\Ttau}{T_{\tau}}
+\newcommand{\Trbil}{\mathrm{Tr}}
+
+\title{The $\tausigma$ Involution: A Canonical Galois-Coset Duality\\
+       on the Binary Icosahedral Group}
+\author{%
+  Lee Smart \\[3pt]
+  \textit{Institute of Vibrational Field Dynamics} \\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}}
+\date{May 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed). Pure mathematics; no physical interpretation is claimed.
+
+\begin{abstract}
+We construct an explicit involution
+$\tausigma : \Vsixhundred \to \Vsixhundred$ on the vertex set of the
+$600$-cell, equivalently the binary icosahedral group $\twoI$. The
+construction is a vertex permutation rather than a Euclidean
+reflection; testing two restricted families fixing the binary
+dihedral subgroup $H = \Dicfive$ pointwise — single
+$E_8$-Weyl-reflection candidates (which act trivially on
+$\Vsixhundred$ in every tested case) and parity-flip candidates
+(which produce zero closed-and-involution target hits) — motivates
+using a vertex permutation instead (Remark~\ref{rem:reflfail}; this is
+a computational observation, not an exhaustive non-existence claim,
+and W(H$_4$) was not separately enumerated). The construction instead
+uses the right-coset
+$\Ttau$-cycle structure paired with a $\sigmaG$-Galois projection in
+the icosian trace metric. For each non-bulk right coset
+$Hg \subset \twoI$, which contains exactly one whole $\Ttau$-cycle of
+K-class $52$ and one whole $\Ttau$-cycle of K-class $20$ (Paper~1
+\citep{V600Paper1}), the construction selects a $\Ttau$-equivariant
+phase swap by the symmetric-maximin criterion on the trace inner
+product $\Trbil_{K/\mathbb{Q}}\,\mathrm{Re}(\sigmaG(v) \cdot \bar w)$.
+The phase selection yields exactly two admissible phases per coset
+(the antipodal pair $j \in \{0, 5\}$), giving a $\mathbb{Z}_2^5 = 32$-fold
+canonical lift. We prove $\tausigma$ satisfies four canonical
+properties: it is an involution, fixes $H$ pointwise, exchanges the
+$K=52$ and $K=20$ cycle classes within each non-bulk right coset, and
+commutes with $\Ttau$ (T-equivariance). It additionally commutes with
+the antipodal map $v \mapsto -v$. The canonical phase
+$(0,0,0,0,0)$-lift is exhibited explicitly as a $120$-vertex map and
+verified by an exact-arithmetic certificate.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+The binary icosahedral group $\twoI$ — equivalently the vertex set
+$\Vsixhundred$ of the regular $600$-cell — admits a rich finite-group
+structure that has been studied for over a century in the contexts of
+regular polytopes \citep{Coxeter1973}, lattice theory
+\citep{ConwaySloane1988,Elkies1995}, and Coxeter / reflection groups
+\citep{Humphreys1990}. Recent work \citep{V600Paper1} has identified a
+distinguished subgroup chain $H = \Dicfive \subset \twoI$ ($|H| = 20$)
+arising from the bulk decomposition of $\Vsixhundred$ under
+$\Ttau$-cycle K-class structure, with $H$ self-normalizing in
+$\twoI$.
+
+In this note we construct an involution
+$\tausigma : \Vsixhundred \to \Vsixhundred$ that
+
+\begin{enumerate}[leftmargin=2em]
+\item fixes $H$ pointwise,
+\item swaps the $K=52$ and $K=20$ cycle classes within each non-bulk
+right coset of $H$,
+\item commutes with $\Ttau$, and
+\item commutes with the antipodal map.
+\end{enumerate}
+
+The motivation is internal to the V$_{600}$ programme: a subsequent
+paper uses this involution to state phase-independence for
+operator-trace identities on the $\Ttau$-cycle space of
+$\Vsixhundred$. The construction is purely combinatorial-arithmetic;
+no physical interpretation is claimed in the present paper.
+
+A natural first attempt — a Euclidean reflection of $\Vsixhundred$
+fixing $H$ — was tested in two restricted families:
+\texttt{block3c\_e8\_reflection\_obstruction.py} reports that
+single-Euclidean-reflection candidates fixing $H$ act trivially on
+$\Vsixhundred$ in the tested embedding, and
+\texttt{block3b\_parity\_flip\_tau\_sigma.py} reports zero
+target hits in the parity-flip family. We summarise both in
+Section~\ref{sec:reflfail} (no exhaustive non-existence claim is made,
+and W(H$_4$) was not separately enumerated), then turn to a
+vertex-permutation construction in Section~\ref{sec:construction}. Section~\ref{sec:main}
+proves the four canonical properties of the resulting map; Section~\ref{sec:Z25}
+discusses the $\mathbb{Z}_2^5$ phase ambiguity.
+
+\section{Setup}\label{sec:setup}
+
+We import the following from Paper 1 \citep{V600Paper1}; the present
+paper does not re-prove any of these statements.
+
+\begin{itemize}[leftmargin=2em]
+\item $K := \mathbb{Q}(\sqrt{5})$ with Galois twist
+$\sigmaG : a + b\sqrt{5} \mapsto a - b\sqrt{5}$, extended componentwise
+to the icosian quaternion algebra $\mathbb{H}_K$.
+\item $\Vsixhundred = \twoI \subset \mathrm{Sp}(1, K)$: the $120$ unit
+icosian quaternions forming the binary icosahedral group, partitioned
+into $8$ axis, $16$ half-type, and $96$ even-permutation vertices.
+\item $\Vtwentyfour := \Vsixhundred \cap \mathrm{Fix}(\sigmaG)$: the
+24-cell sublattice ($8$ axis + $16$ half-type vertices).
+\item $\Ttau : g \mapsto \tau g$ for some chosen $\tau \in \twoI$ with
+$\mathrm{ord}(\tau) = 10$. The cycle decomposition of $\Ttau$
+partitions $\Vsixhundred$ into 12 cycles each of length 10, with
+K-multiset $\{72{:}1,\,0{:}1,\,52{:}5,\,20{:}5\}$.
+\item $H := \Dicfive$, the bulk subgroup of order $20$ formed by the
+union of the $K=72$ and $K=0$ cycles. Self-normalizing and non-normal
+in $\twoI$ \citep{V600Paper1}.
+\end{itemize}
+
+\begin{lemma}[Right-coset carrier; Paper 1, Coset cycle composition]\label{lem:rightcoset}
+For every non-bulk right coset $Hg \subset \twoI$, the coset is
+exactly the disjoint union of one whole $\Ttau$-cycle of K-class $52$
+and one whole $\Ttau$-cycle of K-class $20$. In particular $\Ttau$
+preserves $Hg$ setwise (since $\tau \in H$, where $\tau$ is the chosen
+order-$10$ generator of the bulk $\Ttau$-cycle of $K=72$ that lies
+inside $H = \Dicfive$, we have $\tau H = H$ and hence
+$\Ttau(Hg) = (\tau H) g = Hg$); the K-class pairing $52$ with
+$20$ is the additional content of the lemma and is established in
+Paper 1 by direct enumeration. The five non-bulk right cosets
+exhaust the ten non-bulk $\Ttau$-cycles, paired one $K=52$ with one
+$K=20$.
+\end{lemma}
+
+By contrast, non-bulk \emph{left} cosets $gH$ contain two vertices from
+each of the ten non-bulk $\Ttau$-cycles and are \emph{not} whole-cycle
+carriers (Paper 1, ``Coset cycle composition'' lemma). For the construction below it is
+essential to use the right-coset family.
+
+\subsection{Trace inner product}
+
+The icosian quaternion algebra $\mathbb{H}_K$ with $K = \mathbb{Q}(\sqrt{5})$
+carries a natural rational trace bilinear form,
+\[
+  \langle v, w \rangle_{\mathrm{tr}}
+  \;:=\;
+  \mathrm{Tr}_{K/\mathbb{Q}}\!\left(\,\mathrm{Re}(v \cdot \bar w)\,\right),
+\]
+where $\bar w$ is the quaternionic conjugate, $\mathrm{Re}$ extracts the
+real (scalar) component, and $\mathrm{Tr}_{K/\mathbb{Q}}(a + b\sqrt{5}) = 2a$.
+Up to a global rescaling, this form puts $\Vsixhundred$ inside the
+$E_8$ lattice \citep{Elkies1995,ConwaySloane1988}; on the cross-Galois
+pairs used in the construction below the values are rational (and in
+fact lie in $\frac{1}{4}\mathbb{Z}$), and all arithmetic is exact in
+$\mathbb{Q}(\sqrt{5})$.
+
+\section{Why Euclidean reflections fail}\label{sec:reflfail}
+
+The natural first attempt at constructing $\tausigma$ is a Euclidean
+reflection of $\Vsixhundred$ fixing $H$ pointwise. The following
+computational observation motivates abandoning this route.
+
+\begin{remark}[Reflection obstruction, computational]\label{rem:reflfail}
+Two auxiliary script families in the V$_{600}$ programme repository
+test isometric $\tausigma$ candidates that fix $H = \Dicfive$
+pointwise:
+\begin{itemize}[leftmargin=2em]
+\item \texttt{block3c\_e8\_reflection\_obstruction.py} (with the
+embedding helpers in \texttt{block3a\_e8\_icosian\_lattice.py}) checks
+single Euclidean-reflection candidates fixing $H$ and reports that
+each such candidate acts trivially on $\Vsixhundred$ in the tested
+embedding;
+\item \texttt{block3b\_parity\_flip\_tau\_sigma.py} searches the
+parity-flip family for a $\Vsixhundred$-permutation that fixes $H$
+pointwise, swaps the $K=52$ and $K=20$ cycle classes, and is closed
+under $\twoI$, and reports zero target hits.
+\end{itemize}
+No exhaustive Weyl-group enumeration is claimed, and we do not assert
+a closed-form non-existence theorem; this remark only motivates the
+vertex-permutation construction below.
+\end{remark}
+
+The remainder of the paper does not depend on Remark~\ref{rem:reflfail}
+mathematically; it is included only to motivate why we construct
+$\tausigma$ as a vertex permutation rather than as a reflection. The
+construction proceeds via a $\sigmaG$-Galois projection on right
+cosets.
+
+\section{The $\sigmaG$-projection construction}\label{sec:construction}
+
+\subsection{Cycle phase swap}
+
+For a non-bulk right coset $Hg \subset \twoI$, fix base points
+$v_0 \in C_{52}$ and $w_0 \in C_{20}$ (both supplied by the
+deterministic vertex enumeration of
+\texttt{vfd\_v600.icosian.build\_vertices()}; see Section~\ref{sec:Z25}
+for the convention dependence) and write the constituent
+$\Ttau$-cycles as
+\[
+  C_{52} = (v_0, v_1, \ldots, v_9), \qquad
+  C_{20} = (w_0, w_1, \ldots, w_9),
+\]
+with $v_{k+1} = \tau v_k$ and $w_{k+1} = \tau w_k$ (indices mod $10$).
+The phase labels below are computed relative to this choice; a
+different pair $(v_0, w_0)$ would relabel them.
+
+\begin{definition}[Phase-$j$ swap]\label{def:phaseswap}
+For each $j \in \mathbb{Z}/10$, the \emph{phase-$j$ swap} is the
+involution $\tausigmaj{j} : Hg \to Hg$ defined by
+\[
+  \tausigmaj{j}(v_k) := w_{(j + k) \bmod 10}, \qquad
+  \tausigmaj{j}(w_{(j + k) \bmod 10}) := v_k.
+\]
+Each $\tausigmaj{j}$ exchanges the two cycles, is a well-defined
+involution on $Hg$, and is $\Ttau$-equivariant by construction.
+\end{definition}
+
+There are $10$ phases per coset, so naively $10^5 = 10^5$ candidates
+across the five non-bulk cosets. The $\sigmaG$-projection criterion
+below restricts to $2^5 = 32$ canonical lifts.
+
+\subsection{Symmetric-maximin $\sigmaG$-projection}
+
+\begin{definition}[Symmetric maximin score]\label{def:maximin}
+For a non-bulk right coset $Hg$ with cycle data
+$(C_{52}, C_{20}) = (v_k, w_k)$, define the forward and backward
+$\sigmaG$-projections
+\[
+  s_{\to}(j,k) \;:=\; \langle \sigmaG(v_k),\; w_{(j+k) \bmod 10} \rangle_{\mathrm{tr}},
+  \qquad
+  s_{\leftarrow}(j,k) \;:=\; \langle \sigmaG(w_{(j+k) \bmod 10}),\; v_k \rangle_{\mathrm{tr}},
+\]
+and the \emph{symmetric phase score}
+\[
+  s(j) \;:=\; \min_{k \in \mathbb{Z}/10}\,
+  \min\bigl(s_{\to}(j,k),\, s_{\leftarrow}(j,k)\bigr).
+\]
+The \emph{maximin admissible phase set} is
+\[
+  \Phi(Hg) \;:=\; \mathrm{argmax}_{j \in \mathbb{Z}/10}\, s(j).
+\]
+The two-sided minimum makes $s(j)$ symmetric in the role of the two
+cycles and is the form verified by the companion script
+\texttt{verify.py}.
+\end{definition}
+
+\begin{theorem}[Phase selection]\label{thm:phases}
+Under the base-point convention of Section~\ref{sec:construction}
+(both $v_0 \in C_{52}$ and $w_0 \in C_{20}$ supplied by the
+deterministic ordering of
+\texttt{vfd\_v600.icosian.build\_vertices()}), for every non-bulk
+right coset $Hg \subset \twoI$, $\Phi(Hg) = \{0,\, 5\}$, with
+$s(0) = s(5) = 0$ and $s(j) = -\frac{5}{4}$ for
+$j \in \{1,2,3,4,6,7,8,9\}$. The two winning phases are separated by
+$5$ (i.e., antipodal indices on the length-$10$ cycle); the labels
+$\{0, 5\}$ themselves are convention-dependent
+(Remark~\ref{rem:conv}). Phase $j=5$ is the antipodal shift of $j=0$.
+\end{theorem}
+
+\begin{proof}
+Direct exact-arithmetic computation in $\mathbb{Q}(\sqrt{5})$ (the
+companion script \texttt{verify.py} enumerates all five non-bulk right
+cosets and all $10$ phases, asserts the full symmetric score table
+$s(0) = s(5) = 0$ and $s(j) = -\tfrac{5}{4}$ otherwise, and hence
+verifies the argmax). The identity
+$j=5 \leftrightarrow j=0 + \mathrm{antipode}$ follows from the central
+involution $\tau^5 = -1 \in \twoI$ acting on cycle indices by
+$k \mapsto k+5 \bmod 10$.
+\end{proof}
+
+\subsection{Canonical lift}
+
+Definition~\ref{def:phaseswap} and Theorem~\ref{thm:phases} together
+yield $|\Phi(Hg)|^5 = 2^5 = 32$ admissible compositions across the five
+non-bulk right cosets. We name the all-zero choice canonical.
+
+\subsection{Algorithm (pseudocode)}
+
+The construction and verification can be summarised as the following
+explicit pseudocode (the script \texttt{verify.py} is a literal
+translation):
+
+\begin{verbatim}
+build state via vfd_v600.group.build_state()
+   -> verts, cycles, K_of_cycle, Dic5, T_tau
+
+for each non-bulk right coset Hg of H = Dic_5:
+    let C52 = the K=52 cycle in Hg, base point v_0
+    let C20 = the K=20 cycle in Hg, base point w_0
+    for j in 0..9:
+        s(j) := min over k in 0..9 of
+                 min( <sigma(v_k), w_{(j+k) mod 10}>_tr,
+                      <sigma(w_{(j+k) mod 10}), v_k>_tr )
+    Phi(Hg) := argmax_{j} s(j)         # equals {0, 5}
+
+choose phase j_g = 0 for each Hg (canonical lift)
+build tau_sigma:
+    tau_sigma(h)        := h            for h in Dic_5
+    tau_sigma(v_k)      := w_{(j_g+k) mod 10}
+    tau_sigma(w_{j_g+k}):= v_k
+
+verify: P1 (involution), P2 (fix Dic_5),
+        P3 (K=52 <-> K=20), P4 (T_tau-equivariance),
+        antipodal: tau_sigma(-v) == -tau_sigma(v),
+        right-coset preservation,
+        match against data/tau_sigma_canonical.txt.
+\end{verbatim}
+
+\begin{definition}[Canonical $\tausigma$]\label{def:canonical}
+The \emph{canonical $\tausigma$} is the involution
+$\tausigma : \Vsixhundred \to \Vsixhundred$ obtained by:
+\begin{itemize}[leftmargin=2em]
+\item $\tausigma(h) = h$ for every $h \in H$;
+\item For each of the five non-bulk right cosets $Hg$, applying the
+phase-$0$ swap $\tausigmaj{0}$ of Definition~\ref{def:phaseswap}.
+\end{itemize}
+The 120-vertex map is recorded explicitly in
+\texttt{papers/v600-programme/data/tau\_sigma\_canonical.txt}.
+\end{definition}
+
+\subsection{Worked example}
+
+For the canonical state with $\tau$ chosen as the first
+order-$10$ icosian in the deterministic vertex enumeration, the first
+non-bulk right coset has $K=52$ cycle and $K=20$ cycle
+\[
+  C_{52} = [4, 119, 81, 80, 118, 5, 112, 86, 87, 113],\qquad
+  C_{20} = [6, 93, 59, 58, 92, 7, 90, 60, 61, 91].
+\]
+The phase-$0$ swap pairs them index-wise:
+$4 \leftrightarrow 6$, $119 \leftrightarrow 93$, $81 \leftrightarrow 59$,
+$80 \leftrightarrow 58$, $118 \leftrightarrow 92$, $5 \leftrightarrow 7$,
+$112 \leftrightarrow 90$, $86 \leftrightarrow 60$, $87 \leftrightarrow 61$,
+$113 \leftrightarrow 91$.
+
+\section{Main theorem}\label{sec:main}
+
+\begin{theorem}[Canonical $\tausigma$ properties]\label{thm:main}
+The canonical $\tausigma$ of Definition~\ref{def:canonical} satisfies:
+\begin{enumerate}[label=(P\arabic*),leftmargin=3em]
+\item \emph{Involution:} $\tausigma \circ \tausigma = \mathrm{id}_{\Vsixhundred}$.
+\item \emph{Fixes the bulk subgroup:} $\tausigma(h) = h$ for every $h \in H$.
+\item \emph{Cross-K coset swap:} for every $v \in Hg$ with $Hg$
+non-bulk, the K-class of the cycle of $\tausigma(v)$ is the
+K-opposite of the K-class of the cycle of $v$ (i.e., $52
+\leftrightarrow 20$).
+\item \emph{$\Ttau$-equivariance:} $\tausigma \circ \Ttau = \Ttau \circ \tausigma$.
+\end{enumerate}
+Additionally, $\tausigma$ commutes with the antipodal map
+$v \mapsto -v$.
+\end{theorem}
+
+\begin{proof}
+(P1) Each phase-$0$ swap on a non-bulk right coset is an involution by
+Definition~\ref{def:phaseswap}, and identity is an involution on $H$;
+the disjoint union of involutions on the six cosets is an involution
+on $\Vsixhundred$.
+
+(P2) Direct from the definition.
+
+(P3) Each phase-$0$ swap exchanges $C_{52}$ and $C_{20}$ in its right
+coset; the K-class assignment is $\Ttau$-cycle-determined, so each
+swap pair has K-classes $\{52, 20\}$.
+
+(P4) For $v = v_k \in C_{52}$ in some non-bulk right coset,
+$\tausigma(\Ttau(v_k)) = \tausigma(v_{k+1}) = w_{k+1} =
+\Ttau(w_k) = \Ttau(\tausigma(v_k))$, with indices mod 10. Same for
+$v = w_k$. For $v \in H$, $\tausigma(v) = v$ and $\Ttau(v) =
+\tau v \in H$ also fixed.
+
+Antipodal compatibility. The element $\tau \in \twoI$ has order $10$
+in the binary icosahedral group; the unique central involution of
+$\twoI$ is $-1$, and the order-$10$ subgroup $\langle \tau \rangle$
+contains it as $\tau^5 = -1$ (this is the standard unit-quaternion
+fact $|\tau| = 1$ with $\tau^{10} = 1$ forcing $\tau^5 \in \{\pm 1\}$;
+$\tau^5 = 1$ would contradict $\mathrm{ord}(\tau) = 10$). Hence the
+antipodal map acts on cycle indices by
+$v_k \mapsto -v_k = \tau^5 v_k = v_{k+5}$
+(and similarly $w_k \mapsto w_{k+5}$), with indices mod $10$. Both
+$v_{k+5}$ and $w_{k+5}$ remain in the same right coset $Hg$, since
+right cosets are setwise $\Ttau$-invariant by
+Lemma~\ref{lem:rightcoset}. Therefore
+\[
+  \tausigma(-v_k) \;=\; \tausigma(v_{k+5}) \;=\; w_{k+5} \;=\; -w_k \;=\; -\tausigma(v_k),
+\]
+and analogously for $v = w_k$. For $v \in H$, $\tausigma(v) = v$ and
+$-v \in H$ (since $-1 \in H$), so $\tausigma(-v) = -v = -\tausigma(v)$.
+\end{proof}
+
+\section{The $\mathbb{Z}_2^5$ phase ambiguity}\label{sec:Z25}
+
+By Theorem~\ref{thm:phases}, each non-bulk right coset admits two
+maximin phases, $\{0, 5\}$. Choosing a phase independently for each
+of the five non-bulk right cosets gives $2^5 = 32$ admissible
+involutions, all satisfying (P1)–(P4) of Theorem~\ref{thm:main}. The
+group of phase choices is $\mathbb{Z}_2^5$, generated by the five
+per-coset antipodal shifts $j \mapsto j + 5$.
+
+\begin{remark}[Convention vs.~freedom]\label{rem:conv}
+The labels $\{0, 5\}$ for the maximin phase set are
+\emph{convention-dependent}; what is intrinsic is that
+$|\Phi(Hg)| = 2$ and that the two winning phases are antipodal
+(separated by $5$ on the length-$10$ cycle, equivalently related by
+$\tau^5 = -1$). The specific labels arise from:
+(i) the choice of base points $v_0 \in C_{52}$ and $w_0 \in C_{20}$ in
+Definition~\ref{def:phaseswap}; and
+(ii) the deterministic ordering of vertices supplied by
+\texttt{vfd\_v600.icosian.build\_vertices()}. A different choice of
+base points relabels the phases by a shift $j \mapsto j + c$ for some
+$c \in \mathbb{Z}/10$, but the $\mathbb{Z}_2^5$ orbit of canonical
+lifts is intrinsic to the construction.
+\end{remark}
+
+The certificate \texttt{verify.py} enumerates all $32$ phase
+combinations and confirms that every one yields an admissible
+$\tausigma$ involution satisfying (P1)–(P4).
+
+\section{Conclusion}\label{sec:concl}
+
+The binary icosahedral group $\twoI$ admits a canonical $\sigmaG$-Galois
+involution $\tausigma$ satisfying four structural properties (P1)–(P4)
+of Theorem~\ref{thm:main}, plus antipodal compatibility. The
+construction is a vertex permutation (motivated, but not required, by
+the computational reflection obstruction recorded in
+Remark~\ref{rem:reflfail}), realised via cycle-phase swaps on right
+cosets of the bulk subgroup $\Dicfive$ selected by symmetric-maximin
+$\sigmaG$-projection in the icosian trace metric
+(Theorem~\ref{thm:phases}). The $\mathbb{Z}_2^5$
+ambiguity in phase choice yields $32$ canonical lifts; we name the
+all-zero choice the canonical representative and exhibit its
+120-vertex map explicitly.
+
+\appendix
+
+\section{Verification certificate}\label{app:verify}
+
+The companion script \texttt{verify.py} performs the following exact
+checks:
+\begin{enumerate}[leftmargin=2em]
+\item $|\Vsixhundred| = 120$, $|H| = 20$, $|\Vtwentyfour| = 24$.
+\item Every non-bulk right coset $Hg$ is one whole $\Ttau$-cycle of
+$K=52$ plus one whole $\Ttau$-cycle of $K=20$.
+\item Regression: every non-bulk left coset $gH$ contains exactly
+two vertices from each of the ten non-bulk $\Ttau$-cycles
+(\emph{not} a whole-cycle carrier).
+\item Per non-bulk right coset, the symmetric maximin score $s(j)$ of
+Definition~\ref{def:maximin} satisfies $s(0) = s(5) = 0$ and
+$s(j) = -\tfrac{5}{4}$ for $j \in \{1,2,3,4,6,7,8,9\}$, hence
+$\Phi(Hg) = \{0, 5\}$.
+\item The phase-$(0,0,0,0,0)$ rebuild matches the loaded canonical
+map \texttt{data/tau\_sigma\_canonical.txt} vertex-by-vertex.
+\item The rebuilt map satisfies (P1)–(P4) and antipodal compatibility.
+\item Right-coset preservation: $\tausigma$ preserves each right coset
+$Hg$ setwise (post-build check, not part of the theorem statement; it
+holds by Definition~\ref{def:canonical}, since each per-coset phase
+swap is internal to its right coset, and is checked separately by the
+script — properties (P1)--(P4) alone do not imply it, since one could
+in principle pair a $K=52$ cycle of one coset with a $K=20$ cycle of
+another and still satisfy (P1)--(P4)).
+\item All $2^5 = 32$ phase combinations yield valid involutions
+satisfying (P1)–(P4).
+\end{enumerate}
+The script depends only on the Python standard library and the shared
+\texttt{vfd\_v600} package. Reproducibility command:
+\begin{verbatim}
+PYTHONPATH=papers/v600-programme/lib \
+    python3 papers/tau-sigma-construction/verify.py
+\end{verbatim}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

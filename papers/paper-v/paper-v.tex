@@ -13,6 +13,7 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{remark}[theorem]{Remark}
 
 \newcommand{\phig}{\varphi}
@@ -35,70 +36,74 @@
 \noindent\textbf{Status:} Preprint (not peer-reviewed)
 
 \begin{abstract}
-Building on Papers~I--IV~\citep{SmartI, SmartII, SmartIII, SmartIV}, we extend the $\phig$-scaled closure framework beyond the proton-to-electron mass ratio by introducing additional exact spectral ingredients from the 600-cell vertex graph. These include the full Laplacian spectrum, the shell-population decomposition, reflection coefficients on the dual vertex populations, and the Hopf-fiber spectrum. Together they define a broader spectral-geometric particle-mass model.
+Building on Papers~I--IV~\citep{SmartI, SmartII, SmartIII, SmartIV}, we extend the $\phig$-scaled closure framework beyond the proton-to-electron mass ratio by introducing additional spectral ingredients from the 600-cell vertex graph --- the full Laplacian spectrum (numerical diagonalisation plus imported exact algebraic forms), the shell-population decomposition, the icosahedral reflection coefficient $R_I$ on the dual vertex populations, the Hopf-fiber cycle spectrum (conditional on the standard Hopf decomposition), and the dodecahedral shell-4 reflection coefficient $R_D(4) = 15$ established as an exact first-passage theorem on the 600-cell absorbing Markov chain (Theorem~\ref{thm:RD4}). The resulting 13-particle mass-formula table additionally rests on two model-level conventions not proved as theorems in the present paper: (a) the identification of the Theorem~\ref{thm:RD4} first-passage ratio with the shell-4 coefficient in the mass-formula ansatz, and (b) the shell-5 boundary convention $R(\theta, 5) = R_I = 1/6$ used by the strange-quark entry. These conventions are explicit open items, not theorem consequences; under those conventions the reported $0.014\%$ average error is conditional on the theorem value $R_D(4) = 15$ (Corollary~\ref{cor:proton} quantifies this conditioning for the proton, showing the theorem value is load-bearing for the proton match).
 
-Within this framework, particle masses are described using three ingredients: a closure invariant $\Delta C$, a standing-wave self-consistency correction, and a winding contribution associated with the Hopf-fiber structure. Under explicit framework postulates, structural particle assignments, and numerically established geometric correspondences, the construction yields high-accuracy numerical correspondences across 13 non-reference particles, including quarks, charged leptons, the proton, neutron, and electroweak bosons. No continuous parameters are fitted, though the framework does include explicit discrete structural assignments and model-level anchor identifications. The same spectral data also supports a high-precision numerical correspondence for the fine structure constant.
+Within this framework, particle masses are described using three ingredients: a closure invariant $\Delta C$, a standing-wave self-consistency term, and a winding contribution associated with the Hopf-fiber structure. Under explicit framework postulates, a non-unique rule-based $(S,w)$ assignment scheme, three structural anchors (two tied to eigenvalues of the 600-cell Laplacian and one standalone), and ten chain correspondences for the remaining mixing angles (five forward-traceable from 600-cell primitives such as the integer Laplacian eigenvalues, the icosahedral reflection coefficient, the shell count, and the shell vertex counts; five reverse-identified post hoc), the construction admits high-accuracy numerical correspondences across 13 non-reference particles, including quarks, charged leptons, the proton, neutron, electroweak bosons, and the Higgs. No continuous parameters are fitted; the framework's predictive content is limited by the assignment-scheme freedom and by the post hoc identification of the chain ratios. The same spectral data also supports a high-precision numerical correspondence for the fine-structure constant.
 
-The paper separates exact computations on the 600-cell graph from framework postulates, structural assignment rules, and numerically established correspondences. It does not claim a first-principles derivation from the Standard Model, a complete dynamical theory, a unique derivation of all model identifications, or an explanation of the absolute mass scale.
+The paper separates exact computations on the 600-cell graph from framework postulates, structural assignment rules, and numerically established correspondences. It does not claim a first-principles derivation from the Standard Model, a complete dynamical theory, a unique derivation of all model identifications, an independent Born-rule derivation, or an explanation of the absolute mass scale.
 \end{abstract}
 
 %==================================================================
 \section{Introduction}\label{sec:intro}
 %==================================================================
 
-Paper~IV~\citep{SmartIV} presented a structured geometric ansatz recovering the proton-to-electron mass ratio $m_p/m_e = \phig^{1265/81} \approx 1835.8$ from the closure geometry of a $\phig$-scaled shell manifold, with zero fitted continuous parameters. Paper~III~\citep{SmartIII} established an exact eigenvalue correspondence ($\Delta C = 15 = \lambda_7$ of the 600-cell Laplacian) and reported the F4 Fibonacci extension. Paper~II~\citep{SmartII} proved a no-go theorem for shell-extension leptons and proposed a conditional winding operator.
+Paper~I~\citep{SmartI} set out the internal closure-geometry framework (combinatorial invariant $\Delta C$, assignment rules, three-order mass law) from which the proton-to-electron exponent $1265/81$ was first assembled, with the closure invariant $C(S) = \prod_{k \in S} k - \sum_{k \in S} k - 1$ asserted at the framework level. Paper~IV~\citep{SmartIV} supplies the explicit state-counting derivation of $C(S)$ via a tensor-product decomposition of the closure Hilbert space into vacuum, single-excitation, and connected-composite sectors, together with a uniqueness proposition, and presents the publication-facing proton/electron ansatz $m_p/m_e = \phig^{1265/81} \approx 1835.8$ with zero fitted continuous parameters. In the present paper, the framework-level role of $C(S)$ and $\Delta C$ is attributed to Paper~I and the state-counting derivation is attributed to Paper~IV. Paper~III~\citep{SmartIII} established an exact eigenvalue correspondence ($\Delta C = 15 = \lambda_7$ of the 600-cell Laplacian) and reported the F4 Fibonacci extension. Paper~II~\citep{SmartII} proved a no-go theorem for shell-extension leptons and proposed a conditional winding operator.
 
 The present paper extends this programme to a broader particle-mass model by introducing new spectral ingredients from the 600-cell. The extension requires three new ingredients beyond Papers~I--IV:
 
 \begin{enumerate}
-    \item A \textit{self-consistency correction} derived from standing-wave boundary reflections on the 600-cell's dual vertex populations (icosahedral and dodecahedral).
+    \item A \textit{self-consistency correction} modelled by mixing-weighted boundary reflections on the 600-cell's dual vertex populations (icosahedral and dodecahedral).
     \item A \textit{correspondence chain} that assigns a mixing angle $\theta^*$ to each particle through model-level geometric correspondences, rather than direct mass fitting or theorem-level derivation from the graph alone.
     \item An \textit{assignment map} connecting Standard Model quantum numbers to shell supports and winding numbers through eight physically motivated rules.
 \end{enumerate}
 
-Under the stated postulates and structural assignments, the resulting framework yields high-accuracy numerical correspondences across 13 non-reference particles (average relative error $0.014\%$). No continuous parameters are fitted, though the framework includes explicit discrete structural assignments and model-level anchor identifications. The same eigenvalue structure also supports a high-precision numerical correspondence for the fine structure constant.
+Under the stated postulates, structural assignments, and post hoc correspondence chain, the resulting framework admits high-accuracy numerical correspondences across 13 non-reference particles (average relative error $0.014\%$, using the theorem value $R_D(4) = 15$). No continuous parameters are fitted, though the framework includes a non-unique $(S,w)$ rule set, three structural anchors, and ten chain correspondences (five forward-traceable to 600-cell primitives, five reverse-identified). The same eigenvalue structure also supports a high-precision numerical correspondence for the fine-structure constant.
 
 \subsection*{Epistemic status and scope}
 
 This paper contains four distinct levels of claim:
 
 \begin{enumerate}
-    \item \textbf{Exact computations.} The 600-cell eigenvalue spectrum, shell structure, dual populations, reflection coefficients, and Hopf fiber eigenvalues are exact computed properties of the graph (Theorems~1--6).
-    \item \textbf{Numerically established correspondences.} The 13 particle-mass correspondences, the fine structure constant correspondence, and the chain ratios are high-precision numerical matches (average $0.014\%$), not analytically proven identities.
-    \item \textbf{Derived within the model.} The closure invariant and self-consistency condition are derived once the framework postulates and structural assignment layer are fixed.
+    \item \textbf{Exact computations.} The 600-cell eigenvalue spectrum (Proposition~\ref{thm:eigenvalues}) and BFS shell structure and dual populations (Proposition~\ref{thm:dual}) are computational propositions reproduced in the accompanying verification script. Proposition~\ref{thm:hopf} is conditional on the imported Hopf decomposition, which this paper cites but does not re-prove. Theorem~\ref{thm:uniqueness} establishes a narrow uniqueness result: among the eleven regular polytopes in 3D and 4D, the 600-cell is the unique one whose vertex-graph Laplacian spectrum contains both $\sqrt{5}$-valued entries and the rational value $15$. The dodecahedral shell-4 reflection coefficient $R_D(4) = 15$ is an exact rational theorem (Theorem~\ref{thm:RD4}), proved by solving a 9-state population-lumped absorbing chain ($6 \times 6$ transient block) over $\mathbb{Q}$.
+    \item \textbf{Numerically established correspondences.} The 13 particle-mass correspondences (average $0.014\%$, using the theorem value $R_D(4) = 15$), the fine-structure constant correspondence, and the chain ratios are high-precision numerical matches, not analytically proven identities; among the 10 chain ratios, five are forward-traceable to explicit 600-cell primitives (Section~\ref{sec:chain}, Table~\ref{tab:chain}) and five remain reverse-identified post hoc correspondences.
+    \item \textbf{Derived within the model.} The closure invariant is introduced at the framework level in Paper~I and given an explicit state-counting derivation in Paper~IV. The self-consistency term (Term~2 of Eq.~\eqref{eq:exponent}) is a model ansatz motivated by a WKB-style round-trip phase condition, not a theorem-level derivation.
     \item \textbf{Framework postulates.} Particles are standing waves on the 600-cell; the 600-cell geometry governs particle physics. These are not derived.
 \end{enumerate}
 
-The paper does not claim a first-principles derivation from the Standard Model, a complete dynamical theory, or an explanation of the absolute mass scale. No continuous parameters are fitted. The framework instead relies on exact graph computations, explicit structural assignments, and numerically established geometric correspondences.
+The paper does not claim a first-principles derivation from the Standard Model, a complete dynamical theory, or an explanation of the absolute mass scale. No continuous parameters are fitted, but the construction uses substantial discrete post hoc structure (structural assignments, a non-unique $(S,w)$ rule set, three structural anchors (two tied to eigenvalues, one standalone), and ten chain correspondences (five forward-traceable to 600-cell primitives, five reverse-identified)), and this should be kept in mind when reading ``zero continuous parameters''.
 
 \subsection*{Model layers}
 
 The present paper operates on four distinct layers:
 
 \begin{enumerate}
-    \item \textbf{Exact graph computations:} spectral and combinatorial properties of the 600-cell and its associated structures (Theorems~\ref{thm:eigenvalues}--\ref{thm:hopf}).
+    \item \textbf{Exact graph computations:} spectral and combinatorial properties of the 600-cell and its associated structures (Propositions~\ref{thm:eigenvalues}, \ref{thm:dual}, and~\ref{thm:hopf}; the first two are computational propositions reproduced in the verification script, the third is conditional on the standard Hopf decomposition; Theorem~\ref{thm:RD4} gives $R_D(4) = 15$ exactly via an absorbing Markov chain over $\mathbb{Q}$; Theorem~\ref{thm:uniqueness} establishes a narrow uniqueness result among the 11 regular polytopes in 3D and 4D).
     \item \textbf{Framework postulates:} the standing-wave interpretation of particles and the privileged role of the 600-cell.
     \item \textbf{Structural assignments:} the particle-to-support and particle-to-anchor map used within the model (Section~\ref{sec:assignments}).
-    \item \textbf{Numerical correspondences:} high-accuracy mass and constant matches obtained once the earlier layers are fixed (Sections~\ref{sec:results}--\ref{sec:alpha}).
+    \item \textbf{Numerical correspondences:} high-accuracy mass and constant matches obtained once the earlier layers are fixed (Section~\ref{sec:alpha} and Section~\ref{sec:results}).
 \end{enumerate}
 
 The strongest claims of the paper lie in Layer~1. The broad particle table belongs to Layers~3--4 and should be interpreted accordingly.
+
+\subsection*{Narrative placement (closure projection)}
+
+The numerical mass correspondences derived in this paper are an instance of the \textit{spectral projection class} of the closure-projection framework introduced in Paper~XXXIII~\citep{SmartXXXIII}: admissible eigenvalue and shell-resolvent functionals of the closure functional on the 600-cell, read through an observer-position placed as a bounded, stable, self-referential constraint substructure (Paper~XXIX~\citep{SmartXXIX}) inside the wave-substrate consolidated as the F1--F8 closure functional in Paper~XXXVI~\citep{SmartXXXVI}. The present paper computes the spectral-projection class numerically; the projection-class identification is interpretive, made in Paper~XXXIII, and does not modify any of the propositions, theorems, hypothesis flags, structural assignments, or chain correspondences of the present paper. Probabilistic outcomes (when projection minimisers are degenerate) are treated by Paper~XXX~\citep{SmartXXX}; the deterministic case applies here under this paper's stated assignment hypotheses.
 
 %==================================================================
 \section{The 600-Cell: Properties Used}\label{sec:600cell}
 %==================================================================
 
-This section collects the properties of the 600-cell vertex graph required by the mass formula. All are exact computations on a finite graph; proofs are by direct computation unless otherwise stated.
+This section collects the finite-graph quantities used by the mass formula. All results in this section are \emph{imported from P2} (the cascade algebraic substrate paper,~\citep{CascadeAlgSubstrate}), whose definitive statements and source audit are collected in P2 \S 6; some ingredients P2 establishes by internal computer-assisted proof (e.g.\ the icosian closure, the shell-to-conjugacy-class bijection, the equitable nine-cell partition, the first-passage identity $R_D(4) = 15$, the narrow polytope-uniqueness theorem), while others are themselves classical imports from the spectral-graph and $600$-cell literature (e.g.\ the Laplacian spectrum via the standard $2I$ character table, the Hopf decomposition into 12 $C_{10}$ fibres, and the classical spectra of the ten non-$600$-cell polytopes). The present section restates each result in the form used by the mass formula of Section~\ref{sec:formula} and retains local labels (\textsc{thm:eigenvalues}, \textsc{thm:uniqueness}, \textsc{thm:dual}, \textsc{thm:RD4}, \textsc{thm:hopf}) so that downstream cross-references in this paper resolve.
 
 \subsection{Definition and basic properties}
 
-The 600-cell is the regular 4-polytope with Schl\"afli symbol $\{3,3,5\}$: 120 vertices, 720 edges (length $1/\phig$), 1200 triangular faces, 600 tetrahedral cells, symmetry group $H_4$ (order 14400)~\citep{Coxeter1973}. All vertex coordinates are algebraic numbers in $\mathbb{Q}(\sqrt{5})$.
+The 600-cell is the regular 4-polytope with Schl\"afli symbol $\{3,3,5\}$: 120 vertices, 720 edges, 1200 triangular faces, 600 tetrahedral cells, symmetry group $H_4$ (order 14400)~\citep{Coxeter1973}. In the standard unit-circumradius normalisation, the edge length is $1/\phig$. All vertex coordinates are algebraic numbers in $\mathbb{Q}(\sqrt{5})$. Under Hamilton multiplication the 120 vertices form the binary icosahedral group $2I$ (P2, Theorem on icosian closure~\citep{CascadeAlgSubstrate}).
 
 \subsection{Eigenvalue spectrum}
 
-\begin{theorem}[Eigenvalue structure]\label{thm:eigenvalues}
-The graph Laplacian $L = 12I - A$ has exactly 9 distinct eigenvalues, all in $\mathbb{Q}(\sqrt{5})$, with perfect-square multiplicities:
-\end{theorem}
+\begin{proposition}[Eigenvalue structure, imported from P2]\label{thm:eigenvalues}
+The graph Laplacian $L = 12I - A$ of the 600-cell vertex graph has the nine distinct eigenvalues and multiplicities shown in Table~\ref{tab:spectrum}. The exact algebraic values in $\mathbb{Q}(\sqrt 5)$ and their isotypic multiplicities (squares of the nine irrep dimensions of $2I$) are derived in P2 \S 6 (Fact on the Laplacian spectrum~\citep{CascadeAlgSubstrate}) by combining the centrality of the shell-adjacency class sum (proved in P2 from the exact-arithmetic shell-to-conjugacy-class bijection) with the imported standard $2I$ character table. The accompanying script \texttt{run\_rigorous\_verification.py} cross-checks the values at floating-point precision.
+\end{proposition}
 
 \begin{table}[ht]
 \centering
@@ -121,11 +126,23 @@ Index & Eigenvalue $\lambda$ & Exact form & Multiplicity \\
 \end{tabular}
 \end{table}
 
-Total: $1+4+9+16+25+36+9+16+4 = 120 = |V|$. The perfect-square multiplicities reflect the representation theory of $H_4$.
+Total: $1+4+9+16+25+36+9+16+4 = 120 = |V|$. The multiplicities are perfect squares; the empirical observation that they arise from irreducible-representation dimensions of $H_4$ is consistent with the decomposition of the vertex module under $H_4$, but the present paper treats the multiplicity table as the relevant computational input and makes no claim about $H_4$ representation theory beyond that.
 
-\begin{theorem}[Uniqueness]\label{thm:uniqueness}
-Among all 21 regular polytopes in dimensions 2--4, the 600-cell is the unique one whose Laplacian eigenvalues involve $\sqrt{5}$ (equivalently, involve $\phig$).
+\begin{theorem}[Narrow uniqueness among the 11 regular polytopes in dimensions 3 and 4; imported from P2, computer-assisted and conditional on imported spectral tables]\label{thm:uniqueness}
+Among the eleven regular polytopes in dimensions three and four --- the five Platonic solids (tetrahedron, cube, octahedron, dodecahedron, icosahedron) and the six regular 4-polytopes (5-cell, 8-cell, 16-cell, 24-cell, 120-cell, and 600-cell) --- the 600-cell is the unique one whose vertex-graph Laplacian spectrum simultaneously contains
+\begin{enumerate}
+    \item[\textup{(i)}] values in $\mathbb{Q}(\sqrt{5}) \setminus \mathbb{Q}$ (equivalently, values involving $\phig$), and
+    \item[\textup{(ii)}] the rational eigenvalue $15$.
+\end{enumerate}
 \end{theorem}
+
+\begin{proof}
+P2 \S 6 (Narrow polytope uniqueness theorem~\citep{CascadeAlgSubstrate}) carries out the full case analysis over the eleven-polytope family, using $\lambda_{\max}(L) \leq 2d$~\citep[Ch.~13]{GodsilRoyle2001} and the classical Laplacian spectra of the ten non-600-cell members~\citep[Ch.~3]{BrouwerHaemers2012}. The local script \texttt{run\_polytope\_uniqueness\_narrow.py} independently builds the ten lower-dimensional vertex graphs, computes their Laplacian spectra, and cross-checks each case.
+\end{proof}
+
+\begin{remark}[Scope of the uniqueness statement]
+Theorem~\ref{thm:uniqueness} is confined to the eleven regular polytopes in dimensions 3 and 4; P2 \S 6 records the extension to dimensions $\geq 5$ (simplex / hypercube / cross-polytope families all have integer spectra, so property (i) fails) and to 2D cycle graphs ($\lambda_{\max}(C_n) \leq 4 < 15$).
+\end{remark}
 
 \subsection{Shell structure and dual populations}
 
@@ -149,9 +166,13 @@ Shell $d$ & $|S_d|$ & Icosahedral & Dodecahedral \\
 \end{tabular}
 \end{table}
 
-\begin{theorem}[Dual populations]\label{thm:dual}
-At shells $d \in \{2,3,4\}$, vertices split into two populations distinguished by their intersection numbers $(a,b,c)$ where $a$ = neighbours at same shell, $b$ = neighbours at next shell, $c$ = neighbours at previous shell. The reflection coefficient $R = c/b$ is:
-\end{theorem}
+\begin{proposition}[Dual populations; imported from P2]\label{thm:dual}
+At each of shells $d \in \{2, 3, 4\}$, the vertices of the 600-cell vertex graph split into two populations (``icosahedral'' and ``dodecahedral'') distinguished by their BFS intersection numbers $(a, b, c)$ (neighbours at same / next / previous shell), with the counts shown in Table~\ref{tab:reflection}. The single-step ratio $R = c/b$ is $1/6$ for the shell-2 and shell-3 icosahedral populations, $1$ for shell-2 dodecahedral and for shell-4 icosahedral, $2$ for shell-3 dodecahedral, and formally $+\infty$ (trapped, with $b = 0$) for shell-4 dodecahedral; the trapped case is handled by the first-passage theorem (Theorem~\ref{thm:RD4}) giving the exact rational $R_D(4) = 15$.
+\end{proposition}
+
+\begin{proof}
+P2 \S 6 (Equitable nine-cell partition with full quotient matrix~\citep{CascadeAlgSubstrate}) establishes the dual-population decomposition together with the full $9 \times 9$ integer quotient matrix $M$ verified by exhaustive enumeration on the 120-vertex graph. Table~\ref{tab:reflection} is the coarse $(a, b, c)$ contraction of that matrix: $a = M_{S, S}$; $b$ sums the entries into the next outward BFS shell; $c$ sums the entries into the previous inward BFS shell. BFS shell sizes $|S_k| = 1, 12, 32, 42, 32, 1$ are $H_4$-vertex-transitive (P2 \S 6, BFS-shell proposition). The local script \texttt{run\_rigorous\_verification.py} reproduces Table~\ref{tab:reflection}; \texttt{run\_rd4\_exact\_rational.py} reproduces the full quotient matrix.
+\end{proof}
 
 \begin{table}[ht]
 \centering
@@ -171,21 +192,47 @@ Shell $d$ & Population & Count & $(a,b,c)$ & $R$ \\
 \end{tabular}
 \end{table}
 
-The icosahedral reflection coefficient $R_I = 1/6$ at shells 2 and 3 follows from the edge count: each icosahedral vertex connects to exactly 1 icosahedral and 5 dodecahedral outward neighbours. The transition is one-way: dodecahedral vertices never connect back to icosahedral vertices at any shell. The dodecahedral population is absorbing.
+The icosahedral single-step ratios $R_I = 1/6$ at shells 2 and 3 follow from the edge count: each icosahedral shell-$d$ vertex with intersection numbers $(5, 6, 1)$ connects to exactly 1 icosahedral and 5 dodecahedral outward neighbours. Table~\ref{tab:reflection} lists the single-step ratios $c/b$ per (shell, population) for reference; the mass formula of Section~\ref{sec:formula} uses the uniform-icosahedral convention $R_I = 1/6$ across all shells, together with shell-dependent $R_D(d)$, and is discussed there. At the BFS-shell level reproduced in \texttt{run\_rigorous\_verification.py}, no outward dodecahedral-to-icosahedral transitions occur in the enumerated one-step data, consistent with an outwardly absorbing description in the single-step picture; the exact first-passage formalism for the shell-4 trapped case is given in Theorem~\ref{thm:RD4}.
 
-\begin{theorem}[Exact $R_D(4)$]\label{thm:RD4}
-The effective reflection coefficient at the trapped shell-4 dodecahedral vertices is $R_D(4) = 15$, computed from the absorbing Markov chain on the BFS transition graph.
+\begin{theorem}[$R_D(4) = 15$ exactly, via first-passage on the 600-cell; imported from P2]\label{thm:RD4}
+At shell~4 the 20 dodecahedral vertices have intersection numbers $(a,b,c) = (6,0,6)$, so their single-step outward coefficient is formally $+\infty$ (trapped). For the trapped case, define $R_D(4)$ as the ratio
+\begin{equation}
+    R_D(4) \;=\; \frac{\mathbb{P}(\text{first-passage hits shell 3} \,\mid\, \text{starting at a shell-4 trapped vertex})}{\mathbb{P}(\text{first-passage hits shell 5} \,\mid\, \text{starting at a shell-4 trapped vertex})},
+\end{equation}
+where the underlying walk is the uniform nearest-neighbour random walk on the 600-cell vertex graph with shell~3 and shell~5 treated as absorbing sets. Then, as an exact rational identity,
+\begin{equation}
+    \mathbb{P}(\text{hit shell 3 first}) \;=\; \tfrac{15}{16}, \qquad
+    \mathbb{P}(\text{hit shell 5 first}) \;=\; \tfrac{1}{16}, \qquad
+    \boxed{\; R_D(4) \;=\; 15 \;.}
+\end{equation}
+The value is identical across all 20 trapped vertices.
 \end{theorem}
+
+\begin{proof}
+P2 \S 6 (Theorem on the first-passage identity $R_D(4) = 15$~\citep{CascadeAlgSubstrate}) proves the statement from the equitable nine-cell partition (P2 Proposition on the equitable partition with full quotient matrix) and the strong-lumpability theorem of~\citep[Ch.~V]{KemenySnell1976} applied to the uniform walk. The P2 proof gives an inline derivation via first-step analysis on the two shell-4 cells $B_4^{\mathrm{dod}}$ and $B_4^{\mathrm{ico}}$, yielding
+\[
+  \mathbb{P}(\text{hit }(3,\mathrm{ico})\text{ first}) = \tfrac{1}{2}, \quad
+  \mathbb{P}(\text{hit }(3,\mathrm{dod})\text{ first}) = \tfrac{7}{16}, \quad
+  \mathbb{P}(\text{hit }(5,\mathrm{all})\text{ first}) = \tfrac{1}{16},
+\]
+which sum to $1$; hence $\mathbb{P}(\text{hit shell 3 first}) = 15/16$, $\mathbb{P}(\text{hit shell 5 first}) = 1/16$, $R_D(4) = 15$. By equitability of the nine-cell partition (P2 \S 6,~\citep{CascadeAlgSubstrate}), the same exact rational values hold for every start vertex in $B_4^{\mathrm{dod}}$ (the 20 shell-4 dodecahedral vertices). The local script \texttt{run\_rd4\_exact\_rational.py} reproduces the P2 derivation end-to-end in Python's \texttt{fractions} module.
+\end{proof}
+
+\begin{remark}[How Theorem~\ref{thm:RD4} enters the mass formula]
+The mass formula of Section~\ref{sec:formula} uses the uniform-icosahedral convention $R_I = 1/6$ together with shell-dependent $R_D(d)$: $R_D(2) = 1$, $R_D(3) = 2$ from the single-step $c/b$ at shells 2 and 3, and $R_D(4) = 15$ from Theorem~\ref{thm:RD4}. Theorem~\ref{thm:RD4} therefore supplies an exact rational value for $R_D(4)$; Paper~V's mass formula adopts this value in Eq.~\eqref{eq:exponent} by the model-level identification that the shell-4 dodecahedral coefficient equals the first-passage ratio of the theorem (an additional model choice, not a consequence of the theorem alone). The single-step $c/b$ values at every (shell, population) pair are listed in Table~\ref{tab:reflection} for reference, but the mass formula does not use those per-population single-step values directly --- it uses the uniform $R_I$ for the icosahedral component and the shell-dependent $R_D(d)$ for the dodecahedral component. The first-passage definition used for $R_D(4)$ in Theorem~\ref{thm:RD4} differs in general from the single-step $c/b$ where the latter is defined; Paper~V's mass formula does not invoke first-passage values at $b > 0$ populations, and this divergence is therefore immaterial to Eq.~\eqref{eq:exponent}.
+\end{remark}
 
 \subsection{Hopf fibration}
 
-\begin{theorem}[Hopf fiber spectrum]\label{thm:hopf}
-The 600-cell decomposes into 12 Hopf fibers, each a decagonal cycle $C_{10}$. The Laplacian eigenvalues of $C_{10}$ are $E_k = 2 - 2\cos(2\pi k/10)$ for $k = 0, \ldots, 9$. Explicitly:
+\begin{proposition}[Hopf-fiber cycle spectrum; imported from P2]\label{thm:hopf}
+Assume the standard Hopf decomposition of the 600-cell into 12 great-decagon fibers~\citep{Coxeter1973, DescHopf600}. The Laplacian eigenvalues of each $C_{10}$ fiber are $E_k = 2 - 2\cos(2\pi k/10)$ for $k = 0, \ldots, 9$. Explicitly:
 \[
 E_0 = 0, \quad E_1 = \phig^{-2}, \quad E_2 = 3 - \phig, \quad E_3 = \phig^2, \quad E_4 = 2 + \phig, \quad E_5 = 4
 \]
 All are algebraic numbers in $\mathbb{Q}(\phig)$.
-\end{theorem}
+\end{proposition}
+
+Statement and proof are in P2 \S 6 (Fact on the Hopf decomposition and Proposition on the Hopf-fibre cycle spectrum~\citep{CascadeAlgSubstrate}): the cycle-spectrum computation is exact on a cycle graph, and the decomposition of the 600-cell into 12 $C_{10}$ fibers is imported from the classical 600-cell literature.
 
 %==================================================================
 \section{The Mass Formula}\label{sec:formula}
@@ -195,7 +242,7 @@ Within the present framework, we introduce a spectral-geometric mass ansatz. Thi
 
 \subsection{The closure invariant}
 
-Paper~IV~\citep{SmartIV} established that for a shell support $S$, the closure invariant $C(S) = \prod_{k \in S} k - \sum_{k \in S} k - 1$ counts connected multi-shell composite states. The inter-class difference $\Delta C = C(S) - C(\{1\})$ provides the leading-order mass exponent.
+Paper~I~\citep{SmartI} introduces the closure invariant $C(S) = \prod_{k \in S} k - \sum_{k \in S} k - 1$ for a shell support $S$ at the framework level; Paper~IV~\citep{SmartIV} supplies the explicit tensor-product state-counting derivation of this formula. The inter-class difference $\Delta C = C(S) - C(\{1\})$ provides the leading-order mass exponent.
 
 \subsection{The standing-wave equation}
 
@@ -208,15 +255,42 @@ where:
     E(\theta) = \Delta C - \frac{\ln \prod_{d \in S} R(\theta, d)}{2|S| \ln \phig} + f(w)
 \end{equation}
 
-\textbf{Term 1: $\Delta C$} --- the closure invariant (Paper~IV). Counts interaction channels and determines the leading mass exponent.
+\textbf{Term 1: $\Delta C$} --- the closure invariant (framework-level in Paper~I; state-counting derivation in Paper~IV). Counts interaction channels and determines the leading mass exponent.
 
-\textbf{Term 2: Self-consistency correction} --- derived from the WKB round-trip phase condition for a standing wave in a cavity of depth $|S|$ shells. The round trip crosses $2|S|$ boundaries, each with reflection coefficient:
+\textbf{Term 2: Self-consistency correction} --- motivated heuristically by a WKB-style round-trip phase condition for a standing wave in a cavity of depth $|S|$ shells, with each of the $2|S|$ shell boundaries assigned a mixing-weighted reflection coefficient:
 \begin{equation}
     R(\theta, d) = R_I \cos^2\theta + R_D(d) \sin^2\theta
 \end{equation}
-This is the Born rule: $\langle\psi|\hat{R}|\psi\rangle$ for $|\psi\rangle = \cos\theta\,|\text{ico}\rangle + \sin\theta\,|\text{dod}\rangle$. The energy correction is $-\ln(\prod R)/(2|S|\ln\phig)$.
+where $R_I = 1/6$ is the uniform icosahedral reflection coefficient used by Paper~V across all shells (motivated by the shell-2 and shell-3 intersection numbers $(a, b, c) = (5, 6, 1)$ giving $c/b = 1/6$ at the icosahedral population, extended by the model convention of uniform-icosahedral reflection to every shell), and $R_D(d)$ is the shell-dependent dodecahedral coefficient. For shells $d \in \{2, 3\}$, the single-step rule $R_D(d) = c/b$ gives $R_D(2) = 1$ and $R_D(3) = 2$ from the intersection numbers $(6, 3, 3)$ and $(6, 2, 4)$ of Table~\ref{tab:reflection}. For the trapped shell-4 dodecahedral population (intersection numbers $(6, 0, 6)$, so single-step $c/b$ is formally $+\infty$), Paper~V adopts the first-passage quantity of Theorem~\ref{thm:RD4} as the shell-4 coefficient in the mass ansatz, giving the exact rational value $R_D(4) = 15$. The theorem proves the first-passage ratio; the identification of that ratio with the coefficient in Eq.~\eqref{eq:exponent} is an additional model-level choice (the mass-ansatz boundary convention), not a consequence of the theorem alone. For shells outside the dual-populations Table~\ref{tab:reflection} (the boundary shells $d \in \{1, 5\}$), Eq.~\eqref{eq:exponent} uses the $\theta$-independent value $R(\theta, d) = R_I = 1/6$ by the same uniform-icosahedral convention, consistent with the shell-1 single-step value $c/b = 1/6$ and extended to the single-vertex antipode shell 5 where both the single-step and the two-boundary first-passage forms are indeterminate.
 
-\textbf{Term 3: Winding energy} --- from the Hopf fibration (Theorem~\ref{thm:hopf}):
+Complete values used by the mass formula:
+\[
+R_I = \tfrac{1}{6} \quad \text{(uniform)}, \qquad R_D(2) = 1, \quad R_D(3) = 2, \quad R_D(4) = 15,
+\]
+with $R_D(4) = 15$ proved exactly in Theorem~\ref{thm:RD4}.
+
+\begin{corollary}[Proton exponent under the mass-formula ansatz with $R_D(4) = 15$]\label{cor:proton}
+Assume Eq.~\eqref{eq:exponent} with the uniform-icosahedral convention $R_I = 1/6$, the shell-4 coefficient $R_D(4) = 15$ adopted from Theorem~\ref{thm:RD4}, the proton support $S = \{2, 3, 4\}$ with $\Delta C = 15$, winding $w = 1$ (so $f(w) = 0$), and the anchor $\sin^2\theta_p = 12/(26 \phig^3) = 6/(13 \phig^3)$ (Section~\ref{sec:chain}). Then the mass-formula exponent takes the numerical value
+\[
+E_{\mathrm{proton}} \;=\; 15 \;+\; \frac{-\ln \prod_{d \in \{2,3,4\}} R(\theta_p, d)}{6 \ln \phig} \;\approx\; 15.61742\,,
+\]
+matching the Paper~I/IV exponent $1265/81 \approx 15.61728$ to a relative precision of $\sim 9 \times 10^{-6}$.
+\end{corollary}
+
+\begin{proof}
+Direct substitution. With $\sin^2\theta_p = 6/(13 \phig^3)$ and $\cos^2\theta_p = 1 - 6/(13 \phig^3)$, using $\phig^3 = 2 + \sqrt{5}$ so $\phig^{-3} = \sqrt{5} - 2 = 2\phig - 3$, one evaluates numerically:
+\[
+R(\theta_p, 2) = R_I \cos^2\theta_p + R_D(2) \sin^2\theta_p \approx 0.25746, \quad R(\theta_p, 3) \approx 0.36641, \quad R(\theta_p, 4) \approx 1.78277.
+\]
+The product is $\prod_d R(\theta_p, d) \approx 0.16817$, so $-\ln(\prod R) / (6 \ln \phig) \approx 0.61742$, and $E = 15 + 0.61742 = 15.61742$. The comparison to $1265/81 = 15.61728\ldots$ gives the quoted relative precision. The calculation is reproduced numerically in \texttt{run\_rigorous\_verification.py} with $R_D(4) = 15$ substituted for the legacy capped value.
+\end{proof}
+
+\begin{remark}[Load-bearing role of Theorem~\ref{thm:RD4}]
+Replacing $R_D(4) = 15$ by the superseded capped value $R_D(4) = 10$ in the same calculation gives $E \approx 15.7437$ and $m_p / m_e = \phig^E \approx 1951$, far from the observed $\approx 1836$. The exact-rational value $R_D(4) = 15$ proved in Theorem~\ref{thm:RD4} is therefore indispensable for the proton match in Eq.~\eqref{eq:exponent} under Paper~V's ansatz: the reported $0.014\%$ proton mass error in Table~\ref{tab:results} is conditional on the theorem value. The theorem proves the first-passage ratio; Paper~V's choice to identify that ratio with the shell-4 coefficient in Eq.~\eqref{eq:exponent} is an additional model-level identification (the mass-ansatz ``boundary convention'' of Section~\ref{sec:formula}), not itself a consequence of the theorem.
+\end{remark}
+The quadratic form in $(\cos\theta, \sin\theta)$ matches the Born-rule mixing weights for a two-component state $|\psi\rangle = \cos\theta\,|\text{ico}\rangle + \sin\theta\,|\text{dod}\rangle$. No explicit Hamiltonian, boundary condition, semiclassical parameter, or phase-integral derivation is presented here. The two-component mixing rule is a model ansatz; Paper~XXX~\citep{SmartXXX} gives only conditional support for Born-type weighting, and its main uniqueness theorem is scoped to $N \geq 3$ components --- the present two-component case ($N = 2$) is not covered by that theorem. Term~2 is therefore a model ansatz rather than a theorem-level derivation. The exponent contribution used in Eq.~\eqref{eq:exponent} is $-\ln(\prod R)/(2|S|\ln\phig)$.
+
+\textbf{Term 3: Winding energy} --- motivated by the Hopf-fiber cycle spectrum under the cited decomposition (Proposition~\ref{thm:hopf}):
 \begin{equation}\label{eq:winding}
     f(w) = \phig^N \times \left[\frac{E_{w-1}(C_{10})}{E_1(C_{10})}\right]^{1/|S|}
 \end{equation}
@@ -224,18 +298,18 @@ where $N = 5$ is the shell count and $E_k$ are the decagonal fiber eigenvalues.
 
 \subsection{Why $\phig$-exponential scaling}
 
-The 600-cell edge length is $1/\phig$. Geometric path length per shell is $\ln\phig$. Standing-wave energies scale inversely with cavity length, giving $\ln(m/m_{\text{ref}}) \propto E \times \ln\phig$, hence $m = m_{\text{ref}} \times \phig^E$.
+In the standard unit-circumradius normalisation the 600-cell edge length is $1/\phig$. The ansatz takes the \emph{effective} geometric path length per shell to be $\ln\phig$ rather than $1/\phig$, i.e.\ a logarithmic shell-index length scale rather than the Euclidean edge length; this is a model-level choice that multiplicatively produces the $\phig^E$ scaling used here, and is not claimed to follow uniquely from the 600-cell's Euclidean geometry. Under this convention, standing-wave energies scale inversely with cavity length and give $\ln(m/m_{\mathrm{ref}}) \propto E \times \ln\phig$, hence $m = m_{\mathrm{ref}} \times \phig^E$.
 
 %==================================================================
-\section{The Fine Structure Constant}\label{sec:alpha}
+\section{The Fine-Structure Constant}\label{sec:alpha}
 %==================================================================
 
-The four integer eigenvalues of the 600-cell Laplacian ($\lambda_3 = 9$, $\lambda_4 = 12$, $\lambda_5 = 14$, $\lambda_7 = 15$) also support a high-precision numerical correspondence for the fine structure constant:
+The four integer eigenvalues of the 600-cell Laplacian ($\lambda_3 = 9$, $\lambda_4 = 12$, $\lambda_5 = 14$, $\lambda_7 = 15$) also support a high-precision numerical correspondence for the fine-structure constant:
 \begin{equation}\label{eq:alpha}
-    \alpha^{-1} = 3(\lambda_5 + \lambda_7) + (\lambda_3 + \lambda_4 + \lambda_5 + \lambda_7) + \frac{\pi}{3(\lambda_5 + \lambda_7)} = 87 + 50 + \frac{\pi}{87} = 137.036
+    \alpha^{-1} \;\approx\; 3(\lambda_5 + \lambda_7) + (\lambda_3 + \lambda_4 + \lambda_5 + \lambda_7) + \frac{\pi}{3(\lambda_5 + \lambda_7)} \;=\; 87 + 50 + \frac{\pi}{87} \;\approx\; 137.036
 \end{equation}
 
-Accuracy: 0.81 ppm from the observed value $137.036$.
+Numerically, $87 + 50 + \pi/87 \approx 137.03611$, compared with the CODATA~2018~\citep{CODATA2018} value $\alpha^{-1} = 137.035999084(21)$: the match is at the $\sim 0.81$~ppm level. The choice of the integer combination $(3,1,1,1,1)$ of the four integer eigenvalues, and the particular role of $3(\lambda_5 + \lambda_7) = 87$ in both the leading term and the phase-correction denominator, is not derived here; it is an engineered numerical combination of spectral integers of the 600-cell, chosen to match the observed $\alpha^{-1}$, and should be read as an arithmetic coincidence at the stated precision rather than as a derived identity or a spectral-data consequence.
 
 \begin{table}[ht]
 \centering
@@ -243,11 +317,11 @@ Accuracy: 0.81 ppm from the observed value $137.036$.
 \label{tab:alpha}
 \begin{tabular}{@{}ccl@{}}
 \toprule
-Component & Value & Geometric origin \\
+Component & Value & Post hoc geometric label \\
 \midrule
-$3(\lambda_5 + \lambda_7)$ & 87 & Edge + face modes of the icosahedron-dodecahedron compound \\
+$3(\lambda_5 + \lambda_7)$ & 87 & Suggestive of edge + face modes of the icosahedron--dodecahedron compound \\
 $\lambda_3 + \lambda_4 + \lambda_5 + \lambda_7$ & 50 & Sum of the four integer eigenvalues \\
-$\pi / [3(\lambda_5 + \lambda_7)]$ & $0.036$ & Geometric phase correction \\
+$\pi / [3(\lambda_5 + \lambda_7)]$ & $0.036$ & Suggestive of a geometric phase correction \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -258,13 +332,13 @@ $\pi / [3(\lambda_5 + \lambda_7)]$ & $0.036$ & Geometric phase correction \\
 \section{Model-Level Geometric Correspondence Chain}\label{sec:chain}
 %==================================================================
 
-\subsection{Three geometric anchors}
+\subsection{Three structural anchors (two eigenvalue-tied, one standalone)}
 
-Each anchor couples to a different eigenvalue of the 600-cell:
+Two of the three anchors are tied to chosen eigenvalues of the 600-cell Laplacian; the up-quark anchor is a standalone structural assignment whose geometric origin is not claimed here beyond the stated ratio form.
 
 \begin{table}[ht]
 \centering
-\caption{Geometric anchors for the prediction chain.}
+\caption{Structural anchors for the correspondence chain (two eigenvalue-tied, one standalone).}
 \label{tab:anchors}
 \begin{tabular}{@{}llll@{}}
 \toprule
@@ -277,7 +351,7 @@ Up quark & $3/(7\phig^5)$ & --- & Lightest confined quark \\
 \end{tabular}
 \end{table}
 
-\textsc{Status:} The anchors are structural assignments within the model. They are not derived from first principles; they are determined by matching each anchor to the eigenvalue most naturally associated with its physical role.
+\textsc{Status:} The anchors are structural assignments within the model. For the top and proton anchors the assignment is made by matching to the eigenvalue naturally associated with the stated physical role ($\lambda_7$ for the heaviest quark; $\lambda_4$ for the stable baryon). The up-quark anchor ratio $3/(7\phig^5)$ is carried as a stand-alone structural assignment; the combination $(3, 7)$ is not derived here from 600-cell data and should be read as a model-level input.
 
 \subsection{Chain steps}
 
@@ -287,7 +361,7 @@ Starting from the three anchors, each subsequent particle's $\sin^2\theta$ follo
 
 \begin{table}[ht]
 \centering
-\caption{Complete prediction chain: 3 anchors + 10 chain steps.}
+\caption{Model-level correspondence chain: 3 anchors + 10 numerical correspondences.}
 \label{tab:chain}
 \begin{tabular}{@{}cllll@{}}
 \toprule
@@ -296,35 +370,42 @@ Starting from the three anchors, each subsequent particle's $\sin^2\theta$ follo
 1 & top & $15/(2\phig^8)$ & Anchor ($\lambda_7$) & Structural within model \\
 2 & proton & $12/(26\phig^3)$ & Anchor ($\lambda_4$) & Structural within model \\
 3 & up & $3/(7\phig^5)$ & Anchor & Structural within model \\
-4 & Z & top $+ 87\alpha$ & 87 = compound modes & Numerical \\
-5 & charm & top $\times (5/6)\phig^{-3}$ & $5/6 = 1 - R_I$ & Numerically established \\
-6 & W & Z $\times (5/2)\phig^{-2}$ & $5/2 = N/2$ & Numerically established \\
-7 & Higgs & Z $/\, [(39/2)\phig^{-3}]$ & $39/2 = |S|(d{+}1)/2$ & Numerically established \\
-8 & muon & Higgs $\times 8/3$ & $(d{-}|S_H|)/|S_Z|$ & Numerically established \\
-9 & tau & Higgs $\times 23/8$ & $\approx 16\phig/9$ & Numerically established \\
-10 & down & tau $\times 2\phig^{-3}$ & $2 = R_D(3)$ & Numerically established \\
-11 & strange & tau $\times 9/8$ & $9/8 = \lambda_3/(d{-}2|S|)$ & Numerically established \\
-12 & bottom & top $\times (43/6)\phig^{-3}$ & $43/6 = V_3/6 + R_I$ & Numerically established \\
-13 & neutron & proton $- \Delta_q \alpha/\phig^2(1{+}\alpha)$ & EM splitting & Numerically established \\
+4 & Z & top $+ 87\alpha$ & $87 = 3(\lambda_5 + \lambda_7) = 3(14 + 15)$ & Forward-traceable to integer eigenvalues \\
+5 & charm & top $\times (5/6)\phig^{-3}$ & $5/6 = 1 - R_I$ (uniform) & Forward-traceable to $R_I$ convention \\
+6 & W & Z $\times (5/2)\phig^{-2}$ & $5/2 = N/2$ with $N = 5$ shells & Forward-traceable to shell count \\
+7 & Higgs & Z $/\, [(39/2)\phig^{-3}]$ & pattern: $39/2$ (suggestive integer combination) & Reverse-identified correspondence \\
+8 & muon & Higgs $\times 8/3$ & pattern: $8/3$ (suggestive integer combination) & Reverse-identified correspondence \\
+9 & tau & Higgs $\times 23/8$ & pattern: $23/8 \approx 16\phig/9$ (approximate $\phig$ match) & Reverse-identified correspondence \\
+10 & down & tau $\times 2\phig^{-3}$ & $2 = R_D(3) = c/b$ at shell-3 dod & Forward-traceable to intersection $(6,2,4)$ \\
+11 & strange & tau $\times 9/8$ & pattern: $9/8$ (suggestive integer combination) & Reverse-identified correspondence \\
+12 & bottom & top $\times (43/6)\phig^{-3}$ & $43/6 = V_3/6 + R_I = 42/6 + 1/6$ & Forward-traceable to $V_3 = 42$ and $R_I$ \\
+13 & neutron & proton $- \Delta_q \alpha/\phig^2(1{+}\alpha)$ & EM splitting & Reverse-identified correspondence \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Every ratio in the chain is associated with a geometric quantity: eigenvalues ($\lambda_3 = 9$, $\lambda_4 = 12$, $\lambda_5 = 14$, $\lambda_7 = 15$), reflection coefficients ($R_I = 1/6$, $R_D(3) = 2$), vertex counts, and shell dimensions. These identifications are numerically established to high precision within the model, but are not proven algebraically from first principles, nor are they claimed to be the unique possible identifications absent a deeper dynamical derivation.
+The chain entries are of two classes. Five chain coefficients ($Z$, charm, $W$, down, bottom) are \emph{forward-traceable to explicit 600-cell primitives} once the chain architecture (product of anchor times $\phig^{\text{integer}}$ times rational factor) is fixed: the $Z$ coefficient $87 = 3(\lambda_5 + \lambda_7) = 3(14 + 15)$ is an integer identity in the 600-cell Laplacian spectrum (Proposition~\ref{thm:eigenvalues}); the charm ratio $5/6 = 1 - R_I$ is the complement of the uniform-icosahedral convention $R_I = 1/6$; the $W$ ratio $5/2 = N/2$ is half the BFS shell count $N = 5$; the down ratio $2 = R_D(3)$ is the single-step $c/b$ at the shell-3 dodecahedral population; the bottom ratio $43/6 = V_3/6 + R_I = 42/6 + 1/6$ is the shell-3 vertex count $V_3 = 42$ divided by six, plus the uniform $R_I$. Forward-traceability here means the numerical identity holds exactly between the chain coefficient and the stated 600-cell combinatorial quantity; it does not mean the underlying particle masses are derived from first principles. The other five entries (Higgs, muon, tau, strange, neutron) remain reverse-identified post hoc numerical correspondences, with the $23/8$ tau ratio explicitly acknowledged in the accompanying derivation material~\citep[see][]{PaperV_scripts_h4}. None of the 10 chain entries is proven as an algebraic identity from first principles in the current manuscript; the forward-traceable class traces each ratio to an explicit 600-cell primitive, while the reverse-identified class is a pattern match at high numerical precision.
 
 %==================================================================
 \section{Results}\label{sec:results}
 %==================================================================
 
-The table below should be interpreted at the level of the model layers identified in the introduction. It is not a theorem-level derivation of the particle spectrum from the 600-cell alone. Rather, it reports the numerical output of the spectral-geometric framework once the exact graph computations, framework postulates, structural assignments, and chain correspondences are fixed. The evidential weight of the correspondences is not uniform across the particle table, since the experimental uncertainties differ substantially between sectors; agreement for tightly measured masses carries greater discriminating force than agreement in sectors with broader experimental uncertainty.
+The table below should be interpreted at the level of the model layers identified in the introduction. It is not a theorem-level derivation of the particle spectrum from the 600-cell alone. Rather, it reports the numerical output of the spectral-geometric framework once the exact graph computations, framework postulates, structural assignments, and chain correspondences are fixed. The following material qualifications apply to the headline ``$0.014\%$ average relative error'' quoted alongside the table, and should be kept in mind while reading that figure:
+\begin{itemize}
+    \item The average is over 13 entries whose PDG~\citep{Workman2022} targets mix mass schemes: pole masses for the charged leptons, proton, neutron, top, $W$, $Z$, and Higgs; $\overline{\mathrm{MS}}$ running masses for the light quarks $u, d, s$ at $2$~GeV and for $c$ and $b$ at their own mass (see Table~\ref{tab:results} caption). Paper V's framework does not distinguish mass schemes internally.
+    \item The strange-quark entry uses the shell-5 boundary convention $R(\theta, 5) = R_I = 1/6$ not separately proved in this manuscript (Section~\ref{sec:formula}); 12 of the 13 non-reference entries rely only on coefficient inputs that are within the stated convention-plus-theorem framework (i.e.\ $R_I = 1/6$ uniform, $R_D(d)$ for $d \in \{2, 3, 4\}$ from single-step $c/b$ or Theorem~\ref{thm:RD4}), without additional shell-5 ad hoc structure.
+    \item The average uses the theorem value $R_D(4) = 15$ (Theorem~\ref{thm:RD4}); Corollary~\ref{cor:proton} quantifies the load-bearing role of that value for the proton entry.
+    \item The tightly-measured entries (muon, proton, neutron, tau, $W$, $Z$) show relative errors that exceed the PDG experimental uncertainty by one to several orders of magnitude, so the agreement there is a within-framework numerical correspondence, not a within-uncertainty match.
+\end{itemize}
+The evidential weight of the correspondences is not uniform across the particle table, since the experimental uncertainties differ substantially between sectors.
 
 \begin{table}[ht]
 \centering
-\caption{All 13 mass predictions compared to experiment.}
+\caption{All 14 entries (electron as reference plus 13 non-reference particle-mass correspondences) compared to experiment. Observed-mass column follows the PDG~\citep{Workman2022} convention: pole masses for the leptons, proton, neutron, top, $W$, $Z$, and Higgs; $\overline{\mathrm{MS}}$ running masses for the light quarks $u, d, s$ (at $2$~GeV) and for $c$ and $b$ (at the mass itself). The framework does not distinguish mass schemes internally.}
 \label{tab:results}
 \begin{tabular}{@{}lrrrl@{}}
 \toprule
-Particle & Predicted (MeV) & Observed (MeV) & Error & PDG uncertainty \\
+Particle & Model value (MeV) & Observed (MeV) & Error & PDG uncertainty \\
 \midrule
 electron & 0.511 & 0.511 & reference & --- \\
 up & 2.160 & $2.16 \pm 0.49$ & $0.002\%$ & $\pm 22\%$ \\
@@ -344,7 +425,7 @@ Higgs & 125{,}244 & $125{,}250 \pm 150$ & $0.005\%$ & $\pm 0.12\%$ \\
 \end{tabular}
 \end{table}
 
-All 13 reported correspondences fall within current experimental uncertainty~\citep{Workman2022}, though the evidential weight is stronger for tightly measured sectors than for particles with broader experimental ranges. The average relative error is $0.014\%$, with a maximum of $0.047\%$ (strange quark, whose current measurement uncertainty is $9.2\%$).
+With those qualifications in force, the reported correspondences fall within the PDG~\citep{Workman2022} uncertainty windows for the broader-uncertainty entries (up, down, strange, charm, bottom, top, and Higgs). The tightly-measured entries (muon, proton, neutron, tau, $W$, $Z$) show relative errors at the $0.001\%$--$0.014\%$ level. The error column is evaluated at the unrounded framework values; small discrepancies from the displayed rounded masses are rounding artefacts. The average relative error over the 13 non-reference entries is $0.014\%$, with a maximum of $0.047\%$ at the strange quark. Entries whose supports include shell 4 depend on the theorem value $R_D(4) = 15$, while those whose supports do not are $R_D(4)$-independent (Table~\ref{tab:assignments}).
 
 %==================================================================
 \section{The Assignment Map}\label{sec:assignments}
@@ -365,17 +446,47 @@ R2 & $N_c = 3 \Rightarrow |S| \leq 3$ & Colour triplet \\
 R3 & $B = 1 \Rightarrow S \supseteq \{2,3,4\}$ & Baryons bridge quark supports \\
 R4 & Prefer connected $S$ & Standing-wave stability \\
 R5 & Charged bosons/scalars include shell 1 & Vacuum coupling \\
-R6 & Leptons: $|S|=1$; excited $\to$ shell 3 & Point-like; shell 3 has most vertices (42) \\
+R6 & Leptons: $|S|=1$; excited $\to$ shell 3 & Point-like; shell 3 has most vertices (42); see remark below on relation to Paper~II \\
 R7 & $Q = +2/3 \Rightarrow$ shell 2 $\in S$ & Up-type charge structure \\
 R8 & $w = \min$ for mass accessibility & Economy \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Within the present rule system, exhaustive verification over the tested $(S,w)$ combinations yields internally consistent assignments across the particle set considered.
+\begin{table}[ht]
+\centering
+\caption{Chosen $(S, w)$ for all 14 entries of Table~\ref{tab:results} (the electron as reference plus 13 non-reference particles), together with whether the corresponding mass depends on $R_D(4)$ (any support touching shell 4) or is $R_D(4)$-independent.}
+\label{tab:assignments}
+\begin{tabular}{@{}lcccl@{}}
+\toprule
+Particle & Support $S$ & $w$ & Depends on $R_D(4)$? & Applicable rules \\
+\midrule
+electron & $\{1\}$          & 1 & no  & R1 \\
+up       & $\{2, 4\}$       & 1 & yes & R2, R7 \\
+down     & $\{3, 4\}$       & 1 & yes & R2 \\
+muon     & $\{3\}$          & 2 & no  & R6 \\
+strange  & $\{4, 5\}$       & 1 & yes & R2 \\
+proton   & $\{2, 3, 4\}$    & 1 & yes & R3, R4 \\
+neutron  & $\{2, 3, 4\}$    & 1 & yes & R3, R4 \\
+charm    & $\{2, 3, 4\}$    & 1 & yes & R2, R4, R7 \\
+tau      & $\{3\}$          & 3 & no  & R6 \\
+bottom   & $\{2, 3\}$       & 3 & no  & R2, R4 \\
+top      & $\{2, 3, 4\}$    & 2 & yes & R2, R4, R7 \\
+$W$      & $\{1, 2, 3, 4\}$ & 2 & yes & R5 \\
+$Z$      & $\{2, 3, 4\}$    & 2 & yes & R5 applied to charged-current counterpart; neutral $Z$ uses $\{2,3,4\}$ as a model choice \\
+Higgs    & $\{1, 2, 3, 4\}$ & 2 & yes & R5 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\begin{remark}[Confinement]
-The up quark has disconnected support $\{2,4\}$ (a gap at shell 3). A standing wave on a disconnected support cannot sustain itself without binding to other quarks whose supports fill the gap. The proton $\{2,3,4\}$ fills this gap. Confinement thus arises as a topological connectivity requirement on the 600-cell.
+Within the present rule system, the tested $(S,w)$ combinations admit a workable assignment scheme for the 13 particles considered, but the assignments are not unique: the verification material records that most particles admit more than one $(S,w)$ choice consistent with R1--R8, and the rules together with the observed mass correspondences are used jointly to select a single assignment. The rule set is therefore to be read as a selection scheme, not as a uniqueness theorem on $(S,w)$.
+
+\begin{remark}[Relation to Paper~II's lepton-generation assignment]
+Paper~II~\citep{SmartII} assigns excited leptons (muon, tau) to the boundary support $\{1\}$ with winding numbers $w = 2, 3$, under its conditional winding-operator ansatz. Paper~V's R6 uses the shell-3 assignment for excited leptons; the two descriptions are not equivalent, and Paper~V's choice supersedes Paper~II's assignment for the purposes of the present mass-correspondence chain, while preserving the underlying conditional winding structure. Reconciling the two parameterisations at the level of physical interpretation is an open item.
+\end{remark}
+
+\begin{remark}[Connectivity suggestion]
+The up quark is assigned the disconnected support $\{2,4\}$ (a gap at shell~3), while the proton is assigned $\{2,3,4\}$ which fills the gap. Within the model, this suggests a confinement-like interpretation if disconnected supports are dynamically excluded: a bound-state particle must occupy a connected support, and isolated quark supports such as $\{2,4\}$ are available only inside composite supports such as the proton $\{2,3,4\}$. No topological theorem or dynamical impossibility result is proved here; the statement is a structural observation about the chosen assignment map, not a first-principles derivation of confinement.
 \end{remark}
 
 %==================================================================
@@ -390,18 +501,18 @@ The up quark has disconnected support $\{2,4\}$ (a gap at shell 3). A standing w
 \toprule
 Claim & Status & Basis \\
 \midrule
-9 eigenvalues in $\mathbb{Q}(\sqrt{5})$ with $n^2$ multiplicities & Exact computation & Laplacian diagonalisation \\
-600-cell uniqueness for $\phig$-eigenvalues & Exact computation & 21-polytope exhaustive search \\
-Dual populations with intersection numbers & Exact computation & BFS + vertex-transitivity \\
-$R_D(4) = 15$ & Exact computation & Absorbing Markov chain \\
-$C(S) = \prod - \sum - 1$ & Derived within model & State counting (Prop.\ in Paper IV) \\
-Hopf fiber eigenvalues in $\mathbb{Q}(\phig)$ & Exact computation & Analytic $C_{10}$ formula \\
-$R_I = 1/6$ from edge count & Exact computation & Transition matrix \\
-$\alpha^{-1}$ correspondence from $87 + 50 + \pi/87$ & Numerically established & 0.81 ppm \\
-13 particle-mass correspondences & Numerically established & avg $0.014\%$ \\
-3 anchor assignments & Structural within model & Particle--eigenvalue matching principles \\
-10 chain ratios & Numerically established correspondences & Geometric identifications checked numerically \\
-8 assignment rules & Structural within model & Internal rule system + verification over tested cases \\
+9 distinct eigenvalues, multiplicities $\{1,4,9,16,25,36,9,16,4\}$, algebraic forms in $\mathbb{Q}(\sqrt{5})$ & Numerical diagonalisation + imported exact forms & Script reproduces 9 distinct floating-point eigenvalues; exact forms imported from standard $H_4$ spectral analysis~\citep{Coxeter1973} \\
+600-cell uniqueness for joint $\sqrt{5}$-spectrum and rational 15 (over 11 regular polytopes in 3D/4D) & Theorem (Theorem~\ref{thm:uniqueness}) & Case analysis over the 11-polytope family; 120-cell handled by the $\lambda_{\max}(L) \leq 2d$ bound \\
+Dual populations with intersection numbers & Exact computation & BFS on 600-cell vertex graph \\
+$R_D(4) = 15$ & Theorem (Theorem~\ref{thm:RD4}) & Imported from P2~\citep{CascadeAlgSubstrate} (theorem on the first-passage identity); reproduced by \texttt{run\_rd4\_exact\_rational.py} over $\mathbb{Q}$ and floating-point cross-checked by \texttt{run\_rd4\_absorbing\_chain.py} \\
+$C(S) = \prod - \sum - 1$ & Derived within model & Framework-level in Paper~I; state-counting derivation in Paper~IV \\
+Hopf-fiber eigenvalues in $\mathbb{Q}(\phig)$ & Exact cycle computation, conditional on imported Hopf decomposition & Analytic $C_{10}$ formula; imported from P2~\citep{CascadeAlgSubstrate} and the classical 600-cell literature~\citep{Coxeter1973, DescHopf600} \\
+$R_I = 1/6$ (uniform-icosahedral convention used by mass formula) & Model convention & Consistent with $c/b = 1/6$ at shells 1, 2, 3 single-step; extended uniformly per Section~\ref{sec:formula} \\
+$\alpha^{-1}$ correspondence from $87 + 50 + \pi/87$ & Numerically established & $\sim$0.81 ppm vs CODATA~2018 \\
+13 particle-mass correspondences & Numerically established & avg $0.014\%$ (under the $R_D(4)=15$ assignment) \\
+3 structural anchors (two eigenvalue-tied, one standalone) & Structural within model & Top and proton anchors tied to $\lambda_7$ and $\lambda_4$; up anchor is a standalone rational ratio \\
+10 chain correspondences: 5 forward-traceable ($Z$, charm, $W$, down, bottom), 5 reverse-identified (Higgs, muon, tau, strange, neutron) & Mixed status (Table~\ref{tab:chain}) & Forward-traceable entries' coefficients equal stated 600-cell primitives; reverse-identified entries are pattern matches \\
+8 assignment rules & Structural within model & Selection scheme, not uniqueness theorem \\
 \midrule
 Particles are standing waves on 600-cell & \textsc{framework postulate} & Consistency \\
 600-cell governs particle physics & \textsc{framework postulate} & All results follow \\
@@ -417,23 +528,29 @@ Particles are standing waves on 600-cell & \textsc{framework postulate} & Consis
     \item \textbf{Not a prediction of the absolute mass scale.} Only mass \textit{ratios} are predicted ($m_e$ is the reference).
     \item \textbf{Neutrino masses are not included} in the current framework.
     \item \textbf{Running of masses with energy scale} is not addressed.
-    \item \textbf{The chain ratios are numerically established, not algebraically proven} from first principles. Each ratio is identified with a geometric quantity to high precision, but the identification has not been derived as a theorem.
+    \item \textbf{The chain ratios are of two classes.} Five chain coefficients ($Z$, charm, $W$, down, bottom) are \emph{forward-traceable to explicit 600-cell primitives} (integer eigenvalues $\lambda_5 = 14$ and $\lambda_7 = 15$, uniform $R_I$, shell count $N=5$, shell-3 intersection $(6,2,4)$, shell-3 vertex count $V_3 = 42$), in the sense that the chain coefficient equals exactly the stated primitive combination; five entries (Higgs, muon, tau, strange, neutron) remain reverse-identified post hoc correspondences. Forward-traceability does not upgrade the particle mass itself to a first-principles derivation --- it documents where each chain coefficient's numerical value comes from (see Section~\ref{sec:chain} and Table~\ref{tab:chain}).
 \end{itemize}
 
 %==================================================================
 \section{Reproducibility}\label{sec:reproducibility}
 %==================================================================
 
-All computations require only Python~3 with NumPy and SciPy. The repository\footnote{\url{https://github.com/vfd-org/vfd-crystallisation}} contains:
+All computations require only Python~3 with NumPy and SciPy. The repository\footnote{\url{https://github.com/vfd-org/vfd-crystallisation}} under \texttt{papers/paper-v/scripts/} contains:
 
 \begin{itemize}
-    \item \texttt{run\_exact\_theta\_patterns.py}: computes the full model prediction chain from the stated geometric inputs
-    \item \texttt{run\_assignment\_uniqueness.py}: tests all $(S,w)$ combinations, applies 8 rules (14/14 correct)
+    \item \texttt{run\_exact\_theta\_patterns.py}: evaluates the model-level correspondence chain from the stated geometric inputs
+    \item \texttt{run\_assignment\_uniqueness.py}: enumerates $(S,w)$ combinations and applies the rule set R1--R8; see the script comments for the particle-by-particle multiplicity of consistent assignments
     \item \texttt{run\_h4\_branching.py}: transition matrices between shell populations (geometric quantities used in the chain correspondences)
-    \item \texttt{run\_final\_derivations.py}: Hopf fiber spectrum, eigenvector projections
-    \item \texttt{run\_alpha\_geometric.py}: fine structure constant analysis
-    \item \texttt{run\_rigorous\_verification.py}: eigenvalues, R coefficients, circularity test
-    \item \texttt{run\_polytope\_uniqueness.py}: 600-cell uniqueness (21 polytopes, $< 1$ second)
+    \item \texttt{run\_final\_derivations.py}: Hopf-fiber spectrum and eigenvector projections
+    \item \texttt{run\_alpha\_geometric.py}: evaluation of the $\alpha^{-1}$ numerical correspondence
+    \item \texttt{run\_rd4\_exact\_rational.py}: exact rational proof of Theorem~\ref{thm:RD4}, using Python's \texttt{fractions} module on the 9-state population-lumped chain to establish $R_D(4) = 15$ as a closed-form rational identity
+    \item \texttt{run\_chain\_forward\_derivations.py}: verification that the five forward-traceable chain ratios ($Z$ $87 = 3(\lambda_5 + \lambda_7)$, charm $5/6 = 1 - R_I$, $W$ $5/2 = N/2$, down $2 = R_D(3)$, bottom $43/6 = V_3/6 + R_I$) match the 600-cell primitives exactly, using rational arithmetic
+    \item \texttt{run\_rd4\_absorbing\_chain.py}: floating-point cross-check of the same absorbing-chain calculation, plus alternative multi-step definitions (expected-count ratio, expected time to shell 5) for contrast
+    \item \texttt{run\_rd4\_check\_all\_populations.py}: applies the first-passage definition to all shell-$2,3,4$ populations for cross-checking against the single-step $c/b$ values
+    \item \texttt{run\_rigorous\_verification.py}: eigenvalues and reflection coefficients; legacy script whose commentary on $R_D(4)$ has been updated to reference Theorem~\ref{thm:RD4}
+    \item \texttt{run\_polytope\_uniqueness\_narrow.py}: computer-assisted verification of Theorem~\ref{thm:uniqueness}, building the vertex graph of each regular polytope in 3D and 4D, computing its Laplacian spectrum, and testing for the joint presence of $\sqrt{5}$-valued entries and the rational eigenvalue 15
+    \item \texttt{run\_polytope\_uniqueness.py}: legacy exploratory scan testing an older $d_s \approx \phig$ uniqueness property; superseded by the narrow uniqueness theorem above
+    \item \texttt{run\_null\_hypothesis.py}: the random-ratio stress test described in Appendix~\ref{app:null}
 \end{itemize}
 
 %==================================================================
@@ -442,42 +559,47 @@ All computations require only Python~3 with NumPy and SciPy. The repository\foot
 
 \begin{table}[ht]
 \centering
-\caption{How Paper V extends each earlier paper.}
+\caption{How Paper V relates to each earlier paper (numerical continuations and structural re-parameterisations, not formal extensions).}
 \label{tab:connection}
 \begin{tabular}{@{}llll@{}}
 \toprule
-Paper & Established & Paper V extends to & Status \\
+Paper & Established & Paper V numerically continues toward & Status \\
 \midrule
-I & Closure invariant $\Delta C$, 3-order law & Self-consistency + winding terms & Extended \\
-II & No-go theorem, conditional winding & Hopf-fiber-supported winding structure & Extended \\
-III & $\lambda = 15 = \Delta C$, F4 extension & Full eigenvalue--mass chain & Extended \\
-IV & $m_p/m_e = \phig^{1265/81}$ & All 13 masses + $\alpha$ & Extended \\
+I & Closure invariant $\Delta C$, 3-order law & Self-consistency + winding terms (different parameterisation) & Numerical continuation \\
+II & No-go theorem, conditional winding & Hopf-fiber-motivated winding ansatz (not algebraically equivalent to Paper II's operator) & Numerical continuation \\
+III & $\lambda = 15 = \Delta C$, F4 extension & Full eigenvalue--mass chain & Numerical continuation \\
+IV & $m_p/m_e = \phig^{1265/81}$ & All 13 numerical mass correspondences + $\alpha$ & Numerical continuation \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Paper~IV's proton-to-electron result is recovered as a special case: with $\theta = 0$ (pure icosahedral), all $R(\theta, d) = R_I = 1/6$, and $w = 1$ (no winding), the exponent reduces to $\Delta C + |E|/|V| - \text{Var}(\deg)\,|E|/|V|^2 = 1265/81$.
+The relation between Paper~V's Eq.~\eqref{eq:exponent} at the proton anchor $\sin^2\theta_p = 6/(13 \phig^3)$ and the Paper~I/IV proton exponent $1265/81$ is quantified by Corollary~\ref{cor:proton} above: under the theorem value $R_D(4) = 15$, Eq.~\eqref{eq:exponent} gives $E_{\mathrm{proton}} \approx 15.61742$, matching $1265/81 \approx 15.61728$ to a relative precision of $\sim 9 \times 10^{-6}$. This is a numerical correspondence to six significant figures, not an algebraic identity: the Paper~I/IV decomposition $1265/81 = 15 + 2/3 - 4/81$ uses a different functional form than Paper~V's $15 + \mathrm{Term~2}(\theta_p)$, and no closed-form algebraic equivalence between the two parameterisations is proved here. The setting $\theta = 0$ does \emph{not} literally produce $1265/81$: with $\theta = 0$, $R(0, d) = R_I = 1/6$ for all $d$, so $\prod R = (1/6)^3 = 1/216$ and Term~2 collapses to $\ln(216)/(6 \ln \phig) = \ln(6)/(2 \ln \phig) \approx 1.86$, giving $E = 16.86$, far from $1265/81$. The recovery in Corollary~\ref{cor:proton} occurs at the physical proton anchor $\theta_p \neq 0$, and is a numerical consequence of the combination of the anchor form and the theorem value $R_D(4) = 15$.
 
 %==================================================================
 \section{Limitations and Open Problems}\label{sec:limits}
 %==================================================================
 
 \begin{enumerate}
-    \item \textbf{Why the 600-cell.} The framework postulates that the 600-cell governs particle physics. The strongest support is the uniqueness theorem (Theorem~\ref{thm:uniqueness}) and the Zamolodchikov--Coldea precedent~\citep{Zamolodchikov1989, Coldea2010} for $\phig$ in mass ratios, but no derivation from first principles exists.
-    \item \textbf{Dynamics.} The framework predicts masses but not forces, scattering, or decay rates. Preliminary loop-correction analysis suggests residuals scale as $\alpha^2$ with $\phig$-algebraic coefficients.
+    \item \textbf{Why the 600-cell.} The framework postulates that the 600-cell governs particle physics. The strongest internal support is (a) the exact $\lambda_7 = 15 = \Delta C$ correspondence established in Paper~III, (b) the narrow uniqueness among the 11 regular polytopes in 3D and 4D (Theorem~\ref{thm:uniqueness}; the higher-dimensional and 2D cases also carry no counterexample, see the remark following Theorem~\ref{thm:uniqueness}), and (c) the Zamolodchikov--Coldea precedent~\citep{Zamolodchikov1989, Coldea2010} for $\phig$ in mass ratios. No first-principles derivation of the 600-cell's privileged role is presented.
+    \item \textbf{Dynamics.} The framework models mass correspondences but does not address forces, scattering, or decay rates. Preliminary loop-correction analysis suggests residuals scale as $\alpha^2$ with $\phig$-algebraic coefficients; that analysis is not presented here.
     \item \textbf{Neutrinos.} Not included in the current framework.
-    \item \textbf{Running masses.} The framework predicts pole masses; running with energy scale is not addressed.
-    \item \textbf{Absolute scale.} Only mass ratios are predicted; $m_e$ itself is the reference.
-    \item \textbf{Chain ratio proofs.} The 13 chain ratios are numerically established, not algebraically derived. Each ratio is identified with a geometric quantity to high precision, but formal proof that these identifications are exact remains open.
+    \item \textbf{Running masses.} The framework is stated against pole-mass targets where applicable and against the standard $\overline{\mathrm{MS}}$ light-quark mass windows where the PDG quotes those; no renormalisation-group running is derived.
+    \item \textbf{Absolute scale.} Only mass ratios are described; $m_e$ itself is the reference.
+    \item \textbf{Chain correspondences.} The 10 chain entries are numerical correspondences, not algebraic derivations; several are explicit reverse identifications.
+    \item \textbf{$R_D(4)$ first-passage ratio now closed.} Previously carried as a structural assignment; Theorem~\ref{thm:RD4} establishes $R_D(4) = 15$ as an exact rational identity (the first-passage ratio) via a 9-state population-lumped absorbing chain on the 600-cell (transient block $6 \times 6$), solved over $\mathbb{Q}$ by Gauss--Jordan elimination (\texttt{run\_rd4\_exact\_rational.py}). The identification of this first-passage ratio with the shell-4 coefficient in the mass-formula ansatz of Eq.~\eqref{eq:exponent} remains a model-level convention, not a theorem consequence. Legacy commentary in \texttt{run\_rigorous\_verification.py} has been updated to cite the theorem.
+    \item \textbf{Shell-5 reflection-coefficient convention (open problem).} The strange entry uses the boundary-convention value $R(\theta, 5) = R_I = 1/6$ of Section~\ref{sec:formula}, uniform across $\theta$. A first-passage theorem parallel to Theorem~\ref{thm:RD4} (handling the maximum-distance shell, where neither the single-step $c/b$ form nor the two-boundary first-passage of Theorem~\ref{thm:RD4} directly applies) would replace the boundary convention with a rigorously-derived value; this is an open consolidation item. The mass-formula numerical value for strange is fully determined by the stated convention.
+    \item \textbf{Paper~IV reconciliation.} An explicit algebraic reduction from Eq.~\eqref{eq:exponent} to Paper~IV's $1265/81$ form at a single common limit is open; see Section~\ref{sec:connection}.
+    \item \textbf{Born-rule status.} Term~2's quadratic mixing weights are Born-rule-like. A measurement-theoretic Born-rule derivation is provided only conditionally in Paper~XXX under stated hypotheses; Paper~V does not derive the Born rule independently.
+    \item \textbf{Assignment uniqueness.} The rule set R1--R8 admits multiple consistent $(S,w)$ choices for most particles; a canonical selection principle is not provided here.
 \end{enumerate}
 
 %==================================================================
 \section{Conclusion}\label{sec:conclusion}
 %==================================================================
 
-Within the stated framework, the spectral geometry of the 600-cell, parameterised by the golden ratio $\phig$ and the four integer eigenvalues $\{9, 12, 14, 15\}$, supports a broader spectral-geometric particle-mass model producing high-accuracy numerical correspondences across 13 non-reference particles (average relative error $0.014\%$), with zero fitted continuous parameters. The same spectral data also supports a high-precision numerical correspondence for the fine structure constant. All reported correspondences fall within current experimental uncertainty, though the evidential weight is stronger in tightly measured sectors than in those with broader observational ranges.
+Within the stated framework, the spectral geometry of the 600-cell, parameterised by the golden ratio $\phig$ and the four integer eigenvalues $\{9, 12, 14, 15\}$, is used in a spectral-geometric model that reports high-accuracy numerical correspondences across 13 non-reference particles --- using the theorem value $R_D(4) = 15$ established via first-passage on the 600-cell absorbing Markov chain (Theorem~\ref{thm:RD4}) --- with zero fitted continuous parameters but substantial discrete post hoc structure (three structural anchors (two tied to eigenvalues, one standalone), a non-unique $(S,w)$ rule-based assignment scheme, and ten chain correspondences (five forward-traceable to 600-cell primitives, five reverse-identified)) and an average relative error of $0.014\%$. The same spectral data also supports a high-precision numerical correspondence for the fine-structure constant. For broad-uncertainty quark entries the correspondences sit within the PDG windows; for tightly measured sectors the agreement is at the $10^{-4}$--$10^{-5}$ level but exceeds the PDG experimental uncertainty, and is therefore reported as a within-framework numerical correspondence rather than as a within-uncertainty match.
 
-The construction extends Papers~I--IV in a structured way: the proton-to-electron result of Paper~IV is recovered as a special case; the conditional winding structure of Paper~II is given a Hopf-fiber spectral realisation within the model; and the eigenvalue correspondence of Paper~III is embedded in the broader correspondence chain. The framework rests on two explicit postulates --- that particles may be modelled as standing waves on the 600-cell, and that the 600-cell provides the governing geometry for the present construction --- and otherwise combines exact spectral graph computations, explicit structural assignments, and numerically established correspondences.
+The construction continues Papers~I--IV numerically rather than as a formal extension: the proton-to-electron result of Paper~IV is numerically matched by the proton entry in Table~\ref{tab:results} but is not algebraically recovered as a special case of Eq.~\eqref{eq:exponent} (see Section~\ref{sec:connection}); the Paper~II winding idea is replaced here by a Hopf-fiber-motivated winding ansatz $f(w)$ of Eq.~\eqref{eq:winding}, with no algebraic equivalence to Paper~II's operator $\phig^5(w-1)^{1/\phig}$ shown; and the eigenvalue correspondence of Paper~III is embedded in the broader correspondence structure. The framework rests on two explicit postulates --- that particles may be modelled as standing waves on the 600-cell, and that the 600-cell provides the governing geometry for the present construction --- and otherwise combines exact spectral graph computations, explicit structural assignments, and numerically established correspondences.
 
 The primary open questions are why the 600-cell should play this privileged role, whether the correspondence chain can be elevated from numerical identification to algebraic proof, and how the framework may be extended toward dynamics. The present paper should therefore be read as a model-building and correspondence-establishing step rather than a complete first-principles derivation of the particle spectrum.
 
@@ -486,9 +608,9 @@ The primary open questions are why the 600-cell should play this privileged role
 \section{Null Hypothesis Test}\label{app:null}
 %==================================================================
 
-As an exploratory robustness check, 100{,}000 random trials were performed to test whether comparably accurate agreement could arise from naive random-ratio constructions of similar scale: each trial generated 13 random fractions of the same magnitude ranges as the chain ratios and evaluated the resulting mass predictions. No trial achieved even $1\%$ average error. The best random result was $1.54\%$, compared to the reported $0.014\%$. The $p$-value for the observed accuracy arising by chance is less than $10^{-5}$.
+As an informal robustness stress test, 100{,}000 random trials were generated under an author-chosen sampling scheme in which each trial drew 13 fractions from magnitude ranges chosen to cover the numerators and denominators appearing in the chain entries of Table~\ref{tab:chain}, and the corresponding mass predictions were evaluated against the observed spectrum. In the sampling scheme used, no trial achieved an average relative error below $1\%$; the best sampled trial was $1.54\%$, compared with the reported $0.014\%$ average error for the framework chain using the theorem value $R_D(4) = 15$ (Theorem~\ref{thm:RD4}).
 
-\textsc{Status: exploratory.} This test suggests that the observed numerical agreement is not easily reproduced by naive random-ratio constructions of comparable scale, but it does not by itself establish the physical mechanism or provide a definitive statistical null for the framework.
+\textsc{Status: exploratory.} The null used here is a narrowly-specified random-ratio sampler with author-chosen ranges; it is not a calibrated statistical null over the space of plausible alternative framework choices, and no formal $p$-value is claimed. The test is reported as evidence that the chain accuracy is not easily reproduced by the particular random-ratio construction used, not as a rejection of any well-defined null hypothesis in the statistical-inference sense.
 
 %==================================================================
 \bibliographystyle{plainnat}

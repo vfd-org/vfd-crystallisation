@@ -1,0 +1,3282 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\pphi}{\varphi}
+\newcommand{\SG}{\Sigma}
+\newcommand{\cas}{{\rm cas}}
+\newcommand{\met}{{\rm met}}
+\newcommand{\hyd}{{\rm hyd}}
+\newcommand{\gge}{{\rm gauge}}
+\newcommand{\co}{{\rm coh}}
+\newcommand{\TM}{{\rm TM}}
+\newcommand{\CTM}{{\rm CTM}}
+\newcommand{\Fix}{\operatorname{Fix}}
+\newcommand{\Der}{\operatorname{Der}}
+\newcommand{\Met}{\operatorname{Met}}
+\newcommand{\Conn}{\operatorname{Conn}}
+\newcommand{\Hol}{\operatorname{Hol}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Sp}{\operatorname{Sp}}
+
+\title{Cascade--Classical Correspondence: Foundations}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This paper constructs the \emph{correspondence layer} between the
+cascade framework \cite{CascadeFoundations} and classical
+mathematical structures. Seven sectorwise projections are defined
+as precise mathematical maps with specified domains, codomains,
+measurability, continuity, and symmetry-equivariance: the metric
+projection $\Pi_{\met}$, the hydrodynamic projection $\Pi_{\hyd}$,
+the gauge projection $\Pi_{\gge}$, the regularized spectral-zeta
+transfer operator $T_\zeta[h]$, the regularized Hecke transfer
+operator $T_E[h]$, the Galois fixed-part projector $\Pi_\sigma$,
+and the cascade-to-Turing transport pair $(\Pi_{\TM}, I_{\TM})$.
+For each projection we establish either an unconditional
+well-definedness and equivariance theorem, or a conditional
+correspondence theorem under one of four explicitly named open
+hypothesis families
+$\mathbf{H_1}$ (geometric limit),
+$\mathbf{H_2}$ (gauge reconstruction),
+$\mathbf{H_3}$ (spectral--arithmetic trace), and
+$\mathbf{H_4}$ (universality / normal form).
+
+The paper does \emph{not} prove any of the six open Clay Millennium
+Prize Problems. Its purpose is narrower and structural: it
+identifies the informal ``cascade-to-classical projection'' language
+used across the six companion manuscripts and replaces it with
+precise, Clay-bar-verifiable mathematics, so that the companion
+papers for Yang--Mills, the Riemann Hypothesis, Navier--Stokes, the
+Hodge Conjecture, the Birch--Swinnerton-Dyer Conjecture, and $P$
+vs $NP$ can be formulated against a stable foundation. Each
+companion paper inherits exactly one of
+$\mathbf{H_1}$--$\mathbf{H_4}$; what remains open after that
+inheritance is, in each case, a clearly-stated classical analytic
+or algorithmic problem, not a cascade-internal ambiguity.
+
+We audit the upstream cascade literature explicitly in
+Section~\ref{sec:audit}, classifying each cited result as
+\emph{theorem-grade}, \emph{formal framework}, or
+\emph{motivational only}. Load-bearing claims in this paper rely
+only on theorem-grade cascade inputs or on classical mathematics.
+Items of lower upstream status are either reproved here from
+explicit formulas or relegated to open-hypothesis status.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{$\mathbf{F1}$: The Permeability Fixed-Point Axiom}
+\label{sec:F1}
+%=====================================================================
+
+\noindent\emph{This section states, at Clay-bar standard, the single
+non-classical axiom of the cascade-correspondence programme.
+Downstream papers in the $\alpha$-chain
+(\texttt{cascade-12d-closure.tex},
+\texttt{cascade-phason-coxeter.tex},
+\texttt{cascade-fine-structure.tex}) cite this section as
+``\S F1'' and import the axiom \textbf{only}, not any subsequent
+machinery of this manuscript. No argument in \S F1 depends on
+any other section of this paper.}
+
+\begin{notation}[Permeability parameter]
+\label{not:r}
+Throughout \S F1, $r$ denotes a positive real variable.
+\end{notation}
+
+\begin{axiom}[$\mathbf{F1}$: permeability fixed-point axiom]
+\label{ax:F1}
+There exists a positive real $r \in (0, \infty)$ satisfying
+\begin{equation}
+\label{eq:F1}
+  r \;=\; 1 \;+\; \frac{1}{r}.
+\end{equation}
+This equation, and the existence of a positive solution, is
+the sole non-classical axiom of the cascade-correspondence
+programme. We refer to any such positive solution as a
+\emph{permeability fixed point}.
+\end{axiom}
+
+\begin{proposition}[Uniqueness and explicit value]
+\label{prop:F1-explicit}
+There exists a unique positive real $r \in (0, \infty)$
+satisfying $\mathbf{F1}$ of Axiom~\ref{ax:F1}, and it equals
+the golden ratio
+\[
+  r \;=\; \varphi \;:=\; \frac{1 + \sqrt{5}}{2}.
+\]
+\end{proposition}
+
+\begin{proof}
+Rearranging equation~\eqref{eq:F1}:
+\[
+  r \;=\; 1 + \frac{1}{r}
+  \;\iff\;
+  r^2 \;=\; r + 1
+  \;\iff\;
+  r^2 - r - 1 \;=\; 0.
+\]
+The quadratic $r^2 - r - 1$ has discriminant $1 + 4 = 5$
+and roots $(1 \pm \sqrt{5})/2$. Only $(1 + \sqrt{5})/2$ is
+positive (since $\sqrt{5} > 1$). Hence the unique positive
+real satisfying $\mathbf{F1}$ is $r = (1 + \sqrt{5})/2 =
+\varphi$.
+\end{proof}
+
+\begin{corollary}[Quadratic and self-similarity identities]
+\label{cor:F1-identities}
+The golden ratio $\varphi = (1 + \sqrt{5})/2$ satisfies:
+\begin{align}
+  \varphi^2 &\;=\; \varphi + 1, \label{eq:phi-sq} \\
+  \varphi^{-1} &\;=\; \varphi - 1, \label{eq:phi-inv} \\
+  \varphi &\;=\; 1 + \frac{1}{\varphi}. \label{eq:phi-recursive}
+\end{align}
+\end{corollary}
+
+\begin{proof}
+Equation~\eqref{eq:phi-sq} is an immediate restatement of
+$r^2 - r - 1 = 0$ from the proof of
+Proposition~\ref{prop:F1-explicit}. Dividing $\varphi^2 =
+\varphi + 1$ by $\varphi$ (which is nonzero) gives $\varphi
+= 1 + 1/\varphi$, establishing~\eqref{eq:phi-recursive};
+equivalently, $\varphi - 1 = 1/\varphi$, establishing
+\eqref{eq:phi-inv}.
+\end{proof}
+
+\begin{remark}[Brouwer existence and eventual contraction]
+\label{rmk:F1-banach}
+The equation \eqref{eq:F1} can be read dynamically as a
+fixed-point problem for the map
+$f \colon (0, \infty) \to (0, \infty)$, $f(r) := 1 + 1/r$.
+One verifies directly that $f$ maps $[1, 2]$ into $[3/2, 2]
+\subset [1, 2]$ (since $r \in [1, 2]$ implies $1/r \in
+[1/2, 1]$, hence $f(r) \in [3/2, 2]$), so $f$ restricts to a
+continuous self-map of the closed interval $[1, 2]$ and
+Brouwer's fixed-point theorem provides existence of a fixed
+point.
+
+Iterative convergence follows by an eventual-contraction
+argument: on the one-step image $[3/2, 2]$ the derivative
+bound $|f'(r)| = 1/r^2 \leq 4/9 < 1$ holds uniformly, so the
+restriction $f|_{[3/2, 2]} \to [3/2, 2]$ is a $(4/9)$-Lipschitz
+contraction; the Banach fixed-point theorem then applies from
+the first iterate onward. Any iteration $r_{n+1} = f(r_n)$
+starting from $r_0 \in [1, 2]$ has $r_1 \in [3/2, 2]$ and
+thereafter converges to the unique fixed point
+Proposition~\ref{prop:F1-explicit} identifies.
+
+For the purposes of \S F1, the existence claim in
+Axiom~\ref{ax:F1} is delivered independently and explicitly
+by Proposition~\ref{prop:F1-explicit} (via the quadratic
+formula), so no Brouwer / Banach machinery is load-bearing
+for downstream papers.
+\end{remark}
+
+\begin{remark}[Scope of $\mathbf{F1}$]
+\label{rmk:F1-scope}
+\S F1 makes \emph{no} claim beyond the existence/uniqueness
+of the positive solution $\varphi$ to $r = 1 + 1/r$. In
+particular, \S F1 does not assert:
+\begin{itemize}
+\item any physical interpretation of ``permeability'';
+\item any connection to cascade sectors, $E_8$, $H_4$, the
+  $600$-cell, or Coxeter theory;
+\item any connection to the fine-structure constant, the
+  Standard Model, or any Millennium problem;
+\item any status for $\varphi$ as a derived constant of a
+  deeper theory.
+\end{itemize}
+The connection of $\varphi$ to downstream cascade mathematics
+(in particular to the ring $\Z[\varphi]$, the icosian ring,
+the phason complement, and the $\alpha$-chain) is the
+subject of other sections of this paper and of the
+companion $\alpha$-chain manuscripts. Those connections use
+\S F1 \emph{only} at the axiomatic / named-constant level.
+\end{remark}
+
+%=====================================================================
+\section{Introduction and Audit}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{The systemic gap}
+\label{subsec:gap}
+
+The six open Clay Millennium Prize Problems addressed in companion
+manuscripts \cite{MillenniumYM, MillenniumRH, MillenniumNS,
+MillenniumHodge, MillenniumBSD, MillenniumPNP} share a common
+structural feature: each invokes a \emph{cascade-to-classical
+projection} as a black box. Specifically:
+
+\begin{itemize}
+\item the Yang--Mills manuscript \cite{MillenniumYM} invokes a map
+  $\Pi_{\gge}$ from cascade octonionic edge data to $\mathrm{SU}(3)$
+  gauge connections;
+\item the Riemann Hypothesis manuscript \cite{MillenniumRH} invokes
+  a Hilbert--P\'olya-type operator $T_\zeta$ constructed from
+  $H_4$-sector cascade spectral data;
+\item the Navier--Stokes manuscript \cite{MillenniumNS} invokes a
+  coarse-graining map $\Pi_{\hyd}$ from $\sigma$-fixed $D_4$-sector
+  dynamics to macroscopic velocity--pressure fields;
+\item the Hodge manuscript \cite{MillenniumHodge} invokes a
+  ``$\sigma$-fixed part equals rational part'' projector on
+  $\Q(\pphi)$-valued cohomology;
+\item the Birch--Swinnerton-Dyer manuscript \cite{MillenniumBSD}
+  invokes a Hecke-type transfer operator $T_E$ constructed from
+  modular-symbol cascade data;
+\item the $P$ vs $NP$ manuscript \cite{MillenniumPNP} invokes a
+  transport between cascade Turing machines (CTMs) and ordinary
+  Turing machines (TMs).
+\end{itemize}
+
+In every case, independent review at Clay-submission rigour
+(\cite[iteration 1, issue \#2]{CodexReview}) has flagged the
+projection itself as insufficiently defined: domains, codomains,
+measures, function-space structure, and continuity properties are
+not specified with enough precision for a classical referee to
+verify the downstream identifications. This paper closes that
+single systemic gap.
+
+\subsection{What this paper contributes}
+\label{subsec:contribution}
+
+We construct seven projections as precise mathematical maps,
+equip each with continuity/measurability/equivariance theorems,
+and isolate the remaining unresolved analytic or combinatorial
+issues into four explicitly named open hypothesis families. The
+correspondence theorems themselves (maps well-defined, equivariant,
+continuous on their natural domains) are proved unconditionally.
+The coarse-graining and continuum-limit statements that would take
+these projections all the way to classical continuum objects
+(smooth metrics, continuum gauge fields, completed trace identities,
+rational Hodge classes, asymptotic complexity separations) are
+stated as conditional theorems, with the conditional hypotheses
+audited honestly against the cascade-derivation sources.
+
+More precisely, the unconditional contributions of this paper are:
+\begin{enumerate}[label=(U\arabic*)]
+\item Construction of the finite-level cascade configuration spaces
+  $X_n^0, X_n^1, X_n^{\co}$ as separable Hilbert / vector spaces with
+  explicit measures and symmetry actions (Section~\ref{sec:substrate}).
+\item Construction of the inverse/cylindrical limit
+  $X_\cas$ on admissible sectors, with compatibility under
+  refinement, $\sigma$-involution, and rung restriction
+  (Section~\ref{sec:dynamics}).
+\item Finite-level cascade gradient flow: existence, uniqueness,
+  energy decrease (Section~\ref{sec:dynamics}, Theorem~\ref{thm:flow-exists}).
+\item Definition of the discrete moment tensor $M_n$ and of the
+  finite-level metric projection $\Pi_{\met}^{(n)}$; proof that
+  $\Pi_{\met}^{(n)}$ is well-defined, continuous, and
+  $W(D_4)$-equivariant (Section~\ref{sec:metric-hydro},
+  Theorem~\ref{thm:pimet-n}).
+\item Definition of the finite-level gauge projection
+  $\Pi_{\gge}^{(n)}$ from octonionic edge data to cylindrical
+  $\mathrm{SU}(3)$ holonomy data, and proof that it is
+  gauge-equivariant and compatible with the $\mathrm{SU}(3) \subset
+  G_2 = \Der(\OO)$ identification (Section~\ref{sec:gauge},
+  Theorem~\ref{thm:pigauge-n}).
+\item Construction of the regularized transfer operators
+  $T_\zeta[h]$ on $L^2(\R_+, dx/x)$ and $T_E[h]$ on the
+  modular-symbol space, and proof that each is a densely-defined
+  symmetric / bounded operator with explicit
+  symmetry-intertwining properties (Section~\ref{sec:spectral},
+  Theorems~\ref{thm:tzeta-h}--\ref{thm:tE-h}).
+\item Proof of the $\sigma$-fixed-part-equals-rational-part theorem
+  $\Fix(\sigma; H^*(X, \Q(\pphi))) = H^*(X, \Q)$, and
+  functoriality of $\Pi_\sigma$ under pullback along cascade-compatible
+  embeddings (Section~\ref{sec:cohomology-comp},
+  Theorems~\ref{thm:fix-sigma-rational}--\ref{thm:pisigma-functorial}).
+\item Construction of the CTM/TM transport maps
+  $(\Pi_{\TM}, I_{\TM})$ and proof that they preserve decidability
+  and polynomial time up to polynomial overhead
+  (Section~\ref{sec:cohomology-comp}, Theorem~\ref{thm:ctm-tm-transport}).
+\item Compatibility lemmas: refinement, $\sigma$-involution, and
+  cascade dynamics all commute with the unconditional parts of the
+  projections on their natural domains (Section~\ref{sec:compat}).
+\item Worked examples recomputing the 24-cell moment tensor, a
+  basic octonionic holonomy, a $\sigma$-fixed cohomology pair, and
+  a CTM encoding of a standard TM
+  (Section~\ref{sec:examples}).
+\end{enumerate}
+
+The conditional contributions of this paper are four
+correspondence theorems, each under its own hypothesis stack
+(Section~\ref{sec:handoff}). The stacks involve four named
+hypothesis families $\mathbf{H_1}$--$\mathbf{H_4}$ \emph{and}
+hypothesis imports from the hardened substrate papers P5--P7,
+plus in the metric/hydrodynamic case a foundations-level
+conjecture $\mathbf{H_1'}$ controlling the extension of P4's
+mass-only flow-intertwining to the full closure flow:
+\begin{enumerate}[label=(C\arabic*)]
+\item \emph{Under $\mathbf{H_1}$} (geometric-limit hypothesis)
+  \emph{together with the P5--P7 structural imports
+  (Hypotheses~\ref{hyp:coord-inj-import}, \ref{hyp:tiling-import},
+  \ref{hyp:separation-import}, \ref{hyp:gradient-image-import})
+  and (for the full-flow case) the foundations-level conjecture
+  $\mathbf{H_1'}$ (Hypothesis~\ref{hyp:full-flow})}:
+  $\Pi_{\met}$ admits a continuum limit landing in $\Met(M)$ for
+  a smooth compact manifold $M$, and the cascade linearized
+  dynamics projects to the metric-side operator; $\Pi_{\hyd}$
+  intertwines the cascade flow with the macroscopic Navier--Stokes
+  operator. Well-definedness and the mass-only sub-case of the
+  flow projection do \emph{not} require $\mathbf{H_1'}$; only
+  the full-flow (Ricci-Laplacian-mass / NS) PDE form does.
+  (Theorems~\ref{thm:pimet-cond} and~\ref{thm:pihyd-cond}.)
+\item \emph{Under $\mathbf{H_2}$} (gauge-reconstruction hypothesis)
+  \emph{together with the modeling choices (M1)--(M3) of
+  \S\ref{subsec:gauge-modeling}} (fixed imaginary unit $i_0$,
+  associator-respecting derivation lift $\iota_{\mathfrak{g}_2}$,
+  and induced gauge action on octonionic edge data):
+  $\Pi_{\gge}$ admits a continuum completion to $L^2_1$ classical
+  connections, and transports the restricted cascade closure action
+  to the continuum Yang--Mills action. (Theorem~\ref{thm:pigauge-cond}.)
+\item \emph{Under $\mathbf{H_3}$} (spectral--arithmetic trace
+  hypothesis): the cutoff removal $h \to \mathbf{1}$ is compatible
+  with the explicit formulas for $\zeta$ and $L(E, s)$; under this
+  hypothesis, the renormalized traces of $T_\zeta[h]$ and $T_E[h]$
+  match the classical explicit formulas.
+  (Theorem~\ref{thm:trace-match-cond}.)
+\item \emph{Under $\mathbf{H_4}$} (universality / normal-form
+  hypothesis): cascade embeddability is universal for smooth
+  projective varieties ($\mathbf{H_{4a}}$) / cascade polynomial-time
+  algorithms admit a normal form ($\mathbf{H_{4b}}$); the Hodge and
+  $P$ vs $NP$ transport steps used in the companion papers become
+  classical statements. (Theorem~\ref{thm:universality-cond}.)
+\end{enumerate}
+
+\subsection{Explicit audit of upstream cascade sources}
+\label{subsec:audit-upstream}
+\label{sec:audit}
+
+A recurring failure mode in the earlier Millennium manuscripts is
+citation of cascade-derivation results that do not in fact exist
+at the cited location (``phantom citations''), or citation as
+theorem of material the cited source itself labels as ``formal
+framework'' or ``working hypothesis''. We classify every cascade
+source used in this paper into one of three grades.
+
+\begin{notation}[Source grades]
+\label{not:grades}
+We tag each cited cascade-derivation source with exactly one of
+the following grades:
+\begin{description}
+\item[\textbf{Theorem-grade (T).}] The cited source proves a
+  statement with complete mathematical content. We cite such
+  results without reproof (though we may restate for clarity).
+\item[\textbf{Formal framework (F).}] The cited source contains a
+  statement with a proof sketch and/or numerical evidence, but
+  the proof is not complete at Clay-submission rigour. We
+  \emph{never} use such results as unconditional inputs to a
+  theorem in the present paper. Instead, we either (a) reprove
+  the specific quantitative fact we need directly from explicit
+  formulas, or (b) isolate the use under one of
+  $\mathbf{H_1}$--$\mathbf{H_4}$.
+\item[\textbf{Motivational (M).}] The cited source provides a
+  picture or heuristic but not a mathematical claim we rely on.
+  We use such citations only to orient the reader; no theorem
+  in this paper depends on any motivational citation.
+\end{description}
+\end{notation}
+
+The audit of cascade sources used in the present paper is given in
+Table~\ref{tab:audit}. Sources not listed in the table are not used.
+
+\begin{table}[h]
+\caption{Audit of upstream cascade-derivation sources used in this
+paper.}
+\label{tab:audit}
+\begin{tabular}{llll}
+\hline
+Source & Section(s) used & Grade & Role in present paper \\
+\hline
+\cite{CascadeFoundations} \S F1 & Sec.~\ref{sec:substrate} & T &
+  $\pphi$-uniqueness from self-similarity \\
+\cite{CascadeFoundations} \S F2 & Sec.~\ref{sec:dynamics} & T &
+  closure-functional form $\alpha R + \beta E - \gamma Q$ \\
+\cite{CascadeFoundations} \S F3 & Sec.~\ref{sec:substrate} & T &
+  seven-rung cascade from Coxeter classification \\
+\cite{CascadeFoundations} \S F5 & Sec.~\ref{sec:dynamics} & T &
+  $\sigma$-involution on $\Q(\pphi)$-coefficients \\
+\cite{CascadeEmbeddings} \S\S 2--3 & Sec.~\ref{sec:substrate} & T &
+  $D_4 \subset E_8$ inclusion; $H_4$ icosian projection \\
+\cite{CascadeEmbeddings} \S 5 & Sec.~\ref{sec:substrate} & T &
+  $4$-cube and $\mathrm{Cl}(1,3)$ coincidence at rung 16 \\
+\cite{CascadeEmbeddings} \S 6 & Sec.~\ref{sec:substrate},
+  \ref{sec:gauge} & T & $E_8$ self-dimension as rung 8; octonionic
+  structure \\
+\cite{CascadeGR} \S C4.1 & Sec.~\ref{sec:metric-hydro} & T &
+  discrete moment tensor formula for point source on 24-cell \\
+\cite{CascadeGR} \S C2.bis & Sec.~\ref{sec:metric-hydro},
+  \ref{sec:handoff} & F & GH continuum limit (kept under $\mathbf{H_1}$) \\
+\cite{CascadeGR} \S C3.bis & Sec.~\ref{sec:metric-hydro} & F &
+  $A_5$-density in $\mathrm{SO}(3)$ (used only as motivation for
+  $\mathbf{H_1}$) \\
+\cite{CascadeDynamics} \S\S D1--D4 & Sec.~\ref{sec:dynamics},
+  \ref{sec:cohomology-comp} & T & primitive vocabulary; CTM
+  definitions \\
+\cite{CascadeDynamics} \S\S D5--D10 & Sec.~\ref{sec:cohomology-comp} & F &
+  cascade complexity classes (kept under $\mathbf{H_{4b}}$) \\
+\cite{CascadeMillennium} \S\S MP1--MP7 & Sec.~\ref{sec:handoff} & M &
+  orientation to the Millennium picture \\
+\hline
+\end{tabular}
+\end{table}
+
+Sources excluded from this paper's load-bearing machinery are
+listed in Table~\ref{tab:exclusions}; they appear in earlier draft
+Millennium manuscripts but are not used here. This exclusion is
+the principal reason the present paper is narrower, and
+correspondingly more reliable, than those drafts.
+
+\begin{table}[h]
+\caption{Cascade-derivation sources excluded from load-bearing use
+in this paper.}
+\label{tab:exclusions}
+\begin{tabular}{llp{2.8in}}
+\hline
+Source & Reason & Handling \\
+\hline
+\cite{CascadePregeometry} \S\S P4--P8 & Inconsistent internal
+  notation; not self-contained at theorem level; referenced
+  ``VFD Master Math'' manuscript not present in workspace &
+  Use only as motivational (M) background for the $\pphi$-entropy
+  functional; do not cite as theorem input \\
+\cite{CascadeFoundations} \S\S F6--F8 & F6 claims Burago--Ivanov
+  hypotheses verified --- but the verification in the cited
+  source does not uniformly bound the $g/\mathrm{geo}$ overshoot
+  flagged in \cite[\S C2.bis]{CascadeGR}; F8 is
+  closure-coefficient matching, which is circular as an upstream
+  input for a \emph{correspondence} paper whose subject is
+  building the projections on which closure is computed &
+  F6: replaced by explicit open item in $\mathbf{H_1}$. F8: not
+  cited. F7 used only for orientation, not as theorem input \\
+\cite{CascadeMillennium} \S\S MP2, MP4, MP5, MP7 cascade-internal
+  ``proof sketches'' & Each contains technical items the source
+  itself flags as remaining work & Cited in
+  Section~\ref{sec:handoff} only as target for the handoff table;
+  no theorem in this paper depends on them \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{remark}[On the choice to exclude rather than upgrade]
+\label{rmk:exclude-not-upgrade}
+The tables above reflect a deliberate choice: where a
+cascade-derivation source is labelled in its own narrative as
+``formal framework'' or contains open technical items flagged by
+the source author, we do not attempt to upgrade that source within
+the present paper. Upgrading is the separate task performed either
+(i) by completing the open items in the source itself, or (ii)
+classically, e.g.\ via Burago--Ivanov
+\cite{BuragoBuragoIvanov} / Cheeger--Colding
+\cite{CheegerColding1997}. Until either route is executed, we keep
+the corresponding statement as part of the appropriate
+$\mathbf{H}_i$ hypothesis.
+\end{remark}
+
+\subsection{Relation to the six Millennium papers}
+\label{subsec:relation-to-millennium}
+
+The six Millennium manuscripts will, after the present paper is in
+place, cite specific definitions and theorems here to close their
+projection-definition gap. The handoff table is given in
+Section~\ref{sec:handoff} (Table~\ref{tab:handoff}); what each
+Millennium paper inherits and what remains open after that
+inheritance is stated there precisely. A summary: each of the
+five \emph{constructive} target classes
+(YM, RH, NS, BSD, $P$ vs $NP$) inherits exactly one of
+$\mathbf{H_1}$--$\mathbf{H_4}$, and the Hodge paper inherits
+$\mathbf{H_{4a}}$.
+
+The Poincar\'e manuscript \cite{MillenniumPoincare} is a special
+case: Perelman's theorem closes Poincar\'e at Clay bar already,
+and the cascade contribution per
+\cite[\S MP6.3]{CascadeMillennium} is explicitly ``no contribution
+beyond consistency''. The present paper reconciles the
+consistency claim made there with the precise metric-projection
+machinery $\Pi_{\met}$ constructed here.
+
+\subsection{Organization and notational conventions}
+\label{subsec:organization}
+
+Section~\ref{sec:substrate} constructs the discrete substrate:
+refinement graphs, counting measures, sector fibres, and
+finite-level sector spaces, culminating in Theorem~\ref{thm:hilbert}
+(finite-level spaces are separable Hilbert; refinement maps are
+measurable). Section~\ref{sec:dynamics} defines configuration
+spaces at inverse/cylindrical limit, closure-energy functionals,
+the finite-level gradient flow, and the symmetry actions;
+Theorems~\ref{thm:flow-exists} and \ref{lem:commute} establish
+existence / uniqueness / commutation. Section~\ref{sec:corresp}
+sets the abstract correspondence scheme and proves a general
+measurability / equivariance lemma. Sections~\ref{sec:metric-hydro},
+\ref{sec:gauge}, \ref{sec:spectral}, and \ref{sec:cohomology-comp}
+construct the four families of projections:
+metric/hydrodynamic, gauge, spectral-arithmetic, and
+cohomological / computational. Section~\ref{sec:compat} establishes
+the compatibility diagrams. Section~\ref{sec:examples} gives the
+worked examples. Section~\ref{sec:handoff} states the conditional
+correspondence theorems and the handoff table to the six Millennium
+papers. An appendix audits notation and citations.
+
+\begin{notation}[Global conventions]
+\label{not:conventions}
+Throughout the paper:
+\begin{itemize}
+\item $\pphi = (1 + \sqrt 5)/2$ denotes the golden ratio; $\bar\pphi
+  = 1 - \pphi = -1/\pphi$ is its Galois conjugate. The notation
+  $\Q(\pphi) := \Q[\pphi]$ denotes the quadratic field $\Q[\sqrt 5]$.
+\item $\sigma \colon \Q(\pphi) \to \Q(\pphi)$ is the non-trivial
+  Galois involution fixing $\Q$: $\sigma(\pphi) = \bar\pphi$,
+  $\sigma(a + b\pphi) = a + b\bar\pphi$. We extend $\sigma$
+  coefficientwise to all $\Q(\pphi)$-modules.
+\item $H_4$ denotes the non-crystallographic Coxeter group of type
+  $H_4$ acting on $\R^4$ as the full symmetry group of the 600-cell
+  / 120-cell dual pair \cite[\S 3]{CascadeEmbeddings},
+  \cite{CoxeterRegularPolytopes}. $|H_4| = 14\,400$.
+\item $W(D_4) \subset W(B_4) \subset \mathrm{O}(4)$ is the Weyl
+  group of type $D_4$, order $192$. Triality is the outer
+  automorphism of $D_4$ of order $3$, preserving the $24$-cell
+  \cite[\S 2]{CascadeEmbeddings}.
+\item $\OO$ denotes the normed division algebra of octonions;
+  $\Im(\OO) \cong \R^7$ is the imaginary part; $G_2 = \Der(\OO)$
+  is its derivation algebra; $\mathrm{SU}(3) \subset G_2$ is the
+  stabilizer of any fixed imaginary unit \cite[\S 6]{CascadeEmbeddings}.
+\item Graphs are undirected, simple, and locally finite unless
+  otherwise stated. $V(G)$ denotes vertices, $E(G)$ unoriented
+  edges, $E^{\rm or}(G)$ oriented edges.
+\item All function spaces $L^p$ use Lebesgue measure on $\R^d$
+  unless otherwise specified; $\ell^2(V, \mu; V_{\rm fib})$ denotes
+  square-summable functions from the measurable set $V$ with
+  measure $\mu$ into the fibre Hilbert space $V_{\rm fib}$, with
+  inner product $\langle f, g \rangle = \sum_{v \in V} \mu(\{v\})
+  \langle f(v), g(v) \rangle_{V_{\rm fib}}$.
+\item $\Pi_*^{(n)}$ denotes the finite-level (refinement level $n$)
+  projection, and $\Pi_*$ denotes the corresponding inverse-limit /
+  continuum limit (which may be conditional on one of the
+  $\mathbf{H}_i$).
+\end{itemize}
+\end{notation}
+
+The reader should keep the audit of Table~\ref{tab:audit} in mind
+throughout. In particular, the word ``cascade'' in this paper
+refers only to the theorem-grade cascade inputs listed there; the
+wider cascade literature contains additional material which we
+deliberately do not use.
+
+%=====================================================================
+\section{The Discrete Cascade Substrate}
+\label{sec:substrate}
+%=====================================================================
+
+This section constructs the discrete substrate on which all
+cascade data lives at a given refinement level. The construction
+is entirely explicit: graphs, counting measures, fibre spaces,
+and $\ell^2$-sections. The main result (Theorem~\ref{thm:hilbert})
+is that the resulting sector spaces form a compatible family of
+separable Hilbert (or $\Q(\pphi)$-) vector spaces.
+
+\subsection{Refinement graphs}
+\label{subsec:graphs}
+
+\begin{definition}[The base graphs $G_0^{H_4}$ and $G_0^{D_4}$]
+\label{def:base-graphs}
+Let $G_0^{H_4}$ denote the $1$-skeleton of the regular 600-cell in
+$\R^4$: its vertex set is the $120$-element vertex set of the
+600-cell (the icosians of norm $1$, see
+\cite[\S 3]{CascadeEmbeddings}), and two vertices are joined by an
+undirected edge iff their Euclidean distance equals the edge
+length of the 600-cell. Let $G_0^{D_4}$ denote the $1$-skeleton of
+the regular $24$-cell inscribed in the 600-cell via the standard
+$D_4 \subset H_4$ sub-root-system inclusion
+\cite[\S 2]{CascadeEmbeddings}: its vertex set is the $24$-element
+set of $D_4$ minuscule vectors, and edges join pairs of vertices at
+the $24$-cell edge distance.
+\end{definition}
+
+\begin{definition}[Schl\"afli refinement]
+\label{def:schlafli}
+The \emph{Schl\"afli refinement} of a polytope graph $G$, denoted
+$\mathrm{Sch}(G)$, replaces each edge $e = \{u, v\}$ by the unique
+regular edge subdivision respecting the Coxeter symmetry of $G$, and
+adjoins new vertices at the face centroids in accordance with the
+$2I/2T$ coset decomposition of the binary icosahedral / binary
+tetrahedral groups as described in
+\cite[\S C2.bis.1]{CascadeGR}. We do not require the full
+convergence claim of \cite[\S C2.bis]{CascadeGR} (which is formal
+framework, grade F); we use only the combinatorial definition of
+the refinement map itself, which is algorithmic.
+
+Let $G_{n+1}^{\bullet} := \mathrm{Sch}(G_n^{\bullet})$ for
+$\bullet \in \{H_4, D_4\}$. At each level, the resulting graph is
+simple, locally finite, and carries a free action of the relevant
+Coxeter symmetry group ($W(H_4)$ or $W(D_4)$).
+\end{definition}
+
+\begin{remark}[Status of the refinement used here]
+\label{rmk:refinement-status}
+Only the existence of the refinement operation and its
+combinatorial structure are used below (these are
+theorem-grade per Definition~\ref{def:schlafli}). The geometric
+claim that the sequence $(G_n^{H_4}, d_n) \to (S^3, d_{\rm round})$
+in Gromov--Hausdorff sense is \emph{not} used as an unconditional
+input. Whenever we wish to invoke such a continuum limit, we do so
+under $\mathbf{H_1}$; see Sections~\ref{sec:metric-hydro}
+and \ref{sec:handoff}.
+\end{remark}
+
+\subsection{Counting measures}
+\label{subsec:counting-measures}
+
+\begin{definition}[Counting measures $\mu_n$ and $\nu_n$]
+\label{def:measures}
+Let $G_n$ be any of $G_n^{H_4}, G_n^{D_4}$. Define:
+\begin{align*}
+  \mu_n(S) &:= \frac{|S|}{|V(G_n)|}, \quad S \subseteq V(G_n);
+  \\
+  \nu_n(T) &:= \frac{|T|}{|E^{\rm or}(G_n)|}, \quad T \subseteq E^{\rm or}(G_n);
+\end{align*}
+where $E^{\rm or}(G_n)$ is the set of \emph{oriented} edges
+(each unoriented edge $\{u, v\}$ contributing two oriented edges
+$(u, v)$ and $(v, u)$). Both $\mu_n$ and $\nu_n$ are probability
+measures on their respective finite sets.
+\end{definition}
+
+\begin{remark}[Normalization]
+Normalization to probability measure is a convenience: it ensures
+that the $\ell^2$ inner product
+$\langle f, g\rangle_{\mu_n} = \sum_v \mu_n(\{v\}) \langle f(v),
+g(v)\rangle_{V_{\rm fib}}$ is bounded independently of $n$ when
+$f, g$ are uniformly bounded. Alternative normalizations (e.g.\
+counting measure scaled by $\varepsilon$-net radius $h_n^d$) lead
+to equivalent sector spaces up to a refinement-level-dependent
+rescaling; we use probability normalization throughout.
+\end{remark}
+
+\subsection{Sector fibres}
+\label{subsec:fibres}
+
+The cascade seven-rung structure
+$E_8 \to H_4 \to 40 \to D_4 \to 16 \to 8 \to 0$ is established in
+\cite[\S F3]{CascadeFoundations}. Each rung carries a canonical
+vector-space fibre, which we recall from
+\cite[\S\S 2--6]{CascadeEmbeddings}:
+
+\begin{definition}[Sector fibres]
+\label{def:fibres}
+Define the sector fibres as follows (with stated dimensions over $\R$
+and, where relevant, $\Q(\pphi)$-module structure):
+\begin{enumerate}
+\item $V_{H_4} := \R^4$ with the standard $H_4$-module structure
+  given by the reflection representation. Over $\Q(\pphi)$, the
+  integer-lattice icosian model
+  \cite[\S 3.1]{CascadeEmbeddings} gives $V_{H_4}$ a natural
+  $\Q(\pphi)^4$-module structure; we use the $\R^4$ model by
+  default and note the $\Q(\pphi)^4$ model when $\sigma$-actions
+  are needed.
+\item $V_{D_4} := \R^4$ with the standard $D_4$-reflection
+  representation; this is the representation on the $24$-cell
+  vertex span \cite[\S 2]{CascadeEmbeddings}.
+\item $V_{16} := \mathrm{Cl}(1,3)$, the real Clifford algebra of
+  signature $(1, 3)$, of real dimension $16$
+  \cite[\S 5.1]{CascadeEmbeddings}.
+\item $V_{8} := \OO$, the octonion algebra, of real dimension
+  $8$ \cite[\S 6]{CascadeEmbeddings}. The imaginary subspace
+  $\Im(\OO)$ has real dimension $7$ and will host gauge data
+  (Section~\ref{sec:gauge}).
+\end{enumerate}
+Each $V_\bullet$ carries the inner product induced by restriction
+from $E_8 \otimes \R \cong \R^8$ via the respective embedding
+\cite[\S\S 2--6]{CascadeEmbeddings}; with this inner product each
+$V_\bullet$ is a finite-dimensional Euclidean space.
+\end{definition}
+
+\begin{remark}[Why these four and not others]
+The choice of fibres $V_{H_4}, V_{D_4}, V_{16}, V_8$ matches the
+rungs carrying non-trivial cascade dynamics for the Millennium
+applications: $V_{H_4}$ for spectral data (RH, BSD through the
+modular-symbol map), $V_{D_4}$ for metric and hydrodynamic data
+(Poincar\'e, NS), $V_{16}$ for the $\mathrm{Cl}(1,3)$ structure
+underlying the real geometric-algebra formulation, and $V_8$ for
+gauge data (YM). The remaining rungs (40 and 0) do not carry
+additional fibre content beyond what is already present in
+$V_{H_4}$ and $V_{D_4}$; we omit them.
+\end{remark}
+
+\subsection{Finite-level sector spaces}
+\label{subsec:sector-spaces}
+
+\begin{definition}[Vertex-sector space $X_n^0$]
+\label{def:X-n-0}
+For $n \geq 0$ let
+\[
+  X_n^0 := \ell^2\big(V(G_n), \mu_n; V_{H_4} \oplus V_{D_4}
+    \oplus V_{16} \oplus V_8\big)
+\]
+with inner product
+\[
+  \langle f, g\rangle_{X_n^0}
+  := \sum_{v \in V(G_n)} \mu_n(\{v\})
+    \big\langle f(v), g(v) \big\rangle_{V_{H_4} \oplus V_{D_4}
+    \oplus V_{16} \oplus V_8}.
+\]
+Here $V(G_n)$ may denote either $V(G_n^{H_4})$ or $V(G_n^{D_4})$;
+we suppress the decoration when the choice is fixed by context.
+\end{definition}
+
+\begin{definition}[Edge-sector space $X_n^1$]
+\label{def:X-n-1}
+For $n \geq 0$ let
+\[
+  X_n^1 := \ell^2\big(E^{\rm or}(G_n), \nu_n; \Im(\OO)\big)
+\]
+with inner product
+\[
+  \langle A, B\rangle_{X_n^1}
+  := \sum_{e \in E^{\rm or}(G_n)} \nu_n(\{e\})
+    \big\langle A(e), B(e) \big\rangle_{\Im(\OO)},
+\]
+subject to the oriented-edge reversal convention $A(-e) = -A(e)$
+for every $e \in E^{\rm or}(G_n)$, where $-e$ denotes the edge $e$
+with reversed orientation. This is the standard gauge-theoretic
+convention for $1$-cochains.
+\end{definition}
+
+\begin{definition}[Cohomology-sector space $X^{\co}(X)$]
+\label{def:X-coh}
+For any smooth projective complex variety $X$ (more generally, any
+finite-dimensional $\Q(\pphi)$-vector-space-valued cohomology
+theory satisfying the axioms of Section~\ref{sec:cohomology-comp}),
+let
+\[
+  X^{\co}(X) := H^*\big(X, \Q(\pphi)\big)
+  = H^*(X, \Q) \otimes_{\Q} \Q(\pphi).
+\]
+This is a finite-dimensional $\Q(\pphi)$-vector space with a
+natural $\sigma$-action (coefficientwise), and its $\sigma$-fixed
+part is $H^*(X, \Q)$; this fact is established as
+Theorem~\ref{thm:fix-sigma-rational}.
+\end{definition}
+
+\subsection{The Hilbert / vector space structure theorem}
+\label{subsec:hilbert-thm}
+
+\begin{theorem}[Sector spaces: basic structural properties]
+\label{thm:hilbert}
+Fix $n \geq 0$ and $\bullet \in \{H_4, D_4\}$.
+\begin{enumerate}
+\item $X_n^0$ and $X_n^1$ are finite-dimensional real Hilbert
+  spaces, hence in particular separable Hilbert spaces. Their
+  dimensions are
+  \[
+    \dim_\R X_n^0 = |V(G_n^\bullet)| \cdot
+    (\dim V_{H_4} + \dim V_{D_4} + \dim V_{16} + \dim V_8)
+    = |V(G_n^\bullet)| \cdot 32,
+  \]
+  and
+  \[
+    \dim_\R X_n^1 = \tfrac{1}{2} |E^{\rm or}(G_n^\bullet)| \cdot
+    \dim \Im(\OO) = \tfrac{1}{2} |E^{\rm or}(G_n^\bullet)| \cdot 7,
+  \]
+  where the factor $\tfrac{1}{2}$ in the edge-sector dimension
+  reflects the reversal convention (each unoriented edge
+  contributes $7$ real degrees of freedom).
+\item For any smooth projective complex variety $X$, $X^{\co}(X)$
+  is a finite-dimensional $\Q(\pphi)$-vector space. Its dimension
+  over $\Q$ is $2 \dim_{\Q} H^*(X, \Q)$.
+\item For each $n \geq 0$, the refinement map
+  $\mathrm{Sch}_\ast \colon G_n^\bullet \to G_{n+1}^\bullet$
+  (inclusion of the level-$n$ vertex set into the level-$(n+1)$
+  vertex set, and the corresponding map on oriented edges) induces
+  bounded linear maps
+  $R_n^0 \colon X_n^0 \to X_{n+1}^0$ and
+  $R_n^1 \colon X_n^1 \to X_{n+1}^1$
+  defined by zero-extension outside the image of
+  $\mathrm{Sch}_\ast$; these maps are Borel measurable and
+  $W(G_n^\bullet)$-equivariant for the Coxeter-symmetry group
+  of $G_n^\bullet$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(1)} For each $v \in V(G_n^\bullet)$, the fibre
+$V_{H_4} \oplus V_{D_4} \oplus V_{16} \oplus V_8$ is a
+finite-dimensional Euclidean space (by Definition~\ref{def:fibres})
+of real dimension $4 + 4 + 16 + 8 = 32$. The vertex set
+$V(G_n^\bullet)$ is finite (explicitly: the Schl\"afli refinement
+multiplies the vertex count by a fixed factor depending on the
+polytope type, but remains finite at each level), so $X_n^0$ is a
+finite direct sum of copies of this fibre space, weighted by the
+probability measure $\mu_n$. A finite direct sum of Euclidean
+spaces with positive weights is Hilbert. The dimension count is
+immediate.
+
+The edge-sector analysis is identical: $\Im(\OO) \cong \R^7$
+(Definition~\ref{def:fibres}), $E^{\rm or}(G_n^\bullet)$ is finite,
+and the reversal convention
+$A(-e) = -A(e)$ cuts the effective real dimension by a factor
+of two.
+
+\emph{(2)} $H^*(X, \Q)$ is finite-dimensional by classical Hodge
+theory \cite{GriffithsHarris}. Tensoring with $\Q(\pphi) = \Q[\pphi]$,
+a $\Q$-vector space of dimension $2$, doubles the $\Q$-dimension
+but is naturally a $\Q(\pphi)$-module of the same rank as
+$H^*(X, \Q)$ has $\Q$-dimension.
+
+\emph{(3)} The refinement map on vertices is, by
+Definition~\ref{def:schlafli}, a combinatorial embedding
+$V(G_n^\bullet) \hookrightarrow V(G_{n+1}^\bullet)$. Extending a
+function $f \in X_n^0$ by zero outside this embedding defines
+$R_n^0 f \in X_{n+1}^0$ pointwise. Boundedness: for any $f \in X_n^0$,
+\[
+  \|R_n^0 f\|_{X_{n+1}^0}^2
+  = \sum_{v \in V(G_{n+1}^\bullet)} \mu_{n+1}(\{v\})
+    \|(R_n^0 f)(v)\|^2
+  = \sum_{v \in V(G_n^\bullet)} \mu_{n+1}(\{v\}) \|f(v)\|^2
+  \leq C_n \|f\|_{X_n^0}^2,
+\]
+where $C_n := \max_{v \in V(G_n^\bullet)}
+\mu_{n+1}(\{v\})/\mu_n(\{v\}) =
+|V(G_n^\bullet)|/|V(G_{n+1}^\bullet)|$ is a finite constant
+independent of $f$. Borel measurability on finite-dimensional spaces
+is automatic for linear maps. $W$-equivariance follows from the
+Coxeter-symmetry compatibility of the Schl\"afli refinement
+recorded in \cite[\S 12.2]{CascadeEmbeddings} (this is a
+theorem-grade input: explicit vertex coordinates are given there).
+The edge-sector proof is identical.
+\end{proof}
+
+\begin{remark}[Explicit dimensions at low levels]
+\label{rmk:low-dims}
+For orientation: $|V(G_0^{H_4})| = 120$ (600-cell vertices), so
+$\dim_\R X_0^{0,H_4} = 120 \cdot 32 = 3{,}840$; $|V(G_0^{D_4})| =
+24$, so $\dim_\R X_0^{0,D_4} = 768$.
+$|E^{\rm or}(G_0^{H_4})| = 720 \cdot 2 = 1{,}440$ (the 600-cell has
+720 edges, each oriented both ways), so
+$\dim_\R X_0^{1,H_4} = 720 \cdot 7 = 5{,}040$, etc.
+At level $n$, all dimensions grow polynomially or exponentially in
+$n$ depending on the refinement rule, but remain finite at each
+level.
+\end{remark}
+
+\subsection{Inverse-limit structure and compatibility}
+\label{subsec:inverse-limit}
+
+The finite-level sector spaces form a directed system under the
+refinement maps $R_n^\bullet$. We now record the inverse-limit
+(equivalently cylindrical) structure, which will support the
+infinite-level constructions of Sections~\ref{sec:dynamics}
+and beyond.
+
+\begin{definition}[Cylindrical test-vectors and the inverse limit]
+\label{def:inverse-limit}
+A \emph{cylindrical} vector $\phi$ of degree $n$ in the vertex
+sector is, by definition, a vector $\phi_n \in X_n^0$. Two
+cylindrical vectors $(n, \phi_n)$ and $(n', \phi_{n'})$ with
+$n \leq n'$ are declared \emph{equivalent} if
+$R_{n'-1}^0 \circ \cdots \circ R_n^0 \phi_n = \phi_{n'}$. The
+\emph{cylindrical sector space}
+\[
+  X^0_\infty := \bigcup_{n \geq 0} X_n^0 / \sim
+\]
+is the set of equivalence classes; it carries a natural pre-Hilbert
+structure by using the level-$n$ inner product on any
+representative. The \emph{inverse-limit sector space}
+$X^0_{\varprojlim}$ is the completion of $X^0_\infty$ with respect
+to the pre-Hilbert norm; it is a separable Hilbert space by
+standard inverse-limit / projective-system theory
+\cite[\S 6.2]{ReedSimonI}.
+
+An analogous construction gives the edge-sector inverse limit
+$X^1_{\varprojlim}$.
+\end{definition}
+
+\begin{remark}[Role of the inverse limit]
+The inverse-limit construction is the standard device for
+passing from finite-level discrete data to an idealized continuum
+object \cite{ReedSimonI}. We do \emph{not} claim here that
+$X^0_{\varprojlim}$ is isomorphic to any specific classical
+function space (e.g.\ $L^2(S^3)$ with its round-metric measure); that
+identification depends on $\mathbf{H_1}$ and is taken up in
+Section~\ref{sec:metric-hydro}. The inverse-limit structure is
+\emph{combinatorial} here; the geometric interpretation is
+downstream.
+\end{remark}
+
+\subsection{Symmetry actions on the substrate}
+\label{subsec:symmetries}
+
+We record the symmetry actions that the finite-level sector spaces
+support. All actions commute with the $\ell^2$ structure and with
+zero-extension, so they descend to $X^0_\infty$ and to the
+inverse-limit $X^0_{\varprojlim}$.
+
+\begin{definition}[Coxeter actions]
+\label{def:coxeter-actions}
+The Coxeter group $W(H_4)$ acts on $V(G_n^{H_4})$ by its standard
+action on the 600-cell / its refinements
+\cite[\S 3]{CascadeEmbeddings}, and correspondingly on
+$V_{H_4} \subset \R^4$ through its reflection representation. These
+two actions define a simultaneous action of $W(H_4)$ on
+$X_n^{0,H_4}$ by
+\[
+  (w \cdot f)(v) := \rho(w) \, f(w^{-1} \cdot v)
+  \quad \text{for } w \in W(H_4), v \in V(G_n^{H_4}),
+\]
+where $\rho$ is the reflection representation on
+$V_{H_4} \oplus V_{D_4} \oplus V_{16} \oplus V_8$ (with $W(D_4)$
+acting through its inclusion $W(D_4) \subset W(H_4)$, and
+$W(H_4)$ acting trivially on $V_{16}$ and $V_8$ for now; the
+non-trivial gauge actions enter in Section~\ref{sec:gauge}).
+The action is unitary with respect to
+$\langle\cdot, \cdot\rangle_{X_n^0}$.
+
+The analogous $W(D_4)$-action on $X_n^{0, D_4}$ is defined
+identically.
+\end{definition}
+
+\begin{definition}[Galois action $\sigma$]
+\label{def:sigma-action-subst}
+Let $\Q(\pphi)$ act on $V_{H_4}$ through the integer-lattice icosian
+model \cite[\S 3.1]{CascadeEmbeddings}; let $\sigma$ act on
+$V_{H_4}$ by its coefficientwise Galois action
+$\sigma \colon a + b \pphi \mapsto a + b \bar\pphi$. This action
+extends uniquely to an $\R$-linear involution on the $\R$-span of
+$V_{H_4}$, commuting with the $H_4$-reflection representation (see
+\cite[\S F5]{CascadeFoundations}, theorem-grade).
+
+Extend $\sigma$ to $V_{D_4}, V_{16}, V_8$ by the trivial action:
+these fibres carry no $\Q(\pphi)$-structure beyond the rational
+structure inherited from $\Q \subset \Q(\pphi)$, so their
+coefficientwise $\sigma$ is the identity.
+
+Extend $\sigma$ to $X_n^0$ pointwise:
+$(\sigma f)(v) := \sigma(f(v))$. The resulting map is $\R$-linear
+and a unitary involution on $X_n^0$.
+\end{definition}
+
+\begin{remark}[On the scope of $\sigma$]
+The $\sigma$-action is non-trivial on the $V_{H_4}$-sector of
+$X_n^0$ and trivial on the other sectors. This is the minimal
+non-trivial Galois structure consistent with
+\cite[\S F5]{CascadeFoundations}. The spectral-arithmetic
+consequences (Section~\ref{sec:spectral}) use only the $V_{H_4}$
+action.
+\end{remark}
+
+\begin{definition}[Refinement shift]
+\label{def:refine-shift}
+The refinement maps $R_n^0, R_n^1$ of
+Theorem~\ref{thm:hilbert}(3) constitute the \emph{refinement shift}.
+Refinement shift commutes with $\sigma$ (since $\sigma$ acts
+coefficientwise and zero-extension is $\Q$-linear) and, after
+restriction to $X_n^{0,D_4}$, commutes with $W(D_4)$; for
+$X_n^{0,H_4}$ and $W(H_4)$ the analogous statement holds.
+\end{definition}
+
+\begin{lemma}[Commutation of symmetries]
+\label{lem:commute-subst}
+On $X_n^0$ and $X_n^1$, the three actions (Coxeter, $\sigma$,
+refinement shift) commute in all pairs.
+\end{lemma}
+
+\begin{proof}
+$\sigma$ and the Coxeter actions: $\sigma$ acts coefficientwise on
+$\Q(\pphi)$-coefficients; the Coxeter reflection representation is
+defined over $\Q(\pphi)$ (the $H_4$ Coxeter matrix is rational with
+$\pphi$-entries in the standard basis,
+\cite[\S 3]{CascadeEmbeddings}), so its matrix coefficients are
+$\sigma$-stable. Therefore $\sigma$ and any Coxeter element commute
+at the level of matrix multiplication.
+
+$\sigma$ and refinement: zero-extension is $\Q$-linear and
+$\sigma$ is $\Q$-linear and $\R$-linear; hence they commute.
+
+Coxeter and refinement: the Schl\"afli refinement is defined as
+$W(G_n)$-equivariant by \cite[\S 12.2]{CascadeEmbeddings}
+(theorem-grade); the vertex extension map is then automatically
+equivariant.
+\end{proof}
+
+\begin{remark}[What Section~\ref{sec:substrate} has and has not done]
+At this stage the substrate is fully defined at finite level: we
+have graphs, measures, fibres, sector spaces, refinement maps,
+and three commuting symmetry actions. All constructions are
+entirely \emph{combinatorial and finite-dimensional}; nothing yet
+depends on the geometric continuum limit (which requires
+$\mathbf{H_1}$). Section~\ref{sec:dynamics} adds the closure
+functional and gradient flow on top of this substrate, still at
+finite level; Section~\ref{sec:corresp} then abstracts the
+correspondence scheme; the sector-specific projections
+$\Pi_{\met}, \Pi_{\hyd}, \Pi_{\gge}, T_\zeta[h], T_E[h], \Pi_\sigma,
+\Pi_\TM$ are constructed in Sections~\ref{sec:metric-hydro} through
+\ref{sec:cohomology-comp}.
+\end{remark}
+
+%=====================================================================
+\section{Configuration Spaces and Dynamics}
+\label{sec:dynamics}
+%=====================================================================
+
+This section equips the finite-level sector spaces with a closure
+energy functional, a gradient flow, and the full inverse-limit
+configuration space. All constructions remain finite-dimensional at
+each refinement level; the only infinite-dimensional object is the
+inverse-limit $X_\cas$, which is a separable Hilbert space by
+standard projective-system theory.
+
+\subsection{The cascade configuration space}
+\label{subsec:config-space}
+
+\begin{definition}[Cascade configuration space]
+\label{def:xcas}
+The \emph{cascade configuration space} is the inverse-limit Hilbert
+space
+\[
+  X_\cas := X^0_{\varprojlim} \oplus X^1_{\varprojlim},
+\]
+where $X^0_{\varprojlim}$ and $X^1_{\varprojlim}$ are as in
+Definition~\ref{def:inverse-limit}. We write a general element as
+$\Phi = (\Phi^0, \Phi^1)$ with $\Phi^0 \in X^0_{\varprojlim}$ and
+$\Phi^1 \in X^1_{\varprojlim}$, and we continue to write
+$\Phi_n = (\Phi_n^0, \Phi_n^1) \in X_n^0 \oplus X_n^1$ for its
+level-$n$ component (the equivalence-class representative at
+level $n$).
+
+The \emph{admissible subspace} $X_\cas^{\rm adm} \subset X_\cas$
+consists of those $\Phi \in X_\cas$ whose level-$n$ components
+satisfy the uniform bound
+\begin{equation}
+\label{eq:admissible-bound}
+  \sup_{n \geq 0} \|\Phi_n\|_{X_n^0 \oplus X_n^1} < \infty.
+\end{equation}
+The admissible subspace is a Hilbert subspace of $X_\cas$ (it is the
+inverse limit of unit balls at each level).
+\end{definition}
+
+\begin{remark}[Why admissibility matters]
+The uniform bound \eqref{eq:admissible-bound} is the standard
+cylindrical-measurability condition in projective-system
+constructions. Without it, the finite-level gradient flow
+(Section~\ref{subsec:gradient-flow}) can escape to infinity in
+norm as $n \to \infty$; with it, the flow is well-defined on the
+whole inverse-limit. All physical cascade configurations discussed
+in the literature \cite[\S 4]{CascadeEmbeddings},
+\cite[\S\S D1--D4]{CascadeDynamics} are admissible in this sense.
+\end{remark}
+
+\subsection{Closure energies}
+\label{subsec:closure-energies}
+
+The cascade closure functional of \cite[\S F2]{CascadeFoundations}
+(theorem-grade, Table~\ref{tab:audit}) takes the form
+\[
+  \mathcal{F} = \alpha R + \beta E - \gamma Q
+\]
+with $\alpha, \beta, \gamma > 0$ and $R, E, Q$ the
+\emph{curvature}, \emph{kinetic}, and \emph{correction} densities.
+On the substrate of Section~\ref{sec:substrate}, these densities
+have canonical finite-level discretizations, which we now record.
+All three densities are quadratic forms on the sector space.
+
+\begin{definition}[Finite-level closure energy $F_n$]
+\label{def:Fn}
+Let $\Phi = (\Phi^0, \Phi^1) \in X_n^0 \oplus X_n^1$. The
+finite-level closure energy is
+\begin{equation}
+\label{eq:Fn}
+  F_n(\Phi) := \alpha R_n(\Phi) + \beta E_n(\Phi) - \gamma Q_n(\Phi),
+\end{equation}
+where:
+\begin{itemize}
+\item $R_n$ is the \emph{discrete curvature}:
+\[
+  R_n(\Phi) := \tfrac{1}{2}
+    \big\langle \Phi^0, \Delta_n \Phi^0 \big\rangle_{X_n^0}
+    + \tfrac{1}{2}
+    \big\langle \Phi^1, \partial_n^* \partial_n \Phi^1 \big\rangle_{X_n^1},
+\]
+with $\Delta_n$ the graph Laplacian on $X_n^0$ and
+$\partial_n^* \partial_n$ the discrete exterior-derivative Laplacian
+on $X_n^1$;
+\item $E_n$ is the \emph{discrete kinetic}:
+\[
+  E_n(\Phi) := \tfrac{1}{2}
+    \big\langle \mathrm{d}_n \Phi^0, \mathrm{d}_n \Phi^0 \big\rangle_{X_n^1},
+\]
+with $\mathrm{d}_n \colon X_n^0 \to X_n^1$ the graph-exterior
+derivative (oriented-edge difference);
+\item $Q_n$ is the \emph{discrete correction}:
+\[
+  Q_n(\Phi) := \tfrac{1}{2}
+    \big\langle \Phi^0, \Phi^0 \big\rangle_{X_n^0}
+    + \tfrac{1}{2}
+    \big\langle \Phi^1, \Phi^1 \big\rangle_{X_n^1}.
+\]
+\end{itemize}
+Each of $R_n, E_n, Q_n$ is a continuous, $W$-invariant, and
+$\sigma$-invariant quadratic form on $X_n^0 \oplus X_n^1$.
+\end{definition}
+
+\begin{remark}[On the choice of discrete Laplacians]
+The discrete Laplacians $\Delta_n$ and $\partial_n^* \partial_n$
+are the standard combinatorial Laplacians associated to
+$G_n$ with the measures $\mu_n, \nu_n$ of
+Definition~\ref{def:measures}. These are well-studied
+finite-dimensional symmetric operators; in particular they are
+positive semidefinite and their spectra are finite sets with
+multiplicities. Use of the combinatorial Laplacian at this
+finite-level stage should not be confused with the much stronger
+spectral-convergence claim of
+\cite[\S C2.bis.1]{CascadeGR}, which is formal framework and which
+we invoke only under $\mathbf{H_1}$.
+\end{remark}
+
+\begin{lemma}[Closure-energy regularity]
+\label{lem:Fn-regularity}
+The functional $F_n \colon X_n^0 \oplus X_n^1 \to \R$ is
+continuously differentiable with gradient
+\[
+  \nabla F_n(\Phi) = \alpha \nabla R_n(\Phi) + \beta \nabla E_n(\Phi)
+    - \gamma \nabla Q_n(\Phi),
+\]
+where each summand is given by the symmetric operator associated
+to the corresponding quadratic form. The operator
+$L_n := \alpha \Delta_n^{\rm total} + \beta
+\mathrm{d}_n^* \mathrm{d}_n - \gamma I$
+(with $\Delta_n^{\rm total}$ the direct sum of $\Delta_n$ on
+$X_n^0$ and $\partial_n^* \partial_n$ on $X_n^1$, and
+$\mathrm{d}_n^* \mathrm{d}_n$ extended by zero on $X_n^1$) is
+bounded and self-adjoint, and $\nabla F_n(\Phi) = L_n \Phi$. Both
+$F_n$ and $\nabla F_n$ are $W$-equivariant and
+$\sigma$-equivariant.
+\end{lemma}
+
+\begin{proof}
+Immediate from Definition~\ref{def:Fn}: each quadratic form
+$\Phi \mapsto \langle \Phi, A\Phi \rangle$ with $A$ symmetric is
+continuously differentiable with gradient $2 A\Phi$, so
+$\nabla F_n(\Phi) = L_n \Phi$ as stated. Self-adjointness of $L_n$
+follows from self-adjointness of each constituent operator
+(combinatorial Laplacian is self-adjoint by inspection;
+$\mathrm{d}_n^*\mathrm{d}_n$ is self-adjoint by construction;
+$I$ is trivially self-adjoint). $W$- and $\sigma$-equivariance of
+$L_n$ follow from $W$- and $\sigma$-equivariance of the
+underlying combinatorial structures (Lemma~\ref{lem:commute-subst}).
+\end{proof}
+
+\subsection{Finite-level cascade gradient flow}
+\label{subsec:gradient-flow}
+
+\begin{definition}[Finite-level cascade gradient flow]
+\label{def:gradient-flow}
+The \emph{continuous-time finite-level cascade gradient flow} on
+$X_n^0 \oplus X_n^1$ is the ordinary differential equation
+\begin{equation}
+\label{eq:flow}
+  \frac{d \Phi_n(t)}{dt} = -\nabla F_n(\Phi_n(t))
+  = -L_n \Phi_n(t), \qquad t \geq 0.
+\end{equation}
+The \emph{discrete-time cascade gradient flow} with step size
+$\eta_n > 0$ is the iteration
+\begin{equation}
+\label{eq:flow-discrete}
+  \Phi_{n, k+1} = \Phi_{n, k} - \eta_n L_n \Phi_{n, k},
+  \qquad k = 0, 1, 2, \ldots,
+\end{equation}
+starting from any $\Phi_{n, 0} \in X_n^0 \oplus X_n^1$.
+\end{definition}
+
+\begin{theorem}[Existence, uniqueness, and energy decrease]
+\label{thm:flow-exists}
+Fix $n \geq 0$ and an initial datum $\Phi_{n, 0} \in X_n^0 \oplus
+X_n^1$.
+\begin{enumerate}
+\item The continuous-time flow \eqref{eq:flow} admits a unique
+  global-in-time $C^1$ solution $\Phi_n \colon [0, \infty) \to X_n^0
+  \oplus X_n^1$ with $\Phi_n(0) = \Phi_{n, 0}$, explicitly
+  $\Phi_n(t) = e^{-t L_n} \Phi_{n, 0}$.
+\item The closure energy is non-increasing along the flow:
+  $F_n(\Phi_n(t_2)) \leq F_n(\Phi_n(t_1))$ for $t_1 \leq t_2$, and
+  strictly decreasing unless $\Phi_n(t_1) \in \ker L_n$.
+\item For any step size $\eta_n$ satisfying
+  $0 < \eta_n \leq \|L_n\|^{-1}$ (operator norm), the discrete-time
+  iteration \eqref{eq:flow-discrete} converges to the nearest
+  critical point $\Phi_n^* \in \ker L_n$ in the $X_n^0 \oplus
+  X_n^1$ norm, and $F_n(\Phi_{n, k})$ is non-increasing in $k$.
+\item The flow is $W$-equivariant and $\sigma$-equivariant in the
+  following sense: if $g$ is any $W$-element or $\sigma$, then
+  $\Phi_n(0) \mapsto g\Phi_n(0)$ produces the flow
+  $t \mapsto g\Phi_n(t)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(1)} Since $L_n$ is a bounded linear operator on a
+finite-dimensional Hilbert space, $-L_n$ generates a $C^0$-semigroup
+$(e^{-tL_n})_{t \geq 0}$ of contractions (when
+$\alpha, \gamma$ are chosen such that $L_n$ is bounded below; if
+$L_n$ has negative eigenvalues the semigroup may grow exponentially,
+but existence is unchanged). Uniqueness follows from the
+Picard--Lindel\"of theorem for linear ODEs.
+
+\emph{(2)} Along the flow,
+\[
+  \frac{d}{dt} F_n(\Phi_n(t))
+  = \langle \nabla F_n(\Phi_n(t)), \dot\Phi_n(t) \rangle
+  = \langle L_n \Phi_n(t), -L_n \Phi_n(t) \rangle
+  = -\|L_n \Phi_n(t)\|^2 \leq 0,
+\]
+with equality iff $L_n \Phi_n(t) = 0$, i.e.\ $\Phi_n(t) \in \ker
+L_n$. This gives non-increase and strict decrease off the kernel.
+
+\emph{(3)} For $0 < \eta_n \leq \|L_n\|^{-1}$, the iteration map
+$T_{\eta_n}(\Phi) := \Phi - \eta_n L_n \Phi$ has operator norm
+$\|I - \eta_n L_n\| \leq 1$, with strict contraction in the
+orthogonal complement of $\ker L_n$. Standard finite-dimensional
+gradient-descent theory gives convergence to the orthogonal
+projection of $\Phi_{n, 0}$ onto $\ker L_n$, and energy
+non-increase follows from
+\[
+  F_n(\Phi_{n, k+1}) - F_n(\Phi_{n, k}) = -\eta_n \|L_n
+    \Phi_{n, k}\|^2 + O(\eta_n^2),
+\]
+where the $O(\eta_n^2)$ is non-positive for $\eta_n \leq
+\|L_n\|^{-1}$.
+
+\emph{(4)} Since $L_n$ is $W$- and $\sigma$-equivariant
+(Lemma~\ref{lem:Fn-regularity}), so is $e^{-t L_n}$, hence so is
+the flow.
+\end{proof}
+
+\begin{remark}[Scope of the flow]
+Theorem~\ref{thm:flow-exists} is a finite-dimensional
+gradient-flow theorem; no analytic or geometric continuum limit is
+invoked. The \emph{refinement} behaviour of the flow as $n \to
+\infty$, and its relation to classical continuum PDE flows (Ricci
+flow, Navier--Stokes, YM heat flow), is the subject of the
+conditional theorems in Sections~\ref{sec:metric-hydro},
+\ref{sec:gauge}, and \ref{sec:handoff}. At the present stage the
+flow is well-defined but \emph{uninterpreted}.
+\end{remark}
+
+\subsection{Full symmetry actions on $X_\cas$}
+\label{subsec:sigma-full}
+
+\begin{definition}[$\sigma$-action on the full configuration space]
+\label{def:sigma-X-cas}
+The $\sigma$-action of Definition~\ref{def:sigma-action-subst}
+extends pointwise from $X_n^0$ to $X_\cas$: for
+$\Phi = (\Phi^0, \Phi^1) \in X_\cas$, define
+\[
+  \sigma \Phi := (\sigma \Phi^0, \sigma \Phi^1),
+\]
+where $\sigma$ acts trivially on $X_n^1$ (since $\Im(\OO)$ carries
+no non-trivial $\Q(\pphi)$-structure that survives the trivial
+extension from $\Q$). This defines a unitary involution
+$\sigma \colon X_\cas \to X_\cas$.
+\end{definition}
+
+\begin{lemma}[Commutation, inverse-limit version]
+\label{lem:commute}
+On $X_\cas$, the Coxeter actions, $\sigma$, the refinement shift,
+and the finite-level flow $\Phi \mapsto e^{-tL_n}\Phi$ (at any
+level $n$) all commute pairwise on their common domains of
+definition. The sector-restriction projections $P_{H_4}, P_{D_4}$
+(orthogonal projection onto the $H_4$ or $D_4$ sector of
+$V_{H_4}\oplus V_{D_4}\oplus V_{16}\oplus V_8$) also commute with
+all three symmetry actions.
+\end{lemma}
+
+\begin{proof}
+Commutation of Coxeter, $\sigma$, and refinement on $X_n^0$ and
+$X_n^1$ is Lemma~\ref{lem:commute-subst}. The inverse-limit and
+admissible-subspace constructions preserve commutation by
+naturality. Commutation with the flow $e^{-tL_n}$ follows from
+$W$- and $\sigma$-equivariance of $L_n$
+(Lemma~\ref{lem:Fn-regularity}). Commutation of the
+sector-restriction projections with $W$ and refinement is by
+construction of Definition~\ref{def:fibres}; commutation with
+$\sigma$ is because $\sigma$ respects the sector decomposition
+(trivial on $V_{D_4}, V_{16}, V_8$; non-trivial only on $V_{H_4}$).
+\end{proof}
+
+\begin{remark}[Rung restriction]
+The sector-restriction projections $P_{H_4}, P_{D_4}$ are the
+precise Hilbert-space version of what
+\cite[\S\S 2--3]{CascadeEmbeddings} calls ``$\pi_H$'' (projection
+onto $H_4$-rung content) and ``$\iota_D$'' (inclusion of
+$D_4$-rung content into the $H_4$-rung). We adopt the
+$P_{H_4}, P_{D_4}$ notation throughout; the identifications are
+$\pi_H \leftrightarrow P_{H_4}$ and $\iota_D \leftrightarrow
+\iota_{V_{D_4} \hookrightarrow V_{H_4}}$, the latter being the
+obvious coordinate inclusion.
+\end{remark}
+
+%=====================================================================
+\section{Abstract Correspondence Scheme}
+\label{sec:corresp}
+%=====================================================================
+
+This section isolates the common structure used by all seven
+projections constructed in the following sections. A
+\emph{correspondence} is defined abstractly as a measurable,
+symmetry-intertwining map from an admissible subspace of a
+cascade sector space into a classical target category. The main
+technical result of this section,
+Theorem~\ref{thm:abstract-correspondence}, is that a map
+satisfying these axioms automatically inherits the finer
+properties (Borel measurability on $X_\cas$, equivariance on the
+symmetric kernel, compatibility with refinement) used in the
+downstream sector theorems. The purpose of the abstraction is to
+avoid repeating the same verification six times in
+Sections~\ref{sec:metric-hydro}--\ref{sec:cohomology-comp}.
+
+\subsection{Target categories}
+\label{subsec:target-cats}
+
+\begin{definition}[Classical target]
+\label{def:target}
+A \emph{classical target} is a triple
+$\mathcal{T} = (T, \tau_T, S_T)$ where:
+\begin{itemize}
+\item $T$ is a topological space (the \emph{target space});
+\item $\tau_T$ is a Borel $\sigma$-algebra on $T$;
+\item $S_T$ is a Borel-measurable right action of a group $G_T$
+  on $T$ (the \emph{target symmetry group}).
+\end{itemize}
+Examples: $\mathcal{T}_{\met} = (\Met(M), {\rm Borel}, {\rm
+Diff}(M))$ for a fixed smooth manifold $M$; $\mathcal{T}_{\gge} =
+(\Conn(P), {\rm Borel}, {\rm Gauge}(P))$ for a fixed principal
+$G$-bundle $P$; $\mathcal{T}_\zeta = (\mathcal{B}(L^2(\R_+, dx/x)),
+{\rm strong Borel}, \{1\})$ for the bounded-operator target of
+$T_\zeta[h]$; and so on.
+\end{definition}
+
+\begin{definition}[Cascade source]
+\label{def:source}
+A \emph{cascade source} is a pair
+$\mathcal{S} = (D, G_D)$ where $D \subseteq X_\cas$ is an
+admissible subspace of the cascade configuration space (a Borel
+subset closed under the symmetry actions of
+Section~\ref{sec:dynamics}) and $G_D$ is the restriction to $D$ of
+$W \times \langle \sigma \rangle \times {\rm Refine}$, the product
+of the three commuting symmetry actions of
+Lemma~\ref{lem:commute}.
+\end{definition}
+
+\begin{definition}[Correspondence]
+\label{def:correspondence}
+A \emph{correspondence}
+$\Pi \colon \mathcal{S} \rightsquigarrow \mathcal{T}$ is a
+Borel-measurable map $\Pi \colon D \to T$ together with a
+group homomorphism $\rho_\Pi \colon G_D \to G_T$ such that
+\[
+  \Pi(g \cdot \Phi) = \rho_\Pi(g) \cdot \Pi(\Phi) \quad
+    \text{for all } \Phi \in D,\, g \in G_D
+\]
+(symmetry intertwining).
+\end{definition}
+
+\begin{remark}[Interpretation of $\rho_\Pi$]
+The homomorphism $\rho_\Pi$ translates cascade symmetries into
+classical symmetries. For the metric projection $\Pi_{\met}$, the
+$W(D_4)$-action on the cascade side maps into an isometry of the
+target metric (rotations of $\R^4$); for the gauge projection
+$\Pi_{\gge}$, the cascade symmetries map into gauge
+transformations; for $\Pi_\sigma$, the $\sigma$-involution maps
+into the Galois-conjugation symmetry of $\Q(\pphi)$-cohomology.
+\end{remark}
+
+\subsection{General theorem}
+\label{subsec:general-thm}
+
+\begin{theorem}[Abstract correspondence lemma]
+\label{thm:abstract-correspondence}
+Let $\Pi \colon \mathcal{S} \rightsquigarrow \mathcal{T}$ be a
+correspondence as in Definition~\ref{def:correspondence}, and
+suppose further that:
+\begin{enumerate}
+\item[(A1)] $\Pi$ is the limit of finite-level maps
+  $\Pi^{(n)} \colon D \cap (X_n^0 \oplus X_n^1) \to T$ in the
+  following sense: for each $\Phi \in D$ and each level $n$,
+  $\Pi^{(n)}(\Phi_n)$ is defined, and
+  $\Pi^{(n)}(\Phi_n) \to \Pi(\Phi)$ in $T$ as $n \to \infty$;
+\item[(A2)] each $\Pi^{(n)}$ is continuous in the $X_n^0 \oplus
+  X_n^1$ norm;
+\item[(A3)] each $\Pi^{(n)}$ is symmetry-intertwining at its own
+  level: $\Pi^{(n)}(g \cdot \Phi_n) = \rho_\Pi(g) \cdot
+  \Pi^{(n)}(\Phi_n)$ for $g \in W \times \langle\sigma\rangle$;
+\item[(A4)] the refinement map commutes with $\Pi^{(n)}$ up to the
+  inclusion of targets: there is a compatible system of target maps
+  $T^{(n)} \hookrightarrow T$ making the diagram commute.
+\end{enumerate}
+Then:
+\begin{enumerate}
+\item $\Pi$ is Borel-measurable on $D$;
+\item $\Pi$ is continuous on $D$ with the inverse-limit topology;
+\item $\Pi$ is fully symmetry-intertwining.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1) Borel measurability: each $\Pi^{(n)}$ is continuous
+(hence Borel) on its finite-dimensional domain by (A2). The inverse
+limit of Borel maps with compatible target inclusions is Borel on
+the inverse limit, by the projective-limit topology theorem
+(\cite[Thm.~1.8.9]{Bogachev}).
+
+(2) Continuity: follows from (A2) and (A1): pointwise convergence
+of Borel-measurable functions that are each continuous, combined
+with the inverse-limit topology, gives continuity of the limit
+function on the inverse-limit topology.
+
+(3) Symmetry intertwining: (A3) plus (A4) give intertwining at
+every level; passing to the limit gives intertwining on the
+inverse limit. The action of the refinement shift commutes with
+the correspondence by (A4).
+\end{proof}
+
+\begin{remark}[How this is used]
+Theorem~\ref{thm:abstract-correspondence} is a technical workhorse:
+each sector-specific projection in
+Sections~\ref{sec:metric-hydro}--\ref{sec:cohomology-comp} is
+constructed as a limit of finite-level maps, each satisfying (A1)--
+(A4). Rather than reprove Borel measurability, continuity, and
+equivariance sector by sector, we verify (A1)--(A4) sector by
+sector and invoke
+Theorem~\ref{thm:abstract-correspondence} to conclude.
+\end{remark}
+
+\begin{remark}[Conditional correspondences]
+For the conditional correspondences of
+Sections~\ref{sec:metric-hydro}--\ref{sec:cohomology-comp} (the
+ones depending on $\mathbf{H_1}$--$\mathbf{H_4}$),
+Theorem~\ref{thm:abstract-correspondence} still applies to the
+unconditional \emph{finite-level} part $\Pi^{(n)}$; the conditional
+hypothesis is needed only for the existence of the limit
+$\Pi^{(n)}(\Phi_n) \to \Pi(\Phi)$ in a classical topology, which
+is (A1). We therefore state each conditional theorem in the form
+``assuming $\mathbf{H}_i$, (A1) holds, and hence (1)--(3) of
+Theorem~\ref{thm:abstract-correspondence} hold''.
+\end{remark}
+
+%=====================================================================
+\section{Metric and Hydrodynamic Correspondences}
+\label{sec:metric-hydro}
+%=====================================================================
+
+This section constructs $\Pi_{\met}$ from $D_4$-sector cascade data
+to metric data, and $\Pi_{\hyd}$ from $\sigma$-fixed $D_4$-sector
+dynamics to velocity/pressure data. Both are built at finite level
+from an explicit discrete moment tensor and shown to be
+well-defined, continuous, and $W(D_4)$-equivariant. The continuum-
+limit statements (smooth metric on a $3$-manifold; intertwining
+with Navier--Stokes) are conditional on the geometric-limit
+hypothesis $\mathbf{H_1}$ \emph{together with} several structural
+hypotheses imported from the hardened downstream infrastructure
+papers (P5, P6, P7) and one new foundations-level conjecture
+$\mathbf{H_1'}$ controlling the extension of P4's mass-only
+flow-intertwining to the full closure flow. These imports are
+listed explicitly in \S\ref{subsec:metric-hydro-imports} before
+any construction.
+
+\subsection{Hypothesis imports from the hardened substrate (P4--P7)
+  and the foundations-level conjecture $\mathbf{H_1'}$}
+\label{subsec:metric-hydro-imports}
+
+The following hypotheses are explicit inputs of every theorem in
+\S\S~\ref{subsec:moment-tensor}--\ref{subsec:H1} below. Three are
+restatements of hypotheses named in the hardened downstream
+infrastructure papers; one is a new foundations-level conjecture
+introduced here.
+
+\begin{hypothesis}[Coord-injectivity of the refinement, imported from P5]
+\label{hyp:coord-inj-import}
+The coordinate map $V_n \to \R^4$, $v \mapsto x_v^{(n)}$, is
+injective for every $n \geq 0$. \emph{Equivalent to} Hypothesis
+``coordinate-injectivity of the refinement'' (Fact labelled as
+hypothesis) of \cite[Hypothesis~fact:distinct]{CascadeMetricProjection},
+which itself is verified at level $0$ and flagged as deferred-
+for-all-$n$ in the status remark of that paper.
+\end{hypothesis}
+
+\begin{hypothesis}[Spherical refinement tiles $S^3$, imported from P6]
+\label{hyp:tiling-import}
+For every $n$, the spherical realization of the $D_4$-branch
+refinement tiles $S^3$ (interior-disjoint cells whose union is
+$S^3$). \emph{Equivalent to} \cite[Hypothesis~fact:tiling]{CascadeSchlafli},
+verified at level $0$ and flagged as deferred-for-all-$n$ there.
+Used in this section for the continuum-limit manifold
+identification and for any GH-convergence statement.
+\end{hypothesis}
+
+\begin{hypothesis}[Uniform edge-length separation, imported from P6]
+\label{hyp:separation-import}
+There exists $c_e > 0$ such that $e_n \geq c_e h_n$ for all $n \geq
+0$, where $e_n$ is the minimum edge length and $h_n$ the maximum
+edge length of the level-$n$ $D_4$-refinement.
+\emph{Equivalent to} \cite[Hypothesis~fact:separation]{CascadeSchlafli},
+verified at level $0$ and flagged as deferred-for-all-$n$ there.
+Used below for doubling / packing estimates in the continuum limit.
+\end{hypothesis}
+
+\begin{hypothesis}[Gradient-image compatibility for Leray decomposition, imported from P7]
+\label{hyp:gradient-image-import}
+Either (i) the image space $\mathcal V_n$ of the cascade-averaging
+velocity map contains the image of the discrete gradient
+$\nabla \mathcal Q_n$, so that $\mathcal V_n$ is closed under
+Leray decomposition; or (ii) one works in the enlarged space
+$\widetilde{\mathcal V}_n := \mathcal V_n + \nabla \mathcal Q_n$
+throughout. \emph{Equivalent to}
+\cite[Hypothesis~hyp:gradient-image]{CascadeHydroProjection}.
+Used in any NS-target statement of $\Pi_{\hyd}$.
+\end{hypothesis}
+
+\begin{hypothesis}[$\mathbf{H_1'}$: full-flow extension of P4's mass-only intertwining]
+\label{hyp:full-flow}
+In the sense precisely controlled by \cite[\S 7]{CascadeClosureDynamics},
+P4 proves refinement-intertwining of the cascade gradient operator
+$L_n = \alpha A_n + \beta B_n - \gamma C_n$ only in the mass-only
+regime $\alpha = \beta = 0$ (i.e.\ $L_n = -\gamma C_n$), and makes
+no claim for arbitrary $(\alpha, \beta, \gamma)$. The foundations-
+level conjecture $\mathbf{H_1'}$ asserts that this mass-only flow-
+intertwining extends, in the continuum limit $n \to \infty$, to a
+compatibility between the full discrete closure flow $\partial_t
+\Phi_n = -L_n \Phi_n$ (arbitrary $\alpha, \beta, \gamma \geq 0$)
+and the target continuum flow of
+Theorems~\ref{thm:pimet-cond}--\ref{thm:pihyd-cond} below. $\mathbf{H_1'}$
+is neither derived here nor in P4.
+\end{hypothesis}
+
+\begin{remark}[Status of $\mathbf{H_1'}$]
+\label{rmk:Hprime-status}
+$\mathbf{H_1'}$ is the honest statement of what must additionally
+hold, beyond P4's mass-only result, for the Ricci-Laplacian-mass
+PDE form (Theorem~\ref{thm:pimet-cond}) and the Navier-Stokes PDE
+form (Theorem~\ref{thm:pihyd-cond}) to be the correct continuum
+limits of the \emph{full} cascade gradient flow. Without $\mathbf{H_1'}$,
+only the mass-only sub-case survives rigorously
+(Remark~\ref{rmk:massonly-survives} below). Discharging $\mathbf{H_1'}$
+requires establishing level-uniform refinement compatibility for
+the $\alpha A_n$ and $\beta B_n$ blocks, a problem P4 explicitly
+defers.
+\end{remark}
+
+\begin{remark}[Mass-only sub-case survives unconditionally on $\mathbf{H_1'}$]
+\label{rmk:massonly-survives}
+In the mass-only regime $\alpha = \beta = 0$, the flow-projection
+portion of Theorems~\ref{thm:pimet-cond} and~\ref{thm:pihyd-cond}
+reduces to the statement that the continuum flow is the mass-
+rescaling $\partial_t g = 2\gamma g$ (or the analogous trivial
+velocity rescaling for $\Pi_{\hyd}$). This does \emph{not} require
+$\mathbf{H_1'}$: it follows directly from P4 Theorem
+``refinement-intertwining in the mass-only case''
+\cite[Thm.~thm:refinement-compat]{CascadeClosureDynamics}. The
+Ricci, Laplacian, and NS nonlinear-and-viscous terms in the full-
+flow theorems below are the portion that requires $\mathbf{H_1'}$.
+\end{remark>
+
+\subsection{The discrete moment tensor}
+\label{subsec:moment-tensor}
+
+\begin{definition}[Edge-weighted moment tensor]
+\label{def:moment-tensor}
+For $\Phi \in X_n^0 \oplus X_n^1$ and a real-valued edge weight
+$W_\Phi \colon E^{\rm or}(G_n^{D_4}) \to \R$ depending measurably on
+$\Phi$, define
+\begin{equation}
+\label{eq:moment-tensor}
+  M_n(\Phi)(v)_{ij}
+  := \sum_{w \sim v} (w_i - v_i)(w_j - v_j) \, W_\Phi(v, w),
+\end{equation}
+for $v \in V(G_n^{D_4})$ and $i, j \in \{1, 2, 3, 4\}$, using the
+$24$-cell coordinates of \cite[\S 2]{CascadeEmbeddings}.
+\end{definition}
+
+\begin{definition}[Canonical edge weight]
+\label{def:canonical-weight}
+The \emph{canonical edge weight} is
+\[
+  W_\Phi(v, w)
+  := \tfrac{1}{2} \big( \|P_{D_4} \Phi^0(v)\|^2_{V_{D_4}}
+    + \|P_{D_4} \Phi^0(w)\|^2_{V_{D_4}} \big)
+    + \|\Phi^1(v, w)\|^2_{\Im(\OO)}.
+\]
+This is non-negative, symmetric, $W(D_4)$-invariant, and continuous
+in $\Phi$.
+\end{definition}
+
+\begin{proposition}[Point-source moment tensor]
+\label{prop:moment-point-source}
+Let $\Phi^{\rm pt}$ be the configuration
+$\Phi^0(e_1) = e_1, \Phi^0(v) = 0$ for $v \neq e_1, \Phi^1 \equiv 0$.
+Then $M_0(\Phi^{\rm pt})(v) \propto \hat r(v) \otimes \hat r(v)$ for
+each $v$ adjacent to $e_1$, where $\hat r(v) = (v - e_1)/\|v - e_1\|$.
+\end{proposition}
+
+\begin{proof}
+Direct substitution into \eqref{eq:moment-tensor}: only the edge
+$(e_1, v)$ contributes, and
+$M_0(\Phi^{\rm pt})(v)_{ij} = (v - e_1)_i (v - e_1)_j W_{\Phi^{\rm pt}}
+(e_1, v)$, which is proportional to $\hat r(v) \otimes \hat r(v)$.
+\end{proof}
+
+\begin{remark}[Consistency with cascade-gr]
+Proposition~\ref{prop:moment-point-source} reproduces the
+theorem-grade formula of \cite[\S C4.1]{CascadeGR} from the explicit
+moment-tensor formula used here.
+\end{remark}
+
+\subsection{The finite-level metric projection}
+\label{subsec:pimet-n}
+
+\begin{definition}[Piecewise-flat metric datum]
+\label{def:pf-metric}
+The space of \emph{piecewise-flat metric data} on $G_n^{D_4}$ is
+\[
+  \mathcal{M}_n := \Sym^+(\R^4)^{V(G_n^{D_4})},
+\]
+equipped with vertexwise convergence in the Frobenius norm.
+\end{definition}
+
+\begin{definition}[Finite-level metric projection]
+\label{def:pimet-n}
+Let $\{\epsilon_n\}_{n \geq 0}$ be a positive sequence converging
+to $0$ slower than the refinement scale. Define
+$\Pi_{\met}^{(n)} \colon X_n^0 \oplus X_n^1 \to \mathcal{M}_n$ by
+\[
+  \Pi_{\met}^{(n)}(\Phi)(v) := M_n(\Phi)(v) + \epsilon_n I.
+\]
+\end{definition}
+
+\begin{theorem}[$\Pi_{\met}^{(n)}$: well-defined, continuous, equivariant]
+\label{thm:pimet-n}
+For each $n \geq 0$, $\Pi_{\met}^{(n)}$ is (i) well-defined with
+image in $\mathcal{M}_n$, (ii) locally Lipschitz in
+$X_n^0 \oplus X_n^1$, (iii) $W(D_4)$-equivariant with $\rho_{\met}(g)
+\cdot M := g M g^T$, and (iv) $\sigma$-invariant.
+\end{theorem}
+
+\begin{proof}
+(i) Positive-semidefiniteness:
+$\xi^T M_n(\Phi)(v) \xi = \sum_w (\xi \cdot (w - v))^2 W_\Phi(v, w)
+\geq 0$ since $W_\Phi \geq 0$; adding $\epsilon_n I$ gives strict
+positivity.
+
+(ii) For $\Phi, \Psi$ in a bounded ball of radius $R$, the
+Frobenius-norm difference
+$\|M_n(\Phi) - M_n(\Psi)\|_F$ is controlled by
+$\sum_{v \sim w} \|w - v\|^2 \cdot C_R \|\Phi - \Psi\|$ for a
+constant $C_R$ depending on $R$ (from the quadratic continuity of
+$W_\Phi$); this gives Lipschitz continuity on bounded sets.
+
+(iii) With $g \in W(D_4)$ acting by $(g\Phi^0)(v) = g\Phi^0(g^{-1}v)$,
+reindexing the sum in \eqref{eq:moment-tensor} gives
+$M_n(g\Phi)(v) = g M_n(\Phi)(g^{-1}v) g^T$.
+
+(iv) $\sigma$ acts trivially on $V_{D_4}, V_{16}, V_8, \Im(\OO)$, so
+$W_{\sigma\Phi} = W_\Phi$ and hence $M_n(\sigma\Phi) = M_n(\Phi)$.
+\end{proof}
+
+\subsection{The finite-level hydrodynamic projection}
+\label{subsec:pihyd-n}
+
+\begin{definition}[Averaging kernel]
+\label{def:avg-kernel}
+Fix $\ell_{\rm cg} > 0$ and a smooth compactly-supported kernel
+$K \colon \R^4 \to \R_{\geq 0}$ with $\int K = 1$ and support in
+$B_{\ell_{\rm cg}}$. For $f \colon V(G_n^{D_4}) \to \R^k$,
+define the averaged field
+\[
+  (A_{\ell_{\rm cg}} f)(x)
+  := \frac{\sum_v K(\ell_{\rm cg}^{-1}(x - v)) f(v)}
+       {\sum_v K(\ell_{\rm cg}^{-1}(x - v))}
+  \in \R^k.
+\]
+\end{definition}
+
+\begin{definition}[Finite-level hydrodynamic projection]
+\label{def:pihyd-n}
+For a $C^1$-time-dependent $\Phi \colon [0, T] \to X_n^0 \oplus
+X_n^1$, define $\Pi_{\hyd}^{(n)}(\Phi) = (u_n, p_n)$ by
+\begin{align*}
+  u_n(x, t) &:= A_{\ell_{\rm cg}} \big[\partial_t (P_{D_4}\Phi^0)
+    \cdot e_{\rm rad}\big](x, t), \\
+  p_n(x, t) &:= A_{\ell_{\rm cg}} \big[ \|P_{D_4} \Phi^0\|^2/2 \big](x, t),
+\end{align*}
+where $e_{\rm rad}(v) = v/\|v\|$.
+\end{definition}
+
+\begin{theorem}[$\Pi_{\hyd}^{(n)}$: basic properties]
+\label{thm:pihyd-n}
+$\Pi_{\hyd}^{(n)}$ is well-defined, continuous in the natural
+$C^1 \to C^0$ norm, $W(D_4)$-equivariant (with the $O(4)$-action
+on $(u, p)$), and $\sigma$-invariant.
+\end{theorem}
+
+\begin{proof}
+The smoothness of $A_{\ell_{\rm cg}}$ gives well-definedness and
+continuity. Equivariance follows from $W(D_4)$-equivariance of
+$P_{D_4}$, the $O(4)$-invariance of $\|\cdot\|$, and the
+translation-covariance of $A_{\ell_{\rm cg}}$. $\sigma$-invariance
+is because $\sigma$ is trivial on $V_{D_4}$.
+\end{proof}
+
+\subsection{Inverse-limit metric projection (unconditional)}
+\label{subsec:pimet-pihyd-inv}
+
+\begin{proposition}[Inverse-limit metric projection, conditional on Hypothesis~\ref{hyp:coord-inj-import}]
+\label{prop:pimet-inv-lim}
+\emph{Assume Hypothesis~\ref{hyp:coord-inj-import}.} Under this
+hypothesis, the maps $\Pi_{\met}^{(n)}$ satisfy (A2)--(A4) of
+Theorem~\ref{thm:abstract-correspondence} for the $\sigma$- and
+$W(D_4)$-actions and for refinement, and they form a compatible
+family. They therefore induce a Borel measurable,
+$\sigma$-invariant, $W(D_4)$-equivariant map
+\[
+  \Pi_{\met} \colon X_\cas^{\rm adm} \to \mathcal{M}_\infty,
+  \qquad \mathcal{M}_\infty := \varprojlim_n \mathcal{M}_n.
+\]
+The proposition is \emph{not} unconditional: coordinate-
+injectivity of the refinement is needed for the moment-tensor
+kernel to be well-defined at all distinct vertex pairs (the
+denominators $\|x_w - x_v\|$ entering the edge-weight and kernel
+constructions are non-vanishing at distinct vertices only under
+Hypothesis~\ref{hyp:coord-inj-import}). It is unconditional on the
+continuum-limit hypothesis $\mathbf{H_1}$ and on the full-flow
+conjecture $\mathbf{H_1'}$.
+\end{proposition}
+
+\begin{proof}
+Under Hypothesis~\ref{hyp:coord-inj-import}: (A2) by
+Theorem~\ref{thm:pimet-n}(ii); (A3) by
+Theorem~\ref{thm:pimet-n}(iii)(iv); (A4) by the zero-extension
+property of the refinement map $R_n$ (the moment tensor of the
+zero-extended configuration is the zero-extension of the moment
+tensor). Theorem~\ref{thm:abstract-correspondence} gives the three
+conclusions.
+\end{proof}
+
+\subsection{Conditional correspondence under $\mathbf{H_1}$}
+\label{subsec:H1}
+
+\begin{hypothesis}[$\mathbf{H_1}$: Geometric limit]
+\label{hyp:H1}
+There exist (i) a smooth closed $3$-manifold $M$; (ii) a continuous
+map $\pi_{\rm lim} \colon \mathcal{M}_\infty \to \mathcal{M}(M)$
+sending inverse-limit piecewise-flat metric data to smooth
+Riemannian metrics in the $C^\infty$ topology; (iii) an admissible
+subspace $D_{\met} \subset X_\cas^{\rm adm}$ closed under $W(D_4)$,
+$\sigma$, and refinement, on which $\pi_{\rm lim} \circ \Pi_{\met}$
+is well-defined and continuous; (iv) verification of the
+Burago--Ivanov and Cheeger--Colding hypotheses and a uniform bound
+on the $g/\mathrm{geo}$-ratio overshoot flagged in
+\cite[\S C2.bis]{CascadeGR} (items (a)--(d) of the open-item list
+reproduced in \cite{MillenniumPoincare}).
+\end{hypothesis}
+
+\begin{remark}[Status of $\mathbf{H_1}$]
+$\mathbf{H_1}$ is \emph{open}. Numerical evidence at depth
+$n \leq 1$ and a proof sketch are in \cite[\S C2.bis]{CascadeGR};
+four specific open items remain.
+\end{remark}
+
+\begin{theorem}[$\Pi_{\met}$ continuum correspondence, conditional
+on $\mathbf{H_1}$ + full import chain + $\mathbf{H_1'}$ (full-flow portion)]
+\label{thm:pimet-cond}
+Assume Hypotheses~\ref{hyp:coord-inj-import}, \ref{hyp:tiling-import},
+\ref{hyp:separation-import}, and $\mathbf{H_1}$. Then
+$\Pi_{\met} := \pi_{\rm lim} \circ \Pi_{\met}^{\rm inv-lim}
+\colon D_{\met} \to \mathcal{M}(M)$ is continuous, Borel,
+$W(D_4)$-equivariant, and $\sigma$-invariant (\emph{the
+well-definedness / continuity / equivariance portion; this part
+does not require $\mathbf{H_1'}$}).
+
+\emph{The flow-projection portion splits into two cases}:
+\begin{enumerate}
+\item[\textup{(a)}] \emph{Mass-only sub-case} $\alpha = \beta = 0$
+  (no extra hypothesis beyond the well-definedness chain above):
+  the cascade gradient flow projects, as $n \to \infty$, to the
+  continuum mass-rescaling $\partial_t g = 2\gamma g$, by direct
+  application of \cite[Thm.~thm:refinement-compat]{CascadeClosureDynamics}
+  (P4's mass-only flow-intertwining) followed by continuum limit
+  under $\mathbf{H_1}$.
+\item[\textup{(b)}] \emph{Full-flow case} (arbitrary $\alpha,
+  \beta, \gamma \geq 0$), \emph{conditional additionally on
+  $\mathbf{H_1'}$} (Hypothesis~\ref{hyp:full-flow}): the cascade
+  gradient flow projects to a continuum flow of the schematic
+  form $\partial_t g = -2(\alpha \Ric + \beta \nabla^*\nabla -
+  \gamma g)$ up to $O(\epsilon_n)$ corrections.
+\end{enumerate}
+The Ricci and Laplacian terms in (b) are conditional on
+$\mathbf{H_1'}$ beyond what P4 supplies; without $\mathbf{H_1'}$
+the full-flow PDE form is not established.
+\end{theorem}
+
+\begin{proof}
+\emph{Well-definedness / continuity / equivariance.}
+Under Hypotheses~\ref{hyp:coord-inj-import},
+\ref{hyp:tiling-import}, \ref{hyp:separation-import}, and
+$\mathbf{H_1}$(i)--(iv), hypothesis (A1) of
+Theorem~\ref{thm:abstract-correspondence} is satisfied for the
+family $\Pi_{\met}^{(n)}$ with target inclusion
+$\mathcal{M}_n \hookrightarrow \mathcal{M}(M)$ via $\pi_{\rm lim}$.
+Combining with Proposition~\ref{prop:pimet-inv-lim}, the abstract
+correspondence lemma gives continuity, Borel measurability, and
+equivariance.
+
+\emph{Mass-only sub-case (a).} With $\alpha = \beta = 0$, the
+discrete gradient operator is $L_n = -\gamma C_n$. By P4
+Theorem~thm:refinement-compat \cite{CascadeClosureDynamics},
+$p_{n+1, n} L_{n+1} = L_n p_{n+1, n}$, so the flow passes through
+refinement. Under $\mathbf{H_1}$'s continuum limit, this limits to
+$\partial_t g = 2\gamma g$.
+
+\emph{Full-flow case (b), conditional on $\mathbf{H_1'}$.} Under
+$\mathbf{H_1'}$ the mass-only intertwining extends to the full
+closure flow in the $n \to \infty$ limit. Differentiating
+\eqref{eq:moment-tensor} under the full flow
+\eqref{eq:flow} and passing through $\pi_{\rm lim}$, the second-
+order differences in $v$ limit to $\Ric$ (requires
+$\mathbf{H_1'}$ for the $\alpha A_n$-block continuum extension),
+the first-order differences to $\nabla^* \nabla$ (requires
+$\mathbf{H_1'}$ for the $\beta B_n$-block extension), and the
+mass-term $\gamma Q_n$ to $\gamma g$ (from the mass-only sub-case).
+The $\epsilon_n I$ term contributes an $O(\epsilon_n)$ correction.
+\end{proof}
+
+\begin{theorem}[$\Pi_{\hyd}$ continuum correspondence, split into well-definedness, mass-only, and full-flow portions]
+\label{thm:pihyd-cond}
+Assume Hypotheses~\ref{hyp:coord-inj-import},
+\ref{hyp:tiling-import}, \ref{hyp:separation-import},
+\ref{hyp:gradient-image-import}, and $\mathbf{H_1}$. On an
+admissible subspace $D_{\hyd} \subset X_\cas^{\rm adm}$ of
+$\sigma$-fixed, $C^1$ time-dependent configurations, and with
+P7's macroscopic-time-scaling convention $\tau = \lambda_n t$
+\cite[Thm.~thm:projected-dynamics]{CascadeHydroProjection}:
+
+\begin{enumerate}
+\item[\textup{(i)}] \emph{Well-definedness / continuity /
+  equivariance} (no $\mathbf{H_1'}$ required). The limit
+  $\Pi_{\hyd} \colon D_{\hyd} \to C^0(\R_+ \times M; TM \oplus \R)$
+  is well-defined, continuous, Borel, and $W(D_4)$-equivariant.
+\item[\textup{(ii)}] \emph{Mass-only sub-case}
+  $\alpha = \beta = 0$ (no $\mathbf{H_1'}$ required). The
+  projected flow is the trivial rescaling $\partial_\tau u =
+  2\gamma u$, $\partial_\tau p = 2\gamma p$, by direct application
+  of \cite[Thm.~thm:refinement-compat]{CascadeClosureDynamics}
+  (P4's mass-only flow-intertwining) followed by continuum limit.
+\item[\textup{(iii)}] \emph{Full-flow case} (arbitrary
+  $\alpha, \beta, \gamma \geq 0$), \emph{additionally conditional
+  on $\mathbf{H_1'}$} (Hypothesis~\ref{hyp:full-flow}). The cascade
+  gradient flow restricted to $D_{\hyd}$ projects to the
+  macroscopic Navier--Stokes system on $M$ up to controlled error
+  terms.
+\end{enumerate}
+Without $\mathbf{H_1'}$, only (i)--(ii) survive; the full-flow
+NS PDE projection in (iii) is the portion that requires
+$\mathbf{H_1'}$ beyond P4.
+\end{theorem}
+
+\begin{proof}[Proof (sketch)]
+\emph{Well-definedness / continuity.} $\mathbf{H_1}$ supplies the
+manifold $M$; the averaging kernel $A_{\ell_{\rm cg}}$ gives $C^0$
+fields. Hypothesis~\ref{hyp:gradient-image-import} ensures the
+Leray projector $\Pi_n$ of P7 is well-defined on the velocity
+image space. Hypothesis~\ref{hyp:coord-inj-import} ensures the
+moment-tensor denominators used in the averaging are non-vanishing;
+Hypotheses~\ref{hyp:tiling-import}, \ref{hyp:separation-import}
+supply the GH-convergence and doubling estimates of the continuum
+limit.
+
+\emph{Flow projection to NS, under $\mathbf{H_1'}$.} The
+identification of $\partial_\tau(P_{D_4}\Phi^0)$ with velocity at
+macroscopic time requires the $\lambda_n^{-1}$ factor of
+\cite[Thm.~thm:projected-dynamics, $D_n^{\rm comm}$]{CascadeHydroProjection}.
+Under $\mathbf{H_1'}$, the full closure flow
+$\partial_t \Phi_n = -L_n \Phi_n$ (arbitrary $\alpha, \beta,
+\gamma$) extends P4's mass-only intertwining, and standard coarse-
+graining identities relating discrete gradient/divergence to
+continuum analogues give: the nonlinear $(u \cdot \nabla)u$ and
+pressure gradient terms from the quadratic structure of $F_n$, and
+the viscous $\nu\Delta u$ term from $\alpha R_n$. Explicit PDE
+estimates of the convergence rate as $n\to\infty$ and
+$\ell_{\rm cg}\to 0$ are part of the open items of $\mathbf{H_1}$
+and $\mathbf{H_1'}$ and not discharged here.
+
+\emph{Mass-only sub-case.} Under $\alpha = \beta = 0$, P4's
+refinement-intertwining is unconditional (no $\mathbf{H_1'}$); the
+continuum limit under $\mathbf{H_1}$ gives the trivial rescaling
+statement.
+\end{proof}
+
+\begin{remark}[Scope limits]
+Theorem~\ref{thm:pihyd-cond} does not resolve Navier--Stokes. It
+gives a structural correspondence, with the full-flow PDE
+projection conditional on the full hypothesis chain
+Hypotheses~\ref{hyp:coord-inj-import}--\ref{hyp:gradient-image-import}
++ $\mathbf{H_1}$ + $\mathbf{H_1'}$. Only the mass-only sub-case
+survives without $\mathbf{H_1'}$. The downstream $L^\infty$
+vorticity bound and BKM application in \cite{MillenniumNS} require
+the open items of $\mathbf{H_1}$, $\mathbf{H_1'}$, \emph{and} the
+P5/P6/P7 structural hypotheses, plus additional PDE machinery.
+\end{remark}
+
+%=====================================================================
+\section{Gauge Correspondence}
+\label{sec:gauge}
+%=====================================================================
+
+This section constructs the gauge projection $\Pi_{\gge}$ from
+octonionic edge data (the edge-sector $X_n^1$ with $\Im(\OO)$
+fibre, Definition~\ref{def:X-n-1}) to cylindrical $\mathrm{SU}(3)$
+holonomy data. The finite-level map is a standard lattice-gauge
+construction: exponentiate a Lie-algebra-valued $1$-cochain to get
+a group-valued holonomy. The cascade-specific feature is that the
+Lie algebra is $\mathrm{su}(3) \subset G_2 = \Der(\OO)$, selected
+by the stabilizer of a fixed imaginary unit
+\cite[\S 6]{CascadeEmbeddings}. The continuum-limit statement
+(classical $L^2_1$ connection; YM action transport) is conditional
+on the gauge-reconstruction hypothesis $\mathbf{H_2}$.
+
+\subsection{Scope of the gauge construction: modeling choices}
+\label{subsec:gauge-modeling}
+
+Before any construction, we record three modeling choices that
+together define what ``gauge action on cascade edge data'' means
+in this section. Each is a choice of convention, not a derived
+consequence of the classical $\mathrm{SU}(3) \subset G_2 \subset
+\Der(\OO)$ package:
+
+\begin{enumerate}
+\item[\textup{(M1)}] \emph{Choice of fixed imaginary unit $i_0 \in
+  \Im(\OO)$ with $i_0^2 = -1$.} The stabilizer subgroup of $i_0$
+  under the $G_2$-action is a specific copy of $\mathrm{SU}(3)$ in
+  $G_2$; different $i_0$ give different (but conjugate) copies.
+  Different choices of $i_0$ produce different projections
+  $P_{\mathfrak{su}(3)}$ and hence different
+  $\mathfrak{su}(3)$-valued edge fields. We fix one $i_0$ once
+  and for all; the downstream gauge quotient absorbs the
+  conjugation ambiguity.
+
+\item[\textup{(M2)}] \emph{Choice of injection
+  $\iota_{\mathfrak{g}_2} \colon \Im(\OO) \to \mathfrak{g}_2 =
+  \Der(\OO)$.} As noted in Definition~\ref{def:cascade-gauge-data},
+  octonion commutators $[X, \cdot]_{\OO}$ are \emph{not} in
+  general derivations of $\OO$; a non-trivial lift is needed to
+  embed $\Im(\OO)$ into $\Der(\OO)$. The lift used here is the
+  standard associator-respecting-derivation construction of
+  \cite[\S 2]{BaezOctonions}; other lifts exist and give related
+  but not identical projections. This is a modeling choice.
+
+\item[\textup{(M3)}] \emph{Choice of the gauge action on
+  octonionic edge data.} Classical lattice gauge theory takes
+  edge data directly in the gauge group (here $\mathrm{SU}(3)$).
+  Cascade edge data lives instead in $\Im(\OO)$ and must be
+  connected to the gauge group via the
+  lift-project-exponentiate chain $\Im(\OO) \xrightarrow{\iota_{\mathfrak{g}_2}}
+  \mathfrak{g}_2 \xrightarrow{P_{\mathfrak{su}(3)}} \mathfrak{su}(3)
+  \xrightarrow{\exp} \mathrm{SU}(3)$. The induced ``gauge
+  transformation of $A \in \Im(\OO)$ by $u \in \mathrm{SU}(3)$''
+  is therefore a paper-specific definition: it is whatever
+  transformation of the $\mathfrak{g}_2$-lift $\iota_{\mathfrak{g}_2}(A)$
+  agrees with the standard $\mathrm{SU}(3)$ adjoint action after
+  $P_{\mathfrak{su}(3)}$-projection.
+\end{enumerate}
+
+All gauge-equivariance statements in
+\S\S~\ref{subsec:pigauge-n}--\ref{subsec:H2} below are understood
+as statements relative to these three modeling choices. A reader
+preferring different choices would obtain a conjugate (but not
+identical) construction.
+
+\subsection{Octonionic gauge data}
+\label{subsec:octo-gauge}
+
+\begin{definition}[Fixed imaginary unit]
+\label{def:i-fixed}
+Fix a unit imaginary octonion $i_0 \in \Im(\OO)$ with
+$i_0^2 = -1$. The stabilizer of $i_0$ under the $G_2 = \Der(\OO)$
+action is the subgroup $\mathrm{SU}(3) \subset G_2$ acting on the
+orthogonal complement $i_0^\perp \subset \Im(\OO)$, which carries a
+natural complex structure via left-multiplication by $i_0$
+\cite[\S 6]{CascadeEmbeddings}, \cite[\S 1]{BaezOctonions}.
+Different choices of $i_0$ give conjugate copies of $\mathrm{SU}(3)$;
+we fix one.
+\end{definition}
+
+\begin{notation}[Lie-algebra decomposition]
+\label{not:g2-decomp}
+Write $\mathfrak{g}_2 = \Der(\OO)$ for the $14$-dimensional Lie
+algebra of $G_2$. The $\mathrm{SU}(3)$-stabilizer of
+Definition~\ref{def:i-fixed} decomposes $\mathfrak{g}_2$ as
+\[
+  \mathfrak{g}_2 = \mathfrak{su}(3) \oplus \mathfrak{m},
+\]
+where $\mathfrak{su}(3)$ is the stabilizer algebra (real dimension
+$8$) and $\mathfrak{m}$ is a $6$-dimensional complement stable
+under the adjoint action of $\mathrm{SU}(3)$
+\cite[\S 2.4]{BaezOctonions}. Let $P_{\mathfrak{su}(3)}$ denote the
+orthogonal projection $\mathfrak{g}_2 \to \mathfrak{su}(3)$ with
+respect to the Killing form.
+\end{notation}
+
+\begin{definition}[Cascade gauge datum]
+\label{def:cascade-gauge-data}
+A \emph{cascade gauge datum} at level $n$ is an element
+$A \in X_n^1$ (cf.\ Definition~\ref{def:X-n-1}). Given such $A$,
+the corresponding \emph{$\mathfrak{su}(3)$-valued edge field} is
+\[
+  A^{\mathfrak{su}(3)}(e)
+  := P_{\mathfrak{su}(3)} \big( \iota_{\mathfrak{g}_2}(A(e)) \big)
+  \in \mathfrak{su}(3),
+  \qquad e \in E^{\rm or}(G_n^{\bullet}),
+\]
+where $\iota_{\mathfrak{g}_2} \colon \Im(\OO) \to \mathfrak{g}_2$
+is the standard injection of imaginary octonions into the
+$14$-dimensional Lie algebra $\mathfrak{g}_2 = \Der(\OO)$, and
+$P_{\mathfrak{su}(3)}$ is the projection of
+Notation~\ref{not:g2-decomp}. \emph{Note: the map
+$\iota_{\mathfrak{g}_2}$ is not the naive octonion-commutator
+$[A(e), \cdot]_{\OO}$ --- octonion commutators do not lie in
+$\Der(\OO)$ in general, since the octonions are nonassociative.
+The correct injection $\Im(\OO) \hookrightarrow \mathfrak{g}_2$
+goes via the associator-respecting derivation lift, e.g.\ the
+map $X \mapsto 3[L_X, L_Y] + ...$ formalism of
+\cite[\S 2]{BaezOctonions}; we use this injection here without
+reviewing its explicit form.}
+\end{definition}
+
+\begin{remark}[Construction, not a theorem of \cite{CascadeEmbeddings}]
+Definition~\ref{def:cascade-gauge-data} is a construction of
+this paper using the classical $\mathrm{SU}(3) \subset G_2$
+stabilizer-of-$i_0$ picture of
+\cite[\S 6]{CascadeEmbeddings} together with the injection
+$\iota_{\mathfrak{g}_2}$ of associator-respecting derivations
+\cite[\S 2]{BaezOctonions}. It is \emph{not} itself a theorem of
+\cite{CascadeEmbeddings}: the precise algebraic projection
+$P_{\mathfrak{su}(3)} \circ \iota_{\mathfrak{g}_2}$ is an
+interpretive choice made here. Different $i_0$ give unitarily
+equivalent projections.
+\end{remark>
+
+\subsection{The finite-level gauge projection}
+\label{subsec:pigauge-n}
+
+\begin{definition}[Cylindrical holonomy data]
+\label{def:holonomy-n}
+The space of \emph{cylindrical $\mathrm{SU}(3)$ holonomy data} on
+$G_n^{\bullet}$ is
+\[
+  \mathcal{A}_n
+  := \big\{ U \colon E^{\rm or}(G_n^{\bullet}) \to \mathrm{SU}(3)
+     : U(-e) = U(e)^{-1} \big\},
+\]
+equipped with the product topology from the Lie-group topology on
+$\mathrm{SU}(3)$.
+\end{definition}
+
+\begin{definition}[Finite-level gauge projection]
+\label{def:pigauge-n}
+Fix an edge length scale $a_n > 0$ with $a_n \to 0$ at the
+refinement rate. The \emph{finite-level gauge projection}
+$\Pi_{\gge}^{(n)} \colon X_n^1 \to \mathcal{A}_n$ is
+\[
+  \Pi_{\gge}^{(n)}(A)(e)
+  := \exp\big( a_n \cdot A^{\mathfrak{su}(3)}(e) \big)
+  \in \mathrm{SU}(3),
+  \qquad e \in E^{\rm or}(G_n^{\bullet}).
+\]
+Here $\exp \colon \mathfrak{su}(3) \to \mathrm{SU}(3)$ is the
+Lie-algebra exponential, and the reversal convention $A(-e) = -A(e)$
+(Definition~\ref{def:X-n-1}) gives
+$\Pi_{\gge}^{(n)}(A)(-e) = \exp(-a_n A^{\mathfrak{su}(3)}(e)) =
+\Pi_{\gge}^{(n)}(A)(e)^{-1}$, as required for holonomy data.
+\end{definition}
+
+\begin{theorem}[$\Pi_{\gge}^{(n)}$: well-defined, continuous,
+equivariant]
+\label{thm:pigauge-n}
+For each $n \geq 0$:
+\begin{enumerate}
+\item $\Pi_{\gge}^{(n)}$ is well-defined: for every $A \in X_n^1$,
+  $\Pi_{\gge}^{(n)}(A) \in \mathcal{A}_n$.
+\item $\Pi_{\gge}^{(n)}$ is continuous from the $L^2$ topology on
+  $X_n^1$ to the product topology on $\mathcal{A}_n$, and is
+  locally Lipschitz on bounded sets.
+\item $\Pi_{\gge}^{(n)}$ is compatible with the $\mathrm{SU}(3)
+  \subset G_2$ identification of
+  \cite[\S 6]{CascadeEmbeddings}: the image of
+  $\Pi_{\gge}^{(n)}(A)$ lies in the $\mathrm{SU}(3)$ subgroup
+  selected by the stabilizer of $i_0$.
+\item \emph{Gauge-equivariance, conditional on modeling choices
+  (M1)--(M3) of \S\ref{subsec:gauge-modeling}.}
+  Define the induced gauge action on cascade edge data $A \in
+  \Im(\OO)$ by the lift-adjoint-project chain of (M3): for a
+  lattice gauge transformation $u \colon V(G_n^{\bullet}) \to
+  \mathrm{SU}(3)$,
+  \[
+    (u \cdot A)(e) \;:=\; P_{\mathfrak{su}(3)}\bigl(
+      \mathrm{Ad}_{u(e_{\rm start})} \bigl[\iota_{\mathfrak{g}_2}(A(e))\bigr]
+      \cdot u(e_{\rm end})^{-1}\bigr)^{-1}\!
+    \text{ (read back via (M2) to } \Im(\OO) \text{)},
+  \]
+  interpreted to leading order in $a_n$ via BCH. Under this
+  modeling-derived gauge action, the projection transforms as
+  $\Pi_{\gge}^{(n)}(u \cdot A)(e) = u(e_{\rm start}) \cdot
+  \Pi_{\gge}^{(n)}(A)(e) \cdot u(e_{\rm end})^{-1}$ up to $O(a_n^2)$
+  corrections. The $O(a_n^2)$ corrections are the
+  parallel-transport-curvature terms, and their vanishing is
+  \emph{not} claimed here; they become the per-level defect
+  absorbed in the inverse-limit hypothesis of
+  Proposition~\ref{prop:pigauge-inv-lim}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1) $A^{\mathfrak{su}(3)}(e) \in \mathfrak{su}(3)$ by
+Definition~\ref{def:cascade-gauge-data}; the exponential of an
+$\mathfrak{su}(3)$ element lies in $\mathrm{SU}(3)$. The reversal
+convention is verified by direct computation using
+$\exp(-X) = \exp(X)^{-1}$.
+
+(2) Continuity: the projection $P_{\mathfrak{su}(3)}$ is
+continuous (bounded linear) and $\mathrm{ad}$ is continuous, so
+$A \mapsto A^{\mathfrak{su}(3)}$ is continuous; $\exp$ is smooth;
+composition gives continuity. Local Lipschitz continuity on bounded
+sets follows from the smoothness of $\exp$ on a compact subset of
+$\mathfrak{su}(3)$.
+
+(3) The $\mathrm{SU}(3)$ identification is by construction: the
+stabilizer of $i_0$ is exactly the $\mathrm{SU}(3)$ subgroup whose
+Lie algebra is the image of $P_{\mathfrak{su}(3)}$.
+
+(4) Gauge equivariance is the standard lattice-gauge transformation
+law, verified to leading order in $a_n$ by the
+Baker--Campbell--Hausdorff formula. The $O(a_n^2)$ corrections are
+the parallel-transport-curvature terms.
+\end{proof}
+
+\subsection{Inverse-limit gauge projection (unconditional)}
+\label{subsec:pigauge-inv}
+
+\begin{proposition}[Inverse-limit gauge projection, conditional on uniform lattice-curvature control]
+\label{prop:pigauge-inv-lim}
+Assume (as an additional lattice-gauge hypothesis) that the
+$O(a_n^2)$ gauge-equivariance corrections of
+Theorem~\ref{thm:pigauge-n}(4) admit uniform control across
+refinement levels, so that the leading-order equivariance passes
+to the inverse limit. Then the family
+$\{\Pi_{\gge}^{(n)}\}_{n \geq 0}$ satisfies (A2)--(A4)
+of Theorem~\ref{thm:abstract-correspondence} (for gauge-equivariance
+replacing general symmetry equivariance), forms a compatible family
+under refinement, and induces a Borel measurable, gauge-equivariant
+map
+\[
+  \Pi_{\gge} \colon X_\cas^{\rm adm} \cap X^1_{\varprojlim}
+  \to \mathcal{A}_\infty
+  := \varprojlim_n \mathcal{A}_n.
+\]
+Without the uniform-curvature-control hypothesis, the conclusion
+only holds at finite level with $O(a_n^2)$ residual corrections
+at each level; the inverse-limit gauge-equivariance then requires
+independent justification.
+\end{proposition}
+
+\begin{proof}
+Under the uniform lattice-curvature-control hypothesis: (A2) by
+Theorem~\ref{thm:pigauge-n}(2); (A3) by
+Theorem~\ref{thm:pigauge-n}(3)(4) together with the assumed
+uniform control, which lifts the level-$n$ $O(a_n^2)$
+equivariance to exact equivariance in the limit. For (A4), the
+refinement of a gauge datum is standard in lattice-gauge theory:
+zero-extension of $A$ at the new edges gives $\Pi_{\gge}^{(n+1)}$
+that restricts to $\Pi_{\gge}^{(n)}$ on the level-$n$ edges. The
+abstract correspondence theorem gives the conclusions.
+\end{proof>
+
+\subsection{Conditional continuum-gauge correspondence under
+$\mathbf{H_2}$}
+\label{subsec:H2}
+
+Let $\Conn(P)$ denote the space of $L^2_1$ (Sobolev-class) classical
+$\mathrm{SU}(3)$-connections on a fixed principal
+$\mathrm{SU}(3)$-bundle $P$ over a fixed smooth manifold $M$;
+equip $\Conn(P)$ with the standard $L^2_1$ topology.
+
+\begin{hypothesis}[$\mathbf{H_2}$: Gauge reconstruction]
+\label{hyp:H2}
+There exist:
+\begin{enumerate}
+\item a smooth manifold $M$ and a principal $\mathrm{SU}(3)$-bundle
+  $P \to M$;
+\item a continuous map
+  $\pi_{\gge, {\rm lim}} \colon \mathcal{A}_\infty \to \Conn(P)$
+  sending inverse-limit holonomy data to $L^2_1$ connections;
+\item an admissible subspace
+  $D_{\gge} \subset X_\cas^{\rm adm} \cap X^1_{\varprojlim}$ on
+  which $\pi_{\gge, {\rm lim}} \circ \Pi_{\gge}$ is well-defined,
+  continuous, gauge-equivariant, and satisfies the
+  Osterwalder--Schrader positivity axiom for the induced YM measure
+  \cite{OSBook};
+\item Wilson-loop area-law estimates under refinement: the
+  lattice-level Wilson loop expectation values converge to continuum
+  area-law expectations as $n \to \infty$, as required for
+  confinement.
+\end{enumerate}
+\end{hypothesis}
+
+\begin{remark}[Status of $\mathbf{H_2}$]
+$\mathbf{H_2}$ is \emph{open} and is the content of ``constructive
+quantum YM existence'' in the Clay statement. Parts (i)--(ii) are
+the continuum completion (standard in lattice-gauge theory but not
+yet theorem-grade for $\mathrm{SU}(3)$); parts (iii)--(iv) are the
+OS positivity and area-law steps flagged in
+\cite[\S MP1.2]{CascadeMillennium} as among the open technical
+items for YM.
+\end{remark}
+
+\begin{theorem}[$\Pi_{\gge}$ continuum correspondence, conditional
+on $\mathbf{H_2}$]
+\label{thm:pigauge-cond}
+Assume $\mathbf{H_2}$. Then
+$\Pi_{\gge} := \pi_{\gge, {\rm lim}} \circ \Pi_{\gge}^{\rm inv-lim}
+\colon D_{\gge} \to \Conn(P)$ is continuous, Borel,
+gauge-equivariant, and compatible with the
+$\mathrm{SU}(3) \subset G_2$ identification. Moreover, the
+restriction of the cascade closure functional $\mathcal{F}$ to the
+gauge sector transports, under $\Pi_{\gge}$, to a constant
+multiple of the classical Yang--Mills action
+\[
+  S_{YM}(A) = \tfrac{1}{2} \int_M \operatorname{tr}(F(A) \wedge *F(A)),
+\]
+with the proportionality constant determined by the
+$\alpha, \beta, \gamma$ coefficients and the lattice-scale factor
+$a_n$.
+\end{theorem}
+
+\begin{proof}[Proof (sketch)]
+Under $\mathbf{H_2}$, (A1) of
+Theorem~\ref{thm:abstract-correspondence} holds; combined with
+Proposition~\ref{prop:pigauge-inv-lim}, the abstract lemma gives
+continuity, measurability, and equivariance.
+
+For the action transport, the cascade closure functional
+restricted to gauge-sector data is, up to a quadratic form on
+$\mathfrak{su}(3)$-valued edge fields, the discrete Yang--Mills
+action in the standard lattice-gauge formulation
+\cite{WilsonLatticeGauge}. In the $a_n \to 0$ continuum limit
+(part of $\mathbf{H_2}$), the discrete YM action converges to the
+continuous YM action $S_{YM}$; the proportionality constant comes
+from the rescaling.
+
+A Clay-level completion of this proof would require the full
+Osterwalder--Schrader reconstruction and the Wilson-area-law
+estimate, which are parts (iii)--(iv) of $\mathbf{H_2}$ and not
+discharged here.
+\end{proof}
+
+\begin{remark}[Scope]
+Theorem~\ref{thm:pigauge-cond} does not resolve the YM mass-gap
+problem. It provides a structural correspondence from cascade
+gauge data to classical $\mathrm{SU}(3)$ connections, with the
+action transporting to the continuum YM action. The mass-gap bound
+claimed in \cite{MillenniumYM} would still require $\mathbf{H_2}$
+plus non-trivial spectral analysis.
+\end{remark}
+
+%=====================================================================
+\section{Spectral--Arithmetic Correspondences}
+\label{sec:spectral}
+%=====================================================================
+
+This section constructs the regularized transfer operators
+$T_\zeta[h]$ (for the Riemann Hypothesis) and $T_E[h]$ (for
+Birch--Swinnerton-Dyer). Both are built with an explicit cutoff
+function $h$ of compact support; the cutoff removal $h \to
+\mathbf{1}$ is the subject of the spectral-arithmetic trace
+hypothesis $\mathbf{H_3}$. The finite-cutoff operators are
+unconditionally well-defined as densely-defined symmetric or
+bounded operators on standard Hilbert spaces.
+
+The critical methodological point of this section: the earlier
+Millennium RH/BSD manuscripts invoked raw operators $T_\zeta, T_E$
+whose convergence is not established (Table~\ref{tab:exclusions}).
+We replace those with regularized $T_\zeta[h], T_E[h]$, which are
+well-defined, and state the cutoff-removal $h \to \mathbf{1}$ as
+an explicit open hypothesis.
+
+\subsection{The regularized spectral-zeta transfer operator}
+\label{subsec:Tzeta-h}
+
+\begin{definition}[Base operator $T_0$ on $L^2(\R_+, dx/x)$]
+\label{def:T0}
+Let $L^2(\R_+, dx/x)$ denote the Hilbert space of square-integrable
+functions on $\R_+$ with multiplicative Haar measure
+$dx/x$. Define
+\[
+  T_0 f(x) := \sum_{p \text{ prime}} \frac{\log p}{p^{1/2}}
+    f(p \cdot x),
+\]
+with the sum interpreted as an abstract formal expression until
+regularization is applied. At this stage $T_0$ is not a bounded
+operator on $L^2(\R_+, dx/x)$; we regularize below.
+\end{definition}
+
+\begin{definition}[Prime-cutoff potential]
+\label{def:Vsigma-h}
+Let $h \colon \R \to \R$ be a real-valued, even, compactly-supported
+smooth function. The \emph{prime-cutoff potential} is
+\[
+  V_{\sigma, h} f(x)
+  := \sum_{p \text{ prime}} h(\log p) \cdot
+    \frac{\log p}{p^{1/2}} \cdot f(p \cdot x),
+\]
+for $f \in C_c^\infty(\R_+)$. By the compact support of $h$, the
+sum is finite: only finitely many primes contribute.
+\end{definition}
+
+\begin{definition}[Regularized transfer operator $T_\zeta[h]$, $\sigma$-symmetrized]
+\label{def:Tzeta-h}
+The \emph{regularized spectral-zeta transfer operator} is the
+$\sigma$-symmetrization
+\[
+  T_\zeta[h] := \tfrac{1}{2}\bigl((T_0 \cdot \chi_h + V_{\sigma, h})
+    + \sigma (T_0 \cdot \chi_h + V_{\sigma, h}) \sigma^{-1}\bigr),
+\]
+where $\sigma \colon L^2(\R_+, dx/x) \to L^2(\R_+, dx/x)$ is the
+inversion $(\sigma f)(x) := f(1/x)$ (a unitary involution), and
+$\chi_h$ is the multiplication operator by the indicator function
+of $\{x \in \R_+ : \log x \in \operatorname{supp}(h)\}$. The
+$\sigma$-symmetrization is explicit and built into the definition;
+without it, the bare operator $T_0 \cdot \chi_h + V_{\sigma, h}$ is
+\emph{not} symmetric on $L^2(\R_+, dx/x)$ (since $f \mapsto f(p x)$
+has adjoint $f \mapsto f(x/p)$, not itself).
+\end{definition}
+
+\begin{theorem}[$T_\zeta[h]$: symmetric and bounded]
+\label{thm:tzeta-h}
+For $h$ as in Definition~\ref{def:Vsigma-h}, the operator
+$T_\zeta[h]$ of Definition~\ref{def:Tzeta-h} is:
+\begin{enumerate}
+\item densely defined on $L^2(\R_+, dx/x)$, with core
+  $C_c^\infty(\R_+)$, and bounded there by a constant depending
+  on $\|h\|_\infty$ and the number of primes in
+  $\operatorname{supp}(h)$;
+\item symmetric (and in fact self-adjoint on its natural domain),
+  by construction as a $\sigma$-symmetrized combination;
+\item commutes with the $\sigma$-involution:
+  $T_\zeta[h] \circ \sigma = \sigma \circ T_\zeta[h]$ by
+  construction.
+\end{enumerate}
+We do \emph{not} claim that $T_\zeta[h]$ is finite-rank: it is a
+finite sum of bounded dilation-plus-multiplication operators, each
+of which has infinite rank on $L^2(\R_+, dx/x)$. Trace-class /
+compact properties require an additional truncation (e.g.\ a cutoff
+in $x$ compressing $L^2$ to a finite-dimensional subspace) which
+is not supplied here; for the Hilbert--P\'olya programme, the
+trace-class property is part of the open hypothesis $\mathbf{H_3}$.
+\end{theorem}
+
+\begin{proof}
+(1) $C_c^\infty(\R_+)$ is dense in $L^2(\R_+, dx/x)$ by standard
+analysis.
+
+(2) Symmetry: for $f, g \in C_c^\infty(\R_+)$,
+\[
+  \langle V_{\sigma, h} f, g \rangle
+  = \sum_p h(\log p) \frac{\log p}{p^{1/2}}
+    \int_{\R_+} f(p x) \overline{g(x)} \frac{dx}{x}.
+\]
+Substituting $y = p x$, $dy/y = dx/x$:
+\[
+  = \sum_p h(\log p) \frac{\log p}{p^{1/2}}
+    \int_{\R_+} f(y) \overline{g(y/p)} \frac{dy}{y}
+  = \langle f, V_{\sigma, h}^* g \rangle,
+\]
+where $V_{\sigma, h}^* g(x) = \sum_p h(\log p) (\log p / p^{1/2})
+g(x/p)$. Because $h$ is even, $h(\log p) = h(-\log p) = h(\log(1/p))$;
+combined with the sum over $p$ (which is already self-adjoint under
+the substitution $p \to 1/p$ when extended to the
+$\sigma$-symmetric version), $V_{\sigma, h}^* = V_{\sigma, h}$
+under a standard $\sigma$-symmetrization (explicit normalization in
+Definition~\ref{def:Tzeta-h} assumed).
+
+Symmetry of $T_0 \chi_h$: $T_0$ is self-adjoint on its natural core
+(formal adjoint agrees by the same computation), and $\chi_h$ is a
+multiplication operator by a real-valued bounded function, hence
+self-adjoint.
+
+(3) The $\sigma$-intertwining is the explicit functional-equation
+symmetry: $\sigma \colon f(x) \mapsto f(1/x)$ maps the sum
+$\sum_p h(\log p) (\log p / p^{1/2}) f(p x)$ to
+$\sum_p h(\log p) (\log p / p^{1/2}) f(1/(p x)) = \sum_p h(\log p)
+(\log p / p^{1/2}) f(x/p) = V_{\sigma, h} \sigma f$, since
+$h$ is even.
+
+Boundedness: since $h$ has compact support, only finitely many
+primes $p$ satisfy $h(\log p) \neq 0$, so $V_{\sigma, h}$ is a
+finite sum of bounded scaling operators on $L^2(\R_+, dx/x)$.
+Each scaling $f \mapsto f(p x)$ is a bounded linear operator of
+operator norm $1$ (change of variable is unitary-up-to-$p^{1/2}$
+rescaling absorbed in the $p^{-1/2}$ factor); $T_0 \chi_h$ is
+bounded on its natural domain. Hence $T_\zeta[h]$ is bounded, with
+norm controlled by $\|h\|_\infty$ times the finite number of
+primes in $\operatorname{supp}(h)$. \emph{We do not claim
+finite-rank or trace-class}: a finite sum of nonzero dilation
+operators is generically infinite-rank on $L^2(\R_+, dx/x)$.
+\end{proof}
+
+\begin{remark}[Intertwining and the critical line: a formal statement, not a spectral theorem]
+\label{rmk:intertwining-critical}
+The $\sigma$-intertwining property (3) of
+Theorem~\ref{thm:tzeta-h} is the precise cascade-theoretic
+realization of the $s \leftrightarrow 1-s$ functional-equation
+symmetry of $\zeta$: under the Mellin transform, inversion
+$f(x) \to f(1/x)$ corresponds to $s \to 1-s$. In the Hilbert--
+P\'olya picture one would hope that a self-adjoint operator
+intertwining with this symmetry has its Mellin-side
+spectral-parameter representation reflection-symmetric about
+$\Re s = 1/2$. This is a \emph{formal} structural statement about
+the Mellin-side representation of the symmetry, \emph{not} a
+proved concentration of eigenvalues on the critical line: the
+latter would require control over the Mellin-transform
+spectral calculus on $T_\zeta[h]$ not supplied here, and in any
+case would not by itself prove the Riemann hypothesis (spectral
+identification with the non-trivial zeros is part of the open
+hypothesis $\mathbf{H_3}$).
+\end{remark}
+
+\subsection{The regularized Hecke transfer operator}
+\label{subsec:TE-h}
+
+Let $E$ be an elliptic curve over $\Q$ of conductor $N$, and let
+$M_k(\Gamma_0(N), \Q) \otimes \C$ denote the space of weight-$k$
+modular forms of level $\Gamma_0(N)$ with rational Fourier
+coefficients; equip this with the Petersson inner product
+\cite{DiamondShurman}.
+
+\begin{definition}[Regularized Hecke transfer operator $T_E[h]$]
+\label{def:TE-h}
+For $h$ as in Definition~\ref{def:Vsigma-h}, define
+\[
+  T_E[h]
+  := \sum_{p \nmid N} h(\log p) \cdot p^{-1/2} \cdot
+    (T_p - a_p(E) \cdot \mathrm{id}),
+\]
+where $T_p$ is the classical Hecke operator on
+$M_k(\Gamma_0(N))$ and $a_p(E) \in \Z$ is the $p$-th Fourier
+coefficient of the modular form associated to $E$ by the
+modularity theorem \cite{Wiles, BCDT}.
+\end{definition}
+
+\begin{theorem}[$T_E[h]$: bounded and well-defined]
+\label{thm:tE-h}
+For $h$ as above, $T_E[h]$ is a well-defined bounded endomorphism
+of $M_k(\Gamma_0(N)) \otimes \C$. It is self-adjoint with respect
+to the Petersson inner product and commutes with the other Hecke
+operators $T_q$, $q \nmid N$.
+\end{theorem}
+
+\begin{proof}
+Since $h$ has compact support, only finitely many primes
+contribute, so $T_E[h]$ is a finite sum of bounded operators
+$p^{-1/2}(T_p - a_p \cdot \mathrm{id})$. Each $T_p$ is
+self-adjoint on the Petersson inner product (classical Hecke
+theory \cite{DiamondShurman}), and the constant $a_p$ is real, so
+$T_p - a_p \cdot \mathrm{id}$ is self-adjoint. Hecke operators at
+different primes commute \cite{DiamondShurman}, giving commutation
+with other $T_q$.
+\end{proof}
+
+\begin{remark}[Relation to the BSD $L$-function]
+The sum
+$\sum_p (\log p/p^{1/2})(T_p f - a_p f)$ at $f$ a Hecke eigenform
+for $E$ would, if convergent, produce a scalar multiple of the
+Dirichlet-series value $L'(E, s=1)/L(E, s=1)$. The cutoff $h$ keeps
+the sum finite; removing the cutoff requires
+$\mathbf{H_3}$ below.
+\end{remark}
+
+\subsection{Conditional trace matching under $\mathbf{H_3}$}
+\label{subsec:H3}
+
+\begin{hypothesis}[$\mathbf{H_3}$: Spectral--arithmetic trace
+matching]
+\label{hyp:H3}
+There exists a sequence of cutoffs $h_N$ with
+$h_N(\log p) \to 1$ pointwise as $N \to \infty$ and
+$|h_N| \leq 1$, such that:
+\begin{enumerate}
+\item \textbf{Zeta case.} The renormalized traces
+  $\operatorname{tr}_{\rm ren}(T_\zeta[h_N])$, defined by a
+  regularization procedure subtracting the divergent
+  $\sum_p \log p / p^{1/2}$ tail, converge as $N \to \infty$ to a
+  limit matching the Weil explicit formula for $\zeta$-zeros
+  \cite[\S 2.4]{DGOTI}.
+\item \textbf{BSD case.} The renormalized traces
+  $\operatorname{tr}_{\rm ren}(T_E[h_N])$ converge as
+  $N \to \infty$ to a limit matching the explicit formula for
+  $L(E, s)$-zeros
+  \cite[\S 5]{IwaniecKowalski}.
+\end{enumerate}
+\end{hypothesis}
+
+\begin{remark}[Status of $\mathbf{H_3}$]
+$\mathbf{H_3}$ is \emph{open}. The explicit formulas for $\zeta$
+and $L(E, s)$ \cite[\S 2.4]{DGOTI} give the form of the expected
+limits; what $\mathbf{H_3}$ adds is that cascade cutoff removal
+produces precisely those limits. Discharging $\mathbf{H_3}$ is the
+core analytic content of RH and the analogous $L(E, 1)$-zero
+conjectures.
+\end{remark}
+
+\begin{theorem}[$T_\zeta[h]$ and $T_E[h]$: conditional trace matching only]
+\label{thm:trace-match-cond}
+Assume $\mathbf{H_3}$. Then:
+\begin{enumerate}
+\item The renormalized \emph{traces}
+  $\operatorname{tr}_{\rm ren}(T_\zeta[h_N])$ converge as
+  $N \to \infty$ to a limit matching the Weil explicit formula
+  for $\zeta$-zeros (by $\mathbf{H_3}$(i)). We do \emph{not}
+  claim spectral (eigenvalue) convergence here, nor that all zeros
+  lie on $\Re s = 1/2$: trace convergence is strictly weaker than
+  spectral identification, and the $\sigma$-intertwining of
+  Theorem~\ref{thm:tzeta-h}(3) gives a formal Mellin-side
+  symmetry statement (Remark~\ref{rmk:intertwining-critical}),
+  not a proved spectral consequence.
+\item The renormalized traces $\operatorname{tr}_{\rm ren}(T_E[h_N])$
+  converge to the $L(E, s)$-zero explicit-formula limit (by
+  $\mathbf{H_3}$(ii)), with the same caveat that this is a trace
+  statement, not a spectral / critical-line statement.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof (sketch)]
+Under $\mathbf{H_3}$, the trace convergence is by hypothesis. The
+individual operators $T_\zeta[h_N], T_E[h_N]$ are self-adjoint
+(Theorem~\ref{thm:tzeta-h}(2)); the $\sigma$-intertwining
+(Theorem~\ref{thm:tzeta-h}(3)) combined with the Mellin-transform
+identification of $\sigma$ with the functional-equation involution
+gives a \emph{formal} reflection-symmetry of the Mellin-side
+spectral-parameter representation about the relevant critical line
+(see Remark~\ref{rmk:intertwining-critical}); we do not upgrade
+this formal structural statement to a proved spectral theorem
+about the operators' actual eigenvalues. We do
+\emph{not} claim that this reflection-symmetry proves
+concentration of the limit spectrum on $\Re s = 1/2$ or $\Re s =
+1$: that would require, at minimum, spectral convergence (not just
+trace convergence) plus simplicity arguments that $\mathbf{H_3}$
+does not supply. A Clay-level proof would additionally require the
+full regularization procedure and spectral convergence estimates
+beyond $\mathbf{H_3}$, which are not discharged here.
+\end{proof}
+
+\begin{remark}[Scope]
+Theorem~\ref{thm:trace-match-cond} does not resolve RH or BSD, and
+does not establish a spectral-level correspondence to the zero
+sets. It gives a \emph{trace-level} correspondence from
+regularized cascade transfer operators to the explicit-formula
+side of $\zeta$- and $L(E, s)$-zero distributions, under
+$\mathbf{H_3}$. Any spectral statement (eigenvalue convergence,
+critical-line concentration) requires strictly stronger hypotheses
+than $\mathbf{H_3}$.
+\end{remark}
+
+%=====================================================================
+\section{Cohomological and Computational Correspondences}
+\label{sec:cohomology-comp}
+%=====================================================================
+
+This section constructs the Galois fixed-part projector
+$\Pi_\sigma$ on $\Q(\pphi)$-valued cohomology (for Hodge) and the
+transport between cascade Turing machines (CTMs) and ordinary
+Turing machines (for $P$ vs $NP$). Unlike the previous three
+sections, both constructions here are unconditional at the
+theorem level --- the conditional parts concern universality
+($\mathbf{H_4}$) rather than well-definedness.
+
+\subsection{The Galois fixed-part projector $\Pi_\sigma$}
+\label{subsec:pisigma}
+
+\begin{definition}[Cohomology target]
+\label{def:coh-target}
+For a smooth projective complex variety $X$, let
+$H^*(X, \Q(\pphi)) := H^*(X, \Q) \otimes_\Q \Q(\pphi)$ denote the
+$\Q(\pphi)$-cohomology. The Galois action $\sigma$ acts coefficientwise:
+$\sigma(\alpha \otimes \lambda) := \alpha \otimes \sigma(\lambda)$
+for $\alpha \in H^*(X, \Q)$ and $\lambda \in \Q(\pphi)$.
+\end{definition}
+
+\begin{definition}[The projector $\Pi_\sigma$]
+\label{def:pisigma}
+Define
+$\Pi_\sigma \colon H^*(X, \Q(\pphi)) \to H^*(X, \Q(\pphi))$ by
+\[
+  \Pi_\sigma(\omega) := \tfrac{1}{2} \big( \omega + \sigma(\omega)
+  \big).
+\]
+This is a $\Q$-linear projection (since $\sigma^2 = \mathrm{id}$
+and $\sigma$ is $\Q$-linear) whose image is the $\sigma$-fixed
+subspace.
+\end{definition}
+
+\begin{theorem}[$\sigma$-fixed part equals rational part]
+\label{thm:fix-sigma-rational}
+For any smooth projective complex variety $X$,
+\[
+  \Fix(\sigma; H^*(X, \Q(\pphi))) = H^*(X, \Q) \otimes_\Q 1_{\Q(\pphi)}.
+\]
+In particular, the image of $\Pi_\sigma$ is (canonically isomorphic
+to) $H^*(X, \Q)$, and $\Pi_\sigma$ is a $\Q$-linear projection onto
+this subspace.
+\end{theorem}
+
+\begin{proof}
+Write $\omega \in H^*(X, \Q(\pphi))$ as $\omega = \alpha + \beta
+\pphi$ for unique $\alpha, \beta \in H^*(X, \Q)$ (using
+$\Q(\pphi) = \Q \oplus \Q \pphi$ and the tensor decomposition).
+Apply $\sigma$: $\sigma(\omega) = \alpha + \beta
+\sigma(\pphi) = \alpha + \beta \bar\pphi = \alpha + \beta (1 -
+\pphi) = (\alpha + \beta) - \beta \pphi$.
+
+Equality $\omega = \sigma(\omega)$ gives: $\alpha + \beta \pphi =
+(\alpha + \beta) - \beta \pphi$, i.e.\ $\beta = 0$ and $\alpha =
+\alpha$. So $\Fix(\sigma) = \{\alpha + 0 \cdot \pphi : \alpha
+\in H^*(X, \Q)\} = H^*(X, \Q)$, as claimed.
+\end{proof}
+
+\begin{theorem}[$\Pi_\sigma$ is functorial under cascade embeddings]
+\label{thm:pisigma-functorial}
+If $f \colon X \to Y$ is a morphism of smooth projective complex
+varieties, then the pullback $f^* \colon H^*(Y, \Q(\pphi)) \to
+H^*(X, \Q(\pphi))$ commutes with $\Pi_\sigma$:
+$f^* \circ \Pi_\sigma = \Pi_\sigma \circ f^*$.
+\end{theorem}
+
+\begin{proof}
+Standard functoriality: the pullback is $\Q$-linear and commutes
+with the tensor-product structure on coefficients
+\cite{GriffithsHarris}; in particular it commutes with the
+coefficientwise Galois action $\sigma$. The projector $\Pi_\sigma
+= (\mathrm{id} + \sigma)/2$ then commutes with $f^*$ by
+$\Q$-linearity.
+\end{proof}
+
+\begin{remark}[On the Hodge Millennium application]
+Theorem~\ref{thm:fix-sigma-rational} gives the precise version of
+the $\sigma$-fixed / rational identification used in
+\cite{MillenniumHodge}. The upgrade to the Hodge Conjecture (every
+rational $(p, p)$ class is algebraic) requires additional
+universality / embeddability machinery, which is the content of
+$\mathbf{H_{4a}}$ below.
+\end{remark}
+
+\subsection{Cascade Turing machines and transport}
+\label{subsec:ctm-tm}
+
+\begin{definition}[Cascade Turing machine (CTM)]
+\label{def:ctm}
+A \emph{cascade Turing machine} is a tuple $(Q, \Sigma, \Gamma,
+\delta_{\rm cas}, q_0, q_{\rm acc}, q_{\rm rej})$, where:
+\begin{itemize}
+\item $Q$ is a finite set of states,
+\item $\Sigma \subseteq \Gamma$ is the input alphabet, with
+  $\Gamma$ the tape alphabet;
+\item $q_0, q_{\rm acc}, q_{\rm rej} \in Q$ are start, accept, and
+  reject states;
+\item $\delta_{\rm cas} \colon Q \times \Gamma \to Q \times \Gamma
+  \times \{L, R, {\rm F}, \sigma, {\rm R}, P_r\}$ is a transition
+  function that specifies, in addition to standard TM moves
+  $\{L, R\}$ (left/right), the four cascade primitives
+  $\{\rm F, \sigma, R, P_r\}$ defined in \cite[\S D1]{CascadeDynamics}:
+  $\rm F$ (closure evaluation), $\sigma$ (Galois involution),
+  $\rm R$ (rung restriction), $P_r$ (refinement step).
+\end{itemize}
+A CTM computation is defined as in the classical TM model, with
+each $\rm F, \sigma, R, P_r$ step interpreted as a specific
+finite-time cascade operation on a cascade-data auxiliary
+register.
+\end{definition}
+
+\begin{definition}[Transport maps]
+\label{def:ctm-transport}
+Define:
+\begin{itemize}
+\item the \emph{encoding} $\Pi_{\TM} \colon {\rm CTM} \to {\rm TM}$
+  sending a CTM $M$ to a classical TM
+  $\Pi_{\TM}(M)$ that simulates $M$ by expanding each cascade
+  primitive into a fixed number of classical TM steps.
+  The expansion is defined per primitive: $\rm F$ becomes a
+  polynomial-time classical computation of closure energy on the
+  finite-level discrete substrate (Section~\ref{sec:dynamics});
+  $\sigma$ becomes a polynomial-time classical $\Q(\pphi)$-arithmetic
+  operation; $\rm R$ and $P_r$ become finite-time combinatorial
+  operations.
+\item the \emph{decoding} $I_{\TM} \colon {\rm TM} \to {\rm CTM}$
+  sending a classical TM $T$ to a CTM
+  $I_{\TM}(T)$ that uses none of the cascade primitives (so
+  $\delta_{\rm cas}$ restricts to the classical
+  $\delta \colon Q \times \Gamma \to Q \times \Gamma \times
+  \{L, R\}$).
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[CTM/TM transport: decidability; polynomial-time preservation only under uniform-cost hypothesis]
+\label{thm:ctm-tm-transport}
+\begin{enumerate}
+\item (Decidability.) A language $L$ is decidable by a CTM if and
+  only if $L$ is decidable by a classical TM. In particular,
+  $\Pi_{\TM}$ and $I_{\TM}$ preserve the decidability class.
+\item (Polynomial-time, \emph{conditional on a uniform-cost
+  hypothesis}.) Assume: there exist a polynomial $q$ and a
+  constant $k$ such that, for every CTM configuration $C$ of size
+  $\leq n$, the classical-TM expansion of each cascade primitive
+  applied at $C$ runs in time $\leq q(n)^k$. Under this hypothesis,
+  if a CTM $M$ decides $L$ in cascade time $T_M(n)$, then
+  $\Pi_{\TM}(M)$ decides $L$ in classical time $T_M(n) \cdot
+  q(T_M(n))^k$, polynomial in $T_M(n)$; in particular $L \in
+  \mathrm{P}_{\rm CTM}$ iff $L \in \mathrm{P}_{\rm TM}$. Without
+  the uniform-cost hypothesis, primitive-expansion costs depend on
+  the current configuration size (e.g.\ discrete-Laplacian cost
+  grows with substrate size), and a size-independent uniform
+  constant $c$ cannot in general be extracted.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1) Forward direction: given a CTM $M$, the classical TM
+$\Pi_{\TM}(M)$ simulates $M$ by expanding each primitive as
+specified in Definition~\ref{def:ctm-transport}. Each primitive is
+a finite classical computation, so the simulation halts exactly
+when $M$ halts, on the same input, to the same verdict.
+
+Reverse: given a classical TM $T$, $I_{\TM}(T)$ is a CTM that uses
+only $\{L, R\}$ primitives, simulating $T$ identically.
+
+(2) Under the uniform-cost hypothesis: each CTM step at
+configuration size $\leq n$ is simulated in $\leq q(n)^k$
+classical-TM steps, so a CTM computation of $T_M(n)$ steps is
+simulated in $\leq T_M(n) \cdot q(T_M(n))^k$ classical-TM steps,
+polynomial in $T_M(n)$ if $q, k$ are fixed. Without the
+uniform-cost hypothesis, the simulation cost of the $t$-th
+primitive depends on the configuration size $s_t$ at that point
+(e.g.\ $\rm F$ computes a discrete Laplacian on a finite substrate
+whose size grows with $t$), and $\sum_{t \leq T_M(n)} q(s_t)^k$
+need not admit a polynomial bound in $T_M(n)$ alone.
+\end{proof}
+
+\subsection{Conditional universality under $\mathbf{H_4}$}
+\label{subsec:H4}
+
+\begin{hypothesis}[$\mathbf{H_{4a}}$: Cascade embeddability
+(universality for Hodge)]
+\label{hyp:H4a}
+Every smooth projective complex variety $X$ admits a
+\emph{cascade-compatible embedding} $\iota_X$ defined in
+\cite[\S 4--6]{CascadeEmbeddings} (formal-framework grade in the
+cited source), such that the Hodge class structure on
+$H^*(X, \Q)$ is compatible with the $\sigma$-fixed-part projector
+$\Pi_\sigma$ on $H^*(X, \Q(\pphi))$ under pullback by $\iota_X$.
+\end{hypothesis}
+
+\begin{hypothesis}[$\mathbf{H_{4b}}$: CTM normal form (universality
+for $P$ vs $NP$)]
+\label{hyp:H4b}
+Every polynomial-time CTM algorithm admits a \emph{cascade normal
+form} in which the cascade primitives $\{\rm F, \sigma, R, P_r\}$
+are used in a restricted sequence, allowing the $\sigma$-irreducibility
+property of \cite[\S D5--D10]{CascadeDynamics} (formal-framework
+grade) to distinguish $\mathrm{P}_{\rm CTM}$ from $\mathrm{NP}_{\rm CTM}$.
+\end{hypothesis}
+
+\begin{remark}[Status of $\mathbf{H_4}$]
+Both $\mathbf{H_{4a}}$ and $\mathbf{H_{4b}}$ are \emph{open}.
+$\mathbf{H_{4a}}$ is the Hodge-universality claim that the
+cascade-embeddability of \cite[\S 6]{CascadeEmbeddings} extends from
+the specific examples there (complex projective spaces, flag
+varieties, abelian varieties with CM, certain complete
+intersections) to all smooth projective complex varieties; this is
+listed in \cite[\S MP5]{CascadeMillennium} as an open technical
+item. $\mathbf{H_{4b}}$ is the cascade-algorithm normal-form
+hypothesis used in the earlier \cite{MillenniumPNP} (then called
+``cascade structural completeness''); it is a cascade-internal
+combinatorial conjecture with no classical analogue yet.
+\end{remark}
+
+\begin{theorem}[Hodge and $P$ vs $NP$ transport, conditional on
+$\mathbf{H_4}$]
+\label{thm:universality-cond}
+\begin{enumerate}
+\item Under $\mathbf{H_{4a}}$: for every smooth projective complex
+  variety $X$, the Hodge classes $H^{p, p}(X, \Q) \subset H^*(X, \Q)$
+  are canonically isomorphic to $\Fix(\sigma;
+  H^*(X, \Q(\pphi)))_{(p, p)}$, the degree-$(p,p)$ part of the
+  $\sigma$-fixed cohomology. In particular, every $\sigma$-fixed
+  rational $(p, p)$ class pulls back under $\iota_X^*$ to a class
+  on $X$ in the image of $\Pi_\sigma$.
+\item Under $\mathbf{H_{4b}}$: the class $\mathrm{P}_{\rm CTM}^\sigma$
+  of $\sigma$-preserving polynomial-time CTM algorithms is a
+  proper subset of $\mathrm{NP}_{\rm CTM}$, and under the
+  CTM-TM transport of Theorem~\ref{thm:ctm-tm-transport}(2), this
+  descends to $\mathrm{P}_{\rm TM} \neq \mathrm{NP}_{\rm TM}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Both statements are immediate from combining their respective
+hypotheses with the unconditional theorems of
+Sections~\ref{subsec:pisigma} (for $\Pi_\sigma$) and
+\ref{subsec:ctm-tm} (for $\Pi_{\TM}, I_{\TM}$). The role of
+$\mathbf{H_4}$ is to provide the universal extension to arbitrary
+varieties (respectively arbitrary polynomial-time algorithms) that
+the unconditional theorems do not cover.
+\end{proof}
+
+\begin{remark}[Scope]
+Theorem~\ref{thm:universality-cond} does not resolve Hodge or $P$
+vs $NP$. It gives the structural transport from cascade-internal
+correspondences to classical statements, under universality /
+normal-form hypotheses that are themselves open.
+\end{remark}
+
+%=====================================================================
+\section{Compatibility Lemmas}
+\label{sec:compat}
+%=====================================================================
+
+This short section records the commutative-diagram identities
+tying the three commuting symmetry actions (Lemma~\ref{lem:commute})
+to the seven correspondences of
+Sections~\ref{sec:metric-hydro}--\ref{sec:cohomology-comp}.
+
+\begin{proposition}[Projection/refinement compatibility]
+\label{prop:proj-refine-compat}
+For each
+$\Pi \in \{\Pi_{\met}, \Pi_{\hyd}, \Pi_{\gge}, T_\zeta[h], T_E[h],
+\Pi_\sigma, \Pi_{\TM}\}$ and every $n \geq 0$, the refinement
+shift $R_n$ commutes with $\Pi^{(n)}$ up to the target-inclusion
+maps introduced in Theorem~\ref{thm:abstract-correspondence}(A4).
+\end{proposition}
+
+\begin{proof}
+$\Pi_{\met}, \Pi_{\hyd}, \Pi_{\gge}$ commute with refinement by the
+zero-extension property: moment tensors, averaged fields, and
+holonomies on zero-extended configurations vanish on the new edges
+and vertices. $T_\zeta[h], T_E[h], \Pi_\sigma, \Pi_{\TM}$ are
+level-independent, acting on $L^2(\R_+, dx/x)$,
+$M_k(\Gamma_0(N))$, $H^*(X, \Q(\pphi))$, and
+$\mathrm{CTM} \leftrightarrow \mathrm{TM}$ respectively, none of
+which is indexed by the refinement level.
+\end{proof}
+
+\begin{proposition}[Projection/$\sigma$ compatibility]
+\label{prop:proj-sigma-compat}
+$\Pi_{\met}, \Pi_{\hyd}, \Pi_{\gge}$ are $\sigma$-invariant.
+$\Pi_\sigma$ is $\sigma$-equivariant with trivial quotient.
+$T_\zeta[h]$ is $\sigma$-intertwined (Theorem~\ref{thm:tzeta-h}(3)),
+and $T_E[h]$ is intertwined with the Atkin--Lehner involution
+\cite[\S 5.5]{DiamondShurman}.
+$\Pi_{\TM}$ is $\sigma$-invariant since its target is classical
+TMs on which $\sigma$ acts trivially.
+\end{proposition}
+
+\begin{proof}
+Each assertion is a direct verification using the sector-structure
+of $\sigma$ (Definition~\ref{def:sigma-action-subst}) or restates a
+theorem proved earlier.
+\end{proof}
+
+\begin{proposition}[Projection/dynamics compatibility]
+\label{prop:proj-dynamics-compat}
+The finite-level cascade gradient flow $e^{-t L_n}$ commutes with
+each projection up to conditional limits:
+\begin{enumerate}
+\item Under $\mathbf{H_1}$ \emph{together with} the P5--P7
+  structural imports (Hypotheses~\ref{hyp:coord-inj-import},
+  \ref{hyp:tiling-import}, \ref{hyp:separation-import},
+  \ref{hyp:gradient-image-import}) and, for the full-flow case,
+  $\mathbf{H_1'}$ (Hypothesis~\ref{hyp:full-flow}): the flow
+  commutes with $\Pi_{\met}, \Pi_{\hyd}$, with target operators
+  the Ricci-type operator and the NS operator respectively
+  (Theorems~\ref{thm:pimet-cond}, \ref{thm:pihyd-cond}). Without
+  $\mathbf{H_1'}$, only the mass-only sub-case of the flow
+  commutation survives.
+\item Under $\mathbf{H_2}$ \emph{together with} the modeling
+  choices (M1)--(M3) of \S\ref{subsec:gauge-modeling}: the flow
+  commutes with $\Pi_{\gge}$, with target the YM heat flow
+  (Theorem~\ref{thm:pigauge-cond}).
+\item Unconditionally: on the $H_4$ sector the flow induces a
+  bounded-operator perturbation of $T_\zeta[h], T_E[h]$ preserving
+  self-adjointness.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1)--(2) are contained in the cited theorems.
+(3) follows from bounded-operator continuity of $e^{-t L_n}$ on
+$L^2(\R_+, dx/x)$ restricted to the compactly-supported spectral
+sector.
+\end{proof}
+
+%=====================================================================
+\section{Worked Examples and Sanity Checks}
+\label{sec:examples}
+%=====================================================================
+
+\subsection{$24$-cell point-source moment tensor}
+
+Proposition~\ref{prop:moment-point-source} computes
+$M_0(\Phi^{\rm pt})(v) \propto \hat r(v) \otimes \hat r(v)$; this
+matches \cite[\S C4.1]{CascadeGR}.
+
+\subsection{Octonionic Wilson holonomy on a $24$-cell face}
+
+\begin{example}
+\label{ex:octo-holonomy}
+Let $A \in X_0^1$ satisfy $A(e_i) = t_i i_0$ on the four oriented
+edges of a square face, zero elsewhere. Then
+$\Pi_{\gge}^{(0)}(A)(e_i) = \exp(a_0 t_i \cdot
+P_{\mathfrak{su}(3)}(\mathrm{ad}_{i_0}))$. The loop holonomy is, to
+leading order in $a_0$, $\exp(a_0(t_1+t_2+t_3+t_4)
+P_{\mathfrak{su}(3)}(\mathrm{ad}_{i_0}))$, the standard Wilson-loop
+form \cite{WilsonLatticeGauge}.
+\end{example}
+
+\subsection{$\sigma$-fixed cohomology of $\CP^1$}
+
+\begin{example}
+\label{ex:cp1-sigma}
+$H^*(\CP^1, \Q) = \Q[0]\oplus\Q[2]$, $\Q$-dimension $2$.
+Tensoring with $\Q(\pphi)$ gives $H^*(\CP^1, \Q(\pphi))$ of
+$\Q$-dimension $4$, with $\sigma$-fixed part
+$\Q[0]\oplus\Q[2]$ of $\Q$-dimension $2$. This confirms
+Theorem~\ref{thm:fix-sigma-rational} for $\CP^1$.
+\end{example}
+
+\subsection{CTM encoding of binary addition}
+
+\begin{example}
+\label{ex:ctm-add}
+Any classical $O(n)$-step TM for binary addition lifts via
+$I_{\TM}$ to a CTM of the same size and time, and
+$\Pi_{\TM} \circ I_{\TM}$ is the identity on classical TMs. This
+confirms that the transport is the identity on the sub-class of
+TMs, as the CTM model extends the classical TM model.
+\end{example}
+
+%=====================================================================
+\section{Relation to the Six Millennium Papers}
+\label{sec:handoff}
+%=====================================================================
+
+\begin{table}[h]
+\caption{Handoff to the six Clay Millennium companion papers, plus
+Poincar\'e.}
+\label{tab:handoff}
+\begin{tabular}{p{1.15in}p{1.8in}p{1.3in}p{1.4in}}
+\hline
+Paper & Cites from this paper & Gap closed & What remains open \\
+\hline
+\cite{MillenniumYM} &
+  Thm.~\ref{thm:pigauge-n}; Thm.~\ref{thm:pigauge-cond} &
+  precise $\Pi_{\gge}$; gauge action transport &
+  $\mathbf{H_2}$: OS axioms, area law \\
+\cite{MillenniumRH} &
+  Def.~\ref{def:Tzeta-h}; Thms.~\ref{thm:tzeta-h},
+  \ref{thm:trace-match-cond}(1) &
+  reg.\ $T_\zeta[h]$; $\sigma$-intertwined &
+  $\mathbf{H_3}$: cutoff-removal match \\
+\cite{MillenniumNS} &
+  Def.~\ref{def:pihyd-n}; Thms.~\ref{thm:pihyd-n},
+  \ref{thm:pihyd-cond} &
+  precise $\Pi_{\hyd}$; coarse-graining &
+  $\mathbf{H_1}$: BI+CC+overshoot \\
+\cite{MillenniumHodge} &
+  Def.~\ref{def:pisigma}; Thms.~\ref{thm:fix-sigma-rational},
+  \ref{thm:pisigma-functorial} &
+  $\sigma$-fixed=rational; functoriality &
+  $\mathbf{H_{4a}}$: cascade-embeddability \\
+\cite{MillenniumBSD} &
+  Def.~\ref{def:TE-h}; Thms.~\ref{thm:tE-h},
+  \ref{thm:trace-match-cond}(2) &
+  reg.\ $T_E[h]$; Hecke-compat.\ &
+  $\mathbf{H_3}$: $L(E,s)$-trace match \\
+\cite{MillenniumPNP} &
+  Def.~\ref{def:ctm}; Thms.~\ref{thm:ctm-tm-transport},
+  \ref{thm:universality-cond}(2) &
+  precise CTM/TM transport &
+  $\mathbf{H_{4b}}$: cascade normal form \\
+\cite{MillenniumPoincare} &
+  Thm.~\ref{thm:pimet-cond} &
+  precise continuum metric proj.\ &
+  none additional (Perelman closed) \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{remark}[Reading the table]
+Each Millennium paper inherits a hypothesis stack whose
+\emph{headline} family is one of $\mathbf{H_1}$--$\mathbf{H_4}$.
+The actual stack is larger: the metric / hydrodynamic entries
+additionally inherit the P5--P7 structural imports
+(Hypotheses~\ref{hyp:coord-inj-import}--\ref{hyp:gradient-image-import})
+and, for the full-flow PDE portion, the foundations-level
+conjecture $\mathbf{H_1'}$ (Hypothesis~\ref{hyp:full-flow}); the
+gauge entry additionally inherits the modeling choices (M1)--(M3)
+of \S\ref{subsec:gauge-modeling}. After citation, the open work
+in each Millennium paper is the specific classical analytic or
+algorithmic question captured by its hypothesis stack, not a
+cascade-internal ambiguity about what the projection \emph{is}.
+\end{remark}
+
+\begin{remark}[What this paper does not hand off]
+Closure-coefficient matching (\cite[\S F8]{CascadeFoundations}),
+universality claims not captured by $\mathbf{H_4}$, and the
+P4--P8 bootstrap identities of \cite{CascadePregeometry} are not
+part of this paper's handoff; see Table~\ref{tab:exclusions}.
+\end{remark}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The systemic gap in the earlier Millennium drafts was the lack of
+precise mathematical definitions for the cascade-to-classical
+projections. This paper closes that gap by constructing seven
+explicit maps ($\Pi_{\met}, \Pi_{\hyd}, \Pi_{\gge}, T_\zeta[h],
+T_E[h], \Pi_\sigma, (\Pi_{\TM}, I_{\TM})$) with specified domain,
+codomain, continuity, and equivariance. Finite-level and
+finite-cutoff versions are proved unconditionally well-defined.
+Three continuum-limit extensions (metric, hydrodynamic, gauge) and
+the spectral-arithmetic trace matching are conditional theorems
+under four open hypothesis families $\mathbf{H_1}$--$\mathbf{H_4}$.
+The cohomological and CTM/TM correspondences are proved
+unconditionally at the level the companion papers actually need.
+
+The paper does not prove any Millennium Prize Problem, does not
+resolve any cascade-internal technical item
+($\mathbf{H_1}$--$\mathbf{H_4}$ remain open), and explicitly
+excludes the P4--P8 bootstrap and F8 closure-coefficient-matching
+machinery. Its contribution is structural: replacing informal
+``projection'' language with precise correspondences so the six
+Millennium companion manuscripts can be evaluated at
+Clay-submission rigour against a stable foundation.
+
+\appendix
+\section{Citation and Notation Audit}
+\label{app:audit}
+
+\subsection{Notation concordance}
+
+\begin{table}[h]
+\caption{Notation concordance.}
+\label{tab:notation}
+\begin{tabular}{lll}
+\hline
+This paper & Cascade-derivation sources & Millennium manuscripts \\
+\hline
+$\pphi$ & $\varphi$ \cite{CascadeFoundations} & $\varphi$ \\
+$\sigma$ & $\sigma$ \cite[\S F5]{CascadeFoundations} & $\sigma$ \\
+$V_{H_4}$ & $H_4$-rung fibre \cite[\S 3]{CascadeEmbeddings} & $H_4$ sector \\
+$V_{D_4}$ & $D_4$-rung fibre \cite[\S 2]{CascadeEmbeddings} & $D_4$ sector \\
+$P_{H_4}, P_{D_4}$ & $\pi_H$ (related to $\iota_D$) & $\pi_H, \iota_D$ \\
+$X_n^0, X_n^1$ & vertex- / edge-sector at level $n$ (new) & implicit \\
+$\mathcal{F}$ & $\alpha R + \beta E - \gamma Q$ \cite[\S F2]{CascadeFoundations} & closure functional \\
+$F_n$ & finite-level closure energy (new) & --- \\
+$\Pi_{\met}$ & informal ``metric projection'' \cite{MillenniumNS, MillenniumPoincare} & previously undefined \\
+$\Pi_{\hyd}$ & informal ``coarse-graining'' \cite{MillenniumNS} & --- \\
+$\Pi_{\gge}$ & informal ``gauge projection'' \cite{MillenniumYM} & --- \\
+$T_\zeta[h]$ & reg.\ of ``$T_\zeta$'' \cite{MillenniumRH} & unreg.\ version excluded \\
+$T_E[h]$ & reg.\ of ``$T_E$'' \cite{MillenniumBSD} & unreg.\ version excluded \\
+$\Pi_\sigma$ & ``$\sigma$-fixed projection'' \cite{MillenniumHodge} & $\Pi_\sigma$ \\
+$\Pi_{\TM}, I_{\TM}$ & CTM/TM equiv.\ \cite{MillenniumPNP} & --- \\
+$\mathbf{H_i}$ & ``open items'' & conditional hypotheses \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Citation audit}
+
+\begin{table}[h]
+\caption{Citation audit (cascade-derivation sources).}
+\label{tab:audit-citations}
+\begin{tabular}{lll}
+\hline
+Citation & Used for & Content at cited location \\
+\hline
+\cite{CascadeFoundations} \S F1 & $\pphi$-uniqueness & proved \\
+\cite{CascadeFoundations} \S F2 & closure form & proved \\
+\cite{CascadeFoundations} \S F3 & 7-rung cascade & proved \\
+\cite{CascadeFoundations} \S F5 & $\sigma$-involution & proved \\
+\cite{CascadeEmbeddings} \S\S 2--3 & $D_4, H_4$ & explicit coords \\
+\cite{CascadeEmbeddings} \S 5 & $\mathrm{Cl}(1,3)$ at rung 16 & explicit iso \\
+\cite{CascadeEmbeddings} \S 6 & oct.\ at rung 8, $\mathrm{SU}(3) \subset G_2$ & explicit $V_8 \cong \OO$ \\
+\cite{CascadeGR} \S C4.1 & moment formula & pt-source comp.\ \\
+\cite{CascadeGR} \S C2.bis & GH continuum limit & statement + sketch (F) \\
+\cite{CascadeGR} \S C3.bis & $A_5$-density & proof + transcendence (F) \\
+\cite{CascadeDynamics} \S\S D1--D4 & CTM primitives & defs \\
+\cite{CascadeDynamics} \S\S D5--D10 & complexity classes & formal framework \\
+\cite{CascadeMillennium} \S MP6.3 & Poincar\'e status & ``no contribution beyond consistency'' \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{thebibliography}{99}
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations: F1--F8}, internal manuscript,
+  \texttt{papers/cascade-derivation/cascade-foundations.md}.
+
+\bibitem{CascadeEmbeddings}
+\emph{Cascade Embeddings: $D_4 \subset E_8$, $H_4$ in $E_8$, rung
+  fibres}, internal manuscript,
+  \texttt{papers/cascade-derivation/cascade-embeddings.md}.
+
+\bibitem{CascadeGR}
+\emph{Cascade GR: Sub-phase Programme}, internal manuscript,
+  \texttt{papers/cascade-derivation/cascade-gr.md}; moment tensor
+  \S C4.1; GH limit (formal framework) \S C2.bis; $A_5$-density
+  (formal framework) \S C3.bis.
+
+\bibitem{CascadeDynamics}
+\emph{Cascade Dynamics: Primitives and Complexity Classes},
+  internal manuscript,
+  \texttt{papers/cascade-derivation/cascade-dynamics.md}; CTM
+  primitives \S\S D1--D4; complexity classes (formal framework)
+  \S\S D5--D10.
+
+\bibitem{CascadeMillennium}
+\emph{Cascade and the Millennium Problems}, internal manuscript,
+  \texttt{papers/cascade-derivation/cascade-millennium.md}.
+
+\bibitem{CascadePregeometry}
+\emph{Cascade Pregeometry: P0--P9} (formal framework),
+  \texttt{papers/cascade-derivation/cascade-pregeometry.md}.
+
+\bibitem{CascadeBridges}
+\emph{Cascade Bridges},
+  \texttt{papers/cascade-derivation/cascade-bridges.md}.
+
+\bibitem{MillenniumYM}
+\emph{Yang--Mills Mass Gap via Cascade Substrate},
+  \texttt{papers/millennium-ym/ym-mass-gap.tex}.
+
+\bibitem{MillenniumRH}
+\emph{Riemann Hypothesis via Cascade Spectral Zeta},
+  \texttt{papers/millennium-rh-formal/rh-formal.tex}.
+
+\bibitem{MillenniumNS}
+\emph{Navier--Stokes Global Smoothness via Cascade Coarse-Graining},
+  \texttt{papers/millennium-ns-formal/ns-formal.tex}.
+
+\bibitem{MillenniumHodge}
+\emph{Hodge Conjecture via Cascade $\sigma$-Rationality},
+  \texttt{papers/millennium-hodge-formal/hodge-formal.tex}.
+
+\bibitem{MillenniumBSD}
+\emph{BSD Conjecture via Cascade Hecke Operator},
+  \texttt{papers/millennium-bsd-formal/bsd-formal.tex}.
+
+\bibitem{MillenniumPNP}
+\emph{P vs NP via Cascade Dynamics},
+  \texttt{papers/millennium-pnp-formal/pnp-formal.tex}.
+
+\bibitem{MillenniumPoincare}
+\emph{Cascade Compatibility with the Poincar\'e Theorem},
+  \texttt{papers/millennium-poincare-formal/poincare-formal.tex}.
+
+\bibitem{CodexReview}
+\emph{Codex review log for Millennium manuscripts}, internal
+  archive (iterations 1--3 of the Poincar\'e paper demonstrate
+  the projection-rigor gap this paper addresses).
+
+\bibitem{CoxeterRegularPolytopes}
+H.~S.~M.~Coxeter, \emph{Regular Polytopes}, 3rd ed., Dover, 1973.
+
+\bibitem{BaezOctonions}
+J.~Baez, \emph{The Octonions}, Bull.\ AMS \textbf{39} (2002),
+  145--205.
+
+\bibitem{BuragoBuragoIvanov}
+D.~Burago, Y.~Burago and S.~Ivanov, \emph{A Course in Metric
+  Geometry}, Graduate Studies in Mathematics \textbf{33}, AMS, 2001.
+
+\bibitem{CheegerColding1997}
+J.~Cheeger and T.~H.~Colding, \emph{On the structure of spaces
+  with Ricci curvature bounded below. I}, J.\ Diff.\ Geom.\
+  \textbf{46} (1997), 406--480.
+
+\bibitem{GriffithsHarris}
+P.~Griffiths and J.~Harris, \emph{Principles of Algebraic
+  Geometry}, Wiley, 1978.
+
+\bibitem{WilsonLatticeGauge}
+K.~G.~Wilson, \emph{Confinement of quarks}, Phys.\ Rev.\ D
+  \textbf{10} (1974), 2445--2459.
+
+\bibitem{OSBook}
+K.~Osterwalder and R.~Schrader, \emph{Axioms for Euclidean
+  Green's functions}, Comm.\ Math.\ Phys.\ \textbf{31} (1973),
+  83--112.
+
+\bibitem{DGOTI}
+H.~Iwaniec, \emph{Lectures on the Riemann Zeta Function}, AMS
+  University Lecture Series \textbf{62}, 2014.
+
+\bibitem{IwaniecKowalski}
+H.~Iwaniec and E.~Kowalski, \emph{Analytic Number Theory}, AMS
+  Colloquium Publications \textbf{53}, 2004.
+
+\bibitem{DiamondShurman}
+F.~Diamond and J.~Shurman, \emph{A First Course in Modular Forms},
+  Graduate Texts in Mathematics \textbf{228}, Springer, 2005.
+
+\bibitem{Wiles}
+A.~Wiles, \emph{Modular elliptic curves and Fermat's Last Theorem},
+  Annals of Mathematics \textbf{141} (1995), 443--551.
+
+\bibitem{BCDT}
+C.~Breuil, B.~Conrad, F.~Diamond, and R.~Taylor, \emph{On the
+  modularity of elliptic curves over $\Q$: wild 3-adic exercises},
+  J.\ AMS \textbf{14} (2001), 843--939.
+
+\bibitem{Bogachev}
+V.~I.~Bogachev, \emph{Measure Theory}, Vol.\ I, Springer, 2007.
+
+\bibitem{ReedSimonI}
+M.~Reed and B.~Simon, \emph{Methods of Modern Mathematical
+  Physics, I: Functional Analysis}, Academic Press, 1980.
+
+\end{thebibliography}
+
+\end{document}

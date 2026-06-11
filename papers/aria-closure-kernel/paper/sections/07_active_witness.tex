@@ -1,0 +1,199 @@
+% =====================================================================
+\section{Active-regime witness: aria-chess}\label{sec:active_witness}
+% =====================================================================
+
+This section threads the second of the two domain-disjoint empirical landings of
+$\Cph$. The full preprint is~\citep{SmartAriaChess2026}; we
+summarise here only what the operator-witness narrative requires
+and inherit the preprint's substrate-witness scope verbatim.
+
+\subsection{What aria-chess tests}\label{ssec:aria_setup}
+
+The aria-chess preprint adds a recurrent self-model layer above
+the same $\Cph$ on the same $\Rsixhundred$. The architecture
+introduces:
+\begin{itemize}\itemsep=2pt
+\item One \emph{condition-dependent} self-injection coupling
+  $\eta \in \{0, 0.05, 0.20\}$ (PROPOFOL, SLEEP\_N3,
+  WAKE/RECOVERY) that controls the strength of the recurrent
+  feedback;
+\item One \emph{substrate-pinned} nonlinearity
+  $\mathrm{bounded\_topk}(\cdot, k=12)$ at the graph's average
+  degree (\S\ref{ssec:graph}: degree $12$ uniform). The choice
+  $k=12$ is not a free hyperparameter; it is the substrate's
+  average degree.
+\item Condition-specific \emph{biologically-motivated} stimulus
+  models (slow oscillation + spindles + K-complexes for SLEEP\_N3,
+  AR(1) noise + tonic shell + attention episodes for WAKE,
+  low-amplitude tonic noise for PROPOFOL). These are
+  biologically-motivated design choices, not measurement-fits to
+  subject-level EEG data.
+\end{itemize}
+The kernel parameter $\Ph^{-2}$ is \emph{not retuned} between
+b-anomaly and aria-chess; the same fixed shift used in the
+flavour-physics structural fit is used in the cortical substrate
+witness.
+
+\subsection{Eighteen preregistered correspondences}
+
+Eighteen quantitative predictions (P1--P18) were locked on
+2026-04-18 in the aria-chess preprint's
+\texttt{docs/brain\_mapping/PAPER\_PREDICTIONS.md} before any
+validation run. Each prediction has a specific numerical claim, a
+falsifiable threshold, and a named validation script. The
+preregistered tally as reported in~\citep{SmartAriaChess2026}:
+
+\begin{itemize}\itemsep=2pt
+\item $17/18$ at standard validation methodology ($5$-seed
+  cascade block plus state-reset protocol);
+\item $18/18$ after a documented $N\!=\!20$ deep-dive on the
+  residual high-variance interaction $C\!\times\!P$ (P4: bootstrap
+  point estimate $+0.190$, $95\%$ CI $[+0.143, +0.239]$,
+  $0/2000$ resamples at-or-below zero, reported as $0.0000$).
+\item No preregistered threshold has been modified.
+\end{itemize}
+The aria-chess preprint reports this as methodology refinement
+(documented seed-count increase on a high-per-seed-variance
+interaction term), \emph{not} as a threshold change. Two further
+predictions in the aria-chess set carry their own documented
+methodology refinements that we also inherit: P3
+($D\!\times\!C$ independence) closes at $N\!=\!5$ within
+its preregistered band, and P13 (chess substrate lift) was
+preregistered with $5$-fold cross-validation but the
+landed value $+40.6$pp uses the documented leave-one-out /
+state-reset protocol; both refinements are reported
+in~\citep{SmartAriaChess2026} with no threshold modification, and
+we inherit those caveats verbatim. The aria-chess preprint also
+flags that the 2026-04-29 P10 (chess null mapping) validation used
+$15$ permutations rather than the preregistered $20$ (threshold
+$\geq 50\%$ unchanged; observed $65.4\%$ robust in the $15$--$20$
+range; the prereg-exact $20$-permutation rerun is left open in the
+aria-chess limitations); we inherit this caveat verbatim alongside
+the $18/18$ summary.
+
+\subsection{Six drug/sleep EEG signatures}
+
+On a single deterministic substrate trajectory at seed~$42$, the
+aria-chess preprint reports six biological signatures testing
+against literature-derived thresholds:
+
+\begin{itemize}\itemsep=2pt
+\item \textbf{Wake cortical-avalanche $\alpha$}: $\alpha = 2.252$,
+  $95\%$ CI $[1.82, 2.86]$, $R^{2}=0.956$ — the WAKE confidence
+  interval overlaps both the Sleep-EDFx EEG CI $[2.50, 2.53]$
+  ($n=30$ subjects) and aria-chess's prior cascade pipeline CI
+  $[2.73, 3.25]$ pairwise (the Sleep-EDFx and prior-pipeline
+  intervals do not overlap each other; the WAKE interval is the
+  pairwise common ground).
+\item \textbf{NREM-N3 phenomenal-intensity variance ratio}:
+  $0.463\!\times$ wake (predicted $\sim 0.365$, threshold $<0.70$).
+\item \textbf{Propofol modality-switching ratio}: $1.83\!\times$
+  wake (threshold $\in [1.5, 5.0]$, empirical reference
+  $2.96\!\times$ from OpenNeuro \texttt{ds005620}).
+\item \textbf{Propofol continuity drop}: $+0.066$
+  (threshold $> 0.020$).
+\item \textbf{Propofol $\Phi$ collapse}: $0.33\!\times$ wake (IIT
+  direction confirmed; $\Phi$-proxy not full IIT).
+\item \textbf{Recovery deterministic identity to wake}: under the
+  WAKE stimulus protocol, the RECOVERY trajectory is bit-identical
+  to the WAKE trajectory.
+\end{itemize}
+
+\subsection{Cross-domain selectivity}
+
+\begin{itemize}\itemsep=2pt
+\item \textbf{Chess pattern recognition (P9--P13)}: $32$ chess
+  positions across $4$ categories on $8$-D V2 features; under the
+  disclosed leave-one-out / state-reset refinement of the
+  preregistered $\geq +15$pp substrate-lift test (the original
+  prereg used $5$-fold cross-validation; the LOO/state-reset
+  protocol is documented in the aria-chess
+  preprint~\citep{SmartAriaChess2026}), substrate routing lifts
+  classification at canonical depth $n=25$ ticks from raw
+  $53.1\%$ to substrate-routed $93.8\%$ ($+40.6$pp), above the
+  preregistered $\geq +15$pp floor.
+\item \textbf{Conversation pattern recognition (P14--P16)}:
+  $64$ utterances, $8$ categories; raw classification $87.5\%$,
+  substrate-routed lift $-4.4$pp (within the preregistered
+  neutrality band $|\cdot| < 10$pp). The substrate is selectively
+  amplifying in tasks where raw features are ambiguous and
+  approximately neutral when raw features are already
+  discriminative.
+\item \textbf{HCP brain functional connectivity (P17--P18)}:
+  full-cohort descriptive statistics on $n=1003$ subjects show
+  ARIA's $H_4$-transitive structure at $-11.58\sigma$ on degree
+  homogeneity, $+79.78\sigma$ on raw participation ratio (with
+  node-count caveat: ARIA $|V|=120$ vs HCP ICA-50 $|V|=50$), and
+  $+6.80\sigma$ on clustering coefficient. ARIA's degree std is
+  $0$ by H$_4$ transitivity (a theorem), $11.58$ standard
+  deviations below the HCP biological cohort.
+\end{itemize}
+
+\subsection{Reading at the operator level}
+
+The aria-chess result is the \emph{active-regime} empirical
+witness for $\Cph$ on $\Rsixhundred$. The recurrent self-model
+layer above $\Cph$ uses one condition-dependent coupling and one
+substrate-pinned nonlinearity at the graph's average degree
+$k=12$; no other \emph{kernel-shape} parameter enters. Above the
+operator, aria-chess inherits its own dynamical and stimulus
+constants (e.g.\ a fixed dynamical decay, fixed cascade gains,
+condition-specific biologically-motivated stimulus models); these
+are documented in the aria-chess preprint and are not retuned in
+this paper. The kernel shift $\Ph^{-2}$ is not retuned between
+b-anomaly and aria-chess. Under those design choices, the same
+fixed $\Cph$ on the same $\Rsixhundred$ is consistent with the
+aria-chess active-regime tally (frozen 2026-04-18): $17/18$
+preregistered cortical correspondences under the standard
+validation protocol, $18/18$ after the documented $N\!=\!20$ P4
+deep-dive (thresholds unchanged), plus six literature-thresholded
+EEG drug/sleep signatures.
+
+The aria-chess preprint stays inside substrate-witness scope: it
+does not claim the substrate \emph{is} consciousness, does not
+claim 600-cell uniqueness among regular 4-polytopes, and does not
+deliver a selection theorem on the ACT 4-tuple. We inherit the
+scope verbatim. What we add at the operator level is the
+observation that the same fixed $\Cph$ — under no shape-parameter
+retuning between regimes — is the shared response primitive
+underneath both empirical landings (the b-anomaly $q^{2}$
+projection above $\Cph$ and the aria-chess recurrent self-model
+layer above $\Cph$ are distinct above-operator constructions; the
+operator below them is the same).
+
+\subsection{Two-witness structure}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Two domain-disjoint empirical landings of $\Cph$ on
+$\Rsixhundred$, with no shape retuning between regimes.}
+\label{tab:two_witness}
+\begin{tabular}{p{0.22\linewidth} p{0.36\linewidth} p{0.36\linewidth}}
+\toprule
+& Passive regime & Active regime \\
+\midrule
+Preprint           & b-anomaly~\citep{SmartBAnomaly2026} & aria-chess~\citep{SmartAriaChess2026} \\
+Domain             & flavour physics                    & cortical neuroscience \\
+Datasets           & 5 public ($n_{\mathrm{tot}}=138$ bins) & prereg + EEG (HCP $n=1003$, Sleep-EDFx $n=30$, etc.) \\
+Operator           & same fixed $\Cph$                  & same fixed $\Cph$ \\
+Substrate          & same $\Rsixhundred$                & same $\Rsixhundred$ \\
+Shift $\Ph^{-2}$   & not retuned                        & not retuned \\
+Headline           & $5/5$ sign uniformity              & $17/18$ standard, $18/18$ after P4 $N\!=\!20$ deep-dive (P3 $N\!=\!5$ + P13 LOO/state-reset documented refinements; P10 prereg-exact $20$-perm rerun open); $6/6$ EEG \\
+Kernel-shape free params & 0                            & 0 \\
+Other free params  & 1 amplitude $A$ per dataset        & 1 coupling $\eta$ per condition; v4 stimulus protocols \\
+Caveat             & AIC tie; free-width Gaussian alt.; Mode-B linearised-to-non-linear refit drift & single-seed EEG; no polytope ablation; P10 prereg-exact rerun open \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The two witnesses share, by design, exactly the geometry-fixed
+operator: the same $\Cph$, the same substrate $\Rsixhundred$, and
+the same shift $\Ph^{-2}$. They share no fitted parameter,
+threshold, dataset, or methodological choice above the operator
+level. The b-anomaly amplitude $A$ is fitted to flavour-physics
+$q^{2}$ shape, dataset by dataset; the aria-chess coupling $\eta$
+is fixed by experimental condition (PROPOFOL/SLEEP/WAKE), not by
+neural data; the v4 stimulus protocols are biologically motivated,
+not subject-fit. Independence in this paper is independence at
+the empirical layer above the shared operator.

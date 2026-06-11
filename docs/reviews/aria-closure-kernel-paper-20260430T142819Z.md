@@ -1,0 +1,3825 @@
+Reading additional input from stdin...
+OpenAI Codex v0.124.0 (research preview)
+--------
+workdir: /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019ddeca-7052-7901-a10c-55da4b8f7103
+--------
+user
+You are reviewing a physics/mathematical preprint in LaTeX (Round 13). Treat this like a careful journal-referee pass.
+
+Paper path:
+  /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/main.tex
+
+Section files (read all 10):
+  papers/aria-closure-kernel/paper/sections/01_introduction.tex
+  papers/aria-closure-kernel/paper/sections/02_definition.tex
+  papers/aria-closure-kernel/paper/sections/03_substrate.tex
+  papers/aria-closure-kernel/paper/sections/04_spectrum.tex
+  papers/aria-closure-kernel/paper/sections/05_agreement.tex
+  papers/aria-closure-kernel/paper/sections/06_passive_witness.tex
+  papers/aria-closure-kernel/paper/sections/07_active_witness.tex
+  papers/aria-closure-kernel/paper/sections/08_programme_home.tex
+  papers/aria-closure-kernel/paper/sections/09_limitations.tex
+  papers/aria-closure-kernel/paper/sections/10_conclusion.tex
+
+Bibliography:
+  papers/aria-closure-kernel/paper/references.bib
+
+Verification script and results:
+  papers/aria-closure-kernel/repro/verify_kernel.py
+  papers/aria-closure-kernel/repro/results.json
+
+Companion preprints:
+  papers/aria-chess-paper/paper/main.tex
+  papers/aria-chess-paper/paper/sections/05_results.tex
+  papers/aria-chess-paper/paper/sections/09_limitations.tex
+  /mnt/c/Users/nexus/OneDrive/Documents/My Projects/BANOMALY-001/vfd-b-anomaly/README.md
+
+This paper is an OPERATOR WITNESS. Hard discipline:
+- never claim phi^-2 is derived
+- never claim 600-cell uniqueness
+- never claim kernel uniqueness on either landing
+- never claim a Lyapunov / 2I-equivariance / selection theorem
+- inherit b-anomaly caveats verbatim (AIC tie + Mode-B drift)
+- inherit aria-chess substrate-witness scope
+- per-vertex correlation: 0.976 (unweighted) / 0.888 (phi-geom) / 0.884 (phi-arith); shell-mean 0.923 (unweighted)
+- operator-norm phi^2 ~ 2.618 matches closed-form
+- Laplacian spectrum: {0, 12-6phi, 12-4phi, 9, 12, 14, 4phi+8, 15, 6phi+6} multiplicities {1,4,9,16,25,36,9,16,4} sum 120
+
+Round 12 left these issues; this round verifies they are fixed:
+1. P10 caveat propagated to all 18/18 summary sites: sec01 fbox, sec07 comparison table, sec10 conclusion tally
+2. Mode-B drift propagated to all b-anomaly caveat summary sites: sec07 table caveat row, sec08 'leaves open' kernel-uniqueness item, sec10 'Operator-witness scope' paragraph
+3. Multi-source invariance qualified as unweighted-only in main.tex
+4. sec08 'leaves open' op-norm condition switched from lambda_min to inf sigma
+
+Read the file in full, then produce a structured review:
+1. **Claim audit** -- cite file:line for each issue
+2. **Internal consistency**
+3. **External consistency / numerics**
+4. **Operator-witness scope discipline**
+5. **Tightness**
+6. **Surface issues**
+7. **Top three fixes**
+8. **Verdict** -- exactly 'Publication ready: yes' or 'Publication ready: no -- must-fix list above'
+
+Be direct. Over-claiming is worse than under-claiming. Don't pad.
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the vendored bubblewrap in the meantime.
+codex
+I’ll do this as a referee-style read, not an edit pass: first map the paper and line numbers, then check the four Round 12 items and the broader scope/numerics constraints against the companion texts.
+exec
+/bin/bash -lc pwd in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc "wc -l papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections/01_introduction.tex papers/aria-closure-kernel/paper/sections/02_definition.tex papers/aria-closure-kernel/paper/sections/03_substrate.tex papers/aria-closure-kernel/paper/sections/04_spectrum.tex papers/aria-closure-kernel/paper/sections/05_agreement.tex papers/aria-closure-kernel/paper/sections/06_passive_witness.tex papers/aria-closure-kernel/paper/sections/07_active_witness.tex papers/aria-closure-kernel/paper/sections/08_programme_home.tex papers/aria-closure-kernel/paper/sections/09_limitations.tex papers/aria-closure-kernel/paper/sections/10_conclusion.tex papers/aria-closure-kernel/paper/references.bib papers/aria-closure-kernel/repro/verify_kernel.py papers/aria-closure-kernel/repro/results.json papers/aria-chess-paper/paper/main.tex papers/aria-chess-paper/paper/sections/05_results.tex papers/aria-chess-paper/paper/sections/09_limitations.tex /mnt/c/Users/nexus/OneDrive/Documents/My\\ Projects/BANOMALY-001/vfd-b-anomaly/README.md" in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ succeeded in 276ms:
+/mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+
+ succeeded in 390ms:
+   221 papers/aria-closure-kernel/paper/main.tex
+   211 papers/aria-closure-kernel/paper/sections/01_introduction.tex
+   149 papers/aria-closure-kernel/paper/sections/02_definition.tex
+   138 papers/aria-closure-kernel/paper/sections/03_substrate.tex
+    99 papers/aria-closure-kernel/paper/sections/04_spectrum.tex
+   153 papers/aria-closure-kernel/paper/sections/05_agreement.tex
+   155 papers/aria-closure-kernel/paper/sections/06_passive_witness.tex
+   199 papers/aria-closure-kernel/paper/sections/07_active_witness.tex
+   108 papers/aria-closure-kernel/paper/sections/08_programme_home.tex
+   175 papers/aria-closure-kernel/paper/sections/09_limitations.tex
+    89 papers/aria-closure-kernel/paper/sections/10_conclusion.tex
+    68 papers/aria-closure-kernel/paper/references.bib
+   474 papers/aria-closure-kernel/repro/verify_kernel.py
+   154 papers/aria-closure-kernel/repro/results.json
+   212 papers/aria-chess-paper/paper/main.tex
+   208 papers/aria-chess-paper/paper/sections/05_results.tex
+   195 papers/aria-chess-paper/paper/sections/09_limitations.tex
+   227 /mnt/c/Users/nexus/OneDrive/Documents/My Projects/BANOMALY-001/vfd-b-anomaly/README.md
+  3235 total
+
+codex
+I’ve got the file sizes. Next I’m reading the manuscript with line numbers, then I’ll cross-check the numerics and companion-paper caveats rather than relying on summary phrasing alone.
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/main.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/01_introduction.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/02_definition.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/03_substrate.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ succeeded in 330ms:
+     1	% =====================================================================
+     2	\section{The 600-cell substrate}\label{sec:substrate}
+     3	% =====================================================================
+     4	
+     5	This section gives the discrete instance used by the two empirical
+     6	witnesses: $M = \Rsixhundred$, the 600-cell regular 4-polytope
+     7	under H$_4$ Coxeter symmetry, with the standard short-edge graph
+     8	Laplacian. The choice of this polytope is post-hoc motivated by
+     9	the empirical landings (\S\ref{sec:limitations}); the
+    10	construction itself is a classical Coxeter-group result we cite,
+    11	not prove, here~\citep{CoxeterRegularPolytopes}. All facts in
+    12	this section are reproduced numerically by
+    13	\texttt{repro/verify\_kernel.py} from the canonical generators
+    14	alone.
+    15	
+    16	\subsection{Vertex set}\label{ssec:vertices}
+    17	
+    18	$\Rsixhundred$ has $|V|=120$ unit vectors on the unit $3$-sphere
+    19	$S^{3} \subset \mathbb{R}^{4}$~\citep{CoxeterRegularPolytopes,
+    20	Weisstein600Cell}. With $\Ph = (1+\sqrt 5)/2$ the canonical vertex
+    21	list partitions into three standard coordinate families:
+    22	\begin{itemize}\itemsep=2pt
+    23	\item \textbf{Axis family} ($8$ vertices): all permutations of
+    24	  $(\pm 1, 0, 0, 0)$;
+    25	\item \textbf{Half-integer family} ($16$ vertices): all sign
+    26	  combinations of $(\pm 1, \pm 1, \pm 1, \pm 1)/2$;
+    27	\item \textbf{$\Ph$-mixed family} ($96$ vertices): all even
+    28	  permutations of $(\pm \Ph, \pm 1, \pm 1/\Ph, 0)/2$ (with the
+    29	  $\Ph^{2} = \Ph + 1$ identity, equivalently
+    30	  $(\pm \Ph, \pm 1, \pm \Ph^{-1}, 0)/2$).
+    31	\end{itemize}
+    32	The total is $8 + 16 + 96 = 120$ unit vectors. These are coordinate
+    33	families, not H$_4$ orbits: H$_4$ acts transitively on the full
+    34	$120$-vertex set, so the three families lie in a single H$_4$
+    35	orbit. Reproduced by \texttt{repro/verify\_kernel.py:build\_v600};
+    36	the numerical check $\max_{v} |\,\|v\| - 1\,| < 10^{-10}$ confirms
+    37	all vertices on $S^{3}$.
+    38	
+    39	The H$_4$ Coxeter group (order $14400$) acts transitively on the
+    40	$120$ vertices. Every vertex therefore has \emph{identical} local
+    41	structure under $H_{4}$; in particular, every vertex has the same
+    42	degree in the short-edge graph defined below.
+    43	
+    44	\subsection{Short-edge nearest-neighbour graph}\label{ssec:graph}
+    45	
+    46	For two unit vectors $v, w \in \Rsixhundred$ on $S^{3}$, the
+    47	Euclidean chord distance is
+    48	\[
+    49	\|v - w\| \;=\; \sqrt{2 - 2\,\langle v, w\rangle}.
+    50	\]
+    51	The \emph{short-edge graph} $G_{V_{600}}=(V,E)$ connects two vertices
+    52	if their inner product equals the canonical short-edge value
+    53	\begin{equation}\label{eq:short_edge}
+    54	\langle v, w\rangle \;=\; \Ph/2 \;\approx\; 0.809,
+    55	\end{equation}
+    56	equivalently chord distance
+    57	$\|v-w\|=\sqrt{2-\Ph} = 1/\Ph \approx 0.618$. This is the
+    58	nearest-neighbour adjacency on the canonical 600-cell embedding
+    59	into $S^{3}$~\citep{CoxeterRegularPolytopes}.
+    60	
+    61	\paragraph{Graph facts (forced by the construction).}
+    62	The graph $G_{V_{600}}$ has:
+    63	\begin{itemize}\itemsep=2pt
+    64	\item $|V|=120$ vertices,
+    65	\item $|E|=720$ edges,
+    66	\item every vertex has degree exactly $12$ (H$_4$ transitivity on
+    67	  the vertex set forces \emph{uniformity} of the local structure;
+    68	  the short-edge nearest-neighbour construction gives the
+    69	  numerical degree $12$, verified by
+    70	  \texttt{repro/verify\_kernel.py}),
+    71	\item the graph is connected (verified numerically by counting
+    72	  connected components of the short-edge adjacency matrix; the
+    73	  classical 600-cell connectivity result is well known
+    74	  in~\citep{CoxeterRegularPolytopes}).
+    75	\end{itemize}
+    76	All four facts are reproduced numerically:
+    77	\texttt{repro/verify\_kernel.py} reports $|V|=120$, $|E|=720$,
+    78	degree-min/max $=12/12$ (uniform), and one connected component.
+    79	
+    80	\subsection{$9$-shell H$_3$ partition}\label{ssec:shells}
+    81	
+    82	Choose any vertex $v_{0}$ as the pole; the H$_3$ subgroup of H$_4$
+    83	fixing $v_{0}$ partitions the remaining $119$ vertices into shells
+    84	of constant inner product with $v_{0}$. The nine canonical inner
+    85	products are
+    86	\begin{equation}\label{eq:shell_inner}
+    87	\langle v, v_{0}\rangle
+    88	\;\in\;
+    89	\bigl\{1,\, \Ph/2,\, 1/2,\, 1/(2\Ph),\, 0,\,
+    90	       -1/(2\Ph),\, -1/2,\, -\Ph/2,\, -1\bigr\},
+    91	\end{equation}
+    92	indexing shells $s = 0, 1, \ldots, 8$ from the pole to the
+    93	antipode. The shell-size sequence is
+    94	\begin{equation}\label{eq:shell_sizes}
+    95	(|S_{0}|, |S_{1}|, \ldots, |S_{8}|)
+    96	\;=\;
+    97	(1,\ 12,\ 20,\ 12,\ 30,\ 12,\ 20,\ 12,\ 1).
+    98	\end{equation}
+    99	The middle shell $S_{4}$ has $30$ equatorial vertices forming the
+   100	icosidodecahedral ring. The total is
+   101	$1+12+20+12+30+12+20+12+1 = 120$, matching $|V|$. Reproduced
+   102	verbatim by \texttt{repro/verify\_kernel.py:shell\_indices}.
+   103	
+   104	\paragraph{Antipodal symmetry.} The map $v \mapsto -v$ takes the
+   105	shell-$s$ vertices to the shell-$(8-s)$ vertices: $s(-v) = 8 - s(v)$.
+   106	The antipode $-v_{0}$ is the unique shell-$8$ vertex.
+   107	
+   108	\subsection{Inner-product check}\label{ssec:inner_product_check}
+   109	
+   110	The canonical short-edge criterion (Eq.~\eqref{eq:short_edge}) and
+   111	the canonical shell inner products (Eq.~\eqref{eq:shell_inner})
+   112	are jointly consistent: a vertex in shell $s_{1}$ is connected to a
+   113	vertex in shell $s_{2}$ if and only if their pairwise inner product
+   114	is $\Ph/2$, which restricts the admissible $(s_{1}, s_{2})$
+   115	adjacency types to those compatible with the H$_3$ orbit structure.
+   116	The numerically constructed graph respects this: every edge has
+   117	inner product exactly $\Ph/2$ within machine precision (tolerance
+   118	$10^{-10}$ in \texttt{repro/verify\_kernel.py:build\_short\_edge\_graph}).
+   119	
+   120	\subsection{What the substrate fixes, and what it does not}
+   121	
+   122	\begin{itemize}\itemsep=2pt
+   123	\item \textbf{Fixed by the construction once $\Rsixhundred$ is
+   124	  chosen}: $|V|=120$, uniform degree $12$, $9$-shell partition
+   125	  $\{1,12,20,12,30,12,20,12,1\}$, antipodal symmetry, and the
+   126	  Laplacian spectrum (\S\ref{sec:spectrum}).
+   127	\item \textbf{Fixed by the design-level $\Ph^{-2}$ shift}:
+   128	  $\Cph$ is positive definite with smallest eigenvalue $\Ph^{-2}$
+   129	  (\S\ref{ssec:opnorm}); the operator-norm bound
+   130	  $\|\Cph^{-1}\| = \Ph^{2}$.
+   131	\item \textbf{Not fixed by this paper}: the choice of
+   132	  $\Rsixhundred$ over the $24$-cell, $120$-cell, or other regular
+   133	  4-polytopes / Coxeter substrates. The 600-cell choice is
+   134	  post-hoc motivated by the empirical landings
+   135	  (\S\ref{sec:passive_witness}, \S\ref{sec:active_witness}). A
+   136	  formal substrate ablation is an
+   137	  open build (\S\ref{sec:limitations}).
+   138	\end{itemize}
+
+ succeeded in 355ms:
+     1	% =====================================================================
+     2	\section{Introduction}\label{sec:intro}
+     3	% =====================================================================
+     4	
+     5	A response operator on a fixed graph, with no shape parameters
+     6	tuned to any dataset, that simultaneously gives (i) a structural
+     7	fit consistent with the $q^{2}$ shape of the
+     8	$b\to s\mu^{+}\mu^{-}$ angular anomaly across five public
+     9	flavour-physics datasets in their passive linear-response regime,
+    10	and (ii) eighteen preregistered substrate/neuroscience
+    11	correspondences plus six drug/sleep EEG signatures in the active
+    12	dynamical regime of a
+    13	recurrent self-model layer above the same graph, deserves a separate
+    14	preprint that names the operator, gives its construction in full,
+    15	and threads the relationship between the two empirical landings
+    16	without inheriting either's load-bearing claims. That is what this
+    17	paper does.
+    18	
+    19	The operator is
+    20	\begin{equation}\label{eq:cphi_intro}
+    21	\Cph \;=\; L_M + \Ph^{-2} I,
+    22	\qquad \Ph \;=\; (1+\sqrt 5)/2,
+    23	\end{equation}
+    24	where $M$ is a closure substrate (graph, simplicial complex, or
+    25	projected coordinate) and $L_M$ is its Laplacian. The shift
+    26	$\Ph^{-2} \approx 0.382$ regularises the inverse: for self-adjoint
+    27	non-negative $L_M$ on a connected finite graph, $\Cph$ is strictly
+    28	positive definite, the smallest eigenvalue is $\Ph^{-2}$, and the
+    29	operator-norm bound is
+    30	\begin{equation}\label{eq:opnorm_intro}
+    31	\|\Cph^{-1}\| \;=\; 1/\Ph^{-2} \;=\; \Ph^{2} \;\approx\; 2.618.
+    32	\end{equation}
+    33	The continuum projection in one coordinate $x$ has a closed-form
+    34	Green's function $G(x) = (\Ph/2)\,e^{-|x|/\Ph}$ with decay scale
+    35	$\Ph$ (\S\ref{sec:definition}).
+    36	
+    37	The discrete substrate used by the two empirical witnesses is
+    38	the 600-cell graph $\Rsixhundred$: $120$ unit vectors on $S^{3}$,
+    39	generated by three standard coordinate families ($8$ axis vertices,
+    40	$16$ half-integer vertices, $96$ $\Ph$-mixed vertices), connected by
+    41	short edges $\langle v, w\rangle = \Ph/2$. The choice of this
+    42	polytope is post-hoc motivated by the empirical landings
+    43	(\S\ref{sec:limitations}); the construction itself is theorem-level
+    44	rigorous. The graph has $|E|=720$ edges, uniform degree by H$_4$
+    45	transitivity (with the value $12$ from the short-edge
+    46	construction), a $9$-shell H$_3$ partition
+    47	$\{1,12,20,12,30,12,20,12,1\}$, and antipodal symmetry
+    48	$s(-v) = 8 - s(v)$. The Laplacian spectrum has nine eigenvalue
+    49	classes in $\mathbb{Z}[\Ph]$ with multiplicities summing to $120$.
+    50	All of these facts are reproduced numerically by
+    51	\texttt{repro/verify\_kernel.py} from the canonical generators
+    52	alone — no external data input.
+    53	
+    54	\subsection*{What this paper claims}
+    55	
+    56	We claim a single \emph{operator witness}: that one geometry-fixed
+    57	operator, on one fixed graph, with no shape-parameter retuning
+    58	between regimes, appears as the shared response primitive
+    59	underneath two
+    60	empirical works covering qualitatively distinct physical settings.
+    61	
+    62	\begin{enumerate}\itemsep=2pt
+    63	\item \textbf{Operator definition is fixed by the construction.}
+    64	  Once $\Rsixhundred$ is selected and the stability shift
+    65	  $\Ph^{-2}$ is chosen, $\Cph$ is fully determined. No shape
+    66	  parameter, no fitted threshold, no learned weight enters the
+    67	  operator. The Laplacian spectrum, the operator-norm bound, and
+    68	  the discrete-to-continuum agreement are computed (not fitted)
+    69	  from the construction and reproduced in
+    70	  \texttt{repro/verify\_kernel.py}.
+    71	\item \textbf{Discrete-to-continuum agreement is empirical, not
+    72	  postulated.} For a localised source at any vertex, the discrete
+    73	  response $\psi = \Cph^{-1} f$ is shell-constant to machine
+    74	  precision, and the multiplicity-weighted per-vertex Pearson
+    75	  correlation between $\psi(v)$ and $G(\|v - v_{\mathrm{src}}\|)$
+    76	  is $\rho = 0.976$ on the unweighted graph Laplacian. (This is a
+    77	  multiplicity-weighted shell-radius correlation, not $119$
+    78	  independent radial samples; the within-shell variance is at
+    79	  machine precision; see \S\ref{ssec:result_unweighted}.) It is
+    80	  numerical agreement between two independently-defined objects
+    81	  (a 120-dimensional discrete inverse and a continuum exponential
+    82	  kernel), not a definitional identity.
+    83	\item \textbf{Variant comparison among the three tested variants.}
+    84	  Two $\Ph$-cocycle weighted Laplacian variants ($\Ph$-geometric,
+    85	  $\Ph$-arithmetic edge weights via shell-grade exponents
+    86	  $\omega_{+}(v) = \Ph^{\kappa(v)}$) score lower per-vertex
+    87	  correlation: $0.888$ and $0.884$ respectively. Within the three
+    88	  tested variants, the unweighted Laplacian ranks highest on the
+    89	  geometry-only criterion. This reproduces,
+    90	  on a different test, the qualitative ranking established
+    91	  independently by the b-anomaly paper's data-$\chi^{2}$ comparison
+    92	  (\S\ref{sec:passive_witness}).
+    93	\item \textbf{Two independent empirical landings, same operator.}
+    94	  (a)~The b-anomaly preprint~\citep{SmartBAnomaly2026} uses the
+    95	  same fixed $\Cph$ on the same $\Rsixhundred$ to describe the
+    96	  $q^{2}$ shape of the $b\to s\mu^{+}\mu^{-}$ anomaly across five
+    97	  public datasets, with one fitted dimensionless amplitude per
+    98	  dataset and the kernel held fixed; sign uniformity holds in
+    99	  $5/5$ datasets ($A>0$, $\Delta C_{9}^{\mathrm{eff}} < 0$).
+   100	  (b)~The aria-chess preprint~\citep{SmartAriaChess2026} uses the
+   101	  same fixed $\Cph$ on the same $\Rsixhundred$, augmented by a
+   102	  recurrent self-model layer above the substrate, to pass eighteen
+   103	  preregistered substrate/neuroscience correspondences (frozen
+   104	  2026-04-18) plus six drug/sleep EEG signatures.
+   105	\end{enumerate}
+   106	
+   107	\subsection*{What this paper does \emph{not} claim}
+   108	
+   109	\begin{itemize}\itemsep=2pt
+   110	\item \emph{Not a derivation of the $\Ph^{-2}$ floor.} The shift
+   111	  $\Ph^{-2}$ is a design-level stability clamp that bounds
+   112	  $\|\Cph^{-1}\|$ at $\Ph^{2}$. It is not derived from a closure
+   113	  functional or a symmetry argument; we report its role as a
+   114	  regularisation-of-mass scale.
+   115	\item \emph{Not a uniqueness claim for $\Rsixhundred$.} Other
+   116	  regular 4-polytopes (the $24$-cell, the $120$-cell), other
+   117	  highly symmetric graphs, and continuum substrates are all
+   118	  candidate $M$ for $\Cph = L_M + \Ph^{-2} I$. The 600-cell choice
+   119	  is post-hoc motivated by the empirical landings; a formal
+   120	  ablation against alternative substrates is an open build.
+   121	\item \emph{Not a kernel-uniqueness claim on either empirical
+   122	  landing.} The b-anomaly's free-width Gaussian alternative shows
+   123	  that a free-width Gaussian charm-loop proxy fits the same five
+   124	  datasets comparably in $\chi^{2}$ at the cost of one extra shape
+   125	  parameter; the b-anomaly AIC comparison against
+   126	  $\mathrm{FREE\_C9}$ (a constant Wilson-coefficient shift) is a
+   127	  statistical tie on current data
+   128	  ($w_{\mathrm{VFD}}=0.348$ vs $w_{\mathrm{FREE\_C9}}=0.652$).
+   129	  Both caveats are inherited verbatim from the b-anomaly preprint.
+   130	\item \emph{Not a selection theorem on the
+   131	  ACT 4-tuple.} The companion adaptive-closure-transport
+   132	  preprint~\citep{SmartAdaptiveClosureTransport2026} proposes a
+   133	  selection layer $(M, L_M, W, R_{\mathrm{hom}})$ in which $\Cph$
+   134	  fills the response slot. Selection — Lyapunov $V(W)$ on the
+   135	  reduced flow, edge-space decomposition under $2I$-equivariance
+   136	  (where $2I$ is the binary icosahedral group, the $\mathrm{SU}(2)$
+   137	  preimage of the icosahedral symmetry of $\Rsixhundred$),
+   138	  full reduced-flow convergence — is left open in that paper and
+   139	  is not delivered here.
+   140	\item \emph{Not a circuit-level model on the active-regime side.}
+   141	  The aria-chess preprint operates at the architectural-algorithmic
+   142	  level above $\Cph$. We import its empirical results verbatim and
+   143	  do not relitigate them here; their substrate-witness scope
+   144	  applies.
+   145	\end{itemize}
+   146	
+   147	\subsection*{Mapping from numerics to admissible claims}
+   148	
+   149	To keep this paper inside the operator-witness scope, we use the
+   150	same claim-boundary discipline as the aria-chess
+   151	preprint~\citep{SmartAriaChess2026}: numerical results
+   152	$\mathcal R_{\mathrm{numeric}}$ are mapped to admissible claims
+   153	$\mathcal C_{\mathrm{admissible}}$ by the rule
+   154	\[
+   155	q\colon \mathcal R_{\mathrm{numeric}} \longrightarrow
+   156	        \mathcal C_{\mathrm{admissible}},
+   157	\qquad
+   158	\mathcal C_{\mathrm{admissible}}
+   159	   \;=\;\{\text{`computed', `consistent with', `direction confirmed'}\}.
+   160	\]
+   161	A numerically computed quantity (the Laplacian spectrum, the
+   162	operator-norm bound, the per-vertex correlation $0.976$) licenses
+   163	a `computed'-type claim. Downstream empirical agreement using the
+   164	fixed operator (sign uniformity in $5/5$ b-anomaly datasets, the
+   165	aria-chess $17/18$ standard plus $18/18$ after the documented
+   166	$N\!=\!20$ P4 deep-dive) licenses a `consistent
+   167	with'-type claim. We never write
+   168	`derives the kernel', `proves uniqueness', or `establishes
+   169	selection'.
+   170	
+   171	\medskip
+   172	\begin{center}
+   173	\fbox{\parbox{0.92\linewidth}{\small
+   174	\textbf{What is claimed / what is not.}\par
+   175	\emph{Claimed:} a geometry-fixed response operator $\Cph$ on the
+   176	600-cell graph, with computed spectrum, operator-norm bound, and
+   177	discrete-to-continuum correlation; the same fixed operator appearing
+   178	in two independent empirical works (b-anomaly five-dataset
+   179	structural fit, AIC tie + Mode-B drift caveats inherited;
+   180	aria-chess $17/18$ preregistered correspondences under the
+   181	standard validation protocol and $18/18$ after the documented P4
+   182	$N\!=\!20$ deep-dive (thresholds unchanged) with the documented
+   183	P3/P13 methodology refinements and the open prereg-exact P10
+   184	$20$-permutation rerun inherited verbatim, plus $6/6$
+   185	literature-thresholded companion EEG signatures) without
+   186	shape-parameter retuning between regimes.\par
+   187	\emph{Not claimed:} derivation of $\Ph^{-2}$; uniqueness of
+   188	$\Rsixhundred$; uniqueness of the kernel shape on either empirical
+   189	landing; a selection theorem on the ACT 4-tuple; that either
+   190	empirical landing settles the underlying physics (flavour anomaly
+   191	or consciousness) by the operator alone.
+   192	}}
+   193	\end{center}
+   194	
+   195	\subsection*{Layout}
+   196	
+   197	\S\ref{sec:definition} gives the operator definition, the positivity
+   198	properties of $\Cph$, the operator-norm bound, and the continuum
+   199	projection. \S\ref{sec:substrate} constructs $\Rsixhundred$ from
+   200	canonical generators, gives the graph facts, and the $9$-shell
+   201	decomposition. \S\ref{sec:spectrum} reports the Laplacian spectrum
+   202	in $\mathbb{Z}[\Ph]$ with multiplicities, computed numerically.
+   203	\S\ref{sec:agreement} runs the discrete-to-continuum agreement test
+   204	across three Laplacian variants. \S\ref{sec:passive_witness} and
+   205	\S\ref{sec:active_witness} thread the two independent empirical
+   206	witnesses (b-anomaly and aria-chess) at the operator level.
+   207	\S\ref{sec:programme_home} positions $\Cph$ relative to the
+   208	published adaptive-closure-transport companion as a member of the
+   209	same polynomial-in-$L$ family, and identifies the open selection
+   210	layer. \S\ref{sec:limitations} enumerates limitations in a
+   211	five-move guard matrix. \S\ref{sec:conclusion} concludes.
+
+ succeeded in 345ms:
+     1	% =====================================================================
+     2	\section{The closure-response operator}\label{sec:definition}
+     3	% =====================================================================
+     4	
+     5	\subsection{Definition}
+     6	
+     7	Let $M$ be a closure substrate: a connected finite undirected graph
+     8	$M=(V,E)$, a finite simplicial complex with chosen Laplacian, or a
+     9	projected continuum coordinate. Let $L_M$ be the corresponding
+    10	Laplacian (graph Laplacian $L = D - A$, simplicial Laplacian, or
+    11	continuum operator $-\Delta$ with chosen boundary conditions).
+    12	Let $\Ph = (1+\sqrt 5)/2$ be the golden ratio, with $\Ph^{-1} = \Ph - 1$
+    13	and $\Ph^{-2} = 2 - \Ph \approx 0.381966$.
+    14	
+    15	The \emph{closure-response operator} is
+    16	\begin{equation}\label{eq:cphi}
+    17	\Cph \;=\; L_M + \Ph^{-2} I.
+    18	\end{equation}
+    19	For a non-negative localised source $f$ on $M$, the
+    20	\emph{closure response field} is
+    21	\begin{equation}\label{eq:psi}
+    22	\psi \;=\; \Cph^{-1} f \;=\; (L_M + \Ph^{-2} I)^{-1} f.
+    23	\end{equation}
+    24	
+    25	\subsection{Hypotheses on $(M, L_M)$}\label{ssec:hypotheses}
+    26	
+    27	The properties developed in \S\ref{ssec:positivity}--\S\ref{ssec:opnorm}
+    28	require:
+    29	
+    30	\begin{itemize}\itemsep=2pt
+    31	\item \textbf{(H1) Self-adjointness.} $L_M$ is self-adjoint on the
+    32	  $L^{2}$ inner product on $M$ (with counting measure on a finite
+    33	  graph, with Lebesgue measure with appropriate boundary conditions
+    34	  in the continuum case).
+    35	\item \textbf{(H2) Non-negativity.} $L_M \geq 0$ as a
+    36	  quadratic form: $\langle f, L_M f\rangle \geq 0$ for all $f$.
+    37	\item \textbf{(H3) Known spectral bottom.} On a finite graph, $M$
+    38	  is connected (so the kernel of $L_M$ is exactly the constant
+    39	  vector and $\lambda_{\min}(L_M) = 0$). In the continuum case,
+    40	  the spectral bottom $\inf \sigma(L_M)$ is explicitly known on
+    41	  the chosen domain (it equals $0$ for the full line; equals the
+    42	  first Dirichlet eigenvalue $> 0$ on a bounded Dirichlet
+    43	  interval). The full-line case has $\inf \sigma(L_M) = 0$ as
+    44	  spectral bottom but not as an eigenvalue, which is sufficient
+    45	  for the operator-norm identity in
+    46	  \S\ref{ssec:opnorm}; H3 does not require a finite-dimensional
+    47	  zero eigenspace.
+    48	\end{itemize}
+    49	
+    50	Three concrete settings illustrate the hypothesis class:
+    51	\begin{itemize}\itemsep=2pt
+    52	\item the standard combinatorial Laplacian on a connected finite
+    53	  undirected graph (the 600-cell case, $\lambda_{\min}(L_M) = 0$);
+    54	\item the continuum $L = -d^{2}/dx^{2}$ on the full line with
+    55	  decay-at-infinity (spectral bottom $\inf \sigma(L_M) = 0$,
+    56	  not attained as an eigenvalue; used for the closed-form Green's
+    57	  function in \S\ref{ssec:continuum});
+    58	\item the continuum $L = -d^{2}/dx^{2}$ on a bounded interval
+    59	  with Dirichlet boundary conditions ($\lambda_{\min}(L_M) > 0$).
+    60	\end{itemize}
+    61	Substrates outside this class — projected coordinates with
+    62	non-standard boundaries, weighted Laplacians whose weight function
+    63	is unbounded, or operators with negative spectrum — require their
+    64	own analysis, which we do not give here.
+    65	
+    66	\subsection{Positive definiteness}\label{ssec:positivity}
+    67	
+    68	Under (H1)--(H3) on a finite connected graph, $L_M$ has a smallest
+    69	eigenvalue $\lambda_{\min}(L_M) = 0$ with one-dimensional
+    70	eigenspace (the constant vector). For $\Cph = L_M + \Ph^{-2} I$,
+    71	\[
+    72	\lambda_{\min}(\Cph) \;=\; \lambda_{\min}(L_M) + \Ph^{-2}
+    73	                    \;=\; \Ph^{-2} \;>\; 0,
+    74	\]
+    75	so $\Cph$ is strictly positive definite and $\Cph^{-1}$ is
+    76	well-defined and bounded.
+    77	
+    78	\subsection{Operator-norm bound}\label{ssec:opnorm}
+    79	
+    80	The operator norm of $\Cph^{-1}$ is the reciprocal of the
+    81	spectral bottom of $\Cph$:
+    82	\begin{equation}\label{eq:opnorm}
+    83	\|\Cph^{-1}\| \;=\; 1/\inf \sigma(\Cph)
+    84	              \;=\; 1/(\inf \sigma(L_M) + \Ph^{-2}).
+    85	\end{equation}
+    86	On finite graphs the spectral bottom is the smallest eigenvalue
+    87	$\lambda_{\min}(L_M)$ (and is attained); on the full-line
+    88	continuum case (\S\ref{ssec:continuum}) it is $\inf \sigma(L_M)=0$
+    89	as spectral bottom but \emph{not} as an eigenvalue. On any
+    90	substrate where $\inf \sigma(L_M) = 0$ (e.g.\ the connected finite
+    91	graph $\Rsixhundred$, or the full-line continuum case), this
+    92	reduces to the identity
+    93	\begin{equation}\label{eq:opnorm_zero_mode}
+    94	\|\Cph^{-1}\| \;=\; \Ph^{2} \;\approx\; 2.618034.
+    95	\end{equation}
+    96	On substrates where $\inf \sigma(L_M) > 0$ (e.g.\ Dirichlet
+    97	intervals), Eq.~\eqref{eq:opnorm} gives the strict inequality
+    98	$\|\Cph^{-1}\| < \Ph^{2}$. The response-amplification ceiling is,
+    99	in either case, $\|\psi\|_{2} \leq \|\Cph^{-1}\|\, \|f\|_{2}$. On
+   100	substrates with $\inf \sigma(L_M) > 0$ a finite ceiling is already
+   101	guaranteed by the Dirichlet structure alone; on substrates with
+   102	$\inf \sigma(L_M) = 0$ (the cases of interest here) the shift
+   103	$\Ph^{-2}$ is what guarantees a finite ceiling and pins it at
+   104	$\Ph^{2}$. Numerically reproduced as $\|\Cph^{-1}\| =
+   105	2.618034$ on $\Rsixhundred$ (\texttt{repro/verify\_kernel.py},
+   106	\S\ref{ssec:opnorm_check}); this matches the closed-form $\Ph^{2}$
+   107	to machine precision.
+   108	
+   109	\subsection{Continuum projection}\label{ssec:continuum}
+   110	
+   111	In one projected coordinate $x \in \mathbb{R}$ with
+   112	$L_{\Ph} = -d^{2}/dx^{2} + \Ph^{-2}$, the Green's function
+   113	$G(x)$ satisfies $L_{\Ph} G = \delta_{0}$ and is the closed-form
+   114	exponential
+   115	\begin{equation}\label{eq:green_continuum}
+   116	G(x) \;=\; \frac{\Ph}{2}\, e^{-|x|/\Ph}.
+   117	\end{equation}
+   118	The decay scale is $\Ph$ — the same constant that appears in the
+   119	shift, by construction. Normalised, the kernel is
+   120	$\kappa(x) = e^{-|x|/\Ph}$ with unit value at the source.
+   121	
+   122	This continuum Green's function is the comparison object for the
+   123	discrete-to-continuum agreement test (\S\ref{sec:agreement}):
+   124	the discrete response $\psi(v) = \Cph^{-1} f(v)$ at a vertex $v$ at
+   125	chord distance $\|v - v_{\mathrm{src}}\|$ from a localised source
+   126	is compared to $G(\|v - v_{\mathrm{src}}\|)$.
+   127	
+   128	\subsection{Disclosure: $\Ph^{-2}$ is a design-level shift}
+   129	
+   130	The shift $\Ph^{-2}$ is chosen so that:
+   131	\begin{enumerate}\itemsep=2pt
+   132	\item $\Cph$ is strictly positive definite (the smallest eigenvalue
+   133	  is exactly $\Ph^{-2}$);
+   134	\item both the operator-norm bound $\|\Cph^{-1}\| = \Ph^{2}$ and
+   135	  the continuum decay scale $\Ph$ (Eq.~\eqref{eq:green_continuum})
+   136	  are fixed by the single design choice $\Ph^{-2}$, giving a single
+   137	  dimensional parameter throughout the operator;
+   138	\item the continuum projection (Eq.~\eqref{eq:green_continuum})
+   139	  has decay scale $\Ph$, not a free length parameter.
+   140	\end{enumerate}
+   141	We do \emph{not} derive $\Ph^{-2}$ from a closure functional or
+   142	symmetry argument. It is a design-level choice motivated by
+   143	(1)--(3); we report this explicitly and treat formal derivation as
+   144	an open build (\S\ref{sec:limitations}). The companion
+   145	adaptive-closure-transport
+   146	preprint~\citep{SmartAdaptiveClosureTransport2026} formulates the
+   147	selection-layer dynamics over $W$-space that would, if delivered,
+   148	constrain the shift further; that derivation is not delivered
+   149	there or here.
+
+ succeeded in 385ms:
+     1	\documentclass[11pt]{article}
+     2	
+     3	\usepackage[a4paper, margin=2.5cm]{geometry}
+     4	\usepackage{amsmath, amssymb, amsthm}
+     5	\usepackage{booktabs}
+     6	\usepackage{enumitem}
+     7	\usepackage{graphicx}
+     8	\usepackage{natbib}
+     9	\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+    10	\usepackage{xcolor}
+    11	
+    12	\graphicspath{{figures/}}
+    13	
+    14	\newcommand{\Ph}{\varphi}
+    15	\newcommand{\Lop}{L_{V_{600}}}
+    16	\newcommand{\Cph}{C_{\Ph}}
+    17	\newcommand{\Rsixhundred}{V_{600}}
+    18	
+    19	\title{The closure-response operator
+    20	       $\Cph = L_M + \Ph^{-2} I$:\\
+    21	       a geometry-fixed kernel on the 600-cell with two\\
+    22	       independent empirical witnesses}
+    23	
+    24	\author{%
+    25	  Lee Smart\\[2pt]
+    26	  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+    27	  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+    28	  \texttt{@vfd\_org}%
+    29	}
+    30	
+    31	\date{April 2026}
+    32	
+    33	\begin{document}
+    34	
+    35	\maketitle
+    36	
+    37	\noindent\textbf{Status:} Preprint, not peer-reviewed.
+    38	
+    39	\noindent\emph{Headline.}
+    40	We define a programme-level closure-response primitive
+    41	$\Cph = L_M + \Ph^{-2} I$ on a closure substrate $M$ with
+    42	corresponding Laplacian $L_M$ (graph, simplicial, or continuum)
+    43	and golden ratio $\Ph = (1 + \sqrt 5)/2$. We use
+    44	the 600-cell instance $\Rsixhundred$ as the discrete substrate
+    45	shared by the two empirical witnesses (the choice of this polytope
+    46	is post-hoc motivated by those landings, \S\ref{sec:limitations};
+    47	numerically reproduced: $|V|=120$, $|E|=720$, uniform
+    48	degree~$12$, H$_3$ shell decomposition
+    49	$\{1,12,20,12,30,12,20,12,1\}$, computed Laplacian spectrum
+    50	matching the closed-form $\mathbb{Z}[\Ph]$ values), establish the
+    51	operator-norm bound $\|\Cph^{-1}\| = \Ph^{2}$ from the smallest
+    52	eigenvalue $\Ph^{-2}$, and verify the discrete-to-continuum
+    53	agreement at per-vertex Pearson correlation $0.976$ between the
+    54	discrete Green response and the continuum kernel
+    55	$G(x) = (\Ph/2)\,e^{-|x|/\Ph}$ (this is a multiplicity-weighted
+    56	shell-radius correlation, since $\psi$ is shell-constant to
+    57	machine precision under H$_3$-fixed source; not $119$ independent
+    58	radial samples; \S\ref{sec:agreement};
+    59	\texttt{repro/verify\_kernel.py}). The same fixed $\Cph$ on the
+    60	same fixed graph is then the shared response primitive used
+    61	underneath two \emph{independent} empirical works: a passive-regime structural
+    62	fit of the $b\to s\mu^{+}\mu^{-}$ angular anomaly across five
+    63	public flavour-physics datasets~\citep{SmartBAnomaly2026}, and an
+    64	active-regime substrate witness against eighteen preregistered
+    65	substrate/neuroscience correspondences plus six drug/sleep EEG
+    66	signatures~\citep{SmartAriaChess2026}.
+    67	
+    68	\noindent\emph{Scope.}
+    69	This paper presents an empirical \emph{operator witness}: a
+    70	geometry-fixed response operator with operator shape held fixed
+    71	across two disjoint-domain empirical landings (flavour physics
+    72	and cortical neuroscience) with no kernel-shape retuning between
+    73	regimes; the substrate $\Rsixhundred$ is post-hoc disclosed as
+    74	the choice motivated by these landings, not selected by an
+    75	independent criterion. It is \emph{not} a derivation of the
+    76	$\Ph^{-2}$ shift from first principles, \emph{not} a uniqueness
+    77	claim for $\Rsixhundred$ among regular 4-polytopes, \emph{not} a
+    78	selection theorem on the companion adaptive-closure-transport
+    79	4-tuple~\citep{SmartAdaptiveClosureTransport2026}, and \emph{not}
+    80	a model-preference claim against alternative kernels on either
+    81	empirical landing (the b-anomaly AIC comparison and the aria-chess
+    82	substrate-witness scope are documented in their own preprints and
+    83	inherited verbatim here).
+    84	
+    85	\begin{abstract}
+    86	We define a closure-response primitive $\Cph = L_M + \Ph^{-2} I$ on
+    87	a closure substrate $M$ with corresponding Laplacian $L_M$ and
+    88	$\Ph = (1+\sqrt 5)/2$, give the 600-cell graph $\Rsixhundred$ as
+    89	the discrete instance shared by two empirical witnesses, and
+    90	document its appearance as the same fixed operator (no shape
+    91	retuning) in two independent empirical
+    92	works: (i)~a five-dataset structural fit of the
+    93	$b\to s\mu^{+}\mu^{-}$ angular anomaly with sign-uniform amplitude
+    94	direction~\citep{SmartBAnomaly2026}; (ii)~an eighteen-prediction
+    95	preregistered substrate witness against substrate/neuroscience
+    96	signatures plus six drug/sleep EEG
+    97	signatures~\citep{SmartAriaChess2026}. We
+    98	include the numerical reproduction script
+    99	(\texttt{repro/verify\_kernel.py}) that constructs $\Rsixhundred$
+   100	from canonical generators, verifies the graph facts
+   101	($|V|=120$, $|E|=720$, uniform degree~$12$, $9$-shell decomposition,
+   102	Laplacian spectrum numerically matching closed-form $\mathbb{Z}[\Ph]$
+   103	values, operator-norm identity $\|\Cph^{-1}\|=\Ph^{2}\approx 2.618$
+   104	on the connected finite graph $\Rsixhundred$ where
+   105	$\lambda_{\min}(L_M)=0$), and tests the discrete-to-continuum
+   106	agreement at multiplicity-weighted shell-radius Pearson
+   107	correlation $0.976$ for the unweighted variant (the discrete
+   108	response is shell-constant to machine precision), above the two
+   109	$\Ph$-cocycle weighted variants tested ($0.888$ geometric, $0.884$
+   110	arithmetic). Within the three
+   111	tested variants the unweighted Laplacian ranks highest on the
+   112	geometry-only criterion, reproducing the qualitative ranking
+   113	established separately by b-anomaly's data $\chi^{2}$ comparison
+   114	(the b-anomaly preprint flags that its data was looked at first
+   115	and the geometry ranking verified afterward; the agreement is
+   116	criterion-independent but historically non-blind, a caveat we
+   117	inherit verbatim).
+   118	
+   119	\noindent\emph{(i) Operator definition and properties.}
+   120	$\Cph = L_M + \Ph^{-2} I$ is positive definite for self-adjoint
+   121	non-negative $L_M$ on a connected finite graph; smallest eigenvalue
+   122	$\Ph^{-2} \approx 0.382$, operator norm
+   123	$\|\Cph^{-1}\| = \Ph^{2} \approx 2.618$. The continuum projection
+   124	in one coordinate $x$ is the closed-form Green's function
+   125	$G(x) = (\Ph/2)\, e^{-|x|/\Ph}$, with decay scale $\Ph$.
+   126	
+   127	\noindent\emph{(ii) The 600-cell instance.}
+   128	$\Rsixhundred$ has $120$ canonical unit vectors on $S^{3}$
+   129	generated by three orbits ($8$~axis, $16$~half-integer,
+   130	$96$~$\Ph$-mixed). H$_4$ transitivity forces uniform degree~$12$
+   131	on the short-edge graph; the Laplacian has nine eigenvalue classes
+   132	in $\mathbb{Z}[\Ph]$ with multiplicities summing to $120$ (Table
+   133	\ref{tab:spectrum}, \S\ref{sec:substrate}).
+   134	
+   135	\noindent\emph{(iii) Discrete-to-continuum agreement.}
+   136	Multiplicity-weighted per-vertex Pearson correlation (shell-constant
+   137	response, see \S\ref{sec:agreement}) between the discrete response
+   138	$\psi = \Cph^{-1} f$ for a localised source and the continuum
+   139	prediction $G(\|v - v_{\mathrm{src}}\|)$ at each non-source
+   140	vertex's chord distance: $0.976$ (unweighted Laplacian), $0.888$
+   141	($\Ph$-geometric weights), $0.884$ ($\Ph$-arithmetic weights).
+   142	Same source vertex, same fixed shift, no parameter fitting; the
+   143	unweighted-headline correlation is invariant under choice of source
+   144	to within machine precision over all $120$ vertices (multi-source
+   145	sweep, \S\ref{sec:limitations}; the sweep is run on the unweighted
+   146	operator only, the two weighted variants were not swept).
+   147	
+   148	\noindent\emph{(iv) Two independent empirical witnesses.}
+   149	(a)~Passive regime, b-anomaly~\citep{SmartBAnomaly2026}: same
+   150	$\Cph$ on the same $\Rsixhundred$ provides a sign-uniform
+   151	$\Delta C_{9}^{\mathrm{eff}} < 0$ description of the
+   152	$b\to s\mu^{+}\mu^{-}$ angular anomaly across five public datasets
+   153	(LHCb 2015, LHCb 2021, CMS 2025, LHCb 2025, LHCb 2015 $B_s\to\phi$),
+   154	with one fitted dimensionless amplitude per dataset and the kernel
+   155	shape held fixed. (b)~Active regime,
+   156	aria-chess~\citep{SmartAriaChess2026}: same $\Cph$ on the same
+   157	$\Rsixhundred$, augmented by a recurrent self-model layer with one
+   158	condition-dependent self-injection coupling
+   159	$\eta\in\{0,0.05,0.20\}$ and one substrate-pinned nonlinearity
+   160	$\mathrm{bounded\_topk}(\cdot, k\!=\!12)$ at the graph's average
+   161	degree, passes $17/18$ preregistered correspondences (frozen
+   162	2026-04-18) at standard methodology and $18/18$ after a documented
+   163	$N\!=\!20$ deep-dive on the residual high-variance
+   164	$C\!\times\!P$ interaction (P4) — alongside two further documented
+   165	methodology refinements in the aria-chess set ($N\!=\!5$ for P3
+   166	within its preregistered band; LOO/state-reset for the P13 chess
+   167	substrate-lift, originally preregistered with $5$-fold CV; no
+   168	threshold modifications) and one open prereg-exact rerun (P10
+   169	chess null mapping was validated with $15$ permutations rather
+   170	than the preregistered $20$; threshold $\geq 50\%$ unchanged;
+   171	$15$--$20$-range robust at $65.4\%$; the $20$-permutation rerun
+   172	is left open in the aria-chess limitations) — plus $6/6$
+   173	literature-thresholded drug/sleep EEG signatures on a single
+   174	deterministic seed.
+   175	
+   176	\noindent\emph{What we do not claim.}
+   177	We do not derive the $\Ph^{-2}$ floor; it is a design-level
+   178	stability clamp making $\Cph$ strictly positive definite. We do
+   179	not claim $\Rsixhundred$ is the unique substrate consistent with
+   180	either empirical landing. We do not claim the operator is the
+   181	unique kernel shape consistent with the b-anomaly data
+   182	(b-anomaly's free-width Gaussian alternative and Mode-B refit
+   183	drift caveats are inherited verbatim) nor that the
+   184	aria-chess substrate witness establishes a selection theorem on
+   185	the adaptive-closure-transport 4-tuple. The structural scope of
+   186	this paper is: \emph{one geometry-fixed operator on one fixed
+   187	graph appears as the shared response primitive underneath two independent
+   188	empirical works in two distinct regimes, with no shape retuning
+   189	between them}.
+   190	\end{abstract}
+   191	
+   192	% =====================================================================
+   193	\input{sections/01_introduction.tex}
+   194	\input{sections/02_definition.tex}
+   195	\input{sections/03_substrate.tex}
+   196	\input{sections/04_spectrum.tex}
+   197	\input{sections/05_agreement.tex}
+   198	\input{sections/06_passive_witness.tex}
+   199	\input{sections/07_active_witness.tex}
+   200	\input{sections/08_programme_home.tex}
+   201	\input{sections/09_limitations.tex}
+   202	\input{sections/10_conclusion.tex}
+   203	% =====================================================================
+   204	
+   205	\section*{Reproducibility}
+   206	The complete numerical verification (vertex construction,
+   207	short-edge graph build, Laplacian spectrum, operator-norm bound,
+   208	discrete-to-continuum correlation across three Laplacian variants)
+   209	is reproducible from \texttt{repro/verify\_kernel.py} in this
+   210	paper's bundle. No randomness, no fitted parameters: all numbers
+   211	in \S\ref{sec:substrate}, \S\ref{sec:spectrum}, and
+   212	\S\ref{sec:agreement} are deterministic outputs of the script.
+   213	The two empirical witness preprints
+   214	(b-anomaly~\citep{SmartBAnomaly2026},
+   215	aria-chess~\citep{SmartAriaChess2026}) carry their own
+   216	reproducibility artifacts; this paper does not duplicate them.
+   217	
+   218	\bibliographystyle{plainnat}
+   219	\bibliography{references}
+   220	
+   221	\end{document}
+
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/04_spectrum.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/05_agreement.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/06_passive_witness.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/07_active_witness.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ succeeded in 986ms:
+     1	% =====================================================================
+     2	\section{Passive-regime witness: b-anomaly}\label{sec:passive_witness}
+     3	% =====================================================================
+     4	
+     5	This section threads the first independent empirical landing of
+     6	$\Cph$. The full preprint is~\citep{SmartBAnomaly2026}; we
+     7	summarise here only what the operator-witness narrative requires
+     8	and inherit the preprint's caveats verbatim.
+     9	
+    10	\subsection{What b-anomaly tests}\label{ssec:banomaly_setup}
+    11	
+    12	The Wilson-coefficient Hamiltonian for $b\to s\mu^{+}\mu^{-}$
+    13	contains a $C_{9}^{(\prime)}$ contribution that, in the Standard
+    14	Model, is approximately $q^{2}$-independent in the relevant
+    15	kinematic range. The b-anomaly preprint tests a fixed
+    16	$q^{2}$-dependent effective shift on top of the SM backend, of the
+    17	form
+    18	\begin{equation}\label{eq:banomaly_kernel}
+    19	\Delta C_{9}^{\mathrm{eff}}(q^{2})
+    20	\;=\;
+    21	-\,A \cdot \kappa_{V_{600}}(q^{2}),
+    22	\end{equation}
+    23	where $\kappa_{V_{600}}(q^{2}) > 0$ on the LHCb $q^{2}$ window is
+    24	the projection of $\Cph$ on $\Rsixhundred$ to the flavour-physics
+    25	$q^{2}$ axis (the b-anomaly preprint's §3 projection construction,
+    26	which we do not relitigate here; this is a projection of the
+    27	operator, not a derivation of $\Ph^{-2}$), and $A$ is a single
+    28	fitted dimensionless amplitude per dataset. The explicit minus
+    29	sign in Eq.~\eqref{eq:banomaly_kernel} reflects the b-anomaly
+    30	preprint's sign convention: a positive fitted $A>0$ produces a
+    31	negative $\Delta C_{9}^{\mathrm{eff}}<0$, the established
+    32	direction of the angular anomaly. The kernel shape
+    33	$\kappa_{V_{600}}$ is held fixed across all five datasets.
+    34	This is a \emph{structural} test: same fixed $\Cph$ on the same
+    35	$\Rsixhundred$, no shape retuning between datasets.
+    36	
+    37	\subsection{The five-dataset structural fit}
+    38	
+    39	The b-anomaly preprint reports the following per-dataset table
+    40	(verbatim from~\citep{SmartBAnomaly2026}, also at
+    41	\texttt{BANOMALY-001/vfd-b-anomaly/README.md}):
+    42	
+    43	\begin{table}[ht]
+    44	\centering
+    45	\small
+    46	\caption{b-anomaly five-dataset structural fit. Verbatim
+    47	from~\citep{SmartBAnomaly2026}; one fitted amplitude $A$ per
+    48	dataset, kernel shape held fixed.}
+    49	\label{tab:banomaly}
+    50	\begin{tabular}{l l r r r r}
+    51	\toprule
+    52	Dataset & Decay & $n$ & $\Delta\mathrm{AIC}_{\mathrm{NL}}$ &
+    53	   Best-fit $A$ & $\Delta C_{9}^{\mathrm{eff}}$ \\
+    54	\midrule
+    55	LHCb 2015 & $B^{0}\!\to\!K^{*0}$ & $32$ & $-0.24$ & $+1.24$ & $-0.96$ \\
+    56	LHCb 2021 & $B^{+}\!\to\!K^{*+}$ & $32$ & $+0.17$ & $+2.06$ & $-1.59$ \\
+    57	CMS 2025 (no $P_{4}'$) & $B^{0}\!\to\!K^{*0}$ & $18$ & $+0.47$ & $+1.05$ & $-0.81$ \\
+    58	LHCb 2025 & $B^{0}\!\to\!K^{*0}$ & $32$ & $+1.09$ & $+1.14$ & $-0.86$ \\
+    59	LHCb 2015 & $B_{s}\!\to\!\phi$ ($S$-basis) & $24$ & $-0.24$ & $+4.98$ & $-3.85$ \\
+    60	\bottomrule
+    61	\end{tabular}
+    62	\end{table}
+    63	
+    64	\subsection{What the structural fit reports}
+    65	
+    66	\begin{itemize}\itemsep=2pt
+    67	\item \textbf{Universality (5/5).} The same fixed kernel shape
+    68	  can be fit to all five datasets with one amplitude $A$ per
+    69	  dataset and no shape retuning. The kernel never moves between
+    70	  datasets.
+    71	\item \textbf{Sign uniformity (5/5).} $A > 0$ in $5/5$ fits;
+    72	  $\Delta C_{9}^{\mathrm{eff}} < 0$ in $5/5$ fits. The kernel
+    73	  reproduces the established direction of the
+    74	  anomaly~\citep{LHCbAngular2020} across all five independent
+    75	  measurements.
+    76	\item \textbf{Cross-channel ratio.} The b-anomaly README reports
+    77	  the basis amplification (the predicted Krüger--Matias $P$-basis
+    78	  vs $S$-basis factor $\sim 2.2$~\citep{KrugerMatias2005}) as
+    79	  partly explanatory for the $B\to K^{*}$ vs $B_{s}\!\to\!\phi$
+    80	  amplitude gap. Working through the explicit arithmetic with
+    81	  $B\to K^{*}$ best-fit $A_{P} \approx 1.14$: the basis-corrected
+    82	  prediction for $B_{s}\!\to\!\phi$ is
+    83	  $A_{P} \cdot 2.2 \approx 2.5$; the observed $B_{s}\!\to\!\phi$
+    84	  amplitude is $A \approx 4.98$, leaving an unresolved amplitude
+    85	  excess of about a factor two above the basis-corrected
+    86	  prediction. The b-anomaly preprint reports this residual as an
+    87	  open item, not a discharge.
+    88	\item \textbf{Geometry-first variant test.} Of three discrete
+    89	  Laplacian variants on $\Rsixhundred$ (unweighted,
+    90	  $\Ph$-geometric weighted, $\Ph$-arithmetic weighted), the
+    91	  unweighted choice ranks highest on both a pure-geometry
+    92	  criterion (correlation $0.997$ with the continuum kernel under
+    93	  the b-anomaly preprint's $q^{2}$/shell-projection geometry
+    94	  metric, §3.4 of~\citep{SmartBAnomaly2026} — \emph{not} this
+    95	  paper's per-vertex test, whose unweighted score is $0.976$;
+    96	  the two metrics differ in what is correlated) and the LHCb~2025
+    97	  data $\chi^{2}$ ($\chi^{2}=13.555$). The two criteria agree on
+    98	  the variant ranking — a two-criterion agreement on the same
+    99	  fixed operator.
+   100	\end{itemize}
+   101	
+   102	\subsection{What the structural fit does \emph{not} establish}
+   103	
+   104	The b-anomaly preprint is explicit about the following caveats,
+   105	which we inherit verbatim:
+   106	
+   107	\begin{itemize}\itemsep=2pt
+   108	\item \textbf{AIC tie on current data.} On Akaike model comparison,
+   109	  $\Cph$-derived $\kappa_{V_{600}}$ and a constant Wilson-coefficient
+   110	  shift ($\mathrm{FREE\_C9}$, also $k=1$) are statistically
+   111	  indistinguishable: stacked AIC weights
+   112	  $w_{\mathrm{VFD}} = 0.348$ vs $w_{\mathrm{FREE\_C9}} = 0.652$.
+   113	  Current data cannot resolve the model comparison. AIC is blind
+   114	  to the universality / shape-prediction claim itself, but it is
+   115	  decisive about whether the shape is forced by data: it is not.
+   116	\item \textbf{Free-width Gaussian alternative.} A free-width
+   117	  Gaussian charm-loop proxy fits the same five datasets comparably
+   118	  in $\chi^{2}$ at the cost of one extra shape parameter; $\Cph$
+   119	  is not the unique $q^{2}$ shape consistent with the anomaly.
+   120	\item \textbf{Mode-B drift (linearised-to-non-linear refit).} An
+   121	  earlier analysis the b-anomaly project labels Mode-B
+   122	  (linearised) gave a stronger preference
+   123	  ($\Delta\mathrm{AIC} = -1.67$ on LHCb 2025) that did not survive
+   124	  the subsequent non-linear refit; the $+2.77$-AIC-unit drift
+   125	  between Mode-B (linearised) and the non-linear refit is the
+   126	  largest single methodological uncertainty in the b-anomaly
+   127	  project.
+   128	\item \textbf{Look-elsewhere on the variant test.} The b-anomaly
+   129	  preprint's limitations section~\citep{SmartBAnomaly2026}
+   130	  acknowledges that the LHCb~2025 data was looked at first, and
+   131	  only later was the agreement of the data-$\chi^{2}$ ranking with
+   132	  the pure-geometry ranking verified. (The b-anomaly README
+   133	  emphasises that the geometry-only criterion is independent of
+   134	  the LHCb data; the historical non-blindness is in the project's
+   135	  ordering, not in the criterion.) The two-criterion agreement is
+   136	  criterion-independent but not historically blind.
+   137	\end{itemize}
+   138	
+   139	\subsection{Reading at the operator level}
+   140	
+   141	The b-anomaly result is the \emph{passive-regime} empirical
+   142	witness for $\Cph$ on $\Rsixhundred$: a single linear response
+   143	$\psi = \Cph^{-1} f$, projected to the $q^{2}$ axis through a
+   144	fixed discrete-to-momentum projection, gives a sign-uniform
+   145	structural fit consistent with the $b\to s\mu^{+}\mu^{-}$ angular
+   146	anomaly across five independent measurements without shape
+   147	retuning. This does
+   148	not establish the kernel as theorem-grade physics on the flavour
+   149	side (the AIC tie, the free-width Gaussian alternative, and the
+   150	Mode-B linearised-to-non-linear refit drift prevent that). It
+   151	does support, at the operator-witness level, the inherited reading
+   152	that the same fixed $\Cph$ on the same fixed $\Rsixhundred$ is
+   153	consistent with one of two independent empirical landings without
+   154	parameter retuning. The
+   155	second landing is in \S\ref{sec:active_witness}.
+
+ succeeded in 996ms:
+     1	% =====================================================================
+     2	\section{Discrete-to-continuum agreement}\label{sec:agreement}
+     3	% =====================================================================
+     4	
+     5	This is the central geometric diagnostic of the paper: the
+     6	discrete response $\psi = \Cph^{-1} f$ on $\Rsixhundred$ for a
+     7	localised source has high per-vertex Pearson correlation in radial
+     8	shape with the continuum kernel
+     9	$G(x) = (\Ph/2)\,e^{-|x|/\Ph}$ at the vertex's chord distance from
+    10	the source. Pearson correlation is a shape similarity statistic, not
+    11	an equality claim. We give the test, the numerical result, and a variant
+    12	comparison in which the unweighted Laplacian ranks highest among
+    13	the three tested variants (unweighted, $\Ph$-geometric weighted,
+    14	$\Ph$-arithmetic weighted).
+    15	
+    16	\subsection{The test}\label{ssec:test}
+    17	
+    18	Pick a pole vertex $v_{0}$ (we use the canonical $+x_{0}$ axis
+    19	vertex). Set $f = e_{v_{0}}$ (the unit vector at $v_{0}$, all
+    20	other entries zero). Compute
+    21	\[
+    22	\psi \;=\; \Cph^{-1} f \;=\; (\Lop + \Ph^{-2} I)^{-1} e_{v_{0}}
+    23	\]
+    24	by direct linear solve (no eigenmode truncation). For each vertex
+    25	$v \in V$, compute the Euclidean chord distance
+    26	$x(v) = \|v - v_{0}\|$ and the continuum prediction
+    27	\[
+    28	G(x(v)) \;=\; (\Ph/2)\,\exp(-\,x(v)/\Ph).
+    29	\]
+    30	The agreement criterion is the Pearson correlation between
+    31	$\psi(v)$ and $G(x(v))$ across $v \in V \setminus \{v_{0}\}$ (the
+    32	source itself is excluded, since the discrete response there is
+    33	trivially the diagonal of $\Cph^{-1}$ and the chord distance is
+    34	zero, both degenerate for the comparison).
+    35	
+    36	\subsection{Result on the unweighted Laplacian}\label{ssec:result_unweighted}
+    37	
+    38	\texttt{repro/verify\_kernel.py:variant\_correlation} returns:
+    39	\begin{itemize}\itemsep=2pt
+    40	\item \textbf{Multiplicity-weighted per-vertex Pearson correlation
+    41	  over shell-constant responses}: $\rho = 0.976$. ($\psi$ is
+    42	  shell-constant to machine precision under H$_3$-fixed source, so
+    43	  the per-vertex test is mathematically a multiplicity-weighted
+    44	  shell-radius correlation rather than $119$ independent radial
+    45	  samples; see the within-shell-variance discussion at the end of
+    46	  this subsection.)
+    47	\item \textbf{Shell-mean Pearson correlation}: $\rho = 0.923$
+    48	  (averaging $\psi(v)$ over each H$_3$ shell first, then
+    49	  correlating the $9$-point shell-mean trajectory with the
+    50	  continuum prediction at the shell mean radius).
+    51	\end{itemize}
+    52	The two correlations measure the same shell-radius fact at
+    53	different weightings and with different source-vertex conventions:
+    54	\begin{itemize}\itemsep=2pt
+    55	\item Per-vertex test: $|V|-1 = 119$ data points (every
+    56	  non-source vertex), source $v_{0}$ \emph{excluded} (the discrete
+    57	  response there is the diagonal of $\Cph^{-1}$ and the chord
+    58	  distance is $0$, both degenerate for the comparison).
+    59	\item Shell-mean test: $9$ data points (one per H$_3$ shell);
+    60	  shell $0$ contains only the source vertex, so it is included
+    61	  on the shell-mean side and contributes a single
+    62	  ($\psi(v_{0}), G(0)$) point.
+    63	\end{itemize}
+    64	On the unweighted 600-cell graph with an H$_3$-fixed source,
+    65	$\psi$ is shell-constant up to numerical precision — the
+    66	within-shell standard deviations are at machine precision
+    67	($\sim 10^{-16}$). The two tests therefore differ in weighting and
+    68	source convention, not in noise content: the per-vertex test
+    69	weights each shell by its multiplicity
+    70	($\{12, 20, 12, 30, 12, 20, 12, 1\}$ for the non-source shells)
+    71	and excludes the source vertex, while the shell-mean test gives
+    72	equal weight to every shell and includes the source. The
+    73	per-vertex test is the headline agreement criterion in this paper.
+    74	
+    75	\subsection{Variant comparison}\label{ssec:variant_comparison}
+    76	
+    77	Two $\Ph$-cocycle weighted Laplacian variants are tested as
+    78	controls:
+    79	
+    80	\begin{itemize}\itemsep=2pt
+    81	\item \textbf{$\Ph$-geometric weights}: edge weight
+    82	  $w_{vw} = \sqrt{\omega_{+}(v)\,\omega_{+}(w)}$ with vertex weight
+    83	  $\omega_{+}(v) = \Ph^{\kappa(v)}$, where $\kappa(v) \in \{0,\ldots,8\}$
+    84	  is the shell index of $v$.
+    85	\item \textbf{$\Ph$-arithmetic weights}: edge weight
+    86	  $w_{vw} = \tfrac12[\omega_{+}(v) + \omega_{+}(w)]$ with the same
+    87	  $\omega_{+}$.
+    88	\end{itemize}
+    89	The weighted Laplacian is then
+    90	$L_{w} = D_{w} - A_{w}$ where $A_{w}$ is the weighted adjacency.
+    91	We re-run the discrete-to-continuum test on each variant.
+    92	
+    93	\begin{table}[ht]
+    94	\centering
+    95	\small
+    96	\caption{Per-vertex and shell-mean Pearson correlations between the
+    97	discrete response $\psi = (L_{w} + \Ph^{-2} I)^{-1} e_{v_{0}}$
+    98	and the continuum prediction $G(\|v - v_{0}\|)$ for three
+    99	Laplacian variants ($L_{w}$ unweighted or $\Ph$-cocycle weighted).
+   100	Computed by \texttt{repro/verify\_kernel.py:variant\_correlation}.}
+   101	\label{tab:variant_correlation}
+   102	\begin{tabular}{l c c}
+   103	\toprule
+   104	Variant            & Per-vertex correlation & Shell-mean correlation \\
+   105	\midrule
+   106	\textbf{Unweighted}     & $\mathbf{0.976}$ & $\mathbf{0.923}$ \\
+   107	$\Ph$-geometric weighted    & $0.888$  & $0.880$ \\
+   108	$\Ph$-arithmetic weighted   & $0.884$  & $0.878$ \\
+   109	\bottomrule
+   110	\end{tabular}
+   111	\end{table}
+   112	
+   113	\textbf{Reading.} Among the three tested variants, the unweighted
+   114	Laplacian ranks highest on both reported criteria
+   115	($+0.088$ per-vertex over the next variant, $+0.044$ shell-mean).
+   116	This reproduces, on a different test, the qualitative ranking the
+   117	b-anomaly paper~\citep{SmartBAnomaly2026} established
+   118	independently against its data-$\chi^{2}$ criterion
+   119	on the LHCb 2025 dataset (see \S\ref{sec:passive_witness} for the
+   120	b-anomaly numbers). Two independent criteria — geometry-only
+   121	correlation here, and angular-anomaly $\chi^{2}$ in b-anomaly —
+   122	agree on which of the three tested variants ranks highest. We do not claim
+   123	this is a uniqueness or blind-selection result; we report it as a
+   124	two-criterion agreement on the highest-ranked tested variant (the
+   125	b-anomaly paper's own caveat that the data was looked at first
+   126	and the geometry criterion verified afterward is inherited
+   127	verbatim).
+   128	
+   129	\subsection{What the agreement does and does not establish}
+   130	
+   131	\paragraph{Does establish.} A geometric agreement: the discrete
+   132	response of a fixed-shift Green operator on a fixed graph
+   133	correlates per-vertex in radial shape, at Pearson $0.976$, with
+   134	the closed-form continuum exponential at the same length scale
+   135	$\Ph$. This is a non-trivial Pearson correlation between
+   136	separately evaluated discrete and continuum Green responses
+   137	sharing the same design-level scale $\Ph^{-2}$: (i) the discrete
+   138	inverse of a $120\times 120$ Laplacian-plus-shift matrix; and
+   139	(ii) a one-dimensional continuum exponential. The $\Ph$-mediated
+   140	agreement is an empirical fact about the chosen substrate and
+   141	shift, computed (not fitted) by the verification script.
+   142	
+   143	\paragraph{Does not establish.} Operator uniqueness on either
+   144	empirical landing — the b-anomaly paper documents a free-width
+   145	Gaussian alternative that fits comparably in $\chi^{2}$ at the
+   146	cost of one extra shape parameter, and the aria-chess preprint
+   147	does not run a substrate ablation; both caveats are inherited
+   148	verbatim. The agreement also does not establish that
+   149	$\Rsixhundred$ is the unique discrete substrate with this
+   150	property; the $24$-cell, $120$-cell, and other H$_n$ Coxeter
+   151	graphs would need to be tested on the same correlation criterion
+   152	to make any comparative claim, and a formal substrate ablation is
+   153	an open build (\S\ref{sec:limitations}).
+
+ succeeded in 1025ms:
+     1	% =====================================================================
+     2	\section{The Laplacian spectrum}\label{sec:spectrum}
+     3	% =====================================================================
+     4	
+     5	The unweighted graph Laplacian $\Lop = D - A$ on $\Rsixhundred$
+     6	numerically resolves into nine distinct eigenvalue classes whose
+     7	values match the closed-form $\mathbb{Z}[\Ph]$ list given in
+     8	Table~\ref{tab:spectrum} to machine precision; multiplicities sum
+     9	to $|V| = 120$. The spectrum is computed numerically by
+    10	\texttt{repro/verify\_kernel.py:laplacian\_spectrum} (a single
+    11	$120\times 120$ symmetric eigendecomposition, deterministic at
+    12	machine precision); the closed-form identification is made by
+    13	algebraic recognition of the displayed values, not by an exact
+    14	arithmetic derivation in this paper.
+    15	
+    16	\begin{table}[ht]
+    17	\centering
+    18	\small
+    19	\caption{Computed Laplacian spectrum of $\Lop$ on $\Rsixhundred$.
+    20	Closed-form values in $\mathbb{Z}[\Ph]$ alongside the numerical
+    21	values returned by \texttt{repro/verify\_kernel.py}; multiplicities
+    22	sum to $120$.}
+    23	\label{tab:spectrum}
+    24	\begin{tabular}{c c c}
+    25	\toprule
+    26	Closed-form eigenvalue & Numerical value & Multiplicity \\
+    27	\midrule
+    28	$0$            & machine zero ($\sim 10^{-15}$)         & $1$ \\
+    29	$12 - 6\Ph$    & $2.2918$  & $4$ \\
+    30	$12 - 4\Ph$    & $5.5279$  & $9$ \\
+    31	$9$            & $9.0000$  & $16$ \\
+    32	$12$           & $12.0000$ & $25$ \\
+    33	$14$           & $14.0000$ & $36$ \\
+    34	$4\Ph + 8$     & $14.4721$ & $9$ \\
+    35	$15$           & $15.0000$ & $16$ \\
+    36	$6\Ph + 6$     & $15.7082$ & $4$ \\
+    37	\midrule
+    38	\multicolumn{2}{r}{\textbf{Total multiplicity:}} & $\mathbf{120}$ \\
+    39	\bottomrule
+    40	\end{tabular}
+    41	\end{table}
+    42	
+    43	\paragraph{Closed-form check.} Using $\Ph = (1+\sqrt 5)/2$:
+    44	\begin{align*}
+    45	12 - 6\Ph &= 12 - 3(1+\sqrt 5) = 9 - 3\sqrt 5 \approx 2.2918, \\
+    46	12 - 4\Ph &= 12 - 2(1+\sqrt 5) = 10 - 2\sqrt 5 \approx 5.5279, \\
+    47	4\Ph + 8 &= 2(1+\sqrt 5) + 8 = 10 + 2\sqrt 5 \approx 14.4721, \\
+    48	6\Ph + 6 &= 3(1+\sqrt 5) + 6 = 9 + 3\sqrt 5 \approx 15.7082.
+    49	\end{align*}
+    50	The eigenvalue pairs $\{12 - 6\Ph,\ 6\Ph+6\}$ (both with multiplicity
+    51	$4$) and $\{12 - 4\Ph,\ 4\Ph+8\}$ (both with multiplicity $9$)
+    52	are conjugate under the Galois automorphism
+    53	$\sigma\colon \sqrt 5 \mapsto -\sqrt 5$ on $\mathbb{Z}[\Ph]$. The
+    54	fixed-point eigenvalues $\{0, 9, 12, 14, 15\}$ are rational and
+    55	have multiplicities $\{1, 16, 25, 36, 16\}$ (sum $94$); the
+    56	$\sigma$-paired eigenvalues have total multiplicity $4+4+9+9 = 26$.
+    57	
+    58	\paragraph{$\sigma$-fix vs $\sigma$-paired multiplicity split.}
+    59	$94/120 = 78.3\%$ of the spectrum is $\sigma$-fixed (rational); the
+    60	remaining $26/120 = 21.7\%$ is $\sigma$-paired. We report this
+    61	structural fact about the spectrum and do not use it in any claim
+    62	made by this paper.
+    63	
+    64	\subsection{Operator-norm bound on $\Cph$}\label{ssec:opnorm_check}
+    65	
+    66	The smallest eigenvalue of $\Cph = \Lop + \Ph^{-2} I$ is
+    67	\[
+    68	\lambda_{\min}(\Cph) \;=\; 0 + \Ph^{-2} \;=\; \Ph^{-2}
+    69	\;\approx\; 0.381966,
+    70	\]
+    71	and the operator-norm bound is
+    72	\[
+    73	\|\Cph^{-1}\| \;=\; 1/\Ph^{-2} \;=\; \Ph^{2} \;\approx\; 2.618034.
+    74	\]
+    75	\texttt{repro/verify\_kernel.py:operator\_norm\_check} reports
+    76	$\|\Cph^{-1}\| = 2.618034$ (numerical) vs $\Ph^{2} = 2.618034$
+    77	(predicted) — match to six decimal places. The largest eigenvalue
+    78	of $\Cph$ is
+    79	$\lambda_{\max}(\Lop) + \Ph^{-2} = (6\Ph + 6) + \Ph^{-2}
+    80	= 9 + 3\sqrt 5 + (2 - \Ph) \approx 16.0902$.
+    81	
+    82	\subsection{H$_4$ irrep block decomposition (imported context)}
+    83	\label{ssec:irrep}
+    84	
+    85	The eigenspaces of $\Lop$ partition into H$_4$-proper and
+    86	$\sigma$-twin Coxeter exponent classes. For H$_4$ proper the
+    87	exponents are $\{1, 11, 19, 29\}$; under the
+    88	$\sigma$-automorphism of $\mathbb{Z}[\Ph]$ the exponents become
+    89	$\{7, 13, 17, 23\}$. The $\sigma$-orbit projector basis used in the
+    90	aria-chess companion's recurrent
+    91	layer~\citep{SmartAriaChess2026} realises this block decomposition
+    92	at machine precision and provides a spectrally clean
+    93	H$_4$-equivariant basis there.
+    94	
+    95	This subsection is imported context from the aria-chess companion;
+    96	the irrep block decomposition is \emph{not} verified by
+    97	\texttt{repro/verify\_kernel.py} of this paper and is not used as
+    98	a load-bearing fact for any operator-witness claim made here. We
+    99	include the labelling for orientation only.
+
+ succeeded in 1168ms:
+     1	% =====================================================================
+     2	\section{Active-regime witness: aria-chess}\label{sec:active_witness}
+     3	% =====================================================================
+     4	
+     5	This section threads the second independent empirical landing of
+     6	$\Cph$. The full preprint is~\citep{SmartAriaChess2026}; we
+     7	summarise here only what the operator-witness narrative requires
+     8	and inherit the preprint's substrate-witness scope verbatim.
+     9	
+    10	\subsection{What aria-chess tests}\label{ssec:aria_setup}
+    11	
+    12	The aria-chess preprint adds a recurrent self-model layer above
+    13	the same $\Cph$ on the same $\Rsixhundred$. The architecture
+    14	introduces:
+    15	\begin{itemize}\itemsep=2pt
+    16	\item One \emph{condition-dependent} self-injection coupling
+    17	  $\eta \in \{0, 0.05, 0.20\}$ (PROPOFOL, SLEEP\_N3,
+    18	  WAKE/RECOVERY) that controls the strength of the recurrent
+    19	  feedback;
+    20	\item One \emph{substrate-pinned} nonlinearity
+    21	  $\mathrm{bounded\_topk}(\cdot, k=12)$ at the graph's average
+    22	  degree (\S\ref{ssec:graph}: degree $12$ uniform). The choice
+    23	  $k=12$ is not a free hyperparameter; it is the substrate's
+    24	  average degree.
+    25	\item Condition-specific \emph{biologically-motivated} stimulus
+    26	  models (slow oscillation + spindles + K-complexes for SLEEP\_N3,
+    27	  AR(1) noise + tonic shell + attention episodes for WAKE,
+    28	  low-amplitude tonic noise for PROPOFOL). These are
+    29	  biologically-motivated design choices, not measurement-fits to
+    30	  subject-level EEG data.
+    31	\end{itemize}
+    32	The kernel parameter $\Ph^{-2}$ is \emph{not retuned} between
+    33	b-anomaly and aria-chess; the same fixed shift used in the
+    34	flavour-physics structural fit is used in the cortical substrate
+    35	witness.
+    36	
+    37	\subsection{Eighteen preregistered correspondences}
+    38	
+    39	Eighteen quantitative predictions (P1--P18) were locked on
+    40	2026-04-18 in the aria-chess preprint's
+    41	\texttt{docs/brain\_mapping/PAPER\_PREDICTIONS.md} before any
+    42	validation run. Each prediction has a specific numerical claim, a
+    43	falsifiable threshold, and a named validation script. The
+    44	preregistered tally as reported in~\citep{SmartAriaChess2026}:
+    45	
+    46	\begin{itemize}\itemsep=2pt
+    47	\item $17/18$ at standard validation methodology ($5$-seed
+    48	  cascade block plus state-reset protocol);
+    49	\item $18/18$ after a documented $N\!=\!20$ deep-dive on the
+    50	  residual high-variance interaction $C\!\times\!P$ (P4: bootstrap
+    51	  point estimate $+0.190$, $95\%$ CI $[+0.143, +0.239]$,
+    52	  $0/2000$ resamples at-or-below zero, reported as $0.0000$).
+    53	\item No preregistered threshold has been modified.
+    54	\end{itemize}
+    55	The aria-chess preprint reports this as methodology refinement
+    56	(documented seed-count increase on a high-per-seed-variance
+    57	interaction term), \emph{not} as a threshold change. Two further
+    58	predictions in the aria-chess set carry their own documented
+    59	methodology refinements that we also inherit: P3
+    60	($D\!\times\!C$ independence) closes at $N\!=\!5$ within
+    61	its preregistered band, and P13 (chess substrate lift) was
+    62	preregistered with $5$-fold cross-validation but the
+    63	landed value $+40.6$pp uses the documented leave-one-out /
+    64	state-reset protocol; both refinements are reported
+    65	in~\citep{SmartAriaChess2026} with no threshold modification, and
+    66	we inherit those caveats verbatim. The aria-chess preprint also
+    67	flags that the 2026-04-29 P10 (chess null mapping) validation used
+    68	$15$ permutations rather than the preregistered $20$ (threshold
+    69	$\geq 50\%$ unchanged; observed $65.4\%$ robust in the $15$--$20$
+    70	range; the prereg-exact $20$-permutation rerun is left open in the
+    71	aria-chess limitations); we inherit this caveat verbatim alongside
+    72	the $18/18$ summary.
+    73	
+    74	\subsection{Six drug/sleep EEG signatures}
+    75	
+    76	On a single deterministic substrate trajectory at seed~$42$, the
+    77	aria-chess preprint reports six biological signatures testing
+    78	against literature-derived thresholds:
+    79	
+    80	\begin{itemize}\itemsep=2pt
+    81	\item \textbf{Wake cortical-avalanche $\alpha$}: $\alpha = 2.252$,
+    82	  $95\%$ CI $[1.82, 2.86]$, $R^{2}=0.956$ — the WAKE confidence
+    83	  interval overlaps both the Sleep-EDFx EEG CI $[2.50, 2.53]$
+    84	  ($n=30$ subjects) and aria-chess's prior cascade pipeline CI
+    85	  $[2.73, 3.25]$ pairwise (the Sleep-EDFx and prior-pipeline
+    86	  intervals do not overlap each other; the WAKE interval is the
+    87	  pairwise common ground).
+    88	\item \textbf{NREM-N3 phenomenal-intensity variance ratio}:
+    89	  $0.463\!\times$ wake (predicted $\sim 0.365$, threshold $<0.70$).
+    90	\item \textbf{Propofol modality-switching ratio}: $1.83\!\times$
+    91	  wake (threshold $\in [1.5, 5.0]$, empirical reference
+    92	  $2.96\!\times$ from OpenNeuro \texttt{ds005620}).
+    93	\item \textbf{Propofol continuity drop}: $+0.066$
+    94	  (threshold $> 0.020$).
+    95	\item \textbf{Propofol $\Phi$ collapse}: $0.33\!\times$ wake (IIT
+    96	  direction confirmed; $\Phi$-proxy not full IIT).
+    97	\item \textbf{Recovery deterministic identity to wake}: under the
+    98	  WAKE stimulus protocol, the RECOVERY trajectory is bit-identical
+    99	  to the WAKE trajectory.
+   100	\end{itemize}
+   101	
+   102	\subsection{Cross-domain selectivity}
+   103	
+   104	\begin{itemize}\itemsep=2pt
+   105	\item \textbf{Chess pattern recognition (P9--P13)}: $32$ chess
+   106	  positions across $4$ categories on $8$-D V2 features; under the
+   107	  disclosed leave-one-out / state-reset refinement of the
+   108	  preregistered $\geq +15$pp substrate-lift test (the original
+   109	  prereg used $5$-fold cross-validation; the LOO/state-reset
+   110	  protocol is documented in the aria-chess
+   111	  preprint~\citep{SmartAriaChess2026}), substrate routing lifts
+   112	  classification at canonical depth $n=25$ ticks from raw
+   113	  $53.1\%$ to substrate-routed $93.8\%$ ($+40.6$pp), above the
+   114	  preregistered $\geq +15$pp floor.
+   115	\item \textbf{Conversation pattern recognition (P14--P16)}:
+   116	  $64$ utterances, $8$ categories; raw classification $87.5\%$,
+   117	  substrate-routed lift $-4.4$pp (within the preregistered
+   118	  neutrality band $|\cdot| < 10$pp). The substrate is selectively
+   119	  amplifying in tasks where raw features are ambiguous and
+   120	  approximately neutral when raw features are already
+   121	  discriminative.
+   122	\item \textbf{HCP brain functional connectivity (P17--P18)}:
+   123	  full-cohort descriptive statistics on $n=1003$ subjects show
+   124	  ARIA's $H_4$-transitive structure at $-11.58\sigma$ on degree
+   125	  homogeneity, $+79.78\sigma$ on raw participation ratio (with
+   126	  node-count caveat: ARIA $|V|=120$ vs HCP ICA-50 $|V|=50$), and
+   127	  $+6.80\sigma$ on clustering coefficient. ARIA's degree std is
+   128	  $0$ by H$_4$ transitivity (a theorem), $11.58$ standard
+   129	  deviations below the HCP biological cohort.
+   130	\end{itemize}
+   131	
+   132	\subsection{Reading at the operator level}
+   133	
+   134	The aria-chess result is the \emph{active-regime} empirical
+   135	witness for $\Cph$ on $\Rsixhundred$. The recurrent self-model
+   136	layer above $\Cph$ uses one condition-dependent coupling and one
+   137	substrate-pinned nonlinearity at the graph's average degree
+   138	$k=12$; no other \emph{kernel-shape} parameter enters. Above the
+   139	operator, aria-chess inherits its own dynamical and stimulus
+   140	constants (e.g.\ a fixed dynamical decay, fixed cascade gains,
+   141	condition-specific biologically-motivated stimulus models); these
+   142	are documented in the aria-chess preprint and are not retuned in
+   143	this paper. The kernel shift $\Ph^{-2}$ is not retuned between
+   144	b-anomaly and aria-chess. Under those design choices, the same
+   145	fixed $\Cph$ on the same $\Rsixhundred$ is consistent with the
+   146	aria-chess active-regime tally (frozen 2026-04-18): $17/18$
+   147	preregistered cortical correspondences under the standard
+   148	validation protocol, $18/18$ after the documented $N\!=\!20$ P4
+   149	deep-dive (thresholds unchanged), plus six literature-thresholded
+   150	EEG drug/sleep signatures.
+   151	
+   152	The aria-chess preprint stays inside substrate-witness scope: it
+   153	does not claim the substrate \emph{is} consciousness, does not
+   154	claim 600-cell uniqueness among regular 4-polytopes, and does not
+   155	deliver a selection theorem on the ACT 4-tuple. We inherit the
+   156	scope verbatim. What we add at the operator level is the
+   157	observation that the same fixed $\Cph$ — under no shape-parameter
+   158	retuning between regimes — is the shared response primitive
+   159	underneath both empirical landings (the b-anomaly $q^{2}$
+   160	projection above $\Cph$ and the aria-chess recurrent self-model
+   161	layer above $\Cph$ are distinct above-operator constructions; the
+   162	operator below them is the same).
+   163	
+   164	\subsection{Two-witness structure}
+   165	
+   166	\begin{table}[ht]
+   167	\centering
+   168	\small
+   169	\caption{Two independent empirical landings of $\Cph$ on
+   170	$\Rsixhundred$, with no shape retuning between regimes.}
+   171	\label{tab:two_witness}
+   172	\begin{tabular}{p{0.22\linewidth} p{0.36\linewidth} p{0.36\linewidth}}
+   173	\toprule
+   174	& Passive regime & Active regime \\
+   175	\midrule
+   176	Preprint           & b-anomaly~\citep{SmartBAnomaly2026} & aria-chess~\citep{SmartAriaChess2026} \\
+   177	Domain             & flavour physics                    & cortical neuroscience \\
+   178	Datasets           & 5 public ($n_{\mathrm{tot}}=138$ bins) & prereg + EEG (HCP $n=1003$, Sleep-EDFx $n=30$, etc.) \\
+   179	Operator           & same fixed $\Cph$                  & same fixed $\Cph$ \\
+   180	Substrate          & same $\Rsixhundred$                & same $\Rsixhundred$ \\
+   181	Shift $\Ph^{-2}$   & not retuned                        & not retuned \\
+   182	Headline           & $5/5$ sign uniformity              & $17/18$ standard, $18/18$ after P4 $N\!=\!20$ deep-dive (P3 $N\!=\!5$ + P13 LOO/state-reset documented refinements; P10 prereg-exact $20$-perm rerun open); $6/6$ EEG \\
+   183	Kernel-shape free params & 0                            & 0 \\
+   184	Other free params  & 1 amplitude $A$ per dataset        & 1 coupling $\eta$ per condition; v4 stimulus protocols \\
+   185	Caveat             & AIC tie; free-width Gaussian alt.; Mode-B linearised-to-non-linear refit drift & single-seed EEG; no polytope ablation; P10 prereg-exact rerun open \\
+   186	\bottomrule
+   187	\end{tabular}
+   188	\end{table}
+   189	
+   190	The two witnesses share, by design, exactly the geometry-fixed
+   191	operator: the same $\Cph$, the same substrate $\Rsixhundred$, and
+   192	the same shift $\Ph^{-2}$. They share no fitted parameter,
+   193	threshold, dataset, or methodological choice above the operator
+   194	level. The b-anomaly amplitude $A$ is fitted to flavour-physics
+   195	$q^{2}$ shape, dataset by dataset; the aria-chess coupling $\eta$
+   196	is fixed by experimental condition (PROPOFOL/SLEEP/WAKE), not by
+   197	neural data; the v4 stimulus protocols are biologically motivated,
+   198	not subject-fit. Independence in this paper is independence at
+   199	the empirical layer above the shared operator.
+
+codex
+The main text is largely disciplined so far: the abstract and intro explicitly avoid deriving the shift, uniqueness, and selection claims. I’m now checking the programme/limitations/conclusion and the actual reproduced numbers, where these papers usually leak scope.
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/08_programme_home.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/09_limitations.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/sections/10_conclusion.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/paper/references.bib' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ succeeded in 460ms:
+     1	% =====================================================================
+     2	\section{Programme home and the open selection layer}\label{sec:programme_home}
+     3	% =====================================================================
+     4	
+     5	This section positions $\Cph$ within the broader cascade programme
+     6	and identifies what the operator does not deliver. The framing
+     7	matters for the hostile-review reading: $\Cph$ is the
+     8	\emph{response} primitive; \emph{selection} (which response
+     9	configuration the system picks under dynamics) is a separate layer
+    10	that this paper does not close.
+    11	
+    12	\subsection{Programme position}
+    13	
+    14	$\Cph$ is one instance of a polynomial-in-$L$ functional on a
+    15	finite-dimensional substrate. The published companion adaptive-
+    16	closure-transport
+    17	preprint~\citep{SmartAdaptiveClosureTransport2026} positions a
+    18	homeostatic regulariser $R_{\mathrm{hom}}$ in the 4-tuple
+    19	$(M, L_M, W, R_{\mathrm{hom}})$ as a member of the same
+    20	polynomial-in-$L$ family. We use this as the only published
+    21	programme-level reference point for $\Cph$. We make no
+    22	classification claim, no family-membership theorem, and no
+    23	forecast about any other members of this programme; any
+    24	broader programme arc lies outside the operator-witness scope of
+    25	this paper.
+    26	
+    27	\subsection{Response vs selection}
+    28	
+    29	The closure response $\psi = \Cph^{-1} f$ is determined by the
+    30	chosen substrate plus the design-level shift: $\Cph$ is fixed by
+    31	the substrate $\Rsixhundred$ and the design-level choice
+    32	$\Ph^{-2}$, and the response is the resulting linear inverse.
+    33	This is a \emph{response} primitive. It does \emph{not} answer:
+    34	\begin{itemize}\itemsep=2pt
+    35	\item Why this substrate? (Selection across regular 4-polytopes
+    36	  $\{24\text{-cell}, 600\text{-cell}, 120\text{-cell}\}$.)
+    37	\item Why this shift? (Selection of $\Ph^{-2}$ over an arbitrary
+    38	  positive constant.)
+    39	\item How does the system pick a response configuration over
+    40	  time? (Crystallisation / Lyapunov descent dynamics on a
+    41	  $W$-trajectory.)
+    42	\end{itemize}
+    43	
+    44	The selection layer is open. The companion adaptive-closure-
+    45	transport preprint~\citep{SmartAdaptiveClosureTransport2026}
+    46	proposes a Lyapunov $V(W)$ on the reduced flow, an edge-space
+    47	decomposition under the $2I$ binary-icosahedral symmetry of
+    48	$\Rsixhundred$, and a full reduced-flow convergence theorem on
+    49	$W$-trajectories; that paper explicitly does \emph{not} deliver
+    50	those, and we do not deliver them here. The aria-chess
+    51	companion~\citep{SmartAriaChess2026} likewise stays inside
+    52	substrate-witness scope and does \emph{not} deliver a selection
+    53	theorem. The two empirical witnesses landed in this paper provide
+    54	external consistency checks on the \emph{response} primitive
+    55	without reducing or addressing the selection gap.
+    56	
+    57	\subsection{What this paper closes vs leaves open}
+    58	
+    59	\paragraph{Closes (at the operator-witness level).}
+    60	\begin{itemize}\itemsep=2pt
+    61	\item The operator $\Cph$ is well-defined and positive definite
+    62	  on any $(M, L_M)$ satisfying (H1)--(H3); the operator-norm
+    63	  identity $\|\Cph^{-1}\| = \Ph^{2}$ holds whenever
+    64	  $\inf \sigma(L_M) = 0$ (e.g.\ on a connected finite graph with
+    65	  the standard combinatorial Laplacian, or on the full-line
+    66	  continuum case). On substrates where $\inf \sigma(L_M) > 0$
+    67	  (e.g.\ Dirichlet-boundary continuum cases) the bound
+    68	  $\|\Cph^{-1}\| \leq \Ph^{2}$ holds and is generally strict
+    69	  (\S\ref{sec:definition}).
+    70	\item The 600-cell instance $\Rsixhundred$ has the construction
+    71	  described (\S\ref{sec:substrate}) and the Laplacian spectrum of
+    72	  Table~\ref{tab:spectrum}, both reproduced numerically
+    73	  (\texttt{repro/verify\_kernel.py}).
+    74	\item Discrete-to-continuum agreement at per-vertex Pearson
+    75	  correlation $0.976$ on the unweighted variant, with the unweighted
+    76	  variant winning the geometry-only criterion against two
+    77	  $\Ph$-cocycle weighted controls (\S\ref{sec:agreement}).
+    78	\item Same fixed $\Cph$ on same fixed $\Rsixhundred$ appears as
+    79	  the shared response primitive underneath two independent empirical works in
+    80	  qualitatively distinct regimes (\S\ref{sec:passive_witness},
+    81	  \S\ref{sec:active_witness}).
+    82	\end{itemize}
+    83	
+    84	\paragraph{Leaves open.}
+    85	\begin{itemize}\itemsep=2pt
+    86	\item \emph{First-principles derivation of $\Ph^{-2}$.} Reported
+    87	  as a design-level shift; not derived from a closure functional
+    88	  or symmetry argument.
+    89	\item \emph{Substrate-uniqueness ablation.} The 600-cell choice is
+    90	  post-hoc motivated by the empirical landings; alternative regular
+    91	  4-polytopes are an explicit ablation build, not a discharged
+    92	  comparison.
+    93	\item \emph{Kernel-uniqueness on either empirical landing.} The
+    94	  b-anomaly free-width Gaussian alternative (fits comparably with
+    95	  one extra shape parameter), the AIC tie
+    96	  ($w_{\mathrm{VFD}}=0.348$ vs $w_{\mathrm{FREE\_C9}}=0.652$), and
+    97	  the Mode-B linearised-to-non-linear refit drift caveat are
+    98	  inherited verbatim from~\citep{SmartBAnomaly2026}.
+    99	\item \emph{Selection theorem on ACT.} Lyapunov $V(W)$, edge-space
+   100	  decomposition under $2I$-equivariance, full reduced-flow
+   101	  convergence — all explicitly not delivered
+   102	  in~\citep{SmartAdaptiveClosureTransport2026} and not delivered
+   103	  here.
+   104	\item \emph{Family-membership theorem.} The programme-home
+   105	  positioning of cascade Lyapunov functionals as members of the
+   106	  same polynomial-in-$L$ family is reported as
+   107	  \emph{programme-positioned}, not formally classified.
+   108	\end{itemize}
+
+ succeeded in 448ms:
+     1	% =====================================================================
+     2	\section{Limitations and hostile-review guard matrix}\label{sec:limitations}
+     3	% =====================================================================
+     4	
+     5	This section enumerates limitations transparently, organised as a
+     6	five-move guard matrix following the b-anomaly preprint
+     7	template~\citep{SmartBAnomaly2026}: regime, post-hoc, interpretation,
+     8	test/claim, state-drift. For each guard we record
+     9	$G\colon \mathrm{risk} \to (\mathrm{disclosure}, \mathrm{evidence},
+    10	\mathrm{strengthening\ build})$.
+    11	
+    12	\subsection{Regime}\label{ssec:regime}
+    13	
+    14	\textbf{Single substrate (the 600-cell).} We have not tested
+    15	whether $\Cph$ on the $24$-cell, the $120$-cell, or other H$_n$
+    16	Coxeter graphs would give comparable per-vertex correlations on
+    17	the discrete-to-continuum agreement test, or comparable structural
+    18	fits on either empirical landing. The 600-cell choice is post-hoc
+    19	motivated by the empirical landings, not from an a-priori
+    20	derivation. \emph{Disclosure:} \S\ref{sec:intro},
+    21	\S\ref{sec:substrate}, \S\ref{sec:programme_home}.
+    22	\emph{Evidence:} per-vertex correlation $0.976$ on $\Rsixhundred$;
+    23	empirical landings of \S\ref{sec:passive_witness} and
+    24	\S\ref{sec:active_witness}. \emph{Strengthening build:}
+    25	\texttt{repro/verify\_kernel.py} extension to the $24$-cell and
+    26	$120$-cell, with the same per-vertex correlation criterion
+    27	applied; verbatim re-run of the b-anomaly fit on alternative
+    28	substrates from~\citep{SmartBAnomaly2026}; the aria-chess
+    29	preprint's regime section already lists alternative-polytope
+    30	ablation as an open build.
+    31	
+    32	\textbf{Single shift ($\Ph^{-2}$).} We have not tested whether
+    33	nearby shifts ($\Ph^{-2} \pm \epsilon$ for small $\epsilon$) give
+    34	comparable per-vertex correlation, or whether the empirical
+    35	landings tolerate a shift sweep. The shift is held fixed across
+    36	both regimes; perturbation analysis is an open build.
+    37	\emph{Strengthening build:} sweep $\Ph^{-2} \cdot (1 \pm \delta)$
+    38	for $\delta \in \{0.01, 0.05, 0.10, 0.25\}$ on the discrete-to-
+    39	continuum correlation; report sensitivity envelope.
+    40	
+    41	\subsection{Post-hoc}\label{ssec:posthoc}
+    42	
+    43	\textbf{The 600-cell choice is post-hoc justified by empirical
+    44	observables.} While the construction of $\Rsixhundred$ is
+    45	theorem-level rigorous (H$_4$ Coxeter group theory), the choice
+    46	of \emph{this} polytope as the discrete substrate instance is
+    47	motivated by the empirical landings observed, not by an a-priori
+    48	geometric or algebraic argument selecting it over the $24$-cell
+    49	or $120$-cell. \emph{Disclosure:} \S\ref{sec:intro}.
+    50	\emph{Evidence:} two independent empirical witnesses on
+    51	$\Rsixhundred$. \emph{Strengthening build:} formal substrate
+    52	ablation (above).
+    53	
+    54	\textbf{The geometry-first variant agreement is not historically
+    55	blind on b-anomaly.} Per the b-anomaly preprint's limitations
+    56	section, the LHCb 2025 data was inspected first and the
+    57	pure-geometry ranking was verified afterward to agree with the
+    58	data-$\chi^{2}$ ranking. The two-criterion agreement is
+    59	\emph{criterion-independent} (geometry-only correlation here is a
+    60	different test from b-anomaly's data $\chi^{2}$) but not
+    61	historically pre-registered. \emph{Disclosure:} we inherit the
+    62	caveat verbatim. \emph{Strengthening build:} a future blind variant
+    63	test would freeze the variant choice before observing the data
+    64	$\chi^{2}$.
+    65	
+    66	\textbf{$\Ph^{-2}$ floor not derived.} The shifted-Laplacian floor
+    67	$\Ph^{-2} \approx 0.382$ is a stability clamp making $\Cph$
+    68	strictly positive definite; it is not derived from a closure
+    69	functional or symmetry argument. \emph{Disclosure:}
+    70	\S\ref{ssec:opnorm}, \S\ref{sec:definition}. \emph{Evidence:} the
+    71	same operator with the same shift serves as the basis for two
+    72	independent empirical witnesses across qualitatively distinct
+    73	regimes (\S\ref{sec:passive_witness},
+    74	\S\ref{sec:active_witness}). \emph{Strengthening build:} derive
+    75	or justify a distinguished shift under a named criterion (e.g.\
+    76	minimum-amplitude amplification on a specified function class);
+    77	uniqueness is not assumed and is itself an open problem.
+    78	
+    79	\subsection{Interpretation}\label{ssec:interpretation}
+    80	
+    81	\textbf{The discrete-to-continuum agreement is descriptive, not
+    82	causal.} The per-vertex correlation $0.976$ between $\psi$ on
+    83	$\Rsixhundred$ and the continuum kernel
+    84	$G(x) = (\Ph/2)\,e^{-|x|/\Ph}$ at the same chord radii is a
+    85	\emph{computed agreement} between two independently-defined
+    86	objects, not a derivation that the discrete operator equals the
+    87	continuum kernel. \emph{Disclosure:} \S\ref{sec:agreement} marks
+    88	this explicitly. \emph{Evidence:} the agreement is at machine
+    89	precision in the operator-norm bound and at $\rho = 0.976$ in the
+    90	per-vertex correlation. \emph{Strengthening build:} a formal
+    91	discrete-continuum convergence proof under a specified large-graph
+    92	limit; a continuum limit theorem on H$_n$ Coxeter substrates as
+    93	$n \to \infty$.
+    94	
+    95	\textbf{Variant ranking is criterion-dependent.} The unweighted
+    96	variant wins on both the geometry-only criterion of this paper
+    97	and b-anomaly's data $\chi^{2}$, but neither criterion is the
+    98	\emph{unique} natural ranking. Edge-weighted variants outside the
+    99	$\Ph$-cocycle family ($\sqrt{\deg}$-weighted, normalised
+   100	Laplacian) are not tested here. \emph{Strengthening build:}
+   101	extend \texttt{repro/verify\_kernel.py} to a wider variant
+   102	catalogue.
+   103	
+   104	\subsection{Test/claim}\label{ssec:testclaim}
+   105	
+   106	\textbf{Two independent empirical landings, not formal physics.}
+   107	The b-anomaly result is a structural fit (kernel shape held fixed)
+   108	under an AIC tie with $\mathrm{FREE\_C9}$ on current data; the
+   109	aria-chess result is a substrate witness (no claim that the
+   110	substrate \emph{is} consciousness). Neither lands a theorem-grade
+   111	physics claim on its own domain; both are appropriately
+   112	hedged in their own preprints, and we inherit those hedges
+   113	verbatim. \emph{Disclosure:} \S\ref{sec:passive_witness},
+   114	\S\ref{sec:active_witness}. \emph{Evidence:} the witnesses pass
+   115	their own preregistered or literature-derived thresholds.
+   116	\emph{Strengthening build:} more flavour-physics datasets
+   117	(LHCb Run~3, Belle~II) for the passive-regime witness;
+   118	cross-cohort EEG (TUH, NHM) and cross-parcellation HCP
+   119	(Schaefer, Glasser) for the active-regime witness; both already
+   120	listed in the respective preprints.
+   121	
+   122	\textbf{Discrete-to-continuum correlation reported on a single pole,
+   123	verified across all $|V|$.} The headline per-vertex correlation
+   124	$0.976$ is reported with the canonical pole ($+x_{0}$ axis) as
+   125	source. H$_4$ transitivity predicts the correlation is invariant
+   126	under choice of source vertex. \texttt{repro/verify\_kernel.py}
+   127	sweeps over all $120$ vertices: every source returns the same
+   128	per-vertex correlation $0.976202$ to within $\sim 10^{-15}$
+   129	(\texttt{multi\_source\_sweep.max\_minus\_min} in
+   130	\texttt{results.json}). The single-pole headline is therefore a
+   131	representative, not a sample, of the operator's behaviour under
+   132	H$_4$ transitivity.
+   133	
+   134	\subsection{State-drift / out-of-scope}\label{ssec:scope}
+   135	
+   136	\textbf{Selection layer not delivered.} As enumerated in
+   137	\S\ref{sec:programme_home}, the selection-layer constructions
+   138	(Lyapunov $V(W)$, edge-space decomposition under $2I$-equivariance,
+   139	full reduced-flow convergence) are open in the companion ACT
+   140	preprint~\citep{SmartAdaptiveClosureTransport2026} and are not
+   141	delivered here. The two empirical witnesses strengthen confidence
+   142	in the response primitive without addressing the selection gap.
+   143	
+   144	\textbf{Broader cascade programme is out of scope.} Other
+   145	preprints in the broader cascade programme share operator-level
+   146	infrastructure with this paper but are not load-bearing here.
+   147	Deliberately out of scope.
+   148	
+   149	\textbf{Out-of-scope items NOT delivered (correctly).}
+   150	\begin{itemize}\itemsep=2pt
+   151	\item Lyapunov function $V(W)$ on the reduced flow — open build
+   152	  of the ACT companion paper~\citep{SmartAdaptiveClosureTransport2026}.
+   153	\item $2I$-equivariance audit of the closure operator family —
+   154	  open build of ACT.
+   155	\item Edge-space decomposition of $\mathbb{R}^{E_{M}}$ under the
+   156	  Hodge edge Laplacian — open build of ACT.
+   157	\item Selection theorem identifying $\Rsixhundred$ over alternative
+   158	  regular 4-polytopes — see \S\ref{ssec:regime}.
+   159	\item Formal discrete-to-continuum convergence theorem under a
+   160	  specified large-graph limit — see \S\ref{ssec:interpretation}.
+   161	\item First-principles derivation of the $\Ph^{-2}$ shift — see
+   162	  \S\ref{ssec:posthoc}.
+   163	\item Family-membership classification theorem for the
+   164	  polynomial-in-$L$ Lyapunov family — see \S\ref{sec:programme_home}.
+   165	\end{itemize}
+   166	
+   167	\subsection{The honest verdict}
+   168	
+   169	The result is an \emph{operator witness}: a geometry-fixed response
+   170	operator on a fixed graph, with no shape parameters tuned to any
+   171	dataset, is consistent with two independent empirical landings in
+   172	qualitatively distinct regimes. We do not claim the operator is
+   173	the unique kernel for either landing. We do not claim selection is
+   174	delivered. We do not claim 600-cell uniqueness. The strengthening
+   175	builds for stronger claims are listed above and remain open.
+
+ succeeded in 553ms:
+     1	@book{CoxeterRegularPolytopes,
+     2	  author    = {Coxeter, H. S. M.},
+     3	  title     = {Regular Polytopes},
+     4	  publisher = {Dover},
+     5	  edition   = {3rd},
+     6	  year      = {1973},
+     7	  address   = {New York}
+     8	}
+     9	
+    10	@misc{Weisstein600Cell,
+    11	  author       = {Weisstein, Eric W.},
+    12	  title        = {{600-Cell}},
+    13	  howpublished = {From MathWorld --- A Wolfram Web Resource},
+    14	  url          = {https://mathworld.wolfram.com/600-Cell.html},
+    15	  note         = {Accessed 2026-04-30}
+    16	}
+    17	
+    18	% Companion VFD preprints (the two empirical witnesses + selection-layer paper).
+    19	
+    20	@unpublished{SmartBAnomaly2026,
+    21	  author = {Smart, Lee},
+    22	  title  = {A geometry-derived response kernel for the $B \to K^*\mu^+\mu^-$
+    23	            angular anomaly: sign-uniform cross-dataset and cross-channel fit},
+    24	  year   = {2026},
+    25	  note   = {VFD preprint}
+    26	}
+    27	
+    28	@unpublished{SmartAriaChess2026,
+    29	  author = {Smart, Lee},
+    30	  title  = {A geometry-fixed substrate witness for cortical signatures:
+    31	            eighteen preregistered correspondences and six drug/sleep EEG
+    32	            signatures from the 600-cell under H$_4$ Coxeter symmetry},
+    33	  year   = {2026},
+    34	  note   = {VFD preprint, papers/aria-chess-paper/}
+    35	}
+    36	
+    37	@unpublished{SmartAdaptiveClosureTransport2026,
+    38	  author = {Smart, Lee},
+    39	  title  = {Adaptive Closure Transport: a 4-tuple bridge
+    40	            $(M, L_M, W, R_{\mathrm{hom}})$ from substrate response to
+    41	            selection},
+    42	  year   = {2026},
+    43	  note   = {VFD preprint, papers/adaptive-closure-transport/}
+    44	}
+    45	
+    46	% External flavour-physics literature (b-anomaly context, cited in §6).
+    47	
+    48	@article{KrugerMatias2005,
+    49	  author  = {Kr\"uger, Frank and Matias, Joaquim},
+    50	  title   = {Probing new physics via the transverse amplitudes of
+    51	             $B^0 \to K^{*0} (\to K^- \pi^+) l^+ l^-$ at low recoil},
+    52	  journal = {Phys. Rev. D},
+    53	  volume  = {71},
+    54	  pages   = {094009},
+    55	  year    = {2005},
+    56	  doi     = {10.1103/PhysRevD.71.094009}
+    57	}
+    58	
+    59	@article{LHCbAngular2020,
+    60	  author  = {{LHCb Collaboration}},
+    61	  title   = {Measurement of $\mathit{CP}$-averaged observables in the
+    62	             $B^0 \to K^{*0} \mu^+ \mu^-$ decay},
+    63	  journal = {Phys. Rev. Lett.},
+    64	  volume  = {125},
+    65	  pages   = {011802},
+    66	  year    = {2020},
+    67	  doi     = {10.1103/PhysRevLett.125.011802}
+    68	}
+
+ succeeded in 598ms:
+     1	% =====================================================================
+     2	\section{Conclusion}\label{sec:conclusion}
+     3	% =====================================================================
+     4	
+     5	The closure-response operator $\Cph = L_M + \Ph^{-2} I$ on the
+     6	600-cell graph $\Rsixhundred$, with $\Ph = (1+\sqrt 5)/2$, is a
+     7	geometry-fixed response primitive: positive definite under
+     8	(H1)--(H3) on the substrate $(M, L_M)$, and on the connected
+     9	finite graph $\Rsixhundred$ where $\lambda_{\min}(L_M) = 0$ it has
+    10	smallest eigenvalue $\Ph^{-2}$ and operator-norm identity
+    11	$\|\Cph^{-1}\| = \Ph^{2} \approx 2.618$ (general substrates with
+    12	$\lambda_{\min}(L_M) > 0$ give the strict inequality
+    13	$\|\Cph^{-1}\| < \Ph^{2}$).
+    14	The 600-cell instance has $|V|=120$, $|E|=720$, uniform degree
+    15	$12$, $9$-shell partition $\{1,12,20,12,30,12,20,12,1\}$, and a
+    16	Laplacian spectrum that numerically resolves to the closed-form
+    17	$\mathbb{Z}[\Ph]$ values listed in Table~\ref{tab:spectrum}. The
+    18	discrete-to-continuum agreement between $\psi = \Cph^{-1} f$ and
+    19	the continuum kernel $G(x) = (\Ph/2)\,e^{-|x|/\Ph}$ at per-vertex
+    20	chord distances (non-source vertices) is Pearson $\rho = 0.976$ on
+    21	the unweighted Laplacian, above the two $\Ph$-cocycle weighted
+    22	variants tested ($0.888$ geometric, $0.884$ arithmetic). All numbers are reproduced from canonical
+    23	generators by \texttt{repro/verify\_kernel.py}; no parameter is
+    24	fitted.
+    25	
+    26	\textbf{Two independent empirical landings.} The same fixed
+    27	$\Cph$ on the same fixed $\Rsixhundred$, with no shape-parameter
+    28	retuning between regimes, appears as the shared response
+    29	primitive underneath:
+    30	\begin{enumerate}\itemsep=2pt
+    31	\item \textbf{Passive regime}~\citep{SmartBAnomaly2026}: a single
+    32	  fitted dimensionless amplitude $A$ per dataset (kernel shape
+    33	  held fixed) gives a sign-uniform
+    34	  $\Delta C_{9}^{\mathrm{eff}} < 0$ description of the
+    35	  $b\to s\mu^{+}\mu^{-}$ angular anomaly across five public
+    36	  datasets (LHCb 2015, LHCb 2021, CMS 2025, LHCb 2025, LHCb 2015
+    37	  $B_s\to\phi$).
+    38	\item \textbf{Active regime}~\citep{SmartAriaChess2026}: a
+    39	  recurrent self-model layer above the same operator (one
+    40	  condition-dependent self-injection coupling
+    41	  $\eta\in\{0,0.05,0.20\}$, one substrate-pinned nonlinearity
+    42	  $\mathrm{bounded\_topk}(\cdot, k=12)$ at the graph's average
+    43	  degree) is consistent with the aria-chess active-regime tally
+    44	  (frozen 2026-04-18): $17/18$ preregistered
+    45	  substrate/neuroscience correspondences under the standard
+    46	  validation protocol, $18/18$ after the documented $N\!=\!20$
+    47	  P4 deep-dive (thresholds unchanged; with the documented P3
+    48	  $N\!=\!5$ and P13 LOO/state-reset refinements, and the open
+    49	  prereg-exact P10 $20$-permutation rerun, all inherited verbatim
+    50	  from~\citep{SmartAriaChess2026}), plus six
+    51	  literature-thresholded drug/sleep EEG signatures.
+    52	\end{enumerate}
+    53	By design, the two witnesses share exactly the geometry-fixed
+    54	operator: the same $\Cph$, substrate $\Rsixhundred$, and shift
+    55	$\Ph^{-2}$. Above that operator level, they share no fitted
+    56	parameter, threshold, or dataset, and the empirical claims are
+    57	tested on disjoint physical domains (flavour physics vs cortical
+    58	neuroscience). Independence here is
+    59	independence at the empirical layer above the shared operator,
+    60	not statistical independence of the operator itself.
+    61	
+    62	\textbf{Operator-witness scope.} This is an operator witness, not
+    63	a derivation of physics on either landing. We do not derive the
+    64	$\Ph^{-2}$ shift; it is a design-level stability clamp. We do not
+    65	claim 600-cell uniqueness; alternative regular 4-polytopes are an
+    66	explicit ablation build. We do not claim kernel uniqueness on
+    67	either empirical landing; the b-anomaly's free-width Gaussian
+    68	alternative, AIC tie ($w_{\mathrm{VFD}}=0.348$ vs
+    69	$w_{\mathrm{FREE\_C9}}=0.652$), and Mode-B linearised-to-non-
+    70	linear refit drift caveats are inherited verbatim, and the
+    71	aria-chess substrate-witness scope is inherited verbatim. We do
+    72	not deliver a selection theorem on the ACT
+    73	4-tuple~\citep{SmartAdaptiveClosureTransport2026}; that paper's
+    74	open builds (Lyapunov $V(W)$, edge-space decomposition under
+    75	$2I$-equivariance, full reduced-flow convergence) remain open and
+    76	are not delivered here.
+    77	
+    78	\textbf{Programme position.} \S\ref{sec:programme_home} positions
+    79	$\Cph$ relative to the published adaptive-closure-transport
+    80	companion as a member of the same polynomial-in-$L$ family;
+    81	family-membership is \emph{programme-positioned}, not formally
+    82	classified. The two empirical landings provide external
+    83	consistency checks on the \emph{response} primitive without
+    84	reducing or addressing the selection gap.
+    85	
+    86	The empirical material gathered here is the operator witness; the
+    87	broader programme to convert the witness into a selection-theorem-
+    88	grade claim is sketched in the companion preprints and remains
+    89	the natural next step.
+
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/repro/results.json' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-closure-kernel/repro/verify_kernel.py' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-chess-paper/paper/sections/05_results.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'nl -ba papers/aria-chess-paper/paper/sections/09_limitations.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ succeeded in 446ms:
+     1	{
+     2	  "phi": 1.618033988749895,
+     3	  "phi_inv_sq": 0.3819660112501051,
+     4	  "n_vertices": 120,
+     5	  "n_edges": 720,
+     6	  "degree_sequence": {
+     7	    "min": 12,
+     8	    "max": 12,
+     9	    "mean": 12.0
+    10	  },
+    11	  "connectivity": {
+    12	    "n_connected_components": 1,
+    13	    "connected": true
+    14	  },
+    15	  "shell_sizes": {
+    16	    "0": 1,
+    17	    "1": 12,
+    18	    "2": 20,
+    19	    "3": 12,
+    20	    "4": 30,
+    21	    "5": 12,
+    22	    "6": 20,
+    23	    "7": 12,
+    24	    "8": 1
+    25	  },
+    26	  "shell_inner_products": [
+    27	    1.0,
+    28	    0.8090169943749475,
+    29	    0.5,
+    30	    0.3090169943749474,
+    31	    0.0,
+    32	    -0.3090169943749474,
+    33	    -0.5,
+    34	    -0.8090169943749475,
+    35	    -1.0
+    36	  ],
+    37	  "antipodal_check": {
+    38	    "pole_idx": 119,
+    39	    "antipode_idx": 0,
+    40	    "expected_shell_8_size": 1,
+    41	    "observed_shell_8_size": 1
+    42	  },
+    43	  "laplacian_spectrum_grouped": [
+    44	    {
+    45	      "eigenvalue": -1.01103545984405e-15,
+    46	      "multiplicity": 1
+    47	    },
+    48	    {
+    49	      "eigenvalue": 2.291796067500629,
+    50	      "multiplicity": 4
+    51	    },
+    52	    {
+    53	      "eigenvalue": 5.527864045000407,
+    54	      "multiplicity": 9
+    55	    },
+    56	    {
+    57	      "eigenvalue": 8.999999999999993,
+    58	      "multiplicity": 16
+    59	    },
+    60	    {
+    61	      "eigenvalue": 11.999999999999984,
+    62	      "multiplicity": 25
+    63	    },
+    64	    {
+    65	      "eigenvalue": 13.999999999999977,
+    66	      "multiplicity": 36
+    67	    },
+    68	    {
+    69	      "eigenvalue": 14.472135954999567,
+    70	      "multiplicity": 9
+    71	    },
+    72	    {
+    73	      "eigenvalue": 14.999999999999988,
+    74	      "multiplicity": 16
+    75	    },
+    76	    {
+    77	      "eigenvalue": 15.708203932499362,
+    78	      "multiplicity": 4
+    79	    }
+    80	  ],
+    81	  "operator_norm": {
+    82	    "lambda_min_L": -1.01103545984405e-15,
+    83	    "lambda_min_C_phi": 0.3819660112501041,
+    84	    "operator_norm_C_phi_inv": 2.618033988749902,
+    85	    "predicted_phi_squared": 2.618033988749895
+    86	  },
+    87	  "discrete_continuum_test": {
+    88	    "shell_radii": [
+    89	      0.0,
+    90	      0.6180339887498948,
+    91	      1.0,
+    92	      1.1755705045849465,
+    93	      1.4142135623730947,
+    94	      1.618033988749895,
+    95	      1.7320508075688772,
+    96	      1.902113032590307,
+    97	      2.0
+    98	    ],
+    99	    "shell_count": [
+   100	      1,
+   101	      12,
+   102	      20,
+   103	      12,
+   104	      30,
+   105	      12,
+   106	      20,
+   107	      12,
+   108	      1
+   109	    ],
+   110	    "shell_psi_mean": [
+   111	      0.11466009151487011,
+   112	      0.034976446331995696,
+   113	      0.024335208435661275,
+   114	      0.021858804323929084,
+   115	      0.019268782150762213,
+   116	      0.01765857292134354,
+   117	      0.016902552852001883,
+   118	      0.015932370381507646,
+   119	      0.01544087945358437
+   120	    ],
+   121	    "continuum_prediction": [
+   122	      0.8090169943749475,
+   123	      0.5521688638304681,
+   124	      0.43606265394423777,
+   125	      0.3912228691703586,
+   126	      0.33757505628626344,
+   127	      0.29762071978885557,
+   128	      0.2773703603621507,
+   129	      0.24969730865080123,
+   130	      0.23503911473677247
+   131	    ],
+   132	    "pearson_correlation": 0.9232082699765517
+   133	  },
+   134	  "variant_correlation": {
+   135	    "UNWEIGHTED": {
+   136	      "shell_mean_correlation": 0.9232082699765517,
+   137	      "per_vertex_correlation": 0.9762022978516623
+   138	    },
+   139	    "PHI_GEOMETRIC": {
+   140	      "shell_mean_correlation": 0.879553132802029,
+   141	      "per_vertex_correlation": 0.8883800503732451
+   142	    },
+   143	    "PHI_ARITHMETIC": {
+   144	      "shell_mean_correlation": 0.8784315463215415,
+   145	      "per_vertex_correlation": 0.8843640031310793
+   146	    }
+   147	  },
+   148	  "multi_source_sweep": {
+   149	    "n_sources": 120,
+   150	    "min_correlation": 0.9762022978516617,
+   151	    "mean_correlation": 0.9762022978516628,
+   152	    "max_correlation": 0.9762022978516637,
+   153	    "max_minus_min": 1.9984014443252818e-15
+   154	  }
+   155	}
+
+ succeeded in 414ms:
+     1	#!/usr/bin/env python3
+     2	"""
+     3	Aria closure kernel — numerical verification.
+     4	
+     5	Constructs V_600 from canonical generators, builds the short-edge
+     6	nearest-neighbour graph, computes the Laplacian spectrum, builds
+     7	C_phi = L + phi^-2 I, runs the discrete <-> continuum agreement
+     8	test as a per-vertex Pearson correlation between psi(v) and
+     9	(phi/2) exp(-|x|/phi) at each non-source vertex's chord radius
+    10	(plus a shell-mean cross-check), tests the unweighted vs
+    11	phi-cocycle-weighted Laplacian variants on the same geometry-only
+    12	correlation criterion, sweeps the per-vertex correlation across
+    13	all 120 source vertices to verify H_4 transitivity, checks
+    14	graph connectedness, and writes results.json.
+    15	
+    16	All constants (phi, the 600-cell vertex generators, the short-edge
+    17	inner product phi/2) are mathematically determined by the choice of
+    18	substrate; no parameter is fitted to any dataset.
+    19	
+    20	Determinism: no randomness anywhere. Source vertices are picked
+    21	by canonical projection (argmax of dot product with $+x_0$ axis);
+    22	the eigendecomposition is deterministic.
+    23	
+    24	Run: python3 verify_kernel.py
+    25	"""
+    26	
+    27	from __future__ import annotations
+    28	
+    29	import json
+    30	import itertools
+    31	import math
+    32	from pathlib import Path
+    33	
+    34	import numpy as np
+    35	from numpy.linalg import eigh, norm
+    36	from scipy.spatial.distance import pdist, squareform
+    37	from scipy.sparse import csr_matrix
+    38	from scipy.sparse.csgraph import connected_components
+    39	
+    40	
+    41	PHI = (1.0 + math.sqrt(5.0)) / 2.0          # golden ratio
+    42	INV_PHI = 1.0 / PHI                          # = phi - 1
+    43	INV_PHI2 = INV_PHI * INV_PHI                 # = 2 - phi ~ 0.381966
+    44	
+    45	
+    46	# ---------------------------------------------------------------------------
+    47	# 1. 600-cell vertex construction (120 vertices on S^3)
+    48	# ---------------------------------------------------------------------------
+    49	
+    50	def even_perms(seq):
+    51	    """Return the 12 even permutations of a 4-tuple (alternating group A_4)."""
+    52	    n = len(seq)
+    53	    out = []
+    54	    for p in itertools.permutations(range(n)):
+    55	        # signature
+    56	        inv = sum(1 for i in range(n) for j in range(i + 1, n) if p[i] > p[j])
+    57	        if inv % 2 == 0:
+    58	            out.append(tuple(seq[p[i]] for i in range(n)))
+    59	    return out
+    60	
+    61	
+    62	def build_v600():
+    63	    """
+    64	    Canonical 600-cell vertex set: 8 + 16 + 96 = 120 unit vectors on S^3.
+    65	
+    66	    - 8 vertices: all permutations of (+/- 1, 0, 0, 0)
+    67	    - 16 vertices: all sign combinations of (+/- 1/2)^4
+    68	    - 96 vertices: all even permutations of (+/- phi/2, +/- 1/2, +/- 1/(2 phi), 0),
+    69	      with all sign assignments
+    70	    """
+    71	    verts = set()
+    72	
+    73	    # 8 axis vertices
+    74	    for sign in (-1, 1):
+    75	        for i in range(4):
+    76	            v = [0.0] * 4
+    77	            v[i] = float(sign)
+    78	            verts.add(tuple(v))
+    79	
+    80	    # 16 half-integer vertices
+    81	    for signs in itertools.product((-1, 1), repeat=4):
+    82	        v = tuple(0.5 * s for s in signs)
+    83	        verts.add(v)
+    84	
+    85	    # 96 phi-mixed vertices: even perms of (+/- phi/2, +/- 1/2, +/- 1/(2 phi), 0)
+    86	    base = (PHI / 2.0, 0.5, 1.0 / (2.0 * PHI), 0.0)
+    87	    for signs in itertools.product((-1, 1), repeat=4):
+    88	        # apply signs componentwise to (PHI/2, 1/2, 1/(2 PHI), 0); the 0 sign is irrelevant
+    89	        signed = tuple(s * b for s, b in zip(signs, base))
+    90	        for p in even_perms(signed):
+    91	            verts.add(p)
+    92	
+    93	    V = np.array(sorted(verts), dtype=np.float64)
+    94	    # Sanity check: all on the unit 3-sphere
+    95	    radii = np.linalg.norm(V, axis=1)
+    96	    assert np.allclose(radii, 1.0, atol=1e-10), \
+    97	        f"vertices not on unit S^3: max |r-1| = {np.max(np.abs(radii - 1.0)):.3e}"
+    98	    return V
+    99	
+   100	
+   101	# ---------------------------------------------------------------------------
+   102	# 2. Short-edge nearest-neighbour graph
+   103	# ---------------------------------------------------------------------------
+   104	
+   105	def build_short_edge_graph(V, tol=1e-10):
+   106	    """
+   107	    Two vertices are connected iff <v, w> = phi/2 (the canonical short-edge
+   108	    criterion on the unit 3-sphere). For the 600-cell this gives a
+   109	    12-regular graph on 120 vertices with 720 edges.
+   110	    """
+   111	    G = V @ V.T  # Gram matrix of inner products
+   112	    short = PHI / 2.0
+   113	    A = (np.abs(G - short) < tol).astype(np.float64)
+   114	    np.fill_diagonal(A, 0.0)  # no self-loops
+   115	    return A
+   116	
+   117	
+   118	# ---------------------------------------------------------------------------
+   119	# 3. Laplacian spectrum
+   120	# ---------------------------------------------------------------------------
+   121	
+   122	def laplacian_spectrum(A):
+   123	    """L = D - A; return sorted eigenvalues + eigenvectors."""
+   124	    D = np.diag(A.sum(axis=1))
+   125	    L = D - A
+   126	    w, U = eigh(L)  # ascending order
+   127	    return L, w, U
+   128	
+   129	
+   130	def round_spectrum(w, decimals=6):
+   131	    """Group eigenvalues into multiplicity classes (within numerical tol).
+   132	
+   133	    Eigenvalues stored at full precision; ``decimals`` only sets the
+   134	    grouping tolerance.
+   135	    """
+   136	    classes = []
+   137	    seen = []
+   138	    for val in w:
+   139	        placed = False
+   140	        for idx, ref in enumerate(seen):
+   141	            if abs(val - ref) < 10 ** (-decimals):
+   142	                classes[idx] = (ref, classes[idx][1] + 1)
+   143	                placed = True
+   144	                break
+   145	        if not placed:
+   146	            seen.append(val)
+   147	            classes.append((float(val), 1))
+   148	    return classes
+   149	
+   150	
+   151	# ---------------------------------------------------------------------------
+   152	# 4. Closure operator and discrete Green's function
+   153	# ---------------------------------------------------------------------------
+   154	
+   155	def build_C_phi(L):
+   156	    """C_phi = L + phi^-2 I."""
+   157	    return L + INV_PHI2 * np.eye(L.shape[0])
+   158	
+   159	
+   160	def green_response(C_phi, source_idx):
+   161	    """psi = C_phi^-1 e_source. Solves the linear system, no explicit inverse."""
+   162	    n = C_phi.shape[0]
+   163	    f = np.zeros(n)
+   164	    f[source_idx] = 1.0
+   165	    psi = np.linalg.solve(C_phi, f)
+   166	    return psi
+   167	
+   168	
+   169	# ---------------------------------------------------------------------------
+   170	# 5. Shell decomposition (9-shell H_3 partition)
+   171	# ---------------------------------------------------------------------------
+   172	
+   173	def shell_indices(V, pole_idx):
+   174	    """
+   175	    Group vertices by their inner product with V[pole_idx]. The 600-cell's
+   176	    H_3 subgroup partitions the 120 vertices into 9 shells of sizes
+   177	    {1, 12, 20, 12, 30, 12, 20, 12, 1} indexed by inner-product class.
+   178	    """
+   179	    pole = V[pole_idx]
+   180	    inner = V @ pole
+   181	    # The 9 canonical inner-product values:
+   182	    canonical = np.array([
+   183	        1.0,                # shell 0: pole itself
+   184	        PHI / 2.0,          # shell 1
+   185	        0.5,                # shell 2
+   186	        1.0 / (2.0 * PHI),  # shell 3
+   187	        0.0,                # shell 4 (equator)
+   188	        -1.0 / (2.0 * PHI), # shell 5
+   189	        -0.5,               # shell 6
+   190	        -PHI / 2.0,         # shell 7
+   191	        -1.0,               # shell 8: antipode
+   192	    ])
+   193	    shells = {k: [] for k in range(9)}
+   194	    for i, val in enumerate(inner):
+   195	        # snap to nearest canonical
+   196	        k = int(np.argmin(np.abs(canonical - val)))
+   197	        shells[k].append(i)
+   198	    sizes = {k: len(shells[k]) for k in shells}
+   199	    return shells, sizes, canonical
+   200	
+   201	
+   202	# ---------------------------------------------------------------------------
+   203	# 6. Discrete <-> continuum agreement test
+   204	# ---------------------------------------------------------------------------
+   205	
+   206	def discrete_continuum_test(V, C_phi, source_idx):
+   207	    """
+   208	    Compute psi(v) = C_phi^-1 e_{source}, then average over each shell. The
+   209	    shell radial coordinate x is the chord distance |v - v_source|. The
+   210	    continuum prediction is G(x) = (phi/2) exp(-|x|/phi) (up to a normalisation).
+   211	
+   212	    Returns the per-shell discrete mean, the continuum prediction at each
+   213	    shell radius, and the Pearson correlation between them.
+   214	    """
+   215	    psi = green_response(C_phi, source_idx)
+   216	    shells, sizes, _ = shell_indices(V, source_idx)
+   217	    pole = V[source_idx]
+   218	
+   219	    shell_means = []
+   220	    shell_radii = []
+   221	    shell_count = []
+   222	    for k in range(9):
+   223	        idxs = shells[k]
+   224	        if not idxs:
+   225	            continue
+   226	        mean_psi = float(np.mean(psi[idxs]))
+   227	        # mean chord radius from pole
+   228	        chord = float(np.mean(np.linalg.norm(V[idxs] - pole, axis=1)))
+   229	        shell_means.append(mean_psi)
+   230	        shell_radii.append(chord)
+   231	        shell_count.append(len(idxs))
+   232	
+   233	    shell_means = np.array(shell_means)
+   234	    shell_radii = np.array(shell_radii)
+   235	    continuum = (PHI / 2.0) * np.exp(-shell_radii / PHI)
+   236	
+   237	    # Pearson correlation of (discrete shell mean) with (continuum prediction)
+   238	    if len(shell_means) > 1 and np.std(shell_means) > 0 and np.std(continuum) > 0:
+   239	        corr = float(np.corrcoef(shell_means, continuum)[0, 1])
+   240	    else:
+   241	        corr = float("nan")
+   242	
+   243	    return {
+   244	        "shell_radii": shell_radii.tolist(),
+   245	        "shell_count": shell_count,
+   246	        "shell_psi_mean": shell_means.tolist(),
+   247	        "continuum_prediction": continuum.tolist(),
+   248	        "pearson_correlation": corr,
+   249	    }
+   250	
+   251	
+   252	# ---------------------------------------------------------------------------
+   253	# 7. Variant comparison: unweighted vs phi-cocycle weighted Laplacian
+   254	# ---------------------------------------------------------------------------
+   255	
+   256	def cocycle_weights(V, source_idx):
+   257	    """
+   258	    phi-cocycle vertex weights omega_+(v) = phi^kappa(v), where kappa(v) is
+   259	    the shell index of v with respect to a chosen pole. For the variant
+   260	    test we compare the unweighted graph Laplacian to two weighted variants
+   261	    discussed in the b-anomaly paper.
+   262	    """
+   263	    shells, _, _ = shell_indices(V, source_idx)
+   264	    kappa = np.zeros(V.shape[0])
+   265	    for k, idxs in shells.items():
+   266	        for i in idxs:
+   267	            kappa[i] = float(k)
+   268	    return PHI ** kappa
+   269	
+   270	
+   271	def weighted_laplacian(A, weights, mode="geometric"):
+   272	    """
+   273	    Weighted graph Laplacian. mode='geometric': w_{vw} = sqrt(omega(v) omega(w)).
+   274	    mode='arithmetic': w_{vw} = (omega(v) + omega(w))/2.
+   275	    """
+   276	    n = A.shape[0]
+   277	    if mode == "geometric":
+   278	        W = np.sqrt(np.outer(weights, weights))
+   279	    elif mode == "arithmetic":
+   280	        W = 0.5 * (weights[:, None] + weights[None, :])
+   281	    else:
+   282	        raise ValueError(mode)
+   283	    A_w = A * W
+   284	    D_w = np.diag(A_w.sum(axis=1))
+   285	    return D_w - A_w
+   286	
+   287	
+   288	def variant_correlation(V, A, source_idx, variant):
+   289	    if variant == "UNWEIGHTED":
+   290	        L_v = np.diag(A.sum(axis=1)) - A
+   291	    else:
+   292	        weights = cocycle_weights(V, source_idx)
+   293	        mode = "geometric" if variant == "PHI_GEOMETRIC" else "arithmetic"
+   294	        L_v = weighted_laplacian(A, weights, mode=mode)
+   295	    C_v = L_v + INV_PHI2 * np.eye(L_v.shape[0])
+   296	    test = discrete_continuum_test(V, C_v, source_idx)
+   297	    psi = green_response(C_v, source_idx)
+   298	    pole = V[source_idx]
+   299	    chord = np.linalg.norm(V - pole, axis=1)
+   300	    # Continuum kernel at each vertex's chord radius
+   301	    cont = (PHI / 2.0) * np.exp(-chord / PHI)
+   302	    # Per-vertex correlation (excluding the source itself, which is degenerate)
+   303	    mask = np.arange(V.shape[0]) != source_idx
+   304	    if np.std(psi[mask]) > 0 and np.std(cont[mask]) > 0:
+   305	        per_vertex_corr = float(np.corrcoef(psi[mask], cont[mask])[0, 1])
+   306	    else:
+   307	        per_vertex_corr = float("nan")
+   308	    return {
+   309	        "shell_mean_correlation": test["pearson_correlation"],
+   310	        "per_vertex_correlation": per_vertex_corr,
+   311	        "test": test,
+   312	    }
+   313	
+   314	
+   315	# ---------------------------------------------------------------------------
+   316	# 8. Operator-norm bound: ||C_phi^-1|| = 1 / lambda_min(C_phi) = phi^2
+   317	# ---------------------------------------------------------------------------
+   318	
+   319	def connectivity_check(A):
+   320	    """
+   321	    Numerical connectedness verification: count connected components of the
+   322	    short-edge adjacency matrix. Connectedness is reported, not derived from
+   323	    a structural argument.
+   324	    """
+   325	    n_components, _ = connected_components(csr_matrix(A), directed=False)
+   326	    return {
+   327	        "n_connected_components": int(n_components),
+   328	        "connected": bool(n_components == 1),
+   329	    }
+   330	
+   331	
+   332	def multi_source_sweep(V, C_phi):
+   333	    """
+   334	    Per-vertex correlation between psi = C_phi^-1 e_v and the continuum kernel
+   335	    G(x) = (phi/2) exp(-x/phi) for every source vertex v in V. H_4 transitivity
+   336	    predicts the correlation is invariant under choice of source vertex; this
+   337	    function verifies the prediction numerically across all 120 sources and
+   338	    reports the min/mean/max envelope.
+   339	    """
+   340	    n = V.shape[0]
+   341	    corrs = np.zeros(n)
+   342	    for source_idx in range(n):
+   343	        psi = green_response(C_phi, source_idx)
+   344	        chord = np.linalg.norm(V - V[source_idx], axis=1)
+   345	        cont = (PHI / 2.0) * np.exp(-chord / PHI)
+   346	        mask = np.arange(n) != source_idx
+   347	        corrs[source_idx] = float(np.corrcoef(psi[mask], cont[mask])[0, 1])
+   348	    return {
+   349	        "n_sources": int(n),
+   350	        "min_correlation": float(corrs.min()),
+   351	        "mean_correlation": float(corrs.mean()),
+   352	        "max_correlation": float(corrs.max()),
+   353	        "max_minus_min": float(corrs.max() - corrs.min()),
+   354	    }
+   355	
+   356	
+   357	def operator_norm_check(L, w):
+   358	    lam_min_L = float(w[0])           # 0
+   359	    lam_min_C = lam_min_L + INV_PHI2  # phi^-2
+   360	    op_norm = 1.0 / lam_min_C         # phi^2
+   361	    return {
+   362	        "lambda_min_L": lam_min_L,
+   363	        "lambda_min_C_phi": lam_min_C,
+   364	        "operator_norm_C_phi_inv": op_norm,
+   365	        "predicted_phi_squared": PHI ** 2,
+   366	    }
+   367	
+   368	
+   369	# ---------------------------------------------------------------------------
+   370	# 9. Run everything and write results.json
+   371	# ---------------------------------------------------------------------------
+   372	
+   373	def main():
+   374	    out_path = Path(__file__).parent / "results.json"
+   375	
+   376	    V = build_v600()
+   377	    n = V.shape[0]
+   378	    A = build_short_edge_graph(V)
+   379	    deg = A.sum(axis=1)
+   380	    n_edges = int(A.sum() // 2)
+   381	
+   382	    L, w, U = laplacian_spectrum(A)
+   383	    spectrum = round_spectrum(w, decimals=4)
+   384	
+   385	    C_phi = build_C_phi(L)
+   386	    op_norm = operator_norm_check(L, w)
+   387	    connectivity = connectivity_check(A)
+   388	    multi_source = multi_source_sweep(V, C_phi)
+   389	
+   390	    # Pick the +x_0 axis vertex as canonical pole/source.
+   391	    pole_idx = int(np.argmax(V @ np.array([1.0, 0.0, 0.0, 0.0])))
+   392	    pole = V[pole_idx]
+   393	
+   394	    shells, shell_sizes, canonical_inner = shell_indices(V, pole_idx)
+   395	
+   396	    test = discrete_continuum_test(V, C_phi, pole_idx)
+   397	
+   398	    # Variant comparison on the same source
+   399	    variants = {}
+   400	    for variant in ("UNWEIGHTED", "PHI_GEOMETRIC", "PHI_ARITHMETIC"):
+   401	        out = variant_correlation(V, A, pole_idx, variant)
+   402	        variants[variant] = {
+   403	            "shell_mean_correlation": out["shell_mean_correlation"],
+   404	            "per_vertex_correlation": out["per_vertex_correlation"],
+   405	        }
+   406	
+   407	    result = {
+   408	        "phi": PHI,
+   409	        "phi_inv_sq": INV_PHI2,
+   410	        "n_vertices": n,
+   411	        "n_edges": n_edges,
+   412	        "degree_sequence": {
+   413	            "min": int(deg.min()),
+   414	            "max": int(deg.max()),
+   415	            "mean": float(deg.mean()),
+   416	        },
+   417	        "connectivity": connectivity,
+   418	        "shell_sizes": shell_sizes,
+   419	        "shell_inner_products": canonical_inner.tolist(),
+   420	        "antipodal_check": {
+   421	            "pole_idx": pole_idx,
+   422	            "antipode_idx": int(np.argmin(V @ pole)),
+   423	            "expected_shell_8_size": 1,
+   424	            "observed_shell_8_size": shell_sizes.get(8, 0),
+   425	        },
+   426	        "laplacian_spectrum_grouped": [
+   427	            {"eigenvalue": ev, "multiplicity": m} for ev, m in spectrum
+   428	        ],
+   429	        "operator_norm": op_norm,
+   430	        "discrete_continuum_test": test,
+   431	        "variant_correlation": variants,
+   432	        "multi_source_sweep": multi_source,
+   433	    }
+   434	
+   435	    with open(out_path, "w") as f:
+   436	        json.dump(result, f, indent=2)
+   437	
+   438	    # Headline summary
+   439	    print("=" * 60)
+   440	    print("ARIA Closure Kernel — verification")
+   441	    print("=" * 60)
+   442	    print(f"|V|           = {n}  (expected 120)")
+   443	    print(f"|E|           = {n_edges}  (expected 720)")
+   444	    print(f"degree min/max = {int(deg.min())}/{int(deg.max())}  (expected 12/12)")
+   445	    print(f"connected      = {connectivity['connected']}  "
+   446	          f"(components = {connectivity['n_connected_components']})")
+   447	    print(f"shell sizes   = {[shell_sizes[k] for k in range(9)]}")
+   448	    print(f"               (expected [1, 12, 20, 12, 30, 12, 20, 12, 1])")
+   449	    print()
+   450	    print("Laplacian spectrum (eigenvalue, multiplicity):")
+   451	    for ev, m in spectrum:
+   452	        print(f"  {ev:>8.4f}   x {m}")
+   453	    print()
+   454	    print(f"||C_phi^-1||  = {op_norm['operator_norm_C_phi_inv']:.6f}")
+   455	    print(f"   phi^2       = {op_norm['predicted_phi_squared']:.6f}  (predicted)")
+   456	    print()
+   457	    print("Discrete <-> continuum agreement (Pearson correlation):")
+   458	    print(f"  variant         | shell-mean  | per-vertex")
+   459	    for v in ("UNWEIGHTED", "PHI_GEOMETRIC", "PHI_ARITHMETIC"):
+   460	        sm = variants[v]["shell_mean_correlation"]
+   461	        pv = variants[v]["per_vertex_correlation"]
+   462	        print(f"  {v:<15} | {sm:>10.6f}  | {pv:>10.6f}")
+   463	    print()
+   464	    print(f"Multi-source sweep over all {multi_source['n_sources']} vertices:")
+   465	    print(f"  per-vertex correlation min  = {multi_source['min_correlation']:.6f}")
+   466	    print(f"  per-vertex correlation mean = {multi_source['mean_correlation']:.6f}")
+   467	    print(f"  per-vertex correlation max  = {multi_source['max_correlation']:.6f}")
+   468	    print(f"  max - min                   = {multi_source['max_minus_min']:.2e}")
+   469	    print()
+   470	    print(f"Wrote {out_path}")
+   471	
+   472	
+   473	if __name__ == "__main__":
+   474	    main()
+
+ succeeded in 474ms:
+     1	% =====================================================================
+     2	\section{Results}\label{sec:results}
+     3	% =====================================================================
+     4	
+     5	This section is the empirical core. \S\ref{ssec:six_signatures}
+     6	gives the six drug/sleep EEG signatures on the recurrent layer
+     7	(set B). \S\ref{ssec:eighteen_prereg} gives the eighteen
+     8	preregistered correspondences (set A). \S\ref{ssec:alpha_overlap}
+     9	gives the three-way $\alpha$ overlap. We lift the result map
+    10	$R\colon (\text{condition / test id}) \to \text{(scalar, threshold,
+    11	verdict)}$ verbatim from the validation outputs without
+    12	recomputation; sources are
+    13	\texttt{docs/brain\_mapping/CONSCIOUSNESS\_CHAIN\_V4\_SIGNATURES.md}
+    14	and \texttt{docs/brain\_mapping/VALIDATION\_RESULTS\_2026-04-29.md}.
+    15	
+    16	\subsection{Six drug/sleep EEG signatures}\label{ssec:six_signatures}
+    17	
+    18	\textbf{Setup.} Four conditions $\times$ $800$ ticks at seed $42$,
+    19	$k_{\mathrm{thr}}=12$, single deterministic substrate
+    20	(\S\ref{sec:chain}). Per-condition trajectory observables are
+    21	$(n_{\mathrm{evt}}, \alpha, \mathrm{CI}_{95}, R^{2}, I_{\mathrm{var}},
+    22	\Phi_{\mathrm{traj}}, \mathrm{cont})$.
+    23	
+    24	\begin{table}[ht]
+    25	\centering
+    26	\small
+    27	\caption{Per-condition trajectory observables (\texttt{demo\_drug\_sleep\_v4.py},
+    28	seed 42).}
+    29	\label{tab:per_condition}
+    30	\begin{tabular}{l r r l r r r r}
+    31	\toprule
+    32	condition & $n_{\mathrm{evt}}$ & $\alpha$ & 95\% CI & $R^{2}$ & $I_{\mathrm{var}}$ & $\Phi_{\mathrm{traj}}$ & cont \\
+    33	\midrule
+    34	WAKE      & $58$  & $2.252$ & $[1.82, 2.86]$ & $0.956$ & $2.18\!\times\!10^{-5}$ & $0.0008$ & $0.943$ \\
+    35	SLEEP\_N3 & $111$ & $3.250$ & $[2.44, 4.14]$ & $0.886$ & $1.01\!\times\!10^{-5}$ & $0.0055$ & $0.980$ \\
+    36	PROPOFOL  & $246$ & $2.758$ & $[2.52, 3.09]$ & $0.931$ & $5.37\!\times\!10^{-6}$ & $0.0003$ & $0.877$ \\
+    37	RECOVERY  & $58$  & $2.252$ & $[1.82, 2.86]$ & $0.956$ & $2.18\!\times\!10^{-5}$ & $0.0008$ & $0.943$ \\
+    38	\bottomrule
+    39	\end{tabular}
+    40	\end{table}
+    41	
+    42	\begin{table}[ht]
+    43	\centering
+    44	\small
+    45	\caption{Six drug/sleep signatures with literature references.}
+    46	\label{tab:six_signatures}
+    47	\begin{tabular}{c l l c c l}
+    48	\toprule
+    49	\# & Signature & Reference & Predicted & Observed & Verdict \\
+    50	\midrule
+    51	1 & NREM-N3 var ratio (vs Wake) &
+    52	   Sleep-EDFx W$\to$N3 ($n=24$)~\citep{SleepEDFx} &
+    53	   $\approx 0.365$ & $0.463$ & $\checkmark$ \\
+    54	2 & Propofol switching ratio &
+    55	   OpenNeuro \texttt{ds005620} ($n=8$, $2.96{\times}$)~\citep{OpenNeuroDS005620} &
+    56	   $\in[1.5, 5.0]$ & $1.83\times$ & $\checkmark$ \\
+    57	3 & Propofol continuity drop &
+    58	   EEG microstate~\citep{Brodbeck2012Microstates} &
+    59	   $> 0.020$ & $+0.066$ & $\checkmark$ \\
+    60	4 & Propofol $\Phi$ collapse (IIT) &
+    61	   Tononi 2008~\citep{Tononi2008} &
+    62	   ratio $< 0.50$ & $0.33\times$ & $\checkmark$ \\
+    63	5 & Recovery reversibility &
+    64	   clinical anaesthesia &
+    65	   identical to wake & $0$ diff & $\checkmark$ \\
+    66	6 & Wake cortical-avalanche $\alpha$ &
+    67	   Sleep-EDFx $n=30$ CI~$[2.50, 2.53]$~\citep{BeggsPlenz2003,SleepEDFx} &
+    68	   $\alpha\!\in\![1.5, 3.5]$, $R^{2}\!>\!0.85$ &
+    69	   $2.252$ $[1.82, 2.86]$ $R^{2}\!=\!0.956$ &
+    70	   $\checkmark$ \\
+    71	\bottomrule
+    72	\end{tabular}
+    73	\end{table}
+    74	
+    75	All six signatures pass against their literature-derived thresholds
+    76	on the same deterministic substrate trajectory. The six signatures
+    77	are not part of the dated 2026-04-18 P1--P18 preregistration; their
+    78	thresholds are drawn from the literature (Sleep-EDFx CI for
+    79	wake $\alpha$, OpenNeuro \texttt{ds005620} point-estimate window for
+    80	propofol switching, literature-direction predictions for $\Phi$
+    81	collapse, continuity drop, and recovery). They were tested on a
+    82	recurrent-layer architecture redesigned at v4 with
+    83	biologically-motivated condition-specific stimulus models
+    84	(\S\ref{sec:chain}; \texttt{CONSCIOUSNESS\_CHAIN\_V4\_SIGNATURES.md}
+    85	documents the v3$\to$v4 stimulus redesign). The mechanistic readings
+    86	in \texttt{CONSCIOUSNESS\_CHAIN\_V4\_SIGNATURES.md} are not
+    87	load-bearing for the headline claim. Single-seed disclosure:
+    88	\S\ref{ssec:regime}.
+    89	
+    90	\subsection{Eighteen preregistered correspondences}\label{ssec:eighteen_prereg}
+    91	
+    92	\textbf{Tally.} $17/18$ at standard validation
+    93	(\texttt{run\_preregistered\_validation.py}, $5$-seed cascade block
+    94	plus state-reset protocol); $18/18$ after the $N\!=\!20$ deep-dive
+    95	on the residual P4 (\texttt{demo\_p4\_cxp\_deep\_dive.py}, seed range
+    96	$32000$--$32019$). \emph{No preregistered threshold has been modified.}
+    97	
+    98	\begin{table}[ht]
+    99	\centering
+   100	\small
+   101	\caption{All eighteen preregistered correspondences, frozen 2026-04-18.}
+   102	\label{tab:eighteen_prereg}
+   103	\begin{tabular}{l l l l l}
+   104	\toprule
+   105	ID & Test & Threshold & Observed (2026-04-29) & Verdict \\
+   106	\midrule
+   107	P1  & Cascade $\alpha$ SOC range            & $\in [2.5, 3.5]$ & $2.958$ & $\checkmark$ \\
+   108	P2  & $C$ main effect                        & $\geq +0.30$     & $+0.621$ & $\checkmark$ \\
+   109	P3  & $|D{\times}C|$ (independence)          & $|\cdot| < 0.20$ & $-0.183$ ($N\!=\!5$) & $\checkmark$ \\
+   110	\textbf{P4} & $C{\times}P$ synergy           & $\geq +0.10$     &
+   111	   $+0.190$ \, CI $[+0.143, +0.239]$ ($N\!=\!20$) & $\checkmark$ \\
+   112	P5  & $|E|$ main effect (null)               & $|\cdot| < 0.15$ & $+0.046$ & $\checkmark$ \\
+   113	P6  & Real EEG $\alpha$                      & $\in [2.0, 3.0]$ & $2.513$ & $\checkmark$ \\
+   114	P7  & W$\!\to\!$N3 variance ratio            & $< 0.70$         & $0.365$ & $\checkmark$ \\
+   115	P8  & W$\!\to\!$N3 switching ratio           & $< 0.50$         & $0.058$ & $\checkmark$ \\
+   116	P9  & Chess 5-fold CV                        & $\geq 70\%$      & $83.1\%$ & $\checkmark$ \\
+   117	P10 & Chess null mapping                     & $\geq 50\%$      & $65.4\%$ & $\checkmark$ \\
+   118	P11 & Chess random-label                     & $\in [15\%, 35\%]$ & $23.4\%$ & $\checkmark$ \\
+   119	P12 & Chess goldilocks peak                  & $\in \{15, 25, 40, 60\}$ & $n=25$ & $\checkmark$ \\
+   120	\textbf{P13}$^{\ddagger}$ & Chess substrate lift (with reset) & $\geq +15$pp & $+40.6$pp (LOO) & $\checkmark$ \\
+   121	P14 & Conv raw 5-fold CV                     & $\geq 75\%$      & $87.5\%$ & $\checkmark$ \\
+   122	P15 & $|$conv lift$|$                        & $|\cdot| < 10$pp & $-4.4$pp & $\checkmark$ \\
+   123	P16 & Conv null mapping                      & $\geq 50\%$      & $70.6\%$ & $\checkmark$ \\
+   124	P17 & ARIA degree std (theorem)              & $= 0$            & $0.0000$ & $\checkmark$ \\
+   125	P18 & HCP degree std                         & $> 2.0$          & $3.388$ & $\checkmark$ \\
+   126	\bottomrule
+   127	\end{tabular}
+   128	\end{table}
+   129	
+   130	\noindent$^{\ddagger}$ P13 was preregistered with the substrate-lift
+   131	estimator as $5$-fold CV at threshold $\geq +15$pp; the 2026-04-29
+   132	validation tightened the estimator to LOO with state reset, a
+   133	disclosed estimator/protocol refinement at the unchanged $+15$pp threshold. See
+   134	\S\ref{sec:cross_domain} for the depth sweep and protocol detail.
+   135	
+   136	\textbf{Three predictions that flipped to PASS, with documented
+   137	methodology refinement (no threshold change).}
+   138	\begin{itemize}\itemsep=2pt
+   139	\item P3 (D$\times$C interaction independence) was outside the band
+   140	  at $N\!=\!3$ ($-0.231$) and inside the band at $N\!=\!5$ ($-0.183$).
+   141	  Reading: consistent with an underpowered interaction estimate at
+   142	  $N\!=\!3$ on a high-per-seed-variance interaction term.
+   143	\item P4 (C$\times$P synergy) was below threshold at $N\!=\!3$
+   144	  ($+0.044$) and at $N\!=\!5$ ($+0.039$); the $N\!=\!20$ deep-dive
+   145	  (\S\ref{sec:stress}) gives $+0.190$ with $95\%$ CI
+   146	  $[+0.143, +0.239]$, decisively above the $\geq +0.10$ floor.
+   147	\item P13 (chess substrate lift): the 2026-04-18 preregistration
+   148	  (\texttt{PAPER\_PREDICTIONS.md:115-120}) specified the estimator as
+   149	  $5$-fold CV with threshold $\geq +15$pp at $n=25$. The 2026-04-29
+   150	  validation strengthened the estimator to LOO with state reset, a
+   151	  disclosed estimator/protocol refinement at the same threshold; the LOO lift was $+3.1$pp
+   152	  without state reset on a state-drifted substrate, and $+40.6$pp
+   153	  with \texttt{homeostatic\_reset(level=1.0)} between depth measurements
+   154	  (\S\ref{sec:method}; \texttt{NON\_EQUILIBRIUM\_FINDING.md}). We
+   155	  report this as a \emph{validation-protocol refinement relative to
+   156	  the preregistered test}, not as preregistration revision.
+   157	\end{itemize}
+   158	
+   159	\textbf{Headline verdict.} Eighteen preregistered correspondences
+   160	all pass at preregistered thresholds, with two interaction tests
+   161	requiring $N\!\geq\!5$ and one requiring $N\!=\!20$ for reliable
+   162	detection of high-variance interaction terms, and one test
+   163	requiring the documented state-reset protocol. The original $15/18$
+   164	result was a methodology-limited tally, not a content failure.
+   165	
+   166	\subsection{Three-way \texorpdfstring{$\alpha$}{alpha} overlap}\label{ssec:alpha_overlap}
+   167	
+   168	The substrate's wake cascade-$\alpha$ confidence interval overlaps
+   169	\emph{three independent reference ranges} simultaneously:
+   170	
+   171	\begin{table}[ht]
+   172	\centering
+   173	\small
+   174	\caption{Three-way $\alpha$ overlap on the wake cascade-event power
+   175	law.}
+   176	\label{tab:alpha_overlap}
+   177	\begin{tabular}{l c l c}
+   178	\toprule
+   179	Source & $\alpha$ & 95\% CI & $n$ \\
+   180	\midrule
+   181	ARIA cascade-pipeline baseline ($N=5$) & $2.958$  & inside $[2.5, 3.5]$ & 5 seeds \\
+   182	Real EEG (Sleep-EDFx, $n=30$ subjects)~\citep{SleepEDFx} & $2.51$ & $[2.50, 2.53]$ & 30 \\
+   183	ARIA prior cascade pipeline ($n=4$ subjects) & $2.85$ & $[2.73, 3.25]$ & per-subject \\
+   184	\textbf{v4 WAKE consciousness chain} & $\mathbf{2.252}$ & $[\mathbf{1.82, 2.86}]$ & 58 events \\
+   185	\bottomrule
+   186	\end{tabular}
+   187	\end{table}
+   188	
+   189	The v4 WAKE 95\% CI $[1.82, 2.86]$ contains the upper arm of the
+   190	real Sleep-EDFx EEG CI $[2.50, 2.53]$, overlaps the ARIA prior
+   191	cascade pipeline CI $[2.73, 3.25]$ on the interval $[2.73, 2.86]$,
+   192	and lies inside the cortical-avalanche band
+   193	$\alpha\!\in\![1.5, 3.5]$~\citep{BeggsPlenz2003}. The pairwise
+   194	intersections (WAKE $\cap$ Sleep-EDFx, WAKE $\cap$ prior pipeline,
+   195	WAKE $\cap$ cortical-avalanche band) are non-empty across three
+   196	independent reference ranges.
+   197	
+   198	\textbf{Reading.} The substrate produces self-organised-critical
+   199	cascade statistics matching the cortical-avalanche literature with
+   200	no fitted parameter on neural data. The bounded-top-$K$ at
+   201	$k=12$ is pinned to the substrate's average degree
+   202	(\S\ref{ssec:graph}); the $\Ph^{-2}$ shift in $\Cph$ is a
+   203	stability clamp (\S\ref{ssec:cphi}); the AR(1) WAKE input has
+   204	biological time-scale parameters but is not measurement-fitted to
+   205	any specific subject (\S\ref{sec:chain}). Three-way overlap on the
+   206	power-law exponent is one of the main empirical anchors in the paper
+   207	(noting that the v4 WAKE CI is from a single deterministic trajectory
+   208	with event-bootstrap; cross-seed CI is an open build).
+
+ succeeded in 488ms:
+     1	% =====================================================================
+     2	\section{Limitations and hostile-review guard matrix}\label{sec:limitations}
+     3	% =====================================================================
+     4	
+     5	This section enumerates limitations transparently, organised as a
+     6	five-move guard matrix following the b-anomaly preprint
+     7	template~\citep{SmartBAnomaly2026}: regime, post-hoc, interpretation,
+     8	test/claim, state-drift. For each guard we record
+     9	$G\colon \mathrm{risk} \to (\mathrm{disclosure}, \mathrm{evidence},
+    10	\mathrm{strengthening\ build})$.
+    11	
+    12	\subsection{Regime}\label{ssec:regime}
+    13	
+    14	\textbf{Single substrate (the 600-cell).} We have not tested whether
+    15	other regular 4-polytopes ($24$-cell, $120$-cell) would produce
+    16	comparable correspondences. The 600-cell was chosen because its
+    17	H$_4$ Coxeter cascade structure aligns with the empirical signatures
+    18	that motivated this paper, not from an a-priori derivation.
+    19	\emph{Disclosure:} substrate-witness scope, no uniqueness claim
+    20	(\S\ref{sec:intro}). \emph{Evidence:} empirical correspondences hold
+    21	on $\Rsixhundred$. \emph{Strengthening build:} formal ablation against
+    22	$\{24\text{-cell}, 120\text{-cell}\}$ on the same six-signature
+    23	battery and the eighteen preregistered tests, with thresholds
+    24	preserved.
+    25	
+    26	\textbf{Single-seed determinism on the recurrent layer.} The v4
+    27	six-signature results in~\S\ref{ssec:six_signatures} are reported on
+    28	a single deterministic trajectory at seed $42$. Empirical CIs across
+    29	$10$--$20$ cross-seed runs would strengthen the per-signature claims
+    30	beyond the single-trajectory bootstrap of $58$ events that gives the
+    31	WAKE 95\% CI $[1.82, 2.86]$. \emph{Disclosure:} explicitly single-seed
+    32	in~\S\ref{sec:method} and~\S\ref{ssec:six_signatures}.
+    33	\emph{Evidence:} bootstrap CI on the wake 58 events, plus three-way
+    34	overlap with two independent reference $\alpha$ ranges.
+    35	\emph{Strengthening build:} 10--20 cross-seed runs of
+    36	\texttt{demo\_drug\_sleep\_v4.py}, with per-signature bootstrap CIs.
+    37	
+    38	\textbf{Stylised stimulus models on the recurrent layer.} The v4
+    39	stimulus models for WAKE (AR(1) noise + tonic shell + attention
+    40	episodes), SLEEP\_N3 (slow oscillation + spindles + K-complexes),
+    41	and PROPOFOL (low-amplitude tonic noise) are biologically motivated
+    42	but abstract: a single shell anchor for tonic coherence, fixed
+    43	$40$-tick period for slow-wave drive, etc. Real spatial structure of
+    44	cortical input is much richer. The v4 stimulus models were redesigned
+    45	after diagnostics on the v3 stimulus models to close v3 stimulus-model
+    46	artefacts; v4 components are biologically-motivated and not fitted
+    47	to subject-level measurements, but they are condition-specific
+    48	design choices iterated to v4. \emph{Disclosure:}~\S\ref{sec:chain}
+    49	explicitly frames v4 as a redesign. \emph{Evidence:} amplitudes and
+    50	durations match published biological time scales; the v3$\to$v4
+    51	diff is captured in
+    52	\texttt{CONSCIOUSNESS\_CHAIN\_V4\_SIGNATURES.md}. \emph{Strengthening
+    53	build:} replication on stimulus models derived from anatomically-grounded
+    54	input statistics (e.g.\ retinotopic, tonotopic).
+    55	
+    56	\subsection{Post-hoc}\label{ssec:posthoc}
+    57	
+    58	\textbf{The 600-cell choice is post-hoc justified by empirical
+    59	observables.} While the construction of $\Rsixhundred$ is theorem-
+    60	level rigorous (H$_4$ Coxeter group theory), the choice of \emph{this}
+    61	polytope as the consciousness-substrate instance is motivated by the
+    62	correspondences observed, not by an a-priori biological argument.
+    63	\emph{Disclosure:}~\S\ref{sec:intro}, ``substrate witness, not
+    64	derivation; not a uniqueness claim''. \emph{Evidence:} the eighteen
+    65	preregistered correspondences plus six signatures; the H$_4$
+    66	transitivity theorem ($P17$). \emph{Strengthening build:} comparison
+    67	with the $24$-cell and $120$-cell on the same signatures; formal
+    68	ACT-selection-theorem witness via the bridge of~\S\ref{ssec:act_bridge}
+    69	(deferred).
+    70	
+    71	\textbf{Cascade decomposition is one of several possible
+    72	decompositions of H$_4$.} We use the $\sigma$-orbit projector basis
+    73	because it is machine-precise and biologically informative, but other
+    74	bases (character-theoretic, Galois-twin) give the same physical
+    75	predictions through different intermediate variables. \emph{Disclosure:}
+    76	\S\ref{ssec:cascade} acknowledges non-uniqueness of decomposition.
+    77	\emph{Evidence:} block-diagonalisation at $<10^{-15}$ cross-block
+    78	norm. \emph{Strengthening build:} catalogue and equivalence-prove the
+    79	admissible decompositions.
+    80	
+    81	\textbf{$\Ph^{-2}$ floor not derived.} The shifted-Laplacian floor
+    82	$\Ph^{-2}\!\approx\!0.382$ is a stability clamp making $\Cph$
+    83	strictly positive definite (\S\ref{ssec:cphi}); it is not derived
+    84	from a closure functional or symmetry argument. \emph{Disclosure:}
+    85	\S\ref{ssec:cphi} marks this as a design-level choice; the companion
+    86	kernel doc~\citep{SmartAriaClosureKernel2026} explicitly does not
+    87	derive it. \emph{Evidence:} the same operator (with the same shift)
+    88	serves as the basis for the b-anomaly passive-regime
+    89	witness~\citep{SmartBAnomaly2026}. \emph{Strengthening build:}
+    90	derive the $\Ph^{-2}$ shift as the unique stability clamp under a
+    91	named regularity criterion.
+    92	
+    93	\subsection{Interpretation}\label{ssec:interpretation}
+    94	
+    95	\textbf{The recurrent layer is a method, not a metaphysics claim.}
+    96	We do not claim the recurrent self-model layer ``is'' consciousness;
+    97	we claim quantitative consistency with six published biological
+    98	signatures on a deterministic trajectory. \emph{Disclosure:}
+    99	\S\ref{sec:intro}, \S\ref{sec:chain} (``method, not metaphysics'').
+   100	\emph{Evidence:} six signatures vs published thresholds.
+   101	\emph{Strengthening build:} cross-seed CIs (\S\ref{ssec:regime}); a
+   102	formal account of which substrate observables map to which phenomenal
+   103	contents (the bind\_phenomenal\_field channels) is not delivered.
+   104	
+   105	\textbf{$\Phi$ is an IIT-style direction-of-effect proxy, not a full
+   106	IIT discharge.} \emph{Disclosure:}~\S\ref{sec:chain} explicitly.
+   107	\emph{Evidence:} propofol $\Phi$ collapse to $0.33\!\times$ wake
+   108	matches IIT direction. \emph{Strengthening build:} a
+   109	\texttt{phi\_iit\_full} implementation following Balduzzi--Tononi
+   110	2008~\citep{BalduzziTononi2008} on the substrate; not delivered.
+   111	
+   112	\textbf{HCP $\sigma$-distances are descriptive, not normative.} We
+   113	do not claim ``cortex has drifted from an ideal polytope''; we
+   114	quantify the distance between cortex and the deterministic H$_4$ null.
+   115	\emph{Disclosure:}~\S\ref{ssec:hcp} explicitly. \emph{Evidence:}
+   116	$\sigma$-distances on three independent metrics. \emph{Strengthening
+   117	build:} cross-parcellation replication (Schaefer, Glasser).
+   118	
+   119	\subsection{Test/claim}\label{ssec:testclaim}
+   120	
+   121	\textbf{Two preregistered interaction tests required higher $N$
+   122	than originally allocated.} P3 closes at $N\!=\!5$; P4 closes only at
+   123	$N\!=\!20$. We document this transparently as consistent with
+   124	underpowered interaction estimates on high-per-seed-variance terms,
+   125	not a threshold change. \emph{Disclosure:}
+   126	\S\ref{sec:method}, \S\ref{sec:results}, \S\ref{sec:stress}.
+   127	\emph{Evidence:} bootstrap CI fully above the $+0.10$ floor; per-seed
+   128	distribution narrow at $N\!=\!20$ ($\mathrm{std}=0.089$);
+   129	$19/20$ seeds positive. \emph{Strengthening build:} a second
+   130	$N\!=\!20$ run at a different seed range (e.g.\ $33000$--$33019$);
+   131	an $N\!=\!50$ characterisation of the per-seed distribution.
+   132	
+   133	\textbf{The original 2026-04-20 walks-back are reversed without
+   134	threshold modification.} The reversals (P3, P4, P13) are documented
+   135	in
+   136	\texttt{docs/brain\_mapping/VALIDATION\_RESULTS\_2026-04-29.md} with
+   137	the original failure values, the methodology refinement, and the
+   138	post-refinement values. \emph{Disclosure:} this paper carries those
+   139	disclosures verbatim. \emph{Evidence:} 2026-04-20 vs 2026-04-29 side-
+   140	by-side results table. \emph{Strengthening build:} the strengthening
+   141	builds for P3/P4/P13 above; no further claim is needed.
+   142	
+   143	\textbf{Bayesian and full-IIT inference not performed.} All intervals
+   144	are frequentist (bootstrap CIs); $\Phi$ is the direction-of-effect
+   145	proxy, not the Balduzzi--Tononi 2008 algorithm. \emph{Disclosure:}
+   146	this section. \emph{Strengthening build:} Bayesian posterior on
+   147	$\Delta_{CP}$; full-IIT computation on the
+   148	substrate's $S^{3}$ state space. The latter is computationally
+   149	heavy and is deferred.
+   150	
+   151	\subsection{State-drift / out-of-scope}\label{ssec:scope}
+   152	
+   153	\textbf{Single condition-dependent parameter $\eta$ is not derived
+   154	as a learned variable.} $\eta\in\{0, 0.05, 0.20\}$ across PROPOFOL,
+   155	SLEEP\_N3, and WAKE/RECOVERY is a condition-dependent constant in
+   156	this paper, not a learned trajectory. A predictive-processing
+   157	extension where $\eta$ adapts on an error norm is an open build.
+   158	
+   159	\textbf{No deuteron / hadron / RH / capstone material is loaded into
+   160	this paper.} The companion programme (cascade-derivation, capstone
+   161	coalgebra, RH formal) shares operator-level infrastructure but is not
+   162	load-bearing here. Deliberately out of scope.
+   163	
+   164	\textbf{Out-of-scope items NOT delivered (correctly).}
+   165	\begin{itemize}\itemsep=2pt
+   166	\item Active-regime extension of the chess pattern-recognition test to
+   167	  move-by-move game trajectories (this paper covers static positions only).
+   168	\item Edge-space decomposition of $\mathbb{R}^{E_{M}}$ under
+   169	  $2I$-equivariance — open build of the ACT companion paper.
+   170	\item Lyapunov derivation $V(W)$ from a closure functional
+   171	  $\mathcal{F}$ — open build of the ACT companion paper.
+   172	\item Selection theorem for $\Rsixhundred$ over alternative regular
+   173	  4-polytopes — see~\S\ref{ssec:regime}.
+   174	\item Cross-cohort EEG (TUH, NHM, OpenNeuro non-propofol) replication
+   175	  of the six signatures.
+   176	\item Cross-parcellation replication of the HCP $\sigma$-distances
+   177	  (Schaefer, Glasser, etc.).
+   178	\item Bayesian posterior on the C$\times$P interaction.
+   179	\item Verification of P10 (chess null mapping) at the preregistered
+   180	  $20$-permutation count (the 2026-04-29 validation used $15$
+   181	  permutations; threshold $\geq 50\%$ unchanged; result $65.4\%$
+   182	  robust in the $15$--$20$ range, but the prereg-exact rerun is open).
+   183	\end{itemize}
+   184	
+   185	\subsection{The honest verdict}
+   186	
+   187	The result is a substrate witness: a geometry-fixed substrate, with
+   188	no shape parameters tuned to any neural dataset, is consistent with
+   189	eighteen preregistered correspondences and six companion drug/sleep
+   190	EEG signatures, with all original gaps closed by methodology
+   191	refinement and without modifying any preregistered threshold. We do
+   192	not claim the substrate \emph{is} consciousness. We do not claim a
+   193	selection theorem on the ACT bridge. We do not claim uniqueness for
+   194	$\Rsixhundred$ among regular 4-polytopes. The strengthening builds
+   195	for these stronger claims are listed above and remain open.
+
+exec
+/bin/bash -lc 'nl -ba papers/aria-chess-paper/paper/main.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc "nl -ba /mnt/c/Users/nexus/OneDrive/Documents/My\\ Projects/BANOMALY-001/vfd-b-anomaly/README.md" in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc "rg -n \"derive|derived|unique|uniqueness|selection theorem|Lyapunov|2I|equivariance|AIC tie|Mode-B|P10|600-cell|phi\\"'^-2|Phi'"\\"'^-2|'"\\\\Ph\\"'^'"\\{-2\\}|lambda_min|inf \\\\sigma|multi-source|all 120|0\\.976|0\\.888|0\\.884|0\\.923|0\\.997|18/18|17/18\" papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections papers/aria-closure-kernel/repro/results.json papers/aria-chess-paper/paper/main.tex papers/aria-chess-paper/paper/sections/05_results.tex papers/aria-chess-paper/paper/sections/09_limitations.tex /mnt/c/Users/nexus/OneDrive/Documents/My\\ Projects/BANOMALY-001/vfd-b-anomaly/README.md" in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ succeeded in 441ms:
+     1	# vfd-b-anomaly
+     2	
+     3	**A geometry-derived response kernel for the $B \to K^{*}\mu^{+}\mu^{-}$ angular anomaly: sign-uniform cross-dataset and cross-channel fit.**
+     4	
+     5	[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+     6	[![Paper](https://img.shields.io/badge/paper-PDF-blue)](paper/main.pdf)
+     7	
+     8	This repository accompanies the preprint **[paper/main.pdf](paper/main.pdf)**. It contains all source code, processed data, intermediate result tables, and figures needed to reproduce every number in the paper from a clean checkout.
+     9	
+    10	---
+    11	
+    12	## Headline result
+    13	
+    14	A single fixed response kernel $\kappa(q^{2})$ — derived from the 600-cell $V_{600}$ graph regularised by the golden ratio $\varphi^{-2}$ as a discrete mass scale, **with no shape parameters tuned to data** — provides a consistent description of the $q^{2}$ behaviour of the $b\to s\mu^{+}\mu^{-}$ angular anomaly across five public datasets covering two collaborations, two isospin partners, and three decay channels. Predictions are evaluated with `flavio.np_prediction` (non-linear in $\Delta C_{9}$). Only **one dimensionless amplitude $A$** is fitted per dataset; the kernel shape itself never moves.
+    15	
+    16	| dataset | decay | $n$ | non-linear $\Delta\mathrm{AIC}$ | best-fit $A$ | $\Delta C_{9}^{\mathrm{eff}}$ |
+    17	|---|---|---:|---:|---:|---:|
+    18	| LHCb 2015            | $B^{0}\!\to\!K^{*0}$           | 32 | $-0.24$ | $+1.24$ | $-0.96$ |
+    19	| LHCb 2021            | $B^{+}\!\to\!K^{*+}$           | 32 | $+0.17$ | $+2.06$ | $-1.59$ |
+    20	| CMS 2025 (no $P_{4}'$) | $B^{0}\!\to\!K^{*0}$           | 18 | $+0.47$ | $+1.05$ | $-0.81$ |
+    21	| LHCb 2025            | $B^{0}\!\to\!K^{*0}$           | 32 | $+1.09$ | $+1.14$ | $-0.86$ |
+    22	| LHCb 2015            | $B_{s}\!\to\!\phi$ ($S$-basis) | 24 | $-0.24$ | $+4.98$ | $-3.85$ |
+    23	
+    24	**What the data shows:**
+    25	- **Universality.** The same fixed kernel describes all five datasets with one amplitude each — no shape retuning across datasets, channels, or isospin partners.
+    26	- **Sign uniformity.** $A>0$ in **5/5** fits; $\Delta C_{9}^{\mathrm{eff}}<0$ in **5/5** fits. The kernel reproduces the established direction of the anomaly across all five independent measurements.
+    27	- **Cross-channel ratio.** The $B\to K^{*}$ vs $B_{s}\!\to\!\phi$ amplitudes differ by a factor consistent with the predicted Krüger–Matias $P$-basis vs $S$-basis amplification ($\sim 2.2$), with a residual $\sim 50\%$ overshoot.
+    28	- **Geometry-first variant test.** Of three discrete Laplacian variants, the unweighted choice wins on a *pure-geometry* criterion (correlation $0.997$ with the continuum kernel) decided **independently of the LHCb data**. The same variant later wins on the data $\chi^{2}$ — independent geometry and data criteria agree.
+    29	
+    30	**Statistical caveat (what the paper does not claim):**
+    31	- On Akaike model comparison, the kernel and a constant Wilson-coefficient shift $\mathrm{FREE\_C9}$ (also $k=1$) are statistically indistinguishable on current data: stacked Akaike weight $w_{\mathrm{VFD}}=0.348$ vs $w_{\mathrm{FREE\_C9}}=0.652$. AIC compares per-parameter goodness-of-fit and is blind to the universality/shape-prediction claim itself.
+    32	- A free-width Gaussian charm-loop proxy fits comparably in $\chi^{2}$ at the cost of one extra shape parameter; the kernel is not the unique $q^{2}$ shape consistent with the anomaly.
+    33	- An earlier linearised analysis (the project's "Mode B") gave a stronger numerical preference for the kernel ($\Delta\mathrm{AIC}=-1.67$ on LHCb 2025) that **did not survive the non-linear refit**. The $+2.77$-AIC-unit drift is the largest single methodological uncertainty in the project. See §2 and §4 of [the paper](paper/main.pdf) and [`reports/wo016c_nonlinear_refit.md`](reports/wo016c_nonlinear_refit.md). Linearised numbers are retained in the paper as a methodology diagnostic.
+    34	
+    35	The structural test the project was designed to run — *can a fixed geometry-derived shape describe the anomaly across multiple independent datasets without retuning?* — is satisfied. Whether the kernel is statistically *preferred* over a constant shift is a question current data cannot resolve and will require future $b\to s\ell\ell$ measurements.
+    36	
+    37	---
+    38	
+    39	## Figures from the paper
+    40	
+    41	| | |
+    42	|---|---|
+    43	| ![kernel shape](paper/figures/fig_F1_kernel_shape.png) | ![bin pulls](paper/figures/fig_F2_bin_pulls.png) |
+    44	| **F1** Geometry-derived kernel $\kappa(q^{2})$ on the LHCb $q^{2}$ window. Solid blue: discrete $V_{600}$ shell-mean (Layer 3, used in fits). Dashed grey: continuum $e^{-|x|/\varphi}$ (Layer 1). Red points: LHCb 2025 bin centres. | **F2** Per-bin pulls on the LHCb 2025 four-observable joint fit under the non-linear FREE\_C9 ($\Delta C_{9}=-1.00$) and VFD ($A=+1.14$) fits. |
+    45	
+    46	![cross-dataset](paper/figures/fig_F3_cross_dataset_A.png)
+    47	
+    48	**F3** Non-linear best-fit amplitudes across the five fits. Green = kernel marginally favoured (LHCb 2015, $B_{s}\!\to\!\phi$); orange = constant shift marginally favoured. Right panel: $S$-basis cross-channel; grey dashed line is the basis-corrected prediction $A_{P}^{\mathrm{LHCb 2025}}\times 2.2 \approx 2.5$.
+    49	
+    50	---
+    51	
+    52	## Repository contents
+    53	
+    54	```
+    55	vfd-b-anomaly/
+    56	├── README.md                      # this file
+    57	├── LICENSE                        # MIT
+    58	├── CITATION.cff                   # citation metadata
+    59	├── CHANGELOG.md                   # findings history (linearisation drift, etc.)
+    60	├── pyproject.toml                 # Python package definition
+    61	├── .gitignore
+    62	│
+    63	├── paper/                         # the preprint
+    64	│   ├── main.pdf                   # camera-ready PDF
+    65	│   ├── main.tex                   # LaTeX source
+    66	│   ├── sections/                  # 10 section files
+    67	│   ├── figures/                   # F1, F2, F3 (PDF + PNG)
+    68	│   ├── references.bib
+    69	│   └── README.md                  # how to recompile
+    70	│
+    71	├── src/vfd_b_anomaly/             # core library (importable as `vfd_b_anomaly`)
+    72	│   ├── flavio_predictor.py        # cached flavio.sm_prediction / np_prediction wrapper
+    73	│   ├── hepdata_ingest.py          # HEPData JSON loader
+    74	│   ├── wo009_full_lift.py         # 600-cell V_600 graph and discrete Green's response
+    75	│   ├── wo010_universality.py      # frozen kernel evaluated at bin centres
+    76	│   ├── wo014_cross_dataset.py     # cross-dataset dataset loaders + linearised fit
+    77	│   ├── wo015_cross_channel.py     # Bs->phi cross-channel loader + linearised fit
+    78	│   └── ...                        # see src/ for the full list
+    79	│
+    80	├── scripts/                       # paper-headline drivers
+    81	│   ├── wo016a_akaike_stack.py     # Akaike weight stacking across 5 fits
+    82	│   ├── wo016b_variant_geometry.py # variant choice on pure-geometry criterion
+    83	│   ├── wo016c_nonlinear_refit.py  # non-linear LHCb 2025 refit (drift diagnostic)
+    84	│   ├── wo016d_nonlinear_xdataset.py  # non-linear refit across all 5 datasets
+    85	│   └── wo017_paper_figures.py     # F1, F2, F3 generation
+    86	│
+    87	├── reports/                       # paper-headline outputs (regenerated by run_all.sh)
+    88	│   ├── wo009_full_lift.{json,csv,md}  # 600-cell graph spectral data
+    89	│   ├── wo016a_akaike_stack.md         # paper §6 Akaike-weight stack
+    90	│   ├── wo016b_variant_geometry.md     # paper §3 variant-selection table
+    91	│   ├── wo016c_nonlinear_refit.md      # paper §4 LHCb 2025 non-linear headline
+    92	│   └── wo016d_nonlinear_xdataset.md   # paper §6 non-linear cross-dataset table
+    93	│
+    94	├── data/
+    95	│   ├── raw/                       # cached HEPData submissions (CC BY 4.0)
+    96	│   └── processed/                 # flavio_cache.json (regeneratable)
+    97	│
+    98	├── tests/                         # pytest suite
+    99	├── repro/                         # reproduction driver
+   100	│   └── run_all.sh
+   101	└── archive/                       # superseded scripts and reports cited as
+   102	                                   # supporting evidence in §5; not on the
+   103	                                   # path of run_all.sh
+   104	```
+   105	
+   106	---
+   107	
+   108	## Reproduce in 5 steps (clean checkout)
+   109	
+   110	### 1. Install the package
+   111	
+   112	```bash
+   113	git clone https://github.com/vfd-org/b-anomaly-reproduction.git vfd-b-anomaly
+   114	cd vfd-b-anomaly
+   115	pip install -e ".[dev,plotting]"
+   116	```
+   117	
+   118	This pulls in `flavio` (2.4), `wilson` (2.5), `numpy`, `scipy`, `matplotlib`, `pytest`. flavio brings the BSZ form-factor parameterisation as a transitive dependency.
+   119	
+   120	### 2. Cache the HEPData archives
+   121	
+   122	The five datasets in the paper draw from five HEPData records. The first four are bundled in `data/raw/hepdata*/` (modest size, CC BY 4.0). For LHCb 2025 (the largest), download with:
+   123	
+   124	```bash
+   125	mkdir -p data/raw/hepdata
+   126	curl -L "https://www.hepdata.net/download/submission/ins3094698/original" \
+   127	     -o data/raw/hepdata/HEPData-ins3094698-v1.zip
+   128	python -c "import zipfile; zipfile.ZipFile('data/raw/hepdata/HEPData-ins3094698-v1.zip').extractall('data/raw/hepdata/extracted')"
+   129	```
+   130	
+   131	### 3. Run all paper-headline experiments
+   132	
+   133	```bash
+   134	bash repro/run_all.sh
+   135	```
+   136	
+   137	This runs (in order):
+   138	1. The non-linear LHCb 2025 refit (`scripts/wo016c_nonlinear_refit.py`).
+   139	2. The full five-dataset non-linear refit (`scripts/wo016d_nonlinear_xdataset.py`).
+   140	3. The Akaike-weight stack (`scripts/wo016a_akaike_stack.py`).
+   141	4. The pure-geometry variant test (`scripts/wo016b_variant_geometry.py`).
+   142	5. Paper figures F1, F2, F3 (`scripts/wo017_paper_figures.py`).
+   143	
+   144	Total wall time: ~5 minutes on a laptop, dominated by the non-linear flavio calls. A persistent on-disk cache (`data/processed/flavio_cache.json`) ensures subsequent runs are near-instant.
+   145	
+   146	### 4. Recompile the paper (optional)
+   147	
+   148	The PDF at `paper/main.pdf` is shipped pre-built. To regenerate from source:
+   149	
+   150	```bash
+   151	# install tectonic once (~50 MB, single static binary, no sudo needed)
+   152	curl -L https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.15.0/tectonic-0.15.0-x86_64-unknown-linux-musl.tar.gz | tar -xz -C ~/.local/bin/
+   153	
+   154	# compile
+   155	~/.local/bin/tectonic -X compile paper/main.tex
+   156	```
+   157	
+   158	See `paper/README.md` for compile alternatives (TeX Live, Overleaf).
+   159	
+   160	### 5. Run tests
+   161	
+   162	```bash
+   163	pytest -q
+   164	```
+   165	
+   166	---
+   167	
+   168	## Contents of the paper
+   169	
+   170	The 25-page preprint (`paper/main.pdf`) has 10 sections:
+   171	
+   172	| § | content |
+   173	|---|---|
+   174	| 1 | Introduction; scope and epistemic status |
+   175	| 2 | Datasets, SM backend (non-linear flavio + linearised Mode B), reproducibility ledger |
+   176	| 3 | Three-layer kernel construction: continuum $\varphi$-tuned Green's function → bounded Dirichlet eigenmode → discrete 2I-equivariant lift on $V_{600}$. Variant-selection table on pure-geometry vs LHCb-data criteria. |
+   177	| 4 | Results on LHCb 2025: non-linear vs linearised, drift table, leave-one-observable-out |
+   178	| 5 | Stress tests on LHCb 2025 under Mode B (bin bootstrap, region splits, alternative Wilson-coefficient models, charm-loop Gaussian, BSZ form-factor MC) |
+   179	| 6 | Cross-dataset non-linear fit across five datasets; Akaike-weight stack; sign-uniformity test |
+   180	| 7 | Cross-channel fit on $B_{s}\!\to\!\phi$; basis-effect explanation of the amplitude gap |
+   181	| 8 | Discussion: why the linearisation breaks; three readings of sign uniformity |
+   182	| 9 | Limitations (linearisation issue is the lead) |
+   183	| 10 | Conclusion; falsification programme; reproducibility |
+   184	
+   185	The paper went through three rounds of internal hostile review. The major finding from Round 2 was that the linearised fit's $\Delta\mathrm{AIC}=-1.67$ on LHCb 2025 flipped to $+1.09$ under a non-linear refit; the paper was rewritten around that negative finding and accepted as preprint-ready in Round 3.
+   186	
+   187	---
+   188	
+   189	## License and data attribution
+   190	
+   191	- **Project code** (everything under `src/`, `scripts/`, `tests/`, `repro/`, `paper/`): MIT licence — see [`LICENSE`](LICENSE).
+   192	- **Cached HEPData supplementary archives** under `data/raw/`: © CERN for the benefit of the LHCb and CMS collaborations, distributed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The canonical citation for each archive is the corresponding HEPData record:
+   193	  - LHCb 2025: [HEPData ins3094698](https://www.hepdata.net/record/ins3094698) (DOI [10.17182/hepdata.167733.v1](https://doi.org/10.17182/hepdata.167733.v1))
+   194	  - LHCb 2015 $K^{*}$: [HEPData ins1409497](https://www.hepdata.net/record/ins1409497)
+   195	  - LHCb 2021 $B^{+}\!\to\!K^{*+}$: [HEPData ins1838196](https://www.hepdata.net/record/ins1838196)
+   196	  - CMS 2025: [HEPData ins2850101](https://www.hepdata.net/record/ins2850101)
+   197	  - LHCb 2015 $B_{s}\!\to\!\phi$: [HEPData ins1380188](https://www.hepdata.net/record/ins1380188)
+   198	- **flavio** ([arXiv:1810.08132](https://arxiv.org/abs/1810.08132)) and **wilson** ([arXiv:1804.05033](https://arxiv.org/abs/1804.05033)) provide the SM and non-linear new-physics predictions used as the headline backend; their licences are upstream.
+   199	
+   200	## Citation
+   201	
+   202	If you use this software or the accompanying paper, see [`CITATION.cff`](CITATION.cff). Suggested BibTeX:
+   203	
+   204	```bibtex
+   205	@misc{Smart2026vfdBAnomaly,
+   206	  author       = {Smart, Lee},
+   207	  title        = {A geometry-derived response kernel for the $B \to K^{*}\mu^{+}\mu^{-}$ angular anomaly: sign-uniform cross-dataset and cross-channel fit},
+   208	  year         = {2026},
+   209	  url          = {https://github.com/vfd-org/b-anomaly-reproduction/blob/main/paper/main.pdf},
+   210	  note         = {Preprint, Institute of Vibrational Field Dynamics}
+   211	}
+   212	```
+   213	
+   214	For the LHCb 2025 dataset the project rests on, also cite:
+   215	
+   216	```bibtex
+   217	@article{LHCb:2025BKstmumuComp,
+   218	  author       = {{LHCb Collaboration}},
+   219	  title        = {A comprehensive analysis of the $B^0\to K^{*0}\mu^+\mu^-$ decay},
+   220	  eprint       = {2512.18053},
+   221	  archivePrefix= {arXiv},
+   222	  primaryClass = {hep-ex},
+   223	  year         = {2025},
+   224	  reportNumber = {LHCb-PAPER-2025-041, CERN-EP-2025-278},
+   225	  doi          = {10.17182/hepdata.167733.v1}
+   226	}
+   227	```
+
+ succeeded in 462ms:
+     1	\documentclass[11pt]{article}
+     2	
+     3	\usepackage[a4paper, margin=2.5cm]{geometry}
+     4	\usepackage{amsmath, amssymb, amsthm}
+     5	\usepackage{booktabs}
+     6	\usepackage{enumitem}
+     7	\usepackage{graphicx}
+     8	\usepackage{natbib}
+     9	\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+    10	\usepackage{xcolor}
+    11	
+    12	\graphicspath{{figures/}}
+    13	
+    14	\newcommand{\Ph}{\varphi}
+    15	\newcommand{\Lop}{L_{V_{600}}}
+    16	\newcommand{\Cph}{C_{\Ph}}
+    17	\newcommand{\Rsixhundred}{V_{600}}
+    18	
+    19	\title{A geometry-fixed substrate witness for cortical signatures:\\
+    20	       eighteen preregistered correspondences and six drug/sleep EEG\\
+    21	       signatures from the 600-cell under H$_4$ Coxeter symmetry}
+    22	
+    23	\author{%
+    24	  Lee Smart\\[2pt]
+    25	  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+    26	  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+    27	  \texttt{@vfd\_org}%
+    28	}
+    29	
+    30	\date{April 2026}
+    31	
+    32	\begin{document}
+    33	
+    34	\maketitle
+    35	
+    36	\noindent\textbf{Status:} Preprint, not peer-reviewed.
+    37	
+    38	\noindent\emph{Headline.}
+    39	Once the 600-cell substrate is chosen, its graph structure is fixed:
+    40	$|V|=120$ vertices of uniform degree $12$ (forced by H$_4$ transitivity
+    41	on the canonical short-edge nearest-neighbour graph), with
+    42	$\Ph=(1+\sqrt 5)/2$ entering through the canonical vertex coordinates
+    43	and through the response-operator stability shift $\Ph^{-2}$. The
+    44	Laplacian spectrum is computed numerically from this graph and is
+    45	reported as observed (\S\ref{sec:substrate}). Treated
+    46	as an architectural-level substrate with a fixed shifted-Laplacian
+    47	response $\Cph = \Lop + \Ph^{-2} I$ and a small dynamical layer above
+    48	it, this single deterministic structure is consistent with eighteen
+    49	quantitative correspondences with neuroscience data — preregistered
+    50	on 2026-04-18 before any validation run — plus six drug/sleep EEG
+    51	signatures of conscious vs unconscious states tested against
+    52	literature-derived thresholds on a single deterministic substrate
+    53	trajectory at seed~$42$. No shape parameter is tuned to any neural
+    54	dataset. The recurrent layer above the substrate adds one
+    55	substrate-pinned nonlinearity $\mathrm{bounded\_topk}(\cdot, k\!=\!12)$
+    56	at the graph's average degree and one condition-dependent self-injection
+    57	coupling $\eta\!\in\!\{0, 0.05, 0.20\}$; condition-specific stimulus
+    58	models (\S\ref{sec:chain}) are biologically-motivated design choices,
+    59	not measurement-fits.
+    60	
+    61	\noindent\emph{Scope.}
+    62	This paper presents an empirical \emph{substrate witness}: it shows
+    63	that a geometry-fixed substrate, with no shape parameters tuned to any
+    64	neural dataset, is consistent with eighteen preregistered correspondences
+    65	and six EEG signatures. It is not a derivation of consciousness, nor a
+    66	selection theorem, nor a uniqueness claim for the 600-cell among regular
+    67	4-polytopes. The companion adaptive-closure-transport
+    68	preprint~\citep{SmartAdaptiveClosureTransport2026} provides the
+    69	4-tuple bridge $(M, L_M, W, R_{\mathrm{hom}})$ in which this substrate
+    70	sits as the $L_M$ instance; the selection of the 600-cell as the active
+    71	$M$ is treated as conjectural and is not load-bearing here.
+    72	
+    73	\begin{abstract}
+    74	We test whether a geometry-fixed substrate — the 600-cell regular
+    75	4-polytope $\Rsixhundred$ under H$_4$ Coxeter symmetry, with the
+    76	shifted graph Laplacian $\Cph = \Lop + \Ph^{-2} I$ as its response
+    77	operator — is consistent with cortical signatures across five
+    78	neuroscience domains. Eighteen quantitative predictions were
+    79	preregistered on 2026-04-18 (\texttt{docs/brain\_mapping/PAPER\_PREDICTIONS.md})
+    80	before any validation run; each has a falsifiable threshold. The
+    81	preregistered tally is $17/18$ at standard validation methodology
+    82	($5$-seed cascade block plus state-reset protocol), and $18/18$ after
+    83	a documented $N\!=\!20$ deep-dive on the residual high-variance
+    84	interaction (P4); no preregistered threshold has been modified. We
+    85	additionally report six drug/sleep EEG signatures tested on a recurrent
+    86	self-model layer above the substrate, on a single deterministic
+    87	trajectory at seed~$42$. The six signatures are not part of the
+    88	P1--P18 preregistration; they are tested against thresholds drawn
+    89	from the published literature (Sleep-EDFx CI for the wake $\alpha$,
+    90	OpenNeuro \texttt{ds005620} point-estimate window for propofol
+    91	switching, literature-direction predictions for $\Phi$ collapse,
+    92	continuity drop, and recovery; \S\ref{sec:method}). They were
+    93	obtained under condition-specific v4 stimulus models redesigned to
+    94	be biologically realistic (\S\ref{sec:chain}).
+    95	
+    96	\noindent\emph{(i) Cortical avalanches.}
+    97	Wake cascade-event power-law exponent $\alpha = 2.252$,
+    98	$95\%$ CI $[1.82, 2.86]$ ($R^{2}=0.956$, $n_{\mathrm{events}}=58$).
+    99	This 95\% CI overlaps simultaneously real Sleep-EDFx EEG ($n=30$
+   100	subjects, $\alpha=2.51$, CI $[2.50, 2.53]$) and ARIA's prior cascade
+   101	pipeline ($\alpha=2.85$, CI $[2.73, 3.25]$) — three-way confidence
+   102	overlap.
+   103	
+   104	\noindent\emph{(ii) Drug/sleep state transitions.}
+   105	NREM-N3 phenomenal-intensity variance ratio $0.463\!\times$ wake
+   106	(predicted $\sim 0.365$, threshold $<\!0.70$); propofol modality-switching
+   107	ratio $1.83\!\times$ wake (threshold $\in[1.5, 5.0]$, empirical
+   108	reference $2.96\!\times$ from OpenNeuro \texttt{ds005620}, $n=8$);
+   109	propofol continuity drop $+0.066$ (threshold $>\!0.020$); propofol
+   110	integrated-information $\Phi$ collapse to $0.33\!\times$ wake (IIT
+   111	direction confirmed); recovery deterministically identical to wake.
+   112	All six signatures pass against their literature-derived thresholds
+   113	on the single deterministic substrate trajectory.
+   114	
+   115	\noindent\emph{(iii) Causal mechanism isolation.}
+   116	Two of four cascade mechanisms — context rotation $C$ and partial
+   117	emission $P$ — are causally identifiable within the factorial
+   118	ablation model, and the original preregistered C$\times$P synergy
+   119	prediction $\geq +0.10$ closes
+   120	decisively at adequate replication: $N\!=\!20$ fresh seeds give a
+   121	bootstrap point estimate of $+0.190$ with $95\%$ CI $[+0.143, +0.239]$
+   122	(threshold $\geq +0.10$); $0/2000$ bootstrap resamples were at or
+   123	below zero, reported as $0.0000$. We document the original $N\!=\!3$
+   124	underestimate ($+0.044$) as consistent with an underpowered interaction
+   125	estimate at $N\!=\!3$. In this cascade matrix, P4 required $N\!=\!20$;
+   126	future preregistrations on similar high-variance ablation matrices
+   127	should budget for this scale.
+   128	
+   129	\noindent\emph{(iv) Cross-domain selectivity.}
+   130	The substrate exhibits selective amplification in the two cross-domain
+   131	tasks tested: chess 4-category position classification on
+   132	8-dimensional V2 features lifts $+40.6$ percentage points on
+   133	leave-one-out at canonical depth $n\!=\!25$ ticks (raw $53.1\%$
+   134	$\to$ substrate-routed $93.8\%$, with state reset; the
+   135	preregistered estimator P13 was $5$-fold CV with threshold
+   136	$\geq\!+15$pp, the LOO finding above is a disclosed estimator/protocol
+   137	refinement at the same threshold), while conversation utterance
+   138	classification at raw $87.5\%$ yields a substrate lift of $-4.4$pp
+   139	(threshold $|\cdot| < 10$pp), consistent with the substrate
+   140	amplifying in these two tasks where raw features are ambiguous and
+   141	remaining approximately neutral when raw features are already
+   142	discriminative. On HCP brain functional connectivity
+   143	(preregistered $n\!=\!100$ ICA-50 plus full-cohort $n\!=\!1003$
+   144	descriptive statistics), the H$_4$-transitive substrate is a
+   145	deterministic null reference: ARIA degree std
+   146	$=\!0$ by transitivity; HCP $3.28\!\pm\!0.28$; ARIA at $-11.58\sigma$
+   147	on degree homogeneity, $+79.78\sigma$ on raw participation ratio
+   148	(with the node-count caveat documented at \S\ref{ssec:hcp}: ARIA
+   149	$|V|\!=\!120$ vs HCP ICA-50 $|V|\!=\!50$; the $\sigma$ value reflects
+   150	both architectural and node-count differences), and $+6.80\sigma$ on
+   151	clustering coefficient (implicit HCP across-subject sd $\approx 0.035$
+   152	inferred from the reported gap; see \S\ref{ssec:hcp}).
+   153	
+   154	\noindent\emph{What we do not claim.}
+   155	We do not claim the 600-cell is the unique substrate consistent with
+   156	these signatures, nor that other regular 4-polytopes (24-cell, 120-cell)
+   157	have been ruled out. We do not derive the $\Ph^{-2}$ floor from
+   158	first principles; it is a design-level stability clamp on the
+   159	shifted-Laplacian response. The recurrent layer above the substrate
+   160	is reported on a single deterministic trajectory; cross-seed CIs on
+   161	the per-condition signatures are an explicit strengthening build.
+   162	The structural scope of this paper is: \emph{a geometry-fixed
+   163	substrate, with no shape parameters tuned to any neural dataset,
+   164	is consistent with eighteen preregistered neuroscience
+   165	correspondences and six drug/sleep EEG signatures, with all gaps in
+   166	the original preregistration closed by methodology refinement and
+   167	without modifying any preregistered threshold.}
+   168	\end{abstract}
+   169	
+   170	% =====================================================================
+   171	\input{sections/01_introduction.tex}
+   172	\input{sections/02_method.tex}
+   173	\input{sections/03_substrate.tex}
+   174	\input{sections/04_consciousness_chain.tex}
+   175	\input{sections/05_results.tex}
+   176	\input{sections/06_stress_tests.tex}
+   177	\input{sections/07_cross_domain.tex}
+   178	\input{sections/08_discussion.tex}
+   179	\input{sections/09_limitations.tex}
+   180	\input{sections/10_conclusion.tex}
+   181	% =====================================================================
+   182	
+   183	\section*{Acknowledgements}
+   184	We thank the Sleep-EDFx (PhysioNet)~\citep{PhysioNet2000,SleepEDFx},
+   185	OpenNeuro propofol cohort \texttt{ds005620}~\citep{OpenNeuroDS005620},
+   186	the OpenNeuro DMT cohort \texttt{ds004902}~\citep{OpenNeuroDS004902},
+   187	the Zenodo DMT EEG release~\citep{ZenodoDMT3992359}, and the WU-Minn
+   188	HCP Consortium~\citep{VanEssen2013HCP} for releasing the public
+   189	datasets that made these comparisons possible. Cortical avalanche
+   190	methodology follows~\citep{BeggsPlenz2003}; the integrated-information
+   191	$\Phi$ proxy is in the IIT family~\citep{Tononi2008,BalduzziTononi2008};
+   192	the propofol microstate comparison uses Brodbeck et
+   193	al.~\citep{Brodbeck2012Microstates}. The 600-cell construction
+   194	follows~\citep{CoxeterRegularPolytopes,Weisstein600Cell}. All code
+   195	and processed data are released under MIT licence at the project
+   196	repository~\citep{ariaChessRepo}.
+   197	
+   198	\section*{Reproducibility}
+   199	The complete pipeline (substrate construction, six-signature
+   200	consciousness chain, $N\!=\!20$ C$\times$P deep-dive, eighteen-prediction
+   201	preregistered validation, figure regeneration, this paper) is reproducible
+   202	from the project repository~\citep{ariaChessRepo} via the included
+   203	\texttt{reproduce\_paper\_claims.sh} script. All scripts are
+   204	deterministic given seeds; the substrate's spectral decomposition is
+   205	cached at module level. Wallclocks: drug/sleep v4 $\sim 30$\,s;
+   206	$N\!=\!20$ deep-dive $\sim 28$\,min; preregistered validation
+   207	$\sim 18$\,min.
+   208	
+   209	\bibliographystyle{plainnat}
+   210	\bibliography{references}
+   211	
+   212	\end{document}
+
+ exited 2 in 565ms:
+rg: regex parse error:
+    (?:derive|derived|unique|uniqueness|selection theorem|Lyapunov|2I|equivariance|AIC tie|Mode-B|P10|600-cell|phi\^-2|Phi\^-2|\Ph\^\{-2\}|lambda_min|inf \sigma|multi-source|all 120|0\.976|0\.888|0\.884|0\.923|0\.997|18/18|17/18)
+                                                                                                                               ^^^
+error: Unicode property not found
+
+exec
+/bin/bash -lc "rg -n \"18/18|17/18|eighteen|P10|20-permutation|20\\\\"'$-permutation|prereg-exact|permutation" papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'rg -n "Mode-B|AIC tie|free-width|Gaussian|drift|FREE_C9|kernel-uniqueness|unique kernel|not the unique|not.*unique|uniqueness" papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc "rg -n \"multi-source|all \\\\"'$?120|source|sweep|unweighted|weighted variants|not swept|PHI_GEOMETRIC|PHI_ARITHMETIC" papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections/05_agreement.tex papers/aria-closure-kernel/paper/sections/09_limitations.tex papers/aria-closure-kernel/repro/verify_kernel.py papers/aria-closure-kernel/repro/results.json' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc "rg -n \"lambda_min|inf \\\\sigma|operator-norm|operator norm|\\\\|\\\\|\\\\Cph\\"'^-1|strict inequality|Dirichlet" papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections/02_definition.tex papers/aria-closure-kernel/paper/sections/08_programme_home.tex papers/aria-closure-kernel/paper/sections/10_conclusion.tex' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ exited 2 in 479ms:
+rg: regex parse error:
+    (?:18/18|17/18|eighteen|P10|20-permutation|20\hBcpermutation|prereg-exact|permutation)
+                                                 ^^
+error: unrecognized escape sequence
+
+ exited 2 in 463ms:
+rg: regex parse error:
+    (?:multi-source|all \0120|source|sweep|unweighted|weighted variants|not swept|PHI_GEOMETRIC|PHI_ARITHMETIC)
+                        ^^
+error: backreferences are not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+ exited 2 in 512ms:
+rg: regex parse error:
+    (?:lambda_min|inf \sigma|operator-norm|operator norm|\|\|\Cph\^-1|strict inequality|Dirichlet)
+                                                             ^^
+error: unrecognized escape sequence
+
+ succeeded in 560ms:
+papers/aria-closure-kernel/paper/main.tex:76:$\Ph^{-2}$ shift from first principles, \emph{not} a uniqueness
+papers/aria-closure-kernel/paper/main.tex:179:not claim $\Rsixhundred$ is the unique substrate consistent with
+papers/aria-closure-kernel/paper/main.tex:181:unique kernel shape consistent with the b-anomaly data
+papers/aria-closure-kernel/paper/main.tex:182:(b-anomaly's free-width Gaussian alternative and Mode-B refit
+papers/aria-closure-kernel/paper/main.tex:183:drift caveats are inherited verbatim) nor that the
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:8:test/claim, state-drift. For each guard we record
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:77:uniqueness is not assumed and is itself an open problem.
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:108:under an AIC tie with $\mathrm{FREE\_C9}$ on current data; the
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:134:\subsection{State-drift / out-of-scope}\label{ssec:scope}
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:173:the unique kernel for either landing. We do not claim selection is
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:174:delivered. We do not claim 600-cell uniqueness. The strengthening
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:123:this is a uniqueness or blind-selection result; we report it as a
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:143:\paragraph{Does not establish.} Operator uniqueness on either
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:144:empirical landing — the b-anomaly paper documents a free-width
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:145:Gaussian alternative that fits comparably in $\chi^{2}$ at the
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:65:claim 600-cell uniqueness; alternative regular 4-polytopes are an
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:66:explicit ablation build. We do not claim kernel uniqueness on
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:67:either empirical landing; the b-anomaly's free-width Gaussian
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:68:alternative, AIC tie ($w_{\mathrm{VFD}}=0.348$ vs
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:69:$w_{\mathrm{FREE\_C9}}=0.652$), and Mode-B linearised-to-non-
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:70:linear refit drift caveats are inherited verbatim, and the
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:89:\item \emph{Substrate-uniqueness ablation.} The 600-cell choice is
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:93:\item \emph{Kernel-uniqueness on either empirical landing.} The
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:94:  b-anomaly free-width Gaussian alternative (fits comparably with
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:95:  one extra shape parameter), the AIC tie
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:97:  the Mode-B linearised-to-non-linear refit drift caveat are
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:115:\item \emph{Not a uniqueness claim for $\Rsixhundred$.} Other
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:121:\item \emph{Not a kernel-uniqueness claim on either empirical
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:122:  landing.} The b-anomaly's free-width Gaussian alternative shows
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:123:  that a free-width Gaussian charm-loop proxy fits the same five
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:168:`derives the kernel', `proves uniqueness', or `establishes
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:179:structural fit, AIC tie + Mode-B drift caveats inherited;
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:187:\emph{Not claimed:} derivation of $\Ph^{-2}$; uniqueness of
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:188:$\Rsixhundred$; uniqueness of the kernel shape on either empirical
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:108:\item \textbf{AIC tie on current data.} On Akaike model comparison,
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:116:\item \textbf{Free-width Gaussian alternative.} A free-width
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:117:  Gaussian charm-loop proxy fits the same five datasets comparably
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:119:  is not the unique $q^{2}$ shape consistent with the anomaly.
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:120:\item \textbf{Mode-B drift (linearised-to-non-linear refit).} An
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:121:  earlier analysis the b-anomaly project labels Mode-B
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:124:  the subsequent non-linear refit; the $+2.77$-AIC-unit drift
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:125:  between Mode-B (linearised) and the non-linear refit is the
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:149:side (the AIC tie, the free-width Gaussian alternative, and the
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:150:Mode-B linearised-to-non-linear refit drift prevent that). It
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:154:claim 600-cell uniqueness among regular 4-polytopes, and does not
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:185:Caveat             & AIC tie; free-width Gaussian alt.; Mode-B linearised-to-non-linear refit drift & single-seed EEG; no polytope ablation; P10 prereg-exact rerun open \\
+
+exec
+/bin/bash -lc 'rg -n -e "18/18" -e "17/18" -e "eighteen" -e "P10" -e "20-permutation" -e "$20$-permutation" -e "prereg-exact" -e "permutation" papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'rg -n -e "multi-source" -e "all 120" -e "source" -e "sweep" -e "unweighted" -e "weighted variants" -e "not swept" -e "PHI_GEOMETRIC" -e "PHI_ARITHMETIC" papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections/05_agreement.tex papers/aria-closure-kernel/paper/sections/09_limitations.tex papers/aria-closure-kernel/repro/verify_kernel.py papers/aria-closure-kernel/repro/results.json' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc "rg -n -e \"lambda_min\" -e \"inf \\\\sigma\" -e \"operator-norm\" -e \"operator norm\" -e \"strict inequality\" -e \"Dirichlet\" papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections/02_definition.tex papers/aria-closure-kernel/paper/sections/08_programme_home.tex papers/aria-closure-kernel/paper/sections/10_conclusion.tex" in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+exec
+/bin/bash -lc 'rg -n -e "derive" -e "derived" -e "first principles" -e "selection theorem" -e "Lyapunov" -e "2I" -e "equivariance" -e "selection" -e "proves" papers/aria-closure-kernel/paper/main.tex papers/aria-closure-kernel/paper/sections' in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ succeeded in 363ms:
+papers/aria-closure-kernel/paper/main.tex:51:operator-norm bound $\|\Cph^{-1}\| = \Ph^{2}$ from the smallest
+papers/aria-closure-kernel/paper/main.tex:103:values, operator-norm identity $\|\Cph^{-1}\|=\Ph^{2}\approx 2.618$
+papers/aria-closure-kernel/paper/main.tex:122:$\Ph^{-2} \approx 0.382$, operator norm
+papers/aria-closure-kernel/paper/main.tex:207:short-edge graph build, Laplacian spectrum, operator-norm bound,
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:62:  on any $(M, L_M)$ satisfying (H1)--(H3); the operator-norm
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:67:  (e.g.\ Dirichlet-boundary continuum cases) the bound
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:10:smallest eigenvalue $\Ph^{-2}$ and operator-norm identity
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:12:$\lambda_{\min}(L_M) > 0$ give the strict inequality
+papers/aria-closure-kernel/paper/sections/02_definition.tex:42:  first Dirichlet eigenvalue $> 0$ on a bounded Dirichlet
+papers/aria-closure-kernel/paper/sections/02_definition.tex:45:  for the operator-norm identity in
+papers/aria-closure-kernel/paper/sections/02_definition.tex:59:  with Dirichlet boundary conditions ($\lambda_{\min}(L_M) > 0$).
+papers/aria-closure-kernel/paper/sections/02_definition.tex:80:The operator norm of $\Cph^{-1}$ is the reciprocal of the
+papers/aria-closure-kernel/paper/sections/02_definition.tex:96:On substrates where $\inf \sigma(L_M) > 0$ (e.g.\ Dirichlet
+papers/aria-closure-kernel/paper/sections/02_definition.tex:97:intervals), Eq.~\eqref{eq:opnorm} gives the strict inequality
+papers/aria-closure-kernel/paper/sections/02_definition.tex:101:guaranteed by the Dirichlet structure alone; on substrates with
+papers/aria-closure-kernel/paper/sections/02_definition.tex:134:\item both the operator-norm bound $\|\Cph^{-1}\| = \Ph^{2}$ and
+
+ succeeded in 381ms:
+papers/aria-closure-kernel/paper/main.tex:57:machine precision under H$_3$-fixed source; not $119$ independent
+papers/aria-closure-kernel/paper/main.tex:107:correlation $0.976$ for the unweighted variant (the discrete
+papers/aria-closure-kernel/paper/main.tex:109:$\Ph$-cocycle weighted variants tested ($0.888$ geometric, $0.884$
+papers/aria-closure-kernel/paper/main.tex:111:tested variants the unweighted Laplacian ranks highest on the
+papers/aria-closure-kernel/paper/main.tex:138:$\psi = \Cph^{-1} f$ for a localised source and the continuum
+papers/aria-closure-kernel/paper/main.tex:139:prediction $G(\|v - v_{\mathrm{src}}\|)$ at each non-source
+papers/aria-closure-kernel/paper/main.tex:140:vertex's chord distance: $0.976$ (unweighted Laplacian), $0.888$
+papers/aria-closure-kernel/paper/main.tex:142:Same source vertex, same fixed shift, no parameter fitting; the
+papers/aria-closure-kernel/paper/main.tex:143:unweighted-headline correlation is invariant under choice of source
+papers/aria-closure-kernel/paper/main.tex:144:to within machine precision over all $120$ vertices (multi-source
+papers/aria-closure-kernel/paper/main.tex:145:sweep, \S\ref{sec:limitations}; the sweep is run on the unweighted
+papers/aria-closure-kernel/paper/main.tex:146:operator only, the two weighted variants were not swept).
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:7:localised source has high per-vertex Pearson correlation in radial
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:10:the source. Pearson correlation is a shape similarity statistic, not
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:12:comparison in which the unweighted Laplacian ranks highest among
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:13:the three tested variants (unweighted, $\Ph$-geometric weighted,
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:32:source itself is excluded, since the discrete response there is
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:36:\subsection{Result on the unweighted Laplacian}\label{ssec:result_unweighted}
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:42:  shell-constant to machine precision under H$_3$-fixed source, so
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:53:different weightings and with different source-vertex conventions:
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:56:  non-source vertex), source $v_{0}$ \emph{excluded} (the discrete
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:60:  shell $0$ contains only the source vertex, so it is included
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:64:On the unweighted 600-cell graph with an H$_3$-fixed source,
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:68:source convention, not in noise content: the per-vertex test
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:70:($\{12, 20, 12, 30, 12, 20, 12, 1\}$ for the non-source shells)
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:71:and excludes the source vertex, while the shell-mean test gives
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:72:equal weight to every shell and includes the source. The
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:99:Laplacian variants ($L_{w}$ unweighted or $\Ph$-cocycle weighted).
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:113:\textbf{Reading.} Among the three tested variants, the unweighted
+papers/aria-closure-kernel/repro/results.json:139:    "PHI_GEOMETRIC": {
+papers/aria-closure-kernel/repro/results.json:143:    "PHI_ARITHMETIC": {
+papers/aria-closure-kernel/repro/results.json:148:  "multi_source_sweep": {
+papers/aria-closure-kernel/repro/results.json:149:    "n_sources": 120,
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:35:landings tolerate a shift sweep. The shift is held fixed across
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:37:\emph{Strengthening build:} sweep $\Ph^{-2} \cdot (1 \pm \delta)$
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:95:\textbf{Variant ranking is criterion-dependent.} The unweighted
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:98:\emph{unique} natural ranking. Edge-weighted variants outside the
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:125:source. H$_4$ transitivity predicts the correlation is invariant
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:126:under choice of source vertex. \texttt{repro/verify\_kernel.py}
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:127:sweeps over all $120$ vertices: every source returns the same
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:129:(\texttt{multi\_source\_sweep.max\_minus\_min} in
+papers/aria-closure-kernel/repro/verify_kernel.py:9:(phi/2) exp(-|x|/phi) at each non-source vertex's chord radius
+papers/aria-closure-kernel/repro/verify_kernel.py:10:(plus a shell-mean cross-check), tests the unweighted vs
+papers/aria-closure-kernel/repro/verify_kernel.py:12:correlation criterion, sweeps the per-vertex correlation across
+papers/aria-closure-kernel/repro/verify_kernel.py:13:all 120 source vertices to verify H_4 transitivity, checks
+papers/aria-closure-kernel/repro/verify_kernel.py:160:def green_response(C_phi, source_idx):
+papers/aria-closure-kernel/repro/verify_kernel.py:161:    """psi = C_phi^-1 e_source. Solves the linear system, no explicit inverse."""
+papers/aria-closure-kernel/repro/verify_kernel.py:164:    f[source_idx] = 1.0
+papers/aria-closure-kernel/repro/verify_kernel.py:206:def discrete_continuum_test(V, C_phi, source_idx):
+papers/aria-closure-kernel/repro/verify_kernel.py:208:    Compute psi(v) = C_phi^-1 e_{source}, then average over each shell. The
+papers/aria-closure-kernel/repro/verify_kernel.py:209:    shell radial coordinate x is the chord distance |v - v_source|. The
+papers/aria-closure-kernel/repro/verify_kernel.py:215:    psi = green_response(C_phi, source_idx)
+papers/aria-closure-kernel/repro/verify_kernel.py:216:    shells, sizes, _ = shell_indices(V, source_idx)
+papers/aria-closure-kernel/repro/verify_kernel.py:217:    pole = V[source_idx]
+papers/aria-closure-kernel/repro/verify_kernel.py:253:# 7. Variant comparison: unweighted vs phi-cocycle weighted Laplacian
+papers/aria-closure-kernel/repro/verify_kernel.py:256:def cocycle_weights(V, source_idx):
+papers/aria-closure-kernel/repro/verify_kernel.py:260:    test we compare the unweighted graph Laplacian to two weighted variants
+papers/aria-closure-kernel/repro/verify_kernel.py:263:    shells, _, _ = shell_indices(V, source_idx)
+papers/aria-closure-kernel/repro/verify_kernel.py:288:def variant_correlation(V, A, source_idx, variant):
+papers/aria-closure-kernel/repro/verify_kernel.py:292:        weights = cocycle_weights(V, source_idx)
+papers/aria-closure-kernel/repro/verify_kernel.py:293:        mode = "geometric" if variant == "PHI_GEOMETRIC" else "arithmetic"
+papers/aria-closure-kernel/repro/verify_kernel.py:296:    test = discrete_continuum_test(V, C_v, source_idx)
+papers/aria-closure-kernel/repro/verify_kernel.py:297:    psi = green_response(C_v, source_idx)
+papers/aria-closure-kernel/repro/verify_kernel.py:298:    pole = V[source_idx]
+papers/aria-closure-kernel/repro/verify_kernel.py:302:    # Per-vertex correlation (excluding the source itself, which is degenerate)
+papers/aria-closure-kernel/repro/verify_kernel.py:303:    mask = np.arange(V.shape[0]) != source_idx
+papers/aria-closure-kernel/repro/verify_kernel.py:332:def multi_source_sweep(V, C_phi):
+papers/aria-closure-kernel/repro/verify_kernel.py:335:    G(x) = (phi/2) exp(-x/phi) for every source vertex v in V. H_4 transitivity
+papers/aria-closure-kernel/repro/verify_kernel.py:336:    predicts the correlation is invariant under choice of source vertex; this
+papers/aria-closure-kernel/repro/verify_kernel.py:337:    function verifies the prediction numerically across all 120 sources and
+papers/aria-closure-kernel/repro/verify_kernel.py:342:    for source_idx in range(n):
+papers/aria-closure-kernel/repro/verify_kernel.py:343:        psi = green_response(C_phi, source_idx)
+papers/aria-closure-kernel/repro/verify_kernel.py:344:        chord = np.linalg.norm(V - V[source_idx], axis=1)
+papers/aria-closure-kernel/repro/verify_kernel.py:346:        mask = np.arange(n) != source_idx
+papers/aria-closure-kernel/repro/verify_kernel.py:347:        corrs[source_idx] = float(np.corrcoef(psi[mask], cont[mask])[0, 1])
+papers/aria-closure-kernel/repro/verify_kernel.py:349:        "n_sources": int(n),
+papers/aria-closure-kernel/repro/verify_kernel.py:388:    multi_source = multi_source_sweep(V, C_phi)
+papers/aria-closure-kernel/repro/verify_kernel.py:390:    # Pick the +x_0 axis vertex as canonical pole/source.
+papers/aria-closure-kernel/repro/verify_kernel.py:398:    # Variant comparison on the same source
+papers/aria-closure-kernel/repro/verify_kernel.py:400:    for variant in ("UNWEIGHTED", "PHI_GEOMETRIC", "PHI_ARITHMETIC"):
+papers/aria-closure-kernel/repro/verify_kernel.py:432:        "multi_source_sweep": multi_source,
+papers/aria-closure-kernel/repro/verify_kernel.py:459:    for v in ("UNWEIGHTED", "PHI_GEOMETRIC", "PHI_ARITHMETIC"):
+papers/aria-closure-kernel/repro/verify_kernel.py:464:    print(f"Multi-source sweep over all {multi_source['n_sources']} vertices:")
+papers/aria-closure-kernel/repro/verify_kernel.py:465:    print(f"  per-vertex correlation min  = {multi_source['min_correlation']:.6f}")
+papers/aria-closure-kernel/repro/verify_kernel.py:466:    print(f"  per-vertex correlation mean = {multi_source['mean_correlation']:.6f}")
+papers/aria-closure-kernel/repro/verify_kernel.py:467:    print(f"  per-vertex correlation max  = {multi_source['max_correlation']:.6f}")
+papers/aria-closure-kernel/repro/verify_kernel.py:468:    print(f"  max - min                   = {multi_source['max_minus_min']:.2e}")
+
+ succeeded in 524ms:
+papers/aria-closure-kernel/paper/main.tex:64:active-regime substrate witness against eighteen preregistered
+papers/aria-closure-kernel/paper/main.tex:94:direction~\citep{SmartBAnomaly2026}; (ii)~an eighteen-prediction
+papers/aria-closure-kernel/paper/main.tex:161:degree, passes $17/18$ preregistered correspondences (frozen
+papers/aria-closure-kernel/paper/main.tex:162:2026-04-18) at standard methodology and $18/18$ after a documented
+papers/aria-closure-kernel/paper/main.tex:168:threshold modifications) and one open prereg-exact rerun (P10
+papers/aria-closure-kernel/paper/main.tex:169:chess null mapping was validated with $15$ permutations rather
+papers/aria-closure-kernel/paper/main.tex:171:$15$--$20$-range robust at $65.4\%$; the $20$-permutation rerun
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:44:  (frozen 2026-04-18): $17/18$ preregistered
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:46:  validation protocol, $18/18$ after the documented $N\!=\!20$
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:49:  prereg-exact P10 $20$-permutation rerun, all inherited verbatim
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:10:and (ii) eighteen preregistered substrate/neuroscience
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:102:  recurrent self-model layer above the substrate, to pass eighteen
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:165:aria-chess $17/18$ standard plus $18/18$ after the documented
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:180:aria-chess $17/18$ preregistered correspondences under the
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:181:standard validation protocol and $18/18$ after the documented P4
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:183:P3/P13 methodology refinements and the open prereg-exact P10
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:184:$20$-permutation rerun inherited verbatim, plus $6/6$
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:47:\item $17/18$ at standard validation methodology ($5$-seed
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:49:\item $18/18$ after a documented $N\!=\!20$ deep-dive on the
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:67:flags that the 2026-04-29 P10 (chess null mapping) validation used
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:68:$15$ permutations rather than the preregistered $20$ (threshold
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:70:range; the prereg-exact $20$-permutation rerun is left open in the
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:72:the $18/18$ summary.
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:146:aria-chess active-regime tally (frozen 2026-04-18): $17/18$
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:148:validation protocol, $18/18$ after the documented $N\!=\!20$ P4
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:182:Headline           & $5/5$ sign uniformity              & $17/18$ standard, $18/18$ after P4 $N\!=\!20$ deep-dive (P3 $N\!=\!5$ + P13 LOO/state-reset documented refinements; P10 prereg-exact $20$-perm rerun open); $6/6$ EEG \\
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:185:Caveat             & AIC tie; free-width Gaussian alt.; Mode-B linearised-to-non-linear refit drift & single-seed EEG; no polytope ablation; P10 prereg-exact rerun open \\
+papers/aria-closure-kernel/paper/sections/03_substrate.tex:23:\item \textbf{Axis family} ($8$ vertices): all permutations of
+papers/aria-closure-kernel/paper/sections/03_substrate.tex:28:  permutations of $(\pm \Ph, \pm 1, \pm 1/\Ph, 0)/2$ (with the
+
+ succeeded in 694ms:
+papers/aria-closure-kernel/paper/main.tex:76:$\Ph^{-2}$ shift from first principles, \emph{not} a uniqueness
+papers/aria-closure-kernel/paper/main.tex:78:selection theorem on the companion adaptive-closure-transport
+papers/aria-closure-kernel/paper/main.tex:177:We do not derive the $\Ph^{-2}$ floor; it is a design-level
+papers/aria-closure-kernel/paper/main.tex:184:aria-chess substrate witness establishes a selection theorem on
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:2:\section{Programme home and the open selection layer}\label{sec:programme_home}
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:8:\emph{response} primitive; \emph{selection} (which response
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:27:\subsection{Response vs selection}
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:40:  time? (Crystallisation / Lyapunov descent dynamics on a
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:44:The selection layer is open. The companion adaptive-closure-
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:46:proposes a Lyapunov $V(W)$ on the reduced flow, an edge-space
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:47:decomposition under the $2I$ binary-icosahedral symmetry of
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:52:substrate-witness scope and does \emph{not} deliver a selection
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:55:without reducing or addressing the selection gap.
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:87:  as a design-level shift; not derived from a closure functional
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:99:\item \emph{Selection theorem on ACT.} Lyapunov $V(W)$, edge-space
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:100:  decomposition under $2I$-equivariance, full reduced-flow
+papers/aria-closure-kernel/paper/sections/08_programme_home.tex:105:  positioning of cascade Lyapunov functionals as members of the
+papers/aria-closure-kernel/paper/sections/05_agreement.tex:123:this is a uniqueness or blind-selection result; we report it as a
+papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:109:  $\Cph$-derived $\kappa_{V_{600}}$ and a constant Wilson-coefficient
+papers/aria-closure-kernel/paper/sections/02_definition.tex:141:We do \emph{not} derive $\Ph^{-2}$ from a closure functional or
+papers/aria-closure-kernel/paper/sections/02_definition.tex:147:selection-layer dynamics over $W$-space that would, if delivered,
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:78:against literature-derived thresholds:
+papers/aria-closure-kernel/paper/sections/07_active_witness.tex:155:deliver a selection theorem on the ACT 4-tuple. We inherit the
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:63:a derivation of physics on either landing. We do not derive the
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:72:not deliver a selection theorem on the ACT
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:74:open builds (Lyapunov $V(W)$, edge-space decomposition under
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:75:$2I$-equivariance, full reduced-flow convergence) remain open and
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:84:reducing or addressing the selection gap.
+papers/aria-closure-kernel/paper/sections/10_conclusion.tex:87:broader programme to convert the witness into a selection-theorem-
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:66:\textbf{$\Ph^{-2}$ floor not derived.} The shifted-Laplacian floor
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:68:strictly positive definite; it is not derived from a closure
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:74:\S\ref{sec:active_witness}). \emph{Strengthening build:} derive
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:115:their own preregistered or literature-derived thresholds.
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:137:\S\ref{sec:programme_home}, the selection-layer constructions
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:138:(Lyapunov $V(W)$, edge-space decomposition under $2I$-equivariance,
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:142:in the response primitive without addressing the selection gap.
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:151:\item Lyapunov function $V(W)$ on the reduced flow — open build
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:153:\item $2I$-equivariance audit of the closure operator family —
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:164:  polynomial-in-$L$ Lyapunov family — see \S\ref{sec:programme_home}.
+papers/aria-closure-kernel/paper/sections/09_limitations.tex:173:the unique kernel for either landing. We do not claim selection is
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:112:  $\|\Cph^{-1}\|$ at $\Ph^{2}$. It is not derived from a closure
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:130:\item \emph{Not a selection theorem on the
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:133:  selection layer $(M, L_M, W, R_{\mathrm{hom}})$ in which $\Cph$
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:134:  fills the response slot. Selection — Lyapunov $V(W)$ on the
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:135:  reduced flow, edge-space decomposition under $2I$-equivariance
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:136:  (where $2I$ is the binary icosahedral group, the $\mathrm{SU}(2)$
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:168:`derives the kernel', `proves uniqueness', or `establishes
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:169:selection'.
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:189:landing; a selection theorem on the ACT 4-tuple; that either
+papers/aria-closure-kernel/paper/sections/01_introduction.tex:209:same polynomial-in-$L$ family, and identifies the open selection
+
+codex
+The Round 12 propagation checks pass in the manuscript: P10 appears with the 18/18 summaries, Mode-B appears in the b-anomaly summary sites, and the multi-source sweep is explicitly unweighted-only. I’m doing one final numerical sanity check directly against the verification code/results before writing the verdict.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import importlib.util
+from pathlib import Path
+p = Path('papers/aria-closure-kernel/repro/verify_kernel.py')
+spec = importlib.util.spec_from_file_location('vk', p)
+vk = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(vk)
+V = vk.build_v600()
+A = vk.build_short_edge_graph(V)
+L, w, U = vk.laplacian_spectrum(A)
+C = vk.build_C_phi(L)
+pole_idx = int((V @ __import__('numpy').array([1.0,0,0,0])).argmax())
+variants = {name: vk.variant_correlation(V, A, pole_idx, name) for name in ('UNWEIGHTED','PHI_GEOMETRIC','PHI_ARITHMETIC')}
+ms = vk.multi_source_sweep(V, C)
+print('n_vertices', V.shape[0])
+print('n_edges', int(A.sum()//2))
+print('degree_min_max', int(A.sum(axis=1).min()), int(A.sum(axis=1).max()))
+print('spectrum_mults', [m for ev,m in vk.round_spectrum(w, decimals=4)])
+print('operator_norm', 1/(w[0]+vk.INV_PHI2), 'phi2', vk.PHI**2)
+print('variant_per_vertex', {k: round(v['per_vertex_correlation'], 12) for k,v in variants.items()})
+print('variant_shell_mean', {k: round(v['shell_mean_correlation'], 12) for k,v in variants.items()})
+print('multi_source', ms)
+PY" in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ exited 1 in 269ms:
+/bin/bash: cannot create temp file for here-document: Read-only file system
+
+exec
+/bin/bash -lc "PYTHONDONTWRITEBYTECODE=1 python3 -c 'import importlib.util, numpy as np; p=\"papers/aria-closure-kernel/repro/verify_kernel.py\"; spec=importlib.util.spec_from_file_location(\"vk\", p); vk=importlib.util.module_from_spec(spec); spec.loader.exec_module(vk); V=vk.build_v600(); A=vk.build_short_edge_graph(V); L,w,U=vk.laplacian_spectrum(A); C=vk.build_C_phi(L); pole_idx=int((V @ np.array([1.0,0,0,0])).argmax()); variants={name: vk.variant_correlation(V,A,pole_idx,name) for name in (\"UNWEIGHTED\",\"PHI_GEOMETRIC\",\"PHI_ARITHMETIC\")}; ms=vk.multi_source_sweep(V,C); print(\"n_vertices\", V.shape[0]); print(\"n_edges\", int(A.sum()//2)); print(\"degree_min_max\", int(A.sum(axis=1).min()), int(A.sum(axis=1).max())); print(\"spectrum_mults\", [m for ev,m in vk.round_spectrum(w, decimals=4)]); print(\"operator_norm\", 1/(w[0]+vk.INV_PHI2), \"phi2\", vk.PHI**2); print(\"variant_per_vertex\", {k: round(v[\"per_vertex_correlation\"], 12) for k,v in variants.items()}); print(\"variant_shell_mean\", {k: round(v[\"shell_mean_correlation\"], 12) for k,v in variants.items()}); print(\"multi_source\", ms)'" in /mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper
+ succeeded in 44307ms:
+n_vertices 120
+n_edges 720
+degree_min_max 12 12
+spectrum_mults [1, 4, 9, 16, 25, 36, 9, 16, 4]
+operator_norm 2.618033988749902 phi2 2.618033988749895
+variant_per_vertex {'UNWEIGHTED': 0.976202297852, 'PHI_GEOMETRIC': 0.888380050373, 'PHI_ARITHMETIC': 0.884364003131}
+variant_shell_mean {'UNWEIGHTED': 0.923208269977, 'PHI_GEOMETRIC': 0.879553132802, 'PHI_ARITHMETIC': 0.878431546322}
+multi_source {'n_sources': 120, 'min_correlation': 0.9762022978516617, 'mean_correlation': 0.9762022978516628, 'max_correlation': 0.9762022978516637, 'max_minus_min': 1.9984014443252818e-15}
+
+codex
+**Claim Audit**
+
+No blocking overclaim found.
+
+Minor tightening issues:
+- [sections/10_conclusion.tex:11](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/10_conclusion.tex:11>) uses `\lambda_{\min}(L_M)>0` for “general substrates”; the paper’s better language is `\inf\sigma(L_M)>0`, already used correctly in [sections/02_definition.tex:80](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/02_definition.tex:80>) and [sections/08_programme_home.tex:63](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/08_programme_home.tex:63>).
+- [sections/02_definition.tex:134](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/02_definition.tex:134>) says the shift fixes `||C_\varphi^{-1}||=\varphi^2`; strictly, equality is for zero spectral bottom, while positive-bottom substrates give a strict smaller norm.
+- [main.tex:130](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/main.tex:130>) says H4 transitivity “forces uniform degree 12”; transitivity forces uniformity, while the short-edge construction gives the value 12. Section 3 states this correctly.
+
+**Internal Consistency**
+
+The Round 12 fixes are present. P10 is propagated at the main 18/18 sites: [main.tex:168](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/main.tex:168>), [sections/01_introduction.tex:180](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/01_introduction.tex:180>), [sections/07_active_witness.tex:182](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/07_active_witness.tex:182>), and [sections/10_conclusion.tex:46](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/10_conclusion.tex:46>).
+
+Mode-B drift is now carried through the b-anomaly caveat sites: [sections/06_passive_witness.tex:120](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:120>), [sections/07_active_witness.tex:185](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/07_active_witness.tex:185>), [sections/08_programme_home.tex:93](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/08_programme_home.tex:93>), and [sections/10_conclusion.tex:67](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/10_conclusion.tex:67>).
+
+**External Consistency / Numerics**
+
+I re-ran the verification functions in memory and reproduced the stated numbers: `|V|=120`, `|E|=720`, degree `12/12`, spectrum multiplicities `{1,4,9,16,25,36,9,16,4}`, operator norm `2.618033988749902`, and correlations `0.976202`, `0.888380`, `0.884364`; shell-mean unweighted `0.923208`.
+
+These match [results.json:43](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/repro/results.json:43>), [results.json:81](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/repro/results.json:81>), and [results.json:134](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/repro/results.json:134>). Companion b-anomaly caveats match README lines 30–35; aria-chess P10/open-scope caveats match [sections/09_limitations.tex:179](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-chess-paper/paper/sections/09_limitations.tex:179>).
+
+**Operator-Witness Scope Discipline**
+
+Strong. The paper repeatedly says: no derivation of `\varphi^{-2}`, no 600-cell uniqueness, no kernel uniqueness, no Lyapunov/2I/selection theorem. The active-regime material is framed as inherited substrate-witness scope, not consciousness proof.
+
+**Tightness**
+
+The paper is tight enough for the stated operator-witness claim. Remaining open builds are correctly labelled: shift sweep, substrate ablation, broader variant catalogue, and ACT selection layer. Add “unweighted” locally to [sections/09_limitations.tex:122](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/09_limitations.tex:122>) for self-containment of the multi-source sweep caveat.
+
+**Surface Issues**
+
+Minor wording only: spectral-bottom terminology, degree-forcing phrasing, and a few long table/source lines. No surface issue changes the claim boundary.
+
+**Top Three Fixes**
+
+1. Replace conclusion `\lambda_{\min}(L_M)>0` with `\inf\sigma(L_M)>0`.
+2. Reword the Section 2 disclosure bullet to say `\varphi^2` is the zero-bottom identity / general ceiling.
+3. Add “unweighted” to the Section 9 multi-source sweep paragraph.
+
+**Verdict**
+
+Publication ready: yes
+tokens used
+170,299
+**Claim Audit**
+
+No blocking overclaim found.
+
+Minor tightening issues:
+- [sections/10_conclusion.tex:11](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/10_conclusion.tex:11>) uses `\lambda_{\min}(L_M)>0` for “general substrates”; the paper’s better language is `\inf\sigma(L_M)>0`, already used correctly in [sections/02_definition.tex:80](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/02_definition.tex:80>) and [sections/08_programme_home.tex:63](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/08_programme_home.tex:63>).
+- [sections/02_definition.tex:134](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/02_definition.tex:134>) says the shift fixes `||C_\varphi^{-1}||=\varphi^2`; strictly, equality is for zero spectral bottom, while positive-bottom substrates give a strict smaller norm.
+- [main.tex:130](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/main.tex:130>) says H4 transitivity “forces uniform degree 12”; transitivity forces uniformity, while the short-edge construction gives the value 12. Section 3 states this correctly.
+
+**Internal Consistency**
+
+The Round 12 fixes are present. P10 is propagated at the main 18/18 sites: [main.tex:168](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/main.tex:168>), [sections/01_introduction.tex:180](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/01_introduction.tex:180>), [sections/07_active_witness.tex:182](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/07_active_witness.tex:182>), and [sections/10_conclusion.tex:46](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/10_conclusion.tex:46>).
+
+Mode-B drift is now carried through the b-anomaly caveat sites: [sections/06_passive_witness.tex:120](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/06_passive_witness.tex:120>), [sections/07_active_witness.tex:185](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/07_active_witness.tex:185>), [sections/08_programme_home.tex:93](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/08_programme_home.tex:93>), and [sections/10_conclusion.tex:67](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/10_conclusion.tex:67>).
+
+**External Consistency / Numerics**
+
+I re-ran the verification functions in memory and reproduced the stated numbers: `|V|=120`, `|E|=720`, degree `12/12`, spectrum multiplicities `{1,4,9,16,25,36,9,16,4}`, operator norm `2.618033988749902`, and correlations `0.976202`, `0.888380`, `0.884364`; shell-mean unweighted `0.923208`.
+
+These match [results.json:43](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/repro/results.json:43>), [results.json:81](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/repro/results.json:81>), and [results.json:134](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/repro/results.json:134>). Companion b-anomaly caveats match README lines 30–35; aria-chess P10/open-scope caveats match [sections/09_limitations.tex:179](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-chess-paper/paper/sections/09_limitations.tex:179>).
+
+**Operator-Witness Scope Discipline**
+
+Strong. The paper repeatedly says: no derivation of `\varphi^{-2}`, no 600-cell uniqueness, no kernel uniqueness, no Lyapunov/2I/selection theorem. The active-regime material is framed as inherited substrate-witness scope, not consciousness proof.
+
+**Tightness**
+
+The paper is tight enough for the stated operator-witness claim. Remaining open builds are correctly labelled: shift sweep, substrate ablation, broader variant catalogue, and ACT selection layer. Add “unweighted” locally to [sections/09_limitations.tex:122](</mnt/c/Users/nexus/OneDrive/Documents/My Projects/vfd-crystalisation-paper/papers/aria-closure-kernel/paper/sections/09_limitations.tex:122>) for self-containment of the multi-source sweep caveat.
+
+**Surface Issues**
+
+Minor wording only: spectral-bottom terminology, degree-forcing phrasing, and a few long table/source lines. No surface issue changes the claim boundary.
+
+**Top Three Fixes**
+
+1. Replace conclusion `\lambda_{\min}(L_M)>0` with `\inf\sigma(L_M)>0`.
+2. Reword the Section 2 disclosure bullet to say `\varphi^2` is the zero-bottom identity / general ceiling.
+3. Add “unweighted” to the Section 9 multi-source sweep paragraph.
+
+**Verdict**
+
+Publication ready: yes

@@ -1,0 +1,347 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Zphi}{\mathbb{Z}[\varphi]}
+\newcommand{\twoI}{2\mathbf{I}}
+
+\title{A Structural Correspondence for the Fine-Structure Constant\\[6pt]
+\large $\alpha^{-1} \approx 137 + \pi/87$ under $F1$, {C1} (with C2, C3 as ambient narrative), {A}, {B}, {Kostant}, and {P2}}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We record the fine-structure constant correspondence $\alpha^{-1} \approx 137 + \pi/87$ conditional on the permeability axiom $F1$ ($r = 1 + 1/r$, forcing $r = \varphi$) together with four downstream ingredients already present in the Vibrational Field Dynamics programme: (i) the Elser--Sloane realisation of $E_8$ as the diagonally-embedded sublattice $\{(x, \sigma(x)) : x \in \mathcal{I}\} \subset \mathcal{I} \oplus \sigma(\mathcal{I})$, where $\mathcal{I}$ is the icosian ring and $\sigma$ is the Galois involution (classical); (ii) the 12-dimensional ambient $L_{12} = E_8 \oplus \Zphi^2$ with C1 (phason-complement uniqueness) as an explicit hypothesis; C2 (upward termination) and C3 ($\Zphi$ self-reference) are part of the ambient 12D narrative but are \emph{not} used in the final $137 + \pi/87$ derivation proper; (iii) two structural assumptions A and B on the $\Zphi^2$-phason alignment with the four $E_8$ Coxeter planes and the role of the upper Coxeter exponents $\{17, 19, 23, 29\}$; and (iv) the $2I$-isotypic substrate on the 600-cell vertex graph imported from Paper~P2. Under these inputs, the integer $137$ decomposes as $87 + 50$ where $87$ is the quantity counted as the phason-sector slot total under Hypothesis~B and the gauge convention of Hypothesis~Kostant (subject to one global $U(1) \times \Z/2$ gauge reduction, which this paper treats as a convention, not a derivation), and $50 = 9 + 12 + 14 + 15$ is the sum of the four nontrivial $\Q$-rational $2I$-isotypic Laplacian eigenvalues of the 600-cell. The irrational $\pi/87$ remainder is recorded as a structural identification between Coxeter phase, Galois halving, and the slot count; this paper does \emph{not} claim a theorem-level derivation of $\pi/87$. The agreement with CODATA~2018 is $0.81$ ppm: $\alpha^{-1}_{\text{CODATA}} = 137.035\,999\,084(21)$ vs.\ $\alpha^{-1}_{\text{identity}} = 137.036\,110\,260\ldots$
+
+\vspace{4pt}
+\noindent\textbf{Epistemic status.} This paper is a \emph{hypothesis-audited structural identification}, not a theorem chain from $F1$. Five distinct open items are named explicitly (B-formalisation, A-canonicality, C1 minimality, Kostant gauge-fixing, and the irrational-term derivation); each is a polish gap between the current derivation and a first-principles proof.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+This paper records the structural correspondence
+\begin{equation}\label{eq:main}
+  \boxed{\; \alpha^{-1} \;\approx\; 137 + \frac{\pi}{87} \;}
+\end{equation}
+as a conditional identification under the permeability axiom $F1$~\citep{CascadeFoundations}:
+\begin{equation}\label{eq:F1}
+  r = 1 + \frac{1}{r},
+\end{equation}
+which has positive solution $r = \varphi = (1 + \sqrt 5)/2$. Identity~\eqref{eq:main} was first reported as a numerical correspondence in~\citep{SmartV, SmartXXII}; the present paper collects the hypothesis-audited structural chain
+\[
+  F1 \;\longrightarrow\; \Zphi \;\longrightarrow\; \mathcal{I}
+  \;\longrightarrow\; E_8 = \{(x,\sigma(x)):x\in\mathcal{I}\}
+  \;\longrightarrow\; L_{12} = E_8 \oplus \Zphi^2
+
+  \;\longrightarrow\; H_4 \text{ (cut-and-project)}
+  \;\longrightarrow\; 87 + 50 + \pi/87.
+\]
+
+\paragraph{What is derived, what is imported, what remains open.}
+The chain splits into four layers. For each, we summarise the epistemic status, cite the establishing source, and state what remains to be done before each layer has textbook rigour.
+
+\begin{itemize}
+  \item[(L-F1)] \emph{$F1$ forces $\varphi$ and $\Zphi$}, and $\Zphi$ is the minimal $\Z$-ring containing $\varphi$. Classical.
+  \item[(L-E8)] \emph{$E_8 = \{(x,\sigma(x)) : x \in \mathcal{I}\} \subset \mathcal{I} \oplus \sigma(\mathcal{I})$ via the icosian ring}, after Elser--Sloane. Classical~\citep{ElserSloane1987, MoodyPatera1993}.
+  \item[(L-12D)] \emph{$L_{12} = E_8 \oplus \Zphi^2$}, with its 12-dimensional closure and self-referential closure of the $\Zphi$ base. Conjectures C1--C3 in~\citep{Cascade12D}. C2 is argued in the admissible-ambient framework of \texttt{cascade-12d-closure.tex}~\citep{Cascade12D}; the earlier Phase~B markdown note~\citep{CascadePhaseB} gives an informal dimensional-counting precursor. C1 closes only under the $H_{\min}$ minimality principle together with the admissibility hypotheses catalogued in~\citep{Cascade12D}; C3 then follows conditionally on C1 plus classical $\Zphi$ structure.
+  \item[(L-AB)] \emph{Canonical $\Zphi^2$-alignment with the four $E_8$ Coxeter planes; phason role of the upper Coxeter exponents $\{17, 19, 23, 29\}$.} Assumptions A and B in~\citep{CascadeABclosure}. Both are formulated in an untranslated markdown note (written in the $\Zphi^4$ convention); this paper treats them as explicit hypotheses, not as downstream-ready proofs. A closes modulo the Coxeter-plane-canonicality claim.
+  \item[(L-P2)] \emph{600-cell vertex graph: isotypic $94{+}26$ decomposition and four nontrivial $\Q$-rational Laplacian eigenvalues $\{9, 12, 14, 15\}$ summing to $50$.} Recorded in P2~\citep{CascadeAlgSubstrate}, \S 6, via exact shell/class computations in $\Q(\sqrt 5)$ together with an imported $2I$ character table from Du~Val~\citep{DuVal1964}.
+\end{itemize}
+
+Identity~\eqref{eq:main} is obtained conditional on the full hypothesis load $\{F1, \text{C1 minimality}, \text{A canonicality}, B, \text{Kostant-gauge fixing}, \text{P2 character-table import}, \text{irrational-term structural identification}\}$. Under those conditions, the \emph{integer} part $137 = 87 + 50$ is traced structurally as below. The \emph{irrational} part $\pi/87$ is recorded as a structural identification with four unresolved heuristic steps (Remark~\ref{rem:irrational} and Section~\ref{sec:status}).
+
+\paragraph{Structure of the paper.} Section~\ref{sec:F1} records $F1$ and its immediate consequences. Section~\ref{sec:L12} restates C1--C3 and notes the closures achieved in Phase~B. Section~\ref{sec:AB} states assumptions A and B and their role. Section~\ref{sec:P2} imports the 600-cell spectral substrate from P2. Section~\ref{sec:theorem} assembles the $\alpha$-structural correspondence. Section~\ref{sec:numerical} compares to CODATA~2018. Section~\ref{sec:status} audits the hypothesis load.
+
+\section{The permeability axiom $F1$ and its immediate consequences}\label{sec:F1}
+
+\begin{axiom}[$F1$, permeability]\label{axiom:F1}
+The dimensionless permeability $r \in \R_{>0}$ of the discrete cascade substrate satisfies
+\[
+  r = 1 + \frac{1}{r}.
+\]
+\end{axiom}
+
+The positive solution is $r = \varphi = (1 + \sqrt 5)/2$; hence all downstream ratios and ring-theoretic objects live in the unique minimal $\Z$-ring extension containing $\varphi$, namely $\Zphi$ (the ring of integers of $\Q(\sqrt 5)$, a PID with class number $1$).
+
+\begin{lemma}[Elser--Sloane realisation of $E_8$]\label{lem:ES}
+Let $\mathcal{I} \subset \mathbb{H}$ be the icosian ring: the quaternionic order of rank $4$ over $\Zphi$ (equivalently, rank $8$ over $\Z$). Let $\sigma: \Zphi \to \Zphi$ be the Galois involution $\sigma(\varphi) = 1 - \varphi = -1/\varphi$, extended coefficientwise. Then the $\Z$-module $\{(x, \sigma(x)) : x \in \mathcal{I}\} \subset \R^4 \oplus \R^4$ is isometric to the $E_8$ root lattice, and the cut-and-project $\pi_H: \mathcal{I} \to \R^4$ with golden-ratio acceptance window recovers the $H_4$ quasicrystal.
+\end{lemma}
+
+\begin{proof}
+Classical; see~\citep[\S 3]{ElserSloane1987} and~\citep{MoodyPatera1993}. The icosian-ring construction of $E_8$ is collected in~\citep[\S 3--4]{CascadeAlgSubstrate} as P2~\S 3--4, with explicit coordinates for the projection $\pi_H: \Lambda(E_8) \to H_4$.
+\end{proof}
+
+\section{The 12-dimensional closure $L_{12}$ (conjectures C1--C3, Phase~B)}\label{sec:L12}
+
+The upward cascade posits a 12-dimensional ambient lattice $L_{12} \subset \R^{12}$ containing $E_8 \subset \R^8$ together with a rank-$4$ phason complement $M$, i.e.\
+\begin{equation}\label{eq:L12decomp}
+  L_{12} = E_8 \oplus M
+\end{equation}
+as a $\Z$-module direct sum. Three conjectures gate the downstream $\alpha$-chain.
+
+\begin{hypothesis}[C1, phason-complement uniqueness]
+The rank-$4$ $\Z$-module $M$ in~\eqref{eq:L12decomp} is isomorphic to $\Zphi^2$ as a $\Zphi$-module.
+\end{hypothesis}
+
+\begin{hypothesis}[C2, upward termination at $L_{12}$]
+No proper $\Z$-lattice strictly containing $L_{12}$ carries a further rank-$\geq 1$ cut-and-project extension of the type used in Lemma~\ref{lem:ES}.
+\end{hypothesis}
+
+\begin{hypothesis}[C3, $\Zphi$ self-reference]
+The ring $\Zphi$ simultaneously (i) generates the substrate ring (Axiom~\ref{axiom:F1}), (ii) equals the coefficient ring of the icosian quaternionic order $\mathcal{I}$, and (iii) equals the scalar ring of the phason complement $M$.
+\end{hypothesis}
+
+\begin{remark}[Phase~B status of C1--C3]
+Phase~B~\citep{CascadePhaseB} argues C2 by a bespoke dimensional-counting argument (not a classical theorem of algebraic number theory); argues C3 conditional on C1 plus classical $\Zphi$ structure; and argues C1 modulo a minimality principle $H_{\min}$ requiring $M$ to carry no ring structure strictly larger than $\Zphi$. The C1 argument additionally assumes $M$ is torsion-free and $\Zphi$-linear, neither of which is proved here; both are carried as implicit hypotheses of the C1 closure.
+\end{remark}
+
+\begin{remark}[Notation reconciliation: $\Zphi^2$ vs $\Zphi^4$]
+\label{rem:notation}
+The $\Zphi^2$ and $\Zphi^4$ readings are \emph{asserted in local sources} \citep[\S 8]{Cascade12D} to be alternative readings of the same underlying algebraic object, via a ring-rank relabelling ($\Zphi^2$ uses $\Zphi$-rank with $\mathrm{rank}_\Z M = 4$, $\mathrm{rank}_{\Zphi} M = 2$; $\Zphi^4$ uses Z-rank-style shorthand with $\mathrm{rank}_\Z M = 4$). We do not claim to \emph{exhibit} a reusable equivalence here: no explicit rewrite transporting the A, B, and $\pi/87$ arguments of the markdown notes~\citep{CascadePhaseB, CascadeABclosure} from their $\Zphi^4$ presentation into the $\Zphi^2$ convention has been carried out in the repository. The present paper uses the $\Zphi^2$ convention throughout; downstream citation of the markdown-note content requires such a translation, and its execution is part of the A/B polish agenda of \S\ref{sec:status}.
+\end{remark}
+
+\section{Assumptions A and B: Coxeter plane alignment and phason exponents}\label{sec:AB}
+
+\begin{hypothesis}[A, $\Zphi^2$--Coxeter-plane alignment]\label{hyp:A}
+There exist four mutually orthogonal $2$-planes $P_1, P_2, P_3, P_4 \subset \R^8$, each invariant under the $E_8$ Coxeter element $w$, such that the $\Zphi^2$ phason complement of C1 aligns canonically with the direct sum $P_1 \oplus P_2 \oplus P_3 \oplus P_4$ under the cut-and-project $L_{12} \to E_8$.
+\end{hypothesis}
+
+\begin{hypothesis}[B, upper Coxeter exponents as phason windings]\label{hyp:B}
+The eigenvalues of $w$ on the four Coxeter planes $P_1, \ldots, P_4$ are $\exp(2\pi i m/30)$ for $m \in \{17, 19, 23, 29\}$ (the four \emph{upper} Coxeter exponents of $E_8$). Each upper exponent parameterises the phason winding along the corresponding $P_k$ per Coxeter cycle.
+\end{hypothesis}
+
+\begin{remark}
+The $E_8$ Coxeter element $w$ has order $30$ and eigenvalues $\exp(2\pi i m/30)$ for $m \in \{1, 7, 11, 13, 17, 19, 23, 29\}$ (Bourbaki--Humphreys). Assumption B is the content of the ``lower/upper exponent'' dichotomy registered in~\citep{SmartXXII}: the four lower exponents $\{1, 7, 11, 13\}$ describe the physical (vertical) half, and the four upper exponents $\{17, 19, 23, 29\}$ describe the phason (internal) half under the Galois involution $\sigma$.
+\end{remark}
+
+\begin{hypothesis}[Kostant gauge reduction]\label{hyp:kostant}
+A single global $U(1) \times \Z/2$ gauge orbit --- one dimensionless choice of origin shared across the four phason directions --- removes exactly one phason slot from the Coxeter-exponent-sum total.
+\end{hypothesis}
+
+\begin{proposition}[Phason slot count, as a counting convention]\label{prop:87}
+Under Hypothesis~\ref{hyp:B} (upper Coxeter exponents identified with phason-direction windings) and Hypothesis~\ref{hyp:kostant} (Kostant gauge reduction), the paper assigns the count $87$ to the phason sector by summing the upper exponents and imposing the one-slot gauge reduction:
+\[
+  (17 + 19 + 23 + 29) \;-\; 1 \;=\; 88 \;-\; 1 \;=\; 87.
+\]
+Calling this quantity a ``phason-slot count'' presupposes the additional identification (part of Hypothesis~\ref{hyp:B}) that the summed upper-exponent winding equals the phason-slot count in the first place; that identification is adopted here as a counting convention, not derived. Hypothesis~\ref{hyp:A} (A canonicality) is used only to \emph{interpret} the four phason directions as aligned with four orthogonal Coxeter planes; it does not enter the arithmetic of this proposition.
+\end{proposition}
+
+\begin{proof}
+The arithmetic $17 + 19 + 23 + 29 = 88$ is elementary given B. No theorem in this paper or in any cited local source derives the reduction $88 \to 87$; Hypothesis~\ref{hyp:kostant} is a convention only. The Kostant~1959 principal-orbit counting~\citep{Kostant1959} is consistent with a one-slot reduction but does not single-handedly select the shared global origin used here.
+\end{proof}
+
+\section{The P2 isotypic substrate}\label{sec:P2}
+
+\begin{proposition}[Rational-irrep eigenvalue sum, from P2]\label{prop:50}
+Let $L$ be the Laplacian of the $600$-cell vertex graph, and let $\{0, 9, 12, 14, 15\}$ be its five $\Q$-rational eigenvalues (the eigenvalues attached to the trivial, $\mathbf{4}$-, $\mathbf{5}$-, $\mathbf{6}$-, $\mathbf{4'}$-isotypic components of $\C[\twoI]$ in the P2 decomposition~\citep{CascadeAlgSubstrate}, \S 6, Fact on the Laplacian spectrum). The sum of the four nontrivial $\Q$-rational eigenvalues is
+\[
+  9 + 12 + 14 + 15 \;=\; 50.
+\]
+\end{proposition}
+
+\begin{proof}
+Immediate from P2~\S 6, Table on the complete Laplacian spectrum of the $600$-cell vertex graph. The isotypic decomposition $\C^{V_{600}} = W_{\mathrm{int}} \oplus W_{\mathrm{irr}}$ with $\dim W_{\mathrm{int}} = 94$ and $\dim W_{\mathrm{irr}} = 26$ was also stated as Theorem~1 of~\citet{SmartXXII}; both papers use the same $2I$ character-table import from~\citep{DuVal1964}.
+\end{proof}
+
+\section{The $\alpha$-structural correspondence}\label{sec:theorem}
+
+\begin{proposition}[Integer part of the structural identity, conditional]\label{thm:alpha}
+Under Hypotheses~\ref{hyp:B} and~\ref{hyp:kostant} (used via Proposition~\ref{prop:87}) and the P2 character-table import (used via Proposition~\ref{prop:50}),
+\begin{equation}
+  137 \;=\; 87 + 50
+\end{equation}
+where $87$ is the quantity counted as the phason-sector slot total under Hypothesis~\ref{hyp:B} and the gauge convention of Hypothesis~\ref{hyp:kostant}, and $50$ is the sum of the four nontrivial $\Q$-rational Laplacian eigenvalues of the 600-cell. The ambient hypotheses $F1$, C1--C3, and A enter this paper at earlier layers (they select the ring $\Zphi$, the phason-complement rank, and the Coxeter-plane interpretation respectively) but do not enter the arithmetic of this proposition.
+\end{proposition}
+
+\begin{proof}
+By Propositions~\ref{prop:87} and~\ref{prop:50},
+\[
+  (17 + 19 + 23 + 29) - 1 \;+\; (9 + 12 + 14 + 15) \;=\; 87 \;+\; 50 \;=\; 137.
+\]
+\end{proof}
+
+\begin{remark}[Irrational part $\pi / 87$: unproved heuristic identification]\label{rem:irrational}
+The irrational $\pi/87$ remainder of Identity~\eqref{eq:main} is \emph{not} derived in this paper, and no cited source in the VFD repository contains a closed proof of it. The heuristic identification in~\citep{CascadeIdentityC, CascadeABclosure} proceeds by (i) assigning $\pi$ of Coxeter phase to each upper exponent, summing to $88\pi$; (ii) a two-to-one Galois operation on the $E_8 \to H_4$ projection (which, at the lattice-set level, projects $240 \to 120$ minimal vectors per P2 \S 4~\citep{CascadeAlgSubstrate}, but whose action on Coxeter phase is not proved in P2); (iii) a $\Z/2$ centre absorption of a $\pi$ residue; followed by (iv) division by the physical phason slot count $87$ to give $\pi/87$ as a per-slot residual. None of steps (i), (ii), (iii), (iv) is established at theorem level: (i) is an unproved phase-assignment convention, (ii) is an extension of a set-level projection to a phase-level statement not proved in~\citep{CascadeAlgSubstrate}, (iii) is a heuristic absorption, and (iv) presupposes the Kostant-gauge reduction of Hypothesis~\ref{hyp:kostant}. We record $\pi/87$ as the empirically-observed residual and flag its derivation as Open Item~5 in \S\ref{sec:status}.
+\end{remark}
+
+\begin{remark}[Recorded correspondence: $\alpha^{-1} \approx 137 + \pi/87$ under the stated identifications]\label{thm:alpha-full}
+Combining the integer decomposition $137 = 87 + 50$ of Proposition~\ref{thm:alpha} with the unproved heuristic identification of the $\pi/87$ residue in Remark~\ref{rem:irrational}, the paper records the correspondence
+\[
+  \alpha^{-1} \;\approx\; 137 + \frac{\pi}{87} \;\approx\; 137.036\,110\,260.
+\]
+This is not a proved proposition about the physical constant. It is the combination of one proved arithmetic identity and one admitted heuristic identification, collected here as the $\alpha$-structural correspondence of the present paper. Five open items (B-formalisation, A-canonicality, C1 minimality, Kostant-gauge derivation, irrational-term derivation) are documented in \S\ref{sec:status}.
+\end{remark}
+
+\begin{remark}[Hypothesis audit]
+The proof rests on: (i) Axiom $F1$; (ii) the C1 minimality principle; (iii) A's canonicality of the $\Zphi^2$-to-Coxeter-plane alignment; (iv) B's assignment of the upper exponents to the phason half; (v) P2's import of the $2I$ character table from Du~Val~\citep{DuVal1964}. Only (ii)--(iv) are not classical; (v) is an explicit external-literature import already catalogued in P2's scope section.
+\end{remark}
+
+\section{Numerical comparison}\label{sec:numerical}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+Source & Value & Uncertainty \\
+\midrule
+CODATA~2018~\citep{CODATA2018} & $\alpha^{-1} = 137.035\,999\,084$ & $21 \times 10^{-9}$ \\
+Remark~\ref{thm:alpha-full} (correspondence) & $\alpha^{-1} \approx 137 + \pi/87 \approx 137.036\,110\,260$ & --- \\
+\midrule
+Difference (ppm) & \multicolumn{2}{l}{$0.81$} \\
+\bottomrule
+\end{tabular}
+\caption{Numerical agreement between the Remark~\ref{thm:alpha-full} structural correspondence and the CODATA~2018 recommended value for $\alpha^{-1}$. The correspondence is conditional on the full hypothesis load in \S\ref{sec:status}; the $0.81$-ppm agreement is a numerical consequence of the assumed identifications collected in this paper, not of a derived chain.}
+\label{tab:numerical}
+\end{table}
+
+\section{Hypothesis status audit}\label{sec:status}
+
+Table~\ref{tab:status} summarises the epistemic status of each ingredient.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{3.3cm}p{6.5cm}p{5cm}}
+\toprule
+Layer & Content & Status \\
+\midrule
+$F1$ (\S\ref{sec:F1}) & $r = 1 + 1/r$, forcing $r = \varphi$ and $\Zphi$. & Axiom; classical once assumed. \\
+Elser--Sloane (\S\ref{sec:F1}) & $E_8 = \{(x,\sigma(x)) : x \in \mathcal{I}\} \subset \mathcal{I} \oplus \sigma(\mathcal{I})$ via the icosian ring. & Theorem, classical. \\
+C2 (\S\ref{sec:L12}) & Upward termination at $L_{12}$. & Proof attempt (Phase~B); status downgraded from ``classical'' to ``bespoke dimensional-counting argument documented in~\citep{CascadePhaseB}''. \\
+C1 (\S\ref{sec:L12}) & Phason complement $\cong \Zphi^2$. & Conditional: closes under the $H_{\min}$ minimality principle \emph{plus} the admissibility hypotheses catalogued in~\citep{Cascade12D}. \\
+C3 (\S\ref{sec:L12}) & $\Zphi$ self-reference. & Conditional on C1 plus classical $\Zphi$ structure; downstream, not independent. \\
+A (\S\ref{sec:AB}) & $\Zphi^2$ aligns canonically with Coxeter planes. & Structurally argued; canonicality polish open. \\
+B (\S\ref{sec:AB}) & Upper exponents $\{17,19,23,29\}$ identified with the phason sector, under B. & Argued from Galois halving; formal derivation open. \\
+P2 \S 6 (\S\ref{sec:P2}) & $\C^{V_{600}} = W_{\mathrm{int}} \oplus W_{\mathrm{irr}} = 94 + 26$; $\{9,12,14,15\}$. & Imported computation (P2): computer-assisted shell/class substrate plus imported $2I$ character table from Du~Val. \\
+Kostant gauge (\S\ref{sec:AB}) & $88 \to 87$ by $U(1) \times \Z/2$ gauge. & Open: a single global $U(1) \times \Z/2$ orbit removing exactly one slot is at present a convention, not a derivation. \\
+Irrational-term (Remark~\ref{rem:irrational}) & $\pi / 87$ residue. & Open: structural identification, not a closed derivation. \\
+\bottomrule
+\end{tabular}
+\caption{Hypothesis-status audit of Remark~\ref{thm:alpha-full}. No row claims theorem-grade closure from $F1$ alone. Five rows are flagged explicitly open.}
+\label{tab:status}
+\end{table}
+
+\paragraph{What remains open for first-principles rigour.} Five items, in order of tightness of the remaining polish:
+\begin{enumerate}
+  \item \textbf{C1 minimality.} Reduce the ``$M$ is not a module over a ring strictly larger than $\Zphi$'' step of Phase~B to a classical theorem of algebraic number theory (candidate: uniqueness of the minimal ring containing $\varphi$ subject to the golden-ratio acceptance window).
+  \item \textbf{A canonicality.} Formalise the ``canonical alignment of $\Zphi^2$ with the four Coxeter planes'' claim. Candidate: classification of $\sigma$-equivariant rank-$4$ sublattices inside $\R^8$.
+  \item \textbf{B formalisation.} Lift the upper-exponents--phason identification from a Galois-halving argument to an intrinsic property of the $w$-eigenbasis.
+  \item \textbf{Kostant-gauge derivation.} Justify $88 \to 87$ by deriving the one-slot reduction from an explicit $U(1) \times \Z/2$ gauge orbit on the phason data. The current paper treats this as a single shared-origin convention.
+  \item \textbf{Irrational-term derivation.} Close the $\pi/87$ remainder by a derived chain (candidate: a phason-phase assignment $\pi$ per upper exponent, followed by a controlled two-to-one halving under $E_8 \to H_4$, followed by a derived $\Z/2$ absorption). All three steps are at present structural identifications; the modular arithmetic of a naive ``$88 \pi \to 44 \pi \to \text{residue} \to \pi/87$'' pipeline is not a proof.
+\end{enumerate}
+These five gaps do not change the arithmetic once assumed, but they prevent Identity~\eqref{eq:main} from being a theorem from $F1$ alone.
+
+\section{Conclusion}
+
+We have recorded a conditional structural correspondence $\alpha^{-1} \approx 137 + \pi/87$ under the hypothesis load $\{F1, \text{C1 (modulo minimality)}, A, B, \text{Kostant gauge}, P2\}$, plus the structural identification of the $\pi/87$ residue. (C2 and C3 belong to the ambient 12D closure narrative but do not enter the final arithmetic step.) Agreement with CODATA~2018 is $0.81$~ppm; the correspondence is a numerical consequence of the assumed identifications collected in this paper, not a derived chain. \textbf{Five open items} separate the present paper from a first-principles theorem: (i) C1 minimality; (ii) A canonicality; (iii) B formalisation; (iv) the Kostant-gauge reduction $88 \to 87$; and (v) the closed derivation of the $\pi/87$ residue.
+
+\bibliographystyle{plainnat}
+\begin{thebibliography}{99}
+
+\bibitem[Cascade Foundations, 2026]{CascadeFoundations}
+L.~Smart.
+\newblock Cascade Foundations: the eight foundations F1--F8 underlying the {VFD} programme.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xxxvi/}.
+
+\bibitem[Cascade {12D} Closure, 2026]{Cascade12D}
+L.~Smart.
+\newblock The {12D} closure theorem: phason complement uniqueness and self-reference on the upward cascade.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-12d-closure/cascade-12d-closure.tex}. Uses the $\Zphi^2$ convention for the phason complement, consistent with $\mathrm{rank}_\Z M = 4$. An earlier exploratory markdown note \texttt{papers/cascade-derivation/cascade-12d-closure.md} uses the older $\Zphi^4$ shorthand which is inconsistent with the stated Z-rank budget; the present paper follows the $\Zphi^2$ convention of the LaTeX preprint.
+
+\bibitem[Cascade Phase {B}, 2026]{CascadePhaseB}
+L.~Smart.
+\newblock Phase {B}: closure of {C1, C2, C3}.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-derivation/cascade-phase-b-c1-c2-c3.md}.
+
+\bibitem[Cascade {A}--{B} Closure, 2026]{CascadeABclosure}
+L.~Smart.
+\newblock Cascade assumptions {A} and {B}: closure of the canonical alignment and upper-exponent identifications.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-derivation/cascade-assumptions-a-b-closure.md}.
+
+\bibitem[Cascade Identity-{C}, 2026]{CascadeIdentityC}
+L.~Smart.
+\newblock Cascade identity-{C} consolidated derivation.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-derivation/cascade-identity-c-consolidated.md}.
+
+\bibitem[Cascade Algebraic Substrate, 2026]{CascadeAlgSubstrate}
+L.~Smart.
+\newblock Cascade--Classical Correspondence II: the cascade algebraic substrate ({P2}).
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}.
+
+\bibitem[Smart, 2026 {V}]{SmartV}
+L.~Smart.
+\newblock Toward a spectral-geometric particle-mass model from the {600}-cell.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-v/}.
+
+\bibitem[Smart, 2026 {XXII}]{SmartXXII}
+L.~Smart.
+\newblock Paper {XXII}.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xxii/}.
+
+\bibitem[Du~Val, 1964]{DuVal1964}
+P.~Du~Val.
+\newblock \emph{Homographies, Quaternions and Rotations}.
+\newblock Oxford University Press, 1964.
+\newblock Classical classification of finite subgroups of $\mathrm{Sp}(1)$; character table of $2I$ in Ch.~3.
+
+\bibitem[Elser and Sloane, 1987]{ElserSloane1987}
+V.~Elser and N.~J.~A. Sloane.
+\newblock A highly symmetric four-dimensional quasicrystal.
+\newblock \emph{Journal of Physics A: Mathematical and General}, 20(18):6161--6168, 1987.
+
+\bibitem[Moody and Patera, 1993]{MoodyPatera1993}
+R.~V. Moody and J.~Patera.
+\newblock Quasicrystals and icosians.
+\newblock \emph{Journal of Physics A: Mathematical and General}, 26(12):2829--2853, 1993.
+
+\bibitem[Kostant, 1959]{Kostant1959}
+B.~Kostant.
+\newblock The principal three-dimensional subgroup and the {Betti} numbers of a complex simple {Lie} group.
+\newblock \emph{American Journal of Mathematics}, 81:973--1032, 1959.
+
+\bibitem[CODATA, 2021]{CODATA2018}
+E.~Tiesinga, P.~J.~Mohr, D.~B.~Newell, and B.~N.~Taylor.
+\newblock {CODATA} recommended values of the fundamental physical constants: 2018.
+\newblock \emph{Reviews of Modern Physics}, 93:025010, 2021.
+
+\end{thebibliography}
+
+\end{document}

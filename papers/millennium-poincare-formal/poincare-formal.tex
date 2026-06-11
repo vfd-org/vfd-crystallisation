@@ -1,0 +1,672 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\title{Cascade Compatibility with the Poincar\'{e} Theorem}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The Poincar\'{e} Conjecture --- every simply connected, closed,
+smooth $3$-manifold is diffeomorphic to $S^{3}$ --- was resolved
+by Hamilton and Perelman \cite{Hamilton1982,Perelman1,Perelman2,
+Perelman3} via the Ricci flow programme with surgery, completed in
+2003 and verified in detail in \cite{KleinerLott,MorganTian,CaoZhu}.
+This paper is \emph{not} a new proof of the Poincar\'{e} theorem.
+Its purpose is narrower: to record, at the level of mathematical
+precision its underlying claims actually support, a three-way
+\emph{coherence} between Perelman's theorem and two independent
+cascade chains both arriving at $S^{3}$.
+
+The cascade contribution is formalised as
+Theorem~\ref{thm:compatibility} and has two open hypotheses:
+the \emph{P5 hypothesis} (\cite[\S P5]{CascadePregeometry}: the
+$\varphi$-entropy variational principle on proto-link multisets has
+a unique minimiser, isomorphic to the 120-cell edge multiset,
+without any topological input), and the \emph{C2.bis hypothesis}
+(\cite[\S C2.bis]{CascadeGR}: the Schl\"{a}fli refinement of the
+600-cell converges in Gromov--Hausdorff sense to $(S^{3},
+d_{\rm round})$). Both are currently \emph{formal frameworks} in
+the cited cascade sources --- statements with proof sketches and
+numerical evidence at shallow depth, but not yet rigorous
+theorems. Conditional on both, the cascade's combinatorial chain
+(P5 $\to$ 120-cell $\to$ 600-cell on $S^{3}$) and its geometric
+chain (Schl\"{a}fli refinements $\to S^{3}$) identify the same
+$3$-manifold, and Perelman's classification confirms that no
+other simply connected closed $3$-manifold could play this role.
+The two cascade chains are mathematically independent inputs whose
+mutual consistency is a non-trivial constraint on the cascade
+framework, but their joint payoff at the Poincar\'{e} level is
+narrow: each chain ultimately depends on objects that already
+sit in $S^{3}$, so the result is a coherence note about cascade,
+not a new contribution to the Poincar\'{e} theorem itself.
+
+We make explicit what is, and is not, established. We do not
+identify cascade gradient flow with Hamilton's Ricci flow as an
+exact equality of evolution equations; we do not identify
+Perelman's $\mathcal{W}$-entropy with any cascade entropy at the
+level of a theorem; we do not lift Perelman's surgery to a
+``cascade bootstrap'' equivalence. These are framed as
+\emph{open programmatic conjectures} (Section~\ref{sec:programme}),
+not theorems. A Clay-level submission must distinguish between a
+genuine reduction or proof and a structural research programme;
+this paper draws that line explicitly. Per
+\cite[\S MP6.3]{CascadeMillennium}, the cascade-internal status of
+Poincar\'{e} is ``no contribution beyond consistency''; the
+present paper is the formal version of that statement.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+
+\subsection{Perelman's theorem}
+
+Throughout, all manifolds are smooth, second countable, and
+oriented. We rely on the following facts, all due to Hamilton and
+Perelman:
+
+\begin{theorem}[Hamilton--Perelman; Poincar\'{e} Conjecture]
+\label{thm:perelman}
+Every simply connected, closed, smooth $3$-manifold is
+diffeomorphic to $S^{3}$.
+\end{theorem}
+
+\noindent
+The proof appears across \cite{Hamilton1982, Perelman1, Perelman2,
+Perelman3}; expositions verifying every step are given in
+\cite{KleinerLott, MorganTian, CaoZhu}. We invoke
+Theorem~\ref{thm:perelman} as a black box; this paper contributes
+nothing to its proof.
+
+\subsection{What the cascade framework predicts}
+
+The cascade framework of \cite{CascadeFoundations} (Foundations
+F1--F8) is a discrete substrate-based model whose macroscopic
+$3+1$-dimensional spatial geometry is studied in \cite{CascadeGR}.
+The relevant statement for our purposes is the following formal
+framework, reproduced verbatim from \cite[\S C2.bis.1]{CascadeGR}:
+
+\begin{quote}
+\textbf{Theorem (C2, Gromov--Hausdorff continuum limit, formal
+framework).} Let $G_{0}$ be the $24$-cell inscribed in $S^{3}$ and
+$G_{n+1}$ the Schl\"{a}fli-respecting refinement of $G_{n}$ (using
+the $2I/2T$ coset decomposition of the binary icosahedral group).
+Equip $G_{n}$ with the graph metric $d_{n}$ rescaled by the
+$\varepsilon$-net radius $h_{n}$. Then
+\[
+  (G_{n}, d_{n}) \longrightarrow (S^{3}, d_{\rm round})
+  \quad \text{in the Gromov--Hausdorff sense.}
+\]
+Consequently the discrete Laplacian spectra converge to the
+continuous $S^{3}$ Laplacian:
+$\operatorname{spec}(-L_{G_{n}}/h_{n}^{2}) \to
+\operatorname{spec}(-\Delta_{S^{3}})$ with multiplicities.
+\end{quote}
+
+\begin{remark}[Status of C2.bis in the cited source]
+\label{rmk:c2bis-status}
+The C2.bis statement is described in \cite[\S C2.bis]{CascadeGR} as
+\emph{``theorem statement + proof sketch + numerical evidence
+complete; full rigorous proof remains real-analysis-thesis level.''}
+The proof sketch combines (i) explicit $\varepsilon$-net density
+bounds verified only at $n = 0, 1$ and extrapolated thereafter;
+(ii) graph-distance / geodesic-distance ratios approaching $1$
+($1.080$ at $G_{0}$, $1.122$ at $G_{1}$, with the slight overshoot
+attributed in the source to lattice artefacts but not bounded
+quantitatively); (iii) the C3.bis density argument for the action
+of $A_{5}$ on $S^{2}$ \cite[\S C3.bis]{CascadeGR}, whose Kuranishi
+step relies on a transcendence claim about the rotation angle of
+the commutator $[R_{1}, R_{2}]$. We do not, in this paper, audit
+the upstream rigour of these ingredients beyond the cited source's
+self-description; we are deliberately conservative in calling the
+C2.bis statement a \emph{formal framework} rather than a theorem.
+The technical items remaining for a self-contained proof include
+(a) explicit verification of the Burago--Ivanov hypotheses on
+$(G_{n}, d_{n})$ uniformly in $n$ (relying on
+\cite{BuragoBuragoIvanov}; this is the item explicitly isolated as
+the remaining work in \cite[\S C2.bis.5]{CascadeGR}); and, by
+inference from the broader source rather than from explicit
+enumeration there, (b) explicit verification of the
+Cheeger--Colding spectral continuity hypotheses (relying on
+\cite{CheegerColding1997}); (c) a quantitative bound on the
+$g/\mathrm{geo}$ ratio overshoot of (ii); and (d) a complete
+write-up of the transcendence step in (iii). None of (a)--(d) is
+carried out in either the cited source or in the present paper.
+\end{remark}
+
+\subsection{Two independent cascade derivations of the 600-cell}
+\label{subsec:two-derivations}
+
+Before turning to the compatibility statement we need a second
+cascade input, distinct from C2.bis. The cascade-pregeometry programme
+\cite{CascadePregeometry} contains a combinatorial uniqueness chain
+P3--P5 whose conclusion is purely combinatorial (no Riemannian or
+topological input):
+
+\begin{quote}
+\textbf{Theorem (P5, 120-cell uniqueness, formal framework as stated
+in \cite[\S P5]{CascadePregeometry}).} The $\varphi$-entropy
+functional $\mathcal{S}$ on multisets of proto-links has a unique
+minimiser $P_{\min}$, characterised by the closure conditions
+(C1)--(C4) of \cite[\S P5.2]{CascadePregeometry}. The unique
+$P_{\min}$ is isomorphic to the edge multiset of the regular
+$4$-polytope $120$-cell. Its automorphism group is $H_{4}$ of order
+$14{,}400$.
+\end{quote}
+
+\begin{remark}[Status of P5 in the cited source]
+\label{rmk:p5-status}
+\cite[\S P5.2]{CascadePregeometry} gives a proof outline citing
+\cite[\S B.5]{VFDMasterMath} for the four-step argument
+(closure $\Rightarrow$ pentagonal-face count $\Rightarrow$ 3-regular
+graph $\Rightarrow$ chirality-respecting $\Rightarrow$ unique
+1200-edge graph). We treat the statement as a formal-framework
+theorem on the same status footing as C2.bis: stated, sketched,
+not yet self-contained at Clay-submission rigour. We make this
+explicit by an analogous \emph{P5 hypothesis} below.
+\end{remark}
+
+The 120-cell is dual to the regular 600-cell
+(\cite[\S P5.3]{CascadePregeometry}), and the 600-cell is a regular
+4-polytope whose vertex set lies on $S^{3}$
+\cite[\S 8.7]{CoxeterRegularPolytopes}. The cascade-pregeometry
+chain therefore arrives at a combinatorial 4-polytope with vertices
+on $S^{3}$, by a route that does not invoke the C2.bis convergence.
+
+\subsection{The compatibility question and what this paper does}
+
+There are now \emph{three} statements on the table:
+\begin{enumerate}
+\item Perelman's theorem (Theorem~\ref{thm:perelman}, established):
+  a simply connected closed $3$-manifold is $S^{3}$.
+\item The cascade's combinatorial chain
+  (\cite[\S\S P3--P5]{CascadePregeometry}, formal framework):
+  the $\varphi$-entropy variational principle on proto-link
+  multisets has a unique minimiser $P_{\min}$, isomorphic to the
+  120-cell, dual to the 600-cell whose vertex set lies on $S^{3}$.
+\item The cascade's geometric chain
+  (\cite[\S C2.bis]{CascadeGR}, formal framework): the Schl\"{a}fli
+  refinement of $G_{0}$ converges in GH sense to $(S^{3},
+  d_{\rm round})$.
+\end{enumerate}
+
+The non-trivial coherence question is whether (1)--(3) are mutually
+consistent: do the two cascade derivations of $S^{3}$ (combinatorial
+via P5; geometric via C2.bis) and Perelman's classification meet at
+the same $3$-manifold? We show in Theorem~\ref{thm:compatibility}
+below that they do, conditional on the formal-framework hypotheses
+P5 and C2.bis. This is the genuine content of the paper.
+
+We emphasise the limits of this coherence:
+\begin{itemize}
+\item It is not a proof of Theorem~\ref{thm:perelman}: that proof
+  is Hamilton--Perelman's, invoked here as a black box.
+\item Chain (2) gives a $4$-polytope, not a $3$-manifold; the
+  identification of $S^{3}$ as the underlying spatial slice
+  requires the dual + embedding step \emph{plus} the C2.bis
+  geometric chain (3). Chain (2) alone does not derive the
+  topology of the limit independently of (3). What chain (2)
+  contributes is a combinatorial identification of the
+  4-polytope whose boundary structure C2.bis refines.
+\item C2.bis itself stipulates the metric scaffolding by inscribing
+  $G_{0}$ in $S^{3}$. Hence neither cascade chain produces $S^{3}$
+  from inputs that contain no reference to $S^{3}$. The cascade's
+  contribution is the cross-check that the two routes agree, not
+  an independent derivation of which $3$-manifold is forced.
+\end{itemize}
+
+In \cite[\S MP6.3]{CascadeMillennium} the cascade-internal status
+of Poincar\'{e} is recorded as: \emph{``Poincar\'{e} is already
+solved. Cascade is consistent with it. No cascade contribution
+beyond consistency.''} This paper formalises that statement,
+strengthened slightly to a three-way coherence between two cascade
+chains and Perelman's classification.
+
+Section~\ref{sec:programme} discusses --- as a research programme,
+not as theorems --- the broader question of whether the structural
+analogies between Ricci flow / Perelman entropy / surgery on the
+classical side and gradient flow / $\varphi$-entropy / refinement
+bootstrap on the cascade side can be upgraded into rigorous
+identifications. We are explicit that none of these analogies are
+proved in this paper, and we list the precise open problems that
+would be needed to make them theorems.
+
+\section{The compatibility theorem}
+\label{sec:compatibility}
+
+\begin{definition}[Cascade P5 hypothesis]
+\label{def:p5-hyp}
+We say the \emph{P5 hypothesis} holds if the formal framework
+statement of \cite[\S P5.1]{CascadePregeometry} is upgraded to a
+fully rigorous theorem, i.e.\ the variational uniqueness
+$P_{\min} \cong $ 120-cell edge multiset is established with all
+steps of \cite[\S P5.2]{CascadePregeometry} (closure conditions
+(C1)--(C4) determine the graph uniquely) verified.
+\end{definition}
+
+\begin{definition}[Cascade C2.bis hypothesis]
+\label{def:c2bis-hyp}
+We say the \emph{C2.bis hypothesis} holds if the formal framework
+statement of \cite[\S C2.bis.1]{CascadeGR} is upgraded to a fully
+rigorous theorem, i.e.\ the Gromov--Hausdorff convergence
+$(G_{n}, d_{n}) \to (S^{3}, d_{\rm round})$ is established with all
+hypotheses of the Burago--Ivanov GH convergence theorem
+\cite{BuragoBuragoIvanov} verified for the sequence $G_{n}$, and
+all four open items (a)--(d) of Remark~\ref{rmk:c2bis-status}
+discharged.
+\end{definition}
+
+\begin{remark}
+Both hypotheses are, by Remarks~\ref{rmk:c2bis-status} and
+\ref{rmk:p5-status}, \emph{open} mathematical statements at the
+time of writing. They are supported by numerical evidence at
+shallow depth and proof sketches. We treat them here as explicit
+assumptions; the conditional structure of
+Theorem~\ref{thm:compatibility} below makes the dependence
+verifiable by a referee without verifying either hypothesis.
+\end{remark}
+
+\begin{theorem}[Cascade--Perelman three-way compatibility]
+\label{thm:compatibility}
+Assume the P5 hypothesis (Definition~\ref{def:p5-hyp}) and the
+C2.bis hypothesis (Definition~\ref{def:c2bis-hyp}). Let $X$ denote
+the GH limit space provided by C2.bis. Then:
+\begin{enumerate}
+\item[(i)] The combinatorial chain (P5 + duality + classical
+  embedding) identifies the cascade substrate $G_{1}$ with the
+  vertex set of the 600-cell, embedded as a regular point set on
+  $S^{3}$.
+\item[(ii)] The geometric chain (C2.bis) identifies $X$ with
+  $(S^{3}, d_{\rm round})$ as a metric measure space; in particular
+  $X$ is a smooth, closed, simply connected $3$-manifold.
+\item[(iii)] Perelman's theorem (Theorem~\ref{thm:perelman}) applied
+  to the underlying smooth manifold of $X$ asserts that $X$ is
+  diffeomorphic to the standard $3$-sphere $S^{3}$.
+\end{enumerate}
+The three identifications are mutually consistent: (i) and (ii)
+agree at the 600-cell vertex set; (ii) and (iii) agree on the
+diffeomorphism class of $X$. In particular, neither cascade chain
+contradicts Perelman, and the two cascade chains do not contradict
+each other.
+\end{theorem}
+
+\begin{proof}
+(i) By the P5 hypothesis, the $\varphi$-entropy minimiser $P_{\min}$
+is the 120-cell edge multiset. By
+\cite[\S P5.3]{CascadePregeometry} the dual relationship
+between the 120-cell and the 600-cell identifies the vertex set of
+$G_{1} = $ 600-cell with the cell centres of the 120-cell. The
+classical embedding of the regular 600-cell as a 4-polytope with
+vertex set on $S^{3}$ is standard \cite[\S 8.7]{CoxeterRegularPolytopes}.
+
+(ii) By the C2.bis hypothesis, $(G_{n}, d_{n}) \to X = (S^{3},
+d_{\rm round})$ in the Gromov--Hausdorff sense. The space $(S^{3},
+d_{\rm round})$ is, as a smooth Riemannian manifold, the standard
+round $3$-sphere; in particular it is closed, smooth, and simply
+connected ($\pi_{1}(S^{3}) = 1$).
+
+(iii) Theorem~\ref{thm:perelman} applied to the smooth manifold
+$X$, which by (ii) is simply connected closed smooth $3$-dimensional,
+yields a diffeomorphism $X \cong S^{3}$.
+
+Consistency: the GH limit point set in (ii) contains the 600-cell
+vertex set in (i) as a subset (the $G_{1}$ approximation), so (i)
+and (ii) agree on the spatial location of these vertices on $S^{3}$.
+The diffeomorphism class of $X$ from (iii) coincides with the
+diffeomorphism class assigned in (ii), since both name the standard
+$3$-sphere. Hence (i)--(iii) are mutually consistent.
+\end{proof}
+
+\begin{remark}[What Theorem~\ref{thm:compatibility} is and is not]
+\label{rmk:scope}
+Theorem~\ref{thm:compatibility} is a three-way coherence
+statement, not an independent proof of any of (i)--(iii). It
+would fail to hold if any of the three identifications were
+inconsistent with the others; for instance, if the cascade's
+combinatorial chain produced a 4-polytope incompatible with
+embedding on $S^{3}$, or if its geometric chain converged to a
+non-simply-connected limit. The cascade contribution is the
+verification that the two cascade derivations and Perelman's
+classification all meet at the same diffeomorphism class.
+
+This is more than a one-step tautology. The earlier draft of this
+paper presented a single cascade chain matched against Perelman,
+which does reduce to ``$S^{3}$ is $S^{3}$''; the present
+formulation has a non-trivial coherence content because the two
+cascade chains (P5 combinatorial and C2.bis geometric) are
+mathematically independent inputs whose agreement is a constraint
+on the cascade framework.
+
+It is, however, \emph{still not} a Clay-level mathematical
+contribution to Poincar\'{e}: the theorem proved here is a
+coherence note about the cascade framework, not new content
+about the Poincar\'{e} theorem itself. Section~\ref{sec:open}
+records what would be required to upgrade the result, in either
+direction.
+\end{remark}
+
+\begin{remark}[Conditional vs.\ unconditional]
+The compatibility theorem is \emph{conditional} on both
+hypotheses. The unconditional statement currently available, given
+only the published numerical evidence and proof sketches in
+\cite[\S C2.bis]{CascadeGR} and \cite[\S P5]{CascadePregeometry},
+is the much weaker:
+\begin{quote}
+``At combinatorial level, the cascade $\varphi$-entropy minimiser
+is identified by the proof sketch \cite[\S P5.2]{CascadePregeometry}
+as the 120-cell edge set; at geometric level, the discrete cascade
+spatial substrate has spectrum and metric ratios at refinement
+depths $n \in \{0,1\}$ consistent (within the numerical tolerances
+reported in \cite[\S C2.bis.4]{CascadeGR}) with $(S^{3},
+d_{\rm round})$. These observations are compatible with each other
+and with Perelman's classification, but the underlying convergence
+and uniqueness theorems are not yet established at the level of
+Clay-submission proof.''
+\end{quote}
+We have stated the conditional form to keep the dependence on the
+two open hypotheses explicit; a referee can verify the conditional
+implication without needing to verify either hypothesis.
+\end{remark}
+
+\section{Open programme: structural analogies}
+\label{sec:programme}
+
+This section is \emph{not part of the theorem}. It records, as
+open research-programme questions, structural analogies between
+Perelman's classical machinery and cascade objects. None of the
+identifications below are proved in this paper, and they are
+\emph{not} used in the proof of Theorem~\ref{thm:compatibility}.
+A Clay-level reader should treat this section as a non-mathematical
+discussion of motivation; the mathematical content of the paper
+ends at Section~\ref{sec:compatibility}.
+
+\subsection{Analogy 1: Ricci flow and cascade gradient flow}
+
+Hamilton's Ricci flow $\partial_{t} g = -2\Ric(g)$ is a geometric
+gradient evolution. The cascade closure functional
+$\mathcal{F} = \alpha R + \beta E - \gamma Q$ from
+\cite[F2]{CascadeFoundations} also admits a gradient flow on its
+configuration space. In the cascade's macroscopic limit one
+obtains a curvature-driven evolution, and at the heuristic level
+this resembles Ricci flow.
+
+\begin{conjecture}[Open: Ricci flow as macroscopic cascade gradient
+flow]
+\label{conj:ricci-cascade}
+There exist (i) a precise definition of the cascade gradient flow
+on a suitable configuration space; (ii) a coarse-graining map from
+that configuration space to the space of Riemannian metrics on a
+fixed compact $3$-manifold; (iii) a precise sense in which the
+coarse-grained image of the cascade gradient flow agrees with the
+DeTurck-modified Ricci flow up to a controlled gauge correction.
+\end{conjecture}
+
+\noindent
+This conjecture is \emph{open}. The earlier draft of this paper
+asserted it as a theorem; that assertion has been retracted. A
+proof would require, at minimum, a rigorous construction of the
+projection $\Pi_{\rm met}$ (which is not present in
+\cite{CascadePregeometry} or \cite{CascadeGR}), an exact
+specification of the metric on the space of cascade configurations,
+and a careful treatment of the diffeomorphism gauge that breaks
+ordinary parabolicity for Ricci flow.
+
+\subsection{Analogy 2: Perelman entropy and a cascade entropy}
+
+Perelman's $\mathcal{W}$-entropy \cite[\S 3]{Perelman1} is monotone
+under coupled Ricci flow / adjoint heat. A cascade
+$\varphi$-entropy is defined in \cite[P2]{CascadePregeometry} (as a
+functional on cascade configurations rather than on Riemannian
+metrics).
+
+\begin{conjecture}[Open: identification of $\mathcal{W}$ with a
+cascade entropy]
+\label{conj:W-cascade}
+There exists a coupling of cascade configurations and auxiliary
+data analogous to Perelman's $(g, f, \tau)$ such that (i) the
+cascade $\varphi$-entropy of \cite[P2]{CascadePregeometry} (or a
+weighted variant) projects to a functional on Riemannian metrics
+that equals $\mathcal{W}(g, f, \tau)$ up to an explicit affine
+transformation; (ii) the cascade gradient flow induces the coupled
+Ricci/adjoint-heat system; and (iii) the cascade-side monotonicity
+implies Perelman's monotonicity under this projection.
+\end{conjecture}
+
+\noindent
+This conjecture is \emph{open}. The earlier draft of this paper
+asserted it as a theorem; that assertion has been retracted, since
+the proof relied on undefined objects ($p_{k}$, $Z[\Phi]$,
+$\beta_{k}$, ``heat-kernel projection'') and a circular definition
+of the dilaton field $f$.
+
+\subsection{Analogy 3: Perelman surgery and cascade refinement}
+
+Perelman's surgery resolves neck-pinch singularities of the Ricci
+flow by cutting along a cylindrical region and capping off with
+standard caps. The cascade framework includes a refinement
+operation $G_{n} \to G_{n+1}$ \cite[\S C2.bis]{CascadeGR}, defined
+globally by Schl\"{a}fli refinement.
+
+\begin{conjecture}[Open: cascade-local refinement as surgery]
+\label{conj:surgery-cascade}
+There exists a localised version of the cascade refinement
+operation such that, for a cascade configuration whose
+metric-rung projection (subject to Conjecture~\ref{conj:ricci-cascade})
+develops a $\delta$-neck in Perelman's sense, the local refinement
+projects to Perelman's surgery restart up to a quantitatively
+controlled equivalence.
+\end{conjecture}
+
+\noindent
+This conjecture is \emph{open} and depends logically on
+Conjecture~\ref{conj:ricci-cascade}. The earlier draft asserted it
+as a theorem; that assertion is retracted. A proof would require
+the canonical-neighbourhood theorem analogue, a quantitative
+neck-detection criterion, and a topology computation for the
+caps --- none of which are present in the cited cascade sources.
+
+\subsection{Programmatic note on the seven-seams idea}
+
+The earlier draft of this paper formulated a ``seven-seams thesis''
+as a theorem (former Theorem 7.4) asserting that all seven Clay
+Millennium Prize Problems admit cascade-native resolutions via a
+common ``four-feature bridge template''. That formulation was a
+slogan, not a theorem: its hypotheses and conclusion are not
+mathematical statements that a referee can check.
+
+A more honest version of the underlying observation is:
+
+\begin{conjecture}[Seven-seams research programme]
+\label{conj:seven-seams}
+The seven Clay Millennium Prize Problems admit reformulations in
+the cascade framework. For each of YM mass gap, RH, NS smoothness,
+Hodge, BSD, P vs NP, and Poincar\'{e}, the corresponding cascade
+companion paper offers either (a) a structural reformulation with
+specified open technical lemmas, or (b) in the case of Poincar\'{e},
+a compatibility theorem with the existing classical proof
+(Theorem~\ref{thm:compatibility} of the present paper). The
+programme of upgrading each (a)-type reformulation to a complete
+classical proof is open.
+\end{conjecture}
+
+\noindent
+The status of the six (a)-type companion papers is, at the time of
+writing, that each contains \emph{open technical items} explicitly
+listed in \cite[Session addendum 2026-04-17]{CascadeWO}. None
+constitutes a Clay-level proof in the classical sense; each
+constitutes a cascade-structural argument together with a list of
+remaining technical items.
+
+\section{What remains open and what would constitute the next step}
+\label{sec:open}
+
+To strengthen the present paper, the following items would each
+constitute a clear improvement, ordered by the size of the
+contribution they would represent:
+
+\begin{enumerate}
+\item \textbf{Discharge the P5 hypothesis.} Complete the
+  combinatorial proof of \cite[\S P5.1]{CascadePregeometry}: verify
+  that closure conditions (C1)--(C4) determine $P_{\min}$ uniquely
+  as the 120-cell edge multiset, including the unique-graph step
+  from \cite[\S B.5]{VFDMasterMath}. This is a finite-combinatorial
+  problem.
+\item \textbf{Discharge the C2.bis hypothesis.} Address the four
+  open items (a)--(d) of Remark~\ref{rmk:c2bis-status}: uniform
+  Burago--Ivanov verification on $(G_{n}, d_{n})$;
+  Cheeger--Colding hypotheses for spectral continuity; quantitative
+  $g/\mathrm{geo}$ overshoot bound; complete write-up of the
+  transcendence step in C3.bis. Discharging (1) and (2) jointly
+  upgrades Theorem~\ref{thm:compatibility} from conditional to
+  unconditional.
+\item \textbf{Prove or disprove
+  Conjecture~\ref{conj:ricci-cascade}.} Either give a precise
+  construction of $\Pi_{\rm met}$ and prove that the coarse-grained
+  cascade gradient flow is the DeTurck-modified Ricci flow, or
+  exhibit a structural obstruction.
+\item \textbf{Prove or disprove
+  Conjecture~\ref{conj:W-cascade}.} Either give the coupling
+  $(g, f, \tau)$ on the cascade side and the affine identification
+  of entropies, or exhibit an obstruction.
+\item \textbf{Prove or disprove
+  Conjecture~\ref{conj:surgery-cascade}.} Conditional on (3), either
+  give the local refinement operator and the quantitative
+  surgery-equivalence theorem, or exhibit an obstruction.
+\end{enumerate}
+
+We do not pursue any of these here. They are listed to make
+explicit what the present paper does \emph{not} do.
+
+\section{Conclusion}
+
+The honest mathematical content of this paper is
+Theorem~\ref{thm:compatibility}: under two explicit and currently
+open hypotheses (P5 and C2.bis), the cascade framework's
+combinatorial and geometric chains both identify $S^{3}$ as the
+spatial slice, and Perelman's classification confirms that no
+other simply connected closed $3$-manifold could play this role.
+This is a three-way coherence statement, not a Clay-level
+contribution to the Poincar\'{e} theorem itself; that theorem is
+Hamilton and Perelman's, and is invoked here as a black box.
+
+Section~\ref{sec:programme} discusses, as a research programme and
+not as theorems, the structural analogies between cascade objects
+and the classical Ricci-flow machinery. We have made explicit that
+each analogy is presently a conjecture with identifiable open
+problems, not a theorem. A previous version of this paper stated
+several of these analogies as theorems; those statements are
+retracted in the present version, replaced by the conjectures of
+Section~\ref{sec:programme}, and the rationale for retraction is
+documented above.
+
+A Clay-level submission must distinguish a proof from a programme.
+This paper draws that line at Section~\ref{sec:compatibility}: the
+mathematical claim ends there, and what follows is honest
+discussion of open work.
+
+\begin{thebibliography}{99}
+
+\bibitem{Hamilton1982}
+R.~S.~Hamilton, \emph{Three-manifolds with positive Ricci curvature},
+J.\ Diff.\ Geom.\ \textbf{17} (1982), 255--306.
+
+\bibitem{Perelman1}
+G.~Perelman, \emph{The entropy formula for the Ricci flow and its
+geometric applications}, arXiv:math/0211159 (2002).
+
+\bibitem{Perelman2}
+G.~Perelman, \emph{Ricci flow with surgery on three-manifolds},
+arXiv:math/0303109 (2003).
+
+\bibitem{Perelman3}
+G.~Perelman, \emph{Finite extinction time for the solutions to the
+Ricci flow on certain three-manifolds}, arXiv:math/0307245 (2003).
+
+\bibitem{KleinerLott}
+B.~Kleiner and J.~Lott, \emph{Notes on Perelman's papers}, Geom.\
+Topol.\ \textbf{12} (2008), 2587--2855.
+
+\bibitem{MorganTian}
+J.~Morgan and G.~Tian, \emph{Ricci Flow and the Poincar\'{e}
+Conjecture}, AMS Clay Math.\ Monographs \textbf{3} (2007).
+
+\bibitem{CaoZhu}
+H.-D.~Cao and X.-P.~Zhu, \emph{A complete proof of the Poincar\'{e}
+and geometrization conjectures --- application of the
+Hamilton--Perelman theory of the Ricci flow}, Asian J.\ Math.\
+\textbf{10} (2006), 165--492.
+
+\bibitem{CoxeterRegularPolytopes}
+H.~S.~M.~Coxeter, \emph{Regular Polytopes}, 3rd ed., Dover, 1973;
+600-cell vertex coordinates and embedding on $S^{3}$: \S 8.7.
+
+\bibitem{VFDMasterMath}
+\emph{VFD Master Math}, internal manuscript cited in
+\cite[\S P5.2]{CascadePregeometry} as ``VFD Master Math.md \S B.5''
+for the four-step uniqueness proof outline (closure $\Rightarrow$
+pentagonal-face count $\Rightarrow$ 3-regular $\Rightarrow$
+chirality $\Rightarrow$ unique 1200-edge graph). The manuscript
+is not present in the workspace at the time of writing; the
+reference is provided for traceability and is not directly
+referee-verifiable from this paper alone.
+
+\bibitem{BuragoBuragoIvanov}
+D.~Burago, Y.~Burago and S.~Ivanov, \emph{A Course in Metric
+Geometry}, Graduate Studies in Mathematics \textbf{33}, AMS, 2001;
+GH convergence: Chapter~7.
+
+\bibitem{CheegerColding1997}
+J.~Cheeger and T.~H.~Colding, \emph{On the structure of spaces with
+Ricci curvature bounded below. I}, J.\ Diff.\ Geom.\ \textbf{46}
+(1997), 406--480.
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations: F1--F8}, internal manuscript,
+\texttt{papers/cascade-derivation/cascade-foundations.md}.
+
+\bibitem{CascadePregeometry}
+\emph{Cascade Pregeometry: P0--P9}, internal manuscript,
+\texttt{papers/cascade-derivation/cascade-pregeometry.md};
+$\varphi$-entropy: \S P2.
+
+\bibitem{CascadeGR}
+\emph{Cascade GR Sub-phase Programme}, internal manuscript,
+\texttt{papers/cascade-derivation/cascade-gr.md}; C2.bis (GH
+continuum limit, formal framework): \S C2.bis; C3.bis ($A_{5}$
+density in $\mathrm{SO}(3)$, theorem): \S C3.bis.
+
+\bibitem{CascadeMillennium}
+\emph{Cascade and the Millennium Problems}, internal manuscript,
+\texttt{papers/cascade-derivation/cascade-millennium.md};
+Poincar\'{e} status: \S MP6.
+
+\bibitem{CascadeWO}
+\emph{Cascade Working Memory}, internal manuscript,
+\texttt{papers/cascade-derivation/WO-CASCADE.md}; Millennium
+session addendum: 2026-04-17.
+
+\end{thebibliography}
+
+\end{document}

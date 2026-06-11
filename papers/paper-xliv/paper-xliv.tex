@@ -1,0 +1,292 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Kcal}{\mathcal{K}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\twoI}{2\mathbf{I}}
+\newcommand{\twoT}{2\mathbf{T}}
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Dcal}{\mathcal{D}}
+
+\title{Information Rung and Decoherence as a Conditional $H_4 \to 16$ Coarsening Template}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed).
+
+\begin{abstract}
+This paper proposes a candidate cross-rung coarse-graining map from the $H_4$ quantum rung (state space $\Hcal_{120} = \mathbb{C}^{120}$ on the 120-vertex 600-cell graph) to the $16$ information rung (state space $\Hcal_{16} = \mathbb{C}^{16}$ on the 16-vertex tesseract graph), and examines whether this map could model decoherence structurally within the VFD programme. The map is specified conditionally at the linear level as a composition of a 120-to-24 coarsening map and a chosen 24-to-16 block-selection map (the first depending on a postulated 5-to-1 surjection $f: X_{H_4} \to X_{D_4}$, the second on a postulated $D_4$-triality block decomposition of $\mathbb{C}^{24}$, neither of which is constructed here), and motivates a possible CPTP upgrade $\widetilde{\Kcal}$, not constructed here. The map is therefore not canonical: it depends on these chosen ingredients. We do not claim that the partial rule $\Kcal$ or any upgrade $\widetilde{\Kcal}$ is a literal partial trace, since $\dim \Hcal_{120}/\dim \Hcal_{16} = 7.5$ admits no tensor factorisation $\Hcal_{120} = \Hcal_{16} \otimes \Hcal_{\mathrm{env}}$ with integer $\dim \Hcal_{\mathrm{env}}$.
+
+Conditional propositions sketched here:
+\begin{itemize}
+\item ($\Kcal$ as candidate map.) The state-to-state assignment $\Kcal: \rho \mapsto V \rho V^\dagger / \Tr(V \rho V^\dagger)$, where $V = \pi_{D_4 \to 16} \circ \pi_{H_4 \to D_4}$ is a chosen linear coarsening map of Definition~\ref{def:V} (depending on the chosen 5-to-1 surjection $f$ and on the chosen $D_4$-triality block decomposition), is a candidate normalised state assignment, together with a not-yet-constructed CPTP upgrade problem.
+\item (Lindblad form, conjectural.) \emph{If} a Markovian dilation compatible with a CPTP upgrade $\widetilde{\Kcal}$ of $\Kcal$ exists, the reduced $16$-rung dynamics would take Lindblad form to leading order; the present paper does not establish the dilation or compute the rates.
+\item (Born compatibility, conditional on Paper~XXX hypotheses.) The reduced probabilities on $\Hcal_{16}$ would agree with Paper~XXX's Born probabilities only if the full hypothesis load of Paper~XXX (the five Route~C hypotheses --- equilibrium, well-separated sectors, sector-supported decomposition, the sampling postulate, and state-completeness --- together with Paper~XXX's full Route~E uniqueness package: universal completeness $\Mcl(\Ocal) = \mathbb{CP}^{N-1}$, basis-realisability, global $U(N)$-covariance, global frame-function/non-contextuality, continuity, eigenstate certainty, and the dimension hypothesis $N\ge 3$) descends through the coarse-graining; this paper does not establish that descent.
+\item (Petz recoverability, sketch only.) Some natural block-diagonal CPTP upgrades would destroy the $8_s$-$8_c$ cross-triality coherence, while others may preserve parts of it; a full Petz-recoverability analysis remains to be done.
+\end{itemize}
+
+A toy-model bifurcation (intra-triality vs.\ inter-triality two-level systems) illustrates the conditional structure. The paper does not establish that the proposed mechanism is operative in any physical system; it isolates a mathematical template and the assumptions it would require.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The VFD programme proposes that quantum mechanics emerges as a projection-level consequence of cascade closure dynamics on the 600-cell. Specifically, Paper~XXI~\citep{SmartXXI} establishes Schr\"odinger-type evolution \emph{conditionally}: either as the formal equilibrium-tangent linearisation of an exact nonlinear closure dynamics (Route A), or as the operator-theoretic consequence of a \emph{posited} self-adjoint generator on $\Hcal_{120}$ (Route B). Paper~XXX~\citep{SmartXXX} derives a Born-rule statement under five explicit conditional assumptions (equilibrium, well-separated sectors, sector-supported decomposition, a sampling postulate, and state-completeness). Paper~XXXI~\citep{SmartXXXI} formulates measurement as sector separation by isolating a conditional sufficient-condition template under four further explicit hypotheses, without deriving the separation topology from the measurement coupling itself.
+
+The present paper addresses a separate question that arises naturally in the cascade picture: how should one think about the coarsening from the $H_4$ rung (120 vertices of the 600-cell) to the $16$ information rung (16 vertices of the tesseract, on which a $\Cl(1,3)$ Clifford structure is naturally carried)?
+
+\paragraph{What this paper does and does not claim.} It defines a candidate linear coarsening map $V: \mathbb{C}^{120} \to \mathbb{C}^{16}$ and a candidate normalised state assignment $\Kcal$ together with the associated CPTP-upgrade problem, and then \emph{conjectures} that some such upgrade could serve as a structural model of decoherence on the VFD information rung. It does \emph{not} prove a Lindblad theorem, does \emph{not} construct an explicit Stinespring dilation, does \emph{not} verify the Born-compatibility descent, and does \emph{not} prove a Petz no-go statement. The paper's contribution is to isolate the mathematical objects on which a future genuine derivation would have to operate.
+
+\subsection{Scope}
+\begin{itemize}
+\item Define the coarsening map $V$ and the candidate normalised state assignment $\Kcal$ together with the CPTP-upgrade problem (\S\ref{sec:K}).
+\item State an inventory of $H_4$-side quantities that one would expect to survive or be lost under a hypothetical CPTP upgrade $\widetilde{\Kcal}$ (\S\ref{sec:invariants}).
+\item Sketch what would be required for a Lindblad form on the reduced dynamics, without claiming to derive it (\S\ref{sec:dynamics}).
+\item Discuss the conditions under which Paper~XXX's Born-rule construction would descend through a hypothetical CPTP upgrade $\widetilde{\Kcal}$ (\S\ref{sec:born}).
+\item Sketch the qualitative shape of a Petz-recoverability analysis without proving non-recoverability (\S\ref{sec:petz}).
+\item Work through the intra-triality vs.\ inter-triality bifurcation in a two-level toy model (\S\ref{sec:toy}).
+\end{itemize}
+
+%==================================================================
+\section{The Linear Coarsening Map $V$ and the Candidate State Assignment $\Kcal$}\label{sec:K}
+%==================================================================
+
+\subsection{Setup}
+
+The $H_4$ rung supports the 600-cell vertex graph $X_{H_4}$ with $|X_{H_4}| = 120$. The space of complex closure-field amplitudes on $X_{H_4}$ is $\Hcal_{120} = \ell^2(X_{H_4}) = \mathbb{C}^{120}$. The information rung supports the tesseract vertex graph $X_{\Cl} = \{\pm 1\}^4$ with $|X_{\Cl}| = 16$, and its amplitude space is $\Hcal_{16} = \mathbb{C}^{16}$. The full real Clifford algebra $\Cl(1,3)$ has dimension $16$ and is naturally identified with $\mathbb{R}^{16}$ as a real vector space; we emphasise that this identification is at the level of dimension and basis labels, not of operator algebras (the even subalgebra $\Cl^+(1,3)$ has dimension $8$, not $16$, so the present paper works with the full Clifford-algebra dimension when identifying the carrier of the $16$ rung).
+
+Conditionally on Paper~XXXVI Foundation F3~\citep{SmartXXXVI}, the cascade chain $E_8 \to H_4 \to 40 \to D_4 \to 16$ contains a polytope-refinement step from $H_4$ through the $D_4$ root-system polytope (the 24-cell, with $|D_4| = 24$ vertices) to the 16-vertex tesseract. The Schl\"afli compound $600 = 5 \times 24$ presents the 600-cell as a disjoint union of five $D_4$ root systems via the $\twoI/\twoT$ coset structure. These two combinatorial inputs motivate a conditional specification of the candidate linear coarsening map: Paper~XXXVI provides the cascade chain and the Schl\"afli decomposition as set-level combinatorics, but neither the vertexwise 5-to-1 surjection onto a reference 24-cell nor the Hilbert-space triality block decomposition of $\mathbb{C}^{24}$ is supplied by Paper~XXXVI; both are postulated as modelling inputs below.
+
+\subsection{The linear coarsening map $V$ and the candidate normalised state assignment $\Kcal$}
+
+\begin{definition}[Linear coarsening map]\label{def:V}
+Motivated by the Schl\"afli decomposition $600 = 5 \times 24$ (the 600-cell decomposes as a disjoint union of five inscribed 24-cells, indexed by the cosets of $\twoT$ in $\twoI$), we \emph{choose} a 5-to-1 surjection $f: X_{H_4} \to X_{D_4}$ from the 120-vertex 600-cell to a chosen 24-vertex $D_4$ root system, with fibres $f^{-1}(a)$ of size 5 for each $a \in X_{D_4}$. Constructing such an $f$ from the Schl\"afli decomposition --- i.e.\ exhibiting a vertexwise 5-to-1 map onto one reference 24-cell that respects the chosen geometric or algebraic structure --- is itself a non-trivial step that we do not carry out in detail here; we postulate the existence of such an $f$ as a chosen modelling input. Index the basis of $\Hcal_{120} = \mathbb{C}^{120}$ by $\{|v\rangle : v \in X_{H_4}\}$, and the basis of $\mathbb{C}^{24}$ by $\{|a\rangle : a \in X_{D_4}\}$. Define
+\[
+    \pi_{H_4 \to D_4} \;:\; \mathbb{C}^{120} \longrightarrow \mathbb{C}^{24}, \qquad
+    \pi_{H_4 \to D_4}|v\rangle = \tfrac{1}{\sqrt{5}}\,|f(v)\rangle,
+\]
+where the factor $1/\sqrt{5}$ makes $\pi_{H_4 \to D_4}$ a partial isometry on the fibre-symmetric subspace (its restriction to the subspace of vectors that are constant on each fibre $f^{-1}(a)$ is unitary onto $\mathbb{C}^{24}$). Next, we postulate a chosen $8 + 8 + 8$ decomposition of $\mathbb{C}^{24}$ motivated by $D_4$ triality, $\mathbb{C}^{24} = 8_v \oplus 8_s \oplus 8_c$. Triality relates the three 8-dimensional representations of $D_4$ at the level of representation theory; promoting that to an explicit orthogonal decomposition of the 24-cell vertex Hilbert space requires further structure (a choice of $D_4$-action on the vertex set and a choice of identification with the representation spaces) that we do not construct here. Define
+\[
+    \pi_{D_4 \to 16} \;:\; \mathbb{C}^{24} \longrightarrow \mathbb{C}^{16}, \qquad
+    \pi_{D_4 \to 16}\bigl(x_v \oplus x_s \oplus x_c\bigr) = x_s \oplus x_c,
+\]
+the orthogonal projection onto the spinor-doublet block, which is a partial isometry (and exactly the standard orthogonal projector $\mathbb{1}_{8_s \oplus 8_c}$ in this decomposition). Define the composite
+\begin{equation}
+V \;:=\; \pi_{D_4 \to 16} \circ \pi_{H_4 \to D_4} \;:\; \mathbb{C}^{120} \longrightarrow \mathbb{C}^{16}.
+\end{equation}
+With these normalisations, $V$ is a contraction ($\|V\| \le 1$), and it acts as a partial isometry when restricted to the subspace of $H_4$ amplitudes that are coset-symmetric and supported on the spinor-doublet $D_4$-triality blocks.
+\end{definition}
+
+\begin{remark}[$V$ is not by itself a partial trace]
+Since $\dim \Hcal_{120}/\dim \Hcal_{16} = 120/16 = 7.5$ is not an integer, there is no tensor factorisation $\Hcal_{120} = \Hcal_{16} \otimes \Hcal_{\mathrm{env}}$ in which the operator-level map associated with $V$ would arise as a literal partial-trace channel (partial trace acts on operators, not on state vectors; the relevant statement is therefore that the induced map on $\mathcal{B}(\Hcal_{120})$ cannot be obtained as $\mathrm{Tr}_{\mathrm{env}}$ for any such factorisation). Earlier informal descriptions of $\Kcal$ as a ``partial trace over a $7.5$-fold redundant fibre'' should be understood only as motivational language; any genuine CPTP upgrade would require an explicit instrument/Kraus/Stinespring construction, which is not carried out here.
+\end{remark}
+
+\begin{definition}[Candidate partial normalised state assignment $\Kcal$]\label{def:K}
+Let $V$ be a chosen linear coarsening map of Definition~\ref{def:V} (depending on the chosen 5-to-1 surjection and triality block decomposition). Let
+\[
+  \Dcal_V \;:=\; \bigl\{ \rho \in \mathcal{B}(\Hcal_{120})_{+,1} \;:\; \Tr(V \rho V^\dagger) > 0 \bigr\}
+\]
+be the set of input density matrices with non-vanishing projected trace. Define a \emph{partial} normalised state assignment on $\Dcal_V$ by
+\begin{equation}\label{eq:K-def}
+    \Kcal \;:\; \Dcal_V \longrightarrow \mathcal{B}(\Hcal_{16})_{+,1}, \qquad
+    \Kcal(\rho) \;:=\; \frac{V \rho V^\dagger}{\Tr(V \rho V^\dagger)},
+\end{equation}
+where $\mathcal{B}(\Hcal)_{+,1}$ denotes the set of trace-one positive operators on $\Hcal$. The rule is undefined on the complement $\mathcal{B}(\Hcal_{120})_{+,1} \setminus \Dcal_V$; any CPTP upgrade must therefore be formulated on a strictly larger domain than $\Kcal$ itself.
+\end{definition}
+
+\begin{remark}[$\Kcal$ as written is not linear or CPTP]\label{rem:K-not-cptp}
+Equation~\eqref{eq:K-def} contains a state-dependent normalisation $\Tr(V\rho V^\dagger)^{-1}$ and is therefore \emph{not} a linear map on $\mathcal{B}(\Hcal_{120})$. To obtain a genuine CPTP channel on the full operator algebra, one would need to extend the construction by either (a) supplying explicit Kraus operators $\{K_k\}$ with $\sum_k K_k^\dagger K_k = \mathbb{1}_{120}$, or (b) producing a Stinespring dilation $\Hcal_{120} \hookrightarrow \Hcal_{16} \otimes \Hcal_E$ with auxiliary space $\Hcal_E$ and tracing out $\Hcal_E$. The non-integer dimension ratio $120/16 = 7.5$ rules out (b) without an explicit auxiliary embedding (e.g.\ into $\Hcal_{16} \otimes \mathbb{C}^8$, with the extra $128 - 120 = 8$ dimensions absorbed by a chosen embedding). Neither (a) nor (b) is carried out in the present paper. The map of equation~\eqref{eq:K-def} should therefore be read as a normalised state-to-state assignment, not a verified CPTP channel.
+\end{remark}
+
+\begin{remark}[On the upgrade to a CPTP channel]\label{rem:K-upgrade}
+A natural plan is instead to seek an instrument whose selected CP branch is $\rho \mapsto V \rho V^\dagger$ (unnormalised, trace-nonincreasing), with the partial normalised rule of Definition~\ref{def:K} obtained only after conditioning on that branch and renormalising. A deterministic CPTP channel cannot in general coincide with the nonlinear normalised rule on all rank-one inputs; an instrument/postselection picture is the appropriate target. \emph{If} one first specifies a contraction or instrument structure compatible with $V$ --- in particular, a chosen embedding $\Hcal_{120} \hookrightarrow \Hcal_{16} \otimes \Hcal_E$ for an auxiliary space $\Hcal_E$ together with a verified contraction property of $V$ --- one may then seek a CPTP channel whose one selected branch realises the corresponding CP map. The non-integer dimension ratio $120/16 = 7.5$ is not by itself an obstacle to a Stinespring dilation (one may embed into $\Hcal_{16} \otimes \mathbb{C}^8$ with the extra $128 - 120 = 8$ dimensions absorbed by the embedding); the obstacle is that no such contraction analysis or embedding is carried out in the present paper. We reserve the notation $\widetilde{\Kcal}$ for any such hypothetical CPTP upgrade --- a linear completely positive trace-preserving map $\mathcal{B}(\Hcal_{120}) \to \mathcal{B}(\Hcal_{16})$ whose postselected branch realises the $\Kcal$ of Definition~\ref{def:K} on $\Dcal_V$ after renormalisation. Specific Kraus operators, a Stinespring dilation, and the corresponding instrument/postselection details for $\widetilde{\Kcal}$ are deferred to future work. $\widetilde{\Kcal}$ is a formally distinct object from the partial rule $\Kcal$; the subsequent Lindblad, Born-descent, and Petz sections are typed in terms of $\widetilde{\Kcal}$.
+\end{remark}
+
+%==================================================================
+\section{Candidate Inventory: What Could Survive a CPTP Upgrade $\widetilde{\Kcal}$}\label{sec:invariants}
+%==================================================================
+
+The following inventory of would-survive and would-be-lost quantities is heuristic, conditional on a successful CPTP upgrade $\widetilde{\Kcal}$ in the sense of Remark~\ref{rem:K-upgrade}.
+
+\paragraph{Quantities expected to survive (heuristic).}
+\begin{itemize}
+\item Trace of the density matrix, $\Tr(\rho^{(16)}) = 1$, under any properly-normalised CPTP upgrade.
+\item Expectation values of any observable $O^{(16)}$ on $\Hcal_{16}$ that lifts via $V^\dagger O^{(16)} V$ to a $\twoI$-equivariant observable on $\Hcal_{120}$.
+\item Diagonal $D_4$-triality block contributions ($8_s$-internal and $8_c$-internal).
+\end{itemize}
+
+\paragraph{Quantities expected to be lost (heuristic).}
+\begin{itemize}
+\item $H_4$ amplitude information orthogonal to the $\twoI/\twoT$-coset direction (annihilated by $\pi_{H_4 \to D_4}$).
+\item $D_4$ amplitudes in the discarded $8_v$ block (annihilated by $\pi_{D_4 \to 16}$).
+\item Off-diagonal $\rho$-elements between the $8_s$ and $8_c$ triality blocks (potentially preserved or lost depending on which CPTP upgrade is chosen).
+\end{itemize}
+
+\begin{remark}
+This inventory is not a theorem. In particular the fate of $8_s$-$8_c$ off-diagonal coherences depends on the specific Kraus structure of the chosen CPTP upgrade, which is not constructed here. The toy model of Section~\ref{sec:toy} illustrates the bifurcation in a 2-level setting.
+\end{remark}
+
+%==================================================================
+\section{Conjectural Lindblad Form for the Reduced Dynamics}\label{sec:dynamics}
+%==================================================================
+
+\begin{remark}[Lindblad reduction is not derived here]\label{rem:lindblad-conjecture}
+A standard Born--Markov derivation~\citep{BreuerPetruccione2002} produces a GKSL/Lindblad equation~\citep{GoriniKossakowskiSudarshan1976,Lindblad1976} for the reduced density matrix of a system coupled to a Markovian environment, given (i) a system--environment tensor factorisation, (ii) a weak-coupling expansion, (iii) a separation of timescales (system slow, environment-correlation fast), and (iv) a tracing-out procedure. None of these ingredients is available in the present paper: there is no constructed Stinespring dilation, no identified environment, no weak-coupling expansion of the closure dynamics in a small parameter, and no proven Markovian timescale separation.
+
+\emph{Conditional on} all four ingredients being supplied by a future analysis, the reduced density matrix $\rho^{(16)}$ would satisfy a Lindblad equation
+\begin{equation}\label{eq:lindblad}
+    \frac{d \rho^{(16)}}{dt} = -i\bigl[H_{16}, \rho^{(16)}\bigr] + \sum_{k} \gamma_k \mathcal{L}_k\bigl[\rho^{(16)}\bigr] + (\text{higher-order corrections}),
+\end{equation}
+where $H_{16}$ would be an effective Hamiltonian on $\Hcal_{16}$, $\gamma_k$ would be decoherence rates, and $\mathcal{L}_k[\rho] = L_k \rho L_k^\dagger - \tfrac12 \{L_k^\dagger L_k, \rho\}$ would be the Lindblad dissipators with $L_k$ derived from the Kraus operators of the chosen CPTP upgrade $\widetilde{\Kcal}$ (Remark~\ref{rem:K-upgrade}). The present paper does \emph{not} establish equation~\eqref{eq:lindblad}; it is included as a target for future work.
+\end{remark}
+
+\begin{remark}[Decoherence rates and structural input]\label{rem:rates-conjecture}
+\emph{If} a Lindblad reduction in the sense of Remark~\ref{rem:lindblad-conjecture} were available, the rates $\gamma_k$ would in principle be determined by the cascade structure (the chosen Kraus decomposition of $\widetilde{\Kcal}$, plus the environment-correlation timescales). The claim sometimes made in earlier drafts that the rates are ``cascade-structural and independent of environmental parameters'' is too strong: any Born--Markov derivation requires environment-correlation properties as input, and the rates depend on those. The present paper does not derive any specific $\gamma_k$.
+\end{remark}
+
+%==================================================================
+\section{Conditional Born-Rule Compatibility}\label{sec:born}
+%==================================================================
+
+\begin{remark}[Born compatibility is not proved here]\label{rem:born-conditional}
+Paper~XXX's Born-rule package is conditional on the five Route~C hypotheses (equilibrium, well-separated sectors, sector-supported decomposition, a sampling postulate, and state-completeness) on the $H_4$ rung, \emph{together with the full Route~E uniqueness package} (universal completeness $\Mcl(\Ocal) = \mathbb{CP}^{N-1}$, basis-realisability, global $U(N)$-covariance, global frame-function/non-contextuality, continuity, eigenstate certainty, and $N\ge 3$). To carry that derivation through a future CPTP upgrade $\widetilde{\Kcal}$ of the partial rule $\Kcal$ (Remark~\ref{rem:K-upgrade}) to a Born-rule statement on $\Hcal_{16}$, one would need to verify that all of those hypotheses descend appropriately:
+
+\begin{itemize}
+\item the equilibrium structure on $\Hcal_{120}$ projects to a meaningful equilibrium structure on $\Hcal_{16}$ under $\widetilde{\Kcal}$;
+\item the well-separated sector decomposition on $\Hcal_{120}$ pushes forward to a sector decomposition on $\Hcal_{16}$ that matches the observable structure of the $16$ rung;
+\item the sector-supported decomposition of states on $\Hcal_{120}$ descends to a corresponding decomposition on $\Hcal_{16}$;
+\item Paper~XXX's sampling postulate (the assumption relating observed outcome frequencies to sector-supported probabilities on $\Hcal_{120}$) implies an analogous sampling postulate on $\Hcal_{16}$;
+\item the state-completeness hypothesis on $\Hcal_{120}$ transfers to state-completeness on $\Hcal_{16}$;
+\item Paper~XXX's Route~E universal-completeness hypothesis $\Mcl(\Ocal) = \mathbb{CP}^{N-1}$ (applied at the $H_4$ rung's appropriate sector dimension $N$) implies an analogous statement at the $16$ level, and the auxiliary Route~E uniqueness package (global $U(N)$-covariance, frame-function/non-contextuality, continuity, eigenstate certainty, and $N\ge 3$) carries over to the descended setting;
+\item the basis-realisability hypothesis transfers similarly.
+\end{itemize}
+
+None of these descent statements is established in the present paper. They are flagged here as the questions that any future Born-rule-on-the-information-rung claim would have to address.
+
+A na\"ive ``Gleason at the $16$-level dimension'' argument is not enough, because Paper~XXX itself emphasises that Gleason gives the Born rule only \emph{after} the global probability assignment $P$ on $\mathbb{CP}^{N-1}$ has been pinned down by all five Route~C hypotheses plus completeness; reapplying Gleason at dimension $16$ does not supply those hypotheses.
+\end{remark}
+
+%==================================================================
+\section{Sketch: Petz Recoverability}\label{sec:petz}
+%==================================================================
+
+\begin{remark}[Petz analysis is sketched, not proved]\label{rem:petz-sketch}
+For a CPTP channel $\widetilde{\Kcal}$ (a hypothetical upgrade of $\Kcal$ in the sense of Remark~\ref{rem:K-upgrade}) and reference state $\sigma$, the Petz recovery map~\citep{Petz1986}
+\[
+    \mathcal{R}_{\widetilde{\Kcal},\sigma}(\tau) \;=\; \sigma^{1/2}\,\widetilde{\Kcal}^\dagger\bigl(\widetilde{\Kcal}(\sigma)^{-1/2}\,\tau\,\widetilde{\Kcal}(\sigma)^{-1/2}\bigr)\,\sigma^{1/2}
+\]
+is defined under suitable support/full-rank hypotheses on $\sigma$ and $\widetilde{\Kcal}(\sigma)$ (or via the generalised/Moore--Penrose inverse when those fail), and in that setting recovers the input state ($\mathcal{R}_{\widetilde{\Kcal},\sigma}(\widetilde{\Kcal}(\rho)) = \rho$ for $\rho$ with $\operatorname{supp}\rho \subseteq \operatorname{supp}\sigma$) precisely when the relative entropy is preserved, $D(\rho\|\sigma) = D(\widetilde{\Kcal}(\rho)\|\widetilde{\Kcal}(\sigma))$~\citep{HiaiPetz1991}. For a hypothetical $\widetilde{\Kcal}$ associated with the $V$ of Definition~\ref{def:V} and the partial rule of Definition~\ref{def:K}, the question of whether off-diagonal $D_4$-triality coherences are recoverable by some Petz map requires:
+
+\begin{itemize}
+\item a specific Kraus / Stinespring presentation of $\widetilde{\Kcal}$;
+\item a specific reference state $\sigma$ (typically the projected-stationary state or a maximally mixed state on $\Hcal_{120}$);
+\item a computation of the relative-entropy gap $D(\rho\|\sigma) - D(\widetilde{\Kcal}(\rho)\|\widetilde{\Kcal}(\sigma))$.
+\end{itemize}
+
+None of these is carried out here. Heuristically, one expects that for off-diagonal blocks between $8_s$ and $8_c$, some natural $\widetilde{\Kcal}$'s Petz map fails to invert the channel, but this is conjecture, not theorem. A claim that ``the coarsening is decoherence (irrecoverable) rather than mere compression'' is therefore deferred to a future paper that supplies the Kraus presentation of a specific $\widetilde{\Kcal}$ and computes the entropy gap explicitly.
+\end{remark}
+
+%==================================================================
+\section{Toy Model: Two-Level Bifurcation}\label{sec:toy}
+%==================================================================
+
+Consider a 2-dimensional subspace $W \subset \Hcal_{120}$ spanned by two normalised vectors $|\psi_1\rangle, |\psi_2\rangle \in \mathbb{C}^{120}$. The behaviour of $V|_W$ depends qualitatively on how $|\psi_1\rangle, |\psi_2\rangle$ sit relative to the $D_4$ triality decomposition.
+
+\paragraph{Case A: same triality block.} Suppose both $|\psi_1\rangle$ and $|\psi_2\rangle$ project entirely into the same triality block (say $8_s$) under $\pi_{H_4 \to D_4}$, i.e.\ $V|\psi_i\rangle$ is supported on $8_s \subset \Hcal_{16}$. Under additional assumptions on $V|_W$ (in particular non-degeneracy of $V|_W$ and a quantitative norm-control bound), $V|_W$ \emph{could} behave approximately isometrically on $W$, and a Kraus upgrade $\widetilde{\Kcal}$ that respects this block structure could preserve the off-diagonal coherence $\langle\psi_1|\rho|\psi_2\rangle$ on the image side. None of these conditions is verified here.
+
+\paragraph{Case B: different triality blocks.} Suppose $|\psi_1\rangle$ projects into $8_s$ and $|\psi_2\rangle$ projects into $8_c$ under $\pi_{H_4 \to D_4}$. Then $V|\psi_1\rangle$ and $V|\psi_2\rangle$ live in orthogonal blocks of $\Hcal_{16} = 8_s \oplus 8_c$. The fate of the cross-block coherence under a CPTP upgrade $\widetilde{\Kcal}$ depends on the chosen Kraus structure: a maximally-mixing $\widetilde{\Kcal}$ (one Kraus operator per triality block) annihilates the cross-block coherence and produces a classical mixture on the image; a more refined $\widetilde{\Kcal}$ can preserve some of it.
+
+\paragraph{Lesson.} The toy bifurcation between Cases A and B illustrates that some block-diagonal CPTP upgrades $\widetilde{\Kcal}$ (specifically, those whose Kraus operators respect the $D_4$-triality block structure) suppress inter-triality coherences more readily than intra-triality coherences; other upgrades may behave differently. This is the qualitative content of the heuristic decoherence picture sketched in Sections~\ref{sec:dynamics} and~\ref{sec:petz}; converting it into a quantitative Lindblad/Petz statement requires the missing Kraus / Stinespring construction together with a specification of the upgrade class under consideration.
+
+%==================================================================
+\section{Conjectural Targets and Deferred Dependencies}\label{sec:predictions}
+%==================================================================
+
+The items below are targets for the substantial future work needed to make the coarsening picture quantitative; none is a prediction of this paper's mathematics.
+
+\begin{description}
+\item[\textbf{T1 (target).}] If a Lindblad reduction in the sense of Remark~\ref{rem:lindblad-conjecture} can be derived, the rates $\gamma_k$ may differ between same-triality and different-triality transitions in a way that reflects triality structure, depending on the chosen CPTP upgrade and environment model. Whether those differences take the form of ratios determined by the cascade combinatorics is an open question, not a target quantity established by the present paper.
+\item[\textbf{T2 (consistency target).}] A successful Born-rule descent through a CPTP upgrade $\widetilde{\Kcal}$ would predict that no violation of standard quantum-probability rules appears at the $\Cl(1,3)$ level, even though the underlying $H_4$ structure is richer. Verifying this is the content of an open question, not an established result.
+\end{description}
+
+\paragraph{Deferred dependency: Paper~XLII coupling.} Paper~XLII~\citep{SmartXLII} mentions a $\varphi^{-25}$-scale $\delta U_{\mathrm{rel}}$ contribution to decoherence rates only conditionally on coupling to the present Paper~XLIV; Paper~XLIV in turn imports XLII's coupling only conditionally. The two papers do not independently establish the figure, so we do not list a $\varphi^{-25}$ decoherence prediction. A non-circular derivation is left for future work.
+
+%==================================================================
+\section{Scope and Open Questions}\label{sec:scope}
+%==================================================================
+
+\paragraph{Defined here.}
+\begin{itemize}
+\item The linear coarsening map $V: \Hcal_{120} \to \Hcal_{16}$ from a chosen Schl\"afli-based surjection and a postulated triality block decomposition (Definition~\ref{def:V}).
+\item The candidate partial normalised state-to-state rule $\Kcal$ on the domain $\Dcal_V \subseteq \mathcal{B}(\Hcal_{120})_{+,1}$ (Definition~\ref{def:K}), with the explicit caveat that it is not a linear CPTP channel (Remark~\ref{rem:K-not-cptp}).
+\item A heuristic inventory of would-survive and would-be-lost $H_4$-side quantities (\S\ref{sec:invariants}).
+\item A toy-model bifurcation illustrating the intra-triality vs.\ inter-triality distinction (\S\ref{sec:toy}).
+\end{itemize}
+
+\paragraph{Conjectural / not proved here.}
+\begin{itemize}
+\item A genuine CPTP upgrade $\widetilde{\Kcal}$ of the $\Kcal$-branch, via Kraus operators or a Stinespring dilation (Remark~\ref{rem:K-upgrade}).
+\item A Lindblad reduction of the cross-rung dynamics (Remark~\ref{rem:lindblad-conjecture}).
+\item Specific decoherence rates $\gamma_k$ (Remark~\ref{rem:rates-conjecture}).
+\item Born-rule compatibility through $\widetilde{\Kcal}$ (Remark~\ref{rem:born-conditional}).
+\item Petz non-recoverability and the resulting interpretation of the coarsening as ``decoherence'' rather than ``compression'' (Remark~\ref{rem:petz-sketch}).
+\item The conjectural targets T1--T2 and the deferred Paper~XLII coupling listed in \S\ref{sec:predictions}.
+\end{itemize}
+
+\paragraph{Dependencies.} This paper imports the following inputs at the level of conditional statements: Paper~XXI~\citep{SmartXXI} for Schr\"odinger-type evolution on the $H_4$ rung (under either Route~A or Route~B hypotheses); Paper~XXX~\citep{SmartXXX} for the Born-rule construction (under its full hypothesis load: the five Route~C hypotheses together with the full Route~E uniqueness package, including universal completeness, basis-realisability, $U(N)$-covariance, frame-function/non-contextuality, continuity, eigenstate certainty, and $N\ge 3$); Paper~XXXI~\citep{SmartXXXI} for the sector-separation template (under its four explicit additional hypotheses); Paper~XXXVI~\citep{SmartXXXVI} for the cascade chain $E_8 \to H_4 \to 40 \to D_4 \to 16$; and (provisionally, deferred) Paper~XLII~\citep{SmartXLII} for the nonlinear closure residual $\delta U_{\mathrm{rel}}$.
+
+\subsection{Conclusion}
+The present paper isolates a candidate cross-rung mathematical template (the linear coarsening $V$, the partial nonlinear rule $\Kcal$, and the target CPTP upgrade $\widetilde{\Kcal}$) and the assumptions a future genuine derivation of structural decoherence in the VFD framework would have to discharge. It does not establish that the coarsening produces Lindblad dynamics, that it preserves Born-rule probabilities, or that the resulting information loss is Petz-irrecoverable. Each of these claims is recorded as conditional and flagged with the missing inputs needed to convert it into a theorem. The paper's contribution is to make the open-system question on the cascade explicit at the level of definitions, so that subsequent work can target the missing constructions directly.
+
+%==================================================================
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{SmartXVIII} L. Smart, \emph{Nelson Pairing for Closure Dynamics}, Paper XVIII, VFD Programme, 2026.
+\bibitem{SmartXXI} L. Smart, \emph{From Closure Dynamics to Quantum Structure}, Paper XXI, VFD Programme, 2026.
+\bibitem{SmartXXIX} L. Smart, \emph{Observer as Constraint Substructure}, Paper XXIX, VFD Programme, 2026.
+\bibitem{SmartXXX} L. Smart, \emph{Born Rule from K\"ahler Uniqueness plus Gleason}, Paper XXX, VFD Programme, 2026.
+\bibitem{SmartXXXI} L. Smart, \emph{Measurement as a Conditional Barrier Template for Sector Separation in Closure Dynamics}, Paper XXXI, VFD Programme, 2026.
+\bibitem{SmartXXXV} L. Smart, \emph{QM, Life, and Gravity as $E_8$ Projections}, Paper XXXV, VFD Programme, 2026.
+\bibitem{SmartXXXVI} L. Smart, \emph{Cascade Foundations: F1--F8}, Paper XXXVI, VFD Programme, 2026.
+\bibitem{SmartXLII} L. Smart, \emph{Physical Meaning of $\delta U_{\mathrm{rel}}$}, Paper XLII, VFD Programme, 2026.
+\bibitem{SmartXLV} L. Smart, \emph{Observer Rung, $G_2$ Automorphisms, and the Observational Constraint}, Paper XLV, VFD Programme, 2026.
+
+\bibitem{Petz1986} D. Petz, \emph{Sufficient subalgebras and the relative entropy of states of a von Neumann algebra}, Communications in Mathematical Physics 105, 123--131 (1986).
+\bibitem{HiaiPetz1991} F. Hiai and D. Petz, \emph{The proper formula for relative entropy and its asymptotics in quantum probability}, Communications in Mathematical Physics 143, 99--114 (1991).
+\bibitem{GoriniKossakowskiSudarshan1976} V. Gorini, A. Kossakowski, and E. C. G. Sudarshan, \emph{Completely positive dynamical semigroups of $N$-level systems}, Journal of Mathematical Physics 17, 821--825 (1976).
+\bibitem{Lindblad1976} G. Lindblad, \emph{On the generators of quantum dynamical semigroups}, Communications in Mathematical Physics 48, 119--130 (1976).
+\bibitem{BreuerPetruccione2002} H.-P. Breuer and F. Petruccione, \emph{The Theory of Open Quantum Systems}, Oxford University Press, 2002.
+
+\end{thebibliography}
+
+\end{document}

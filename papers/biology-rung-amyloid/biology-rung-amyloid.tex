@@ -1,0 +1,503 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{observation}[theorem]{Observation}
+
+\newcommand{\phig}{\varphi}
+\newcommand{\Stab}{\mathrm{Stab}}
+
+\title{Cross-$\beta$ Amyloid Fibril Twist from $2I$ Helical-Orbit Classes\\[6pt]
+\large A Commensurability Prediction for Diabetes, Alzheimer's, Parkinson's, Prion, and Cancer-Associated Aggregation}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Cross-$\beta$ amyloid fibrils are the shared pathological
+architecture of a wide disease family: type 2 diabetes (islet
+amyloid polypeptide, IAPP), Alzheimer's disease (amyloid-$\beta$,
+tau), Parkinson's disease ($\alpha$-synuclein), prion diseases
+(PrP$^{\mathrm{Sc}}$), systemic amyloidoses, and cancer-associated
+gain-of-function aggregation (oncogenic p53). Each fibril species
+carries a small per-strand twist angle $\theta_{\mathrm{twist}}$
+(typically $1^{\circ}$--$5^{\circ}$) accumulating along the fibril
+axis; per-strand stacking is fixed near $d_\beta = 4.7$ \AA\ by
+$\beta$-sheet hydrogen-bond geometry.
+
+We formalise (from the Vibrational Field Dynamics cascade
+Life-rung machinery) a discrete set of \emph{cascade-admissible}
+per-strand twists, obtained by:
+
+\begin{itemize}
+\item \textbf{Lemma~\ref{lem:L1}} identifying the preimage in
+  $2I \subset \mathrm{SU}(2)$ of a 5-fold stabiliser in
+  $I \cong A_5$ as the cyclic group $C_{10}$ of order 10 by the
+  Schur--Zassenhaus theorem (the extension splits because the
+  kernel and quotient orders $2$ and $5$ are coprime). The
+  smallest nonzero single-$2I$-element rotation about a 5-fold
+  axis is $36^{\circ}$;
+\item \textbf{Definition~\ref{def:D2}} parametrising
+  commensurable-twist families $\theta(p, q, N) = 36^{\circ}
+  (p - 10q)/N$ with $N$ an explicit integer resolution
+  parameter; and
+\item \textbf{Definition~\ref{def:D3}} imposing an exact
+  amyloid-scale filter: $M \cdot \theta = 360^{\circ}$ with
+  integer $M$ and crossover length $M \cdot d_\beta \in [100, 500]$
+  \AA, giving $M \in [22, 106]$ and
+  $\theta \in [3.3962^{\circ}, 16.3636^{\circ}]$.
+\end{itemize}
+
+An enumeration script produces the $24$-element admissible set
+for resolution $N \le 20$; all rows satisfy $M \theta = 360^{\circ}$
+exactly. The resulting set contains the $\theta = 36^{\circ}/N$
+ladder for $N = 3, \ldots, 10$ (i.e.
+$\{3.6^{\circ}, 4.0^{\circ}, 4.5^{\circ}, 5.14^{\circ}, 6.0^{\circ},
+7.2^{\circ}, 9.0^{\circ}, 12.0^{\circ}\}$) plus additional
+$(p, q, N)$-combinations such as $\{3.79^{\circ}, 4.24^{\circ},
+\ldots\}$.
+
+\textbf{Empirical conjecture and falsifier.} The central prediction
+(Conjecture~\ref{conj:C1}) is that observed cross-$\beta$ fibril
+per-strand twists cluster on this 24-element admissible set
+rather than distributing uniformly over $[3.4^{\circ}, 16.4^{\circ}]$.
+Ultra-slow-twist polymorphs ($\theta < 3.4^{\circ}$, e.g.\ tau PHF
+$\sim 1^{\circ}$) lie outside the current filter and are flagged
+as an open regime (Remark~\ref{rem:R2}). The empirical test is
+pending curation of a cryo-EM amyloid-twist dataset.
+
+No empirical comparison is carried out in this paper; the
+comparison pipeline follows the WO-1 capsid
+template~\cite{SmartCapsid} with \texttt{wo2\_amyloid\_fetch.py}
+and \texttt{wo2\_compare.py} planned in the same
+\texttt{WAITING\_FOR\_DATA} style. Every claim is classified as
+\textbf{derived}, \textbf{identified}, or \textbf{open}.
+\end{abstract}
+
+%==================================================================
+\section{Introduction and Scope}\label{sec:intro}
+%==================================================================
+
+\subsection{Cross-$\beta$ architecture}
+
+A cross-$\beta$ amyloid fibril is a linear polymer of
+$\beta$-strands stacked perpendicular to a common fibril axis,
+with the strands held together by main-chain hydrogen bonds. Key
+geometric parameters:
+
+\begin{itemize}
+\item \textbf{Strand stacking}: $d_\beta \approx 4.7$ \AA\ per
+  strand (fixed by canonical $\beta$-sheet hydrogen-bonding).
+\item \textbf{Per-strand twist angle} $\theta_{\mathrm{twist}}$:
+  a small rotation about the fibril axis, typically
+  $1^{\circ}$--$5^{\circ}$ per strand.
+\item \textbf{Crossover distance}:
+  $L_{\mathrm{co}} = 360^{\circ} \cdot d_\beta / \theta_{\mathrm{twist}}$;
+  observed range roughly $100$--$500$ \AA, with some polymorphs
+  extending to $> 1000$ \AA.
+\item \textbf{Protofilament count}: typically $1$--$4$ with
+  $C_n$ or $D_n$ bundle symmetry.
+\end{itemize}
+
+Cross-$\beta$ architecture is shared across the amyloid-disease
+family. The present paper asks: does the cascade Life-rung
+substrate constrain $\theta_{\mathrm{twist}}$ to a discrete
+admissible set, or is $\theta_{\mathrm{twist}}$ set purely by
+polypeptide backbone mechanics with no substrate-level
+constraint?
+
+\subsection{Disease relevance}
+
+Amyloid fibril formation is central to:
+
+\begin{itemize}
+\item \textbf{Type 2 diabetes}: pancreatic $\beta$-cell
+  dysfunction is associated with islet amyloid polypeptide
+  (IAPP / amylin) fibril deposition.
+\item \textbf{Alzheimer's disease}: amyloid-$\beta$ (A$\beta$)
+  plaques and tau neurofibrillary tangles, both cross-$\beta$.
+\item \textbf{Parkinson's disease}: Lewy bodies are
+  $\alpha$-synuclein fibrils with cross-$\beta$ architecture.
+\item \textbf{Prion diseases}: PrP$^{\mathrm{Sc}}$ cross-$\beta$
+  aggregates.
+\item \textbf{Cancer-associated aggregation}: some oncogenic
+  missense mutants of p53 form amyloid-like fibrils as a
+  gain-of-function mechanism.
+\end{itemize}
+
+A prediction constraining fibril twist across all of these is
+simultaneously a prediction for every disease in the list.
+
+\subsection{Relation to sibling WOs}
+
+This paper is WO-2 of the biology-rung programme
+\cite{SmartCapsid,SmartPhyllotaxis,SmartTubulin,SmartBioelectric}.
+It depends on:
+\begin{itemize}
+\item WO-1 (capsid) for the $2I / A_5$ substrate and the
+  catalogue convention.
+\item The upstream B2 decagram result
+  \cite[\S5.1]{CascadeBio}: the natural fast helical orbit on a
+  5-fold axis of the 600-cell is the decagram, with $10$ vertices
+  per $2\pi$-turn ($36^{\circ}$/step), matching DNA's 10 bp/turn.
+\end{itemize}
+The present paper extends B2 from the single fast decagram pitch
+to the full commensurable-twist family.
+
+%==================================================================
+\section{Helical-Orbit Structure on the 5-Fold Axis}\label{sec:orbits}
+%==================================================================
+
+\subsection{The $C_{10}$ stabiliser}
+
+\begin{lemma}[$\blacktriangleright$ Admissible angles on a 5-fold axis]\label{lem:L1}
+Let $A$ be a 5-fold axis of the 600-cell. The preimage of
+$\Stab_I(A) \cong C_5$ in the double cover $2I \to I$ is cyclic
+of order $10$. The SU(2) rotation angles (in the convention
+$R = \exp(i(\alpha/2)\hat{n} \cdot \hat{\sigma})$ for axis unit
+vector $\hat{n}$) of the $10$ elements are
+\[
+\Stab_{2I}(A) = \{\alpha : \alpha = 2\pi k / 10, k = 0, 1, \ldots, 9\}.
+\]
+In degrees: $\{0^{\circ}, 36^{\circ}, 72^{\circ}, 108^{\circ},
+144^{\circ}, 180^{\circ}, 216^{\circ}, 252^{\circ}, 288^{\circ},
+324^{\circ}\}$. The smallest nonzero single-$2I$-element
+rotation about $A$ is $36^{\circ}$.
+\end{lemma}
+
+\begin{proof}
+The short exact sequence $1 \to \{\pm 1\} \to 2I \to I \to 1$
+has kernel of order $2$ and projects $\Stab_I(A) \cong C_5$ onto
+the 5-fold stabiliser. The preimage is a central extension of
+$C_5$ by $C_2$. Since $\gcd(2, 5) = 1$, the
+Schur--Zassenhaus theorem gives a splitting; explicitly the
+preimage is $C_5 \times C_2 \cong C_{10}$ (using the isomorphism
+of finite abelian groups with coprime factorisation). The
+rotation angles of $C_{10}$'s ten elements as SU(2) rotations
+about $A$ are the $10$th roots of unity, i.e.\ $2\pi k / 10$ for
+$k = 0, \ldots, 9$.
+\end{proof}
+
+\begin{remark}[$\triangleright$ The small-angle problem]\label{rem:R1}
+Empirical amyloid twists cluster in the $1^{\circ}$--$5^{\circ}$
+range. By Lemma~\ref{lem:L1} these cannot be achieved as single-
+$2I$-element rotations about a 5-fold axis (minimum is
+$36^{\circ}$). The small-angle twist must therefore emerge from
+\emph{compounded} group elements, not a single $R_\alpha$: either
+commensurable residues of multi-step helical walks, or orbits
+restricted to subgroups of $2I$, or cell-level (not vertex-level)
+orbits. This document focuses on the compound-residue route.
+\end{remark}
+
+\subsection{Commensurable twist family}
+
+\begin{definition}[$\blacktriangleright$ Commensurable twist]\label{def:D2}
+Fix $\alpha \in \Stab_{2I}(A) \setminus \{0\}$, an integer
+$N \ge 1$, and integers $(p, q)$ with $\gcd(p, q, N) = 1$. The
+\emph{commensurable twist at $(\alpha; p, q, N)$} is
+\[
+\theta(\alpha; p, q, N) := (p \alpha - q \cdot 2\pi) / N
+\qquad (\text{reduced mod } 2\pi).
+\]
+$N$ is an explicit parameter of the definition (not derived from
+$(p, q, \alpha)$). Geometrically: after $N$ strands along the
+fibril, the helical pattern has accumulated $N\theta$ of
+in-plane rotation, which equals $p$ applications of $R_\alpha$
+minus $q$ full turns.
+
+For $\alpha = 36^{\circ}$, one computes
+$\theta = 36^{\circ} \cdot (p - 10q)/N$; setting $s := p - 10q$,
+every commensurable twist is a rational multiple of
+$36^{\circ}/N$ within the $36^{\circ}/N \cdot \mathbb{Z}$ ladder.
+Other $\alpha \in \Stab_{2I}(A)$ (multiples of $36^{\circ}$) give
+no angles outside this ladder.
+\end{definition}
+
+\begin{lemma}[$\blacktriangleright$ Countability and zero-accumulation]\label{lem:L2}
+The union $\cup_{N \ge 1} \Theta_{\mathrm{adm}}(A; N)$ is a
+countable subset of $\{36^{\circ} \cdot m/N : m, N \in \mathbb{Z},
+N \ge 1\}$ and has $0$ as an accumulation point.
+\end{lemma}
+
+\begin{proof}
+Every commensurable twist is of the form $36^{\circ}(p-10q)/N =
+36^{\circ}m/N$ with $m = p - 10q \in \mathbb{Z}$; this is the
+rational-number ladder, which is countable. For accumulation at
+zero: given $\epsilon > 0$, choose any $N > 36^{\circ}/\epsilon$
+and $m = 1$; then $\theta = 36^{\circ}/N < \epsilon$.
+\end{proof}
+
+\subsection{Amyloid-scale filter}
+
+\begin{definition}[$\blacktriangleright$ Amyloid-scale compatibility]\label{def:D3}
+A twist $\theta$ is \emph{amyloid-scale compatible under
+$n$-protofilament bundle symmetry} if there exists a positive
+integer $M$ with
+\[
+M \cdot \theta \in \frac{360^{\circ}}{n}\,\mathbb{Z}, \qquad
+\text{i.e. } M\theta\text{ is an exact multiple of } 360^{\circ}/n
+\]
+(the strict full-turn case used in this definition is $n = 1$;
+the generalised $n \ge 2$ case accommodates multi-protofilament
+$C_n$-bundles whose cross-section repeats every $360^{\circ}/n$
+and is enumerated in build $B_{\mathrm{crossover}}$ at
+\texttt{scripts/wo2\_sim\_close\_crossover.py}), \textbf{and} the
+crossover length satisfies
+\[
+M \cdot d_\beta = M \cdot 4.7 \text{ \AA} \in [100 \text{ \AA}, 500 \text{ \AA}].
+\]
+Solving: $M \in \{22, 23, \ldots, 106\}$ and therefore
+\[
+\theta \in [360^{\circ}/106, 360^{\circ}/22] = [3.3962^{\circ}, 16.3636^{\circ}].
+\]
+The $M$-integrality requirement is the substantive constraint
+beyond the bare crossover length range: it picks out
+commensurable-twist family members whose fibril crossovers close
+\emph{exactly} modulo $360^{\circ}$, excluding twists that only
+close approximately.
+\end{definition}
+
+\begin{remark}[$\triangleright$ Ultra-slow-twist polymorphs]\label{rem:R2}
+Some tau PHF and $\alpha$-synuclein fibril polymorphs report
+per-strand twists below $3.4^{\circ}$, corresponding to
+crossover distances $> 1500$ \AA. These lie outside
+Definition~\ref{def:D3}'s filter. Three candidate explanations
+are recorded (not resolved here): (i) they sit at higher
+resolution $N > 106$, technically within the commensurable set
+but outside the canonical short-crossover filter; (ii) they
+correspond to cell-level orbits (rather than vertex-level) on
+the 600-cell; (iii) they correspond to different axis types
+(3-fold or 2-fold rather than 5-fold). An open sub-problem is
+to compute the cell-level orbit spectrum and test whether it
+absorbs these polymorphs.
+\end{remark}
+
+%==================================================================
+\section{Enumeration and Predictions}\label{sec:enum}
+%==================================================================
+
+\subsection{The 24-element admissible set}
+
+The admissibility condition $M = 10N/s$ (integer, in
+$[22, 106]$) with $\theta = 36^{\circ} s/N$ and $(s, N)$ coprime
+gives a finite set for each resolution bound $N_{\max}$. For
+$N_{\max} = 20$, the script
+\texttt{papers/biology-rung/scripts/wo2\_helical\_orbits.py}
+produces $24$ distinct admissible $\theta$-values, all
+satisfying $M\theta = 360^{\circ}$ exactly. A representative
+subset is shown in Table~\ref{tab:admissible}.
+
+\begin{table}[h]
+\centering
+\caption{Representative cascade-admissible amyloid per-strand
+twists (resolution $N \le 20$), with exact integer crossover $M$
+and resulting crossover length. Full 24-element list in
+\texttt{data/wo2\_prediction.csv}.}
+\label{tab:admissible}
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+$\theta$ (deg) & $s$ & $N$ & $M$ & $L_{\mathrm{co}}$ (\AA) \\
+\midrule
+3.6000 & 1 & 10 & 100 & 470.0 \\
+4.0000 & 1 & 9 & 90 & 423.0 \\
+4.5000 & 1 & 8 & 80 & 376.0 \\
+5.1429 & 1 & 7 & 70 & 329.0 \\
+6.0000 & 1 & 6 & 60 & 282.0 \\
+7.2000 & 1 & 5 & 50 & 235.0 \\
+9.0000 & 1 & 4 & 40 & 188.0 \\
+12.0000 & 1 & 3 & 30 & 141.0 \\
+14.4000 & 2 & 5 & 25 & 117.5 \\
+16.3636 & 5 & 11 & 22 & 103.4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Empirical conjecture}
+
+\begin{conjecture}[$\circ$ Amyloid-twist selection rule]\label{conj:C1}
+Observed cross-$\beta$ amyloid per-strand twists cluster on the
+enumerated admissible set
+$\Theta_{\mathrm{adm}}(A) \cap [3.3962^{\circ}, 16.3636^{\circ}]$
+rather than distributing uniformly over that range.
+
+\textbf{Falsifier.} A uniform distribution of observed
+$\theta_{\mathrm{twist}}$ over $[3.4^{\circ}, 16.4^{\circ}]$
+across a curated cryo-EM amyloid dataset, with no clustering at
+the admissible-set values, would falsify this conjecture.
+\textbf{Status}: untested; comparison script planned following
+the WO-1 WAITING\_FOR\_DATA template.
+\end{conjecture}
+
+\begin{conjecture}[$\circ$ Chirality bias; qualitative]\label{conj:C2}
+The $2I$ group carries intrinsic chirality per
+\cite[\S 2.7, \S B5]{CascadeBio}. Cross-$\beta$ fibrils may show
+a handedness bias inherited from the cascade substrate; upstream
+work only establishes that $2I$-orbits are intrinsically chiral
+and that a god-prime $2^n + 1$ argument would select one
+enantiomer, but the \emph{direction} of the bias is not
+derived. The claim here is qualitative: a nonzero asymmetry
+may be present. Magnitude and sign are open.
+\end{conjecture}
+
+\begin{conjecture}[$\circ$ Protofilament count from $2I$ subgroups]\label{conj:C3}
+Admissible protofilament bundle symmetries correspond to
+non-trivial cyclic and binary-dihedral subgroups of $2I$
+(principally $C_1, C_2, C_3, C_5, D_2$, etc.), giving the
+1--4-protofilament bundle range commonly observed in cryo-EM.
+The absence of, e.g., $C_7$-symmetric protofilament bundles
+across a careful cryo-EM survey would be consistent with (but
+not necessarily required by) $2I$ subgroup exhaustion.
+\end{conjecture}
+
+\subsection{Per-disease empirical targets}
+
+The predictions of Conjecture~\ref{conj:C1} apply uniformly
+across the amyloid-disease family. Disease-specific comparison
+targets (all pending data curation):
+\begin{itemize}
+\item IAPP (type 2 diabetes): polymorph-dependent, some cryo-EM
+  structures reporting $\theta \approx 4.5^{\circ}$ which would
+  match the admissible $\theta = 36^{\circ}/8$ entry.
+\item A$\beta_{1-42}$ (Alzheimer's): polymorphs reported in
+  $1^{\circ}$--$5^{\circ}$ range; many in Remark~\ref{rem:R2}'s
+  open regime.
+\item Tau PHF (Alzheimer's): $\sim 1^{\circ}$, in
+  Remark~\ref{rem:R2}'s open regime.
+\item $\alpha$-synuclein (Parkinson's): $\sim 2^{\circ}$, in
+  Remark~\ref{rem:R2}'s open regime.
+\item PrP$^{\mathrm{Sc}}$ (prion): structure-dependent.
+\item p53-cancer aggregation: limited structural data; flagged
+  as an interesting stretch target for future cryo-EM work.
+\end{itemize}
+The sub-3.4$^{\circ}$ polymorphs fall outside the present
+filter; whether they are absorbed by cell-level orbits
+(Remark~\ref{rem:R2}) is an explicit open question, not resolved
+in this paper.
+
+%==================================================================
+\section{Summary and Logical Chain}\label{sec:chain}
+%==================================================================
+
+\paragraph{What is derived ($\blacktriangleright$).}
+\begin{itemize}
+\item Lemma~\ref{lem:L1}: $\Stab_{2I}(A) \cong C_{10}$ on a
+  5-fold axis, smallest nonzero rotation $36^{\circ}$.
+\item Definition~\ref{def:D2}: commensurable-twist family with
+  explicit resolution parameter $N$ (non-circular).
+\item Lemma~\ref{lem:L2}: countable set with zero-accumulation.
+\item Definition~\ref{def:D3}: exact-$M$ amyloid-scale filter,
+  $\theta \in [3.3962^{\circ}, 16.3636^{\circ}]$.
+\item Computational enumeration: 24 admissible $\theta$-values
+  at resolution $N \le 20$, all satisfying $M\theta = 360^{\circ}$
+  exactly (script at
+  \texttt{papers/biology-rung/scripts/wo2\_helical\_orbits.py}).
+\end{itemize}
+
+\paragraph{What is identified ($\triangleright$).}
+\begin{itemize}
+\item Remark~\ref{rem:R1}: small-angle amyloid twists cannot be
+  single-$2I$-element rotations; must emerge from compound steps.
+\item Remark~\ref{rem:R2}: ultra-slow-twist polymorphs
+  ($< 3.4^{\circ}$) lie outside the present filter; three
+  candidate resolutions flagged as open.
+\item The decagram substrate of B2 \cite[\S 5.1]{CascadeBio} is
+  the 5-fold-axis origin; other axis types (3-fold, 2-fold) not
+  enumerated here.
+\end{itemize}
+
+\paragraph{What is open ($\circ$).}
+\begin{itemize}
+\item Conjecture~\ref{conj:C1} (amyloid-twist selection):
+  empirical test pending curated cryo-EM dataset.
+\item Conjecture~\ref{conj:C2} (chirality bias): qualitative
+  only; magnitude and sign not derived.
+\item Conjecture~\ref{conj:C3} (protofilament count from
+  subgroups): conjecture, not proof.
+\item Cell-level orbit enumeration for sub-3.4$^{\circ}$
+  polymorphs (Remark~\ref{rem:R2}).
+\item Multi-axis extension (3-fold and 2-fold axes of the
+  600-cell).
+\item Whether the amyloid selection rule is the spectrum of a
+  closure operator parallel to WO-1's $\mathcal{T}_{\mathrm{casc}}$
+  \cite[T.1]{SmartCapsid}.
+\end{itemize}
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+This manuscript lives at
+\texttt{papers/biology-rung-amyloid/biology-rung-amyloid.tex};
+the mathematical source is \texttt{derivation-amyloid.md} in
+\texttt{papers/biology-rung/}, the enumeration script is
+\texttt{scripts/wo2\_helical\_orbits.py}, and the admissible
+CSV output is \texttt{data/wo2\_prediction.csv}.
+
+The empirical-comparison scripts
+(\texttt{wo2\_amyloid\_fetch.py},
+\texttt{wo2\_compare.py}) are planned following the WO-1
+WAITING\_FOR\_DATA template but not yet written. A cryo-EM
+amyloid-twist dataset is pending curation.
+
+\begin{thebibliography}{99}
+
+\bibitem{CascadeBio}
+\emph{Cascade Biology Rung: The 600-Cell Cell-Level Substrate},
+internal manuscript,
+\texttt{papers/cascade-derivation/cascade-bio.md}. Preprint,
+Institute of Vibrational Field Dynamics.
+
+\bibitem{SmartCapsid}
+Smart, L.,
+\emph{Caspar--Klug Triangulation Numbers from a Face-Level
+Cascade Operator} (WO-1),
+\texttt{papers/biology-rung-capsid/biology-rung-capsid.tex}.
+Preprint, Institute of Vibrational Field Dynamics, 2026.
+
+\bibitem{SmartPhyllotaxis}
+Smart, L.,
+\emph{Fibonacci Phyllotaxis from the 600-Cell's $\phig$-Helical
+Closure Orbits} (WO-5),
+\texttt{papers/biology-rung-phyllotaxis/biology-rung-phyllotaxis.tex}.
+Preprint, Institute of Vibrational Field Dynamics, 2026.
+
+\bibitem{SmartTubulin}
+Smart, L.,
+\emph{The 13-Protofilament Microtubule as a $C_{13}$ Selector}
+(WO-3),
+\texttt{papers/biology-rung-tubulin/biology-rung-tubulin.tex}.
+Preprint, Institute of Vibrational Field Dynamics, 2026.
+
+\bibitem{SmartBioelectric}
+Smart, L.,
+\emph{Bioelectric Prepattern Eigenmodes as Morphogenetic
+Attractors} (WO-4),
+\texttt{papers/biology-rung-bioelectric/biology-rung-bioelectric.tex}.
+Preprint, Institute of Vibrational Field Dynamics, 2026.
+
+\end{thebibliography}
+
+\end{document}

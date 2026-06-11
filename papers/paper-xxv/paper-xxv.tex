@@ -38,11 +38,11 @@
 \begin{abstract}
 Papers~XXIII--XXIV derived a strict partial order on admissible overlap events and showed that observer-dependent time functions, relativity of simultaneity, and time-dilation analogues emerge from the event poset. The present paper addresses the next question: what does it mean for two events to be \textit{near or far}?
 
-Three candidate separation constructions are developed and compared. For comparable events (those related by the partial order), a \textit{chain-length separation} counts the minimum number of cover steps between them, providing an observer-independent temporal interval. For incomparable events (those not causally related), an \textit{observer-disagreement separation} measures the variance of time-difference assignments across observers, providing a structural precursor to spatial distance. A \textit{transition-cost separation} on the Hasse graph gives a unified graph-distance that applies to both cases.
+Three candidate separation constructions are developed and compared. For comparable events (those related by the partial order), a \textit{cover-step (chain-length) separation} counts the minimum number of cover steps along a saturated chain between them, providing an observer-independent directed temporal separation. For incomparable events (those not causally related), a \textit{family-relative observer-disagreement separation} measures the variance of time-difference assignments across a chosen finite observer family, providing a structural precursor to spatial distance relative to that family. A \textit{transition-cost separation} on the Hasse graph gives a unified graph-distance that applies to both cases on a connected component of the graph.
 
-The chain-length separation is proved to be a well-defined directed temporal separation on comparable pairs. The observer-disagreement construction is shown to exhibit observer-independent sign for comparable pairs and observer-dependent sign for incomparable pairs, with the variance quantity providing a nontrivial separation measure. When the transition graph is connected, the transition-cost construction satisfies all metric axioms on the event set. A worked example on the dual-pentagon system demonstrates all three constructions explicitly.
+The cover-step separation is defined in terms of saturated chains and its basic order-theoretic properties (non-negativity, zero-on-diagonal, and a forward triangle inequality on comparable triples) are proved. The observer-disagreement construction is shown to have sign of the individual time-differences that is family-independent for comparable pairs, and possibly sign-varying for incomparable pairs; the resulting variance is strictly positive whenever the chosen family contains sign-reversing observers for the pair. On each connected component of the Hasse graph, the transition-cost construction satisfies all metric axioms. A worked example on the first two birth-angle layers of the dual-pentagon system of Papers~XXIII--XXIV demonstrates all three constructions explicitly.
 
-The paper does not derive the Lorentz metric or continuous geometry. It establishes that the event-order framework supports a nontrivial separation structure, providing a concrete route from poset to emergent metric geometry.
+The paper does not derive the Lorentz metric or continuous geometry. It establishes that the event poset canonically yields a graph metric on each connected Hasse-graph component, and provides two additional, weaker separation functions (cover-step and family-relative observer-disagreement) that together distinguish comparable from incomparable event pairs.
 \end{abstract}
 
 %==================================================================
@@ -50,6 +50,11 @@ The paper does not derive the Lorentz metric or continuous geometry. It establis
 %==================================================================
 
 Paper~XXIII~\citep{SmartXXIII} derived a strict partial order $\prec$ on an event set $\Ecal$ from phase-overlap geometry. Paper~XXIV~\citep{SmartXXIV} showed that observers (linear extensions with sampling measures) produce frame-dependent time functions, relativity of simultaneity, and time-dilation analogues.
+
+\medskip
+\noindent\textbf{Standing assumption.} Throughout this paper, $\Ecal$ denotes a finite event set carrying a strict partial order $\prec$ (as in Papers~XXIII--XXIV). Finiteness guarantees that every comparable pair $e_1 \prec e_2$ admits at least one saturated chain from $e_1$ to $e_2$ (Definition~\ref{def:satchain}) and that the maximum chain length between such a pair is finite.
+\medskip
+
 
 These results give the event set temporal and observer structure, but not spatial or metric structure. The present paper asks: \textit{given only the event poset and its observer completions, can one define a meaningful notion of separation between events?}
 
@@ -65,7 +70,7 @@ Any separation construction must handle both cases, and the two cases may requir
 
 \subsection*{Scope}
 
-This paper constructs separation quantities and proves their basic properties. It does not derive the Lorentz metric, continuous manifold structure, or the Einstein equations. It establishes that the event-order framework naturally supports emergent metric-like geometry.
+This paper constructs separation quantities and proves their basic properties. It does not derive the Lorentz metric, continuous manifold structure, or the Einstein equations. It establishes a graph metric on each connected Hasse-graph component, together with two weaker separation constructions (cover-step and family-relative observer-disagreement).
 
 %==================================================================
 \section{Cover Relations and the Transition Graph}\label{sec:hasse}
@@ -93,20 +98,24 @@ The cover relation encodes ``immediate succession'': $e_1 \lessdot e_2$ means $e
 
 For comparable events, the natural separation is the number of order steps between them.
 
-\begin{definition}[Chain-length separation]\label{def:dchain}
-For comparable events $e_1 \prec e_2$, define:
+\begin{definition}[Saturated chain]\label{def:satchain}
+A \textit{saturated chain} from $e_1$ to $e_2$ is a sequence $e_1 = c_0, c_1, \ldots, c_k = e_2$ in $\Ecal$ with $c_{i-1} \lessdot c_i$ for all $i = 1, \ldots, k$: i.e.\ every consecutive pair is a cover pair, with no intermediate events. Its \textit{length} is $k$.
+\end{definition}
+
+\begin{definition}[Cover-step (chain-length) separation]\label{def:dchain}
+The \textit{natural domain} of $d_{\mathrm{chain}}$ is $\{(e,e) : e \in \Ecal\} \cup \{(e_1, e_2) \in \Ecal \times \Ecal : e_1 \prec e_2\}$ --- the diagonal together with strictly comparable pairs. On this domain, define:
 \begin{equation}\label{eq:dchain}
-    d_{\mathrm{chain}}(e_1, e_2) = \min\{|C| - 1 : C \text{ is a chain from } e_1 \text{ to } e_2\}
+    d_{\mathrm{chain}}(e, e) = 0, \qquad d_{\mathrm{chain}}(e_1, e_2) = \min\{k \in \mathbb{Z}_{\geq 1} : \text{a saturated chain of length } k \text{ from } e_1 \text{ to } e_2 \text{ exists}\}.
 \end{equation}
-where $|C|$ is the number of events in $C$. For $e_1 = e_2$, set $d_{\mathrm{chain}}(e, e) = 0$.
+Since $\Ecal$ is finite (standing assumption), every strictly comparable pair admits at least one saturated chain, so $d_{\mathrm{chain}}$ is defined everywhere on its natural domain and takes values in $\mathbb{Z}_{\geq 0}$.
 \end{definition}
 
 \begin{remark}
-$d_{\mathrm{chain}}(e_1, e_2) = k$ means there is a chain $e_1 = c_0 \prec c_1 \prec \cdots \prec c_k = e_2$ of length $k$, and no shorter chain exists. This is the minimum number of ``causal steps'' between $e_1$ and $e_2$.
+$d_{\mathrm{chain}}(e_1, e_2) = k$ means there is a saturated chain $e_1 = c_0 \lessdot c_1 \lessdot \cdots \lessdot c_k = e_2$ of exactly $k$ cover steps, and no saturated chain with fewer cover steps exists. Equivalently, $d_{\mathrm{chain}}$ is the \textit{Hasse-graph distance restricted to directed (upward) paths}. An arbitrary chain $e_1 \prec c \prec e_2$ in which consecutive elements are not cover-related does \emph{not} decrease $d_{\mathrm{chain}}$, because such a chain can always be refined (in finite $\Ecal$) to a longer saturated chain.
 \end{remark}
 
 \begin{proposition}[Properties of chain-length separation]\label{prop:dchain}
-On the set of comparable pairs, $d_{\mathrm{chain}}$ satisfies:
+On its natural domain (Definition~\ref{def:dchain}), $d_{\mathrm{chain}}$ satisfies:
 \begin{enumerate}
     \item \textbf{Non-negativity:} $d_{\mathrm{chain}}(e_1, e_2) \geq 0$.
     \item \textbf{Identity:} $d_{\mathrm{chain}}(e, e) = 0$.
@@ -118,19 +127,19 @@ On the set of comparable pairs, $d_{\mathrm{chain}}$ satisfies:
 \end{proposition}
 
 \begin{proof}
-(1): Chain lengths are non-negative integers. (2): The trivial chain $\{e\}$ has $|C| - 1 = 0$. (3): Concatenating a shortest chain from $e_1$ to $e_2$ with one from $e_2$ to $e_3$ gives a chain from $e_1$ to $e_3$ of length $d_{\mathrm{chain}}(e_1, e_2) + d_{\mathrm{chain}}(e_2, e_3)$. The minimum over all chains can only be shorter.
+(1): Saturated-chain lengths are non-negative integers. (2): The trivial saturated chain consisting of the single event $e$ has length $0$. (3): Concatenating a shortest saturated chain from $e_1$ to $e_2$ with one from $e_2$ to $e_3$ yields a saturated chain from $e_1$ to $e_3$ (the last cover step of the first chain ends at $e_2$, and the first cover step of the second begins at $e_2$) of length $d_{\mathrm{chain}}(e_1, e_2) + d_{\mathrm{chain}}(e_2, e_3)$. The minimum over all saturated chains from $e_1$ to $e_3$ can only be smaller or equal.
 \end{proof}
 
 \begin{remark}
-$d_{\mathrm{chain}}$ is a directed separation function, not a metric: it is only defined for comparable pairs and is inherently directional (from earlier to later). Incomparable events have no chain between them, so $d_{\mathrm{chain}}$ does not apply. This separation is \textit{temporal}: it measures causal distance, not spatial distance.
+$d_{\mathrm{chain}}$ is a directed separation function on its natural domain (diagonal plus strictly comparable pairs), not a metric: it is asymmetric --- $d_{\mathrm{chain}}(e_2, e_1)$ is undefined whenever $e_1 \prec e_2$ --- and it is not defined on incomparable pairs at all. This separation is \textit{temporal}: it measures causal distance, not spatial distance.
 \end{remark}
 
 \begin{remark}[Longest chain as proper-time analogue]
-In causal set theory, the longest (not shortest) chain between comparable events is the analogue of proper time. Define:
+In causal set theory~\citep{BombelliLeeMeyerSorkin1987,BrightwellGregory1991}, the longest (not shortest) chain between comparable events is the analogue of proper time. Define:
 \begin{equation}
-    d_{\max}(e_1, e_2) = \max\{|C| - 1 : C \text{ is a chain from } e_1 \text{ to } e_2\}
+    d_{\max}(e_1, e_2) = \max\{k : \text{there exists a saturated chain of length } k \text{ from } e_1 \text{ to } e_2\}
 \end{equation}
-$d_{\max}$ is well-defined for comparable pairs but does not in general satisfy a metric-style triangle inequality. It is better viewed as an alternative temporal-size functional. In the VFD framework, whether $d_{\mathrm{chain}}$ (shortest) or $d_{\max}$ (longest) better approximates physical proper time is an open question; in causal set theory, the longest chain is preferred.
+$d_{\max}$ is well-defined and finite for comparable pairs in a finite $\Ecal$, but satisfies a \emph{reverse} triangle inequality ($d_{\max}(e_1, e_3) \geq d_{\max}(e_1, e_2) + d_{\max}(e_2, e_3)$ when $e_1 \prec e_2 \prec e_3$) rather than a metric-style triangle inequality. It is better viewed as a temporal-size functional than a metric. In the VFD framework, whether $d_{\mathrm{chain}}$ (shortest saturated) or $d_{\max}$ (longest saturated) better approximates physical proper time is an open question; in causal set theory, the longest chain is preferred.
 \end{remark}
 
 %==================================================================
@@ -139,37 +148,33 @@ $d_{\max}$ is well-defined for comparable pairs but does not in general satisfy 
 
 For incomparable events, no chain exists and $d_{\mathrm{chain}}$ is undefined. A different construction is needed.
 
-\begin{definition}[Observer-disagreement separation]\label{def:dobs}
-For any two events $e_1, e_2 \in \Ecal$, let $\Ocal$ be a family of observers. Define:
+\begin{definition}[Family-relative observer-disagreement separation]\label{def:dobs}
+Fix a finite observer family $\Ocal = \{O_1, \ldots, O_N\}$ with $N \geq 2$, each observer $O_i$ as in Paper~XXIV (a linear extension of $\prec$ together with a positive weight function on $\Ecal$). Endow $\Ocal$ with the uniform (counting) measure so that expectations and variances are population statistics. For any $e_1, e_2 \in \Ecal$, define
 \begin{equation}\label{eq:dobs}
-    \sigma(e_1, e_2) = \mathrm{Var}_{O \in \Ocal}\!\left[t_O(e_1) - t_O(e_2)\right]
+    \sigma_{\Ocal}(e_1, e_2) \;=\; \frac{1}{N}\sum_{i=1}^{N} \bigl(\Delta_i - \bar{\Delta}\bigr)^2, \qquad \Delta_i := t_{O_i}(e_1) - t_{O_i}(e_2), \quad \bar{\Delta} := \frac{1}{N}\sum_{i=1}^{N}\Delta_i.
 \end{equation}
-the variance of the time-difference assignment across the observer family.
+$\sigma_{\Ocal}$ depends on the chosen family $\Ocal$; the same event pair can yield different values under different families.
 \end{definition}
 
-\begin{proposition}[Observer-dependent sign structure]\label{prop:dobs}
+\begin{proposition}[Family-relative sign structure]\label{prop:dobs}
+Let $\Ocal$ be a finite observer family as in Definition~\ref{def:dobs}, and let $\Delta_i$ be as in~\eqref{eq:dobs}.
 \begin{enumerate}
-    \item If $e_1 = e_2$: $t_O(e_1) - t_O(e_2) = 0$ for all observers $O$.
-    \item If $e_1 \prec e_2$ (comparable): $t_O(e_1) - t_O(e_2) < 0$ for all observers $O$. The sign is observer-independent.
-    \item If $e_1$ and $e_2$ are incomparable: there exist observers $O_1, O_2$ such that
-    \[
-        t_{O_1}(e_1) - t_{O_1}(e_2) < 0, \qquad t_{O_2}(e_1) - t_{O_2}(e_2) > 0.
-    \]
-    The sign is observer-dependent.
+    \item If $e_1 = e_2$: $\Delta_i = 0$ for every $O_i \in \Ocal$; hence $\sigma_{\Ocal}(e_1, e_2) = 0$.
+    \item If $e_1 \prec e_2$ (comparable): $\Delta_i < 0$ for every $O_i \in \Ocal$; the sign of $\Delta_i$ is family-independent.
+    \item If $e_1$ and $e_2$ are incomparable, there exist linear extensions placing them in either relative order (Paper~XXIV, relativity-of-simultaneity theorem, \citealt{SmartXXIV}). In particular, if $\Ocal$ is chosen to contain at least one observer with $\Delta_i < 0$ and at least one with $\Delta_j > 0$, then the $\Delta_i$ take both signs across $\Ocal$, which forces $\sigma_{\Ocal}(e_1, e_2) > 0$.
 \end{enumerate}
-Consequently, the variance $\sigma(e_1, e_2)$ is zero for identical events, and generically nonzero for incomparable pairs (where the sign-changing contributions ensure positive variance).
 \end{proposition}
 
 \begin{proof}
-(1): Immediate. (2): $e_1 \prec e_2$ implies $t_O(e_1) < t_O(e_2)$ for all $O$ (Proposition~1 of Paper~XXIV). (3): By the relativity-of-simultaneity theorem (Theorem~1 of Paper~XXIV), linear extensions exist placing the pair in either order.
+(1): Immediate from $t_O(e) = t_O(e)$. (2): $e_1 \prec e_2$ forces $t_O(e_1) < t_O(e_2)$ for every observer by Paper~XXIV's order-preservation proposition~\citep{SmartXXIV}. (3): If the $\{\Delta_i\}_{i=1}^N$ take strictly positive and strictly negative values, they are not all equal, so the population variance of a non-constant real sample is strictly positive.
 \end{proof}
 
 \begin{remark}[Interpretation]
-The observer-disagreement $\sigma$ serves as a \textit{spatial-separation precursor}: it is large for events that observers strongly disagree about, and zero only for identical events. Comparable events have constrained (sign-fixed) disagreement; incomparable events admit sign-varying disagreement across observers. This mirrors the physical intuition that timelike-separated events have a fixed ordering while spacelike-separated events do not.
+The family-relative observer-disagreement $\sigma_{\Ocal}$ serves as a \textit{spatial-separation precursor relative to the chosen family}: it is large when observers in $\Ocal$ strongly disagree on the time-difference, and zero whenever all observers in $\Ocal$ assign the same $\Delta$ (including, but not limited to, the case $e_1 = e_2$). Comparable events have a family-independent sign of $\Delta_i$; for incomparable events, $\sigma_{\Ocal}$ can be made strictly positive by choosing $\Ocal$ to include a sign-reversing pair, but it is not a function of the event pair alone.
 \end{remark}
 
-\begin{remark}[Metric failure]
-$\sigma$ does not satisfy the triangle inequality in general and is therefore not a metric. It is a meaningful \textit{separation measure} but not a distance function in the strict sense. Its role is to provide nontrivial structure for incomparable pairs where $d_{\mathrm{chain}}$ is undefined.
+\begin{remark}[Not a metric]
+$\sigma_{\Ocal}$ does not satisfy the triangle inequality in general and is therefore not a metric. It is a meaningful \textit{separation measure relative to a chosen observer family}, not a distance function in the strict sense. Its role is to provide nontrivial observer-sensitive structure for incomparable pairs, where $d_{\mathrm{chain}}$ is undefined.
 \end{remark}
 
 %==================================================================
@@ -179,32 +184,37 @@ $\sigma$ does not satisfy the triangle inequality in general and is therefore no
 The transition graph $\Gcal$ (Definition~\ref{def:hasse}) provides a unified metric that applies to both comparable and incomparable events.
 
 \begin{definition}[Transition-cost metric]\label{def:dtrans}
-For any $e_1, e_2 \in \Ecal$, define:
+For $e_1, e_2 \in \Ecal$ in the same connected component of $\Gcal$, define
 \begin{equation}\label{eq:dtrans}
-    d_{\mathrm{trans}}(e_1, e_2) = \text{shortest-path length in } \Gcal \text{ between } e_1 \text{ and } e_2
+    d_{\mathrm{trans}}(e_1, e_2) = \text{shortest-path length in } \Gcal \text{ between } e_1 \text{ and } e_2,
 \end{equation}
-where the graph $\Gcal$ is the undirected Hasse graph with unit edge weights.
+where $\Gcal$ is the undirected Hasse graph with unit edge weights. If $\Gcal$ is connected (a hypothesis verified in the pentagon model below but not established in general for the full 600-cell event set), $d_{\mathrm{trans}}$ is defined on all of $\Ecal \times \Ecal$.
 \end{definition}
 
-\begin{theorem}[Metric on $\Ecal$]\label{thm:metric}
-If $\Gcal$ is connected, then $d_{\mathrm{trans}}$ is a metric on $\Ecal$:
+\begin{theorem}[Metric on a connected component]\label{thm:metric}
+On any connected component of $\Gcal$, $d_{\mathrm{trans}}$ is a metric:
 \begin{enumerate}
     \item $d_{\mathrm{trans}}(e_1, e_2) \geq 0$, with equality iff $e_1 = e_2$.
     \item $d_{\mathrm{trans}}(e_1, e_2) = d_{\mathrm{trans}}(e_2, e_1)$.
     \item $d_{\mathrm{trans}}(e_1, e_3) \leq d_{\mathrm{trans}}(e_1, e_2) + d_{\mathrm{trans}}(e_2, e_3)$.
 \end{enumerate}
+If $\Gcal$ is connected, $d_{\mathrm{trans}}$ is a metric on the full event set $\Ecal$.
 \end{theorem}
 
 \begin{proof}
-These are the standard properties of shortest-path distance on a connected graph. (1): Shortest paths have non-negative length; length 0 iff $e_1 = e_2$. (2): Undirected graph, so paths are reversible. (3): Triangle inequality holds for shortest-path distance on any graph (concatenation gives an upper bound).
+These are the standard properties of shortest-path distance on a connected graph. (1): Shortest paths have non-negative length; length $0$ iff $e_1 = e_2$. (2): Undirected graph, so paths are reversible. (3): Concatenation of shortest paths from $e_1$ to $e_2$ and from $e_2$ to $e_3$ gives an upper bound on the $e_1$-to-$e_3$ path length.
 \end{proof}
 
 \begin{remark}
-$d_{\mathrm{trans}}$ is the first genuine metric on the event set. Unlike $d_{\mathrm{chain}}$ (which requires comparability) and $\sigma$ (which fails the triangle inequality), $d_{\mathrm{trans}}$ applies to all pairs and satisfies all metric axioms.
+$d_{\mathrm{trans}}$ is the first genuine metric on (each connected component of) the event set. Unlike $d_{\mathrm{chain}}$ (which requires comparability) and $\sigma_{\Ocal}$ (which fails the triangle inequality), $d_{\mathrm{trans}}$ applies to all same-component pairs and satisfies all metric axioms.
 \end{remark}
 
 \begin{remark}[Comparable vs incomparable]
-For comparable events $e_1 \prec e_2$, the transition-cost distance satisfies $d_{\mathrm{trans}}(e_1, e_2) \leq d_{\mathrm{chain}}(e_1, e_2)$ (since any chain gives a path in the Hasse graph). In the pentagon toy model, equality holds: $d_{\mathrm{trans}} = d_{\mathrm{chain}} = 1$ for all comparable pairs. Whether equality holds in general depends on the specific Hasse-graph structure. For incomparable events, $d_{\mathrm{trans}}$ involves ``sideways'' steps through the graph --- paths that go up then down (or vice versa) through the partial order. These sideways paths are the structural precursor to spatial separation.
+For comparable events $e_1 \prec e_2$, every saturated chain from $e_1$ to $e_2$ gives a path in $\Gcal$ of the same length (each cover step is a Hasse edge). Therefore
+\begin{equation}
+    d_{\mathrm{trans}}(e_1, e_2) \;\leq\; d_{\mathrm{chain}}(e_1, e_2).
+\end{equation}
+In the pentagon toy model (Section~\ref{sec:example}), equality holds: $d_{\mathrm{trans}} = d_{\mathrm{chain}} = 1$ for all comparable pairs. Whether equality holds in general depends on the specific Hasse-graph structure. For incomparable events, $d_{\mathrm{trans}}$ involves ``sideways'' steps through the graph --- paths that go up then down (or vice versa) through the partial order. These sideways paths are the structural precursor to spatial separation.
 \end{remark}
 
 %==================================================================
@@ -219,12 +229,12 @@ The three constructions cleanly separate into temporal and spatial-precursor com
 \label{tab:separation}
 \begin{tabular}{@{}llll@{}}
 \toprule
-Event pair & $d_{\mathrm{chain}}$ & $\sigma$ & $d_{\mathrm{trans}}$ \\
+Event pair & $d_{\mathrm{chain}}$ & $\sigma_{\Ocal}$ (family-relative) & $d_{\mathrm{trans}}$ \\
 \midrule
-Comparable & Defined (causal steps) & Sign-fixed & Graph distance bounded by chain distance \\
-Incomparable & Undefined & Sign-varying (high variance) & Sideways path \\
+Comparable & Defined (cover steps) & Sign of $\Delta$ family-independent & Graph distance $\leq d_{\mathrm{chain}}$ \\
+Incomparable & Undefined & Sign of $\Delta$ can vary; $\sigma_{\Ocal}>0$ for sign-reversing $\Ocal$ & Sideways path \\
 \midrule
-Interpretation & Temporal interval & Spatial precursor & Unified metric \\
+Interpretation & Temporal interval & Family-relative spatial precursor & Unified metric (on component) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -245,7 +255,7 @@ For comparable events $e_1 \prec e_2$ and any observer $O = (\leq_O, \mu_O)$:
 \end{proposition}
 
 \begin{proof}
-Let $e_1 = c_0 \prec c_1 \prec \cdots \prec c_k = e_2$ be a shortest chain ($k = d_{\mathrm{chain}}(e_1, e_2)$). Since $\leq_O$ extends $\prec$, the observer ordering satisfies $c_0 \leq_O c_1 \leq_O \cdots \leq_O c_k$. Therefore all $k$ events $c_1, \ldots, c_k$ lie in the interval $\{e' : e_1 <_O e' \leq_O e_2\}$. Each contributes at least $\min_{e} \mu_O(e)$ to the sum.
+Let $e_1 = c_0 \lessdot c_1 \lessdot \cdots \lessdot c_k = e_2$ be a shortest saturated chain from $e_1$ to $e_2$ (so $k = d_{\mathrm{chain}}(e_1, e_2)$; Definition~\ref{def:dchain}). Since $\leq_O$ extends $\prec$ and each cover step gives $c_{i-1} \prec c_i$, the observer ordering satisfies $c_0 <_O c_1 <_O \cdots <_O c_k$. Therefore the $k$ events $c_1, \ldots, c_k$ lie in the interval $\{e' \in \Ecal : e_1 <_O e' \leq_O e_2\}$, which is the set $S$ in Paper~XXIV's observer-endpoint-interval construction~\citep{SmartXXIV}; each of them contributes at least $\min_{e \in \Ecal} \mu_O(e) > 0$ to the sum for $t_O(e_2) - t_O(e_1)$.
 \end{proof}
 
 \begin{remark}
@@ -257,59 +267,60 @@ This proposition connects observer-dependent time to observer-independent struct
 %==================================================================
 
 \begin{example}[Pentagon separation structure]\label{ex:pentagon}
-Using the dual-pentagon event set from Papers~XXIII--XXIV: 10 events in two layers.
+Using the first two birth-angle layers of the dual-pentagon event set of Paper~XXIII~\citep{SmartXXIII} (also used in Paper~XXIV~\citep{SmartXXIV}):
+\[
+    L_1 = \{(0,4),(1,0),(2,1),(3,2),(4,3)\} \quad \text{at } \theta_b = \pi/5 - \delta,
+\]
+\[
+    L_2 = \{(0,3),(1,4),(2,0),(3,1),(4,2)\} \quad \text{at } \theta_b = 3\pi/5 - \delta,
+\]
+ten events in two layers.
 
-\textbf{Layer 0} ($\theta_b = 0$): events $(0,0), (1,1), (2,2), (3,3), (4,4)$.
+\textbf{Partial order:} Every $L_1$ event precedes every $L_2$ event (layer-1 birth angles are strictly smaller); events within a single layer share a birth angle and are incomparable.
 
-\textbf{Layer 1} ($\theta_b = 2\pi/5$): events $(0,4), (1,0), (2,1), (3,2), (4,3)$.
+\textbf{Cover relations:} Within the first-two-layer truncation of the event set, every $L_2$ event covers every $L_1$ event, i.e.\ $e \lessdot f$ for every $e \in L_1$ and $f \in L_2$ (Definition~\ref{def:cover}; no events lie strictly between the two layers in this truncation).
 
-\textbf{Partial order:} Every Layer-0 event precedes every Layer-1 event. Events within the same layer are incomparable.
-
-\textbf{Cover relations:} Every Layer-0 event covers every Layer-1 event (since there are no intermediate events). So $e \lessdot f$ for all $e$ in Layer~0 and $f$ in Layer~1.
-
-\textbf{Hasse graph:} Complete bipartite graph $K_{5,5}$ between the two layers.
+\textbf{Hasse graph:} The complete bipartite graph $K_{5,5}$ between $L_1$ and $L_2$; it is connected, so Theorem~\ref{thm:metric} applies on the full 10-event set.
 
 \subsection*{Chain-length separation (comparable pairs)}
 
-For any Layer-0 event $e$ and Layer-1 event $f$: $d_{\mathrm{chain}}(e, f) = 1$ (one cover step). All comparable pairs have the same chain-length separation.
+For any $e \in L_1$ and $f \in L_2$: there is a one-step saturated chain $e \lessdot f$, so $d_{\mathrm{chain}}(e, f) = 1$. All comparable pairs have the same chain-length separation.
 
-\subsection*{Observer-disagreement separation (incomparable pairs)}
+\subsection*{Family-relative observer-disagreement separation (incomparable pairs)}
 
-Within Layer~0, events $(0,0)$ and $(1,1)$ are incomparable. Using two observers from Paper~XXIV:
+Within $L_1$, the events $(0,4)$ and $(1,0)$ are incomparable. Take the two observers from Paper~XXIV's Example (same event set, uniform weight $\mu \equiv 1$): $O_1$ uses the linear extension $\leq_A$, $O_2$ uses $\leq_B$ obtained from $\leq_A$ by swapping the incomparable pair $(0,4)$ and $(1,0)$. Form the family $\Ocal = \{O_1, O_2\}$. Then
 \begin{itemize}
-    \item $O_1$: assigns $t_{O_1}(0,0) = 1$, $t_{O_1}(1,1) = 2$. Difference: $-1$.
-    \item $O_2$: assigns $t_{O_2}(0,0) = 10$, $t_{O_2}(1,1) = 6$. Difference: $+4$.
+    \item $O_1$: $t_{O_1}(0,4) = 1$, $t_{O_1}(1,0) = 2$, so $\Delta_1 = t_{O_1}(0,4) - t_{O_1}(1,0) = -1$.
+    \item $O_2$: $t_{O_2}(0,4) = 2$, $t_{O_2}(1,0) = 1$, so $\Delta_2 = t_{O_2}(0,4) - t_{O_2}(1,0) = +1$.
 \end{itemize}
-Mean difference: $(-1 + 4)/2 = 1.5$. Variance: $\sigma = ((−1−1.5)^2 + (4−1.5)^2)/2 = (6.25 + 6.25)/2 = 6.25$.
-
-So $\sigma((0,0),(1,1)) = 6.25 > 0$: the incomparable events are distinguished by observer disagreement.
+Mean $\bar\Delta = 0$, variance $\sigma_{\Ocal}((0,4),(1,0)) = \tfrac{1}{2}\bigl((-1)^2 + (+1)^2\bigr) = 1$. The incomparable pair is separated by the family $\Ocal$ in the sense of Proposition~\ref{prop:dobs}(3); the value itself depends on the family. By contrast, for any comparable $e \in L_1$, $f \in L_2$ and the same $\Ocal$, the individual $\Delta_i$ are all strictly negative, so the sign of $\Delta$ is family-independent (Proposition~\ref{prop:dobs}(2)).
 
 \subsection*{Transition-cost metric (all pairs)}
 
-The Hasse graph is $K_{5,5}$.
+The Hasse graph is $K_{5,5}$, so:
 \begin{itemize}
-    \item Comparable pair (different layers): $d_{\mathrm{trans}} = 1$ (direct edge).
-    \item Incomparable pair (same layer): $d_{\mathrm{trans}} = 2$ (go to any event in the other layer, then back). For example, $(0,0) \to (0,4) \to (1,1)$: path length 2.
+    \item Comparable pair (different layers): $d_{\mathrm{trans}} = 1$ (direct Hasse edge).
+    \item Incomparable pair (same layer): $d_{\mathrm{trans}} = 2$. For example, $(0,4) \to (0,3) \to (1,0)$ is a length-2 path in $K_{5,5}$, via any common neighbour.
 \end{itemize}
 
 \subsection*{Summary}
 
 \begin{table}[ht]
 \centering
-\caption{Separations in the pentagon toy model.}
+\caption{Separations in the first-two-layer pentagon truncation, with $\Ocal = \{O_1, O_2\}$ as above.}
 \label{tab:pentagon}
 \begin{tabular}{@{}llll@{}}
 \toprule
-Pair type & $d_{\mathrm{chain}}$ & $\sigma$ & $d_{\mathrm{trans}}$ \\
+Pair type & $d_{\mathrm{chain}}$ & $\sigma_{\Ocal}$ & $d_{\mathrm{trans}}$ \\
 \midrule
-Same event & 0 & 0 & 0 \\
-Comparable (cross-layer) & 1 & $> 0$ (fixed sign) & 1 \\
-Incomparable (same layer) & undefined & $6.25$ (sign-varying) & 2 \\
+Same event & $0$ & $0$ & $0$ \\
+Comparable ($L_1 \to L_2$) & $1$ & $\Delta_i < 0$ for all $i$ (fixed sign) & $1$ \\
+Incomparable (same layer) & undefined & $1$ (for the incomparable $(0,4),(1,0)$) & $2$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The transition-cost metric gives $d_{\mathrm{trans}} = 1$ for ``timelike'' (comparable) pairs and $d_{\mathrm{trans}} = 2$ for ``spacelike'' (incomparable) pairs. Incomparable events are \textit{farther} in the transition metric than comparable ones --- the sideways cost exceeds the forward cost.
+In this corrected pentagon example, the transition-cost metric gives $d_{\mathrm{trans}} = 1$ for ``timelike'' (comparable) pairs and $d_{\mathrm{trans}} = 2$ for ``spacelike'' (incomparable) pairs. Incomparable events are \textit{farther} in the transition metric than comparable ones --- the sideways cost exceeds the forward cost.
 \end{example}
 
 %==================================================================
@@ -344,12 +355,12 @@ In causal set theory, the longest chain between comparable events approximates L
 \subsection{What is established}
 
 \begin{itemize}
-    \item Cover relation and Hasse graph explicitly defined (Definitions~\ref{def:cover}--\ref{def:hasse}).
-    \item Chain-length separation: well-defined directed temporal separation on comparable pairs (Proposition~\ref{prop:dchain}).
-    \item Observer-sign structure: comparable pairs have observer-independent sign; incomparable pairs have observer-dependent sign (Proposition~\ref{prop:dobs}). Variance $\sigma$ provides a quantitative separation measure but does not satisfy the triangle inequality (explicitly noted).
-    \item Transition-cost metric: a genuine metric on the full event set (Theorem~\ref{thm:metric}).
-    \item Structural bound relating observer time to chain length (Proposition~\ref{prop:bound}).
-    \item All constructions demonstrated on the pentagon toy model.
+    \item Cover relation, saturated chain, and Hasse graph explicitly defined (Definitions~\ref{def:cover}, \ref{def:hasse}, \ref{def:satchain}).
+    \item Cover-step (chain-length) separation $d_{\mathrm{chain}}$: well-defined directed temporal separation on comparable pairs in finite $\Ecal$ (Proposition~\ref{prop:dchain}).
+    \item Family-relative observer-sign structure (Proposition~\ref{prop:dobs}): for comparable pairs, the sign of $\Delta_i$ is family-independent; for incomparable pairs, the sign can be made to vary across a chosen family, yielding $\sigma_{\Ocal} > 0$. The variance $\sigma_{\Ocal}$ depends on the chosen family $\Ocal$ and does not satisfy the triangle inequality.
+    \item Transition-cost metric: a genuine metric on each connected component of the Hasse graph $\Gcal$ (Theorem~\ref{thm:metric}); a metric on the full $\Ecal$ only if $\Gcal$ is connected.
+    \item Structural bound relating observer elapsed time to $d_{\mathrm{chain}}$ (Proposition~\ref{prop:bound}).
+    \item All constructions demonstrated on the first-two-layer truncation of the XXIII/XXIV pentagon toy model.
 \end{itemize}
 
 \subsection{What is not established}
@@ -358,17 +369,17 @@ In causal set theory, the longest chain between comparable events approximates L
     \item No Lorentzian metric. The transition-cost metric is positive-definite, not Lorentzian.
     \item No signed interval. A $ds^2 = dt^2 - dx^2$ decomposition is not derived.
     \item No continuous manifold. All constructions are discrete (graph-based).
-    \item No Einstein equations or curvature. The metric is flat in the toy model.
-    \item The observer-disagreement quantity is not a metric (triangle inequality failure is explicit).
-    \item The Hasse graph connectivity (required for Theorem~\ref{thm:metric}) is assumed, not proved for the full 600-cell event structure.
+    \item No Einstein equations or curvature. No curvature notion is introduced in this paper, even for the toy model.
+    \item The observer-disagreement quantity $\sigma_{\Ocal}$ is family-dependent and not a metric (triangle inequality failure is explicit).
+    \item The Hasse graph connectivity required for a global metric on all of $\Ecal$ (Theorem~\ref{thm:metric}) is verified in the pentagon truncation but is not established for the full 600-cell event structure.
 \end{itemize}
 
 \subsection{Metric failure modes (honest assessment)}
 
 \begin{itemize}
-    \item $d_{\mathrm{chain}}$: only defined for comparable pairs; it is a directed temporal separation, not a metric on full $\Ecal$.
-    \item $\sigma$: fails triangle inequality; not a metric in the formal sense.
-    \item $d_{\mathrm{trans}}$: satisfies all axioms but is positive-definite, losing the timelike/spacelike distinction that Lorentzian geometry requires.
+    \item $d_{\mathrm{chain}}$: only defined for comparable pairs; it is a directed temporal separation built from cover steps, not a metric on full $\Ecal$.
+    \item $\sigma_{\Ocal}$: depends on the chosen observer family $\Ocal$, and fails the triangle inequality; not a metric in the formal sense.
+    \item $d_{\mathrm{trans}}$: satisfies all metric axioms on any connected component of $\Gcal$ but is positive-definite, losing the timelike/spacelike distinction that Lorentzian geometry requires.
 \end{itemize}
 
 A future construction that recovers a signed interval from the interplay of $d_{\mathrm{chain}}$ and $d_{\mathrm{trans}}$ would represent a significant step toward Lorentzian structure. The present paper provides the ingredients.
@@ -377,14 +388,14 @@ A future construction that recovers a signed interval from the interplay of $d_{
 \section{Conclusion}\label{sec:conclusion}
 %==================================================================
 
-The event-order framework of Papers~XXIII--XXIV naturally supports emergent separation structure. Three constructions are developed:
+The event-order framework of Papers~XXIII--XXIV supports emergent separation structure. Three constructions are developed:
 \begin{itemize}
-    \item \textbf{Chain-length separation}: an observer-independent directed temporal separation for comparable events (properties proved).
-    \item \textbf{Observer-disagreement separation}: a nontrivial observer-dependent separation measure for incomparable events, interpreted as a spatial precursor (sign structure proved; not a metric).
-    \item \textbf{Transition-cost metric}: a genuine metric on the full event set from Hasse-graph shortest paths (metric axioms proved, conditional on graph connectivity).
+    \item \textbf{Cover-step (chain-length) separation} $d_{\mathrm{chain}}$: an observer-independent directed temporal separation for comparable events, defined as the minimum number of cover steps along a saturated chain (properties proved).
+    \item \textbf{Family-relative observer-disagreement separation} $\sigma_{\Ocal}$: a nontrivial separation measure for incomparable events relative to a chosen finite observer family, interpreted as a family-relative spatial precursor (sign structure proved; not a metric; depends on the chosen family).
+    \item \textbf{Transition-cost metric} $d_{\mathrm{trans}}$: a metric on each connected component of the Hasse graph, obtained from shortest-path distance (metric axioms proved; global on $\Ecal$ only if $\Gcal$ is connected).
 \end{itemize}
 
-The structural distinction between comparable (chain-based, temporal) and incomparable (sideways, spatial-precursor) separation mirrors the timelike/spacelike distinction of Lorentzian geometry, though a signed interval is not yet derived.
+The structural distinction between comparable (chain-based, temporal) and incomparable (sideways, spatial-precursor) separation provides a discrete structural analogue of the comparable/incomparable split familiar from Lorentzian geometry, though a signed interval is not yet derived.
 
 The event-order framework now carries: temporal ordering (Paper~XXIII), observer-dependent kinematics (Paper~XXIV), and separation geometry (this paper). What remains for the GR programme is the construction of curvature and dynamical equations on this structure.
 

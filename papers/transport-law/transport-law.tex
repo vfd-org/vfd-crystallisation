@@ -1,0 +1,606 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\setlength{\emergencystretch}{3em}
+\sloppy
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\Zphi}{\mathbb{Z}[\varphi]}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Jcal}{\mathcal{J}}
+\newcommand{\Tcal}{\mathcal{T}}
+\newcommand{\Wcal}{\mathcal{W}}
+\newcommand{\twoI}{2\mathbf{I}}
+
+\title{Transport Laws in Closure Dynamics\\[6pt]
+\large Discrete continuity, $U(1)$ current conservation, and the
+photon-sector zero mode on $V_{600}$}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We collect the transport-law content of the VFD closure programme into a single conditional framework, organised around the closure functional $\Fcal[\psi] = \alpha R[\psi] + \beta E[\psi] - \gamma C[\psi]$ (with $C[\psi]$ the quadratic closure term and the symbol $Q$ reserved elsewhere for the total-probability charge) and the $600$-cell spectral substrate of P2~\S 6~\citep{CascadeAlgSubstrate}. The paper is deliberately packaged as a \emph{unifying proposal with explicit hypothesis audit}, not as a closed theorem chain.
+
+The paper contains: (i) a symmetry catalogue for $\Fcal$ with \emph{two} exact symmetries ($U(1)$ phase, $H_4$ isometry) and two approximate ones ($\sigma$-Galois, $\mathrm{SO}(4)$-rotation) explicitly flagged; (ii) a discrete $600$-cell continuity law stated as a \emph{programme target} (Hypothesis~\ref{thm:continuity-discrete}), whose generator-level derivation from the closure Langevin dynamics is flagged as an open item --- Paper~XVIII's continuum continuity is imported, and the discrete analogue is targeted, not proved, here; (iii) one conditional conservation statement --- the $U(1)$ total-probability conservation under that continuity hypothesis (Proposition~\ref{thm:u1}) --- and one $H_4$-equivariance remark recording a conditional block-norm-invariance statement --- valid only under the Schr\"{o}dinger-limit reduction of the Madelung pair \emph{plus} the additional hypothesis that the Schr\"{o}dinger-limit generator $\Hcal$ is itself $H_4$-equivariant (no continuous angular-momentum current is claimed; $H_4$ is a finite Coxeter group without a Lie algebra); (iv) a Schr\"{o}dinger-limit dispersion identification (Hypothesis~\ref{prop:dispersion}) $\omega^2 = c_{\text{eff}}^2 k^2 + m_\rho^2$ with $m_\rho^2 = \beta\lambda_\rho$, $\lambda_\rho$ the Laplacian eigenvalue of P2~\S 6, presented as a heuristic physical identification rather than a theorem; (v) a proposed dictionary between the transport-law objects and the ARIA cognitive substrate (\texttt{aria-chess} repository), stated as a proposal pending repository-backed verification; and (vi) a hypothesised specialisation to photon transport ($\lambda = 0$ massless eigenmode) conditional on the $T_{\text{PH}}$ chain recorded in the internal note~\citep{CascadeAlphaChain}, with the $T_{\text{PH}\,2}$ ``needs polish'' caveat of that note reproduced explicitly in the claim.
+
+Microtubule transport is reframed: the paper explicitly does \emph{not} derive the $13$-fold helical symmetry from $L_{12}$. The claim attached to microtubules is a hypothesis --- that biological microtubules \emph{may be} active-transport substrates of ARIA's class, with $13$ as a selected operating point --- not a theorem.
+
+\vspace{4pt}
+\noindent\textbf{Epistemic status.} Proposal + hypothesis audit, with two new theorems delivered in the Schr\"{o}dinger-limit regime of the closure dynamics on $V_{600}$:
+\begin{itemize}\itemsep=2pt
+\item Theorem~\ref{thm:u1-explicit} (\emph{discrete continuity + $U(1)$ conservation, with explicit current}): for the Schr\"{o}dinger-limit evolution $i\dot\psi = H\psi$ with $H$ any real-symmetric \emph{nearest-neighbour-supported} operator on $\R^{V_{600}}$ (the graph Laplacian $L = D - A$ is the canonical example), the explicit edge current $j_{v\to w} := -2\,\mathrm{Im}(\overline{\psi_v}\,H_{vw}\,\psi_w)$ satisfies the discrete continuity equation pointwise, is antisymmetric, and yields exact $U(1)$ total-probability conservation. This promotes Hypothesis~\ref{thm:continuity-discrete} and Proposition~\ref{thm:u1} from conditional to unconditional in the Schr\"{o}dinger limit on $H = L$.
+\item Theorem~\ref{thm:photon-sector} (\emph{photon-sector spectral witness}): the $\lambda = 0$ eigenspace of $L_{V_{600}}$ is one-dimensional, lies in the trivial $\twoI$-isotypic sector, and verifies the substrate-side zero-mode facts used by the massless ($m = 0$) specialisation of the dispersion ansatz of Hypothesis~\ref{prop:dispersion}; non-trivial eigenmodes oscillate at $\omega = \lambda$ exactly.
+\end{itemize}
+The five remaining open items (gauge-field emergence; $\Gamma$-limit coarse-graining; learned-$W$-as-gauge-potential; ARIA repository-level verification \emph{(reduced scope: the active-regime witness is now the published \texttt{aria-chess} preprint~\citep{SmartARIAChess2026})}; a generator-level derivation of the discrete continuity law from the closure Langevin process \emph{(Schr\"{o}dinger-limit case now closed; Langevin-with-noise case still open)}) are listed in \S\ref{sec:open}. Both new theorems are independently reproducible from canonical numerical scripts in \texttt{papers/transport-law/repro/} (\S\ref{sec:numerical}; wallclock seconds on a laptop, no fitted parameters; the analytic continuity residual is at machine precision, $\sim 3 \times 10^{-16}$).
+\end{abstract}
+
+\noindent\textbf{Status of claims at a glance.}
+
+\begin{center}\small
+\begin{tabular}{@{}p{2.4cm}p{8.2cm}p{3.2cm}@{}}
+\toprule
+Claim type & Content & Status \\
+\midrule
+\textbf{Theorem} & Schr\"{o}dinger-limit explicit current $j_{v\to w} = -2\,\mathrm{Im}(\bar\psi_v H_{vw}\psi_w)$, antisymmetry, pointwise discrete continuity, exact $U(1)$ total-probability conservation (Theorem~\ref{thm:u1-explicit}) & \emph{proved here} \\
+\textbf{Theorem} & $V_{600}$ Laplacian zero-mode is one-dimensional, lies in trivial $\twoI$-isotypic sector, is stationary under $i\dot\psi=L\psi$; non-trivial modes rotate at $\omega = \lambda$ (Theorem~\ref{thm:photon-sector}) & \emph{proved here} \\
+\midrule
+Hypothesis & Discrete continuity law for the full \emph{Langevin-with-noise} closure dynamics (Hypothesis~\ref{thm:continuity-discrete}) & \emph{open} \\
+Hypothesis & Relativistic-form dispersion identification $\omega^2 = c_{\mathrm{eff}}^2 k^2 + m_\rho^2$ with $m_\rho^2 = \beta\lambda_\rho$ (Hypothesis~\ref{prop:dispersion}) & \emph{heuristic identification} \\
+Hypothesis & Identification of $\lambda = 0$ eigenmode with the physical $U(1)_{\mathrm{EM}}$ photon sector (Hypothesis~\ref{cor:photon}) & \emph{conditional on $T_{\mathrm{PH}}$} \\
+\midrule
+Programme target & ARIA \texttt{couple\_tick} verification of Fick / Nernst-Planck / cascade-pressure-balance objectives (\S\ref{sec:aria}) & \emph{not done here} \\
+Programme target & Microtubule active-substrate biophysics (Hypothesis~\ref{hyp:mt}) & \emph{future biophysics} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\tableofcontents
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+\subsection{The programme gap this paper closes}
+
+The VFD crystallisation programme derives static spectral observables --- particle masses (Paper~V), charge radii (Paper~XXXII), the fine-structure constant as a structural correspondence (Paper~XXXIV) --- and event-order kinematics on the GR side (Papers~XXIII--XXVII). External reviewers have flagged that no single paper catalogues the \emph{dynamical} content of the framework. The present paper's \emph{delivered} content is narrower than that full programme: we close the probability-current layer in the Schr\"{o}dinger limit (Theorem~\ref{thm:u1-explicit}, with the discrete continuity equation, antisymmetric current, and $U(1)$ conservation all unconditional for $H = L$), leave the Langevin-with-noise derivation conditional, and record analogies / hypotheses / proposals for the remaining transport content (energy flow, linear-momentum flow, cascade-pressure flow). Dynamical charge flow, energy flow, linear-momentum flow, and cascade-pressure flow are discussed only under explicit hypothesis load, and the paper is explicit about where each hypothesis fails to close. Transport structure exists in fragmentary form across
+\begin{itemize}
+    \item Paper~XII (gradient flow $\dot\psi = -\nabla\Fcal$),
+    \item Paper~XVI (WKB transport; characteristic flow along $\nabla\Fcal$),
+    \item Paper~XVIII (Nelson pairing; exact continuity equation; Madelung pair),
+    \item Paper~XIX (nonlinear closure residual),
+    \item Paper~XXVII (discrete conservation $\sum_v (S_v - \bar S) = 0$),
+    \item Paper~XXX (stationary measure).
+\end{itemize}
+This paper collects those ingredients into a hypothesis-audited framework. It closes the conditional probability-current layer; beyond that, it catalogues the two exact symmetries of $\Fcal[\psi]$, records a heuristic dispersion identification from the P2 Laplacian spectrum, and proposes ARIA as a candidate implementation-level testbed with hypothesised photon and microtubule specialisations. It does \emph{not} deliver dynamical energy, linear-momentum, or gauge currents; those remain open items (\S\ref{sec:open}).
+
+\subsection{Structure}
+
+\S\ref{sec:functional} states $\Fcal[\psi]$ explicitly and enumerates its two exact symmetries, with non-symmetries explicitly excluded.
+\S\ref{sec:continuity} records the targeted discrete continuity law on $V_{600}$ as a programme hypothesis (not proved here), with Paper~XVIII's continuum continuity as the imported motivation.
+\S\ref{sec:noether} explains why Noether's theorem does not apply to the dissipative closure dynamics in the strict variational sense, records the one conditional conservation statement (Proposition~\ref{thm:u1}) and the $H_4$-equivariance remark (Remark~\ref{rem:h4}), and lists currents that are explicitly \emph{not} claimed (energy, linear momentum, continuous angular momentum).
+\S\ref{sec:dispersion} presents a heuristic Schr\"{o}dinger-limit dispersion identification (Hypothesis~\ref{prop:dispersion}) derived from the P2~\S 6 Laplacian spectrum, flagged as heuristic, not a theorem.
+\S\ref{sec:aria} proposes a dictionary (Remark~\ref{prop:aria-dict}) between transport-law objects and the ARIA cognitive substrate, pending repository-backed verification.
+\S\ref{sec:photon} states a photon-identification hypothesis (Hypothesis~\ref{cor:photon}) conditional on the $T_{\text{PH}}$ chain of~\citep{CascadeAlphaChain}.
+\S\ref{sec:microtubule} reframes microtubule transport as an ARIA-class hypothesis, explicitly \emph{not} a first-principles derivation of the $13$-fold symmetry.
+\S\ref{sec:consistency} cross-checks against Papers~XII--XXXIV under their own stated scopes.
+\S\ref{sec:open} lists the five open items.
+\S\ref{sec:numerical} reports the delivered numerical witnesses (\texttt{verify\_u1\_conservation.py} and \texttt{verify\_photon\_dispersion.py}, machine-precision pass).
+\S\ref{sec:conclusion} summarises.
+
+\subsection{Notation and conventions}
+
+$V_{600}$ is the 600-cell vertex set (120 unit icosians, P2~\S 6).
+$\mathbf{A}_k$ is the Euclidean shell-$k$ adjacency matrix.
+$L = 12I - \mathbf{A}_1$ is the combinatorial Laplacian.
+$\rho: V_{600} \times \R_{\geq 0} \to \R_{\geq 0}$ denotes a density (conservation is \emph{conditional} on Hypothesis~\ref{thm:continuity-discrete} plus current antisymmetry; see Proposition~\ref{thm:u1}).
+$j_{v \to w}: \R_{\geq 0} \to \R$ is the candidate flux along the oriented edge $(v, w)$.
+$\Fcal: \C^{V_{600}} \to \R$ is the closure functional of Papers~XII, XVIII, and XXII (realised on the $V_{600} \to \C$ finite-graph fields used throughout this paper).
+$W$ is the learned coupling-weight tensor of ARIA.
+
+%==================================================================
+\section{The closure functional and its symmetries}\label{sec:functional}
+%==================================================================
+
+\begin{definition}[Closure functional]\label{def:F}
+Following the setup of Papers~XII and XXII, the closure functional on a square-integrable complex-valued field $\psi: V_{600} \to \C$ is
+\begin{equation}\label{eq:F}
+    \Fcal[\psi] \;=\; \alpha R[\psi] \;+\; \beta E[\psi] \;-\; \gamma C[\psi],
+\end{equation}
+where
+\begin{align}
+    R[\psi] &= \tfrac{1}{2} \sum_{v \in V_{600}} |\psi_v|^2 \log |\psi_v|^2, &&\text{(residual / entropy term; $0 \log 0 := 0$)}\\
+    E[\psi] &= \tfrac{1}{2} \sum_{v \sim w} |\psi_v - \psi_w|^2, &&\text{(edge-disagreement / kinetic term)}\\
+    C[\psi] &= \tfrac{1}{2} \bigl(\psi, L_C \psi\bigr)_{\text{Herm}}, &&\text{(quadratic closure term; Hermitian inner product)}
+\end{align}
+with coefficients $\alpha, \beta, \gamma \in \R$. We require $L_C$ to be a real self-adjoint operator on $\C^{V_{600}}$ lying in the real polynomial algebra generated by the shell-adjacency matrices $\{\mathbf A_1, \ldots, \mathbf A_8\}$ of P2~\S 6~\citep{CascadeAlgSubstrate}; this places $L_C$ in the commutant of the $H_4$-action and ensures $\Fcal[\psi] \in \R$. Below we reserve the symbol $Q$ for the total probability $\sum_v |\psi_v|^2$ (Proposition~\ref{thm:u1}); the third functional term is denoted $C[\psi]$ throughout to avoid collision.
+\end{definition}
+
+\begin{remark}
+Definition~\ref{def:F} adopts an entropy--kinetic--quadratic decomposition inspired by the closure-functional language used across Papers~XII, XVIII, and XXII~\citep{SmartXII, SmartXVIII, SmartXXII}. The specific three-term form $\alpha R + \beta E - \gamma C$ is our working notation for the purposes of this paper; it is not a direct quotation of any single Proposition in those papers. The coefficients $\alpha, \beta, \gamma$ are left unspecified here; no local source in this paper fixes them.
+
+\noindent\emph{Status of $\Fcal$ in the present paper.} In this paper, $\Fcal$ functions as a \emph{modelling functional} organising the transport hypotheses (the symmetry catalogue of Proposition~\ref{prop:symmetries}, the continuity law of Hypothesis~\ref{thm:continuity-discrete}, and the dispersion identification of Hypothesis~\ref{prop:dispersion}). It is not derived here from a more fundamental action principle, and the coefficient calibration is not supplied. Theorems~\ref{thm:u1-explicit} and~\ref{thm:photon-sector} below do not depend on the $\Fcal$ coefficients: they are stated directly for the Schr\"{o}dinger-limit operator $i\dot\psi = H\psi$ with $H$ in the shell-adjacency commutant.
+\end{remark}
+
+\begin{proposition}[Two exact symmetries of $\Fcal$]\label{prop:symmetries}
+The closure functional~\eqref{eq:F} is invariant under the following two symmetry actions:
+\begin{enumerate}
+    \item[\textup{(S1)}] The continuous global $U(1)$ phase action: $\psi \mapsto e^{i\theta} \psi$, $\theta \in [0, 2\pi)$.
+    \item[\textup{(S2)}] The finite $H_4$ Coxeter action: for each $g$ in the (finite) Coxeter group $H_4$, $\psi_v \mapsto \psi_{g^{-1} v}$.
+\end{enumerate}
+(S1) is a one-parameter Lie-group action; (S2) is a finite-group action with no Lie algebra --- in particular, no continuous rotation generators --- and therefore does not yield an infinitesimal Noether current in the classical sense. Any $H_4$ consequence used below is conditional, and amounts at most to the preservation of isotypic subspaces of $\C^{V_{600}}$ under commuting operators (and, under unitary evolution such as the Schr\"{o}dinger-limit reduction of Paper~XVIII, preservation of the norms of their projections); see Remark~\ref{rem:h4}.
+\end{proposition}
+
+\begin{proof}
+Use the standard Hermitian inner product $(\phi, \psi) = \sum_{v \in V_{600}} \overline{\phi_v}\,\psi_v$ on $\C^{V_{600}}$.
+
+\emph{(S1).} $R[\psi]$ depends on $\psi$ only through $|\psi|$, hence is phase-invariant. $E[\psi]$ is invariant because $|e^{i\theta}\psi_v - e^{i\theta}\psi_w| = |\psi_v - \psi_w|$. $C[\psi] = \tfrac{1}{2}(\psi, L_C\psi)$ is invariant because $(e^{i\theta}\psi, L_C e^{i\theta}\psi) = e^{-i\theta} e^{i\theta}(\psi, L_C\psi) = (\psi, L_C\psi)$, using that $L_C$ is $\C$-linear and the Hermitian pairing absorbs the global phase.
+
+\emph{(S2).} $R[\psi]$ and $E[\psi]$ are sums over vertex-labels and edge-labels permuted by the $H_4$-action, hence invariant. For $C[\psi]$, write $U_g$ for the unitary induced on $\C^{V_{600}}$ by $v \mapsto g^{-1}v$ (P2~\S 6~\citep{CascadeAlgSubstrate}): since $L_C$ lies in the real polynomial algebra generated by the shell-adjacency matrices (Definition~\ref{def:F}), and each $\mathbf A_k$ commutes with $U_g$ by the class-sum-centrality corollary of P2~\S 6, $U_g^\dagger L_C U_g = L_C$. Therefore $C[U_g \psi] = \tfrac{1}{2}(U_g\psi, L_C U_g\psi) = \tfrac{1}{2}(\psi, U_g^\dagger L_C U_g \psi) = C[\psi]$.
+\end{proof}
+
+\begin{remark}[Non-symmetries explicitly excluded]\label{rem:non-symmetries}
+For completeness we record transformations that might appear to be symmetries but are not used here:
+\begin{itemize}
+    \item \emph{Time translation.} The closure gradient flow $\dot\psi = -\nabla\Fcal$ is autonomous, but gradient flow \emph{dissipates} $\Fcal$. Energy-in-the-functional-sense is therefore not conserved under the closure gradient flow. In the Schr\"{o}dinger limit of the Madelung pair of Paper~XVIII~\citep{SmartXVIII}, the usual QM statement applies \emph{provided $\Hcal$ is time-independent and self-adjoint} (as assumed in Hypothesis~\ref{prop:dispersion}): the expectation $\langle \Hcal \rangle_\psi$ is then conserved under the $i\dot\psi = \Hcal\psi$ evolution. That expectation is a function of $\Hcal$, not of $\Fcal$ itself.
+    \item \emph{Binary-icosahedral left-regular action.} The $2I$ left-regular action is (S2) restated in group-algebra language; it is not independent.
+    \item \emph{Closure-scaling $\psi \mapsto \lambda \psi$.} Changes $E$ by $|\lambda|^2$, $Q$ by $|\lambda|^2$, and $R$ by a mixed multiplicative/additive term; not a symmetry of $\Fcal$. Restricted to a fixed $L^2$-sphere it becomes a gauge, which we do not use.
+    \item \emph{$\sigma$-Galois involution and $\mathrm{SO}(4)$ rotation.} Approximate symmetries of $V_{600}$ (no quantitative residual bound is claimed here). If these enter the discrete continuity of \S\ref{sec:continuity} as source terms, they would contribute alongside the nonlinear closure residual of Paper~XIX~\citep{SmartXIX}; a precise identification with a specific bound from Paper~XIX is not established here.
+\end{itemize}
+Only (S1) and (S2) are used downstream. This paper therefore enumerates two exact symmetries, not the larger count that would be needed for a four-current Noether catalogue; see the current discussion in \S\ref{sec:noether}.
+\end{remark}
+
+%==================================================================
+\section{The master continuity equation}\label{sec:continuity}
+%==================================================================
+
+\subsection{Discrete continuity on $V_{600}$}
+
+Let $\rho_v(t) := |\psi_v(t)|^2$ be the density at vertex $v \in V_{600}$.
+
+\begin{hypothesis}[Programme target: discrete continuity analogue of Paper~XVIII]\label{thm:continuity-discrete}
+Paper~XVIII~\citep{SmartXVIII} establishes the exact continuum continuity equation $\partial_t \rho + \nabla\cdot(\rho v) = 0$ in configuration space under the Nelson-paired closure dynamics, with current velocity $v = -\nabla\Fcal - (\sigma^2/2)\nabla\log\rho$. The discrete-substrate analogue --- a vertex-wise continuity
+\begin{equation}\label{eq:continuity}
+    \partial_t \rho_v \;+\; \sum_{w \sim v} j_{v \to w} \;=\; 0
+    \qquad (v \in V_{600})
+\end{equation}
+for $\rho_v(t) := |\psi_v(t)|^2$, with an edge current $j_{v \to w}$ yet to be specified --- is stated as a \emph{programme target} of the present paper. The paper does not establish it; it records the target as the discrete shape that the Paper~XVIII continuum continuity should take on $V_{600}$, and uses it downstream under that hypothesis. A precise discrete-master-equation derivation, correctly tracking the distinction between configuration-space and vertex-wise densities, is deferred to future work and is listed as open item~(5) of \S\ref{sec:open}.
+\end{hypothesis}
+
+\subsection{Continuum limit (conjectural)}
+
+\begin{hypothesis}[Conjectural long-wavelength continuum limit]\label{prop:continuum}
+Let $\rho(x, t)$ and $j(x, t)$ denote continuum fields obtained from $\rho_v$, $j_{v \to w}$ by a graph-to-continuum coarse-graining of P7-type (cascade-hydrodynamic-projection~\citep{CascadeHydro}). We conjecture that in the long-wavelength limit,
+\begin{equation}
+    \partial_t \rho + \nabla \cdot j = \sigma_{\text{source}},
+\end{equation}
+with $\sigma_{\text{source}}$ a residual source from the approximate symmetries of Remark~\ref{rem:non-symmetries}. The precise $\Gamma$-convergence statement, including the identification of the source term, is open item~(2) of \S\ref{sec:open}; the present paper does not establish it. We use the symbol $\sigma_{\text{source}}$ for the source term to avoid collision with the diffusion coefficient $\sigma$ used elsewhere in the closure Langevin picture.
+\end{hypothesis}
+
+%==================================================================
+\section{Symmetry-associated conservation statements (Noether caveats)}\label{sec:noether}
+%==================================================================
+
+\subsection{Noether caveat}\label{sec:noether-caveat}
+
+Noether's theorem in its strict form requires a variational action principle: the dynamics must be derivable from $\delta S = 0$ for some action functional $S$ whose invariance under a one-parameter group yields a conserved current. The closure dynamics considered here is \emph{dissipative} gradient flow plus Nelson pairing~\citep{SmartXII, SmartXVIII}, not variational in that strict sense; Paper~XVIII's Madelung reformulation rewrites the resulting dynamics as a coupled continuity / modified-Hamilton--Jacobi pair, but the pair arises from the Fokker--Planck operator, not from a first-principles action.
+
+We therefore do \emph{not} derive Noether currents in the classical variational sense. We record two symmetry-associated current candidates aligned with the two exact symmetries of Proposition~\ref{prop:symmetries}. The $U(1)$ candidate is conserved \emph{only} under Hypothesis~\ref{thm:continuity-discrete} plus current antisymmetry (Proposition~\ref{thm:u1}); the $H_4$ statement reduces in the Schr\"{o}dinger limit to conditional block-norm invariance (Remark~\ref{rem:h4}). Neither is a Noether current derived from a closed variational principle; that derivation is deferred.
+
+\begin{proposition}[Total-probability conservation under Hypothesis~\ref{thm:continuity-discrete}]\label{thm:u1}
+Suppose Hypothesis~\ref{thm:continuity-discrete} holds and the discrete edge current $j_{v \to w}$ satisfies the natural antisymmetry $j_{w \to v} = -j_{v \to w}$. Then the total probability $Q(t) := \sum_{v \in V_{600}} |\psi_v(t)|^2$ is conserved along any evolution satisfying Hypothesis~\ref{thm:continuity-discrete}.
+\end{proposition}
+
+\begin{proof}
+Sum Equation~\eqref{eq:continuity} over $v$; each edge $(v, w)$ contributes $j_{v \to w} + j_{w \to v} = 0$ by the stated antisymmetry.
+\end{proof}
+
+\begin{remark}
+The antisymmetry hypothesis $j_{w \to v} = -j_{v \to w}$ is natural if the transport is driven by a difference of scalar quantities (as in Fick's law or Fokker--Planck), and fails if the current has a non-antisymmetric drift component. Establishing the antisymmetry directly from the closure Langevin generator is part of the programme target of Hypothesis~\ref{thm:continuity-discrete}.
+\end{remark}
+
+\begin{theorem}[Discrete continuity + $U(1)$ conservation in the Schr\"{o}dinger limit, with explicit current]\label{thm:u1-explicit}
+On the Schr\"{o}dinger limit $i\dot\psi = H\psi$ of the Madelung pair (Paper~XVIII~\citep{SmartXVIII}), where $H$ is the $V_{600}$ graph Laplacian (or any real-symmetric \emph{nearest-neighbour-supported} operator on $\R^{V_{600}}$, i.e.\ $H_{vw} \neq 0 \Rightarrow v \sim w$ or $v = w$), define the explicit edge current
+\begin{equation}\label{eq:current-explicit}
+   j_{v \to w} \;:=\; -2\,\mathrm{Im}\bigl(\overline{\psi_v}\, H_{vw}\, \psi_w\bigr)
+   \qquad\text{for each oriented adjacent pair }(v, w).
+\end{equation}
+Then:
+\begin{enumerate}
+\item The current is antisymmetric: $j_{w \to v} = -j_{v \to w}$ (algebraic consequence of $H_{wv} = H_{vw} \in \R$).
+\item The pointwise discrete continuity equation
+$\;\;\dot\rho_v + \sum_{w \sim v} j_{v \to w} \;=\; 0\;\;$
+holds at every $v \in V_{600}$ and every $t$, as an algebraic identity following from $\dot\rho_v = +2\,\mathrm{Im}(\overline{\psi_v}(H\psi)_v)$.
+\item Hence Hypothesis~\ref{thm:continuity-discrete} is realised \emph{exactly} (not approximately) by the explicit current~\eqref{eq:current-explicit}, and Proposition~\ref{thm:u1} promotes from conditional to unconditional in the Schr\"{o}dinger limit on $H = L$: $Q(t) = \sum_v|\psi_v(t)|^2$ is conserved exactly.
+\end{enumerate}
+
+\noindent\emph{Restriction to nearest-neighbour-supported $H$ is essential}: the continuity sum is over $w \sim v$ only, so a $H$ with non-nearest-neighbour matrix entries (e.g.\ a polynomial $\mathbf{A}_2 = $ shell-2 adjacency, which is in the shell-adjacency commutant but not nearest-neighbour) requires extending the current to all pairs with $H_{vw} \neq 0$ and the corresponding extended-graph continuity sum. The graph Laplacian $L = D - A$ on $V_{600}$ is nearest-neighbour-supported by construction.
+\end{theorem}
+
+\begin{proof}
+For $H$ real symmetric, $j_{v \to w} = -2\,\mathrm{Im}(\overline{\psi_v}\,H_{vw}\,\psi_w)$ and $j_{w \to v} = -2\,\mathrm{Im}(\overline{\psi_w}\,H_{wv}\,\psi_v) = -2\,\mathrm{Im}\bigl(\overline{(\overline{\psi_v}\,H_{vw}\,\psi_w)}\bigr) = +2\,\mathrm{Im}(\overline{\psi_v}\,H_{vw}\,\psi_w) = -j_{v \to w}$, giving (1). For (2): $i\dot\psi = H\psi \Rightarrow \dot\psi = -iH\psi$, so $\dot\rho_v = \partial_t|\psi_v|^2 = 2\,\mathrm{Re}(\overline{\psi_v}\dot\psi_v) = 2\,\mathrm{Re}(-i\,\overline{\psi_v}(H\psi)_v) = +2\,\mathrm{Im}(\overline{\psi_v}(H\psi)_v)$. The expansion of $(H\psi)_v = \sum_w H_{vw}\psi_w = H_{vv}\psi_v + \sum_{w\,:\,w\neq v,\, H_{vw}\neq 0} H_{vw}\psi_w$ contributes a diagonal piece $\overline{\psi_v} H_{vv} \psi_v = H_{vv}|\psi_v|^2 \in \R$ which has zero imaginary part and so drops out; the remaining off-diagonal sum (restricted to nearest neighbours $w \sim v$ by the nearest-neighbour-support hypothesis on $H$) gives $\dot\rho_v = \sum_{w \sim v} 2\,\mathrm{Im}(\overline{\psi_v}\,H_{vw}\,\psi_w) = -\sum_{w \sim v} j_{v \to w}$. (3) follows from (1)+(2) and Proposition~\ref{thm:u1}.
+
+An independent numerical witness --- evolution under $U = e^{-iLt}$ for $200$ steps on a normalised random complex initial state, with the analytic continuity residual measured at machine precision --- is performed by \texttt{repro/verify\_u1\_conservation.py}; see Table in \S\ref{sec:numerical}. Result: $Q$-drift $\sim 3 \times 10^{-15}$, pointwise continuity residual $\sim 3 \times 10^{-16}$, current antisymmetry exactly $0$.
+\end{proof}
+
+\begin{remark}[What Theorem~\ref{thm:u1-explicit} closes and what it does not]\label{rem:u1-status}
+Theorem~\ref{thm:u1-explicit} closes the discrete continuity hypothesis (Hypothesis~\ref{thm:continuity-discrete}) and Proposition~\ref{thm:u1} \emph{in the Schr\"{o}dinger limit} of Paper~XVIII --- which is precisely the regime in which the dispersion identification of Hypothesis~\ref{prop:dispersion} also lives. It does \emph{not} close the same statements for the full \emph{dissipative} closure dynamics $\dot\psi = -\nabla\Fcal + \text{noise}$: gradient-flow $\Fcal$-descent does not in general preserve $Q = \|\psi\|^2$ (see Remark~\ref{rem:no-energy-momentum}), so the discrete continuity equation in that regime requires either a different current or a different conservation law (e.g.\ a $\Fcal$-monotone law). The Schr\"{o}dinger-limit case is the closure-dynamics regime in which the conditional probability-current layer of this paper is honestly closed.
+\end{remark}
+
+
+\begin{remark}[$H_4$-equivariance: what it actually gives, and what it does not]\label{rem:h4}
+$H_4$ is a finite Coxeter group, not a Lie group, so it has no Lie algebra and no infinitesimal generators: the familiar "angular momentum current" from a continuous rotation group does not apply directly to (S2). What (S2) gives, algebraically, is a unitary representation $\widehat g$ on $\C^{V_{600}}$ induced by the permutation $v \mapsto g^{-1} v$ (P2~\S 6~\citep{CascadeAlgSubstrate}), and the fact that the shell-adjacency operators $\mathbf{A}_k$ lie in the commutant of this representation. The commutant property has two concrete consequences:
+\begin{enumerate}
+    \item Every polynomial in the shell-adjacency operators preserves the $2I$-isotypic subspaces of $\C^{V_{600}}$. This is a statement about \emph{subspaces}, not about individual projected vectors: a vector inside an isotypic subspace stays inside that subspace under any shell-adjacency-algebra time evolution, but its direction within the subspace is not constrained.
+    \item \emph{Conditional on} (a) the Schr\"{o}dinger-limit reduction $i\dot\psi = \Hcal\psi$ of the Madelung pair of Paper~XVIII~\citep{SmartXVIII}, \emph{and} (b) the additional hypothesis that $\Hcal$ is itself built from the shell-adjacency algebra (so that it lies in the commutant of the $H_4$-action), the unitary evolution $e^{-i\Hcal t}$ preserves the norm of each isotypic projection $\|P_\rho \psi\|$. \emph{Neither} condition is established here: (a) is the Schr\"{o}dinger-limit hypothesis already carried by Hypothesis~\ref{prop:dispersion}, and (b) requires the linearised variation of $\Fcal$ around a closure equilibrium to respect the $H_4$-symmetry, which in turn requires the equilibrium itself to respect $H_4$. Without (b) the linearisation in general mixes isotypic components.
+\end{enumerate}
+A continuous angular-momentum current would emerge only in the continuum $\mathrm{SO}(4)$-limit after the $\Gamma$-convergence of open item~(2) of \S\ref{sec:open}; we do not attempt that limit here. Under the full (dissipative) closure dynamics, even the conditional block-norm preservation of item~2 is at best approximate; a precise bound on the drift would require combining Paper~XII's gradient-flow dissipation~\citep{SmartXII} with the nonlinear residual of~\citep{SmartXIX}, which is not attempted here.
+\end{remark}
+
+\begin{remark}[On "energy" and "linear momentum"]\label{rem:no-energy-momentum}
+Two currents that might be expected here but are not present:
+\begin{itemize}
+    \item \emph{Energy.} Gradient flow dissipates $\Fcal$; energy in the functional sense is therefore not conserved. The standard QM conservation statement under Schr\"{o}dinger evolution --- that $\langle \Hcal\rangle$ is conserved under $i\dot\psi = \Hcal\psi$ for time-independent self-adjoint $\Hcal$ --- applies to the linearised Hamiltonian $\Hcal$, which is not $\Fcal$.
+    \item \emph{Linear momentum.} $V_{600}$ is finite and bounded; there is no $\R^4$-translation symmetry to give linear momentum.
+    \item \emph{Continuous angular momentum.} $H_4$ is a finite Coxeter group; it has no continuous rotation generators. A continuous angular-momentum current would emerge only after the $\Gamma$-limit to the continuum $\mathrm{SO}(4)$-invariant theory (open item~(2) of \S\ref{sec:open}).
+\end{itemize}
+None of these is claimed in this paper.
+\end{remark}
+
+\begin{remark}[Charge current: conditional-only, and SU(5) assignment disclaimer]\label{rem:su5}
+Conditional on Hypothesis~\ref{thm:continuity-discrete} (the discrete continuity law) and on the antisymmetry $j_{w \to v} = -j_{v \to w}$ of the associated current, the $U(1)$-phase-rotation charge $Q = \sum_v |\psi_v|^2$ is conserved on $V_{600}$ (Proposition~\ref{thm:u1}). For the Schr\"{o}dinger-limit case $H = L$ this is now \emph{unconditional} via Theorem~\ref{thm:u1-explicit} (which delivers both the continuity equation and the antisymmetric current explicitly); the Hypothesis~\ref{thm:continuity-discrete} / antisymmetry conditioning still applies to the full \emph{Langevin-with-noise} closure dynamics, where the question is part of open programme item~(5) of \S\ref{sec:open}. We do \emph{not} claim in this paper that Paper~XXII~\citep{SmartXXII} contains a theorem-level derivation of the fractional SU(5) charge assignments; local verification against \texttt{paper-xxii.tex} does not surface such a derivation, and \texttt{docs/gaps.md} records the fractional quark charges as an open gap. A first-principles identification of SM representation labels with $2I$-isotypic sectors of P2~\S 6 is not attempted here.
+\end{remark}
+
+%==================================================================
+\section{Dispersion on the 600-cell}\label{sec:dispersion}
+%==================================================================
+
+\begin{hypothesis}[Heuristic Schr\"{o}dinger-limit dispersion identification]\label{prop:dispersion}
+Assume $\beta > 0$ (so that the edge-disagreement term in $\Fcal$ is a positive kinetic cost) and that, in the Schr\"{o}dinger limit of the Madelung pair of Paper~XVIII~\citep{SmartXVIII}, the closure dynamics reduces to $i\dot\psi = \Hcal\psi$ for some \emph{time-independent self-adjoint} operator $\Hcal$ built from the shell-adjacency algebra of P2~\S 6~\citep{CascadeAlgSubstrate}. Both conditions are additional hypotheses here: $\Hcal$ time-independence is needed for the conservation-of-expectation language used in \S\ref{sec:noether-caveat}; the shell-adjacency form of $\Hcal$ is \emph{not} imported from Paper~XVIII. Under these hypotheses we \emph{adopt the formal ansatz} that the long-wavelength dispersion of each isotypic block $\rho$ is
+\begin{equation}\label{eq:dispersion}
+    \omega^2 \;=\; c_{\text{eff}}^2 \, k^2 \;+\; m_\rho^2,
+\end{equation}
+where $m_\rho^2 := \beta\,\lambda_\rho$, $\lambda_\rho$ is the Laplacian eigenvalue on block $\rho$, $c_{\text{eff}}^2 = \beta a^2$, and $a$ is the $600$-cell edge length. The P2 spectrum
+\[
+    \lambda_\rho \;\in\; \{0,\,9-3\sqrt 5,\,10-2\sqrt 5,\,9,\,12,\,14,\,10+2\sqrt 5,\,15,\,9+3\sqrt 5\}
+\]
+is used as the eigenvalue data~\citep{CascadeAlgSubstrate}. \textbf{This is a heuristic physical identification, not a theorem:} (i) the reduction $\dot\psi = -\nabla\Fcal + \text{noise} \Rightarrow i\dot\psi = \Hcal\psi$ is not derived here (inherited from Paper~XVIII's Madelung pair conditional on its hypotheses); (ii) the notion of a long-wavelength wavenumber $k$ on the finite graph $V_{600}$ is itself a coarse-graining construct tied to the continuum $\Gamma$-limit (open item~(2) of \S\ref{sec:open}); (iii) the unit convention $m_\rho^2 = \beta\lambda_\rho$ with $\beta a^2 = c^2$ is an external calibration chosen to match the relativistic-dispersion form, not derived. Each of these three items is a hypothesis in its own right.
+\end{hypothesis}
+
+\begin{remark}[Spectral sectors under the heuristic identification]\label{rem:sectors}
+If Hypothesis~\ref{prop:dispersion} is adopted, the nine Laplacian eigenvalues of P2~\S 6 split into five $\Q$-rational values $\{0, 9, 12, 14, 15\}$ and four irrational values $\{9\pm 3\sqrt 5,\,10\pm 2\sqrt 5\}$. The $\lambda = 0$ eigenmode (trivial isotypic component) corresponds to $m^2 = 0$ and, if it is physical, to the massless photon sector discussed in \S\ref{sec:photon} under the additional photon-identification hypothesis. The four nontrivial rational sectors give four rational-irrep mass-squared values which reuse the same four rational eigenvalues singled out arithmetically in Paper~V~\citep{SmartV}; note that Paper~V uses $\{9, 12, 14, 15\}$ as ingredients in a particle-mass numerical correspondence and does \emph{not} itself establish a dispersion-based mass-squared sector identification. The four irrational sectors are additional spectral content not used by Paper~V's 13-particle table.
+\end{remark}
+
+\begin{theorem}[Photon-sector spectral witness on $V_{600}$]\label{thm:photon-sector}
+On the $600$-cell graph Laplacian $L$ with spectrum (multiplicities)
+$\{0:1,\;9-3\sqrt5:4,\;10-2\sqrt5:9,\;9:16,\;12:25,\;14:36,\;10+2\sqrt5:9,\;15:16,\;9+3\sqrt5:4\}$:
+\begin{enumerate}
+\item The $\lambda = 0$ eigenspace is one-dimensional, spanned by the uniform vector $u_0 \propto (1,\ldots,1)$.
+\item The trivial-sector projector $P_0 = u_0\,u_0^{\!\top}$ satisfies $L\,P_0 = 0$ exactly (algebraic; numerical witness $\|L\,P_0\|_F \lesssim 10^{-13}$).
+\item Under the Schr\"{o}dinger-limit evolution $i\dot\psi = L\psi$, an initial state $\psi_0 \in \mathrm{range}(P_0)$ is exactly stationary: $\psi(t) = \psi_0$ for all $t$ (zero-frequency mode).
+\item For any non-trivial eigenmode $u_\lambda$ with eigenvalue $\lambda > 0$, the evolution is $\psi(t) = e^{-i\lambda t} u_\lambda$, i.e.\ the per-mode angular phase rotates at rate $\lambda$ (equivalently, the per-mode angular frequency in the Schr\"{o}dinger-limit sense is $\omega = \lambda$).
+\end{enumerate}
+
+\emph{The connection to the dispersion ansatz $\omega^2 = c_{\rm eff}^2 k^2 + m_\rho^2$ of Hypothesis~\ref{prop:dispersion} is not delivered here}: that ansatz invokes a long-wavelength wavenumber $k$ (a coarse-graining construct tied to the open $\Gamma$-limit, item~(2) of \S\ref{sec:open}) and a unit-conversion calibration $m_\rho^2 = \beta\lambda_\rho$ (the heuristic identification of Hypothesis~\ref{prop:dispersion}, also conditional). Theorem~\ref{thm:photon-sector} verifies the substrate-level facts about the trivial / non-trivial spectral sectors of $L$; the gauge-side photon identification (the $T_{\rm PH\,2}$ chain of \citep{CascadeAlphaChain}, marked ``needs polish'') and the dispersion identification remain hypotheses. The trivial-sector stationarity is the substrate-side content of the massless ($m = 0$) physical interpretation, not a derivation of it.
+\end{theorem}
+
+\begin{proof}[Proof]
+(1)+(2) follow from the standard fact that the Laplacian of a connected regular graph has a one-dimensional kernel spanned by the constant vector. (3)+(4) follow from the spectral theorem applied to $L$. The Schr\"{o}dinger evolution on each eigenspace is $u_\lambda(t) = e^{-i\lambda t} u_\lambda(0)$; for $\lambda = 0$ this reduces to $u_0(t) = u_0(0)$.
+
+A complete numerical verification --- spectrum check, projector annihilation $\|L P_0\|_F < 10^{-13}$, trivial-sector stationarity to machine precision, non-trivial frequency match to $\sim 10^{-15}$ --- is performed by \texttt{repro/verify\_photon\_dispersion.py}; see Table in \S\ref{sec:numerical}.
+\end{proof}
+
+\begin{remark}[Theorem~\ref{thm:photon-sector} as the substrate-side photon witness]\label{rem:photon-sector-status}
+Theorem~\ref{thm:photon-sector} verifies the substrate-level content of the photon-identification hypothesis (Hypothesis~\ref{cor:photon}): the $\lambda = 0$ massless mode exists, is one-dimensional, lies in the trivial $\twoI$-isotypic sector, and is preserved exactly under the Schr\"{o}dinger-limit evolution. It does \emph{not} close Hypothesis~\ref{cor:photon}: the $T_{\text{PH}\,2}$ descent claim of~\citep{CascadeAlphaChain} (the gauge-side identification of the trivial mode with the diagonal $U(1)_{\text{EM}}$) remains marked ``needs polish'' in the source note, and the local-gauge-current reinterpretation is not delivered here.
+\end{remark}
+
+\begin{remark}[Unit conventions]\label{rem:units}
+The transport law is stated with $\hbar = 1$. Laplacian eigenvalues $\lambda_\rho$ are dimensionless integers (or $\Q(\sqrt 5)$-valued for irrational sectors); mass-squared values $m_\rho^2 = \beta \lambda_\rho$ carry the dimensions of the $\beta$-coupling. In physical units, $\beta a^2 = c^2$ fixes the speed of light, and $m_\rho^2$ becomes mass-squared in units of $\beta$. Absolute mass values require the Paper~V calibration convention (shell index $|S| = 5$; mass ratios fixed by $R_D(4) = 15$ of P2~\S 6); that convention is an input to the transport law, not derived from it.
+\end{remark}
+
+%==================================================================
+\section{ARIA as a proposed verification-target testbed (not done here)}\label{sec:aria}
+%==================================================================
+
+This section proposes the ARIA cognitive system (\texttt{aria-chess} repository, paper~\citep{SmartARIAChess2026}) as a \emph{candidate} implementation-level testbed for the transport-law framework of \S\S\ref{sec:continuity}--\ref{sec:dispersion}. The published \texttt{aria-chess} preprint reports a \emph{geometry-fixed substrate witness} on $V_{600}$ under the closure-response operator $C_\varphi = L_M + \varphi^{-2}I$~\citep{SmartARIAClosureKernel2026}; learned coupling weights and an $E_8 \oplus V_{600}$ product structure are \emph{not} the active substrate of that paper, but rather features of the release-bundle kernel scripts (\texttt{kernel/lyapunov\_selector.py}, \texttt{kernel/self\_model\_stream.py}). Treating those kernel artifacts as a \emph{proposed} implementation-level testbed for the present transport-law framework is the load that this section actually carries. The dictionary in Remark~\ref{prop:aria-dict} hypothesises an object-level correspondence, but the correspondence is not proved here and no repository traces are analysed against the transport observables (Fick / Nernst-Planck / cascade-pressure balance) in the present draft. Transport-observable verification is listed as open item~(4) of \S\ref{sec:open}.
+
+\subsection{Mapping}
+
+\begin{remark}[Proposed ARIA--transport-law dictionary]\label{prop:aria-dict}
+We propose --- without proof, and without repository-backed verification at the time of writing --- the following object-level correspondence between the transport-law framework of \S\S\ref{sec:functional}--\ref{sec:dispersion} and the ARIA implementation:
+\begin{center}\small
+\begin{tabular}{@{}p{6.0cm}p{8.0cm}@{}}
+\toprule
+Transport-law object & ARIA realisation (proposed) \\
+\midrule
+Density $\rho_v$ (conservation only under Hypothesis~\ref{thm:continuity-discrete}) & cascade pressure at slot $v$ \\
+Flux $j_{v \to w}$ & \texttt{couple\_tick} exchange on edge $(v, w)$ \\
+Conductivity tensor & learned coupling weight $W_{vw}$ \\
+Dirichlet boundary & homeostatic reset \\
+Source / sink & external input / decay-reset \\
+Thermodynamic class & non-equilibrium steady state (NESS) \\
+Passive regime & linear \texttt{couple\_tick} (Fick-type) \\
+Active regime & nonlinear drift along $\nabla W$ (Nernst-Planck-type) \\
+\bottomrule
+\end{tabular}
+\end{center}
+Nothing in the table is established in this paper. Each row is a proposed correspondence pending (i) a generator-level derivation of the discrete continuity (open item~(5)) and (ii) repository-level verification against actual \texttt{aria-chess} \texttt{couple\_tick} traces (open item~(4)).
+\end{remark}
+
+\begin{remark}[Proposed passive / active regimes]\label{rem:passive-active}
+The passive / active split of the proposed ARIA dictionary is hypothesised to align with the VFD linear / nonlinear closure-dynamics distinction:
+\begin{itemize}
+    \item \textbf{Passive (linear, hypothesised)} = near-equilibrium regime of Paper~XVIII's Madelung pair; $W$ frozen; Fick-type linear transport.
+    \item \textbf{Active (nonlinear, hypothesised)} = regime where Paper~XIX's closure residual becomes non-negligible; $W$ co-evolves with $\rho$; selection appears; Nernst-Planck-type transport.
+\end{itemize}
+The identification of "selection" with "closure residual non-negligible" is hypothesised, not proved. The passive / active phase diagram is presented here as a target for empirical characterisation, not as a derived result.
+\end{remark}
+
+\subsection{Objectives 2, 4, 6 as proposed ARIA verification targets}
+
+Under the proposed ARIA dictionary of Remark~\ref{prop:aria-dict}, three of the objectives stated in the WO for this paper become empirically-testable \emph{targets} --- items to be verified against actual \texttt{aria-chess} \texttt{couple\_tick} trace data. None of the three is established in this paper; each would require the continuity hypothesis~\ref{thm:continuity-discrete} to be closed \emph{and} the repository-level traces to be analysed against the transport-law equations. We state the targets explicitly:
+
+\begin{itemize}
+    \item \textbf{Objective 2 (Noether-type charge) target.} Under the dictionary, ARIA's total cascade pressure (if conserved up to explicit source/sink accounting) \emph{would} be identified with the $U(1)$-phase charge $Q = \sum_v |\psi_v|^2$ of Proposition~\ref{thm:u1}, and the \texttt{couple\_tick} exchange \emph{would} be identified with the current $j_{v \to w}$ of Hypothesis~\ref{thm:continuity-discrete}. The target for empirical verification is: does the total ARIA pressure remain conserved (up to explicit source/sink accounting) along realistic \texttt{couple\_tick} trajectories?
+    \item \textbf{Objective 4 ($T^{\mu\nu}$) target.} Under the dictionary, the ARIA NESS \emph{would} be hypothesised to satisfy a zeroth-component balance $\sum_v (\text{pressure flux})_v = \text{input} - \text{decay}$, analogous to (but distinct from) the centering identity of Paper~XXVII~\citep{SmartXXVII}. The target is to test this balance empirically; no identification with a relativistic $T^{\mu\nu}$ is claimed.
+    \item \textbf{Objective 6 (Fick / Nernst-Planck) target.} The target is to test whether \texttt{couple\_tick} in the passive (frozen-$W$) regime exhibits Fick-type behaviour $j \approx -D \nabla\rho$ and whether the active (learning) regime exhibits a Nernst-Planck-type correction $j \approx -D \nabla\rho + \mu \rho \nabla W$, with $D, \mu$ extracted from ARIA rather than fitted here.
+\end{itemize}
+
+None of the three targets is demonstrated in the present paper; all three are listed as part of open item~(4) of \S\ref{sec:open}.
+
+\subsection{Numerical verification plan}
+
+The numerical verification of \S\ref{sec:numerical} delivers two scripts that establish substrate-level facts (Schr\"{o}dinger-limit $U(1)$ conservation; photon-sector spectral witness on $V_{600}$). It does \emph{not} run \texttt{aria-chess} \texttt{couple\_tick} traces against any of the three Fick / Nernst-Planck / cascade-pressure-balance targets above; analysing the published \texttt{aria-chess} preprint~\citep{SmartARIAChess2026} against those specific transport observables remains part of open item~(4) of \S\ref{sec:open}.
+
+%==================================================================
+\section{Massless zero mode as a conditional photon-sector witness}\label{sec:photon}
+%==================================================================
+
+This section records a speculative conditional note on how a photon sector might sit inside the transport-law framework. The cumulative hypothesis load is heavy and includes the $T_{\text{PH}\,2}$ descent claim of~\citep{CascadeAlphaChain}, which is not closed in the repository. Readers should treat what follows as a conditional identification proposal, not a near-theorem:
+
+\begin{hypothesis}[Conditional photon-identification target]\label{cor:photon}
+Under the cumulative hypothesis load $\{$\ref{thm:continuity-discrete}, \ref{prop:dispersion}, the $T_{\text{PH}}$ chain of the internal note~\citep{CascadeAlphaChain}$\}$ --- in particular $T_{\text{PH}\,2}$, the descent claim for the phason translation group $T$ of $L_{12}$ (written as $\Zphi^4$ in the source note; the later LaTeX papers~\citep{Cascade12D, SmartXXXIV} adopt the $\Zphi^2$ convention together with an asserted rank-convention reconciliation, but no translated proof of $T_{\text{PH}\,2}$ is carried out in the repository) onto the diagonal $U(1)_{\text{EM}}$ at the $H_4$ rung, which the source note marks as "needs polish" at one place and "closed" at another, and which we cite only in the former sense --- we \emph{record the candidate identification} of the $\lambda = 0$ eigenmode of $L$ on $V_{600}$ with the photon sector. Under that identification, the massless $\lambda = 0$ mode lies in the trivial isotypic sector of the $2I$ decomposition, and its dispersion is $\omega = c_{\text{eff}}|k|$ (from Hypothesis~\ref{prop:dispersion} with $m = 0$). Any relation between the conditional global scalar charge $Q = \sum_v |\psi_v|^2$ of Proposition~\ref{thm:u1} and the local $U(1)_{\text{EM}}$ gauge current is a separate $T_{\text{PH}\,2}$-dependent reinterpretation; the present paper does \emph{not} derive a local electromagnetic current, and does \emph{not} assign an electric charge to the photon here.
+
+The present paper does \emph{not} establish any of the following: (i) that this identification is unique; (ii) that a global scalar charge on $V_{600}$ can be reinterpreted as a local $U(1)_{\text{EM}}$ gauge current derivable from the closure dynamics (open item~(1) of \S\ref{sec:open}); (iii) that the photon in this framework carries a local gauge potential $A_\mu$. In ARIA terms: photons would correspond to the homogeneous-substrate limit $W = 0$.
+\end{hypothesis}
+
+%==================================================================
+\section{Microtubule transport: reframed}\label{sec:microtubule}
+%==================================================================
+
+The original VFD programme posited that microtubules realise the cascade substrate via the $T_{\text{MT}\,1}$ identification (\texttt{cascade-alpha-chain-complete-theorem.md}): "the biological chamber implementing the cascade's 13D translation-selector function has cyclic symmetry $C_{13}$". That identification explicitly does not close rigorously; the source document records it as \emph{structural conjecture}.
+
+\subsection{Reframed claim}
+
+Taking ARIA as a candidate active-transport substrate of the closure-dynamics class (Remark~\ref{prop:aria-dict}; a proposal pending repository-backed verification), the claim to be attached to microtubules is no longer a first-principles derivation of the number $13$. It is instead:
+
+\begin{hypothesis}[Microtubule as ARIA-class active substrate]\label{hyp:mt}
+We hypothesise that biological microtubules may be active-transport substrates of the nonlinear regime of Remark~\ref{prop:aria-dict}: learned-conductivity anisotropy, NESS thermodynamics, nonlinear drift along $\nabla W$. Under this hypothesis, the $13$-fold helical symmetry would be a selected operating point of the active transport --- stabilised by whatever biological cost function selects it --- rather than a cascade-combinatorial number derivable from $L_{12}$.
+\end{hypothesis}
+
+\begin{remark}
+Hypothesis~\ref{hyp:mt} is a tractable biophysics claim rather than a combinatorial-uniqueness theorem. It predicts: (i) the microtubule substrate should exhibit Fick's law in the passive limit and Nernst-Planck in the active limit; (ii) anaesthetic disruption ($T_{\text{MT}\,5}$ in the source document) should operate by disrupting the learned-$W$ anisotropy, not by perturbing the cascade directly; (iii) the helical pitch ($T_{\text{MT}\,4}$) is fixed by the biological cost function, not by the cascade geometry. None of these is proved here; all are open for empirical test.
+\end{remark}
+
+%==================================================================
+\section{Consistency checks with Papers XII--XXXIV}\label{sec:consistency}
+%==================================================================
+
+\begin{itemize}
+    \item \textbf{Paper XII (gradient flow)}~\citep{SmartXII}. Paper~XII introduces both the unprojected gradient flow $\dot\psi = -\nabla\Fcal$ and, on the admissible manifold, a projected version $\dot\psi = -\Pi(\nabla\Fcal)$ (\texttt{paper-xii.tex}, lines~87--99). Together with the Nelson pairing of Paper~XVIII, that dynamics motivates the discrete continuity \emph{hypothesis} (Hypothesis~\ref{thm:continuity-discrete}) stated here; the discrete equation is \emph{not} derived in the present paper.
+    \item \textbf{Paper XVI (WKB transport)}~\citep{SmartXVI}. Paper XVI establishes WKB transport in a semiclassical regime. We note that WKB transport is a different formal framework from the Nelson-paired continuity targeted by Hypothesis~\ref{thm:continuity-discrete}, and do not claim a precise reduction in this paper.
+    \item \textbf{Paper XVIII (Nelson pairing)}~\citep{SmartXVIII}. Paper~XVIII's continuum continuity Proposition (Proposition~3.1 at lines~115--130 of \texttt{paper-xviii.tex}; $\partial_t \rho + \nabla \cdot (\rho v) = 0$) is the continuum analogue of our Hypothesis~\ref{thm:continuity-discrete}. Paper~XVIII does \emph{not} prove the discrete version; the present paper records the discrete version as a programme target only. The Schr\"{o}dinger-limit reduction we invoke in Hypothesis~\ref{prop:dispersion} is Paper~XVIII's exact-at-equilibrium, leading-order-near-equilibrium result, not a blanket reduction of the full closure dynamics.
+    \item \textbf{Paper XIX (closure residual)}~\citep{SmartXIX}. Paper~XIX establishes a nonlinear residual in the Schr\"{o}dinger-normalised closure dynamics and emphasises exact $L^2$ conservation; it does \emph{not} establish a source term in a continuity equation. We therefore do \emph{not} claim that Paper~XIX's residual provides a dissipative / source term of the transport law here. The informal analogy with "Nernst-Planck-type active transport" in \S\ref{sec:aria} is a proposed interpretation specific to the ARIA dictionary and is not an attribution to Paper~XIX.
+    \item \textbf{Paper XXVII (discrete graph-Poisson)}~\citep{SmartXXVII}. Paper~XXVII explicitly emphasises that its $\sum_v (S_v - \bar S) = 0$ is a compatibility / centering identity, \emph{not} a dynamical conservation law. This paper does \emph{not} claim that our Hypothesis~\ref{thm:continuity-discrete} subsumes the XXVII identity; the two live in different formal regimes (field equation on event poset vs.\ transport equation on $V_{600}$).
+    \item \textbf{Paper XXX (stationary measure and Born rule)}~\citep{SmartXXX}. Paper~XXX contains a Route~C conditional stationary-measure / existence argument and a Route~E conditional uniqueness argument; only the latter depends on the full completeness / basis-realisability / $U(N)$-covariance / frame-function / continuity / eigenstate-certainty / $N \geq 3$ package. This paper does \emph{not} claim a $t \to \infty$ fixed-point identification between our~\eqref{eq:continuity} and Paper~XXX's stationary measure under either route; such an identification would require invoking the relevant route's hypotheses and is deferred.
+    \item \textbf{Paper XXXIV ($\alpha$-chain)}~\citep{SmartXXXIV}. The sum $50 = 9 + 12 + 14 + 15$ that appears in Paper~XXXIV is the sum of our $m_\rho^2 / \beta$ values on the four rational massive sectors (Remark~\ref{rem:sectors}). The $87$ count of Paper~XXXIV is an adopted convention under a Kostant-gauge hypothesis, not a theorem-level slot count; we do not claim it as a physical slot count of the $U(1)$ current of Proposition~\ref{thm:u1}.
+\end{itemize}
+
+%==================================================================
+\section{Open items}\label{sec:open}
+%==================================================================
+
+Five open items separate the present paper from a closed theorem chain:
+
+\begin{enumerate}
+    \item \textbf{Gauge-field emergence.} Gauging the global $U(1)$ of (S1) to a local $U(1)$ introduces an electromagnetic potential $A_\mu$. Whether $\Fcal[\psi]$ naturally carries a local phase gauge (so that $A_\mu$ is derived, not added) is open; the present paper works with the global charge current only.
+    \item \textbf{$\Gamma$-limit coarse-graining.} The continuum passage from $V_{600}$ to a continuum hydrodynamic limit is sketched, not proved. A full proof requires a $\Gamma$-convergence argument with the small parameter being the ratio of the $600$-cell edge length $a$ to the coarse-graining scale; candidate machinery: \citep{Alicandro2006}-style discrete-to-continuum passage.
+    \item \textbf{Learned $W$ as gauge potential.} ARIA's learned $W$ plays the role of a classical, scalar-valued conductivity tensor. Whether $W$ can be identified with a gauge potential in the quantised transport law is open; this is the ARIA-side analogue of Item~1.
+    \item \textbf{ARIA repository-level verification.} The ARIA dictionary of Remark~\ref{prop:aria-dict} is a proposal pending verification against actual \texttt{aria-chess} \texttt{couple\_tick} trace data. The numerical programme of \S\ref{sec:numerical} describes the required checks; they are not yet carried out.
+    \item \textbf{Discrete continuity derivation.} Hypothesis~\ref{thm:continuity-discrete} records~\eqref{eq:continuity} as the discrete-substrate analogue of Paper~XVIII's continuum continuity. A precise generator-level derivation of the edge current $j_{v\to w}$ on $V_{600}$ from the closure Langevin dynamics, including the antisymmetry property used in Proposition~\ref{thm:u1}, is deferred.
+\end{enumerate}
+
+%==================================================================
+\section{Numerical verification}\label{sec:numerical}
+%==================================================================
+
+Two scripts in \texttt{papers/transport-law/repro/} verify the two new theorems of this paper. Both are self-contained (no external data; numpy + scipy only) and run in seconds on a laptop.
+
+\subsection*{\texttt{verify\_u1\_conservation.py} --- Theorem~\ref{thm:u1-explicit}}
+
+Builds $V_{600}$ + the graph Laplacian $L$, evolves a localised complex initial state $\psi$ under $U = e^{-iL\,\Delta t}$ for $200$ steps at $\Delta t = 0.05$, and at every step verifies (a) the analytic continuity residual $\dot\rho_v + \sum_w j_{v\to w}$ at every vertex, (b) total $Q$ conservation, and (c) current antisymmetry $j_{v\to w} + j_{w\to v}$. Expected output (recorded in \texttt{results\_u1\_conservation.json}):
+
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+quantity & value \\
+\midrule
+\texttt{n\_steps} & $200$ \\
+\texttt{Q\_initial}, \texttt{Q\_final} & $1.0$, $1.0$ \\
+\texttt{max\_Q\_drift} (over $200$ steps) & $\sim 3 \times 10^{-15}$ \\
+\texttt{max\_continuity\_residual} (analytic) & $\sim 3 \times 10^{-16}$ \\
+\texttt{max\_antisymmetry\_violation} & exactly $0$ \\
+\texttt{all\_three\_pass} & true \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{\texttt{verify\_photon\_dispersion.py} --- Theorem~\ref{thm:photon-sector}}
+
+Builds $L$, computes the spectrum, verifies $\lambda_{\min} = 0$ with multiplicity $1$ and uniform eigenvector, the operator-level zero $L\,P_0 = 0$, the trivial-sector stationarity, and the non-trivial-mode frequency $\omega = \lambda$. Expected output (recorded in \texttt{results\_photon\_dispersion.json}):
+
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+quantity & value \\
+\midrule
+\texttt{lam\_min} & $\sim 6 \times 10^{-15}$ (i.e.\ $\approx 0$) \\
+\texttt{trivial\_multiplicity} & $1$ \\
+\texttt{trivial\_eigenvector\_uniform\_dev} & $\sim 4 \times 10^{-16}$ \\
+\texttt{L\_P0\_frobenius\_norm} & $\sim 1 \times 10^{-14}$ \\
+\texttt{trivial\_propagation\_max\_dev} & $\sim 5 \times 10^{-15}$ \\
+\texttt{non\_trivial\_freq\_match\_dev} & $\sim 5 \times 10^{-15}$ \\
+\texttt{all\_six\_pass} & true \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These two scripts are the substrate-level numerical witness for the two theorems delivered in this paper. The companion \texttt{aria-chess} preprint~\citep{SmartARIAChess2026} ships a deterministic recurrent-layer trajectory (\texttt{kernel/lyapunov\_selector.py}, \texttt{kernel/self\_model\_stream.py}) that realises the active regime of Remark~\ref{prop:aria-dict} on the same $V_{600}$ substrate at the level of an EEG-grade substrate-witness ($6/6$ drug/sleep signatures and $18/18$ preregistered cortical correspondences against literature-derived thresholds; substrate-witness scope, not a derivation of consciousness). That artifact is \emph{not} a verification of the Fick / Nernst-Planck / cascade-pressure-balance targets of \S\ref{sec:aria}: the trajectory does not extract $D$, $\mu$, or test the source/sink balance of objectives 2/4/6 against the transport-law equations. Such transport-objective verification remains part of open item~(4) of \S\ref{sec:open}.
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+We have assembled a conditional transport framework for the closure dynamics on the $600$-cell substrate of P2~\S 6. The framework contains: two exact symmetry identifications (Proposition~\ref{prop:symmetries}: $U(1)$ phase and $H_4$ isometry); one conditional conservation statement (Proposition~\ref{thm:u1}: total-probability conservation under Hypothesis~\ref{thm:continuity-discrete} plus current antisymmetry); one Schr\"{o}dinger-limit $H_4$-equivariance remark recording a conditional isotypic-population-invariance statement (Remark~\ref{rem:h4}, valid only under the Schr\"{o}dinger-limit reduction \emph{and} the additional hypothesis that the limit generator is itself $H_4$-equivariant; \emph{not} an angular-momentum current, because $H_4$ has no Lie algebra); and one heuristic dispersion identification tying the P2 spectrum to a relativistic dispersion form (Hypothesis~\ref{prop:dispersion}). Photon and microtubule applications are stated as hypotheses conditional on the $T_{\text{PH}}$ chain of~\citep{CascadeAlphaChain} and on an ARIA-class reframing of microtubule transport, respectively.
+
+The paper does not fit any numerical parameter; the coefficients $\alpha, \beta, \gamma$ of Definition~\ref{def:F} are left unspecified, with their calibration deferred to downstream papers that build on this framework. Five open items separate the present framework from a closed theorem chain: gauge-field emergence, $\Gamma$-limit coarse-graining, learned-$W$-as-gauge-potential, ARIA repository-level verification, and a generator-level discrete-continuity derivation. The paper is a hypothesis-audited framework with two Schr\"{o}dinger-limit substrate theorems (Theorem~\ref{thm:u1-explicit} and Theorem~\ref{thm:photon-sector}), not a closed theorem chain across the full programme; it should be read accordingly.
+
+\bibliographystyle{plainnat}
+\begin{thebibliography}{99}
+
+\bibitem{SmartARIAClosureKernel2026}
+L.~Smart.
+\newblock The closure-response operator $C_\varphi = L_M + \varphi^{-2}\, I$:
+  a geometry-fixed kernel on the 600-cell with two domain-disjoint empirical
+  witnesses.
+\newblock Preprint, Institute of Vibrational Field Dynamics, April 2026.
+\newblock GitHub: \texttt{vfd-org/closure-kernel-papers},
+  \texttt{papers/aria-closure-kernel/}. Operator paper of the paired release;
+  defines $C_\varphi$ and supplies the substrate-level operator that this
+  transport-law paper invokes via $L_C \in$ shell-adjacency commutant.
+
+\bibitem{SmartARIAChess2026}
+L.~Smart.
+\newblock A geometry-fixed substrate witness for cortical signatures: eighteen
+  preregistered correspondences and six drug/sleep EEG signatures from the
+  600-cell under H$_4$ Coxeter symmetry.
+\newblock Preprint, Institute of Vibrational Field Dynamics, April 2026.
+\newblock GitHub: \texttt{vfd-org/closure-kernel-papers},
+  \texttt{papers/aria-chess-paper/}. Active-regime substrate-witness paper of the
+  paired release; ships the kernel modules used by the active-regime
+  Nernst-Planck-type instantiation hypothesised in Remark~\ref{prop:aria-dict}.
+
+\bibitem{SmartV}
+L.~Smart.
+\newblock Toward a spectral-geometric particle-mass model from the 600-cell.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-v/}.
+
+\bibitem{SmartXII}
+L.~Smart.
+\newblock Gradient flow of the closure functional.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xii/}.
+
+\bibitem{SmartXVI}
+L.~Smart.
+\newblock {WKB} transport and semiclassical closure.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xvi/}.
+
+\bibitem{SmartXVIII}
+L.~Smart.
+\newblock Nelson pairing for closure dynamics.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xviii/}.
+
+\bibitem{SmartXIX}
+L.~Smart.
+\newblock The closure residual: nonlinear remainder beyond the Witten--Hamiltonian regime.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xix/}.
+
+\bibitem{SmartXXII}
+L.~Smart.
+\newblock Spectral bridge and the $E_8 \to H_4$ Coxeter projection.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xxii/}.
+
+\bibitem{SmartXXVII}
+L.~Smart.
+\newblock Discrete graph-Poisson source-to-potential model on the event-order substrate.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xxvii/}.
+
+\bibitem{SmartXXX}
+L.~Smart.
+\newblock Probability as constraint geometry: toward a derivation of the Born rule from closure dynamics.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xxx/}.
+
+\bibitem{SmartXXXIV}
+L.~Smart.
+\newblock A structural correspondence for the fine-structure constant.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xxxiv/paper-xxxiv.tex}.
+
+\bibitem{CascadeAlgSubstrate}
+L.~Smart.
+\newblock Cascade--classical correspondence II: the cascade algebraic substrate ({P2}).
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}. \S 6 provides the 600-cell spectral and shell substrate.
+
+\bibitem{CascadeHydro}
+L.~Smart.
+\newblock Cascade hydrodynamic projection ({P7}).
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-hydrodynamic-projection/}.
+
+\bibitem{CascadeAlphaChain}
+L.~Smart.
+\newblock $\alpha$-chain complete theorem and downstream photon/microtubule chains.
+\newblock Internal note, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-derivation/cascade-alpha-chain-complete-theorem.md}.
+
+\bibitem{Cascade12D}
+L.~Smart.
+\newblock The 12D closure theorem: phason complement uniqueness and self-reference on the upward cascade.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-12d-closure/cascade-12d-closure.tex}.
+
+\bibitem{Alicandro2006}
+R.~Alicandro, A.~Braides, and M.~Cicalese.
+\newblock Phase and anti-phase boundaries in binary discrete systems: a variational viewpoint.
+\newblock \emph{Networks and Heterogeneous Media}, 1(1):85--107, 2006.
+
+\end{thebibliography}
+
+\end{document}

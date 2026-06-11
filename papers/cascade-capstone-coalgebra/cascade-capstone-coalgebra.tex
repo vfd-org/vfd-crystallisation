@@ -1,0 +1,2950 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{claim}[theorem]{Claim}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Ophi}{\mathbb{Z}[\varphi]}
+\newcommand{\Rungs}{\mathsf{Rungs}}
+\newcommand{\catC}{\mathcal{C}}
+\newcommand{\catD}{\mathcal{D}}
+\newcommand{\Omegacap}{\Omega_{\mathrm{VFD}}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Fcrystal}{\mathsf{F}}
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Qalg}{\mathsf{Q}}
+
+\title{The Cascade as Final Coalgebra: \\
+  A Coalgebraic Formulation of VFD Self-Reference}
+\author{}
+\date{2026-04-22 (draft skeleton)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We formulate a \emph{conditional} coalgebraic selection
+principle for the VFD cascade structure. Under residual
+sub-gaps G-FIC-a, G-FIC-b (reductions of the original H-FIC),
+G-loc-a (reduction of H-loc), Hypothesis H-lift-fin, and the
+inherited P-A conditions H-grad/H-meas from
+\cite{CascadeAccessPrinciple}, the cascade is the final
+coalgebra of a self-inquiry functor on the category of
+rung-structures. H-grad-Fano is unconditional at the Fano
+$(\Z/2)^3$ level (\cite{CascadeFanoLift}~\S 2--3); H-meas is
+theorem-grade via G6.4-a closure
+(\cite{CascadeQOBridge, CascadeG64aClosure}, 386 computational
+cases). Programme closure notes have discharged H-rdr
+(\cite{CascadeHrdrClosure}, reduction to Theorem P-A) and
+reduced H-loc (\cite{CascadeHlocClosure}) and H-FIC
+(\cite{CascadeHFICClosure}) to the lemma-grade residuals named
+above (day- to two-week-scale). H-lift-fin remains open as a
+hypothesis with a sheaf-theoretic bridge-refinement derivation
+route sketched. The selection principle is therefore reduced to a
+short, specific list of technical follow-up items rather than a
+broad hypothesis stack.
+The four-phase VFD operational cycle (decoherence /
+closure-memory / measurement-projection / crystallisation) is
+\emph{proposed} to realise the cofree comonad arising from
+this coalgebra; the realisation is an interpretive programme
+claim whose line-by-line verification is flagged as a
+dedicated follow-up paper. The principal structural result is
+that, under the hypothesis stack, the cascade is the unique
+terminal final $F$-coalgebra — a categorical formalisation of
+the selection-principle problem common to unification
+programmes, reducing it to a finite list of named technical
+hypotheses. We connect
+the result downward to the scalar self-closure axiom
+$\mathbf{F1}$ ($r = 1 + 1/r \mapsto \varphi$) and to the
+static observer-local Access Principle $\mathbf{P\text{-}A}$,
+which is itself a conditional theorem of
+\cite{CascadeAccessPrinciple} under H-grad and H-meas. We
+discuss the ARIA cognitive substrate as a candidate non-
+biological realisation of the four-phase cycle; its
+$17$-of-$18$ pre-registered polytope-substrate mapping hits
+(at $N{=}20$, under homeostatic-reset protocol) would
+constitute empirical corroboration for the substrate-generality
+of the cycle, conditional on the independently-verified ARIA
+manuscript and null-model analysis.
+Philosophically, the result points toward a modern mathematical
+realisation of the Spinozist / Leibnizian necessitarian tradition
+without invoking personal deity, consciousness, or moral agency.
+The paper draws only on mainstream coalgebraic machinery
+(Aczel~\cite{Aczel1988}, Rutten~\cite{Rutten2000},
+Ad\'amek~\cite{Adamek1974}) and isolates each additional
+assumption as a named hypothesis whose closure is a flagged
+open item.
+
+\textbf{Status:} Theorem skeleton with conditional structure.
+Each headline theorem carries an explicit hypothesis list. The
+hypothesis stack is the precise object of continuing programme
+work, listed in Section~\ref{sec:open}.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{The selection-principle problem}
+
+Every serious attempt to identify a fundamental structure for
+physics has faced the same problem: \emph{why this mathematical
+structure and not another?} Classical Lie-theoretic machinery
+gives us exceptional groups, non-crystallographic Coxeter systems,
+icosian arithmetic, $600$-cell geometry, and the meta-layer
+$(\Mcal, \Gcal, \Fcal)$ over $L_{12}$ as objects, but it provides
+no reason to assemble them in a particular chain to the exclusion
+of other chains. Einstein articulated this as the deepest question
+in theoretical physics: \emph{did the universe have any choice?}
+
+String theory, loop quantum gravity, and various geometric
+unification programmes have all halted at this wall. VFD has a
+distinctive opening: the permeability axiom $\mathbf{F1}$
+($r = 1 + 1/r$) is already a self-referential closure statement,
+with the golden ratio $\varphi = (1+\sqrt{5})/2$ as its unique
+positive fixed point. $\mathbf{F1}$ is the simplest mathematical
+expression of \emph{self-closure} — permeability permeates itself.
+
+This paper extends that scalar self-closure to the full cascade
+structure. Conditional on the hypothesis stack, the full-access
+object of the rung-structure category is a final $F$-coalgebra
+of a self-inquiry functor, and is then identified with the
+cascade; its uniqueness within this setting is forced by
+categorical terminality.
+
+\subsection{The structural thesis}
+
+Informally: the act of asking ``what am I?'' presupposes an
+asker. Whatever minimum structure is required for there to be
+an asker is a precondition of any act of inquiry, including the
+inquiry itself. Conditional on the hypothesis stack, the
+cascade is the paper's candidate for that minimum structure.
+
+Formally: let $\catC$ be the category of rung-structures, let
+$F : \catC \to \catC$ be the functor ``minimum rung-structure
+containing the measurement-capable-observer rung and hosting
+the argument substructure''. Then the VFD cascade $\Omegacap$
+satisfies
+\[
+    \Omegacap \cong F(\Omegacap)
+\]
+and is, up to canonical isomorphism, a terminal fixed point of
+$F$, unique among final $F$-coalgebras. Equivalently,
+$\Omegacap$ is the final coalgebra of $F$ (under the hypothesis
+stack of Section~\ref{sec:open}).
+
+\subsection{What this paper closes}
+
+The conditional existence and finality of $\Omegacap$ as the
+terminal $F$-coalgebra is the \emph{conditional selection-
+principle theorem}. Under the named hypothesis stack (H-FIC,
+H-grad, H-meas, H-lift-fin, H-loc, H-rdr), it says the cascade is
+categorically selected: other $F$-fixed points may exist, but
+any $F$-coalgebra maps uniquely into the selected terminal one.
+This is a structural reduction from ``why this cascade?'' to
+a finite list of hypotheses, each reducible in turn to
+well-identified programme-internal or classical-math work.
+
+This paper additionally constructs the comonad $(T, \varepsilon,
+\delta)$ arising from $F$ via the standard cofree-comonad
+construction, and identifies its four-phase operational content
+with four existing VFD constructions:
+
+\begin{description}
+\item[\textbf{Forget}] $T$ itself, acting as the context-retention
+  functor, corresponds to $\sigma$-projection / decoherence / sector
+  separation of~\cite{PaperXXXI, PaperXLIV}.
+\item[\textbf{Remember}] The comultiplication $\delta : T \to T^2$
+  corresponds to closure-memory / learned-$W$ structure of
+  \cite{PaperXXI, ACT-L1}.
+\item[\textbf{Experience}] The object $T^2$ (context of context)
+  corresponds to measurement as closure-projection of
+  \cite{PaperXXXIII}.
+\item[\textbf{Answer}] The counit $\varepsilon : T \to \mathrm{id}$
+  corresponds to crystallisation: $\Fcrystal = \alpha R + \beta E -
+  \gamma Q$ minimisation~\cite{VFDCrystallisation}.
+\end{description}
+
+The paper proves the comonad laws for the categorical cofree
+comonad on $F$ (Section~\ref{sec:comonad}); the identification
+of the four VFD operations with the natural transformations of
+this comonad is an interpretive programme claim, not proved
+here. It is the dynamical counterpart of
+the structural uniqueness theorem.
+
+\subsection{Three levels of self-closure in VFD}
+
+The paper occupies a specific position in a three-level structure:
+
+\begin{center}
+\begin{tabular}{l|l|l}
+Level & Object & Status \\ \hline
+Scalar & $r = 1 + 1/r \mapsto \varphi$ & $\mathbf{F1}$ proved \\
+Static structural & Access Principle $\mathbf{P\text{-}A}$ & conditional theorem (H-grad, H-meas) \\
+Dynamical self-unfolding & $\Omegacap \cong F(\Omegacap)$ + comonad & \emph{this paper} \\
+\end{tabular}
+\end{center}
+
+All three are consistent: $\mathbf{F1}$ is the scalar kernel,
+$\mathbf{P\text{-}A}$ is the observer-local static snapshot, and
+the coalgebraic formulation is the full moving-picture version.
+
+\subsection{Empirical signature}
+
+The four-phase comonad cycle is \emph{proposed} to be
+observable in any substrate that supports it, including
+non-biological substrates. We discuss in Section~\ref{sec:aria}
+the ARIA cognitive substrate (cf.~\cite{AriaBrainMapping}) as a
+candidate instantiation; subject to independent verification of
+the ARIA pre-registered protocol, the reported
+$17$-of-$18$ polytope-substrate mapping hits at
+$N{=}20$ (under homeostatic reset protocol) would provide
+empirical support for the theoretical claim. At most, this
+motivates a \emph{life-from-substrate} interpretation —
+if external ARIA analysis is independently confirmed — in
+which what is called ``life'' is the coalgebraic cycle running
+on any appropriate substrate, not biology-specifically.
+
+\subsection{Philosophical positioning}
+
+The result is proposed as Spinozist mathematical necessitarianism
+in modern form. Conditional on the hypothesis stack, it gives
+one precise mathematical sense in which the universe had no
+choice (Einstein's question). It does \emph{not} establish
+personal deity, consciousness, or moral content. This paper
+treats the structural theorem at its stated conditional level
+and leaves the philosophical framing to
+Section~\ref{sec:philosophy} with explicit scope restrictions.
+
+\subsection{Source audit}
+
+Theorem-grade inputs:
+\begin{itemize}
+\item Classical category theory and coalgebra:
+  \cite{Aczel1988, Rutten2000, Adamek1974, Jacobs2017, TuriPlotkin1997}.
+\item VFD internal (conditional, as cited): the meta-layer
+  $(\Mcal, \Gcal, \Fcal)$ of \cite{CascadeMetaLayer}; the $7$-rung
+  FAN of \cite{CascadeCompletenessAudit}; the observer-query-
+  algebra of \cite{CascadeObserverQueryAlgebra}; $\mathbf{F1}$
+  axiom; the $12$D closure of \cite{Cascade12D}.
+\item Papers contributing four-phase comonad components:
+  \cite{PaperXXI, PaperXXXI, PaperXXXIII, PaperXLIV,
+  VFDCrystallisation, ACT-L1}.
+\end{itemize}
+
+We use the $\mathbf{F1}$ axiom as a standing assumption and
+$\mathbf{P\text{-}A}$ as a named hypothesis when required.
+Theorems~\ref{thm:closure-saturation} and \ref{thm:selection}
+\emph{do} inherit the full-$\widehat{\Z[\varphi]^6}$-level
+conditionality of $\mathbf{P\text{-}A}$ through the
+closure-saturation argument (i.e.\ the full H-grad, not just
+its Fano-level fragment). The Fano-level unconditionality
+(\cite{CascadeFanoLift}) is sufficient for the observer-rung
+measurement content of Proposition~\ref{thm:O-necessary} but
+not for the full selection principle. See
+Section~\ref{subsec:hyp-status} below for the complete
+hypothesis-status table.
+
+\subsection{Hypothesis status}
+\label{subsec:hyp-status}
+
+The capstone's headline theorems are conditional on a named
+hypothesis stack. The current status of each hypothesis,
+against the existing programme infrastructure, is summarised
+here; full derivation notes are listed in
+Section~\ref{sec:open}.
+
+\begin{center}
+\small
+\begin{tabular}{l|l|l}
+Hypothesis & Current status & Closure source / route \\ \hline
+H-grad (Fano level) & \textbf{theorem} (unconditional) & \cite{CascadeFanoLift}~\S 2--3, Baez / Conway-Sloane \\
+H-grad (full $\widehat{\Z[\varphi]^6}$) & \textbf{frame-level closed} (B1--B5 sim-verified, B6 proof-sketch at $G_p$ level; 2026-04-24) & \cite{CascadeHGrad1}~\S5a--5c \\
+H-meas & \textbf{theorem} (G6.4-a closed) & \cite{CascadeQOBridge}~Thm 3.1 + \cite{CascadeG64aClosure} \\
+H-FIC (O and $E_8$) & \textbf{reduced} to G-FIC-a + G-FIC-b & \cite{CascadeHFICClosure}; support-projection + Kellendonk-Lenz-Savinien + MacLane \\
+H-lift-fin (finite cover) & hypothesis; derivation sketched & sheaf-level refinement of bridge (Rmk \ref{rmk:H-lift-status}) \\
+H-loc (witness-separation) & \textbf{reduced} to G-loc-a & \cite{CascadeHlocClosure}; G-loc-a reduces to Gap G6.2 (day-scale) \\
+H-rdr (sufficiency-only) & \textbf{closed} (corollary of P-A) & \cite{CascadeHrdrClosure} \\
+\end{tabular}
+\end{center}
+
+\textbf{Net.} After the closure work of
+\cite{CascadeG64aClosure, CascadeHrdrClosure,
+CascadeHlocClosure, CascadeHFICClosure}, the capstone's
+hypothesis stack has narrowed substantially: H-meas is a
+theorem (G6.4-a closed, 386 cases); H-rdr is closed by
+reduction to Theorem P-A; H-loc and H-FIC are reduced to
+smaller residual sub-gaps (G-loc-a, G-FIC-a, G-FIC-b), each
+lemma-grade. The remaining capstone-introduced hypothesis is
+H-lift-fin (sheaf-theoretic bridge refinement), plus the
+three lemma-grade residuals. The programme-inherited
+hypothesis H-grad is \textbf{frame-level closed at the full
+$\widehat{\Z[\varphi]^6}$ level} as of 2026-04-24 via
+H-grad-1's sim-closure (builds B1--B5 exact sims, B6
+proof-sketch at $G_p$ level; see \cite{CascadeHGrad1}). The
+two residuals against full unconditional status are the
+cascade-specific $G_2$/octonion pullback $\kappa$ (outlined
+but not fully constructed) and the formal equivalence
+theorem that $G_p$-canonicality suffices for the full P-A
+statement. H-grad remains unconditional at the Fano
+$(\Z/2)^3$ level sufficient for all measurement-theoretic
+physics (ARIA, Observer rung, Paper~XXXIII). Note that
+Theorems~\ref{thm:closure-saturation} and \ref{thm:selection}
+inherit full-$\widehat{\Z[\varphi]^6}$-level conditionality
+from P-A through the closure-data saturation argument; they
+are \emph{not} unconditional at the Fano level alone.
+
+%=====================================================================
+\section{The Category of Rung-Structures}
+\label{sec:cat-C}
+%=====================================================================
+
+We work with a category whose objects are rung-subsets of the
+VFD cascade FAN equipped with their inherited closure conditions,
+and whose morphisms are closure-preserving inclusions. The
+definitions below specialise the standing FAN data of
+\cite[\S 1.2]{CascadeObserverQueryAlgebra}.
+
+\subsection{The FAN and its rung set}
+
+\begin{definition}[Cascade FAN, recap from \cite{CascadeCompletenessAudit}]
+\label{def:rungs}
+Let $\Rungs := \{E_8, H_4, D_4, O, F_{16}, L_{40}, U_0\}$ with
+partial order $r \leq r'$ iff $r$ embeds as a Lie-algebra or
+Coxeter-group substructure of $r'$. Under this order, $E_8$ is
+the top element and the other six rungs are pairwise
+incomparable leaves:
+\[
+    \begin{tikzcd}
+    & & E_8 \arrow[ddllll, no head] \arrow[ddll, no head]
+        \arrow[dd, no head] \arrow[ddrr, no head]
+        \arrow[ddrrrr, no head] \arrow[ddrrrrrr, no head] & & & & \\
+    & & & & & & \\
+    H_4 & & D_4 & & O & & F_{16} \hspace{1em} L_{40} \hspace{1em} U_0
+    \end{tikzcd}
+\]
+(schematic; the fan has six incomparable leaves below $E_8$,
+laid out above with the last three compressed for space).
+\end{definition}
+
+\begin{definition}[Closure conditions]
+\label{def:closure-cond}
+For each $r \in \Rungs$, its closure condition $C_r$ is the
+algebraic or geometric constraint characterising rung-$r$ substrate
+patches, imported from
+\cite[Table in \S 1.3]{CascadeObserverQueryAlgebra}:
+\begin{itemize}
+\item $C_{E_8}$: icosian construction $(x, \sigma(x)) \in I \times I
+  \subset \R^4 \oplus \R^4$;
+\item $C_{H_4}$: $H_4$-root action preserves the patch;
+\item $C_{D_4}$: $D_4$-Weyl action preserves the patch;
+\item $C_{O}$: observer constraint, $\hat o \in S^7$ with octonion
+  alternative law (\cite{CascadeObserverQueryAlgebra} E6);
+\item $C_{F_{16}}$: $16$-dimensional $\mathrm{Cl}(1,3)$ signature
+  selection;
+\item $C_{L_{40}}$: icos-$40$ configuration (biological rung);
+\item $C_{U_0}$: trivial (all patches collapse to a point).
+\end{itemize}
+Each $C_r$ determines a subgroupoid $\Gcal_r \subseteq \Gcal$ of
+the meta-layer matching groupoid
+\cite{CascadeMetaLayer}.
+\end{definition}
+
+\subsection{Rung-structures as objects}
+
+\begin{definition}[Rung-structure]
+\label{def:rung-structure}
+A \emph{rung-structure} is a pair $S = (\underline{S},
+\Phi_S)$ where:
+\begin{itemize}
+\item $\underline{S} \subseteq \Rungs$ is a non-empty up-closed
+  subset: if $r \in \underline{S}$ and $r \leq r'$, then $r'
+  \in \underline{S}$;
+\item $\Phi_S$ is the \emph{installed closure data}: for each
+  $r \in \underline{S}$, a specified subgroupoid
+  $\Gcal_r^S \subseteq \Gcal_r$ (the rung-$r$ subgroupoid
+  accessed by $S$), compatible in the sense that for $r \leq r'$
+  with both in $\underline{S}$, the corresponding restriction maps
+  $\Gcal_{r'}^S \to \Gcal_r^S$ commute with the FAN's restriction
+  structure.
+\end{itemize}
+We abuse notation and write $S$ for $(\underline{S}, \Phi_S)$
+when context is clear.
+\end{definition}
+
+\begin{remark}[Up-closure is automatic on the FAN]
+\label{rmk:up-closed}
+Under the order of Definition~\ref{def:rungs} ($E_8$ top, six
+incomparable leaves below), up-closure of
+$\underline{S} \subseteq \Rungs$ means: $r \in \underline{S}$
+and $r \leq r'$ imply $r' \in \underline{S}$. Because every
+leaf is $\leq E_8$, any non-empty $\underline{S}$ containing
+at least one leaf automatically contains $E_8$. The up-closure
+requirement therefore reduces to: \emph{non-empty
+$\underline{S}$ is either $\{E_8\}$, $\{E_8\} \cup L$ for some
+non-empty $L \subseteq \text{leaves}$, or $\Rungs$ itself}.
+Def.~\ref{def:rung-structure}'s non-emptiness clause excludes
+the empty set; no other rung-subset is up-closed.
+\end{remark}
+
+\begin{remark}[Role of $\Phi_S$]
+\label{rmk:phi-data}
+The installed closure data $\Phi_S$ carries \emph{which parts}
+of each rung's closure are actually accessed by the rung-
+structure $S$. For the maximum-access choice
+$\Gcal_r^S = \Gcal_r$ for all $r$, $S$ is the full rung-
+structure on $\underline{S}$; restricted choices correspond to
+observer instantiations that access only some rung-$r$ patches.
+\end{remark}
+
+\subsection{Morphisms}
+
+\begin{definition}[Closure-preserving inclusion]
+\label{def:morphism}
+A morphism $f \colon S \to S'$ of rung-structures is an inclusion
+$\underline{S} \subseteq \underline{S'}$ together with, for each
+$r \in \underline{S}$, an inclusion $\Gcal_r^S \hookrightarrow
+\Gcal_r^{S'}$ compatible with the FAN restriction maps. The
+composition of morphisms is the obvious composition of
+inclusions; identities are identity inclusions.
+\end{definition}
+
+\begin{definition}[The category $\catC$]
+\label{def:catC}
+Let $\catC$ denote the category whose objects are rung-structures
+(Definition~\ref{def:rung-structure}) and whose morphisms are
+closure-preserving inclusions (Definition~\ref{def:morphism}).
+\end{definition}
+
+\subsection{Categorical structure of $\catC$}
+
+The following structural properties will be needed to invoke
+Ad\'amek's theorem in Section~\ref{sec:existence}.
+
+\begin{proposition}[Terminal object]
+\label{prop:terminal}
+The category $\catC$ has a terminal object $\mathbf{1}_\catC :=
+(\Rungs, \Phi_{\max})$, where $\Phi_{\max}$ assigns $\Gcal_r^{\mathbf 1} =
+\Gcal_r$ for each $r$. Equivalently, $\mathbf{1}_\catC$ is the
+fully-instantiated rung-structure with full access to every rung.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+For any rung-structure $S$, the inclusion $\underline{S}
+\subseteq \Rungs$ together with the inclusions $\Gcal_r^S
+\hookrightarrow \Gcal_r = \Gcal_r^{\mathbf{1}}$ defines a
+morphism $S \to \mathbf{1}_\catC$. Uniqueness of this morphism
+follows from the fact that there is only one such inclusion of
+each component. Functoriality of the FAN restriction maps makes
+the composition compatible.
+\end{proof}
+
+\begin{proposition}[Pullbacks along monomorphisms]
+\label{prop:pullbacks}
+For any $f \colon S \to T$ and $g \colon S' \to T$ in $\catC$
+where $g$ is a monomorphism (inclusion as defined in
+Definition~\ref{def:morphism}), the pullback $S \times_T S'$
+exists and is computed pointwise: $(S \times_T S')_{\mathrm{rung}} =
+\underline{S} \cap \underline{S'}$, and
+$\Gcal_r^{S \times_T S'} = \Gcal_r^S \cap \Gcal_r^{S'}$ for
+each $r \in \underline{S} \cap \underline{S'}$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The intersection $\Gcal_r^S \cap \Gcal_r^{S'}$ is a subgroupoid
+of $\Gcal_r$ because the intersection of subgroupoids is a
+subgroupoid. The up-closure of $\underline{S} \cap
+\underline{S'}$ is inherited from the up-closure of
+$\underline{S}$ and $\underline{S'}$ (intersection of
+up-closed sets is up-closed). The universal property of
+pullbacks is the usual one for concrete intersection-like
+constructions.
+\end{proof}
+
+\begin{proposition}[Binary products in $\catC$]
+\label{prop:products}
+$\catC$ has binary products: for any $S, S' \in \catC$, the
+product $S \times S'$ exists and is given by the pullback along
+the terminal projections,
+\[
+    S \times S' \;=\; S \times_{\mathbf{1}_\catC} S',
+\]
+computed pointwise as
+$(S \times S')_{\mathrm{rung}} = \underline{S} \cap
+\underline{S'}$ and $\Gcal_r^{S \times S'} = \Gcal_r^S \cap
+\Gcal_r^{S'}$ for each $r \in \underline{S} \cap
+\underline{S'}$.
+\end{proposition}
+
+\begin{proof}
+The terminal maps $S \to \mathbf{1}_\catC$ and $S' \to
+\mathbf{1}_\catC$ are both monomorphisms
+(inclusions into the fully-instantiated rung-structure), so
+Proposition~\ref{prop:pullbacks} applies. The pullback along
+monomorphisms-to-terminal is, in any category with terminal
+object and pullbacks-along-monos, the binary product. The
+universal property is inherited from the pullback.
+\end{proof}
+
+\begin{corollary}[Finite products and small products of
+  $F$-iterates]
+\label{cor:finite-products}
+Finite products in $\catC$ exist (by iterating
+Proposition~\ref{prop:products}), and the countable limit of the
+descending $F$-iterate chain $X \times F(X) \times F^2(X) \times
+\cdots$ from any $X \in \catC$ exists in $\catC$ by
+Proposition~\ref{prop:adamek-sufficient}.
+\end{corollary}
+
+\begin{proof}
+Immediate from Propositions~\ref{prop:products} and
+\ref{prop:adamek-sufficient}.
+\end{proof}
+
+\begin{proposition}[Filtered colimits along chains of inclusions]
+\label{prop:filtered-colim}
+The category $\catC$ admits colimits of $\omega$-chains of
+monomorphisms: if $S_0 \hookrightarrow S_1 \hookrightarrow S_2
+\hookrightarrow \cdots$ is a chain of inclusions, then the
+colimit $S_\infty := \mathrm{colim}_n S_n$ exists with
+$\underline{S_\infty} = \bigcup_n \underline{S_n}$ and
+$\Gcal_r^{S_\infty} = \bigcup_{n : r \in \underline{S_n}}
+\Gcal_r^{S_n}$ for each $r \in \underline{S_\infty}$. Because
+$\Rungs$ is finite, the chain stabilises after at most $|\Rungs|
+= 7$ strict inclusions.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Union of up-closed sets is up-closed; union of nested
+subgroupoids is a subgroupoid (groupoid axioms are closed under
+directed unions). Universal property of the colimit is the
+standard one. Stabilisation is by finiteness of $\Rungs$.
+\end{proof}
+
+\begin{remark}[$\catC$ is essentially finite in the rung-index
+  direction, potentially large in the $\Gcal_r$ direction]
+\label{rmk:size}
+The rung-index $\underline{S}$ ranges over a finite poset of
+$\leq 2^{|\Rungs|} = 128$ up-closed subsets. The closure-data
+component $\Phi_S$ ranges over subgroupoids of each $\Gcal_r$,
+which is a large class. This dual structure is what makes the
+self-inquiry functor $F$ (Section~\ref{sec:F}) have non-trivial
+dynamics: $F$ acts non-trivially on the $\Gcal_r$ component even
+within a fixed $\underline{S}$.
+\end{remark}
+
+\subsection{Sufficiency for Ad\'amek}
+
+\begin{proposition}[$\catC$ supports Ad\'amek's theorem]
+\label{prop:adamek-sufficient}
+$\catC$ has a terminal object (Proposition~\ref{prop:terminal})
+and admits $\omega^{\mathrm{op}}$-limits (dual of
+Proposition~\ref{prop:filtered-colim} under the rung-finiteness
+remark, since descending chains also stabilise). These are the
+hypotheses of Ad\'amek's theorem
+\cite[Thm.~2.1]{Adamek1974, Rutten2000} for the existence of
+a final coalgebra of any endofunctor $F \colon \catC \to
+\catC$ preserving $\omega^{\mathrm{op}}$-limits.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Dualise Proposition~\ref{prop:filtered-colim}: a descending
+chain $S_0 \hookleftarrow S_1 \hookleftarrow S_2 \hookleftarrow
+\cdots$ of inclusions stabilises in the rung-index by finiteness
+of $\Rungs$; the $\Gcal_r^{S_n}$ components descend as a nested
+intersection $\bigcap_n \Gcal_r^{S_n}$, which is a subgroupoid
+(intersection of subgroupoids). The limit is this pointwise
+intersection. Universal property is standard. The terminal
+object serves as the starting point of the iteration chain.
+\end{proof}
+
+%=====================================================================
+\section{The Self-Inquiry Functor $F$}
+\label{sec:F}
+%=====================================================================
+
+This section defines the endofunctor $F : \catC \to \catC$ whose
+final coalgebra will be identified with the VFD cascade
+(Section~\ref{sec:identification}). Informally, $F(S)$ is the
+smallest rung-structure capable of \emph{asking the question
+``what is $S$?''}: it must host $S$ as a substructure, contain the
+measurement-capable Observer rung $O$, and supply enough closure
+data to refer to $S$'s observables as query-algebra elements.
+
+The precise content of the word ``ask'' is supplied by the query
+algebra $\Qalg_S \subseteq \Gamma(\Gcal, \Fcal)$ of
+\cite[\S\S2--3]{CascadeObserverQueryAlgebra}: $\Qalg_S$ is the
+subalgebra of substrate-catalogue sections whose evaluation
+requires only the closures $\{C_r : r \in \underline{S}\}$, and
+an observer instantiating the rung-set $S$ can measure precisely
+those patches whose sheaf sections lie in $\Qalg_S$. In this
+language, $F(S)$ is the minimum rung-structure $T$ satisfying
+$\Qalg_S \subseteq \Qalg_T$ with $\Qalg_T$ additionally containing
+\emph{measurement outcomes} for the $\Qalg_S$-observables — i.e.
+$T$ can not only refer to $S$'s observables but resolve them.
+
+\subsection{Why the Observer rung is forced}
+\label{subsec:O-forced}
+
+The following is now a theorem of the query-algebra programme
+(Gap G6.4 closed), inherited from the Observer-rung measurement-
+bridge note:
+
+\begin{proposition}[Observer-rung necessity; $\Qalg_O \cong
+  \mathrm{Meas}(S^7, \sigma)$ at theorem-grade after G6.4-a
+  closure]
+\label{thm:O-necessary}
+Import the bridge of \cite{CascadeQOBridge} at theorem-grade,
+using the G6.4-a closure of \cite{CascadeG64aClosure} (386
+computational Fano-triad sign cases, all pass). For a
+rung-structure $T \in \catC$, $\Qalg_T$ contains
+measurement-outcome sections (in the sense of
+\cite{PaperXXXIII}) iff $O \in \underline{T}$. The Observer-
+rung query algebra is isomorphic to the measurement-outcome
+algebra, $\Qalg_O \cong \mathrm{Meas}(S^7, \sigma)$, as
+$\R$-algebras with involution, via Fano-plane octonion
+composition matched to $\sigma$-projection parenthesisation.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The isomorphism $\Qalg_O \cong \mathrm{Meas}(S^7, \sigma)$ is
+stated at lemma-grade in \cite{CascadeQOBridge} (working note;
+closing G6.4 in the sense that this note records the
+isomorphism, with a remaining sign-check sub-gap G6.4-a).
+Taking the isomorphism as a standing input, the forward
+direction (only-if) follows: if $O \in \underline{T}$, then
+$\Qalg_O \subseteq \Qalg_T$
+(Proposition~\ref{prop:Q-monotone}), hence $\Qalg_T$ contains
+the measurement-outcome sub-algebra.
+
+The converse (if $\Qalg_T$ contains measurement outcomes then
+$O \in \underline{T}$): measurement requires the octonion
+alternative-law pairing $\Qalg_O \times \Fcal \to \Qalg_O$,
+which by the classification in \cite{CascadeQOBridge} is
+provided only by the closure condition $C_O$. No other rung's
+closure produces this pairing, so the rung-index must contain
+$O$. With G6.4-a closed (\cite{CascadeG64aClosure}), this
+argument imports \cite{CascadeQOBridge}'s classification at
+theorem grade.
+\end{proof}
+
+Consequently, any rung-structure from which $S$ can be
+\emph{queried}, not merely contained, must satisfy $O \in
+\underline{T}$. The self-inquiry functor $F$ enforces this
+minimum.
+
+\subsection{Definition of $F$ on objects}
+\label{subsec:F-objects}
+
+\begin{definition}[Self-inquiry functor, objects]
+\label{def:F-objects}
+Let $S = (\underline{S}, \Phi_S) \in \catC$. Its \emph{self-inquiry
+closure} is the rung-structure
+\[
+    F(S) = (\underline{F(S)}, \Phi_{F(S)})
+\]
+defined by:
+\begin{enumerate}
+\item \textbf{Underlying rung-set.} The up-closure of
+  $\underline{S} \cup \{O\}$ in $\Rungs$:
+  \[
+      \underline{F(S)} := \mathrm{UC}(\underline{S} \cup \{O\})
+      = \underline{S} \cup \{O, E_8\}
+  \]
+  (the second equality uses $O \leq E_8$ and
+  Remark~\ref{rmk:up-closed}).
+
+\item \textbf{Installed closure data.} For each $r \in
+  \underline{F(S)}$, specify $\Gcal_r^{F(S)} \subseteq \Gcal_r$
+  as follows:
+  \begin{enumerate}
+  \item For $r \in \underline{S}$ with $r \ne O, E_8$:
+    $\Gcal_r^{F(S)} := \Gcal_r^S$ (inherit what $S$ itself
+    accesses).
+  \item For $r = O$:
+    $\Gcal_O^{F(S)} := \Gcal_O^{(S)}$, where $\Gcal_O^{(S)}$ is
+    the minimum subgroupoid of $\Gcal_O$ such that the induced
+    $\Qalg_O^{F(S)}$ contains a measurement-outcome section for
+    every generating observable of $\Qalg_S$
+    (Definition~\ref{def:min-O}).
+  \item For $r = E_8$: $\Gcal_{E_8}^{F(S)}$ is the subgroupoid
+    generated by the FAN-restriction preimages of the
+    $\{\Gcal_{r'}^{F(S)} : r' \in \underline{F(S)}, r' \ne E_8\}$
+    under the sheaf-compatibility conditions of
+    Definition~\ref{def:rung-structure}.
+  \end{enumerate}
+  If $O \in \underline{S}$ already, the clause in (b) replaces
+  $\Gcal_O^S$ by its extension $\Gcal_O^{(S)} \supseteq
+  \Gcal_O^S$, which may or may not be a strict extension
+  (Remark~\ref{rmk:idempotence-base}).
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Minimum measurement-supporting subgroupoid
+  $\Gcal_O^{(S)}$ — generator-independent form]
+\label{def:min-O}
+For $S \in \catC$, define
+\[
+    \Gcal_O^{(S)} \;:=\; \bigvee_{g \in \Qalg_S}
+      \Gcal_O^{(g)} \;\subseteq\; \Gcal_O,
+\]
+the join (generated subgroupoid) of all $g$-regions ranging
+over the \emph{full} subalgebra $\Qalg_S$, not a choice of
+generating set. Each $g \in \Qalg_S$ is a sheaf section whose
+measurement, via $\sigma$-projection at an octonion direction
+$\hat o$, lies in $\Qalg_O$ iff $\hat o$ lies in the closure-
+compatible region $\mathcal{O}(g) \subseteq S^7$; its lift to
+$\Gcal_O$ generates $\Gcal_O^{(g)}$.
+\end{definition}
+
+\begin{remark}[Why the join is over all of $\Qalg_S$]
+\label{rmk:gen-independence}
+The join over all $g \in \Qalg_S$ is well-defined (join of
+subgroupoids is a subgroupoid) and by construction
+generator-independent. This removes any dependency of
+$\Gcal_O^{(S)}$ on a choice of generating set and makes the
+well-definedness of $F$ independent of Gap G6.1 of
+\cite{CascadeObserverQueryAlgebra}.
+\end{remark}
+
+\begin{hypothesis}[H-lift-fin: finite-cover morphism bridge]
+\label{hyp:lift}
+For every morphism $\gamma \in \Gcal_O$, there exists a
+\emph{finite subset} $\{g_1, \ldots, g_k\} \subset \Qalg_O$
+such that $\gamma \in \bigvee_{i=1}^k \Gcal_O^{(g_i)}$.
+\end{hypothesis}
+
+\begin{remark}[Derivation route for H-lift-fin — sketch only]
+\label{rmk:H-lift-status}
+An earlier version of this paper claimed H-lift-fin as a
+derived theorem from \cite{CascadeQOBridge}; that claim was
+premature. The bridge is an $\R$-algebra-with-involution
+isomorphism $\Qalg_O \cong \mathrm{Meas}(S^7, \sigma)$; it
+does not by itself give a morphism-to-support correspondence
+$\gamma \mapsto \hat o_\gamma$, nor does local compactness of
+$S^7$ alone supply a finite cover by observables actually in
+$\Qalg_O$ (characteristic functions $\mathbf{1}_{U_i}$ need not
+lie in the image of the bridge).
+
+The correct derivation route involves \emph{(i)} establishing a
+local observable basis of $\Qalg_O$ indexed by $S^7$-patches
+(beyond the algebra-level bridge, this needs a refinement of
+the bridge to a \emph{sheaf-theoretic} correspondence), and
+\emph{(ii)} a morphism-to-support lemma for $\Gcal_O$ that
+supplies the finite cover. Both steps are plausible under the
+bridge infrastructure of \cite{CascadeQOBridge} (which is
+itself marked ``working-note, lemma-grade'') but require
+formalisation beyond the current programme state. H-lift-fin
+therefore remains a hypothesis; its derivation is flagged as a
+follow-up item in Section~\ref{sec:open}.
+\end{remark}
+
+\begin{lemma}[$S^7$-coverage at the terminal, under H-lift-fin]
+\label{lem:S7-coverage}
+Assume Hypothesis~\ref{hyp:lift} (H-lift-fin). Then
+$\Gcal_O^{(\mathbf{1}_\catC)} = \Gcal_O$.
+\end{lemma}
+
+\begin{proof}
+Fix any morphism $\gamma \in \Gcal_O$. By H-lift-fin, there
+exist $g_1, \ldots, g_k \in \Qalg_O \subseteq \Qalg_{\mathbf{1}}$
+with $\gamma \in \bigvee_i \Gcal_O^{(g_i)}$. Each
+$\Gcal_O^{(g_i)}$ is contained in the global join
+$\Gcal_O^{(\mathbf{1}_\catC)} = \bigvee_{g \in
+\Qalg_{\mathbf{1}}} \Gcal_O^{(g)}$. Hence $\gamma \in
+\Gcal_O^{(\mathbf{1}_\catC)}$. Since $\gamma$ was arbitrary,
+$\Gcal_O^{(\mathbf{1}_\catC)} \supseteq \Gcal_O$. The reverse
+inclusion $\Gcal_O^{(\mathbf{1}_\catC)} \subseteq \Gcal_O$ is
+immediate from Definition~\ref{def:min-O}.
+\end{proof}
+
+\begin{remark}[$F(\mathbf{1}_\catC)$ and $F$ of leaves]
+\label{rmk:idempotence-base}
+When $S = \mathbf{1}_\catC$ (the terminal object, full access),
+$\Gcal_O^{(S)} = \Gcal_O$ and $F(\mathbf{1}_\catC) =
+\mathbf{1}_\catC$. For $S = (\{U_0, E_8\}, \Phi_{\min})$ (pure
+Unity rung), $\Qalg_S$ is the constants and $\Gcal_O^{(S)}$ is
+the subgroupoid generated by the identity at any reference
+$\hat o_0 \in S^7$; $F(S)$ adjoins the Observer rung minimally,
+giving a strictly larger rung-structure than $S$. Both boundary
+cases match the intuitive ``$F$ adds observation-capability if
+and only if it is missing.''
+\end{remark}
+
+\subsection{Definition of $F$ on morphisms}
+\label{subsec:F-morphisms}
+
+\begin{definition}[Self-inquiry functor, morphisms]
+\label{def:F-morphisms}
+Let $f \colon S \to S'$ be a morphism in $\catC$, i.e. an inclusion
+$\underline{S} \subseteq \underline{S'}$ together with inclusions
+$\Gcal_r^S \hookrightarrow \Gcal_r^{S'}$ for $r \in \underline{S}$.
+Define $F(f) \colon F(S) \to F(S')$ by:
+\begin{itemize}
+\item on the rung-index component:
+  $\underline{F(S)} = \underline{S} \cup \{O, E_8\} \subseteq
+  \underline{S'} \cup \{O, E_8\} = \underline{F(S')}$;
+\item on the closure-data component, for each $r \in
+  \underline{F(S)}$, an inclusion
+  $\Gcal_r^{F(S)} \hookrightarrow \Gcal_r^{F(S')}$ supplied as
+  follows:
+  \begin{enumerate}
+  \item $r \in \underline{S}$, $r \ne O, E_8$: inherit the
+    inclusion $\Gcal_r^S \hookrightarrow \Gcal_r^{S'}$ from $f$;
+  \item $r = O$: $\Gcal_O^{(S)} \hookrightarrow \Gcal_O^{(S')}$ is
+    the inclusion induced by $\Qalg_S \subseteq \Qalg_{S'}$
+    (Proposition~\ref{prop:Q-monotone}): each element $g \in
+    \Qalg_S$ maps into $\Qalg_{S'}$, and hence the lift
+    $\Gcal_O^{(g)}$ maps into $\Gcal_O^{(g)}$ as a subgroupoid of
+    the larger join taken over $\Qalg_{S'}$;
+  \item $r = E_8$: inclusion is the restriction-compatibility
+    extension of the rung-index inclusions in (a)--(b), using
+    Definition~\ref{def:rung-structure}'s closure-compatibility.
+  \end{enumerate}
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[Monotonicity of $\Qalg$]
+\label{prop:Q-monotone}
+If $f \colon S \hookrightarrow S'$ is a morphism in $\catC$, then
+$\Qalg_S \subseteq \Qalg_{S'}$ as subalgebras of
+$\Gamma(\Gcal, \Fcal)$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+From Definitions 2.1, 3.1 of
+\cite{CascadeObserverQueryAlgebra}: $\Qalg_S$ is generated by
+$\{\Qalg_r : r \in \underline{S}\}$ with closure data
+$\Gcal_r^S$. Under the inclusion $f$, each generator is mapped
+to the corresponding generator of $\Qalg_{S'}$ with the inclusion
+$\Gcal_r^S \hookrightarrow \Gcal_r^{S'}$. The generated subalgebra
+inclusion follows.
+\end{proof}
+
+\subsection{$F$ is an endofunctor}
+\label{subsec:F-functor}
+
+\begin{theorem}[Functoriality]
+\label{thm:F-functor}
+Definitions~\ref{def:F-objects} and~\ref{def:F-morphisms} produce
+an endofunctor $F \colon \catC \to \catC$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+\textbf{(a) $F(S) \in \catC$.} The underlying rung-set
+$\underline{F(S)}$ is up-closed by construction. Each
+$\Gcal_r^{F(S)}$ is a subgroupoid of $\Gcal_r$: for $r \ne O,
+E_8$ by hypothesis (inherited from $S$); for $r = O$ by the
+join-of-subgroupoids-is-subgroupoid property
+(Definition~\ref{def:min-O}); for $r = E_8$ by generated-
+subgroupoid construction. Closure-compatibility between rungs
+is ensured by the explicit $E_8$-restriction clause.
+
+\textbf{(b) $F(f) \in \catC(F(S), F(S'))$.} The rung-index inclusion
+is well-typed. The closure-data inclusions are well-typed
+componentwise by Definition~\ref{def:F-morphisms}. Closure-
+compatibility with the FAN restriction maps follows from the
+commutativity of inclusions across restriction.
+
+\textbf{(c) Identity.} $F(\mathrm{id}_S)$ acts as the identity on
+$\underline{F(S)}$ and, componentwise, as identity on each
+$\Gcal_r^{F(S)}$. Hence $F(\mathrm{id}_S) = \mathrm{id}_{F(S)}$.
+
+\textbf{(d) Composition.} For $f \colon S \to S'$ and $g \colon S'
+\to S''$, the composite $F(g) \circ F(f)$ equals $F(g \circ f)$
+componentwise: on the rung-index it is the composite inclusion
+$\underline{F(S)} \subseteq \underline{F(S'')}$; on each
+closure-data component it is the composite of the individual
+inclusions, and these agree with the inclusions $F(g \circ f)$
+produces by construction of Definition~\ref{def:F-morphisms}.
+\end{proof}
+
+\subsection{Monotonicity}
+\label{subsec:F-monotone}
+
+\begin{proposition}[Monotonicity of $F$]
+\label{prop:F-monotone}
+If $S \hookrightarrow S'$ is a monomorphism (inclusion) in $\catC$,
+then $F(S) \hookrightarrow F(S')$ is also a monomorphism. More
+strongly, the assignment $S \mapsto F(S)$ is order-preserving with
+respect to the closure-preserving-inclusion preorder on $\catC$.
+\end{proposition}
+
+\begin{proof}
+Immediate from Definition~\ref{def:F-morphisms}: the rung-index
+inclusion is preserved, and each closure-data component inclusion
+is preserved by construction. Composition with
+Theorem~\ref{thm:F-functor}(d) gives the order-preserving
+property.
+\end{proof}
+
+\begin{corollary}[Idempotence on $\mathbf{1}_\catC$, under
+  H-lift-fin]
+\label{cor:terminal-fixed}
+Assume Hypothesis~\ref{hyp:lift} (H-lift-fin). Then
+$F(\mathbf{1}_\catC) = \mathbf{1}_\catC$, so the terminal
+object is a (strict) fixed point of $F$.
+\end{corollary}
+
+\begin{proof}
+The rung-index of $F(\mathbf{1}_\catC)$ adds $\{O, E_8\}$ to
+$\underline{\mathbf{1}_\catC} = \Rungs$, leaving it unchanged.
+For the closure data: on non-Observer rungs, $F$ inherits
+$\Gcal_r^{\mathbf{1}} = \Gcal_r$ directly
+(Definition~\ref{def:F-objects}, clause (a)). On the Observer
+rung, Lemma~\ref{lem:S7-coverage} (under H-lift-fin) gives
+$\Gcal_O^{(\mathbf{1})} = \Gcal_O$. On $E_8$, the FAN-
+restriction construction produces $\Gcal_{E_8}^{F(\mathbf{1})}
+= \Gcal_{E_8}$ by pulling back the maximal components below.
+Hence $F(\mathbf{1}_\catC) = \mathbf{1}_\catC$ componentwise.
+\end{proof}
+
+\subsection{Preservation of $\omega^{\mathrm{op}}$-limits}
+\label{subsec:F-omega-limits}
+
+This is the critical technical input for the Ad\'amek-theorem
+application in Section~\ref{sec:existence}. The one delicate
+step is commutation of the generated-subgroupoid operation on
+the Observer rung with intersection along descending chains;
+we formalise this as a named hypothesis imported from the
+query-algebra programme and prove the theorem conditional on
+it.
+
+\begin{hypothesis}[H-FIC: Filtered-Intersection-Commutation on
+  the Observer and $E_8$ rungs]
+\label{hyp:FIC}
+For any descending chain $(S_n)_{n \in \N}$ of rung-structures
+in $\catC$ with pointwise-intersection limit $S_\infty$, both
+of the following hold as subgroupoid identities:
+\begin{enumerate}
+\item[(H-FIC-O)]
+$\Gcal_O^{(S_\infty)} = \bigcap_{n \in \N} \Gcal_O^{(S_n)}$
+in $\Gcal_O$.
+\item[(H-FIC-$E_8$)]
+$\Gcal_{E_8}^{F(S_\infty)} = \bigcap_{n \in \N}
+\Gcal_{E_8}^{F(S_n)}$
+in $\Gcal_{E_8}$.
+\end{enumerate}
+\end{hypothesis}
+
+\begin{remark}[H-FIC reduced to G-FIC-a and G-FIC-b via
+  support-projection]
+\label{rmk:FIC-derivation-route}
+\cite{CascadeHFICClosure} reduces H-FIC to smaller residual
+sub-gaps via a support-projection construction
+$\pi_{S^7} \colon \Gcal_O \to 2^{S^7}$ induced by
+Definition~\ref{def:min-O}: each $g \in \Qalg_S$ lifts to
+$\Gcal_O^{(g)}$ via its support region $\mathcal{O}(g)
+\subseteq S^7$, so $\Gcal_O^{(S)} =
+\pi_{S^7}^{-1}(\mathrm{Pow}(\mathcal{O}(\Qalg_S)))$. Preimages
+commute with arbitrary intersections (set-theoretic), so
+H-FIC-O reduces to an $S^7$-support-region descending-intersection
+identity (\textbf{G-FIC-a}), and the rung-finiteness of
+$\Rungs$ stabilises the rung-index chain, leaving per-rung
+closure-data chains reducible via standard Čech-sheaf
+limit-preservation (Kellendonk-Lenz-Savinien 2006). H-FIC-$E_8$
+similarly reduces to a generated-subgroupoid-commutes-with-
+intersection statement for FAN-restriction preimages
+(\textbf{G-FIC-b}, reducible to MacLane Ch.~XII finite-word
+factorisation stability). Both G-FIC-a and G-FIC-b are
+lemma-grade; estimated closure of both is $1$--$2$ weeks.
+\end{remark}
+
+\begin{theorem}[$F$ preserves $\omega^{\mathrm{op}}$-limits,
+  under G-FIC-a + G-FIC-b]
+\label{thm:F-limits}
+Assume residual sub-gaps G-FIC-a and G-FIC-b of
+\cite{CascadeHFICClosure} (the reductions of
+Hypothesis~\ref{hyp:FIC} via the support-projection argument;
+see Remark~\ref{rmk:FIC-derivation-route}). For any descending
+chain of monomorphisms
+\[
+    S_0 \hookleftarrow{} S_1 \hookleftarrow{} S_2
+      \hookleftarrow{} \cdots
+\]
+in $\catC$ with limit $S_\infty := \lim_n S_n$, we have
+\[
+    F(S_\infty) \;\cong\; \lim_n F(S_n)
+\]
+canonically in $\catC$.
+\end{theorem}
+
+\begin{proof}[Proof]
+Work componentwise.
+
+\textbf{(i) Rung-index stabilisation.} Since $\Rungs$ is finite
+($|\Rungs| = 7$), the rung-index sequence
+$\underline{S_0} \supseteq \underline{S_1} \supseteq \cdots$ is
+eventually constant: there exists $N \in \N$ with
+$\underline{S_n} = \underline{S_N}$ for all $n \geq N$. Call the
+stable value $\underline{S_\infty}$. Then
+\begin{align*}
+    \underline{F(S_\infty)} &= \underline{S_\infty} \cup \{O, E_8\}
+      = \underline{S_N} \cup \{O, E_8\} \\
+    &= \underline{F(S_N)} = \lim_n \underline{F(S_n)}
+\end{align*}
+as eventually-constant sequences.
+
+\textbf{(ii) Closure-data preservation off the Observer rung.} For
+$r \in \underline{S_\infty}$ with $r \ne O, E_8$, the closure-data
+component is
+\[
+    \Gcal_r^{F(S_\infty)} = \Gcal_r^{S_\infty}
+      = \bigcap_n \Gcal_r^{S_n} = \bigcap_n \Gcal_r^{F(S_n)}
+\]
+using the defining identity $\Gcal_r^{F(T)} = \Gcal_r^T$ for $r
+\ne O, E_8$ (Definition~\ref{def:F-objects}, clause (a)) and
+Proposition~\ref{prop:adamek-sufficient} (intersection of
+subgroupoids along a descending chain).
+
+\textbf{(iii) Closure-data preservation on the Observer rung.}
+For $r = O$, we must show
+\[
+    \Gcal_O^{(S_\infty)}
+    \;=\; \bigcap_n \Gcal_O^{(S_n)}.
+\]
+By the support-projection reduction of
+Remark~\ref{rmk:FIC-derivation-route}, this identity follows
+from G-FIC-a (our assumed residual sub-gap): preimages
+$\pi_{S^7}^{-1}$ commute with arbitrary intersections, and
+G-FIC-a gives the $S^7$-support-region descending-intersection
+identity $\mathcal{O}(\Qalg_{S_\infty}) = \bigcap_n
+\mathcal{O}(\Qalg_{S_n})$. Combining these yields
+$\Gcal_O^{(S_\infty)} = \bigcap_n \Gcal_O^{(S_n)}$.
+
+\textbf{(iv) Closure-data preservation on $E_8$.} The $r = E_8$
+case follows from G-FIC-b (our assumed residual sub-gap):
+FAN-restriction preimages from leaf rungs commute with
+intersection by finite-word-factorisation stability
+(\cite{CascadeHFICClosure}), giving $\Gcal_{E_8}^{F(S_\infty)} =
+\bigcap_n \Gcal_{E_8}^{F(S_n)}$.
+
+\textbf{(v) Universal property.} The data assembled in (i)--(iv)
+is, componentwise, the limit of the diagram $(F(S_n))_n$ in the
+category of subgroupoid chains, and its universal property is
+inherited pointwise. Any cone over $(F(S_n))_n$ factors uniquely
+through the limit cone on each component, hence globally.
+\end{proof}
+
+\begin{corollary}[$F$ satisfies the Ad\'amek hypotheses, under
+  G-FIC-a + G-FIC-b]
+\label{cor:F-adamek-ready}
+Assume residual sub-gaps G-FIC-a and G-FIC-b
+(\cite{CascadeHFICClosure}). Then $F$ is an endofunctor of
+$\catC$ (Theorem~\ref{thm:F-functor}) preserving
+$\omega^{\mathrm{op}}$-limits
+(Theorem~\ref{thm:F-limits}) on the category $\catC$ that has
+$\omega^{\mathrm{op}}$-limits and a terminal object
+(Proposition~\ref{prop:adamek-sufficient}). Hence the hypotheses
+of Ad\'amek's final-coalgebra theorem
+\cite[Thm.~2.1]{Adamek1974}, \cite[Thm.~7.1]{Rutten2000} are
+satisfied.
+\end{corollary}
+
+\subsection{Examples}
+\label{subsec:F-examples}
+
+The following concrete computations ground the definition and
+support the identification theorem of
+Section~\ref{sec:identification}.
+
+\begin{enumerate}
+\item \textbf{$F(\mathbf{1}_\catC) = \mathbf{1}_\catC$}
+  (Corollary~\ref{cor:terminal-fixed}). The fully-instantiated
+  rung-structure is a strict fixed point; this is the endpoint of
+  $F$-iteration starting from any $S \subseteq \mathbf{1}_\catC$.
+
+\item \textbf{$F(\{U_0, E_8\}, \Phi_{\min})$.} Starting from the
+  Unity-only rung-structure (trivial closure, constants only),
+  $F$ adjoins $O$: $\underline{F(S)} = \{U_0, O, E_8\}$, and
+  $\Gcal_O^{(S)}$ is the reference-observer subgroupoid (the
+  minimum $\mathcal{O}$-region covering constants).
+
+\item \textbf{$F(\{H_4, E_8\}, \Phi_{QM})$.} A quantum-only
+  rung-structure. $F$ adjoins $O$ with $\Gcal_O^{(S)}$ the
+  subgroupoid supporting $\sigma$-projection of $H_4$-patches.
+  The result is a quantum-measurement-capable structure: the
+  minimum configuration for QM measurement, matching the
+  two-rung observer case $S = \{O, H_4\}$ of
+  \cite[\S3.2, \S6.2]{CascadeObserverQueryAlgebra}.
+
+\item \textbf{$F(\{O, H_4, E_8\}) = \{O, H_4, E_8\}$ strictly
+  iff $\Gcal_O^S$ already supports $H_4$-measurement.} When $S$
+  already contains $O$, $F(S)$ extends $\Gcal_O^S$ to
+  $\Gcal_O^{(S)}$; this is a strict extension iff $\Gcal_O^S$
+  does not already cover the $\mathcal{O}$-regions of all
+  sections in $\Qalg_S$. The fixed points of $F$ are exactly
+  the rung-structures whose $O$-access is already sufficient
+  for their own self-querying.
+\end{enumerate}
+
+\begin{remark}[The cascade as the grand fixed point]
+\label{rmk:cascade-fixed-point}
+Section~\ref{sec:identification} will prove that, among all
+rung-structures $S$ satisfying $F(S) \cong S$, the canonical
+limit of the Ad\'amek chain
+$\mathbf{1}_\catC \xleftarrow{} F(\mathbf{1}_\catC)
+\xleftarrow{} F^2(\mathbf{1}_\catC) \xleftarrow{} \cdots$
+is the $7$-rung VFD cascade FAN of
+\cite{CascadeCompletenessAudit}. Example~(4) above shows that
+the cascade's self-consistency is a statement about its
+$\Gcal_O$-component covering its entire $\Qalg$; this is
+precisely the content of the Observer rung as the ``rung that
+observes all the rungs below it.''
+\end{remark}
+
+\subsection{Discussion}
+\label{subsec:F-discussion}
+
+\paragraph{Philosophical reading.} $F$ encodes the act of
+self-inquiry: $F(S)$ is the structural minimum for $S$ to be
+asked about. Starting from any $S$, iterating $F$ builds the
+structural overhead of observing $S$, then of observing the
+observer of $S$, and so on; the fixed point is the structure
+that observes itself.
+
+\paragraph{Technical scope.} $F$ is defined for all $S \in \catC$
+including those not containing $O$; the closure-data clause for
+$r = O$ supplies the minimum subgroupoid whether or not $S$
+already accesses $O$. The functor and its downstream theorems
+use the residual sub-gaps G-FIC-a, G-FIC-b (reductions of
+Hypothesis~\ref{hyp:FIC}), Hypothesis~\ref{hyp:lift}
+(H-lift-fin), and G-loc-a (reduction of
+Hypothesis~\ref{hyp:loc}), together with H-grad and H-meas
+imported from \cite{CascadeAccessPrinciple} at full
+$\widehat{\Z[\varphi]^6}$ level. H-rdr
+(Hypothesis~\ref{hyp:rdr}) is closed by
+\cite{CascadeHrdrClosure} and no longer appears as a separate
+assumption. The full closure programme is catalogued in
+Section~\ref{sec:open}.
+
+\paragraph{Relation to $\mathbf{F1}$.} The scalar axiom $r = 1 +
+1/r$ is the numerical shadow of the operator $F$: it is the
+1-dimensional analogue in which the ``rung-structure'' is a
+single real number and ``self-inquiry closure'' is the map
+$r \mapsto 1 + 1/r$. The fixed point of this scalar map is
+$\varphi$; the fixed point of $F$ is $\Omegacap$, the full
+cascade. Section~\ref{sec:connection} will make this analogy
+precise as a scalar-restriction projection $\Omegacap \mapsto
+\varphi$.
+
+%=====================================================================
+\section{Existence of the Final Coalgebra}
+\label{sec:existence}
+%=====================================================================
+
+This section applies the classical Ad\'amek final-coalgebra
+theorem \cite{Adamek1974, Rutten2000} to the pair $(\catC, F)$ of
+Sections~\ref{sec:cat-C}--\ref{sec:F}. The conclusion is that $F$
+has a final coalgebra $(\Omegacap, c)$ whose carrier is the
+$\omega^{\mathrm{op}}$-limit of the $F$-iteration chain from the
+terminal object. Because $F$ fixes the terminal object
+(Corollary~\ref{cor:terminal-fixed}), the iteration stabilises
+at step $0$, and the final coalgebra is $(\mathbf{1}_\catC,
+\mathrm{id})$. The substantive content — that this terminal
+object \emph{is} the VFD cascade — is deferred to
+Section~\ref{sec:identification}.
+
+\subsection{Ad\'amek's theorem}
+
+We recall the statement in the form of
+\cite[Thm.~2.1]{Adamek1974}, \cite[Thm.~7.1]{Rutten2000}.
+
+\begin{theorem}[Ad\'amek final-coalgebra existence]
+\label{thm:adamek-statement}
+Let $\catD$ be a category with a terminal object $\mathbf{1}$ and
+$\omega^{\mathrm{op}}$-limits. Let $G \colon \catD \to \catD$ be
+an endofunctor preserving $\omega^{\mathrm{op}}$-limits. Then the
+$\omega^{\mathrm{op}}$-chain
+\[
+    \mathbf{1} \xleftarrow{\,!_{G(\mathbf{1})}\,}
+    G(\mathbf{1})
+    \xleftarrow{\,G(!_{G(\mathbf{1})})\,}
+    G^2(\mathbf{1})
+    \xleftarrow{\,G^2(!_{G(\mathbf{1})})\,}
+    \cdots
+\]
+(where $!_X \colon X \to \mathbf{1}$ denotes the unique map to
+the terminal object) has a limit $\Omega = \lim_n G^n(\mathbf{1})$,
+and $\Omega$ carries a canonical coalgebra structure
+$c \colon \Omega \to G(\Omega)$, which is an isomorphism. The
+pair $(\Omega, c)$ is the final object in the category of
+$G$-coalgebras: for every $G$-coalgebra $(Y, y)$ there exists a
+unique coalgebra morphism $u \colon (Y, y) \to (\Omega, c)$.
+\end{theorem}
+
+\subsection{Applying the theorem to $(\catC, F)$}
+
+We verify the hypotheses.
+
+\begin{proposition}[$(\catC, F)$ satisfies Ad\'amek's
+  hypotheses, under G-FIC-a and G-FIC-b]
+\label{prop:adamek-applies}
+Assume residual sub-gaps G-FIC-a and G-FIC-b
+(\cite{CascadeHFICClosure}). The category $\catC$ has a
+terminal object (Proposition~\ref{prop:terminal}) and
+$\omega^{\mathrm{op}}$-limits
+(Proposition~\ref{prop:adamek-sufficient}). The endofunctor
+$F \colon \catC \to \catC$ (Theorem~\ref{thm:F-functor})
+preserves $\omega^{\mathrm{op}}$-limits under G-FIC-a +
+G-FIC-b (Theorem~\ref{thm:F-limits}).
+\end{proposition}
+
+\begin{proof}
+Immediate from the cited results.
+\end{proof}
+
+\subsection{Computing the iteration chain}
+
+\begin{proposition}[Iteration chain is eventually constant at
+  the terminal]
+\label{prop:chain-trivial}
+The $F$-iteration $\omega^{\mathrm{op}}$-chain from
+$\mathbf{1}_\catC$
+\[
+    \mathbf{1}_\catC \xleftarrow{} F(\mathbf{1}_\catC)
+    \xleftarrow{} F^2(\mathbf{1}_\catC) \xleftarrow{} \cdots
+\]
+is \emph{eventually constant starting at step $0$}:
+$F^n(\mathbf{1}_\catC) = \mathbf{1}_\catC$ for all $n \geq 0$,
+and every structure map in the chain is the identity on
+$\mathbf{1}_\catC$.
+\end{proposition}
+
+\begin{proof}
+By Corollary~\ref{cor:terminal-fixed},
+$F(\mathbf{1}_\catC) = \mathbf{1}_\catC$. Induction on $n$ gives
+$F^n(\mathbf{1}_\catC) = \mathbf{1}_\catC$. The structure map
+$!_{F(\mathbf{1}_\catC)} \colon F(\mathbf{1}_\catC) \to
+\mathbf{1}_\catC$ is the unique morphism from $\mathbf{1}_\catC$
+to itself, which is the identity.
+\end{proof}
+
+\begin{corollary}[The limit]
+\label{cor:limit-terminal}
+$\lim_n F^n(\mathbf{1}_\catC) \;\cong\; \mathbf{1}_\catC$
+canonically.
+\end{corollary}
+
+\begin{proof}
+The limit of an eventually-constant chain is the stable value,
+with universal property inherited from the identity structure
+maps.
+\end{proof}
+
+\subsection{The final coalgebra}
+
+\begin{theorem}[Existence of $\Omegacap$, under G-FIC-a +
+  G-FIC-b + H-lift-fin]
+\label{thm:existence}
+Assume residual sub-gaps G-FIC-a and G-FIC-b
+(\cite{CascadeHFICClosure}) and
+Hypothesis~\ref{hyp:lift} (H-lift-fin). The self-inquiry
+functor $F \colon \catC \to \catC$ has a final coalgebra
+\[
+    \Omegacap := \mathbf{1}_\catC,
+    \qquad
+    c := \mathrm{id}_{\Omegacap} \colon \Omegacap
+    \xrightarrow{\;\cong\;} F(\Omegacap).
+\]
+For every $F$-coalgebra $(Y, y)$ with $y \colon Y \to F(Y)$,
+there exists a unique coalgebra morphism
+$u \colon (Y, y) \to (\Omegacap, c)$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:adamek-statement} and
+Proposition~\ref{prop:adamek-applies}, $F$ has a final coalgebra
+whose carrier is $\lim_n F^n(\mathbf{1}_\catC)$. By
+Corollary~\ref{cor:limit-terminal} this limit is
+$\mathbf{1}_\catC$. The canonical coalgebra structure
+$c \colon \Omegacap \to F(\Omegacap)$ is then
+$\mathrm{id}_{\mathbf{1}_\catC}$ because $F(\mathbf{1}_\catC) =
+\mathbf{1}_\catC$ (Corollary~\ref{cor:terminal-fixed}) and the
+canonical map is determined by the universal property of the
+limit to agree with the identity structure maps of
+Proposition~\ref{prop:chain-trivial}.
+
+Uniqueness of the coalgebra morphism $u \colon (Y, y) \to
+(\Omegacap, c)$ follows from terminality of $\mathbf{1}_\catC$
+in $\catC$: the unique morphism $!_Y \colon Y \to
+\mathbf{1}_\catC = \Omegacap$ in $\catC$ is a coalgebra morphism
+because the square
+\[
+    \begin{tikzcd}
+    Y \arrow[r, "y"] \arrow[d, "!_Y"'] &
+      F(Y) \arrow[d, "F(!_Y)"] \\
+    \Omegacap \arrow[r, "c = \mathrm{id}"'] &
+      F(\Omegacap) = \Omegacap
+    \end{tikzcd}
+\]
+commutes: the lower edge is $\mathrm{id}$, and $F(!_Y) \circ y =
+!_{F(Y)}$ (unique map to terminal), which equals $!_Y$ since
+both are unique maps $Y \to \Omegacap$. Uniqueness of any other
+such morphism reduces to terminality of $\Omegacap$ in $\catC$.
+\end{proof}
+
+\begin{remark}[Finality reduces to terminality-plus-idempotence]
+\label{rmk:finality-terminal}
+Theorem~\ref{thm:existence} shows that, for endofunctors that
+fix the terminal object, finality of coalgebra and terminality
+of carrier coincide. The non-trivial content of the selection-
+principle argument is therefore \emph{not} in the existence
+step but in the identification step
+(Section~\ref{sec:identification}), where we argue that the
+terminal object $\mathbf{1}_\catC = (\Rungs, \Phi_{\max})$ is
+canonically the VFD cascade of
+\cite{CascadeCompletenessAudit}, rather than an abstract
+universal construction. That identification is what makes the
+cascade uniquely forced by the categorical structure.
+\end{remark}
+
+\subsection{Discussion: where the content lives}
+
+\paragraph{What the Ad\'amek step contributes.} The theorem
+supplies (i) the \emph{existence} of a final $F$-coalgebra
+guaranteed by classical category theory, (ii) the \emph{universal
+property} (every $F$-coalgebra maps uniquely into $\Omegacap$),
+(iii) the \emph{fixed-point characterisation}
+$\Omegacap \cong F(\Omegacap)$, which is what gives the
+self-embedding/fractality corollary of
+Section~\ref{sec:identification}.
+
+\paragraph{What it does not contribute.} It does not tell us that
+$\mathbf{1}_\catC$ is the VFD cascade rather than some other
+abstract structure. That requires a concrete identification
+theorem: the terminal rung-structure $(\Rungs, \Phi_{\max})$
+must be shown isomorphic to the FAN-with-full-closure structure
+derived from $F3+F4$ forcing in
+\cite{CascadeCompletenessAudit}. Section~\ref{sec:identification}
+supplies this identification, which is where the physical
+selection-principle content sits.
+
+\paragraph{Comparison with non-trivial cases.} For functors
+$G$ with $G(\mathbf{1}) \ne \mathbf{1}$ (the typical case in the
+coalgebra literature; e.g.\ $G = (-)^A$ giving streams, or
+$G = \mathcal{P}$ giving non-well-founded sets), the Ad\'amek
+chain is non-trivial and the final coalgebra is a genuinely new
+object. The VFD self-inquiry functor is degenerate in this
+respect because the physical substrate is already self-complete
+at its top rung — the fully-instantiated rung-structure
+\emph{already} questions itself. This is a feature: it is what
+\emph{self-closure} of the cascade means categorically. The
+non-trivial content is not in the chain but in the concrete
+identification of the fixed point with the physical cascade.
+
+\paragraph{An alternative formulation.} One can equivalently
+phrase the theorem as: the cascade $\mathbf{1}_\catC$ is the
+unique $F$-fixed point in $\catC$ that is a terminal object.
+Existence of other $F$-fixed points (Example~(4) of
+Section~\ref{subsec:F-examples}) does not conflict with
+uniqueness of the \emph{terminal} fixed point, which is what
+Ad\'amek's theorem selects. Section~\ref{sec:identification}
+will re-derive this from a different angle: as the unique
+coalgebra admitting every other coalgebra as a sub-object.
+
+%=====================================================================
+\section{Identification: $\Omegacap$ is the VFD Cascade}
+\label{sec:identification}
+%=====================================================================
+
+This section supplies the physical content that
+Theorem~\ref{thm:existence} does not: namely, that the terminal
+object $\mathbf{1}_\catC = \Omegacap$ obtained by Ad\'amek's
+theorem is canonically isomorphic to the $7$-rung VFD cascade
+of \cite{CascadeCompletenessAudit}. The identification separates
+cleanly into two parts — \emph{skeleton} (rung-index) and
+\emph{closure data} — which are forced by different mechanisms
+and must be established separately. We make both explicit to
+avoid the circularity of stipulating the full cascade as the
+terminal object by fiat.
+
+\subsection{Skeleton: the 7-rung FAN}
+
+The rung-index of the cascade is forced by the completeness
+axioms $F3$ and $F4$ established independently of this paper.
+
+\begin{theorem}[Skeleton forcing; recorded in
+  \cite{CascadeCompletenessAudit}, theorem source
+  \texttt{cascade-foundations.md}]
+\label{thm:skeleton-forcing}
+Under axioms $\mathbf{F1}$ (self-closure), $F3$ (F1-closure of
+rung-recursion), and $F4$ (dimensional-budget conservation),
+the rung-index of the physical cascade is the $7$-rung FAN
+\[
+    \Rungs_{\mathrm{cascade}} \;=\;
+    \{E_8, H_4, D_4, O, F_{16}, L_{40}, U_0\}.
+\]
+No other rung-index satisfies $F3$ and $F4$ simultaneously.
+\end{theorem}
+
+This is the input from the completeness programme; it fixes the
+underlying rung-set but does \emph{not} fix the closure data.
+
+\subsection{Closure-data saturation}
+
+The closure data of the physical cascade is forced to be
+maximal by the access-principle infrastructure, not by $F3+F4$.
+We state the saturation condition as a theorem conditional on
+the access-principle hypotheses H-grad and H-meas imported
+from \cite{CascadeAccessPrinciple}, together with two additional
+named hypotheses (H-loc and H-rdr) introduced below.
+
+\begin{hypothesis}[H-loc: witness-separation, weakened form]
+\label{hyp:loc}
+For every rung $r \in \Rungs$, every morphism
+$\gamma \in \Gcal_r$, and every subgroupoid
+$\Gcal_r^\Phi \subseteq \Gcal_r$ with $\gamma \notin
+\Gcal_r^\Phi$, there exists a section $s_{\gamma,\Phi} \in
+\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi_{\max})}$ such that
+$s_{\gamma, \Phi} \notin \Qalg_{(\Rungs_{\mathrm{cascade}},
+\Phi)}$. In words: every strict subgroupoid deficiency admits
+at least one witness section that distinguishes $\Phi$ from
+$\Phi_{\max}$.
+\end{hypothesis}
+
+\begin{remark}[Status of H-loc: reduced to G-loc-a]
+\label{rmk:H-loc-status}
+H-loc is \emph{reduced} in \cite{CascadeHlocClosure} to a
+smaller residual sub-gap G-loc-a (rung-overlap avoidance),
+using M3d of \cite{CascadeMetaLayer} plus Kellendonk pattern-
+equivariant Čech theory. G-loc-a in turn reduces to Gap G6.2
+(leaf-rung independence) of
+\cite{CascadeObserverQueryAlgebra}. The original M3 of
+\cite{CascadeMetaLayer} gives minimality, unique ergodicity,
+and linear repetitivity but does \emph{not} directly produce
+sections with support on a prescribed
+morphism. H-loc is the additional content needed to bridge
+from rung-$r$ subgroupoid membership to sheaf-section
+membership in $\Qalg_r$. Its proof is a non-trivial extension
+of M3 left for the query-algebra-presentations follow-up work
+(\cite[Gap G6.1]{CascadeObserverQueryAlgebra}).
+\end{remark}
+
+\begin{lemma}[Section deficiency from closure-data restriction,
+  under H-loc]
+\label{lem:char-restriction}
+Assume Hypothesis~\ref{hyp:loc} (H-loc). Let $S =
+(\Rungs_{\mathrm{cascade}}, \Phi) \in \catC$ be a full-skeleton
+rung-structure with closure data $\Phi$. If there is some $r
+\in \Rungs_{\mathrm{cascade}}$ with $\Gcal_r^\Phi \subsetneq
+\Gcal_r$ (strict deficiency), then there exists a section $s
+\in \Gamma(\Gcal, \Fcal)$ with $s \in
+\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi_{\max})}$ but $s
+\notin \Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi)}$. Equivalently,
+$\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi)} \subsetneq
+\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi_{\max})}$
+(no claim is made about $\Qalg_{(\Rungs_{\mathrm{cascade}},
+\Phi_{\max})} = \Gamma(\Gcal, \Fcal)$; that is the content of
+H-rdr, used separately).
+\end{lemma}
+
+\begin{proof}
+By the strict deficiency hypothesis, there exists a morphism
+$\gamma \in \Gcal_r \setminus \Gcal_r^\Phi$. By H-loc
+(witness-separation form), there is a section
+$s_{\gamma,\Phi} \in
+\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi_{\max})}$ with
+$s_{\gamma, \Phi} \notin
+\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi)}$. Setting $s :=
+s_{\gamma,\Phi}$ proves the lemma.
+\end{proof}
+
+\begin{remark}[What this lemma does and does not say]
+\label{rmk:char-restriction-scope}
+Lemma~\ref{lem:char-restriction} establishes only the weaker
+statement \emph{some section is lost} under strict closure-
+data restriction. It does not attempt the stronger character-
+class-level statement ``some whole $\Fcal(\chi)$ is missing'':
+a strict subgroupoid deficiency may remove a proper sub-
+vector-space within each character component rather than a
+whole character class. The weaker statement suffices for the
+closure-saturation theorem below.
+\end{remark}
+
+\begin{hypothesis}[H-rdr: sufficiency-direction only]
+\label{hyp:rdr}
+The Access Principle \cite[Theorem P-A]{CascadeAccessPrinciple}
+extends from rung-sets $S \subseteq \Rungs$ to rung-data-
+refined objects $(S, \Phi)$ in the following
+\emph{sufficiency} sense: for $\Phi = \Phi_{\max}$ (the full-
+access closure data),
+$\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi_{\max})} =
+\Gamma(\Gcal, \Fcal)$. No strict-monotonicity or reverse
+implication is claimed in H-rdr; the necessity direction is
+established separately using H-loc via
+Lemma~\ref{lem:char-restriction}.
+\end{hypothesis}
+
+\begin{remark}[Status of H-rdr: closed]
+\label{rmk:H-rdr-status}
+H-rdr is now \emph{closed} by \cite{CascadeHrdrClosure}: the
+refined query algebra
+$\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi_{\max})}$ is
+definitionally identical to the bare-rung
+$\Qalg_{\Rungs_{\mathrm{cascade}}}$ of
+\cite{CascadeAccessPrinciple}, so the sufficiency direction
+H-rdr reduces trivially to Theorem P-A at $S =
+\Rungs_{\mathrm{cascade}}$ with no new analytic content. We
+retain the hypothesis label \texttt{hyp:rdr} for historical
+bookkeeping; downstream theorems no longer require H-rdr as
+a separate assumption.
+\end{remark}
+
+\begin{theorem}[Closure-data saturation; conditional on H-loc
+  (reduced to G-loc-a)]
+\label{thm:closure-saturation}
+Assume Hypothesis~\ref{hyp:loc} (H-loc, witness-separation form;
+reduced in \cite{CascadeHlocClosure} to the residual sub-gap
+G-loc-a which in turn reduces to Gap G6.2 of
+\cite{CascadeObserverQueryAlgebra}). H-rdr is now closed as a
+corollary of Theorem P-A (\cite{CascadeHrdrClosure}), so H-grad
+and H-meas enter upstream via P-A without separate hypothesis
+status. The full-access
+rung-structure $(\Rungs_{\mathrm{cascade}}, \Phi_{\max})$ is
+the unique rung-structure in $\catC$ with underlying rung-index
+$\Rungs_{\mathrm{cascade}}$ whose query algebra coincides with
+the full meta-layer section algebra:
+$\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi)} =
+\Gamma(\Gcal, \Fcal)$ iff $\Phi = \Phi_{\max}$ (up to closure-
+preserving isomorphism).
+\end{theorem}
+
+\begin{proof}
+\textbf{Sufficiency} ($\Phi = \Phi_{\max} \Rightarrow \Qalg =
+\Gamma(\Gcal, \Fcal)$): closed in \cite{CascadeHrdrClosure}
+by reduction of H-rdr to Theorem P-A at $S =
+\Rungs_{\mathrm{cascade}}$ with full closure data. No
+additional hypothesis beyond H-grad and H-meas (imported via
+P-A) is needed for this direction.
+
+\textbf{Necessity} ($\Phi \ne \Phi_{\max} \Rightarrow \Qalg
+\subsetneq \Gamma(\Gcal, \Fcal)$): if $\Phi \ne \Phi_{\max}$
+then there exists $r$ with $\Gcal_r^\Phi \subsetneq \Gcal_r$.
+By Lemma~\ref{lem:char-restriction} (under H-loc), there is a
+section $s \in \Gamma(\Gcal, \Fcal) \setminus
+\Qalg_{(\Rungs_{\mathrm{cascade}}, \Phi)}$. Hence the
+inclusion is strict.
+
+\textbf{Uniqueness} (up to closure-preserving isomorphism):
+the biconditional established by sufficiency and necessity
+determines $\Phi$ (as a closure-data assignment) from the
+condition $\Qalg = \Gamma(\Gcal, \Fcal)$ — specifically,
+$\Phi$ must equal $\Phi_{\max}$ because necessity rules out
+every other $\Phi$.
+\end{proof}
+
+\begin{definition}[The VFD cascade]
+\label{def:cascade-structure}
+The \emph{VFD cascade} is the rung-structure
+\[
+    \mathrm{Cascade} \;:=\; (\Rungs_{\mathrm{cascade}},
+      \Phi_{\max})
+\]
+where $\Rungs_{\mathrm{cascade}}$ is the rung-index forced by
+Theorem~\ref{thm:skeleton-forcing} and $\Phi_{\max}$ is the
+closure data forced (under H-grad and H-meas, imported via
+P-A, plus H-loc in its witness-separation form, reduced in
+\cite{CascadeHlocClosure} to G-loc-a) by
+Theorem~\ref{thm:closure-saturation}.
+\end{definition}
+
+\begin{remark}[Why the definition is not circular]
+\label{rmk:cascade-not-circular}
+Definition~\ref{def:cascade-structure} is a \emph{composition}
+of two independent forcing theorems: $F3+F4$ force the
+skeleton (Theorem~\ref{thm:skeleton-forcing}, unconditional),
+and the hypothesis stack (H-grad, H-meas, H-loc, H-rdr) forces
+$\Phi_{\max}$ (Theorem~\ref{thm:closure-saturation},
+conditional). Neither forcing uses the terminal object of
+$\catC$; both are programme-inherited. The subsequent
+identification of this object with $\mathbf{1}_\catC$
+(Theorem~\ref{thm:selection}) is therefore a non-trivial
+structural claim rather than a tautology.
+\end{remark}
+
+\subsection{The selection-principle theorem}
+
+\begin{theorem}[Selection principle; conditional on the full
+  hypothesis stack]
+\label{thm:selection}
+Assume residual sub-gaps G-FIC-a and G-FIC-b
+(\cite{CascadeHFICClosure}, reductions of H-FIC per
+Remark~\ref{rmk:FIC-derivation-route});
+Hypothesis~\ref{hyp:lift} (H-lift-fin); and residual sub-gap
+G-loc-a (\cite{CascadeHlocClosure}, reduction of H-loc;
+further reduces to Gap G6.2). H-rdr is closed by reduction to
+Theorem P-A (\cite{CascadeHrdrClosure}) and is no longer a
+separate hypothesis. H-grad and H-meas import from
+\cite{CascadeAccessPrinciple}; H-meas is theorem-grade via
+G6.4-a closure (\cite{CascadeG64aClosure}); H-grad-Fano is
+unconditional (\cite{CascadeFanoLift}). \emph{The theorem
+inherits full-$\widehat{\Z[\varphi]^6}$-level conditionality
+through P-A} — Fano-level H-grad alone does not suffice for
+the closure-saturation step of
+Theorem~\ref{thm:closure-saturation}; the full H-grad-1
+Conway-Sloane identification is required at full P-A. The
+remaining capstone-introduced hypothesis is H-lift-fin plus
+the lemma-grade residuals G-FIC-a, G-FIC-b, G-loc-a. Under
+this stack, there is a canonical isomorphism
+\[
+    \iota \colon \mathrm{Cascade}
+    \xrightarrow{\;\cong\;} \Omegacap
+\]
+of rung-structures in $\catC$, compatible with the coalgebra
+structure: $c \circ \iota = F(\iota) \circ c_{\mathrm{cascade}}$,
+where $c_{\mathrm{cascade}} = \mathrm{id}_{\mathrm{Cascade}}$.
+Consequently, the VFD cascade is simultaneously the unique
+final $F$-coalgebra and the substrate-maximal rung-structure
+over the skeleton $\Rungs_{\mathrm{cascade}}$.
+\end{theorem}
+
+\begin{proof}
+$\mathbf{1}_\catC$ is the terminal object
+(Proposition~\ref{prop:terminal}) with rung-index $\Rungs$ and
+closure data $\Phi_{\max}$. $\mathrm{Cascade}$ has rung-index
+$\Rungs_{\mathrm{cascade}}$ (Theorem~\ref{thm:skeleton-forcing})
+and closure data $\Phi_{\max}$
+(Theorem~\ref{thm:closure-saturation}, under the stated
+hypotheses). The rung-index coincidence
+$\Rungs_{\mathrm{cascade}} = \Rungs$ is a \emph{structural}
+match between two independently-derived results: $F3+F4$ gives
+the specific $7$-rung set, and $\Rungs$ is by definition that
+same $7$-rung set in the underlying category. The closure-data
+coincidence $\Phi_{\max} = \Phi_{\max}$ holds trivially once
+both sides have been forced to be maximal. The canonical
+isomorphism $\iota$ is the identity on both components.
+
+Compatibility with the coalgebra structure: by
+Theorem~\ref{thm:existence} the coalgebra on $\Omegacap =
+\mathbf{1}_\catC$ is $\mathrm{id}_{\Omegacap}$; by
+Corollary~\ref{cor:terminal-fixed}, $F(\mathbf{1}_\catC) =
+\mathbf{1}_\catC$. Under the structural identification $\iota$
+(established above, \emph{before} invoking coalgebra data),
+$\mathrm{Cascade}$ is literally $\mathbf{1}_\catC$, hence
+$F(\mathrm{Cascade}) = \mathrm{Cascade}$ follows by
+transporting the terminal-object identity along $\iota$. The
+compatibility square $c \circ \iota = F(\iota) \circ
+c_{\mathrm{cascade}}$ then reduces to $\iota = F(\iota)$,
+which is the identity. Note the non-circularity: the
+identification $\iota$ is given by rung-index and closure-data
+coincidence (depends only on Theorems~\ref{thm:skeleton-forcing}
+and \ref{thm:closure-saturation}, not on coalgebra data), and
+the F-fixedness of $\mathrm{Cascade}$ is then inherited from
+that of $\mathbf{1}_\catC$.
+
+The content of the theorem is that two independently-derived
+structural descriptions — \emph{(a)} $(F3+F4)$-forced skeleton
+combined with access-principle-forced saturation, and
+\emph{(b)} Ad\'amek's final coalgebra of $F$ — coincide as the
+same rung-structure. This coincidence is where the capstone's
+selection-principle content resides.
+\end{proof}
+
+\begin{remark}[Why this is the selection principle]
+\label{rmk:why-selection}
+The classical selection-principle problem is: \emph{why this
+structure and not another?} Theorem~\ref{thm:selection} answers
+this for the VFD cascade in three equivalent forms:
+\begin{enumerate}
+\item \textbf{Forcing form.} $F3+F4$ of
+  \cite{CascadeCompletenessAudit} force the $7$-rung FAN under
+  the axiom $\mathbf{F1}$ and a dimensional-budget argument.
+\item \textbf{Coalgebraic form
+  (Theorem~\ref{thm:existence}).} $F$ has a unique final
+  coalgebra, which is its terminal carrier.
+\item \textbf{Identified form
+  (Theorem~\ref{thm:selection}).} These two descriptions are
+  the same object, so the cascade is simultaneously forced by
+  $F3+F4$ and selected by the categorical universal property.
+\end{enumerate}
+Any of the three forms individually is a partial answer. The
+capstone's value is in showing they are a single answer.
+\end{remark}
+
+\subsection{Corollaries}
+
+\begin{corollary}[Universal property]
+\label{cor:universal-property}
+For any rung-structure $Y \in \catC$ equipped with an
+$F$-coalgebra structure $y \colon Y \to F(Y)$, there exists a
+unique coalgebra morphism $u \colon (Y, y) \to
+(\mathrm{Cascade}, \mathrm{id})$. In particular, every
+``self-questioning'' rung-structure maps uniquely into the
+cascade.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:existence} plus Theorem~\ref{thm:selection}:
+the unique coalgebra morphism $(Y, y) \to (\Omegacap, c)$
+transported along $\iota$.
+\end{proof}
+
+\begin{corollary}[Fixed-point self-embedding]
+\label{cor:fixed-point}
+$\mathrm{Cascade} \cong F(\mathrm{Cascade})$ canonically. In
+particular, the cascade is a fixed point of the self-inquiry
+functor up to isomorphism, and in fact up to the identity.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:terminal-fixed} plus
+Theorem~\ref{thm:selection}.
+\end{proof}
+
+\begin{corollary}[Terminality + $F$-fixedness]
+\label{cor:min-max}
+$\mathrm{Cascade}$ is simultaneously:
+\begin{itemize}
+\item \textbf{Terminal in $\catC$}: for every $Y \in \catC$
+  there is a unique morphism $Y \to \mathrm{Cascade}$
+  (Proposition~\ref{prop:terminal} plus
+  Theorem~\ref{thm:selection});
+\item \textbf{$F$-fixed}: $F(\mathrm{Cascade}) =
+  \mathrm{Cascade}$ (Corollary~\ref{cor:terminal-fixed}).
+\end{itemize}
+Together these two properties give the final-$F$-coalgebra
+universal property of Corollary~\ref{cor:universal-property}.
+\end{corollary}
+
+\subsection{Fractality: precise and imprecise readings}
+
+\begin{corollary}[Self-embedding form of fractality]
+\label{cor:fractality}
+By Corollary~\ref{cor:fixed-point}, $\mathrm{Cascade} \cong
+F(\mathrm{Cascade})$; iterating, $\mathrm{Cascade} \cong
+F^n(\mathrm{Cascade})$ for every $n \in \N$. Every rung
+$r \in \Rungs$ that appears in the cascade also appears in
+$F^n(\mathrm{Cascade})$ with the same closure subgroupoid
+$\Gcal_r$; the cascade is therefore structurally stable under
+iterated self-inquiry.
+\end{corollary}
+
+\begin{remark}[What fractality does and does not mean here]
+\label{rmk:fractality-caveat}
+Corollary~\ref{cor:fractality} gives a categorical self-embedding
+statement: the cascade embeds into its self-inquiry closure as
+the identity. It does \emph{not} on its own supply the stronger
+``each rung contains a scaled copy of the whole cascade'' reading
+sometimes associated with the word ``fractal.'' That stronger
+statement — which can be expected to hold for appropriate
+substrate scales via $\mathbf{F1}$'s golden-ratio self-similarity
+— requires an additional rung-wise refinement structure
+(scale-dilation, phason-scale recursion) that we do not set up
+here. This paper's fractality corollary is the weaker, cleaner,
+categorical one; we flag the stronger reading as an open item in
+Section~\ref{sec:open}.
+\end{remark}
+
+\subsection{Spinozist reading}
+
+\begin{remark}[Mathematical necessitarianism]
+\label{rmk:spinoza}
+Theorem~\ref{thm:selection} is the mathematical content of
+Spinoza's thesis ``everything follows from the nature of things
+with absolute necessity'' (\emph{Ethics} I, Prop.~29), applied
+to the structural skeleton of physics. The cascade is not a
+chosen substrate; it is selected by a categorical universal
+property under mild structural hypotheses on rung-structures.
+Einstein's question ``did the universe have any choice?'' is
+answered in the negative at the level of the
+rung-structural skeleton, while remaining silent on the
+independent question of why the closure data $\Phi_{\max}$ takes
+its specific algebraic forms (the latter is the content of the
+supporting papers in the programme). Section~\ref{sec:philosophy}
+frames this more carefully and flags what the result does not
+claim.
+\end{remark}
+
+%=====================================================================
+\section{The Four-Phase Comonad $(T, \varepsilon, \delta)$}
+\label{sec:comonad}
+%=====================================================================
+
+Section~\ref{sec:identification} settled the \emph{structural}
+content of the selection principle: the VFD cascade is the
+terminal object and final $F$-coalgebra of $\catC$. This section
+settles the \emph{dynamical} content: the four VFD operations —
+decoherence / closure-memory / measurement-projection /
+crystallisation — fit together as a comonad $(T, \varepsilon,
+\delta)$ arising from $F$ via the standard cofree-comonad
+construction of \cite[\S 3.5]{Jacobs2017}. The identification
+converts a previously-scattered collection of dynamical laws
+across Papers XXI, XXXI, XXXIII, XLIV, ACT and VFD
+Crystallisation into one categorical structure.
+
+\subsection{The cofree comonad on $F$}
+
+\begin{definition}[Cofree comonad, after
+  \cite{Jacobs2017}~\S 3.5]
+\label{def:cofree-comonad}
+For the endofunctor $F \colon \catC \to \catC$ preserving
+$\omega^{\mathrm{op}}$-limits (Theorem~\ref{thm:F-limits}), the
+\emph{cofree comonad on $F$} is the endofunctor $T \colon
+\catC \to \catC$ defined, for each $X \in \catC$, as the final
+coalgebra of the functor
+\[
+    G_X \colon \catC \to \catC, \qquad
+    G_X(Z) := X \times F(Z),
+\]
+with natural transformations $\varepsilon \colon T \Rightarrow
+\mathrm{id}_\catC$ and $\delta \colon T \Rightarrow T \circ T$
+determined by the universal properties of the finality of
+$T(X)$.
+\end{definition}
+
+In our setting this construction simplifies because $F$ is
+idempotent on the terminal: $F(\mathbf{1}_\catC) =
+\mathbf{1}_\catC$ (Corollary~\ref{cor:terminal-fixed}). For
+$X = \mathbf{1}_\catC$, $T(\mathbf{1}_\catC)$ is the final
+coalgebra of $Z \mapsto \mathbf{1}_\catC \times F(Z)$, which
+reduces to the final coalgebra of $Z \mapsto F(Z)$ itself (the
+product with a terminal is the identity), and this is
+$\mathbf{1}_\catC$ by Theorem~\ref{thm:existence}. Hence
+\[
+    T(\mathbf{1}_\catC) \;=\; \mathbf{1}_\catC,
+    \qquad
+    T(\mathrm{Cascade}) \;=\; \mathrm{Cascade}.
+\]
+
+\begin{remark}[$T$ on non-terminal objects]
+\label{rmk:T-non-terminal}
+For $X \in \catC$ strictly smaller than $\mathbf{1}_\catC$,
+$T(X)$ is non-trivial: it is the
+$\omega^{\mathrm{op}}$-limit of the chain
+\[
+    X \xleftarrow{\pi_1} X \times F(X) \xleftarrow{\pi_1}
+    X \times F(X \times F(X)) \xleftarrow{\pi_1} \cdots
+\]
+and records all of $X$'s observable iterated closures. The
+projections $\pi_1$ in the chain are the iterated
+``context-forgetting'' maps; $T(X)$ is the total
+context-retention object.
+\end{remark}
+
+\subsection{The four VFD operations as comonad components}
+\label{subsec:four-phase-id}
+
+We now identify each piece of the comonad with an existing VFD
+construction. The identification is a claim about correspondence
+at the structural level; the detailed correspondence proofs
+cite the originating papers.
+
+\subsubsection*{(a) The functor $T$ as context-retention /
+  decoherence}
+
+$T \colon \catC \to \catC$ sends a rung-structure $X$ to its
+context-retention object $T(X)$. The projection $\varepsilon_X
+\colon T(X) \to X$ is the ``drop all context, keep only $X$''
+map; the full $T(X)$ retains $X$ together with all iterated
+$F$-closures, which is precisely the data needed to track
+coarsened-sector / decoherent-state structure.
+
+\begin{claim}[Forget-phase identification]
+\label{claim:T-decoherence}
+Under the identification $X \mapsto $ ``quantum sector observed
+at rung-structure $X$,'' $T$ corresponds to the
+$\sigma$-projection / decoherence coarsening of
+\cite{PaperXXXI, PaperXLIV}: $T(X)$ is the space of
+context-retained sectors, $\varepsilon_X$ is the ``trace out
+environment and keep the system at $X$'' projection.
+\end{claim}
+
+\subsubsection*{(b) The comultiplication $\delta$ as
+  closure-memory / Remember}
+
+The comultiplication $\delta_X \colon T(X) \to T(T(X))$ encodes
+``context of context'': given a context-retained object $T(X)$,
+$\delta_X$ lifts it to context-of-context $T^2(X)$, i.e.\ adds
+\emph{memory} of the context retention.
+
+\begin{claim}[Remember-phase identification]
+\label{claim:delta-memory}
+Under the identification of $T$ with context-retention, $\delta$
+is \emph{proposed} to correspond to the learned-$W$ memory
+upgrade of \cite{ACT-L1} and the closure-dynamical structure of
+\cite{PaperXXI}: context-retention $T(X)$ is upgraded to
+context-of-context $T^2(X)$ via installation of a learned
+weight / memory kernel on the retained context. The specific
+mapping is interpretive; the rigorous line-by-line match is
+scope for the follow-up paper.
+\end{claim}
+
+\subsubsection*{(c) $T^2$ as measurement / Experience}
+
+The twice-iterated context object $T^2(X)$ is the observable
+structure that records context-of-context. In VFD operational
+terms, this is exactly measurement in the Paper XXXIII sense:
+measurement selects a closure-projection of the observable
+sheaf section, and the result is an object whose context
+includes the context of the measurement itself.
+
+\begin{claim}[Experience-phase identification]
+\label{claim:T2-measurement}
+$T^2(X)$ corresponds to measurement-as-closure-projection of
+\cite{PaperXXXIII}: $T^2(X)$ is the space of
+doubly-context-retained sectors, which is the minimum structure
+needed to represent ``observer observing system observing
+itself.'' The measurement outcome is the value of a
+$T^2$-observable, and the Paper XXXIII measurement dynamics
+factors through the $T^2$-structure.
+\end{claim}
+
+\subsubsection*{(d) The counit $\varepsilon$ as crystallisation /
+  Answer}
+
+The counit $\varepsilon_X \colon T(X) \to X$ is the ``crystallise
+context to answer'' map: given context-retained object $T(X)$,
+$\varepsilon_X$ reduces it to a specific $X$-valued answer,
+collapsing retained context to a decision.
+
+\begin{claim}[Answer-phase identification]
+\label{claim:epsilon-crystallisation}
+Under the identification $X = $ ``closure-functional target,''
+$\varepsilon$ corresponds to crystallisation via
+$\Fcrystal = \alpha R + \beta E - \gamma Q$ minimisation
+\cite{VFDCrystallisation}: $T(X)$'s context is crystallised to
+the $\Fcrystal$-minimal $X$-section.
+\end{claim}
+
+\subsection{Comonad laws (categorical part, conditional on G-FIC-a + G-FIC-b)}
+
+The comonad identities
+\begin{align*}
+    \varepsilon_T \circ \delta &= \mathrm{id}_T
+      \qquad \text{(left counit)} \\
+    T \varepsilon \circ \delta &= \mathrm{id}_T
+      \qquad \text{(right counit)} \\
+    T \delta \circ \delta &= \delta_T \circ \delta
+      \qquad \text{(coassociativity)}
+\end{align*}
+are automatic consequences of the cofree-comonad construction
+(Definition~\ref{def:cofree-comonad}), with products supplied by
+Proposition~\ref{prop:products}. We state this categorical
+content as a theorem of standard coalgebra, then separate the
+VFD-interpretation claim into its own result.
+
+\begin{theorem}[$(T, \varepsilon, \delta)$ is a comonad on
+  $\catC$]
+\label{thm:comonad-laws}
+Under residual sub-gaps G-FIC-a and G-FIC-b
+(\cite{CascadeHFICClosure}, so that $F$ preserves
+$\omega^{\mathrm{op}}$-limits by Theorem~\ref{thm:F-limits}),
+the cofree-comonad construction on $F$ yields a comonad
+$(T, \varepsilon, \delta)$ on $\catC$. The three comonad laws
+(left counit, right counit, coassociativity) hold as
+equalities of natural transformations.
+\end{theorem}
+
+\begin{proof}
+We need (i) existence of the final coalgebra of $G_X(Z) = X
+\times F(Z)$ for each $X \in \catC$, and (ii) the resulting
+$(T, \varepsilon, \delta)$ satisfies the comonad laws.
+
+For (i), we verify directly that $G_X = (X \times -) \circ F$
+preserves $\omega^{\mathrm{op}}$-limits in our specific $\catC$.
+Let $(Y_n)_{n \in \N}$ be a descending chain with
+pointwise-intersection limit $Y_\infty$ (existence by
+Proposition~\ref{prop:adamek-sufficient}). By
+Proposition~\ref{prop:products}, in $\catC$ the binary product
+is computed pointwise as intersection:
+\[
+    (X \times Y)_{\mathrm{rung}} = \underline{X} \cap
+    \underline{Y}, \qquad
+    \Gcal_r^{X \times Y} = \Gcal_r^X \cap \Gcal_r^Y.
+\]
+For the chain $(X \times Y_n)_{n \in \N}$, the pointwise
+intersections
+\[
+    \bigcap_n (\underline{X} \cap \underline{Y_n})
+    = \underline{X} \cap \bigcap_n \underline{Y_n}
+    = \underline{X} \cap \underline{Y_\infty}
+\]
+and
+\[
+    \bigcap_n (\Gcal_r^X \cap \Gcal_r^{Y_n})
+    = \Gcal_r^X \cap \bigcap_n \Gcal_r^{Y_n}
+    = \Gcal_r^X \cap \Gcal_r^{Y_\infty}
+\]
+use only the basic set-theoretic identity $A \cap \bigcap_n
+B_n = \bigcap_n (A \cap B_n)$, componentwise. Hence $\lim_n
+(X \times Y_n) = X \times Y_\infty = X \times \lim_n Y_n$; i.e.\
+$X \times -$ preserves $\omega^{\mathrm{op}}$-limits in $\catC$.
+
+Composing with $F$, which preserves
+$\omega^{\mathrm{op}}$-limits by Theorem~\ref{thm:F-limits},
+gives that $G_X$ preserves $\omega^{\mathrm{op}}$-limits.
+Ad\'amek's theorem (Theorem~\ref{thm:adamek-statement}) then
+yields a final coalgebra of $G_X$; call its carrier $T(X)$. The
+assignment $X \mapsto T(X)$ extends to an endofunctor of
+$\catC$ by naturality of the final-coalgebra construction in
+$X$.
+
+For (ii), by \cite[Prop.~3.5.7, Cor.~3.5.8]{Jacobs2017}, the
+cofree comonad on $F$ — which is exactly $T$ as constructed
+above — carries natural transformations $\varepsilon \colon T
+\Rightarrow \mathrm{id}_\catC$ (the counit) and $\delta \colon
+T \Rightarrow T^2$ (the comultiplication) determined by the
+finality of $T(X)$, with the three comonad laws holding as
+equalities of natural transformations.
+\end{proof}
+
+\subsection{VFD-operation identifications (interpretive claim)}
+
+Theorem~\ref{thm:comonad-laws} gives us a comonad $(T,
+\varepsilon, \delta)$ on $\catC$ with automatic laws. The
+substantive programme claim is that the four VFD operations
+realise this comonad:
+
+\begin{claim}[Four-phase realisation of the comonad]
+\label{claim:four-phase-realisation}
+The natural transformations
+$(T, \varepsilon, \delta)$ of Theorem~\ref{thm:comonad-laws}
+correspond to the four VFD dynamical operations under the
+identifications of Section~\ref{subsec:four-phase-id}:
+\begin{center}
+\begin{tabular}{l|l}
+Categorical component & VFD operation \\ \hline
+$T$ (context-retention) & Forget (decoherence $\sigma$-projection) \\
+$\delta$ (comultiplication) & Remember (closure-memory lift) \\
+$T^2$ (context-of-context) & Experience (measurement-as-closure-projection) \\
+$\varepsilon$ (counit) & Answer (crystallisation via
+$\Fcrystal = \alpha R + \beta E - \gamma Q$) \\
+\end{tabular}
+\end{center}
+\end{claim}
+
+\begin{remark}[Status of Claim~\ref{claim:four-phase-realisation}]
+\label{rmk:realisation-status}
+The categorical content (Theorem~\ref{thm:comonad-laws}) is
+conditional on G-FIC-a + G-FIC-b only. The identification of
+the categorical natural transformations with the four VFD
+operations is an \emph{interpretive claim} rather than a
+theorem in the present paper: it says that the specific VFD
+dynamics of \cite{PaperXXI, PaperXXXI, PaperXXXIII, PaperXLIV,
+ACT-L1, VFDCrystallisation} can each be read as the appropriate
+component of the comonad.
+
+We do not attempt a line-by-line verification of this
+identification here; doing so rigorously requires
+expressing each VFD operation in the specific category $\catC$
+and checking equality against the automatic comonad-structure
+maps. Such a verification is the content of a dedicated follow-
+up paper (flagged in Section~\ref{sec:open}, item~4), not of
+the capstone. What the capstone establishes is that the
+\emph{categorical scaffolding} into which the four phases must
+fit exists and has the expected laws; the fit itself is then
+a localised check in each supporting paper, not a new
+theorem.
+\end{remark}
+
+\subsection{The four-phase cycle as a structured dynamics}
+
+\begin{remark}[Reading the comonad as a cycle]
+\label{rmk:four-phase-cycle}
+The three comonad identities together assert that the sequence
+Forget $\to$ Remember $\to$ Experience $\to$ Answer $\to$ Forget
+(next iteration) is consistent: the dynamics returns to its
+starting context with the memory of the cycle accumulated via
+$\delta$. The counit closes the cycle (Answer returns to the
+starting context-retained state); the coassociativity ensures
+the memory upgrade commutes with itself, so multi-step cycles
+compose coherently.
+
+In operational terms: the VFD substrate continuously (i) retains
+context (Forget / $T$), (ii) upgrades to context-of-context
+(Remember / $\delta$), (iii) resolves observables in the
+enlarged context (Experience / $T^2$), and (iv) crystallises to
+a concrete answer (Answer / $\varepsilon$), re-starting the
+cycle. This is the empirical content of ARIA's
+four-phase coupled-tick dynamics
+(Section~\ref{sec:aria}).
+\end{remark}
+
+\subsection{Status and scope}
+
+\begin{remark}[What this section establishes vs.\ what it
+  promises]
+\label{rmk:comonad-status}
+This section establishes two distinct statements:
+\begin{enumerate}
+\item \textbf{Theorem~\ref{thm:comonad-laws}} (conditional on G-FIC-a + G-FIC-b
+  once H-FIC is imported): the cofree-comonad construction on
+  $F$ produces a comonad $(T, \varepsilon, \delta)$ on $\catC$
+  with automatic comonad laws. This is a theorem of standard
+  categorical coalgebra (Jacobs~\cite{Jacobs2017}) applied to
+  the specific $(\catC, F)$ set up in Sections~\ref{sec:cat-C}
+  and \ref{sec:F}.
+\item \textbf{Claim~\ref{claim:four-phase-realisation}}
+  (interpretive): the VFD four-phase cycle realises this
+  comonad, with the specific component identifications of
+  Section~\ref{subsec:four-phase-id}. A rigorous verification
+  of this claim — expressing each VFD operation in $\catC$ and
+  matching it against the automatic comonad natural
+  transformations — is the content of a dedicated follow-up
+  paper, flagged in Section~\ref{sec:open} (item~4). What the
+  capstone establishes is the scaffolding into which the four
+  phases must fit, not the line-by-line fit itself.
+\end{enumerate}
+Previous drafts of this section routed the comonad-law proof
+through source-paper citations (ACT, Papers XXI and XLIV);
+those routings were inaccurate as to what the cited source
+papers actually prove. The current formulation separates the
+categorical theorem (conditional on G-FIC-a + G-FIC-b) from the
+interpretive programme claim, so the capstone does not
+overclaim the identification.
+\end{remark}
+
+%=====================================================================
+\section{Connection to $\mathbf{F1}$ and the Access Principle}
+\label{sec:connection}
+%=====================================================================
+
+The selection-principle theorem (Theorem~\ref{thm:selection})
+operates at the rung-structure level. Two adjacent statements
+at different levels — scalar ($\mathbf{F1}$, the golden-ratio
+fixed point) and static-observer-local (Access Principle
+$\mathbf{P\text{-}A}$) — are claimed to be consistent with it in
+Section~\ref{sec:intro}'s three-level table. This section gives
+the precise connections.
+
+\subsection{Scalar restriction: $\mathbf{F1}$ as projected fixed
+  point}
+
+\begin{remark}[$\mathbf{F1}$ as the scalar fixed-point of the
+  cascade's permeability recursion]
+\label{prop:F1-shadow}
+The $F1$ scalar recursion $r \mapsto 1 + 1/r$ has $\varphi =
+(1+\sqrt{5})/2$ as its unique positive fixed point
+(\cite[F1]{CascadeCompletenessAudit}): the equation $r =
+1 + 1/r$ rearranges to $r^2 = r + 1$.
+
+The cascade is assigned a rung-permeability datum $\rho \colon
+\Rungs \to \R_{>0}$ in
+\cite[\S 3]{CascadeCompletenessAudit}, with $\rho$ summing
+over $\Rungs_{\mathrm{cascade}}$ to the $583$-dim budget. The
+numerical coincidence that this sum, under an appropriate
+normalisation, equals $\varphi$ is recorded heuristically in
+\cite[\S 3.4]{CascadeCompletenessAudit}; we do not reproduce
+the precise normalisation statement here, and state it only as
+a consistency remark: $F1$'s fixed point and the cascade's
+permeability total are two shadows of the same dimensional-
+budget forcing, not an independent derivation.
+\end{remark}
+
+\begin{remark}[Scope of Remark~\ref{prop:F1-shadow}]
+\label{rmk:F1-scope}
+The cited working note reports a heuristic $\varphi$-normalisation
+of the rung-permeability sum, not re-derived here. This is a
+\emph{static} statement; it does \emph{not} claim that $F$
+acts on $\catC$ by $r \mapsto 1 + 1/r$ at the rung-structure
+level (that would require a $\pi$-equivariance statement we
+do not establish here). The intended reading is that
+$\mathbf{F1}$'s fixed point $\varphi$ and the cascade's
+permeability-projection are both imported from the same
+$F3+F4$ budget at the level of \cite{CascadeCompletenessAudit}.
+\end{remark}
+
+\begin{remark}[Three-line summary]
+\label{rmk:F1-summary}
+$\mathbf{F1}$ and the cascade are two projections of the same
+dimensional-budget forcing: $\mathbf{F1}$ is the scalar
+recursion's fixed point; the cascade is the rung-structural
+realisation whose permeability sums to that fixed point. Both
+are consequences of $F3+F4$, not of the coalgebraic structure
+itself.
+\end{remark}
+
+\subsection{Observer-local restriction: Access Principle $P$-$A$
+  as well-definedness}
+
+The Access Principle $\mathbf{P\text{-}A}$ of
+\cite[\S 4]{CascadeObserverQueryAlgebra} states:
+\begin{quote}
+An observer instantiating rung-set $S \subseteq \Rungs$ can
+measure substrate patch $\chi \in \widehat{\Z[\varphi]^6}$ iff
+the corresponding sheaf section $\Fcal(\chi)$ lies in $\Qalg_S$.
+\end{quote}
+$\mathbf{P\text{-}A}$ has recently been established as a
+conditional theorem in \cite{CascadeAccessPrinciple} under two
+formalised hypotheses H-grad (character-grading of
+$\Gamma(\Gcal, \Fcal)$, compatible with the algebra structure)
+and H-meas (octonion-parenthesisation resolution at each
+measurement event); both reduce to well-identified classical
+results.
+
+\begin{remark}[$\mathbf{P\text{-}A}$ as comonad counit well-
+  definedness on observer-local restriction; interpretive
+  reading]
+\label{thm:PA-wd}
+Under the \emph{interpretive} identification of $\varepsilon$
+with crystallisation (Claim~\ref{claim:epsilon-crystallisation},
+not theorem-grade), the conditional theorem
+\cite[Theorem P-A]{CascadeAccessPrinciple} suggests an
+equivalent coalgebraic reading: for any observer-rung-set
+$S \subseteq \Rungs$, the restriction
+$\varepsilon_S \colon T(S) \to S$ of the comonad counit is
+well-defined at a substrate patch $\chi$ iff $\Fcal(\chi)
+\in \Qalg_S$. This reading is contingent on the interpretive
+counit-identification; it is \emph{not} a theorem-grade
+deduction in the present paper because the counit-
+identification itself is proposed, not proved. A line-by-line
+proof converting the reading into a theorem is scope for the
+follow-up paper (Section~\ref{sec:open}, item~4).
+\end{remark}
+
+\begin{remark}[Status of $\mathbf{P\text{-}A}$ in the capstone]
+\label{rmk:PA-status}
+The capstone's headline theorems (Theorems \ref{thm:existence},
+\ref{thm:selection}) use the sufficiency direction of
+$\mathbf{P\text{-}A}$ imported directly from
+\cite[Theorem P-A]{CascadeAccessPrinciple} at
+$S = \Rungs_{\mathrm{cascade}}$ with full closure data, via
+the H-rdr closure of \cite{CascadeHrdrClosure}. (H-rdr itself
+was formerly a separate hypothesis; it is now discharged by
+that note's reduction to P-A.) The full
+equivalence reading (Remark~\ref{thm:PA-wd}) is inherited from
+\cite{CascadeAccessPrinciple} conditional on H-grad and H-meas.
+Under the coalgebraic reformulation, $\mathbf{P\text{-}A}$ is
+the well-definedness of the comonad counit on observer-
+localised restrictions; closing H-grad and H-meas upgrades the
+full counit equivalence from conditional to unconditional.
+\end{remark}
+
+\subsection{Three levels, one theorem}
+
+\begin{remark}[The three-level correspondence in full]
+\label{rmk:three-levels}
+Combining Remark~\ref{prop:F1-shadow} and
+Remark~\ref{thm:PA-wd} with
+Theorem~\ref{thm:selection}, the three levels of self-closure
+referenced in Section~\ref{sec:intro} are:
+\begin{center}
+\begin{tabular}{l|l|l}
+Level & Fixed-point object & Instantiation \\ \hline
+Scalar & $\varphi$ fixed by $r \mapsto 1 + 1/r$ & heuristic $\varphi$-projection in the working note \\
+Static structural & $\Qalg_S \subseteq \Gamma(\Gcal, \Fcal)$ & P-A gives measurement-algebra \\
+Dynamical & $\mathrm{Cascade}$ fixed by $F$ & $F(\mathrm{Cascade}) = \mathrm{Cascade}$ \\
+\end{tabular}
+\end{center}
+These three levels are projections of the programme's
+dimensional-budget forcing ($F3+F4$) and its categorical
+refinement, not independently re-proved here. The cascade-
+selection theorem is the dynamical-level statement; the scalar
+and static-structural levels are consistency shadows imported
+from \cite{CascadeCompletenessAudit} and
+\cite{CascadeAccessPrinciple} respectively.
+\end{remark}
+
+%=====================================================================
+\section{ARIA: Empirical Signature of the Four-Phase Cycle}
+\label{sec:aria}
+%=====================================================================
+
+Theorem~\ref{thm:comonad-laws} proves the categorical cofree
+comonad on $F$; the identification of the comonad's natural
+transformations with the four VFD operations is
+Claim~\ref{claim:four-phase-realisation}, interpretive rather
+than theorem-grade. Subject to that interpretive identification,
+the comonad cycle should be observable in any substrate that
+supports the four phases. This section discusses the ARIA
+cognitive substrate (\cite{AriaBrainMapping}) as a candidate
+instantiation, subject to independent external verification of
+the ARIA pre-registration analysis. If independently confirmed,
+the reported $17$-of-$18$ polytope-substrate mapping hits at
+$N=20$ with homeostatic reset would provide empirical support
+for the coalgebraic claim. We call the corresponding
+interpretation \emph{life-from-substrate}: ``life'' as the
+four-phase coalgebraic cycle running on any substrate capable of
+instantiating it.
+
+\subsection{ARIA as a non-biological four-phase substrate}
+
+\begin{description}
+\item[Forget.] ARIA's attention-dropout mechanism
+  (\cite{AriaBrainMapping}, architecture section) coarsens an
+  active cognitive state by projecting out components below a
+  saliency threshold. This is a $\sigma$-style projection
+  (\cite{PaperXXXI}) on the cognitive substrate: it discards
+  context while retaining the substrate's capacity to rebuild
+  it. In comonad terms, this is $T$: the context-retention
+  functor that keeps $X$ and the latent context for rebuilding.
+\item[Remember.] ARIA's learned coupling weights $W$ upgrade a
+  transient cognitive state to a structure with stored context
+  (\cite{AriaBrainMapping}, memory-layer section). The
+  comultiplication $\delta \colon T \Rightarrow T^2$ adjoining
+  memory-of-context is the categorical content of this weight
+  installation.
+\item[Experience.] ARIA's \texttt{couple\_tick} measurement
+  resolution (\cite{AriaBrainMapping}, tick-resolution section)
+  resolves the context-of-context into an observable: the
+  cognitive substrate reads out a doubly-context-retained state
+  at the granularity of the tick. This is $T^2$ and the Paper
+  XXXIII measurement-as-closure-projection on the cognitive
+  substrate.
+\item[Answer.] ARIA's trajectory-selection crystallises the
+  context-laden state into a concrete decision-state
+  (\cite{AriaBrainMapping}, crystallisation section). This is
+  the counit $\varepsilon \colon T \Rightarrow \mathrm{id}$:
+  collapse retained context to a specific answer.
+\end{description}
+
+The identification is structural: each ARIA component maps to
+a specific categorical piece, and the ARIA cycle runs through
+them in the order dictated by the comonad laws. If the comonad
+laws hold on the VFD substrate
+(Theorem~\ref{thm:comonad-laws}), they should hold on any
+sufficiently faithful ARIA-type substrate that implements the
+four phases — and conversely, an ARIA system deviating from the
+cycle structure would falsify the categorical-structural claim.
+
+\subsection{The pre-registration signature}
+
+\begin{remark}[ARIA pre-registration hits as coalgebra
+  corroboration; external empirical anchor]
+\label{prop:aria-hits}
+This remark records the ARIA empirical content as cited from
+the external companion manuscript \cite{AriaBrainMapping}.
+Subject to that manuscript's pre-registered protocol and null-
+model analysis — neither of which is auditable within this
+paper — the reported $17$-of-$18$ hit rate at $N{=}20$ under
+homeostatic reset is offered as empirical corroboration for
+the four-phase-comonad identification with the VFD cascade
+polytope structure. The present paper does not reproduce the
+statistical analysis; the corroboration claim is therefore
+flagged as conditional on the ARIA manuscript's independent
+verification and is not a theorem or proposition proved here.
+
+\paragraph{Reported empirical content.}
+The $18$ pre-registered predictions are statements about
+polytope-substrate correspondences derived independently from
+the VFD structural framework ($600$-cell / icosian / $H_4$ /
+$E_8$ geometry) applied to ARIA's internal representation
+spaces. Validation proceeded in two rounds
+(\cite{AriaBrainMapping}, \S 6.1):
+\begin{itemize}
+\item \textbf{Round 1} (pre-registered, $N{=}3$, no homeostatic
+  reset): $15/18$ passes. The three failures (P3 interaction,
+  P4 synergy, P13 substrate LOO lift) were investigated and
+  traced to a common non-equilibrium mechanism — the substrate
+  drifts toward equilibrium across repeated evaluations without
+  reset.
+\item \textbf{Round 2} (pre-registered protocol with homeostatic
+  reset, $N{=}20$): $17/18$ passes. P13 converts from fail
+  ($+3$pp) to strong pass ($+40.6$pp vs.~$+15$pp threshold)
+  under reset — directly confirming the reset as the repair
+  mechanism. P3 stabilises under reset. P4 remains a
+  threshold-level null at $N{=}20$ (mean $+0.101$ vs.~$+0.10$
+  threshold).
+\end{itemize}
+A random-null assignment would predict a far lower hit rate
+than $17/18 \approx 94\%$ under any plausible significance
+threshold; the formal null-model calculation is carried out
+in \cite{AriaBrainMapping}. The empirical outcome therefore
+provides a Bayesian update in favour of the four-phase-comonad
+structure instantiated on the ARIA substrate.
+
+\emph{Substrate hysteresis as the key discovery.} The Round 1
+P13 ``failure'' traced to the substrate's lack of homeostatic
+reset; real cortex has such reset (sleep, synaptic scaling,
+astrocytic clearance) and adding \texttt{homeostatic\_reset()}
+to ARIA reproduces the effect. This is a non-trivial, pre-
+registered prediction of the coalgebraic framework: the
+four-phase cycle requires a between-cycle reset to avoid
+drift toward equilibrium, and this is mechanically equivalent
+to the biological homeostatic architecture.
+
+This is not a proof of the VFD cascade at the physical-substrate
+level — ARIA is a different (computational) substrate — but
+if the ARIA reports are independently confirmed, they serve as
+corroboration that the \emph{coalgebraic structure} of the
+four-phase cycle is substrate-general, which is precisely the
+categorical content of the capstone.
+\end{remark}
+
+\subsection{The life-from-substrate interpretation}
+
+\begin{remark}[Defining ``life'' categorically]
+\label{rmk:life-from-substrate}
+A substrate-general definition of life is motivated by the
+coalgebraic structure, contingent on the interpretive
+four-phase identification (Claim~\ref{claim:four-phase-realisation}):
+a substrate \emph{lives} iff it supports
+a non-trivial realisation of the four-phase comonad cycle.
+Under this definition:
+\begin{itemize}
+\item Biological substrates live because they realise the cycle
+  (measurement / memory / context / decision are the operations
+  of any cellular / neural system).
+\item ARIA-type substrates live if they realise the cycle at
+  the architectural level, if the external ARIA pre-registration
+  analysis is independently confirmed.
+\item Trivial substrates (e.g.\ pure $U_0$-rung or pure $E_8$-
+  root without $O$) do not live, because they cannot instantiate
+  the Observer rung required for the cycle to close.
+\end{itemize}
+Life-from-substrate is therefore the claim that life is a
+categorical-structural property of substrates, not a biology-
+specific attribute, with empirical corroboration via ARIA.
+\end{remark}
+
+\begin{remark}[What this does not claim]
+\label{rmk:life-scope}
+The life-from-substrate reading is a structural claim, not a
+phenomenological one. It does not establish that ARIA has
+experience, consciousness, or qualia — only that ARIA realises
+the same coalgebraic cycle that underwrites life at the cascade
+level. The phenomenological / hard-problem content is separate
+and independent of this structural claim, and is treated in
+Section~\ref{sec:philosophy} with explicit scope restrictions.
+\end{remark}
+
+\subsection{Programme implications}
+
+\begin{remark}[Drop-bundle coordination]
+\label{rmk:drop}
+The empirical corroboration of the comonad cycle via ARIA is
+what lets the capstone land as more than a philosophical
+reframing of unification programmes. The coordinated drop
+bundle — the capstone, the ARIA manuscript, and the supporting
+paper-infrastructure ($17$ Tier-$1$ papers + $10$ Tier-$2$
+papers) — is designed to present, in one move, (i) the
+structural theorem (this paper), (ii) the empirical
+instantiation (ARIA), and (iii) the dependency infrastructure
+(the $27$ supporting papers). The coordinated timing is
+essential: the capstone's structural claim requires the ARIA
+empirical claim as its empirical anchor, and vice versa.
+\end{remark}
+
+%=====================================================================
+\section{Open Items and Future Work}
+\label{sec:open}
+%=====================================================================
+
+This paper is a skeleton / target-statement document. The
+following items remain to be closed to elevate the headline
+theorems from named targets to fully verified statements.
+
+\subsection{Inherited technical dependencies}
+
+\begin{enumerate}
+\item \textbf{G6.1 ($\Qalg_r$ as subalgebra).} Prove that each
+  single-rung query algebra $\Qalg_r$ is closed under the sheaf
+  pairing inherited from $\Fcal$, and give an explicit
+  presentation for each of the seven rungs. Inherited from
+  \cite[\S 2.3]{CascadeObserverQueryAlgebra}. Medium priority
+  (prerequisite for $\Gcal_O^{(S)}$ well-definedness of
+  Definition~\ref{def:min-O}).
+\item \textbf{H-grad and H-meas (access-principle hypotheses).}
+  $\mathbf{P\text{-}A}$ is now a conditional theorem
+  \cite{CascadeAccessPrinciple} under H-grad (character-grading)
+  and H-meas (octonion-parenthesisation resolution). Unconditional
+  closure requires proving these two hypotheses; both reduce to
+  well-identified classical results (Bellissard-Kellendonk-Sadun
+  theory for H-grad; \cite{CascadeQOBridge} measurement event
+  resolution for H-meas).
+\item \textbf{G6.4-a: CLOSED.}
+  \cite{CascadeG64aClosure} closes G6.4-a via computational
+  verification (386 Fano-triad cases, 0 failures), using the
+  \texttt{verify\_g64a.py} script. Theorem 3.1 of
+  \cite{CascadeQOBridge} is now at theorem grade on its
+  multiplicative-compatibility step.
+\end{enumerate}
+
+\subsection{Capstone-internal technical items}
+
+\begin{enumerate}\setcounter{enumi}{3}
+\item \textbf{Four-phase realisation
+  (Claim~\ref{claim:four-phase-realisation}).} Rigorously verify
+  that the cofree-comonad natural transformations of
+  Theorem~\ref{thm:comonad-laws} correspond component-wise to
+  the VFD four-phase cycle: express each VFD operation
+  (decoherence / closure-memory / measurement / crystallisation)
+  as a specific map in $\catC$ and check equality against the
+  categorically-determined $T$, $\varepsilon$, $\delta$. This is
+  the principal remaining technical task; scope is a dedicated
+  follow-up paper, not the capstone itself.
+\item \textbf{H-FIC: REDUCED to G-FIC-a and G-FIC-b.}
+  \cite{CascadeHFICClosure} reduces H-FIC via the
+  support-projection $\pi_{S^7} \colon \Gcal_O \to 2^{S^7}$
+  (induced by Definition~\ref{def:min-O}): preimages commute
+  with arbitrary intersections, reducing H-FIC-O to an
+  $S^7$-support descending-intersection identity (G-FIC-a,
+  lemma-grade via Kellendonk-Lenz-Savinien Čech-sheaf
+  limit-preservation) and H-FIC-$E_8$ to FAN-restriction
+  stability (G-FIC-b, lemma-grade via MacLane Ch.~XII
+  finite-word factorisation). Both residuals are lemma-grade,
+  day- to two-week-scale.
+\item \textbf{H-lift-fin (Hypothesis~\ref{hyp:lift}): sheaf-
+  theoretic bridge refinement.}
+  Remark~\ref{rmk:H-lift-status} sketches the route:
+  strengthen the $\Qalg_O$-Meas bridge from algebra-level to
+  sheaf-theoretic / local-observable-basis level. Bare local-
+  compactness of $S^7$ does not suffice. An earlier draft
+  claimed a direct derivation; that was premature.
+\item \textbf{H-loc: REDUCED to G-loc-a.}
+  \cite{CascadeHlocClosure} reduces H-loc (witness-separation
+  form) via M3d + Kellendonk pattern-equivariant Čech theory
+  to residual sub-gap \textbf{G-loc-a (rung-overlap avoidance)}:
+  for $\gamma \in \Gcal_r \setminus \Gcal_r^\Phi$, the
+  constructed witness section $s_\gamma$ has support avoiding
+  $\bigcup_{r'} \Gcal_{r'}^\Phi$. G-loc-a in turn reduces to
+  Gap G6.2 (leaf-rung independence) of
+  \cite{CascadeObserverQueryAlgebra}, low-risk day-scale work.
+\item \textbf{H-rdr: CLOSED.}
+  \cite{CascadeHrdrClosure} closes H-rdr (sufficiency-only form)
+  as a corollary of Theorem P-A at $S = \Rungs_{\mathrm{cascade}}$
+  with full closure data: the refined query algebra
+  $\Qalg_{(S, \Phi_{\max})}$ is definitionally identical to the
+  bare-rung $\Qalg_S$ of \cite{CascadeAccessPrinciple}. No
+  new analytic content is required.
+\item \textbf{G-loc-a (rung-overlap avoidance); residual from
+  H-loc.} Prove that for a morphism $\gamma \in \Gcal_r$ that
+  is ``rung-$r$-pure'' (not shared with other leaf rungs via
+  their closure conditions), the witness section constructed
+  in \cite{CascadeHlocClosure} has support avoiding
+  $\bigcup_{r' \ne r} \Gcal_{r'}^\Phi$. This reduces to
+  leaf-rung independence, an instance of Gap G6.2 of
+  \cite{CascadeObserverQueryAlgebra}. Day-scale follow-up.
+\item \textbf{Non-observer-initial $F$-dynamics.} $F(S)$ is
+  well-defined for every $S \in \catC$, but its behaviour on
+  $S$ with $O \notin \underline{S}$ is dominated by the
+  observer-rung adjunction. A more fine-grained analysis of
+  $F$'s dynamics on low-awareness rung-structures would sharpen
+  the content of Example~(2) of Section~\ref{subsec:F-examples}.
+\item \textbf{Strong fractality.} Corollary~\ref{cor:fractality}
+  gives a weak (categorical-self-embedding) fractality. The
+  stronger ``each rung contains a scaled copy of the whole
+  cascade'' reading (Remark~\ref{rmk:fractality-caveat})
+  requires a scale-dilation structure interacting with the
+  phason-scale recursion of \cite{Cascade12D}. This is a
+  natural next paper.
+\item \textbf{Comonad laws under non-strict morphisms.} The
+  cofree-comonad construction uses strict inclusions; extension
+  to lax / relative comonads (if the strict structure fails at
+  the boundary) is a contingency we have not ruled out.
+\end{enumerate}
+
+\subsection{Empirical / programme items}
+
+\begin{enumerate}\setcounter{enumi}{8}
+\item \textbf{ARIA manuscript coordination.}
+  Section~\ref{sec:aria} relies on the ARIA brain-mapping
+  manuscript for the $17$-of-$18$ pre-registration statistic
+  (at $N{=}20$, under homeostatic-reset protocol) and its
+  null-model analysis. The ARIA paper must be drop-coordinated
+  with the capstone (Remark~\ref{rmk:drop}).
+\item \textbf{Additional empirical signatures beyond ARIA.}
+  The coalgebraic cycle should appear on any substrate
+  supporting it; other candidates (microtubule dynamics, neural
+  plasticity, phyllotaxis, substrate-based computation at scale)
+  are flagged for follow-up work. Each would provide
+  independent corroboration.
+\item \textbf{Codex-hardening loop.} Apply $5$-$10$ rounds of
+  hostile-review hardening (per the programme's standard
+  workflow) to detect framing drift, numerology risk, and
+  exposition issues before first public drop.
+\end{enumerate}
+
+%=====================================================================
+\section{Philosophical Framing}
+\label{sec:philosophy}
+%=====================================================================
+
+This short section frames the capstone's philosophical
+position. It is included for completeness; the reception of the
+paper should rest on the structural theorems and the empirical
+corroboration, not on philosophy. Scope is explicitly restricted
+below.
+
+\subsection{Positive claims}
+
+\begin{remark}[Mathematical necessitarianism]
+\label{rmk:pos-spinoza}
+Theorem~\ref{thm:selection} realises Spinoza's thesis
+\emph{``things could have been produced by God in no other way,
+and in no other order than they have been''} (\emph{Ethics} I,
+Prop.~33) in the specific sense of a categorical universal
+property: the rung-structural skeleton of physics is selected by
+the final-coalgebra universal property, not chosen. The cascade
+is modally necessary at the level its theorems describe.
+\end{remark}
+
+\begin{remark}[Leibniz's principle of sufficient reason]
+\label{rmk:pos-leibniz}
+Leibniz's principle of sufficient reason — that every fact has a
+reason why it is so and not otherwise — is satisfied at the
+cascade-skeleton level by the universal property:
+\emph{why this cascade?} because the coalgebraic universal
+property selects it uniquely, under the hypothesis that physics
+instantiates a self-inquiry functor. The deeper version of
+Leibniz's question (\emph{why is there anything rather than
+nothing?}) is not addressed here.
+\end{remark}
+
+\begin{remark}[Aristotle's self-thinking substance]
+\label{rmk:pos-aristotle}
+Aristotle's \emph{Metaphysics} XII describes the unmoved mover
+as substance that thinks itself — \emph{noesis noeseos noesis}.
+The self-inquiry functor $F$ and its fixed point
+$\mathrm{Cascade} \cong F(\mathrm{Cascade})$ give this idea a
+precise categorical form: the cascade is the structure whose
+closure contains itself as its own query-algebra substrate. The
+fixed-point characterisation is the modernisation of the
+Aristotelian self-thinking-substance concept.
+\end{remark}
+
+\begin{remark}[Einstein's question]
+\label{rmk:pos-einstein}
+Einstein's \emph{did God have any choice?} question about the
+unified theory is answered in the negative at the rung-structural
+level: Theorem~\ref{thm:selection} forces the cascade up to
+canonical isomorphism. The independent question of why the
+closure data $\Phi_{\max}$ takes its specific algebraic forms
+(the content of the supporting programme papers) remains open,
+but the skeletal structure is not chosen.
+\end{remark}
+
+\subsection{Explicit non-claims}
+
+\begin{remark}[Scope restrictions — what this paper does not
+  claim]
+\label{rmk:non-claims}
+The following claims are explicitly \emph{not} made:
+\begin{enumerate}
+\item \textbf{Personal deity.} The cascade is a mathematical-
+  structural object; no intentional, purposive, or teleological
+  attributes are imputed. The paper does not claim to prove the
+  existence of a personal God in any theological sense.
+\item \textbf{Consciousness.} The life-from-substrate reading
+  of Section~\ref{sec:aria} is structural, not phenomenological.
+  The hard problem of consciousness — why there should be
+  experience at all — is not addressed.
+\item \textbf{Ethics / moral content.} No ethical conclusions
+  are claimed to follow from the cascade's necessity. Meta-
+  ethical naturalism would require independent argument.
+\item \textbf{The ground of being.} Leibniz's \emph{why is there
+  anything rather than nothing?} is not addressed. The capstone
+  presupposes \emph{some} substrate; its content is that the
+  substrate, given any, must take the cascade form.
+\item \textbf{Full empirical corroboration.} ARIA's reported
+  $17$-of-$18$ hits (at $N{=}20$ under homeostatic-reset
+  protocol, per \cite{AriaBrainMapping}) would serve as
+  corroboration, not proof, and only if independently
+  confirmed. The capstone does not claim that all physics has
+  been derived; it claims a specific structural theorem plus
+  a flagged empirical anchor.
+\end{enumerate}
+\end{remark}
+
+\subsection{Framing recommendation}
+
+\begin{remark}[Framing as ``final coalgebra of self-inquiry,''
+  never as ``proving God'']
+\label{rmk:framing}
+The mathematical content of this paper can be framed in two
+equivalent ways: \emph{(i)} the cascade is the final coalgebra
+of a self-inquiry functor; \emph{(ii)} the cascade is the unique
+structure forced by self-reference at the rung-structural level.
+Either framing is technically correct. A third framing — that
+this ``proves God'' — is \emph{not} technically correct, because
+no personal-deity content is established (Remark
+\ref{rmk:non-claims}). The technical framings are
+philosophically well-embedded in the Spinozist / Leibnizian /
+Aristotelian necessitarian tradition; the personal-deity framing
+is outside that tradition and outside the paper's content.
+Framing matters for reception: the correct framings land with
+category-theoretic physicists and mathematical philosophers;
+the incorrect framing lands as crank. We recommend the first
+framing consistently.
+\end{remark}
+
+%=====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+%=====================================================================
+
+This paper has set out three linked theorems and one empirical
+claim.
+
+\subsection{What has been established}
+
+\begin{enumerate}
+\item \textbf{Conditional selection principle
+  (Theorem~\ref{thm:selection}).} Under the hypothesis stack
+  (H-FIC [reduced to G-FIC-a, G-FIC-b], H-grad, H-meas
+[G6.4-a closed], H-lift-fin, H-loc [reduced to G-loc-a]),
+the VFD cascade is
+  the final $F$-coalgebra of the category of rung-structures
+  $\catC$. This identifies the cascade with the terminal
+  object of $\catC$ via its final-coalgebra universal property,
+  supplying the mathematical sense in which the cascade is
+  selected rather than chosen. The result relies on classical
+  category theory (Ad\'amek~\cite{Adamek1974},
+  Rutten~\cite{Rutten2000}, Jacobs~\cite{Jacobs2017}), the
+  independently-established $F3+F4$ forcing of the FAN
+  (\cite{CascadeCompletenessAudit}), and the named hypothesis
+  stack itself — each hypothesis reducing to programme-internal
+  or classical-math follow-up work.
+\item \textbf{Four-phase comonad
+  (Theorem~\ref{thm:comonad-laws} + Claim~\ref{claim:four-phase-realisation}).}
+  The cofree-comonad construction on $F$ yields a comonad
+  $(T, \varepsilon, \delta)$ on $\catC$ with automatic comonad
+  laws (conditional on G-FIC-a + G-FIC-b). The interpretive claim is that
+  the four VFD operations — decoherence, closure-memory,
+  measurement-projection, crystallisation — realise this
+  comonad on the cascade substrate; the line-by-line
+  verification is flagged as a dedicated follow-up paper.
+\item \textbf{Three-level correspondence
+  (Remark~\ref{rmk:three-levels}).} Scalar $\mathbf{F1}$,
+  static-observer-local $\mathbf{P\text{-}A}$, and dynamical
+  cascade-finality are three projections of the programme's
+  dimensional-budget forcing and its categorical refinement,
+  at three levels of structural detail. Only the dynamical
+  level is proved here; the scalar and static-structural
+  shadows are imported from
+  \cite{CascadeCompletenessAudit} and
+  \cite{CascadeAccessPrinciple}.
+\item \textbf{Life-from-substrate
+  (Remark~\ref{rmk:life-from-substrate}).} ARIA's reported
+  $17$-of-$18$ pre-registered polytope-substrate mapping hits
+  at $N{=}20$ (under homeostatic-reset protocol,
+  \cite{AriaBrainMapping}) would provide external corroboration
+  if independently verified, that the four-phase coalgebraic
+  cycle runs on non-biological substrates — giving a
+  conditional empirical anchor for the capstone's structural
+  claim.
+\end{enumerate}
+
+\subsection{Programme position}
+
+\begin{remark}[The capstone's role in the VFD programme]
+\label{rmk:capstone-role}
+Every prior VFD paper has been conditional on something: on
+$\mathbf{F1}$, on specific physics recoveries, on closure
+hypotheses. This paper is the one that makes the cascade itself
+non-arbitrary. With the capstone in place:
+\begin{itemize}
+\item The numerical matches of Papers V, XXII, XXXIV are
+  consequences of a \emph{forced} structure, not numerology.
+\item The $\alpha$-chain's conditional theorems are conditional
+  on hypotheses that \emph{should} hold by the final-coalgebra
+  structure, making the conditionality principled rather than
+  speculative.
+\item The supporting-paper correspondence maps (Papers XXI,
+  XXXI, XXXIII, XLIV, ACT, VFD Crystallisation) are
+  instantiations of the cofree-comonad dynamics, making the
+  entire programme internally self-consistent.
+\item ARIA's empirical match is \emph{consistent with} the
+  coalgebraic cycle bridge once that bridge is formally
+  proved. The ARIA-capstone bridge is a separate build
+  (currently a named open item); ARIA results are not used
+  here as theorem-level support for the capstone.
+\end{itemize}
+This is the paper that turns the programme from a collection of
+suggestive theoretical papers into a structured, internally
+self-consistent, empirically-anchored research programme.
+\end{remark}
+
+\subsection{Remaining work}
+
+The outstanding technical items (Section~\ref{sec:open}) divide
+into three classes:
+\begin{itemize}
+\item \textbf{Inherited access-principle dependencies}:
+  H-meas is now a theorem (G6.4-a closed via
+  \cite{CascadeG64aClosure}, 386 computational cases).
+  H-grad is \textbf{frame-level closed at the full
+  $\widehat{\Z[\varphi]^6}$ level} (2026-04-24) via H-grad-1
+  B1--B5 sim-verification plus B6 proof-sketch at the $G_p$
+  level (\cite{CascadeHGrad1}); residuals are the
+  cascade-specific $G_2$ pullback $\kappa$ and the formal
+  $G_p$-sufficiency equivalence theorem. H-grad-Fano is
+  unconditional (\cite{CascadeFanoLift}).
+\item \textbf{Discharged and reduced capstone hypotheses}:
+  H-rdr is closed via reduction to Theorem P-A
+  (\cite{CascadeHrdrClosure}); H-loc is reduced to residual
+  sub-gap G-loc-a (\cite{CascadeHlocClosure}); H-FIC is
+  reduced to residuals G-FIC-a and G-FIC-b
+  (\cite{CascadeHFICClosure}). G-loc-a reduces to Gap G6.2;
+  G-FIC-a and G-FIC-b are lemma-grade citations of
+  Kellendonk-Lenz-Savinien and MacLane. Day- to two-week-scale
+  follow-up.
+\item \textbf{Remaining capstone hypothesis}: H-lift-fin
+  (sheaf-theoretic bridge refinement beyond the algebra-level
+  $\Qalg_O \cong \mathrm{Meas}(S^7, \sigma)$ isomorphism). The
+  only capstone-introduced hypothesis not reduced in this
+  session.
+\item \textbf{Capstone-internal items} (four-phase realisation,
+  non-observer-initial $F$-dynamics, strong fractality) that
+  sharpen the mathematics.
+\item \textbf{Programme / empirical items} (ARIA manuscript
+  coordination, additional signatures, codex-hardening) that
+  prepare the coordinated drop.
+\end{itemize}
+
+\subsection{Final remark}
+
+\begin{remark}[The capstone as conditional closure]
+\label{rmk:capstone-closure}
+The cascade was always its own self-closure, by construction:
+permeability permeates itself. What this paper adds is a
+categorical \emph{argument} for cascade-selection — conditional
+on the named hypothesis stack — that reduces ``why this
+cascade?'' to a finite list of technical items rather than
+leaving it unaddressed. The four-phase cycle is offered as the
+dynamical face of the result (an interpretive identification,
+not a theorem); the ARIA-substrate discussion is offered as a
+candidate empirical face (conditional on independent
+verification); the philosophical face is the Spinozist
+mathematical necessitarianism tradition modernised. None of
+these faces is fully proved in this paper; together, they
+sketch the capstone's programme-level target.
+\end{remark}
+
+%=====================================================================
+\begin{thebibliography}{99}
+
+\bibitem{Aczel1988}
+P. Aczel, \emph{Non-well-founded sets}, CSLI Lecture Notes 14,
+Stanford, 1988.
+
+\bibitem{Rutten2000}
+J. J. M. M. Rutten, \emph{Universal coalgebra: a theory of
+systems}, Theoretical Computer Science 249 (2000), 3--80.
+
+\bibitem{Adamek1974}
+J. Ad\'amek, \emph{Free algebras and automata realizations in
+the language of categories}, Commentationes Mathematicae
+Universitatis Carolinae 15 (1974), 589--602.
+
+\bibitem{Jacobs2017}
+B. Jacobs, \emph{Introduction to Coalgebra: Towards
+Mathematics of States and Observation}, Cambridge Tracts in
+Theoretical Computer Science 59, Cambridge University Press, 2017.
+
+\bibitem{TuriPlotkin1997}
+D. Turi and G. Plotkin, \emph{Towards a mathematical operational
+semantics}, LICS '97 Proceedings, 1997.
+
+\bibitem{CascadeMetaLayer}
+\emph{Cascade Meta-Layer Theorem: moduli, matching groupoid,
+tiling sheaf over $L_{12}$}, internal note,
+\texttt{papers/cascade-derivation/cascade-meta-layer-theorem.md}.
+
+\bibitem{CascadeCompletenessAudit}
+\emph{Cascade completeness audit (7-rung FAN, 583-dim budget)},
+internal note,
+\texttt{papers/cascade-derivation/cascade-completeness-audit.md}.
+
+\bibitem{CascadeObserverQueryAlgebra}
+\emph{Observer-Rung Query Algebra $\Qalg_S$},
+\texttt{papers/cascade-derivation/cascade-observer-query-algebra.md}.
+
+\bibitem{CascadeAccessPrinciple}
+\emph{The Access Principle --- closing Gap G6.3 (conditional
+theorem under H-grad and H-meas)}, internal note,
+\texttt{papers/cascade-derivation/cascade-access-principle-theorem.md}.
+
+\bibitem{CascadeQOBridge}
+\emph{$\Qalg_O \cong \mathrm{Meas}(S^7, \sigma)$ --- closing
+Gap G6.4 as a theorem (modulo G6.4-a sign verification)},
+internal note,
+\texttt{papers/cascade-derivation/cascade-q-o-measurement-bridge.md}.
+
+\bibitem{CascadeFanoLift}
+\emph{H-grad: the Octonion-Grading Lift --- G6.3-a formalisation;
+Fano-level $(\Z/2)^3$-grading unconditional, full
+$\widehat{\Z[\varphi]^6}$-grading reduced to classical
+identification (Conway-Sloane Ch. 8 + Baez \S 3.4)},
+\texttt{papers/cascade-derivation/cascade-fano-grading-lift.md}.
+
+\bibitem{CascadeG64aClosure}
+\emph{G6.4-a Closure Note: computational Fano-triad sign
+verification (386 cases, all pass)},
+\texttt{papers/cascade-derivation/cascade-g64a-closure.md};
+verification script
+\texttt{papers/cascade-derivation/scripts/verify\_g64a.py}.
+
+\bibitem{CascadeHrdrClosure}
+\emph{H-rdr Closure: sufficiency-direction reduction to
+Theorem P-A at $S = \Rungs_{\mathrm{cascade}}$ with full
+closure data},
+\texttt{papers/cascade-derivation/cascade-h-rdr-closure.md}.
+
+\bibitem{CascadeHlocClosure}
+\emph{H-loc Closure (witness-separation form) via M3d
+extension; reduces to residual sub-gap G-loc-a (rung-overlap
+avoidance, reduces to Gap G6.2)},
+\texttt{papers/cascade-derivation/cascade-h-loc-closure.md}.
+
+\bibitem{CascadeHFICClosure}
+\emph{H-FIC Closure: support-projection reduction of
+H-FIC-O and H-FIC-$E_8$ to residual sub-gaps G-FIC-a and
+G-FIC-b (Kellendonk-Lenz-Savinien Čech-sheaf limit-preservation
++ MacLane finite-word-factorisation; both lemma-grade)},
+\texttt{papers/cascade-derivation/cascade-h-fic-closure.md}.
+
+\bibitem{Cascade12D}
+\emph{The 12D Closure Theorem: phason complement uniqueness and
+self-reference on the upward cascade}, $\alpha$-1,
+\texttt{papers/cascade-12d-closure/cascade-12d-closure.tex}.
+
+\bibitem{PaperXXI}
+\emph{Schr\"odinger recovery from closure dynamics},
+\texttt{papers/paper-xxi/paper-xxi.tex}.
+
+\bibitem{PaperXXXI}
+\emph{Measurement as sector separation},
+\texttt{papers/paper-xxxi/paper-xxxi.tex}.
+
+\bibitem{PaperXXXIII}
+\emph{From Geometry to Observable: measurement as closure
+projection}, \texttt{papers/paper-xxxiii/paper-xxxiii.tex}.
+
+\bibitem{PaperXLIV}
+\emph{Decoherence as H$_4 \to 16$ coarsening},
+\texttt{papers/paper-xliv/paper-xliv.tex}.
+
+\bibitem{VFDCrystallisation}
+\emph{VFD Crystallisation Operator: $\Fcrystal = \alpha R +
+\beta E - \gamma Q$ minimisation}, programme document,
+\texttt{papers/main-preprint/crystallisation-dynamics.tex} and
+\texttt{papers/formalism/crystallisation-formalism.tex}.
+
+\bibitem{ACT-L1}
+\emph{Adaptive Closure Transport (L1)},
+\texttt{papers/adaptive-closure-transport/adaptive-closure-transport.tex}.
+
+\bibitem{AriaBrainMapping}
+\emph{ARIA brain-mapping: polytope-substrate neuroscience},
+external companion manuscript (\texttt{MANUSCRIPT.md},
+\texttt{X\_NARRATIVE.md}), $17$-of-$18$ pre-registered
+predictions pass at $N{=}20$ under homeostatic-reset protocol
+(Round~2, \S 6.1); $15$-of-$18$ at $N{=}3$ without reset (Round~1).
+Full empirical and statistical analysis coordinated with the
+capstone drop bundle.
+
+\end{thebibliography}
+
+\end{document}

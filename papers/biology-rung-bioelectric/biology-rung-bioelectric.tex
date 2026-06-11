@@ -1,0 +1,597 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{observation}[theorem]{Observation}
+
+\newcommand{\phig}{\varphi}
+\newcommand{\Lcasc}{\mathcal{L}_{\mathrm{casc}}}
+
+\title{Bioelectric Prepattern Eigenmodes as Morphogenetic Attractors\\[6pt]
+\large A Cascade-Laplacian Conjecture on the $2I$-Orbit Cell Graph}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed;
+conjectural framework note)
+
+\begin{abstract}
+Michael Levin and co-workers have established experimentally that
+\emph{bioelectric prepatterns} --- steady-state transmembrane
+voltage distributions in developing or regenerating tissue ---
+act as high-level morphological organisers, with discrete
+manipulations reliably inducing specific morphological outcomes
+(double-head planaria, no-head planaria, heterospecific head
+morphology, Xenopus ``electric face'' patterns preceding
+gene-expression
+markers)~\cite{LevinBeane2011,DurantLevin2017,PietakLevin2016,Levin2021}.
+The physical question Levin's group has repeatedly raised is:
+\emph{what discrete set of bioelectric prepatterns is
+morphologically admissible?} Why these specific attractor states
+and not others?
+
+This paper proposes a Vibrational Field Dynamics (VFD)
+answer grounded in \emph{computationally verified} spectral
+structure on the 600-cell cell graph. Morphologically admissible
+bioelectric prepatterns are conjectured to be low-lying eigenmodes
+of a cascade closure-Laplacian on the full $600 \times 600$ cell
+graph (\emph{not} the $\mathcal{G}/2I$ quotient, because $2I$
+acts freely on cells so the central element $-e$ acts
+non-trivially and no descent to $A_5$ holds globally). The
+classification is \emph{at the $2I$ level, not $A_5$}; attractor
+families correspond to $2I$ irreps, of which there are 9 (with
+dimensions $\{1, 2, 2', 3, 3', 4, 4', 5, 6\}$).
+
+Direct computation (builds $B_{\mathrm{orbits}}$,
+$B_{\mathrm{laplacian}}$) establishes:
+\begin{itemize}
+\item $2I$ acts freely on the 600 cells, giving 5 orbits of size
+  120 each — SIM-VERIFIED.
+\item The 600-cell cell-graph Laplacian (4-regular, 1200 edges)
+  has low-lying eigenvalue multiplicities
+  $(1, 4, 9, 16, 25, 36)$, exactly the squared dimensions
+  of the first six distinct $2I$ irrep dimensions
+  $\{1, 2, 3, 4, 5, 6\}$.
+\item Per-eigenspace central parity $\chi(-e)$ alternates
+  $(+1, -4, +9, -16, +25, -36)$, matching integer-spin versus
+  half-integer-spin $2I$ irrep assignment.
+\item The full 600-dim permutation representation decomposes
+  into $2I$ irreps with integer multiplicities summing to 600,
+  matching 5 copies of the regular $2I$ rep — forced by the
+  free action.
+\end{itemize}
+
+\textbf{Status.} The spectral-structure and group-action
+content is sim-verified. The identification of specific
+morphological phenotypes with specific low-mode labels is
+\emph{conjectural} and awaits the B\_modes\_full full-character-
+projection build plus empirical comparison against curated
+Levin-group regeneration outcomes. Every step is classified
+as \textbf{derived} (proved / sim-verified), \textbf{identified}
+(structural correspondence), or \textbf{open / conjectural}.
+\end{abstract}
+
+%==================================================================
+\section{Introduction and Scope}\label{sec:intro}
+%==================================================================
+
+\subsection{The Levin-group experimental setting}
+
+Over the past two decades, experiments from the Levin group and
+collaborators have established that \emph{bioelectric
+prepatterns} --- spatial distributions of transmembrane voltage
+$V_{\mathrm{mem}}(x)$ across developing, regenerating, or
+wounded tissue --- operate as \emph{morphogenetic} signals above
+the level of genetic expression
+\cite{LevinBeane2011,DurantLevin2017,PietakLevin2016,Levin2021}.
+Key published findings:
+\begin{itemize}
+\item Planarian flatworms can be induced, by pharmacologically
+  altering gap-junction communication and thereby redistributing
+  the steady-state $V_{\mathrm{mem}}$ pattern, to regenerate with
+  \emph{two heads}, \emph{no heads} (tail-only), or
+  \emph{heterospecific head morphology} (the head of a different
+  planarian species) from standard amputation fragments
+  \cite{LevinBeane2011,EmmonsBell2015,DurantLevin2017}.
+\item Xenopus embryos show a stereotyped ``electric face'' ---
+  specific $V_{\mathrm{mem}}$ hot and cold spots appearing at
+  future facial-organ sites \emph{before} the corresponding
+  gene-expression markers appear \cite{VandenbergLevin2011}
+  (pre-gene-expression voltage / pH regionalisation);
+  \cite{PietakLevin2016} supplies the BETSE simulation framework
+  for downstream modelling.
+\item Regenerating vertebrate tails, axolotl limbs, and
+  amphibian eyes show $V_{\mathrm{mem}}$ patterns that prefigure
+  the morphological outcome in reliable, reproducible ways.
+\end{itemize}
+A central open question --- posed explicitly in
+\cite{Levin2021} --- is: \emph{what determines the discrete set
+of admissible $V_{\mathrm{mem}}$ attractor patterns?} Why two
+heads and not three? Why are certain off-target morphologies
+reliably inducible while others are not?
+
+\subsection{The VFD conjecture}
+
+The VFD cascade Life rung identifies the biological substrate at
+the \emph{cell level} of the 600-cell, with the binary
+icosahedral group $2I$ acting as the 600-cell vertex set and
+$A_5 = 2I/\{\pm 1\}$ as the proper rotation
+group~\cite[\S 2.1--2.3, \S 3.1]{CascadeBio}. Under this
+identification, the 600 tetrahedral cells of the 600-cell form a
+natural graph $\mathcal{G}$ (vertices = cells, edges =
+face-sharing adjacencies); the $2I$-orbit quotient
+$\mathcal{G}/2I$ has \emph{exactly 5 orbits of size 120 each}:
+$2I$ acts freely on the 600 cells, giving the decomposition
+$600 = 5 \cdot 120$. This is SIM-VERIFIED in
+\texttt{scripts/wo4\_sim\_close\_orbits.py} by direct enumeration
+of the $2I$-action on cells (quaternion multiplication, no
+counting shortcuts): all 120 group elements × 600 cells were
+computed and the orbit BFS returned 5 orbits, each of size 120.
+The 5-orbit structure is therefore a \emph{computed} fact, not
+a hypothesis.
+
+The conjecture this paper records:
+
+\begin{quote}
+\textbf{Levin-attractor conjecture.} The morphologically
+admissible bioelectric prepatterns of a developing / regenerating
+organism are the low-lying eigenmodes of a cascade
+closure-Laplacian $\Lcasc$ on $\mathcal{G}/2I$, classified by
+$A_5$ irreducible representations. The five $A_5$ irreps ---
+$\mathbf{1}, \mathbf{3}, \mathbf{3}', \mathbf{4}, \mathbf{5}$ ---
+correspond to five morphological attractor families, with
+Galois-conjugate polymorphism between $\mathbf{3}$ and
+$\mathbf{3}'$.
+\end{quote}
+
+No eigenmode computation is performed in this paper; the
+conjecture is stated as a \emph{falsifiable framework claim},
+with the understanding that executing the test requires
+\emph{both} a concrete construction of $\Lcasc$ (depending on
+resolving the conjectural Hopf cell-fibration of
+\cite[\S 2.6, \S 3.2]{CascadeBio}) \emph{and} a curated dataset
+of Levin-style regeneration outcomes with bioelectric-pattern
+labels.
+
+\subsection{Why this paper is conjectural only}
+
+Three reasons:
+\begin{enumerate}
+\item The cell-level graph structure of the 600-cell under $2I$
+  depends on the conjectural $15 \times 40$ Hopf
+  fibration~\cite[\S 2.6]{CascadeBio}, currently flagged as a
+  ``structural candidate'' not proved.
+\item The cascade closure-Laplacian on a cell graph is not yet
+  constructed (parallel to the open problem C.2 of WO-1, which
+  asks about face-level residues of the 600-cell closure
+  machinery).
+\item The empirical comparison requires Levin-group
+  regeneration data curated with specific bioelectric-pattern
+  labels; such a dataset is available in various published forms
+  but has not been assembled in comparison-ready form for this
+  programme.
+\end{enumerate}
+This paper therefore records the conjecture at the
+\emph{framework} level and provides a path to falsification; it
+does \emph{not} constitute a theorem or a completed empirical
+test.
+
+%==================================================================
+\section{Preliminaries}\label{sec:prelim}
+%==================================================================
+
+\subsection{Cascade Life-rung substrate}
+
+From \cite[\S 2.1--2.3]{CascadeBio} and WO-1~\cite{SmartCapsid}:
+the binary icosahedral group $2I \subset \mathrm{SU}(2)$ of order
+$120$ acts as the vertex set of the 600-cell; $I = 2I/\{\pm 1\}
+\cong A_5$ of order $60$ acts on antipodal vertex pairs and on
+the icosahedron's 20 faces. The 600-cell has $600$ tetrahedral
+cells; biology is placed at the cell (3-volume)
+level~\cite[\S 3.1]{CascadeBio}. A $15$-fibre Hopf cell-
+fibration with $40$ cells per fibre is proposed as a structural
+candidate~\cite[\S 2.6]{CascadeBio}, conjectural.
+
+\subsection{The cell graph $\mathcal{G}$ and its $2I$-quotient}
+
+Let $\mathcal{G}$ denote the graph with $600$ vertices (one per
+tetrahedral cell of the 600-cell) and edges between every pair of
+face-sharing cells. $2I$ acts on $\mathcal{G}$ by permuting cells
+according to its action on the 600-cell.
+
+The $2I$-orbit structure of $\mathcal{G}$ has five vertex orbits
+(this is the cascade Life-rung identification of the cell-level
+substrate; see WO-1~\cite{SmartCapsid}, catalogue entry R.0).
+The quotient graph $\mathcal{G}/2I$ therefore has 5 vertices and
+a set of edges determined by the $2I$-equivariant adjacencies.
+
+\subsection{The standard $A_5$ irrep spectrum}
+
+$A_5$ has five irreducible complex representations:
+\[
+\mathbf{1} \quad (\dim 1, \text{ trivial}), \qquad
+\mathbf{3} \oplus \mathbf{3}' \quad (\dim 3, \text{ Galois pair}), \qquad
+\mathbf{4}, \quad \mathbf{5}.
+\]
+Total dimension $1 + 3 + 3 + 4 + 5 = 16$, squared sum
+$1 + 9 + 9 + 16 + 25 = 60 = |A_5|$.
+
+The Galois-conjugate pair $\mathbf{3}, \mathbf{3}'$ swap under
+$\phig \leftrightarrow 1 - \phig$ (equivalently
+$\phig \leftrightarrow -1/\phig$); their characters differ on the
+5-cycle classes.
+
+%==================================================================
+\section{The Cascade Closure-Laplacian (Defined Conjecturally)}\label{sec:laplacian}
+%==================================================================
+
+\begin{definition}[$\triangleright$ Cascade closure-Laplacian, conjectural]\label{def:D2}
+The \emph{cascade closure-Laplacian} $\Lcasc$ on the cell graph
+$\mathcal{G}$ (or its $2I$-quotient $\mathcal{G}/2I$) is a
+graph Laplacian operator, conjecturally obtained by restriction
+of the Paper XXXII closure-functional
+machinery~\cite[\S 4]{SmartXXXII} (or of the density-level F2
+functional~\cite[\S F2]{CascadeFoundations}) to the cell-level
+discretisation.
+
+This definition is explicitly \emph{conjectural}: no such
+restriction has been constructed. If the restriction exists,
+$\Lcasc$ would be a symmetric positive-semi-definite operator on
+$\ell^2(\mathcal{G})$, commuting with the $2I$ action. The
+invariant sector descends to $\mathcal{G}/2I$; non-trivial
+$2I$-irrep eigenspaces live on the full cell graph and do not
+descend (since $2I$ acts freely, $-e$ is non-trivial and
+$A_5$-descent fails globally).
+\end{definition}
+
+\begin{conjecture}[$\circ$ Morphogenetic attractor identification]\label{conj:C1}
+The morphologically admissible bioelectric prepatterns
+$V_{\mathrm{mem}}(x)$ of a developing / regenerating organism are
+proportional to the low-lying eigenmodes of $\Lcasc$, classified
+first by $2I$ irrep content. The cell-graph Laplacian's
+sim-verified multiplicity structure $(1, 4, 9, 16, 25, 36)$ on
+the first six eigenvalues singles out the six distinct $2I$ irrep
+dimensions $\{1, 2, 3, 4, 5, 6\}$ as candidate bioelectric-mode
+labels, with central-parity alternation
+($\chi(-e) = +1, -4, +9, -16, +25, -36$) distinguishing
+integer-spin (descends to $A_5$) from half-integer-spin
+(does not). Under any descent to $A_5$, only the 5
+integer-spin irreps contribute ($1, 3, 3', 4', 5$); the 4
+half-integer-spin irreps ($2, 2', 4, 6$) remain at the $2I$
+level only. Attractor count is therefore bounded above by 9
+($2I$ irreps) and by 5 ($A_5$ irreps) depending on which
+descent holds for the specific morphology.
+\end{conjecture}
+
+\begin{conjecture}[$\circ$ Double-head / no-head as axial-mode inversion]\label{conj:C2}
+The double-head and no-head planaria phenotypes of
+\cite{LevinBeane2011,DurantLevin2017} correspond to
+\emph{sign-inversions} of an axial mode — conjecturally the
+first non-trivial 2I-irrep-labelled eigenmode with clear
+head-tail-axis structure. Specific labelled-irrep assignment
+is deferred to the B\_modes\_full full-character-projection
+build; the pattern of sign-inverted axial prepatterns mapping
+to mirrored phenotypes is the falsifiable content here,
+independent of the specific irrep label.
+\end{conjecture}
+
+\begin{conjecture}[$\circ$ Falsifier: forbidden bioelectric pattern]\label{conj:C3}
+There exist steady-state $V_{\mathrm{mem}}$ patterns whose
+$2I$-irrep content does not overlap any low-lying
+$\Lcasc$-eigenspace (e.g.\ patterns with $C_7$ or $C_{11}$
+cyclic-symmetry content, which do not appear in any $2I$-irrep
+for the first few low eigenvalues).
+Such patterns, if induced artificially via gap-junction
+manipulation or ion-channel perturbation, should fail to produce
+a viable morphological outcome (organism does not regenerate, or
+regenerates with a disorganised phenotype). A successful
+induction of a viable morphology from a
+non-$A_5$-irrep-classifiable $V_{\mathrm{mem}}$ pattern would
+falsify Conjecture~\ref{conj:C1}.
+\end{conjecture}
+
+%==================================================================
+\section{Empirical Test Design (Planned)}\label{sec:empirical}
+%==================================================================
+
+The full empirical test of Conjecture~\ref{conj:C1} has two
+components:
+
+\subsection{Computational prerequisite}
+
+Before comparison against biology, we need an explicit
+$\Lcasc$-eigenmode computation on $\mathcal{G}/2I$. This
+requires:
+\begin{enumerate}
+\item A construction of $\Lcasc$ via either (a) restriction of
+  the Paper XXXII closure functional
+  \cite[\S 4]{SmartXXXII} to the cell graph, or (b) restriction
+  of the density-level F2 functional
+  \cite[\S F2]{CascadeFoundations}, or (c) a direct group-
+  theoretic definition on $\mathcal{G}/2I$ (e.g.\ the standard
+  graph Laplacian, which on any $2I$-invariant graph already
+  splits into $A_5$-irrep blocks).
+\item Explicit diagonalisation: build B\_laplacian
+  (\texttt{scripts/wo4\_sim\_close\_laplacian.py}) has been run
+  on the full $600 \times 600$ cell-graph Laplacian (not just
+  the orbit quotient); the first six low-lying eigenvalues
+  have multiplicities $1, 4, 9, 16, 25, 36$, exactly the
+  squared dimensions of $2I$'s first six irreps
+  $\{1, 2, 3, 4, 5, 6\}$.
+\item Classification of each low eigenmode by $2I$ irrep type
+  (\emph{not} $A_5$ alone — a quotient graph $\mathcal{G}/2I$ by
+  itself cannot carry non-trivial $A_5$-irrep labels; the full
+  $2I$-cell-graph is needed and then descent to $A_5$ via
+  antipodal pairing is applied separately).
+\end{enumerate}
+
+\subsection{Empirical comparison}
+
+With the eigenmode table in hand, compare against the Levin-group
+regeneration-outcome literature:
+\begin{itemize}
+\item \textbf{Planaria}: \cite{LevinBeane2011,DurantLevin2017}
+  report $V_{\mathrm{mem}}$ maps before and during regeneration
+  for normal, double-head, no-head, and heterospecific
+  phenotypes. Compare the maps against $\Lcasc$-predicted
+  $\mathbf{3}$/$\mathbf{3}'$ eigenmodes.
+\item \textbf{Xenopus ``electric face''}:
+  \cite{PietakLevin2016} reports the pre-gene-expression
+  voltage maps. Compare against $\Lcasc$'s $\mathbf{4}$-
+  eigenmode (conjectured facial-organ mode).
+\item \textbf{Forbidden-pattern falsifier test}: construct a
+  $V_{\mathrm{mem}}$ pattern with $A_6$-symmetric content (e.g.\
+  6-pole radial voltage distribution), apply it via standard
+  gap-junction modulation protocols, and test for viable
+  morphological outcome. A viable outcome falsifies
+  Conjecture~\ref{conj:C1}; a null or disorganised outcome is
+  consistent.
+\end{itemize}
+
+None of this is performed in the present paper. The design is
+recorded here for later execution.
+
+%==================================================================
+\section{Relation to Upstream and Sibling WOs}\label{sec:rel}
+%==================================================================
+
+\subsection{Dependencies}
+
+\begin{itemize}
+\item \textbf{WO-1 (capsid)}~\cite{SmartCapsid}: shares the
+  $2I$-substrate and $A_5$ irrep infrastructure
+  (Lemma L.0 of~\cite{SmartCapsid} classifies the face
+  permutation representation).
+\item \textbf{WO-2 (amyloid)}~\cite{SmartAmyloid}: shares the
+  $\phig$-helical closure-orbit machinery that would enter if
+  $\Lcasc$ is constructed via the field-theoretic F2 restriction.
+\item \textbf{Upstream Hopf cell-fibration
+  conjecture}~\cite[\S 2.6]{CascadeBio}: needed to give the
+  cell graph $\mathcal{G}$ a principled $2I$-orbit
+  decomposition.
+\item \textbf{aria-chess brain-mapping
+  programme}: not a dependency of this paper, but a
+  \emph{sibling programme} (see WO-6 cross-reference
+  \texttt{papers/biology-rung/WO-BIOLOGY-RUNG-006-DMN-BRIDGE.md}). The
+  aria-chess programme addresses adult-brain
+  EEG / DMN / cortical-dynamics preregistrations
+  (15/18 preregistered hits), which are distinct from
+  developmental bioelectric morphogenesis.
+\end{itemize}
+
+\subsection{Stretch targets}
+
+If Conjecture~\ref{conj:C1} is empirically supported, it opens a
+theoretical handle on:
+\begin{itemize}
+\item \textbf{Tissue regeneration and wound
+  healing}: predicting which bioelectric manipulations will
+  successfully induce a given regenerative outcome.
+\item \textbf{Axolotl limb regeneration}: a model system where
+  bioelectric prepatterns before regeneration are already well-
+  characterised.
+\item \textbf{Cancer as bioelectric
+  disorganisation}: tumour tissue shows disrupted
+  $V_{\mathrm{mem}}$ maps compared to healthy tissue
+  \cite{Levin2021}; a cascade-eigenmode framework would interpret
+  tumour $V_{\mathrm{mem}}$ patterns as ``forbidden'' modes in
+  the sense of Conjecture~\ref{conj:C3}.
+\end{itemize}
+None of these stretch targets is quantitatively addressed here;
+they are flagged as opportunities for downstream work.
+
+%==================================================================
+\section{Summary and Logical Chain}\label{sec:chain}
+%==================================================================
+
+\paragraph{What is derived ($\blacktriangleright$).}
+\begin{itemize}
+\item Build $B_{\mathrm{orbits}}$ (\texttt{scripts/wo4\_sim\_close\_orbits.py}):
+  the 2I action on the 600 tetrahedral cells of the 600-cell is
+  \emph{free}, with exactly 5 orbits of size 120 each. Direct
+  enumeration via quaternion multiplication of all 120 group
+  elements on each cell (600 · 120 = 72 000 actions computed),
+  then BFS-orbit decomposition — no counting shortcut.
+\item Build $B_{\mathrm{laplacian}}$ (\texttt{scripts/wo4\_sim\_close\_laplacian.py}):
+  the 600-cell cell-graph Laplacian (4-regular, 1200 edges) has
+  low-lying eigenvalue multiplicities
+  $(1, 4, 9, 16, 25, 36) = (1^2, 2^2, 3^2, 4^2, 5^2, 6^2)$ — exactly
+  the squared dimensions of the first six $2I$ irreps
+  $\{1, 2, 3, 4, 5, 6\}$. The $\chi(-e)$ character values
+  $(+1, -4, +9, -16, +25, -36)$ cleanly alternate between
+  integer-spin (trivial, dim-3, dim-5) and half-integer-spin
+  (dim-2 spinor, dim-4, dim-6), matching the 2I irrep parity
+  under the central element $-e$.
+\item The full permutation representation $\chi_{\mathrm{perm}}$
+  on 600 cells decomposes into 2I irreps with integer
+  multiplicities $(5, 10, 10, 15, 15, 20, 20, 25, 30)$ on
+  $(1, 2a, 2b, 3a, 3b, 4a, 4b, 5, 6)$, exactly $5 \cdot \dim \rho$
+  per irrep — matching 5 copies of the regular $2I$ rep, as
+  forced by the free action.
+\end{itemize}
+
+\paragraph{What is identified ($\triangleright$).}
+\begin{itemize}
+\item The $2I$-orbit decomposition of the cell graph has $5$
+  orbits of size $120$ each (sim-verified by build B\_orbits at
+  \texttt{scripts/wo4\_sim\_close\_orbits.py}, \emph{not} imported
+  from WO-1; WO-1 catalogue R.0 supplies only the shared
+  $2I/A_5$ substrate). Build B\_laplacian at
+  \texttt{scripts/wo4\_sim\_close\_laplacian.py} further shows
+  the $600 \times 600$ cell-graph Laplacian has
+  low-lying eigenvalues of multiplicities $1, 4, 9, 16, 25, 36$
+  — exactly the squared dimensions of the first six $2I$
+  irreps, confirming isotypic structure on low modes.
+\item The $A_5$ irrep count is $5$, giving at most $5$
+  morphologically distinct attractor families under the conjecture.
+\end{itemize}
+
+\paragraph{What is open ($\circ$).}
+\begin{itemize}
+\item Construction of $\Lcasc$ (Definition~\ref{def:D2} is
+  conjectural; three construction routes suggested).
+\item Conjecture~\ref{conj:C1} (morphological attractors as
+  eigenmodes): central framework claim.
+\item Conjecture~\ref{conj:C2} (double-head / no-head as
+  $\mathbf{3}$-inversion): specific match to planarian data.
+\item Conjecture~\ref{conj:C3} (forbidden-pattern falsifier):
+  the cleanest experimental test.
+\item All empirical comparison against Levin-group data.
+\end{itemize}
+
+\paragraph{Status summary.} This is a framework conjecture
+note rather than a substantive derivation paper. It exists in
+programme-drop form to ensure the Levin-bioelectric prediction is
+on the record alongside the other biology-rung papers, not to
+claim a proved result. Its falsifiability is stated explicitly;
+the computation and empirical comparison are flagged for future
+work.
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+This manuscript lives at
+\texttt{papers/biology-rung-bioelectric/biology-rung-bioelectric.tex};
+umbrella-programme artefacts are in \texttt{papers/biology-rung/}
+(WO spec at \texttt{WO-BIOLOGY-RUNG-004-BIOELECTRIC.md}; shared
+math-catalogue ledger). No computational artefact is supplied by
+this paper; the $\Lcasc$-eigenmode sim is flagged as
+\texttt{WAITING\_FOR\_CONSTRUCTION} pending either resolution of
+the Hopf cell-fibration or an alternative graph-theoretic
+definition of $\Lcasc$.
+
+\begin{thebibliography}{99}
+
+\bibitem{LevinBeane2011}
+Beane, W.~S., Morokuma, J., Adams, D.~S., and Levin, M.,
+\emph{A chemical genetics approach reveals H,K-ATPase-mediated
+membrane voltage is required for planarian head regeneration},
+Chemistry \& Biology \textbf{18} (2011), 77--89.
+
+\bibitem{DurantLevin2017}
+Durant, F., Morokuma, J., Fields, C., Williams, K., Adams, D.~S.,
+and Levin, M.,
+\emph{Long-term, stochastic editing of regenerative anatomy via
+targeting endogenous bioelectric gradients},
+Biophysical Journal \textbf{112} (2017), 2231--2243.
+
+\bibitem{EmmonsBell2015}
+Emmons-Bell, M., Durant, F., Hammelman, J., Bessonov, N.,
+Volpert, V., Morokuma, J., Pinet, K., Adams, D.~S., Pietak, A.,
+Lobo, D., and Levin, M.,
+\emph{Gap junctional blockade stochastically induces different
+species-specific head anatomies in genetically wild-type
+Girardia dorotocephala flatworms},
+International Journal of Molecular Sciences \textbf{16} (2015),
+27865--27896.
+
+\bibitem{VandenbergLevin2011}
+Vandenberg, L.~N., Morrie, R.~D., and Adams, D.~S.,
+\emph{V-ATPase-dependent ectodermal voltage and pH regionalization
+are required for craniofacial morphogenesis},
+Developmental Dynamics \textbf{240} (2011), 1889--1904.
+
+\bibitem{PietakLevin2016}
+Pietak, A., and Levin, M.,
+\emph{Exploring instructive physiological signaling with the
+Bioelectric Tissue Simulation Engine},
+Frontiers in Bioengineering and Biotechnology \textbf{4} (2016), 55.
+
+\bibitem{Levin2021}
+Levin, M.,
+\emph{Bioelectric signaling: Reprogrammable circuits underlying
+embryogenesis, regeneration, and cancer},
+Cell \textbf{184} (2021), 1971--1989.
+
+\bibitem{CascadeBio}
+\emph{Cascade Biology Rung: The 600-Cell Cell-Level Substrate},
+internal manuscript,
+\texttt{papers/cascade-derivation/cascade-bio.md}. Preprint,
+Institute of Vibrational Field Dynamics.
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations: F1--F8}, internal manuscript,
+\texttt{papers/cascade-derivation/cascade-foundations.md}. Preprint,
+Institute of Vibrational Field Dynamics.
+
+\bibitem{SmartXXXII}
+Smart, L.,
+\emph{The Closure Functional from First Principles: Self-Similar
+Permeability, the 600-Cell, and the Derived Interaction}
+(Paper XXXII),
+\texttt{papers/paper-xxxii/paper-xxxii.tex}. Preprint,
+Institute of Vibrational Field Dynamics, 2026.
+
+\bibitem{SmartCapsid}
+Smart, L.,
+\emph{Caspar--Klug Triangulation Numbers from a Face-Level
+Cascade Operator} (WO-1),
+\texttt{papers/biology-rung-capsid/biology-rung-capsid.tex}.
+Preprint, Institute of Vibrational Field Dynamics, 2026.
+
+\bibitem{SmartAmyloid}
+Smart, L.,
+\emph{Cross-$\beta$ Amyloid Fibril Twist from $2I$ Helical-Orbit
+Classes} (WO-2),
+\texttt{papers/biology-rung-amyloid/} (in preparation), 2026.
+
+\bibitem{SmartTubulin}
+Smart, L.,
+\emph{The 13-Protofilament Microtubule as a $C_{13}$ Selector}
+(WO-3),
+\texttt{papers/biology-rung-tubulin/biology-rung-tubulin.tex}.
+Preprint, Institute of Vibrational Field Dynamics, 2026.
+
+\bibitem{SmartPhyllotaxis}
+Smart, L.,
+\emph{Fibonacci Phyllotaxis from the 600-Cell's $\phig$-Helical
+Closure Orbits} (WO-5),
+\texttt{papers/biology-rung-phyllotaxis/biology-rung-phyllotaxis.tex}.
+Preprint, Institute of Vibrational Field Dynamics, 2026.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,154 @@
+% =====================================================================
+\section{The closure-response operator}\label{sec:definition}
+% =====================================================================
+
+\subsection{Definition}
+
+Let $M$ be a closure substrate: a connected finite undirected graph
+$M=(V,E)$, a finite simplicial complex with chosen Laplacian, or a
+projected continuum coordinate. Let $L_M$ be the corresponding
+Laplacian (graph Laplacian $L = D - A$, simplicial Laplacian, or
+continuum operator $-\Delta$ with chosen boundary conditions).
+Let $\Ph = (1+\sqrt{5})/2$ be the golden ratio, with $\Ph^{-1} = \Ph - 1$
+and $\Ph^{-2} = 2 - \Ph \approx 0.381966$.
+
+The \emph{closure-response operator} is
+\begin{equation}\label{eq:cphi}
+\Cph \;=\; L_M + \Ph^{-2} I.
+\end{equation}
+For a non-negative localised source $f$ on $M$, the
+\emph{closure response field} is
+\begin{equation}\label{eq:psi}
+\psi \;=\; \Cph^{-1} f \;=\; (L_M + \Ph^{-2} I)^{-1} f.
+\end{equation}
+
+\subsection{Hypotheses on $(M, L_M)$}\label{ssec:hypotheses}
+
+The properties developed in \S\ref{ssec:positivity}--\S\ref{ssec:opnorm}
+require:
+
+\begin{itemize}\itemsep=2pt
+\item \textbf{(H1) Self-adjointness.} $L_M$ is self-adjoint on the
+  $L^{2}$ inner product on $M$ (with counting measure on a finite
+  graph, with Lebesgue measure with appropriate boundary conditions
+  in the continuum case).
+\item \textbf{(H2) Non-negativity.} $L_M \geq 0$ as a
+  quadratic form: $\langle f, L_M f\rangle \geq 0$ for all $f$.
+\item \textbf{(H3) Known spectral bottom.} On a finite graph, $M$
+  is connected (so the kernel of $L_M$ is exactly the constant
+  vector and $\lambda_{\min}(L_M) = 0$). In the continuum case,
+  the spectral bottom $\inf \sigma(L_M)$ is explicitly known on
+  the chosen domain (it equals $0$ for the full line; equals the
+  first Dirichlet eigenvalue $> 0$ on a bounded Dirichlet
+  interval). The full-line case has $\inf \sigma(L_M) = 0$ as
+  spectral bottom but not as an eigenvalue, which is sufficient
+  for the operator-norm identity in
+  \S\ref{ssec:opnorm}; H3 does not require a finite-dimensional
+  zero eigenspace.
+\end{itemize}
+
+Three concrete settings illustrate the hypothesis class:
+\begin{itemize}\itemsep=2pt
+\item the standard combinatorial Laplacian on a connected finite
+  undirected graph (the 600-cell case, $\lambda_{\min}(L_M) = 0$);
+\item the continuum $L = -d^{2}/dx^{2}$ on the full line with
+  decay-at-infinity (spectral bottom $\inf \sigma(L_M) = 0$,
+  not attained as an eigenvalue; used for the closed-form Green's
+  function in \S\ref{ssec:continuum});
+\item the continuum $L = -d^{2}/dx^{2}$ on a bounded interval
+  with Dirichlet boundary conditions ($\lambda_{\min}(L_M) > 0$).
+\end{itemize}
+Substrates outside this class — projected coordinates with
+non-standard boundaries, weighted Laplacians whose weight function
+is unbounded, or operators with negative spectrum — require their
+own analysis, which we do not give here.
+
+\subsection{Positive definiteness}\label{ssec:positivity}
+
+Under (H1)--(H3) on a finite connected graph, $L_M$ has a smallest
+eigenvalue $\lambda_{\min}(L_M) = 0$ with one-dimensional
+eigenspace (the constant vector). For $\Cph = L_M + \Ph^{-2} I$,
+\[
+\lambda_{\min}(\Cph) \;=\; \lambda_{\min}(L_M) + \Ph^{-2}
+                    \;=\; \Ph^{-2} \;>\; 0,
+\]
+so $\Cph$ is strictly positive definite and $\Cph^{-1}$ is
+well-defined and bounded.
+
+\subsection{Operator-norm bound}\label{ssec:opnorm}
+
+The operator norm of $\Cph^{-1}$ is the reciprocal of the
+spectral bottom of $\Cph$:
+\begin{equation}\label{eq:opnorm}
+\|\Cph^{-1}\| \;=\; 1/\inf \sigma(\Cph)
+              \;=\; 1/(\inf \sigma(L_M) + \Ph^{-2}).
+\end{equation}
+On finite graphs the spectral bottom is the smallest eigenvalue
+$\lambda_{\min}(L_M)$ (and is attained); on the full-line
+continuum case (\S\ref{ssec:continuum}) it is $\inf \sigma(L_M)=0$
+as spectral bottom but \emph{not} as an eigenvalue. On any
+substrate where $\inf \sigma(L_M) = 0$ (e.g.\ the connected finite
+graph $\Rsixhundred$, or the full-line continuum case), this
+reduces to the identity
+\begin{equation}\label{eq:opnorm_zero_mode}
+\|\Cph^{-1}\| \;=\; \Ph^{2} \;\approx\; 2.618034.
+\end{equation}
+On substrates where $\inf \sigma(L_M) > 0$ (e.g.\ Dirichlet
+intervals), Eq.~\eqref{eq:opnorm} gives the strict inequality
+$\|\Cph^{-1}\| < \Ph^{2}$. The response-amplification ceiling is,
+in either case, $\|\psi\|_{2} \leq \|\Cph^{-1}\|\, \|f\|_{2}$. On
+substrates with $\inf \sigma(L_M) > 0$ a finite ceiling is already
+guaranteed by the Dirichlet structure alone; on substrates with
+$\inf \sigma(L_M) = 0$ (the cases of interest here) the shift
+$\Ph^{-2}$ is what guarantees a finite ceiling and pins it at
+$\Ph^{2}$. Numerically reproduced as $\|\Cph^{-1}\| =
+2.618034$ on $\Rsixhundred$ (\texttt{repro/verify\_kernel.py},
+\S\ref{ssec:opnorm_check}); this matches the closed-form $\Ph^{2}$
+to machine precision.
+
+\subsection{Continuum projection}\label{ssec:continuum}
+
+In one projected coordinate $x \in \mathbb{R}$ with
+$L_{\Ph} = -d^{2}/dx^{2} + \Ph^{-2}$, the Green's function
+$G(x)$ satisfies $L_{\Ph} G = \delta_{0}$ and is the closed-form
+exponential
+\begin{equation}\label{eq:green_continuum}
+G(x) \;=\; \frac{\Ph}{2}\, e^{-|x|/\Ph}.
+\end{equation}
+The decay scale is $\Ph$ — the same constant that appears in the
+shift, by construction. Normalised, the kernel is
+$\kappa(x) = e^{-|x|/\Ph}$ with unit value at the source.
+
+This continuum Green's function is the comparison object for the
+discrete-to-continuum agreement test (\S\ref{sec:agreement}):
+the discrete response $\psi(v) = \Cph^{-1} f(v)$ at a vertex $v$ at
+chord distance $\|v - v_{\mathrm{src}}\|$ from a localised source
+is compared to $G(\|v - v_{\mathrm{src}}\|)$.
+
+\subsection{Disclosure: $\Ph^{-2}$ is a design-level shift}
+
+The shift $\Ph^{-2}$ is chosen so that:
+\begin{enumerate}\itemsep=2pt
+\item $\Cph$ is strictly positive definite (the smallest eigenvalue
+  is exactly $\Ph^{-2}$);
+\item $\Ph^{2}$ is the zero-bottom operator-norm
+  \emph{identity} ($\|\Cph^{-1}\| = \Ph^{2}$ when
+  $\inf\sigma(L_M)=0$) and the general response-amplification
+  \emph{ceiling} ($\|\Cph^{-1}\| \leq \Ph^{2}$ on positive-bottom
+  substrates), and the continuum decay scale is $\Ph$
+  (Eq.~\eqref{eq:green_continuum}). Zero-bottom identity, general
+  ceiling, and continuum decay scale are all fixed by the single
+  design choice $\Ph^{-2}$, giving one dimensional parameter
+  throughout the operator;
+\item the continuum projection (Eq.~\eqref{eq:green_continuum})
+  has decay scale $\Ph$, not a free length parameter.
+\end{enumerate}
+We do \emph{not} derive $\Ph^{-2}$ from a closure functional or
+symmetry argument. It is a design-level choice motivated by
+(1)--(3); we report this explicitly and treat formal derivation as
+an open build (\S\ref{sec:limitations}). The companion
+adaptive-closure-transport
+preprint~\citep{SmartAdaptiveClosureTransport2026} formulates the
+selection-layer dynamics over $W$-space that would, if delivered,
+constrain the shift further; that derivation is not delivered
+there or here.

@@ -1,0 +1,1452 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{axiom}[theorem]{Axiom}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\rk}{\operatorname{rank}}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\Frac}{\operatorname{Frac}}
+\newcommand{\Hmin}{\mathbf{H}_{\min}}
+\newcommand{\Hor}{\mathbf{H}_{\mathrm{or}}}
+\newcommand{\Hdist}{\mathbf{H}_{\mathrm{dist}}}
+\newcommand{\Hquot}{\mathbf{H}_{\mathrm{quot}}}
+\newcommand{\Ophi}{\mathbb{Z}[\varphi]}
+\newcommand{\Mcox}{M_{\mathrm{Cox}}}
+\newcommand{\Mtw}{M_{12}}
+\newcommand{\Wph}{W_{\mathrm{ph}}}
+\newcommand{\Nslot}{N_{\mathrm{slot}}}
+
+\title{Phason--Coxeter Alignment:\\
+  Coxeter-Plane Resolution of the 12D Phason Complement\\
+  and Upper-Exponent Winding}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This is the second entry of the $\alpha$-chain in the
+cascade-correspondence programme, building strictly on
+$\alpha$-1 (\emph{The 12D Closure Theorem}) and on classical
+Lie / Coxeter / icosian / McKay theory. It does \emph{not}
+depend on the infrastructure papers P1--P7.
+
+We carry out two steps. First (\emph{Theorem~A}, $T_A$,
+Theorem~\ref{thm:TA}), \emph{relative to a fixed Coxeter
+element $c \in W(E_8)$} and under $\alpha$-1's Hypothesis
+$\Hmin$ together with Hypothesis $\Hor$
+(Hypothesis~\ref{hyp:Horient}, the $\sigma$-twist
+orientation convention on Coxeter planes), we show that
+the $\alpha$-1 phason complement $\Mtw \cong \Ophi^{2}$
+admits a Coxeter-resolved bookkeeping module $\Mcox(c)
+\cong \Ophi^{4}$ with one $\Ophi$-line per
+$c$-invariant Coxeter plane $P_k(c)$, canonical relative
+to $c$ up to signed permutation $S_4 \ltimes (\Z/2)^4$
+of plane labels (across distinct choices of $c$, only
+existence-up-to-conjugacy is asserted). The bookkeeping
+equivalence $\Mtw \leftrightarrow \Mcox(c)$ is proved at
+the cut-and-project parameter level, not the
+ambient-lattice level: $L_{16}(c) := E_8 \oplus \Mcox(c)$
+is \emph{not} a new closure theorem, only a four-plane
+resolution of the same underlying internal geometry of
+$\alpha$-1's $L_{12}$.
+
+Second (\emph{Theorem~B}, $T_B$, Theorems~\ref{thm:TB-88}
+and~\ref{thm:TB-87}), under $T_A$ plus an explicit
+$\sigma$-twist orientation hypothesis $\Hor$
+(Hypothesis~\ref{hyp:Horient}), each plane-wise phason
+winding integer $w_k$ equals the \emph{upper} exponent
+$m_k^+$ in the conjugate exponent pair attached to $P_k$.
+The total phason winding is
+\[
+  \Wph \;=\; \sum_{k=1}^{4} m_k^+
+        \;=\; 17 + 19 + 23 + 29
+        \;=\; 88,
+\]
+proved as Theorem~\ref{thm:TB-88} \emph{conditionally on
+$\Hmin + \Hor + \Hdist$}, where $\Hdist$
+(Hypothesis~\ref{hyp:Hdist}) is a distribution hypothesis
+ensuring the four plane-wise images of the reconciliation
+map $\Psi$ together generate the phason internal image.
+The slot-count statement $\Nslot = 87$ requires the
+additional named hypothesis $\Hquot$
+(Hypothesis~\ref{hyp:Hquot}), which fixes a one-dimensional
+global-phase quotient; this clause is stated in
+Theorem~\ref{thm:TB-87}, conditionally on $\Hmin + \Hor +
+\Hdist + \Hquot$.
+
+The paper makes no claim about $\alpha^{-1}$, the
+$\pi/87$ correction, the $137 = 87 + 50$ decomposition,
+the $600$-cell Laplacian spectrum, photons, microtubules,
+or Standard-Model phenomenology. Those belong to $\alpha$-3
+and to downstream papers. We make no claim that
+$L_{16}$ replaces $L_{12}$ as the canonical upward closure.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction and Convention Reconciliation}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{What this paper is}
+
+This paper is the second entry of the $\alpha$-chain. It
+takes the $12$D closure structure of $\alpha$-1
+\cite{Cascade12D} as input, together with classical Lie /
+Coxeter / icosian / McKay theory, and derives two
+structural results about how the $\alpha$-1 phason complement
+sits inside the Coxeter-plane decomposition of $E_8$.
+
+The position of the $\alpha$-chain in the cascade-correspondence
+programme is described in $\alpha$-1's introduction; we recall
+only that the $\alpha$-chain is \emph{parallel} to the
+infrastructure stack P1--P7 and shares with it only the
+classical $E_8$ / icosian core. No infrastructure paper is
+used as a proof source here.
+
+\subsection{What this paper proves}
+
+\textbf{Unconditional layer.}
+\begin{description}
+\item[\textbf{Lemma~\ref{lem:E8-data}.}] Classical $E_8$
+  Coxeter data: Coxeter number $h = 30$, exponents
+  $\{1, 7, 11, 13, 17, 19, 23, 29\}$, conjugate pairing
+  $m \leftrightarrow 30 - m$, four pairwise-orthogonal
+  Coxeter planes $P_1, \ldots, P_4 \subset \R^8$.
+\item[\textbf{Lemma~\ref{lem:cox-plane}.}] Kostant's Coxeter-plane
+  decomposition: $\R^8 = P_1 \oplus P_2 \oplus P_3 \oplus P_4$
+  pairwise-orthogonally, with $c$ acting as a rotation in each
+  plane.
+\item[\textbf{Lemma~\ref{lem:McKay}.}] McKay correspondence
+  for $2I$ and $E_8$: classical ADE bridge linking the binary
+  icosahedral group to the $E_8$ Dynkin diagram.
+\end{description}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist$, relative to
+a fixed Coxeter element $c \in W(E_8)$:}
+\begin{description}
+\item[\textbf{Theorem~\ref{thm:TA}}] (\textbf{T${}_A$}, the
+  phason--Coxeter alignment): for the chosen $c$, the
+  Coxeter-resolved phason module $\Mcox(c)$ decomposes as
+  \[
+    \Mcox(c) \;\cong\; \bigoplus_{k=1}^{4} \Ophi \cdot e_k,
+  \]
+  with one $\Ophi$-line per $c$-invariant Coxeter plane
+  $P_k(c)$, canonical (relative to $c$) up to signed
+  permutation $S_4 \ltimes (\Z/2)^4$ of the four plane
+  labels. The reconciliation map $\Psi$ to the $\alpha$-1
+  phason image is constructed explicitly plane-by-plane.
+  Across distinct choices of $c$, only existence up to
+  $W(E_8)$-conjugacy is asserted.
+\item[\textbf{Theorem~\ref{thm:TB-88}.}] Total phason
+  winding $\Wph = 88$. Conditionality flows through $T_A$
+  (using $\Hmin$, $\Hor$, $\Hdist$) and through the
+  plane-wise upper-exponent labelling (which uses $\Hor$
+  directly).
+\end{description}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist + \Hquot$:}
+\begin{description}
+\item[\textbf{Theorem~\ref{thm:TB-87}}] (\textbf{T${}_B$,
+  slot count}): under all four hypotheses (with $\Hquot$
+  fixing the one-dimensional global-phase quotient), the
+  slot count is $\Nslot = \Wph - 1 = 87$.
+\end{description}
+
+\subsection{What this paper does NOT claim}
+
+\begin{enumerate}
+\item No claim that $T_A$ is unconditional. It depends on
+  $\Hmin$ (via $\alpha$-1's $C_1$), $\Hor$, and $\Hdist$.
+\item No claim that $\Wph = 88$ depends on $\Hquot$. The
+  total winding count is established under $\Hmin + \Hor +
+  \Hdist$, \emph{before} the one-dimensional quotient is
+  taken.
+\item No claim that $\Hor$, $\Hdist$, or $\Hquot$ is
+  itself a theorem. All are named hypotheses with structural
+  justifications (Remarks~\ref{rmk:Horient-status},
+  \ref{rmk:Hdist-status}, \ref{rmk:Hquot-justif}); the
+  slot-count clause $\Nslot = 87$ is stated conditionally on
+  $\Hmin + \Hor + \Hdist + \Hquot$.
+\item No claim about $\alpha^{-1} = 137 + \pi/87$. That is the
+  subject of $\alpha$-3.
+\item No claim that $137 = 87 + 50$. The $50$ count and the
+  $137$ decomposition are not addressed here.
+\item No claim about the $600$-cell rational-irrep Laplacian
+  spectrum.
+\item No claim about photons, microtubules, biology, the
+  Standard Model, or any phenomenology.
+\item No claim that $L_{16} = E_8 \oplus \Mcox$ is a new closure
+  theorem. $L_{16}$ is a Coxeter-resolved bookkeeping object
+  attached to the same underlying $L_{12}$ closure of
+  $\alpha$-1; we make no statement that $L_{16}$ replaces
+  $L_{12}$ as the canonical upward ambient.
+\item No claim of dependence on P1--P7. Citations of the
+  infrastructure stack are absent throughout.
+\item No use of \texttt{papers/cascade-derivation/} working
+  notes as theorem-grade proof sources. Those notes are author
+  scratch material; their contents are converted to clean
+  theorem statements with classical citations here.
+\end{enumerate}
+
+\subsection{Convention Reconciliation}
+\label{sec:conv-recon}
+
+A central technical point is that this paper uses a different
+rank reading of the phason complement than $\alpha$-1
+\cite{Cascade12D}. We fix the relationship explicitly here,
+\emph{before} any theorem.
+
+\paragraph{$\alpha$-1's reading.} Under $\alpha$-1's
+Notation \texttt{not:rank-convention}, ``rank'' means $\rk_\Z$.
+The closure ambient is $L_{12}$ with $\rk_\Z L_{12} = 12$, and
+under Hypothesis $\Hmin$, the phason complement $\Mtw$ has
+$\rk_\Z \Mtw = 4$, equivalently $\rk_\Ophi \Mtw = 2$:
+$\Mtw \cong \Ophi^{2}$ as $\Ophi$-modules (this is $\alpha$-1's
+Theorem $C_1$).
+
+\paragraph{$\alpha$-2's resolved reading.} For the
+Coxeter-plane decomposition, the load-bearing object is the
+\emph{four-line Coxeter-resolved bookkeeping module}
+\[
+  \Mcox \;:=\; \bigoplus_{k=1}^{4} \Ophi \cdot e_k,
+\]
+free of $\Ophi$-rank $4$ (equivalently $\Z$-rank $8$), one
+$\Ophi$-line per Coxeter plane. We adopt the
+\emph{$\Ophi$-rank reading} for the bookkeeping module from
+this point on: when we write ``$\Mcox \cong \Ophi^{4}$'' the
+exponent is $\Ophi$-rank, not $\Z$-rank.
+
+\paragraph{Bookkeeping equivalence.} The relationship between
+$\Mtw$ and $\Mcox$ is \emph{not} a module isomorphism (their
+$\Z$-ranks differ: $4$ vs $8$). Rather, $\Mcox$ is a
+\emph{Coxeter-resolved parameter module} for the same
+internal-image data carried by $\Mtw$ in the cut-and-project
+package: each plane-wise component $\Ophi \cdot e_k$ encodes
+the shift amplitude of the underlying $\sigma$-embedding of
+$E_8$ along the Coxeter plane $P_k$. Under the conjunction
+$\Hmin + \Hor + \Hdist$, the $\Ophi$-action structures of
+$\Mtw$ and $\Mcox$ match in a precise sense made explicit in
+Definition~\ref{def:reconciliation} and
+Proposition~\ref{prop:reconciliation}. We do \emph{not} claim
+that the formal sum $L_{16} := E_8 \oplus \Mcox$ is a 16D
+closure ambient analogous to $\alpha$-1's $L_{12}$; that
+would be a separate (unproven) closure theorem. $L_{16}$ is
+used in this paper purely as bookkeeping notation for the
+Coxeter-resolved phason data.
+
+\paragraph{Notation discipline.} After this subsection,
+``rank'' \emph{always} means $\rk_\Ophi$ (Coxeter-resolved
+$\Ophi$-rank reading); every $\Z$-rank is marked
+$\rk_\Z$ explicitly. When citing $\alpha$-1's $L_{12}$ and
+$\Mtw$ we will retranslate using the bookkeeping equivalence
+of Proposition~\ref{prop:reconciliation}.
+
+\subsection{Source audit}
+
+\textbf{Internal theorem inputs.}
+\begin{itemize}
+\item Axiom $\mathbf{F1}$ (the permeability fixed-point axiom)
+  is a named axiom of the cascade programme whose statement is
+  collected in \cite[\S F1]{CascadeFoundations}; we adopt it
+  here as an axiom (not a theorem) and use only its statement,
+  not any derivation from $\mathbf{F1}$ that \cite{CascadeFoundations}
+  might contain. We rely on $\mathbf{F1}$ only in
+  \S\ref{sec:convention}'s convention reconciliation for the
+  $L_{12}$ / $L_{16}$ bookkeeping, where the axiom fixes the
+  permeability balance.
+\item $\alpha$-1 Theorems $C_1$, $C_2$, $C_3$
+  \cite{Cascade12D}: $C_2$ may be cited unconditionally for
+  the $4 + 4$ closure architecture; $C_1$ and $C_3$ may be
+  cited only conditionally on $\Hmin$ (their statement
+  hypothesis in $\alpha$-1).
+\end{itemize}
+
+\textbf{Classical mathematical inputs.}
+\begin{itemize}
+\item \emph{Coxeter / Lie theory.}
+  \cite{Bourbaki46} for exponents and Coxeter elements of
+  $E_8$ (Ch.~6 \S4 No.~12, Planche~VII for $E_8$);
+  \cite{Humphreys} as a clean modern reference (\S 3.16--3.20
+  for Coxeter elements and exponents).
+\item \emph{Coxeter-plane decomposition.}
+  \cite{Kostant59} for the principal $\mathfrak{sl}_2$
+  decomposition into pairwise-orthogonal $c$-invariant
+  $2$-planes (Theorem 6.7 and surrounding discussion).
+\item \emph{Icosian / $E_8$ / $H_4$ / 600-cell.}
+  \cite{ConwaySloane} for the icosian ring $I$ and the
+  $E_8 = \{(x, \sigma(x)) : x \in I\}$ embedding (Ch.~8 \S2);
+  \cite{MoodyPatera} for the $E_8 \to H_4$ cut-and-project
+  (Thm~4.1, Prop.~4.2); \cite{ElserSloane} for the
+  cut-and-project quasicrystal construction (\S2--3,
+  pp.~6162--6165).
+\item \emph{McKay correspondence.}
+  \cite{McKay80} for the ADE / finite-subgroup-of-$SU(2)$
+  correspondence linking $2I$ to $E_8$.
+\end{itemize}
+
+We do not cite P1--P7, the \texttt{cascade-derivation/} working
+notes, scripts, notebooks, or downstream $\alpha$-3 / photon /
+microtubule manuscripts as proof sources.
+
+\subsection{Organization}
+
+\S\ref{sec:prelims} states $\mathbf{F1}$ as an axiom (carried
+over from $\alpha$-1), records the Galois data $\sigma$, and
+imports the $\alpha$-1 Theorems used here.
+
+\S\ref{sec:cox-data} proves Lemmas~\ref{lem:E8-data}
+($E_8$ exponent / Coxeter-number data),
+\ref{lem:cox-plane} (Kostant's plane decomposition), and
+\ref{lem:McKay} (McKay correspondence).
+
+\S\ref{sec:Mcox} introduces the Coxeter-resolved phason
+module $\Mcox$ and the reconciliation map relating it to
+$\alpha$-1's $\Mtw$ (Definition~\ref{def:reconciliation},
+Proposition~\ref{prop:reconciliation}).
+
+\S\ref{sec:TA} proves Theorem~\ref{thm:TA} ($T_A$:
+phason--Coxeter alignment) under $\Hmin + \Hor + \Hdist$.
+
+\S\ref{sec:sigma-twist} establishes the $\sigma$-twist
+orientation reversal (Hypothesis~\ref{hyp:Horient}) and defines
+plane-wise winding integers (Definition~\ref{def:winding}).
+
+\S\ref{sec:TB-88} proves Theorem~\ref{thm:TB-88}
+($\Wph = 88$) under $\Hmin + \Hor + \Hdist$.
+
+\S\ref{sec:TB-87} introduces Hypothesis $\Hquot$
+(one-dimensional global-phase quotient) and proves
+Theorem~\ref{thm:TB-87} ($\Nslot = 87$ under $\Hmin + \Hor +
+\Hdist + \Hquot$).
+
+\S\ref{sec:audit} is the self-audit.
+\S\ref{sec:handoff} is the citation contract.
+\S\ref{sec:notation} is the notation audit.
+
+%=====================================================================
+\section{Preliminaries: $\alpha$-1 Imports and Galois Data}
+\label{sec:prelims}
+%=====================================================================
+
+\begin{axiom}[$\mathbf{F1}$: the permeability fixed-point
+  axiom, recap from $\alpha$-1]
+\label{ax:F1}
+There exists a positive real $\varphi$ satisfying
+$\varphi = 1 + 1/\varphi$, equivalently $\varphi^2 = \varphi
++ 1$, whence $\varphi = (1 + \sqrt{5})/2$. We import this
+axiom from \cite[\S F1]{CascadeFoundations} via $\alpha$-1
+\cite[Axiom~ax:F1]{Cascade12D}.
+\end{axiom}
+
+\begin{notation}[Number-field data]
+\label{not:K}
+Let $K := \Q(\sqrt 5) = \Q(\varphi)$, $\Ophi := \Z[\varphi]
+= \mathcal O_K$ (the ring of integers; see
+\cite[Ch.~2, Thm.~1]{Marcus}), and $\sigma \in \Gal(K / \Q)$
+the nontrivial Galois automorphism, $\sigma(\varphi) = 1 -
+\varphi$. As proved in $\alpha$-1, $\Ophi$ is a PID
+\cite[Lem.~lem:pid]{Cascade12D} and every finitely generated
+torsion-free $\Ophi$-module is free
+\cite[Lem.~lem:pid-free]{Cascade12D}.
+\end{notation}
+
+\begin{notation}[Rank convention for this paper]
+\label{not:rank-conv}
+\emph{From this point on}, ``rank'' and $\rk$ always mean
+$\rk_\Ophi$ (the Coxeter-resolved $\Ophi$-rank reading
+adopted in \S\ref{sec:conv-recon}). Whenever we refer to
+$\Z$-rank, we write $\rk_\Z$ explicitly. The $\alpha$-1
+ambient $L_{12}$ has $\rk_\Z L_{12} = 12$ and $\rk_\Ophi
+L_{12} = 6$ (its $\Ophi$-rank reading); $\Mtw$ has
+$\rk_\Z = 4$ and $\rk_\Ophi = 2$. The Coxeter-resolved
+bookkeeping module $\Mcox$ has $\rk_\Ophi = 4$ and
+$\rk_\Z = 8$.
+\end{notation}
+
+\begin{fact}[Imports from $\alpha$-1]
+\label{fact:alpha1-imports}
+We freely use the following from
+$\alpha$-1 \cite{Cascade12D}.
+\begin{enumerate}
+\item[(a)] $\alpha$-1 Theorem $C_2$ (\emph{unconditional}):
+  given the classical Elser--Sloane package
+  (Definitions \texttt{def:cap}, \texttt{def:E8-iso} of
+  $\alpha$-1) and the admissibility class fixed by
+  axioms (A1)--(A4), no admissible upward ambient of
+  $\Z$-rank $> 12$ adds new geometric content; the canonical
+  closure has $\rk_\Z L_{12} = 12$.
+\item[(b)] $\alpha$-1 Hypothesis $\Hmin$
+  (\emph{conditional}): the phason coefficient ring of
+  $\Mtw$ in $L_{12} = E_8 \oplus \Mtw$ is $\Ophi$.
+\item[(c)] $\alpha$-1 Theorem $C_1$ (\emph{conditional on
+  $\Hmin$}): under $\Hmin$, $\Mtw \cong \Ophi^{2}$ as an
+  $\Ophi$-module (the phason complement is free of
+  $\Ophi$-rank $2$, equivalently $\Z$-rank $4$).
+\item[(d)] $\alpha$-1 Theorem $C_3$ (\emph{conditional on
+  $\Hmin$}): the phason coefficient ring at $L_{12}$ closure
+  coincides with the smallest subring of $\R$ containing
+  $\Z$ and the $\mathbf{F1}$ fixed point $\varphi$.
+\end{enumerate}
+\end{fact}
+
+%=====================================================================
+\section{Coxeter-Plane Structure of $E_8$}
+\label{sec:cox-data}
+%=====================================================================
+
+We set up the classical Coxeter-plane data needed for
+$T_A$ and $T_B$. Each lemma in this section is a citation of
+classical theory; we record the statements verbatim for use
+downstream and pin the source.
+
+\begin{lemma}[$E_8$ Coxeter data]
+\label{lem:E8-data}
+The Weyl group $W(E_8)$ acts on the reflection representation
+$V := \R^8$ (the span of the $E_8$ root system). A Coxeter
+element $c \in W(E_8)$ has order $h = 30$ (the Coxeter number).
+The exponents of $E_8$ are
+\[
+  \{m_1, \ldots, m_8\}
+  \;=\; \{1, 7, 11, 13, 17, 19, 23, 29\},
+\]
+each appearing with multiplicity one and satisfying the
+conjugate pairing
+\[
+  m_k^- + m_k^+ \;=\; 30
+  \qquad(k = 1, 2, 3, 4),
+\]
+with the four conjugate pairs
+\[
+  \{1, 29\}, \quad \{7, 23\}, \quad \{11, 19\}, \quad \{13, 17\}.
+\]
+The lower exponents are
+$\{m_k^-\} = \{1, 7, 11, 13\}$ and the upper exponents are
+$\{m_k^+\} = \{17, 19, 23, 29\}$, with
+\[
+  \sum_{k=1}^{4} m_k^+ \;=\; 17 + 19 + 23 + 29 \;=\; 88.
+\]
+\end{lemma}
+
+\begin{proof}
+The Coxeter number, the exponent list, and their multiplicities
+for $E_8$ are classical. See
+\cite[Ch.~6, \S4 No.~12, Planche~VII (the table for $E_8$)]{Bourbaki46}
+or \cite[\S 3.18 (Coxeter number) and \S 3.19 (exponents)
+together with the table in \S 3.7 for $E_8$]{Humphreys}.
+The pairing $m \leftrightarrow h - m$ follows from
+\cite[Ch.~5, \S6 No.~2, Cor.~2 (the symmetry of exponents
+about $h/2$)]{Bourbaki46} or
+\cite[Thm.~3.18 and Cor.~3.20]{Humphreys}.
+The arithmetic $17 + 19 + 23 + 29 = 88$ is direct.
+\end{proof}
+
+\begin{lemma}[Kostant's Coxeter-plane decomposition]
+\label{lem:cox-plane}
+Let $c \in W(E_8)$ be a Coxeter element acting on $V = \R^8$.
+There is an orthogonal direct-sum decomposition
+\[
+  V \;=\; P_1 \oplus P_2 \oplus P_3 \oplus P_4,
+\]
+where each $P_k$ is a real $2$-dimensional $c$-invariant
+subspace, the four planes are pairwise orthogonal in the
+$W(E_8)$-invariant inner product on $V$, and on each $P_k$,
+$c$ acts as rotation by angle $2\pi m_k^- / 30$ (the lower
+exponent in the conjugate pair attached to $P_k$).
+\end{lemma}
+
+\begin{proof}
+This is the principal-three-dimensional / Coxeter-plane
+decomposition of \cite{Kostant59}; the precise statement
+needed here appears in \cite[Theorem~6.7 and the explicit
+plane-wise rotation formula in \S 6.6--6.7,
+pp.~983--988]{Kostant59}. The pairwise orthogonality of the
+$P_k$ in the $W$-invariant inner product follows because the
+real $c$-invariant decomposition is the realification of the
+complex eigenspace decomposition of $c$ acting on $V \otimes
+\C$, and the eigenvalue spectrum $\{\zeta^{m_k^\pm} : k = 1,
+\ldots, 4\}$ (where $\zeta = e^{2\pi i / 30}$) consists of
+distinct simple eigenvalues paired into complex conjugate
+$\{\zeta^{m_k^-}, \zeta^{m_k^+}\} = \{\zeta^{m_k^-},
+\overline{\zeta^{m_k^-}}\}$ pairs (each $m_k^+ = 30 - m_k^-$
+gives the conjugate root of unity). For the eigenvalue
+formula see also \cite[\S 3.20 Thm.~3.20 (the eigenvalues of
+a Coxeter element)]{Humphreys}.
+\end{proof}
+
+\begin{lemma}[McKay correspondence: $2I \leftrightarrow E_8$]
+\label{lem:McKay}
+The binary icosahedral group $2I \subset SU(2)$ corresponds
+to the affine Dynkin diagram $\widetilde{E}_8$ under the
+McKay correspondence: the irreducible representations of
+$2I$ are in canonical bijection with the nodes of
+$\widetilde{E}_8$ (including the trivial representation on
+the affine node), and the tensor-product graph
+$V_{\rm std} \otimes (-)$ (where $V_{\rm std}$ is the
+defining $2$-dimensional representation of $2I$)
+reproduces the $\widetilde{E}_8$ adjacency.
+\end{lemma}
+
+\begin{proof}
+\cite[\S 3, pp.~183--186]{McKay80}, where the ADE
+correspondence between finite subgroups of $SU(2)$ and
+extended Dynkin diagrams is established (the $2I
+\leftrightarrow \widetilde E_8$ entry of the ADE table is
+the load-bearing case for this paper).
+\end{proof}
+
+\begin{remark}[Role of Lemma~\ref{lem:McKay} in this paper]
+\label{rmk:McKay-role}
+Lemma~\ref{lem:McKay} is a contextual / language-bridge
+statement only. We use it to justify the simultaneous use of
+$E_8$ and $H_4$ / $600$-cell language for the same underlying
+classical data, and to label the $\alpha$-1 phason complement
+intrinsically by the $E_8$ Coxeter geometry. We do
+\emph{not} extract the $600$-cell rational-irrep Laplacian
+spectrum, the count $50$, or any $137$-arithmetic from
+Lemma~\ref{lem:McKay}; those belong to $\alpha$-3 and to
+separate downstream papers.
+\end{remark}
+
+%=====================================================================
+\section{The Coxeter-Resolved Phason Module $\Mcox$}
+\label{sec:Mcox}
+%=====================================================================
+
+We now introduce the Coxeter-resolved phason module $\Mcox$
+and its reconciliation with $\alpha$-1's $\Mtw$.
+
+\begin{definition}[The Coxeter-resolved phason module]
+\label{def:Mcox}
+Fix the four Coxeter planes $P_1, \ldots, P_4 \subset V =
+\R^8$ of Lemma~\ref{lem:cox-plane}. The
+\emph{Coxeter-resolved phason module} is the formal free
+$\Ophi$-module
+\[
+  \Mcox \;:=\; \bigoplus_{k=1}^{4} \Ophi \cdot e_k,
+\]
+where $e_k$ is a labelling generator attached to plane $P_k$.
+Thus $\rk_\Ophi \Mcox = 4$ and $\rk_\Z \Mcox = 8$.
+\end{definition}
+
+\begin{definition}[Reconciliation map; concrete construction]
+\label{def:reconciliation}
+Fix a Coxeter element $c \in W(E_8)$. For each $k \in \{1,
+2, 3, 4\}$, let $u_k(c) \in P_k(c)$ be the
+\emph{distinguished plane-wise generator} chosen by
+Hypothesis $\Hor$ (Hypothesis~\ref{hyp:Horient}): the unit
+real-vector along the upper-eigenline complex coordinate of
+$c|_{P_k(c)}$ that $\Hor$ singles out (this fixes $u_k(c)$
+up to sign, which is part of $\Hor$'s orientation choice).
+The \emph{reconciliation map} is the $\sigma$-twisted
+$\Ophi$-linear map
+\[
+  \Psi \colon \Mcox(c) \;\longrightarrow\; \HH_{\rm int}
+\]
+defined on the $\Ophi$-basis $\{e_1, e_2, e_3, e_4\}$ of
+$\Mcox(c)$ by
+\[
+  \Psi(e_k) \;:=\; \pi_{\rm int}^{\rm amb}(u_k(c))
+    \;\in\; \HH_{\rm int}, \qquad k = 1, 2, 3, 4,
+\]
+and extended $\sigma$-twisted-$\Ophi$-linearly:
+$\Psi(\alpha \cdot e_k) = \sigma(\alpha) \cdot \Psi(e_k)$
+for $\alpha \in \Ophi$. The codomain is the entire
+$\HH_{\rm int}$ as a target $\R$-vector space; under
+Hypothesis $\Hdist$ (Hypothesis~\ref{hyp:Hdist}), the image
+$\Psi(\Mcox(c))$ is shown in
+Proposition~\ref{prop:reconciliation} to land inside the
+$\Ophi$-submodule $\pi_{\rm int}^{\rm amb}(\Mtw) \subseteq
+\HH_{\rm int}$.
+\end{definition}
+
+\begin{hypothesis}[$\Hdist$: plane-wise distribution of the
+  phason internal image]
+\label{hyp:Hdist}
+For the chosen Coxeter element $c$ and the orientation
+convention $\Hor$, the four images $\{\Psi(e_1), \Psi(e_2),
+\Psi(e_3), \Psi(e_4)\} \subset \pi_{\rm int}^{\rm
+amb}(\Mtw)$ defined in Def.~\ref{def:reconciliation} are
+non-zero and together generate the rank-$2$ $\Ophi$-submodule
+$\pi_{\rm int}^{\rm amb}(\Mtw)$ of $\HH_{\rm int}$ as a
+$\Z$-module. Geometrically: the $\sigma$-twisted internal
+image of $\alpha$-1's $\Mtw$ distributes nontrivially across
+all four Coxeter planes $P_k(c)$, each plane contributing a
+non-zero $\Ophi$-line. \emph{We do not assert the four
+$\Ophi$-lines are $\Ophi$-independent}: in a rank-$2$
+$\Ophi$-module, four non-zero lines must satisfy at least two
+$\Ophi$-linear dependencies. The dependency structure is left
+unresolved in $\alpha$-2; the hypothesis controls only
+generation, not linear independence of the four plane-image
+lines.
+\end{hypothesis}
+
+\begin{remark}[Status of $\Hdist$]
+\label{rmk:Hdist-status}
+$\Hdist$ is a \emph{structural distribution hypothesis},
+not a theorem of $\alpha$-2. Its content is that the
+rank-$2$ $\Ophi$-image $\pi_{\rm int}^{\rm amb}(\Mtw)
+\subset \HH_{\rm int}$ is generated, as a $\Z$-module, by four
+nonzero plane-image lines (one per Coxeter plane), rather than
+concentrating in only some subset of the planes. Since the
+module has $\Ophi$-rank $2$, the four generating lines must
+satisfy non-trivial $\Ophi$-dependencies; $\Hdist$ does not
+fix the dependency structure. Geometrically: each $P_k(c)$ contributes
+non-trivially to the internal phason image. A fully rigorous
+derivation of $\Hdist$ from the bare $\alpha$-1 data would
+require analysing the action of the centralizer of $c$ in
+$W(E_8)$ on the phason internal image and proving
+distribution-uniformity; we do not provide that derivation
+here. The map $\Psi$ of Def.~\ref{def:reconciliation} is
+already well-defined as a map $\Mcox(c) \to \HH_{\rm int}$
+without $\Hdist$ (the formula $\Psi(e_k) = \pi_{\rm
+int}^{\rm amb}(u_k(c))$ uses only $\Hor$). $\Hdist$ is
+needed only to upgrade the codomain to $\pi_{\rm int}^{\rm
+amb}(\Mtw)$ and to give the asserted image-rank, as in
+Proposition~\ref{prop:reconciliation}.
+\end{remark}
+
+\begin{remark}[On the comparison level]
+\label{rmk:reconciliation-level}
+The reconciliation $\Psi$ is \emph{not} a module isomorphism
+$\Mcox \not\cong \Mtw$ (they have different $\Z$-ranks: $8$
+vs $4$). Rather, $\Psi$ resolves the internal-image data of
+$\Mtw$ along the four orthogonal Coxeter planes: $\Mtw$
+encodes the rank-$2$ $\Ophi$-module of internal phason data
+attached to the cut-and-project, while $\Mcox$ records the
+plane-wise contribution of each of the four Coxeter
+directions to that data. The image of $\Psi$ has $\Ophi$-rank
+$\leq 2$ inside $\HH_{\rm int}$ (consistent with $\alpha$-1's
+admissibility axiom (A4)); the kernel of $\Psi$ records the
+remaining $\Ophi$-rank $\geq 2$ of bookkeeping degeneracy.
+The bookkeeping equivalence claim --- that $\Mcox$ and $\Mtw$
+encode the same underlying internal geometry up to the
+explicit map $\Psi$ --- is made precise in
+Proposition~\ref{prop:reconciliation}.
+\end{remark}
+
+\begin{proposition}[Bookkeeping equivalence at the
+  cut-and-project parameter level; conditional on $\Hmin
+  + \Hor + \Hdist$]
+\label{prop:reconciliation}
+Fix a Coxeter element $c \in W(E_8)$ and assume all three:
+\begin{itemize}
+\item $\Hmin$, so that $\alpha$-1's Theorem $C_1$ applies
+  and $\Mtw \cong \Ophi^{2}$ as an $\Ophi$-module;
+\item Hypothesis $\Hor$ (Hypothesis~\ref{hyp:Horient}),
+  fixing the plane-wise upper-eigenline coordinate
+  $u_k(c) \in P_k(c)$;
+\item Hypothesis $\Hdist$ (Hypothesis~\ref{hyp:Hdist}),
+  ensuring the four images $\Psi(e_k) := \pi_{\rm int}^{\rm
+  amb}(u_k(c))$ are non-zero and together generate
+  $\pi_{\rm int}^{\rm amb}(\Mtw)$ as a $\Z$-module.
+\end{itemize}
+Then the reconciliation map $\Psi$ of
+Definition~\ref{def:reconciliation} is well-defined,
+$\sigma$-twisted-$\Ophi$-linear, and its image
+$\Psi(\Mcox(c))$ has $\Ophi$-rank exactly equal to the
+$\Ophi$-rank of $\pi_{\rm int}^{\rm amb}(\Mtw)$ (which is
+$\leq 2$ by $\alpha$-1's (A4); by $\Hdist$, the four
+$\Z$-generators span the full image). The kernel
+$\ker(\Psi) \subseteq \Mcox(c)$ is the bookkeeping
+degeneracy recording the redundancy between the four-plane
+$\Mcox$ description and the rank-$2$ $\Mtw$ description.
+\end{proposition}
+
+\begin{proof}
+\emph{Step 1: $\Psi$ is well-defined.} For each $k$, $u_k(c)
+\in P_k(c) \subset V \otimes \R$ is a chosen unit vector
+fixed by $\Hor$ (orientation choice). The image $\Psi(e_k) =
+\pi_{\rm int}^{\rm amb}(u_k(c))$ is the $\R$-linear image
+under the (extended) internal projection of $\alpha$-1's
+(A3); since $\pi_{\rm int}^{\rm amb}$ is well-defined on
+$V \otimes \R$, $\Psi(e_k)$ is a well-defined element of
+$\HH_{\rm int}$. The extension to all of $\Mcox(c)$ via
+$\sigma$-twisted-$\Ophi$-linearity is by the universal
+property of free modules: any choice of basis-image
+extends uniquely.
+
+\emph{Step 2: $\Psi$ takes values in $\pi_{\rm int}^{\rm
+amb}(\Mtw)$.} By $\Hdist$, $\Psi(e_k) \in \pi_{\rm
+int}^{\rm amb}(\Mtw)$ for each $k$ (the hypothesis explicitly
+locates the four images inside the phason image). Since
+$\pi_{\rm int}^{\rm amb}(\Mtw)$ is an $\Ophi$-submodule of
+$\HH_{\rm int}$ (under the $\sigma$-twisted action), the
+$\sigma$-twisted-$\Ophi$-linear extension of $\Psi$ to all
+of $\Mcox(c)$ takes values in this submodule.
+
+\emph{Step 3: $\sigma$-twisted-$\Ophi$-linearity.}
+$\Ophi$-linearity (with respect to $\sigma$-twisted
+scalars) is by construction (the universal property of
+$\Mcox(c)$ as a free $\Ophi$-module on $\{e_k\}$ combined
+with the explicit twist convention). It is consistent with
+$\alpha$-1 (A3.b): $\pi_{\rm int}^{\rm amb}$ is itself
+$\sigma$-twisted $\Ophi$-linear, so the entire diagram
+commutes.
+
+\emph{Step 4: Image rank.}
+$\Psi(\Mcox(c))$ is a finitely generated $\Ophi$-submodule
+of $\pi_{\rm int}^{\rm amb}(\Mtw) \subseteq \HH_{\rm int}$,
+hence (by $\alpha$-1's (A4)) has $\Ophi$-rank $\leq 2$. By
+$\Hdist$, the four $\Z$-generators $\{\Psi(e_1), \ldots,
+\Psi(e_4)\}$ generate $\pi_{\rm int}^{\rm amb}(\Mtw)$ as a
+$\Z$-module; hence the $\Ophi$-image equals
+$\pi_{\rm int}^{\rm amb}(\Mtw)$. The kernel is then
+determined by the rank--nullity count: $\rk_\Ophi \Mcox(c)
+- \rk_\Ophi \Psi(\Mcox(c)) = 4 - r$ where $r := \rk_\Ophi
+\pi_{\rm int}^{\rm amb}(\Mtw) \in \{0, 1, 2\}$.
+\end{proof}
+
+\begin{remark}[$L_{16}$ is bookkeeping, not a closure theorem]
+\label{rmk:L16-bookkeeping}
+Define
+\[
+  L_{16} \;:=\; E_8 \oplus \Mcox
+\]
+formally. We do \emph{not} claim that $L_{16}$ satisfies an
+analog of $\alpha$-1's Theorem $C_2$ (closure / termination at
+$\Z$-rank 16); we make no statement about admissibility,
+no uniqueness claim, and no termination claim about $L_{16}$.
+The symbol $L_{16}$ is purely shorthand for the Coxeter-resolved
+phason bookkeeping data $E_8 + \Mcox$ used in
+$T_A$ and $T_B$. Any future paper attempting to elevate
+$L_{16}$ to a closure status would need a distinct theorem
+not contained here.
+\end{remark}
+
+%=====================================================================
+\section{Theorem $T_A$: Phason--Coxeter Alignment}
+\label{sec:TA}
+%=====================================================================
+
+\begin{theorem}[$\mathbf{T_A}$: phason--Coxeter alignment;
+  conditional on $\Hmin + \Hor + \Hdist$ relative to a fixed
+  Coxeter element]
+\label{thm:TA}
+Fix a Coxeter element $c \in W(E_8)$ as input data, and let
+$\{P_1(c), P_2(c), P_3(c), P_4(c)\}$ be the four
+pairwise-orthogonal $c$-invariant Coxeter planes of
+Lemma~\ref{lem:cox-plane}. Let $\Mcox = \Mcox(c)$ be the
+Coxeter-resolved phason module of Definition~\ref{def:Mcox}
+attached to this choice (one $\Ophi$-line $\Ophi \cdot e_k$
+labelled by $P_k(c)$). Assume all three:
+\begin{itemize}
+\item $\alpha$-1's Hypothesis $\Hmin$, so that Theorem $C_1$
+  applies and $\Mtw \cong \Ophi^{2}$ as an $\Ophi$-module;
+\item Hypothesis $\Hor$ (Hypothesis~\ref{hyp:Horient}), the
+  $\sigma$-twist orientation convention on Coxeter planes
+  fixing the plane-by-plane upper-eigenline coordinate
+  $u_k(c) \in P_k(c)$;
+\item Hypothesis $\Hdist$ (Hypothesis~\ref{hyp:Hdist}), the
+  distribution hypothesis ensuring the four images
+  $\Psi(e_k) = \pi_{\rm int}^{\rm amb}(u_k(c))$ are non-zero
+  and together generate $\pi_{\rm int}^{\rm amb}(\Mtw)$ as
+  $\Z$-module.
+\end{itemize}
+Then:
+\begin{enumerate}
+\item[\textup{(a)}] The reconciliation map $\Psi$ of
+  Definition~\ref{def:reconciliation} is well-defined and
+  $\sigma$-twisted-$\Ophi$-linear, $\Psi \colon \Mcox(c) \to
+  \pi_{\rm int}^{\rm amb}(\Mtw)$, with image of $\Ophi$-rank
+  $\leq 2$ inside $\HH_{\rm int}$ (matching $\alpha$-1's
+  bound (A4)).
+\item[\textup{(b)}] $\Mcox(c) = \bigoplus_{k=1}^{4} \Ophi
+  \cdot e_k$ as $\Ophi$-modules, with the four $\Ophi$-lines
+  in bijection with $\{P_1(c), \ldots, P_4(c)\}$.
+\item[\textup{(c)}] The bijection in (b) is canonical
+  \emph{relative to the chosen Coxeter element $c$}, up to
+  signed permutation $S_4 \ltimes (\Z/2)^4$ of the
+  four-plane labels (ordering + orientation).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: Reconciliation map (Part (a)).}
+This is the content of Proposition~\ref{prop:reconciliation}
+under the joint hypothesis $\Hmin + \Hor + \Hdist$. The
+construction of $\Psi$ is plane-by-plane via the explicit
+formula $\Psi(e_k) = \pi_{\rm int}^{\rm amb}(u_k(c))$ of
+Def.~\ref{def:reconciliation}: $u_k(c)$ is fixed by $\Hor$,
+the image lies in $\pi_{\rm int}^{\rm amb}(\Mtw)$ by
+$\Hdist$, and the $\sigma$-twisted-$\Ophi$-linearity follows
+from $\alpha$-1's (A3.b) on $\pi_{\rm int}^{\rm amb}$. The
+image-rank bound is from $\alpha$-1's (A4); equality with
+$\pi_{\rm int}^{\rm amb}(\Mtw)$'s $\Ophi$-rank uses
+$\Hdist$ (the four $\Z$-generators span the full image).
+
+\emph{Step 2: Direct-sum structure (Part (b)).}
+By Definition~\ref{def:Mcox}, $\Mcox(c)$ is the formal free
+$\Ophi$-module on the four generators $\{e_1, e_2, e_3,
+e_4\}$, each labelled by one of the four $c$-invariant
+Coxeter planes $\{P_1(c), \ldots, P_4(c)\}$. The direct-sum
+decomposition $\Mcox(c) = \bigoplus_{k=1}^{4} \Ophi \cdot
+e_k$ is therefore tautological from the construction. The
+bijection between the $\Ophi$-lines $\{\Ophi \cdot e_k\}$
+and the planes $\{P_k(c)\}$ is the labelling fixed in
+Def.~\ref{def:Mcox}.
+
+\emph{Step 3: Canonicity (Part (c)).}
+By Lemma~\ref{lem:cox-plane}, the four $c$-invariant
+pairwise-orthogonal planes $\{P_1(c), \ldots, P_4(c)\}$ are
+determined by the chosen Coxeter element $c$ as an unordered
+set. Once $c$ is fixed, the only further choices are:
+\begin{enumerate}
+\item[(i)] An ordering of the four planes: an $S_4$
+  relabelling of $\{1, 2, 3, 4\} \to \{P_1(c), \ldots,
+  P_4(c)\}$.
+\item[(ii)] An orientation on each plane: an independent
+  $\Z/2$ choice per plane, corresponding to the choice of
+  generator $e_k$ vs $-e_k$ inside the $\Ophi$-line $\Ophi
+  \cdot e_k$.
+\end{enumerate}
+Together these give an $S_4 \ltimes (\Z/2)^4$ action on
+the labelling. The decomposition is rigid beyond this
+signed-permutation quotient, conditional on $c$.
+
+\emph{Note on different choices of $c$:} For two distinct
+Coxeter elements $c, c' \in W(E_8)$, the planes
+$\{P_k(c)\}$ and $\{P_k(c')\}$ are \emph{conjugate} in
+$W(E_8)$ (since all Coxeter elements form a single
+conjugacy class in $W(E_8)$, see
+\cite[\S 3.18]{Humphreys}) but are generally not literally
+equal as subspaces of $V$; we make no canonicity claim
+across distinct choices of $c$.
+\end{proof}
+
+\begin{remark}[On the meaning of canonicity here]
+\label{rmk:TA-canonicity}
+Theorem~\ref{thm:TA} does \emph{not} claim that the four
+specific $\Ophi$-lines of $\Mcox$ are absolutely intrinsic to
+$E_8$. The chosen Coxeter element $c \in W(E_8)$ is part of
+the input data of the theorem; different choices of $c$
+give conjugate (but generally not identical) plane
+decompositions of $V$. Relative to a fixed $c$, the
+four-plane decomposition of $\Mcox(c)$ is canonical up to
+the $S_4 \ltimes (\Z/2)^4$ signed-permutation action on
+labels; beyond that, it is rigid. Across different choices
+of $c$, the canonical content is only that the four-plane
+decomposition exists and is unique up to conjugacy.
+\end{remark}
+
+%=====================================================================
+\section{$\sigma$-Twist Orientation and Plane-Wise Winding}
+\label{sec:sigma-twist}
+%=====================================================================
+
+We now make precise the $\sigma$-twist orientation reversal
+and define the plane-wise winding integer.
+
+\begin{lemma}[$\sigma$ commutes with $c$]
+\label{lem:sigma-c-commute}
+Let $c \in W(E_8)$ act on $V \otimes \Q$ via the rational
+reflection representation. The Galois involution
+$\sigma \in \Gal(K/\Q)$ extends entrywise to $\Ophi$-coefficient
+vectors and acts on $V \otimes K$ by acting on coefficients.
+Since $c$ has matrix entries in $\Z \subset \Ophi^\sigma$ (the
+fixed subring of $\sigma$), $c$ commutes with $\sigma$ on
+$V \otimes K$:
+\[
+  \sigma(c \cdot v) \;=\; c \cdot \sigma(v)
+  \qquad \text{for all } v \in V \otimes K.
+\]
+\end{lemma}
+
+\begin{proof}
+$c$ is an element of $W(E_8)$, which acts on the integer root
+lattice $E_8 \subset V$ with integer matrix entries
+(\cite[Ch.~6, \S1]{Bourbaki46} or \cite[\S 1]{Humphreys}). On
+$V \otimes K$, $c$'s matrix lies in $\mathrm{GL}_8(\Z)
+\subset \mathrm{GL}_8(\Ophi)$. The Galois action $\sigma$
+fixes elements of $\Z$ pointwise. Hence for any matrix
+entry $c_{ij} \in \Z$, $\sigma(c_{ij}) = c_{ij}$, and the
+matrix $c$ commutes with $\sigma$ on coefficients:
+$\sigma(c \cdot v) = \sigma(c) \cdot \sigma(v) = c \cdot
+\sigma(v)$.
+\end{proof}
+
+\begin{remark}[Why coefficientwise $\sigma$ does not act on
+  the $c$-eigenspaces]
+\label{rmk:sigma-no-action}
+Although Lemma~\ref{lem:sigma-c-commute} gives $\sigma c =
+c \sigma$ on $V \otimes K$, this does \emph{not} imply that
+$\sigma$ acts non-trivially on the complex eigenspaces of
+$c$ on $V \otimes \C$. The complex eigenvalues of $c$ are
+$\zeta^{m_k^\pm}$ with $\zeta = e^{2\pi i / 30}$ and live
+in the cyclotomic field $\Q(\zeta) \supset K$; complex
+conjugation $\zeta \mapsto \zeta^{-1}$ on $\Q(\zeta)$ fixes
+the totally real subfield $K = \Q(\sqrt 5)$ pointwise, so
+it does \emph{not} restrict to the nontrivial $\sigma \in
+\Gal(K/\Q)$. Lifts of $\sigma$ to $\Gal(\Q(\zeta)/\Q)$
+exist (since $[\Q(\zeta) : K] = 4$), but each requires an
+additional choice. In particular, the heuristic
+``$\sigma$ on $V$ swaps the complex eigenspaces of $c$
+within each $P_k$'' that appears in informal working notes
+\emph{cannot} be derived from coefficientwise Galois
+action on $V \otimes K$ alone, and as a global identity on
+$V \otimes \C$ would contradict the commutation $\sigma c
+= c \sigma$ (since $\sigma c \sigma = c$, not $c^{-1}$).
+
+The orientation reversal needed for the upper-exponent
+winding count below is therefore not an extension of
+$\sigma$ to $V \otimes \C$. It is a separate structural
+hypothesis $\Hor$ on the choice of plane-wise complex
+identification adapted to $\alpha$-1's $\sigma$-twisted
+internal projection (A3.b), formalised in
+Hypothesis~\ref{hyp:Horient} below.
+\end{remark}
+
+\begin{hypothesis}[$\Hor$: $\sigma$-twist orientation
+  convention on Coxeter planes]
+\label{hyp:Horient}
+Let $\Pi^{\rm amb} = (\pi_{\rm phys}^{\rm amb}, \pi_{\rm
+int}^{\rm amb})$ be $\alpha$-1's admissible projection pair,
+with $\pi_{\rm int}^{\rm amb}$ the $\sigma$-twisted
+$\Ophi$-linear internal projection of $\alpha$-1's axiom
+(A3.b) \cite[(A3.b)]{Cascade12D}. The hypothesis $\Hor$
+asserts: for each Coxeter plane $P_k$
+(Lemma~\ref{lem:cox-plane}), the plane-wise complex
+identification $P_k \cong \C$ adapted to the
+$\sigma$-twisted internal projection $\pi_{\rm int}^{\rm
+amb}$ uses the \emph{upper} eigenline of $c$ (eigenvalue
+$\zeta^{m_k^+}$) for the canonical complex coordinate,
+rather than the lower eigenline (eigenvalue $\zeta^{m_k^-}$)
+which is the natural $V$-side choice. Equivalently: under
+$\Hor$, the plane-wise rotation generator $c|_{P_k}$
+realises in the internal-factor identification as
+$\R$-linear rotation by angle $2\pi m_k^+ / 30$ (rather than
+by $2\pi m_k^- / 30$ as on the $V$-side).
+\end{hypothesis}
+
+\begin{remark}[Status of $\Hor$ and motivation]
+\label{rmk:Horient-status}
+$\Hor$ is a \emph{structural orientation hypothesis}, not a
+theorem of this paper. Its motivation is that the
+$\sigma$-twisted internal projection of $\alpha$-1's (A3.b)
+treats the internal factor as the algebraic
+``Galois-conjugate'' picture relative to the physical
+factor: $\pi_{\rm phys}^{\rm amb}$ uses the standard
+$\Ophi$-action, while $\pi_{\rm int}^{\rm amb}$ uses the
+$\sigma$-twisted action $\alpha \cdot w := \sigma(\alpha)
+\cdot w$. Inside each Coxeter plane $P_k$, the two complex
+eigenlines of $c$ are interchanged by complex conjugation
+of the eigenvalue (an $\R$-orientation reversal of the
+plane). $\Hor$ is the assertion that the $\sigma$-twist of
+(A3.b), \emph{interpreted plane-by-plane}, selects the
+upper-eigenline complex coordinate, hence the upper-exponent
+rotation labelling, on each $P_k$.
+
+A fully rigorous derivation of $\Hor$ from the bare
+algebraic data of (A3.b) would require formalising a
+$\C$-structure on $\HH_{\rm int}$ compatible with the
+$\sigma$-twisted $\Ophi$-action and proving canonicity of
+the upper-eigenline choice plane-by-plane. We do not provide
+that derivation here; introducing $\Hor$ as a named
+hypothesis makes this orientation convention an explicit
+input to $T_B$ rather than a hidden assumption.
+\end{remark}
+
+\begin{definition}[Plane-wise phason winding integer]
+\label{def:winding}
+For each Coxeter plane $P_k$ (Lemma~\ref{lem:cox-plane}), the
+\emph{phason winding integer} $w_k$ is the unique integer
+in $\{1, 2, \ldots, 29\}$ such that the plane-wise rotation
+generator $c|_{P_k}$ acts in the $\sigma$-twist orientation
+assumed by Hypothesis $\Hor$ as $\R$-linear rotation of the
+internal factor by angle $2\pi w_k / 30$. Definition of $w_k$
+is independent of the assertion that $w_k = m_k^+$; identifying
+$w_k$ with a specific Coxeter exponent is the content of
+Hypothesis $\Hor$, not of this definition.
+\end{definition}
+
+%=====================================================================
+\section{Theorem $T_B$ (Total Winding $= 88$)}
+\label{sec:TB-88}
+%=====================================================================
+
+\begin{proposition}[$\mathbf{T_B}$, total winding under the hypothesis stack]
+\label{thm:TB-88}
+\emph{The content of this statement is almost entirely packed
+into the hypotheses $\Hor$ and $\Hdist$; we present it as a
+named proposition to organise the eventual bookkeeping, not as
+a substantive independent derivation.} Assume all three:
+\begin{itemize}
+\item $\alpha$-1's Hypothesis $\Hmin$
+  (\cite{Cascade12D}), so that Theorem~$C_1$ applies;
+\item Hypothesis~\ref{hyp:Horient} ($\Hor$, the
+  $\sigma$-twist orientation convention assigning each plane-wise
+  winding integer $w_k$ to the upper exponent $m_k^+$);
+\item Hypothesis~\ref{hyp:Hdist} ($\Hdist$, the plane-wise
+  distribution hypothesis), so that Theorem $T_A$
+  (Theorem~\ref{thm:TA}) holds for the chosen Coxeter element
+  $c$.
+\end{itemize}
+Then each Coxeter plane $P_k(c)$ has phason winding integer
+$w_k = m_k^+$ (\emph{by the content of} $\Hor$), and the total
+phason winding is the Coxeter-exponent sum
+\[
+  \Wph \;:=\; \sum_{k=1}^{4} w_k
+       \;=\; \sum_{k=1}^{4} m_k^+
+       \;=\; 17 + 19 + 23 + 29
+       \;=\; 88,
+\]
+the final equality being a classical $E_8$ exponent-arithmetic
+identity (Lemma~\ref{lem:E8-data}).
+\end{proposition}
+
+\begin{proof}
+\emph{Step 1: $T_A$ provides the four-plane phason
+decomposition under the hypothesis stack.}
+Theorem~\ref{thm:TA} (under $\Hmin + \Hor + \Hdist$) provides
+the canonical four-plane decomposition of the Coxeter-resolved
+phason bookkeeping module: one $\Ophi$-line per Coxeter plane
+$P_k$, with each $\Ophi$-line carrying the $\sigma$-twisted
+internal-factor data of plane $P_k$.
+
+\emph{Step 2: Under $\Hor$, each $w_k$ is identified with $m_k^+$.}
+Hypothesis $\Hor$ asserts exactly this identification; we do not
+derive it independently.
+
+\emph{Step 3: Sum.} By Lemma~\ref{lem:E8-data}, the upper
+exponent set of $E_8$ is $\{17, 19, 23, 29\}$, and
+\[
+  \sum_{k=1}^{4} m_k^+ \;=\; 17 + 19 + 23 + 29 \;=\; 88.
+\]
+This last step is the only independent mathematical content
+beyond the hypothesis stack.
+\end{proof}
+
+\begin{remark}[Conditionality fence for Theorem~\ref{thm:TB-88}]
+\label{rmk:TB-88-fence}
+Theorem~\ref{thm:TB-88} is conditional on the conjunction
+$\Hmin + \Hor + \Hdist$ (the $\alpha$-1 minimality
+hypothesis via $T_A$, the $\sigma$-twist orientation
+convention, and the plane-wise distribution hypothesis). It
+is \emph{unconditional} in $\Hquot$: no quotient hypothesis
+is used here. The total $88$ is an honest theorem at the
+$\Hmin + \Hor + \Hdist$ conditional level.
+\end{remark}
+
+%=====================================================================
+\section{Theorem $T_B$ (Slot Count $= 87$ under $\Hquot$)}
+\label{sec:TB-87}
+%=====================================================================
+
+The slot-count clause $\Nslot = 87$ requires identifying and
+quotienting out a one-dimensional global-phase artifact. We
+introduce the quotient hypothesis explicitly.
+
+\begin{definition}[Candidate global-phase quotient direction]
+\label{def:global-phase}
+Among the $88$ phason winding units of $\Wph$
+(Proposition~\ref{thm:TB-88}), there is a natural candidate
+\emph{common-winding-mode direction}: the combinatorial diagonal
+$\{(w_1, w_2, w_3, w_4) : w_1 = w_2 = w_3 = w_4 \bmod 30\}$ of
+the four-plane phason grading under the $\Z/30\Z$-order of each
+Coxeter-plane rotation $c|_{P_k}$. This is a candidate diagonal
+mode in the bookkeeping grading, \emph{not} an independently
+constructed $U(1)$-action. A genuine $U(1)$-action realising
+this direction --- and in particular fixing its contribution to
+the winding count --- requires an additional construction not
+carried out here. We do not assert that this candidate direction
+has dimension exactly $1$ inside $\Wph$, nor that quotienting by
+it removes exactly one winding unit; both claims are content of
+Hypothesis~\ref{hyp:Hquot} below.
+\end{definition}
+
+\begin{remark}[The need for a separate quotient hypothesis]
+\label{rmk:Hquot-justif}
+Definition~\ref{def:global-phase} identifies only a
+\emph{candidate} quotient direction, not its dimension or
+its winding contribution. A fully rigorous derivation that
+quotienting by this direction removes exactly $1$ unit of
+winding (and not, say, $0$ or $4$) requires a precise
+quotient construction: explicitly identifying a global
+$U(1)$-symmetry action on the Coxeter-resolved phason
+bookkeeping and proving that its quotient on $\Wph$ has
+the asserted dimension.
+
+Such a construction is well beyond the scope of $\alpha$-2;
+it would require introducing the structure of the
+cut-and-project's acceptance window as a $U(1)$-bundle over
+the Coxeter base. We therefore proceed by introducing the
+quotient hypothesis $\Hquot$ explicitly, as the assumption
+that the candidate direction of
+Def.~\ref{def:global-phase} contributes exactly one
+winding unit to $\Wph$:
+\end{remark}
+
+\begin{hypothesis}[$\Hquot$: one-dimensional global-phase
+  quotient]
+\label{hyp:Hquot}
+The $88$ units of phason winding accumulated in
+$\Wph$ (Theorem~\ref{thm:TB-88}) admit a quotient by exactly
+one dimension of global rotational phase
+(Def.~\ref{def:global-phase}), giving a slot count
+$\Nslot = \Wph - 1 = 87$.
+\end{hypothesis}
+
+\begin{proposition}[$\mathbf{T_B}$, slot count, restatement under the hypothesis stack]
+\label{thm:TB-87}
+\emph{The arithmetic content is $88 - 1 = 87$; the mathematical
+content is packed into Hypothesis $\Hquot$. Recorded as a named
+proposition for bookkeeping, not as a substantive independent
+derivation.} Assume all four:
+\begin{itemize}
+\item $\alpha$-1's Hypothesis $\Hmin$;
+\item Hypothesis $\Hor$ (Hypothesis~\ref{hyp:Horient});
+\item Hypothesis $\Hdist$ (Hypothesis~\ref{hyp:Hdist}); so
+  that $T_A$ Theorem~\ref{thm:TA} and Theorem~\ref{thm:TB-88}
+  give $\Wph = 88$;
+\item Hypothesis $\Hquot$ (Hypothesis~\ref{hyp:Hquot}, the
+  one-dimensional global-phase quotient).
+\end{itemize}
+Then the phason slot count is
+\[
+  \Nslot \;=\; \Wph - 1 \;=\; 88 - 1 \;=\; 87.
+\]
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{thm:TB-88}, $\Wph = 88$. By $\Hquot$ (which
+directly asserts the quotient removes exactly one winding unit),
+$\Nslot = \Wph - 1 = 87$. The arithmetic is direct; no additional
+mathematical content beyond the hypothesis stack.
+\end{proof}
+
+\begin{remark}[Status of Theorem~\ref{thm:TB-87}]
+\label{rmk:TB-87-status}
+Theorem~\ref{thm:TB-87} is conditional on the conjunction
+$\Hmin + \Hor + \Hdist + \Hquot$: the $\alpha$-1 minimality
+hypothesis, the $\sigma$-twist orientation convention, the
+plane-wise distribution hypothesis, and the one-dimensional
+global-phase quotient. We do
+\emph{not} claim any of these four hypotheses is itself a
+theorem of this paper. They are named hypotheses with the
+structural justifications of Remarks~\ref{rmk:Horient-status},
+\ref{rmk:Hdist-status}, \ref{rmk:Hquot-justif}.
+A future paper that constructs the explicit
+$U(1)$-bundle quotient on the cut-and-project acceptance
+window would close $\Hquot$ to a theorem; in the meantime,
+the slot count $87$ is conditionally derived. The total
+$\Wph = 88$ stands at the $T_A$-conditional level without
+$\Hquot$.
+\end{remark}
+
+%=====================================================================
+\section{Self-Audit}
+\label{sec:audit}
+%=====================================================================
+
+\textbf{Unconditional layer.}
+\begin{itemize}
+\item[[1]] Lemma~\ref{lem:E8-data} ($E_8$ Coxeter data) cites
+  classical sources at theorem/page level
+  (Bourbaki Ch.~6 \S4 No.~12, Planche~VII; Humphreys
+  \S 3.18--3.20).
+\item[[2]] Lemma~\ref{lem:cox-plane} (Coxeter-plane
+  decomposition) cites Kostant 1959 Theorem 6.7 with
+  page-level pin.
+\item[[3]] Lemma~\ref{lem:McKay} (McKay correspondence) cites
+  McKay 1980 \S3, pp.~183--186.
+\item[[4]] Lemma~\ref{lem:sigma-c-commute} ($\sigma$-$c$
+  commutation) is a direct calculation from the
+  $\Z$-integrality of $c$'s matrix.
+\end{itemize}
+
+\textbf{Structural hypotheses (named, not claimed as
+theorems of $\alpha$-2).}
+\begin{itemize}
+\item[[5]] Hypothesis~\ref{hyp:Horient} ($\Hor$, the
+  $\sigma$-twist orientation convention on Coxeter planes)
+  is a \emph{named structural hypothesis}, not a proved
+  matrix lemma; coefficient-Galois alone cannot derive
+  plane-wise orientation reversal
+  (Remark~\ref{rmk:sigma-no-action}). Structural motivation
+  in Remark~\ref{rmk:Horient-status}.
+\item[[5b]] Hypothesis~\ref{hyp:Hdist} ($\Hdist$, the
+  plane-wise distribution hypothesis on the phason internal
+  image) is a \emph{named structural hypothesis}, not a
+  derived theorem. Structural motivation in
+  Remark~\ref{rmk:Hdist-status}: a full derivation would
+  require analysing the centralizer-of-$c$ action on the
+  phason internal image.
+\end{itemize}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist$.}
+\begin{itemize}
+\item[[6]] $\Hmin$ is imported from $\alpha$-1
+  (Fact~\ref{fact:alpha1-imports}); not claimed as a
+  theorem of $\alpha$-2.
+\item[[7]] Theorem~\ref{thm:TA} ($T_A$: phason--Coxeter
+  alignment) conditional on $\Hmin + \Hor + \Hdist$,
+  relative to a fixed Coxeter element $c \in W(E_8)$. The
+  reconciliation map $\Psi$ is constructed explicitly
+  plane-by-plane in Def.~\ref{def:reconciliation} (using
+  $u_k(c)$ from $\Hor$ and image-distribution from
+  $\Hdist$). Canonicity class explicitly stated as ``up to
+  signed permutation of the four plane labels relative to
+  $c$'' (Remark~\ref{rmk:TA-canonicity}); not overclaimed
+  as rigid or canonical across distinct $c$.
+\item[[8]] Theorem~\ref{thm:TB-88} (total winding $\Wph =
+  88$) conditional on $\Hmin + \Hor + \Hdist$ via $T_A$
+  together with the plane-wise upper-exponent labelling of
+  $\Hor$. Independent of $\Hquot$.
+\end{itemize}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist + \Hquot$.}
+\begin{itemize}
+\item[[9]] Hypothesis $\Hquot$ stated explicitly as
+  Hypothesis~\ref{hyp:Hquot}; structurally justified in
+  Remark~\ref{rmk:Hquot-justif}; not claimed as a theorem.
+\item[[10]] Theorem~\ref{thm:TB-87} (slot count $\Nslot =
+  87$) conditional on $\Hmin + \Hor + \Hdist + \Hquot$. The quotient
+  step is identified as the residual gap.
+\end{itemize}
+
+\textbf{Convention discipline.}
+\begin{itemize}
+\item[[11]] The rank convention (this paper uses
+  $\rk_\Ophi$ as default; $\alpha$-1 used $\rk_\Z$ as
+  default) is fixed once in
+  Notation~\ref{not:rank-conv} and the bridge to $\alpha$-1
+  is made explicit in \S\ref{sec:conv-recon} and
+  Proposition~\ref{prop:reconciliation}.
+\item[[12]] $L_{16} = E_8 \oplus \Mcox$ is bookkeeping
+  (Remark~\ref{rmk:L16-bookkeeping}); no closure-theorem
+  claim attached.
+\item[[13]] Reconciliation map $\Psi$ is defined explicitly
+  (Def.~\ref{def:reconciliation}); image $\Ophi$-rank
+  $\leq 2$ matches $\alpha$-1's (A4) bound
+  (Prop.~\ref{prop:reconciliation}).
+\end{itemize}
+
+\textbf{Not claimed.}
+\begin{itemize}
+\item No unconditional $T_A$ or $T_B$ (slot-count clause).
+\item No claim that $L_{16}$ replaces $L_{12}$ as the
+  canonical upward closure.
+\item No $\alpha^{-1} = 137 + \pi/87$ derivation.
+\item No $137 = 87 + 50$ decomposition.
+\item No $600$-cell Laplacian spectrum.
+\item No photon, microtubule, biology, Standard-Model claim.
+\item No dependence on P1--P7.
+\item No use of \texttt{cascade-derivation/} working notes
+  as proof source.
+\end{itemize}
+
+%=====================================================================
+\section{Citation Contract and Downstream Handoff}
+\label{sec:handoff}
+%=====================================================================
+
+\textbf{Unconditionally citable.}
+\begin{itemize}
+\item Lemmas~\ref{lem:E8-data}, \ref{lem:cox-plane},
+  \ref{lem:McKay} (classical $E_8$ / Coxeter / McKay data).
+\item Lemma~\ref{lem:sigma-c-commute} ($\sigma$ commutes with
+  $c$ via $\Z$-integrality of $c$).
+\end{itemize}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist$.}
+\begin{itemize}
+\item Theorem~\ref{thm:TA} ($T_A$: four-plane alignment of
+  $\Mcox$, relative to a fixed Coxeter element $c$).
+\item Theorem~\ref{thm:TB-88} (total winding $\Wph = 88$),
+  via $T_A$ together with the plane-wise upper-exponent
+  labelling of $\Hor$.
+\end{itemize}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist + \Hquot$.}
+\begin{itemize}
+\item Theorem~\ref{thm:TB-87} (slot count $\Nslot = 87$).
+\end{itemize}
+
+\textbf{Downstream usage ($\alpha$-3).} The $\alpha$-3 paper
+(fine-structure synthesis $\alpha^{-1} = 137 + \pi/87$) may
+cite Theorem~\ref{thm:TA} and Theorem~\ref{thm:TB-88} with
+their $\Hmin + \Hor + \Hdist$ conditional fence, and
+Theorem~\ref{thm:TB-87} with the additional $\Hquot$
+conditional fence. The $50$ count (rational-irrep Laplacian
+on the $600$-cell) and the $137 = 87 + 50$ arithmetic are
+\emph{not} provided here and must be supplied separately
+by $\alpha$-3.
+
+\textbf{Does NOT close.}
+\begin{itemize}
+\item $\Hmin$ as a theorem (deferred to a follow-up of
+  $\alpha$-1).
+\item $\Hor$ as a theorem: the $\sigma$-twist plane-wise
+  orientation convention is left as a named structural
+  hypothesis (Hypothesis~\ref{hyp:Horient}); a full derivation
+  would require formalising a canonical $\C$-structure on
+  $\HH_{\rm int}$ compatible with $\alpha$-1's (A3.b)
+  $\sigma$-twisted action, which is beyond the scope of
+  $\alpha$-2 (see Remark~\ref{rmk:Horient-status}).
+\item $\Hdist$ as a theorem: the distribution hypothesis on
+  the phason internal image (Hypothesis~\ref{hyp:Hdist})
+  is a named structural input; a full derivation would
+  require analysing the centralizer-of-$c$ action on
+  $\pi_{\rm int}^{\rm amb}(\Mtw)$ and proving uniform
+  plane-wise distribution, which is beyond the scope of
+  $\alpha$-2 (see Remark~\ref{rmk:Hdist-status}).
+\item $\Hquot$ as a theorem: the explicit one-dimensional
+  global-phase quotient construction (a $U(1)$-bundle
+  structure on the cut-and-project acceptance window) is
+  beyond the scope of $\alpha$-2.
+\item Any $\alpha^{-1}$-level fine-structure claim.
+\end{itemize}
+
+%=====================================================================
+\section{Notation Audit}
+\label{sec:notation}
+%=====================================================================
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Symbol & Meaning & First use \\
+\hline
+$\varphi$ & $(1+\sqrt 5)/2$, positive fixed point of
+  $\mathbf{F1}$ & Axiom~\ref{ax:F1} \\
+$K, \Ophi, \sigma$ & $\Q(\sqrt 5), \Z[\varphi], $ Galois
+  involution & Notation~\ref{not:K} \\
+$h$ & Coxeter number of $E_8$, $h = 30$ &
+  Lemma~\ref{lem:E8-data} \\
+$c$ & Coxeter element, $c \in W(E_8)$ &
+  Lemma~\ref{lem:E8-data} \\
+$m_k^-$, $m_k^+$ & lower / upper exponent of conjugate pair
+  attached to $P_k$ & Lemma~\ref{lem:E8-data} \\
+$P_k$ ($k=1,\ldots,4$) & Coxeter plane in $V = \R^8$ &
+  Lemma~\ref{lem:cox-plane} \\
+$\Mtw$ & $\alpha$-1 phason complement, $\rk_\Z = 4$,
+  $\rk_\Ophi = 2$ & Fact~\ref{fact:alpha1-imports} \\
+$\Mcox$ & Coxeter-resolved phason module, $\rk_\Ophi = 4$,
+  $\rk_\Z = 8$ & Def.~\ref{def:Mcox} \\
+$\Psi$ & Reconciliation map $\Mcox(c) \to \HH_{\rm int}$
+  (lands in $\pi_{\rm int}^{\rm amb}(\Mtw)$ under $\Hdist$)
+  & Def.~\ref{def:reconciliation}, Prop.~\ref{prop:reconciliation} \\
+$L_{16}$ & $E_8 \oplus \Mcox$, bookkeeping only &
+  Rem.~\ref{rmk:L16-bookkeeping} \\
+$w_k$ & plane-wise winding integer on $P_k$ &
+  Def.~\ref{def:winding} \\
+$\Wph$ & total phason winding, $\sum_k w_k = 88$ &
+  Thm.~\ref{thm:TB-88} \\
+$\Nslot$ & phason slot count after $\Hquot$ quotient, $= 87$ &
+  Thm.~\ref{thm:TB-87} \\
+$\Hmin$ & $\alpha$-1 minimality hypothesis on phason ring &
+  Fact~\ref{fact:alpha1-imports} \\
+$\Hor$ & $\sigma$-twist orientation convention on Coxeter
+  planes & Hyp.~\ref{hyp:Horient} \\
+$\Hdist$ & plane-wise distribution hypothesis on phason
+  internal image & Hyp.~\ref{hyp:Hdist} \\
+$\Hquot$ & one-dimensional global-phase quotient hypothesis &
+  Hyp.~\ref{hyp:Hquot} \\
+$T_A, T_B$ & Theorem~\ref{thm:TA}; Theorems~\ref{thm:TB-88},
+  \ref{thm:TB-87} & \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Correspondence Foundations},
+\texttt{papers/cascade-correspondence-foundations/foundations.tex}.
+Cited solely for the statement of Axiom $\mathbf{F1}$ (\S F1).
+Not cited as a theorem-grade proof source.
+
+\bibitem{Cascade12D}
+\emph{The 12D Closure Theorem: Phason Complement Uniqueness
+and Self-Reference on the Upward Cascade} ($\alpha$-1),
+\texttt{papers/cascade-12d-closure/cascade-12d-closure.tex}.
+Theorems $C_1$, $C_2$, $C_3$, Hypothesis $\Hmin$,
+admissibility axioms (A1)--(A4), and the
+$\sigma$-twist convention (A3.b).
+
+\bibitem{Bourbaki46}
+N.~Bourbaki, \emph{Groupes et alg\`ebres de Lie}, Chapitres
+4--6. Hermann, Paris, 1968. (Reprinted Springer, Berlin,
+2002.) For $E_8$: Ch.~6, \S4 No.~12 and Planche~VII (the
+$E_8$ exponent table). Coxeter elements and exponent
+symmetry: Ch.~5, \S6.
+
+\bibitem{Humphreys}
+J.~E.~Humphreys, \emph{Reflection Groups and Coxeter
+Groups}, Cambridge Studies in Advanced Mathematics 29,
+Cambridge University Press, 1990. \S 3.7 (table of
+exponents for irreducible Coxeter groups including $E_8$);
+\S 3.16 (Coxeter element); \S 3.18 (Coxeter number);
+\S 3.19--3.20 (eigenvalues / exponents of a Coxeter
+element).
+
+\bibitem{Kostant59}
+B.~Kostant, \emph{The principal three-dimensional subgroup
+and the Betti numbers of a complex simple Lie group}, Amer.
+J. Math. \textbf{81} (1959), 973--1032. Theorem~6.7
+and \S 6.6--6.7 (pp.~983--988): the
+Coxeter-plane decomposition of the reflection
+representation into pairwise-orthogonal $c$-invariant
+$2$-planes with explicit rotation angles.
+
+\bibitem{ConwaySloane}
+J.~H.~Conway, N.~J.~A.~Sloane, \emph{Sphere Packings,
+Lattices and Groups}, 3rd ed., Springer, 1999. The icosian
+ring $I$ and the $E_8$ embedding via icosians: Ch.~8,
+\S2 (pp.~206--209), in particular \S 2.1 (icosian ring) and
+\S 2.2 (the $E_8$ embedding via $(x, \sigma(x))$); table 8.1
+on p.~209 lists the $240$ minimal vectors.
+
+\bibitem{MoodyPatera}
+R.~V.~Moody, J.~Patera, \emph{Quasicrystals and icosians},
+J.~Phys.~A \textbf{26} (1993), 2829--2853. Theorem~4.1 and
+Proposition~4.2: the explicit $E_8 \to H_4$ cut-and-project
+interface used in $\alpha$-1's classical package.
+
+\bibitem{ElserSloane}
+V.~Elser, N.~J.~A.~Sloane, \emph{A highly symmetric
+four-dimensional quasicrystal}, J.~Phys.~A \textbf{20}
+(1987), 6161--6167. Original cut-and-project quasicrystal
+construction from $E_8$: \S 2 (pp.~6162--6163) sets up the
+$I \oplus \sigma(I)$ decomposition; \S 3 (pp.~6163--6165)
+defines the acceptance window and projects onto
+$\HH_{\rm phys}$.
+
+\bibitem{McKay80}
+J.~McKay, \emph{Graphs, singularities, and finite groups},
+in: \emph{The Santa Cruz Conference on Finite Groups},
+Proc.~Symp.~Pure Math.~37, Amer.~Math.~Soc., 1980,
+pp.~183--186. \S 3 establishes the ADE correspondence
+between finite subgroups of $SU(2)$ and extended Dynkin
+diagrams; the $2I \leftrightarrow \widetilde E_8$ entry is
+in the body of this section.
+
+\bibitem{Marcus}
+D.~A.~Marcus, \emph{Number Fields}, 2nd ed., Universitext,
+Springer, 2018. Ring of integers of $\Q(\sqrt d)$ for
+$d \equiv 1 \pmod 4$: Ch.~2, Thm.~1.
+
+\end{thebibliography}
+
+\end{document}

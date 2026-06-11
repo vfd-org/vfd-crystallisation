@@ -1,0 +1,197 @@
+% =====================================================================
+\section{The recurrent layer}\label{sec:chain}
+% =====================================================================
+
+The cascade-pipeline substrate (\S\ref{sec:substrate}) reproduces
+cortical-avalanche statistics matching real EEG (\S\ref{sec:results}).
+To test high-level signatures — NREM-N3 variance collapse, propofol
+regime-switching, propofol $\Phi$ collapse — we add a recurrent
+self-model layer above the substrate. The layer adds one
+graph-pinned nonlinearity, one condition-dependent self-injection
+coupling $\eta$, and four trajectory observables. No shape parameter
+is fit to any neural dataset.
+
+This section is method, not metaphysics. We do not claim the
+recurrent layer ``is'' consciousness; we report which numerical
+observables on the layer's trajectory match published biological
+signatures in~\S\ref{sec:results}.
+
+\subsection{The recurrent loop}
+
+Implementation: \texttt{kernel/self\_model\_stream.py:SelfModelLoop}.
+At each tick $t$ the substrate state evolves as
+\begin{align}
+f_{\mathrm{total}}(t) &= f_{\mathrm{ext}}(t) + \eta\cdot f_{\mathrm{self}}(\mathrm{snap}_{t-1}, \psi_{t-1}), \\
+\psi_{t} &= \Cph^{-1}\, f_{\mathrm{total}}(t), \\
+\psi^{\mathrm{thr}}_{t} &= \mathrm{bounded\_topk}(\psi_{t}, k=12), \\
+\mathrm{state}_{t} &= \mathrm{decay}\cdot\mathrm{state}_{t-1} + (1-\mathrm{decay})\cdot \psi^{\mathrm{thr}}_{t}, \\
+\mathrm{snap}_{t} &= \mathrm{bind\_phenomenal\_field}(\psi_{t}, \texttt{profile=K\_7\_only}),
+\end{align}
+with $\mathrm{decay}=0.95$ (state EMA factor) and $\eta$ the only
+condition-dependent architectural parameter. $f_{\mathrm{self}}$ maps
+the prior phenomenal snapshot to a directional source weighted by
+ignition $\times$ intensity (cosine direction alignment with the
+prior snapshot). The substrate response operator $\Cph$ is unchanged
+across all conditions.
+
+Conditions:
+\begin{itemize}\itemsep=2pt
+\item $\eta = 0.20$ for WAKE and RECOVERY (active recurrent self-loop);
+\item $\eta = 0.05$ for SLEEP\_N3 (attenuated self-loop);
+\item $\eta = 0.00$ for PROPOFOL (broken recurrence; residual cortex
+  preserved as background drive).
+\end{itemize}
+
+\subsection{The graph-pinned nonlinearity}
+
+\textbf{$\mathrm{bounded\_topk}(\psi, k=12)$.} This is the load-bearing
+nonlinearity, implemented in
+\texttt{kernel/lyapunov\_selector.py:bounded\_topk}: zero all but the
+top-$12$ vertex amplitudes (by absolute value), and rescale the rest
+to a small fraction of their baseline. Linear Green response alone
+gives smooth dynamics with cascade $\alpha\approx 1.09$ — no
+avalanches. Adding bounded-top-$K$ at $k=12$ drives $\alpha$ into the
+SOC band $(2.0, 3.5)$ with $R^{2}>0.85$.
+
+\textbf{Why $k=12$.} The choice $k=12$ is the average degree of
+$G_{V_{600}}$ (\S\ref{ssec:graph}), pinned by the substrate
+geometry, not by neural data. Smaller $k$ (e.g.\ $k=6$) gives $\alpha$
+at the band edge with poorer fit; larger $k$ ($24, 48$) gives $\alpha$
+above band or with degraded fit. We do not search $k$ over a fitted
+window; $k$ is determined by the graph.
+
+\subsection{The integrated-information proxy
+            \texorpdfstring{$\Phi$}{Phi}}
+
+Implementation:
+\texttt{kernel/consciousness\_binding.py:phi\_iit\_trajectory}.
+Given the state history matrix $S\in\mathbb{R}^{T\times 120}$, write
+$A = S\cdot V$ for the H$_4$-eigenvector matrix $V$ (mode amplitudes
+$A\in\mathbb{R}^{T\times 120}$). Define $c_{\mathrm{full}}$ as the
+lag-$1$ auto-correlation of the full system, and $c_{k}$ as the
+lag-$1$ auto-correlation within the K-class irrep block $k$. Then
+\[
+\Phi \;=\; \max\!\bigl(0,\; |c_{\mathrm{full}}| - \mathrm{mean}_{k}\,|c_{k}|\bigr).
+\]
+The proxy is designed to be small under H$_{4}$-equivariant dynamics
+(when block autocorrelations within irrep classes match the full-system
+autocorrelation) and to increase when dynamics produce cross-class
+asymmetries. It is not a theorem on information transport; it is a
+proxy that captures one observable signature of cross-class
+non-equivariance. This is a port of the published
+\texttt{integrated\_information\_phi\_irrep} proxy from the cascade
+pipeline, adapted to take amplitude trajectories from any source.
+
+We position $\Phi$ as an IIT-style direction-of-effect proxy, not as
+a full implementation of IIT. ARIA does not implement cause-effect
+repertoires, exclusion postulate, or integration-over-partitions
+machinery~\citep{Tononi2008,BalduzziTononi2008}. The propofol $\Phi$
+collapse in~\S\ref{sec:results} is consistent with the IIT direction
+of effect on the propofol-vs-wake state contrast; it is not a
+discharge of the IIT axioms.
+
+\subsection{The continuity composite}
+
+Implementation:
+\texttt{kernel/self\_model\_stream.py:StreamContinuityScorer}.
+A composite first-person continuity score over a 64-tick rolling
+window:
+\begin{align*}
+b_{\mathrm{cont}} &= \mathrm{mean\ cos\text{-}sim\ of\ consecutive}\ (I, L, P)\,\mathrm{vectors},\\
+v_{\mathrm{cont}} &= 1/(1 + 4\cdot \mathrm{var}(\mathrm{valence})),\\
+m_{\mathrm{pers}} &= \mathrm{frac.\ of\ consecutive\ same\text{-}modality\ ticks},\\
+i_{\mathrm{smooth}} &= 1/(1 + 4\cdot \mathrm{TV}(\mathrm{intensity})),\\
+\mathrm{composite} &= 0.35\cdot b_{\mathrm{cont}} + 0.25\cdot v_{\mathrm{cont}} + 0.20\cdot m_{\mathrm{pers}} + 0.20\cdot i_{\mathrm{smooth}}.
+\end{align*}
+This composite produces the propofol continuity-drop signature
+(WAKE composite $0.943$; PROPOFOL composite $0.877$;
+drop $+0.066$).
+
+\subsection{The phenomenal-field binding}
+
+Implementation:
+\texttt{kernel/consciousness\_binding.py:bind\_phenomenal\_field}.
+The substrate state $\psi_{t}$ is mapped to a phenomenal snapshot
+with channels (intensity $I$, self-luminosity $L$, presence $P$,
+valence, modality\_label). The modality\_label is determined by which
+H$_4$ K-class dominates the isotypic compression of $\psi_{t}$ under
+the $\sigma$-orbit projector basis. The default profile
+\texttt{K\_7\_only} restricts to $\sigma$-twin K-classes for modality
+labelling; H$_4$-proper classes contribute amplitude bias.
+
+\subsection{Stimulus models}
+
+Implementation: \texttt{demo\_drug\_sleep\_v4.py}. Four conditions
+$\times$ $800$ ticks each at seed $42$:
+
+\textbf{WAKE.} AR(1) cortical noise ($\beta=0.90$), tonic equator-shell
+coherence (small always-on bias), and attention episodes (20--50
+ticks at amplitude $0.8$, anchored to the largest shell with $15\%$
+within-shell rotation per tick). The AR(1) gives temporal correlation
+that lets the $\eta=0.20$ self-loop integrate; tonic coherence anchors
+modality; attention episodes mimic biological visual fixation
+(200--400~ms dwell time analogue); within-shell rotation generates
+cascade events without changing modality.
+
+\textbf{SLEEP\_N3.} Slow oscillation ($\sim 1$\,Hz analogue,
+amplitude $1.0$) on a coherent shell, plus spindle bursts ($12$ ticks
+every $100$ at amplitude $0.4$ fast modulation), plus K-complexes
+($4\%$ of ticks at amplitude $0.8$).
+
+\textbf{PROPOFOL.} Low-amplitude tonic noise (amplitude $0.05$);
+$\eta = 0.00$ (broken recurrence). Residual cortex preserved as
+background drive.
+
+\textbf{RECOVERY.} Identical to WAKE — verifies deterministic
+repeatability under the WAKE stimulus protocol after exposure to
+PROPOFOL (no hidden persistent modification of the substrate state).
+
+The v4 stimulus models were redesigned after diagnostics on the
+v3 stimulus models (which produced 4/6 signatures) to use
+biologically-motivated stimulus components — AR(1) cortical noise,
+attention episodes, slow-wave drive, spindles, K-complexes — at
+amplitudes and durations matching published biological time scales.
+They are not fitted to subject-level measurements, but they are
+condition-specific design choices iterated to close v3 stimulus-model
+artefacts (\texttt{CONSCIOUSNESS\_CHAIN\_V4\_SIGNATURES.md} documents
+the v3$\to$v4 redesign). The full stimulus code is
+\texttt{demo\_drug\_sleep\_v4.py}.
+
+\subsection{Cascade-mechanism ablation matrix}
+
+The cascade dynamics on the substrate use four mechanisms acting on
+the pressure field, each ablatable independently. The $2^{4}$
+ablation grid is the basis for the preregistered tests P1--P5 and
+the C$\times$P stress test in~\S\ref{sec:stress}.
+
+\textbf{$D$ — D$_{4}$ orbit coupling.} The H$_4$ root system contains
+five disjoint 24-cells (D$_4$ orbits). $D$ adds a small
+(coupling $0.05$) cross-orbit pressure averaging that prevents
+cascades from localising to one orbit.
+Implementation: \texttt{kernel/dimensional\_monitor.py:300-305}.
+
+\textbf{$C$ — Context rotation (S$^{7}$ observer frames).} The active
+observer frame on the S$^{7}$ rung rotates periodically based on
+which uncrossed vertices have accumulated pressure aligning with
+each frame's preferences. This creates churn in \emph{which}
+vertices are uncrossed at any tick.
+Implementation: \texttt{kernel/dimensional\_monitor.py:316-318, 823-827}.
+
+\textbf{$P$ — Partial emission.} High-pressure uncrossed vertices
+(above threshold but not yet crossed) emit pressure at $30\%$ scale,
+saturating at pressure $3.0$. Without this mechanism, only fully-
+crossed vertices emit.
+Implementation: \texttt{kernel/dimensional\_monitor.py:842-855}.
+
+\textbf{$E$ — Equator compensation.} The H$_3$ shell-4 equator is a
+30-vertex icosidodecahedral ring with split degree distribution.
+$E$ scales pressure gain by $(\bar d / d_{v})$ so sparse commissural
+vertices overcome their connectivity deficit.
+Implementation: \texttt{kernel/dimensional\_monitor.py:320-360}.
+
+The four mechanisms' \emph{targets} are geometry-pinned (D$_4$ orbits,
+$S^{7}$ rung, equatorial shell); their gains and coupling constants
+($D$ at $0.05$, $P$ at $30\%$ scale saturating at pressure $3.0$,
+$C$ rotation period, $E$ degree-ratio multiplier) are fixed design
+choices reported here, not learned from data. Their causal effects
+within the factorial ablation model are reported in~\S\ref{sec:stress}.

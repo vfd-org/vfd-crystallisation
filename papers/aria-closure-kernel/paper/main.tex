@@ -1,0 +1,229 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{xcolor}
+
+\graphicspath{{figures/}}
+
+\newcommand{\Ph}{\varphi}
+\newcommand{\Lop}{L_{V_{600}}}
+\newcommand{\Cph}{C_{\Ph}}
+\newcommand{\Rsixhundred}{V_{600}}
+
+\title{The closure-response operator
+       $\Cph = L_M + \Ph^{-2} I$:\\
+       a geometry-fixed kernel on the 600-cell with two\\
+       domain-disjoint empirical witnesses}
+
+\author{%
+  Lee Smart\\[2pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint, not peer-reviewed.
+
+\noindent\emph{Headline.}
+We define a programme-level closure-response primitive
+$\Cph = L_M + \Ph^{-2} I$ on a closure substrate $M$ with
+corresponding Laplacian $L_M$ (graph, simplicial, or continuum)
+and golden ratio $\Ph = (1 + \sqrt{5})/2$. We use
+the 600-cell instance $\Rsixhundred$ as the discrete substrate
+shared by the two empirical witnesses (the choice of this polytope
+is post-hoc motivated by those landings, \S\ref{sec:limitations};
+numerically reproduced: $|V|=120$, $|E|=720$, uniform
+degree~$12$, H$_3$ shell decomposition
+$\{1,12,20,12,30,12,20,12,1\}$, computed Laplacian spectrum
+matching the closed-form $\mathbb{Z}[\Ph]$ values), establish the
+operator-norm bound $\|\Cph^{-1}\| = \Ph^{2}$ from the smallest
+eigenvalue $\Ph^{-2}$, and verify the discrete-to-continuum
+agreement at per-vertex Pearson correlation $0.976$ between the
+discrete Green response and the continuum kernel
+$G(x) = (\Ph/2)\,e^{-|x|/\Ph}$ (this is a multiplicity-weighted
+shell-radius correlation, since $\psi$ is shell-constant to
+machine precision under H$_3$-fixed source; not $119$ independent
+radial samples; \S\ref{sec:agreement};
+\texttt{repro/verify\_kernel.py}). The same fixed $\Cph$ on the
+same fixed graph is then the shared response primitive used
+underneath two \emph{domain-disjoint} empirical works: a passive-regime structural
+fit of the $b\to s\mu^{+}\mu^{-}$ angular anomaly across five
+public flavour-physics datasets~\citep{SmartBAnomaly2026}, and an
+active-regime substrate witness against eighteen preregistered
+substrate/neuroscience correspondences plus six drug/sleep EEG
+signatures~\citep{SmartAriaChess2026}.
+
+\noindent\emph{Scope.}
+This paper presents an empirical \emph{operator witness}: a
+geometry-fixed response operator with operator shape held fixed
+across two disjoint-domain empirical landings (flavour physics
+and cortical neuroscience) with no kernel-shape retuning between
+regimes; the substrate $\Rsixhundred$ is post-hoc disclosed as
+the choice motivated by these landings, not selected by an
+independent criterion. It is \emph{not} a derivation of the
+$\Ph^{-2}$ shift from first principles, \emph{not} a uniqueness
+claim for $\Rsixhundred$ among regular 4-polytopes, \emph{not} a
+selection theorem on the companion adaptive-closure-transport
+4-tuple~\citep{SmartAdaptiveClosureTransport2026}, and \emph{not}
+a model-preference claim against alternative kernels on either
+empirical landing (the b-anomaly AIC comparison and the aria-chess
+substrate-witness scope are documented in their own preprints and
+inherited verbatim here).
+The positive claim is therefore deliberately narrow but
+non-trivial: a single fixed shifted-Laplacian response operator on
+the 600-cell gives a reproduced geometry-only discrete-to-continuum
+agreement and serves, without kernel-shape retuning, as the
+common response primitive beneath two domain-disjoint empirical
+analyses. The significance is not that either empirical domain is
+solved, but that the same geometry-fixed response object reappears
+without being reshaped for either domain.
+
+\begin{abstract}
+We define a closure-response primitive $\Cph = L_M + \Ph^{-2} I$ on
+a closure substrate $M$ with corresponding Laplacian $L_M$ and
+$\Ph = (1+\sqrt{5})/2$, give the 600-cell graph $\Rsixhundred$ as
+the discrete instance shared by two empirical witnesses, and
+document its appearance as the same fixed operator (no shape
+retuning) in two domain-disjoint empirical
+works: (i)~a five-dataset structural fit of the
+$b\to s\mu^{+}\mu^{-}$ angular anomaly with sign-uniform amplitude
+direction~\citep{SmartBAnomaly2026}; (ii)~an eighteen-prediction
+preregistered substrate witness against substrate/neuroscience
+signatures plus six drug/sleep EEG
+signatures~\citep{SmartAriaChess2026}. We
+include the numerical reproduction script
+(\texttt{repro/verify\_kernel.py}) that constructs $\Rsixhundred$
+from canonical generators, verifies the graph facts
+($|V|=120$, $|E|=720$, uniform degree~$12$, $9$-shell decomposition,
+Laplacian spectrum numerically matching closed-form $\mathbb{Z}[\Ph]$
+values, operator-norm identity $\|\Cph^{-1}\|=\Ph^{2}\approx 2.618$
+on the connected finite graph $\Rsixhundred$ where
+$\lambda_{\min}(L_M)=0$), and tests the discrete-to-continuum
+agreement at multiplicity-weighted shell-radius Pearson
+correlation $0.976$ for the unweighted variant (the discrete
+response is shell-constant to machine precision), above the two
+$\Ph$-cocycle weighted variants tested ($0.888$ geometric, $0.884$
+arithmetic). Within the three
+tested variants the unweighted Laplacian ranks highest on the
+geometry-only criterion, reproducing the qualitative ranking
+established separately by b-anomaly's data $\chi^{2}$ comparison
+(the b-anomaly preprint flags that its data was looked at first
+and the geometry ranking verified afterward; the agreement is
+criterion-independent but historically non-blind, a caveat we
+inherit verbatim).
+
+\noindent\emph{(i) Operator definition and properties.}
+$\Cph = L_M + \Ph^{-2} I$ is positive definite for self-adjoint
+non-negative $L_M$ on a connected finite graph; smallest eigenvalue
+$\Ph^{-2} \approx 0.382$, operator norm
+$\|\Cph^{-1}\| = \Ph^{2} \approx 2.618$. The continuum projection
+in one coordinate $x$ is the closed-form Green's function
+$G(x) = (\Ph/2)\, e^{-|x|/\Ph}$, with decay scale $\Ph$.
+
+\noindent\emph{(ii) The 600-cell instance.}
+$\Rsixhundred$ has $120$ canonical unit vectors on $S^{3}$
+generated by three orbits ($8$~axis, $16$~half-integer,
+$96$~$\Ph$-mixed). H$_4$ transitivity forces uniform degree~$12$
+on the short-edge graph; the Laplacian has nine eigenvalue classes
+in $\mathbb{Z}[\Ph]$ with multiplicities summing to $120$ (Table
+\ref{tab:spectrum}, \S\ref{sec:substrate}).
+
+\noindent\emph{(iii) Discrete-to-continuum agreement.}
+Multiplicity-weighted per-vertex Pearson correlation (shell-constant
+response, see \S\ref{sec:agreement}) between the discrete response
+$\psi = \Cph^{-1} f$ for a localised source and the continuum
+prediction $G(\|v - v_{\mathrm{src}}\|)$ at each non-source
+vertex's chord distance: $0.976$ (unweighted Laplacian), $0.888$
+($\Ph$-geometric weights), $0.884$ ($\Ph$-arithmetic weights).
+Same source vertex, same fixed shift, no parameter fitting; the
+unweighted-headline correlation is invariant under choice of source
+to within machine precision over all $120$ vertices (multi-source
+sweep, \S\ref{sec:limitations}; the sweep is run on the unweighted
+operator only, the two weighted variants were not swept).
+
+\noindent\emph{(iv) Two domain-disjoint empirical witnesses.}
+(a)~Passive regime, b-anomaly~\citep{SmartBAnomaly2026}: same
+$\Cph$ on the same $\Rsixhundred$ provides a sign-uniform
+$\Delta C_{9}^{\mathrm{eff}} < 0$ description of the
+$b\to s\mu^{+}\mu^{-}$ angular anomaly across five public datasets
+(LHCb 2015, LHCb 2021, CMS 2025, LHCb 2025, LHCb 2015 $B_s\to\phi$),
+with one fitted dimensionless amplitude per dataset and the kernel
+shape held fixed. (b)~Active regime,
+aria-chess~\citep{SmartAriaChess2026}: same $\Cph$ on the same
+$\Rsixhundred$, augmented by a recurrent self-model layer with one
+condition-dependent self-injection coupling
+$\eta\in\{0,0.05,0.20\}$ and one substrate-pinned nonlinearity
+$\mathrm{bounded\_topk}(\cdot, k\!=\!12)$ at the graph's average
+degree, passes $17/18$ preregistered correspondences (frozen
+2026-04-18) at standard methodology and $18/18$ after a documented
+$N\!=\!20$ deep-dive on the residual high-variance
+$C\!\times\!P$ interaction (P4) — alongside two further documented
+methodology refinements in the aria-chess set ($N\!=\!5$ for P3
+within its preregistered band; LOO/state-reset for the P13 chess
+substrate-lift, originally preregistered with $5$-fold CV; no
+threshold modifications) and one open prereg-exact rerun (P10
+chess null mapping was validated with $15$ permutations rather
+than the preregistered $20$; threshold $\geq 50\%$ unchanged;
+$15$--$20$-range robust at $65.4\%$; the $20$-permutation rerun
+is left open in the aria-chess limitations) — plus $6/6$
+literature-thresholded drug/sleep EEG signatures on a single
+deterministic seed.
+
+\noindent\emph{What we do not claim.}
+We do not derive the $\Ph^{-2}$ floor; it is a design-level
+stability clamp making $\Cph$ strictly positive definite. We do
+not claim $\Rsixhundred$ is the unique substrate consistent with
+either empirical landing. We do not claim the operator is the
+unique kernel shape consistent with the b-anomaly data
+(b-anomaly's free-width Gaussian alternative and Mode-B refit
+drift caveats are inherited verbatim) nor that the
+aria-chess substrate witness establishes a selection theorem on
+the adaptive-closure-transport 4-tuple. The structural scope of
+this paper is: \emph{one geometry-fixed operator on one fixed
+graph appears as the shared response primitive underneath two domain-disjoint
+empirical works in two distinct regimes, with no shape retuning
+between them}.
+\end{abstract}
+
+% =====================================================================
+\input{sections/01_introduction.tex}
+\input{sections/02_definition.tex}
+\input{sections/03_substrate.tex}
+\input{sections/04_spectrum.tex}
+\input{sections/05_agreement.tex}
+\input{sections/06_passive_witness.tex}
+\input{sections/07_active_witness.tex}
+\input{sections/08_programme_home.tex}
+\input{sections/09_limitations.tex}
+\input{sections/10_conclusion.tex}
+% =====================================================================
+
+\section*{Reproducibility}
+The complete numerical verification (vertex construction,
+short-edge graph build, Laplacian spectrum, operator-norm bound,
+discrete-to-continuum correlation across three Laplacian variants)
+is reproducible from \texttt{repro/verify\_kernel.py} in this
+paper's bundle. No randomness, no fitted parameters: all numbers
+in \S\ref{sec:substrate}, \S\ref{sec:spectrum}, and
+\S\ref{sec:agreement} are deterministic outputs of the script.
+The two empirical witness preprints
+(b-anomaly~\citep{SmartBAnomaly2026},
+aria-chess~\citep{SmartAriaChess2026}) carry their own
+reproducibility artifacts; this paper does not duplicate them.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

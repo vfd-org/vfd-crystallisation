@@ -22,7 +22,7 @@
 \newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
 \newcommand{\Rst}{R_{\mathrm{st}}}
 
-\title{The Standard Model from 600-Cell Closure Geometry:\\[6pt]
+\title{Spectral and Structural Correspondences from 600-Cell Closure Geometry:\\[6pt]
 \large Spectral Bridge, Structural Constants, and the $\varphi$-Permeability}
 \author{%
   Lee Smart\\[4pt]
@@ -39,13 +39,13 @@
 \noindent\textbf{Status:} Preprint (not peer-reviewed)
 
 \begin{abstract}
-The VFD closure programme has developed three pillars: spectral-geometric particle masses on the 600-cell (Papers~I--V), structural correspondences to the Standard Model (Papers~VI--XI), and a route from dissipative closure dynamics to Schr\"odinger-type evolution (Papers~XII--XXI). This paper bridges them through computation and exhibits structural relations between 600-cell eigenvalue data and known physical constants.
+The VFD closure programme has developed three pillars: spectral-geometric particle-mass correspondences on the 600-cell (Papers~I--V), structural correspondences to the Standard Model (Papers~VI--XI), and a route from dissipative closure dynamics to Schr\"odinger-type evolution (Papers~XII--XXI). This paper collects computations that relate 600-cell eigenvalue data, $E_8$ Coxeter structure, and several Standard Model numerical inputs.
 
-An explicit $H_4$-invariant closure functional on the 600-cell is constructed. The complete spectral decomposition reveals that Paper~V's mass eigenvalues $\{9,12,14,15\}$ are exactly the nontrivial integer Laplacian eigenvalues --- a number-theoretic selection principle. The $E_8 \to H_4$ Coxeter projection (exponents $1,7$) maps all 240 $E_8$ roots onto 120 600-cell vertices (2 per vertex), establishing the double-cover structure.
+An explicit $H_4$-invariant smooth log-sum-exp functional on the 600-cell is constructed at the level of a definition. A numerical spectrum of the 600-cell nearest-neighbour Laplacian is computed, and irrep labels are imported from the standard $2I$ character table: the nontrivial integer eigenvalues are $\{9, 12, 14, 15\}$, matching the values used in Paper~V's spectral-geometric particle-mass assignments. The classical $E_8 \to H_4$ Coxeter projection~\citep{Koca2007, MoodyPatera1993, CascadeAlgSubstrate} sends the 240 $E_8$ roots two-to-one onto 120 directions identifiable with the 600-cell vertex set, giving a two-to-one pairing structure.
 
-From this structure, the paper identifies structural correspondences, including: $\alpha^{-1} = 137 + \pi/87$ at 0.81~ppm, where 137 is a graph invariant (87 triply overdetermined, 50 the eigenvalue trace) and $\pi/87$ is the Coxeter projection phase excess divided by the double cover; $\sin^2\theta_W(\mathrm{GUT}) = 9/(9{+}15) = 3/8$, identified as the NN/NNN angular ratio $36^\circ/60^\circ = 3/5$; a three-level $\mathbb{Z}_3$ splitting suggestive of generation structure; and exact integer/irrational sector decoupling (94 physical modes, proved by representation theory). The golden ratio $\varphi = 2\cos 36^\circ$ enters through the 600-cell distance structure: the permeability gap $d_2^2 - d_1^2 = 1/\varphi$ determines the tunneling scale from which all $\varphi$-power mass formulas arise.
+From this structure the paper collects several numerical correspondences, including: $\alpha^{-1} = 137 + \pi/87$ at 0.81~ppm (a numerical correspondence, not derived as a loop integral here); a structural match between the spectral ratio $9/15 = 3/5$ and the numerical factor appearing in the $SU(5)$ hypercharge normalisation ($\sin^2\theta_W = 3/8$ at the GUT scale); a $\mathbb{Z}_3$-based (script-reported) energy splitting of the 16-dimensional spinor isotypic component suggestive of generation structure; and a $2I$-isotypic decomposition (Theorem~\ref{thm:decoupling}, computer-assisted, using the explicit icosian realisation of the 600-cell vertex set as the group $2I$ under Hamilton multiplication) in which a 94-dimensional integer-eigenvalue subspace and a 26-dimensional irrational-eigenvalue subspace are invariant under every shell-adjacency matrix. The golden ratio $\varphi = 2\cos 36^\circ$ enters through the 600-cell vertex separation structure, and the algebraic identity $d_2^2 - d_1^2 = 1/\varphi$ between the two nearest shells is exhibited; this identity is the geometric input that appears in the heuristic $\varphi$-factor tunnelling framing used in Section~\ref{sec:phi}, rather than a first-principles driver of the mass formulas in Papers~I--V (which carry their own construction independent of this identity).
 
-Seventeen scripts verify every computational claim. The paper does not claim to derive the Standard Model from first principles; it presents evidence that a single closure functional on the 600-cell can coherently relate mass eigenvalues, gauge structure, fundamental constants, and generation structure, with gravity remaining as a separate programme.
+Nineteen scripts accompany the paper; most reproduce the listed computations, while some are exploratory or incomplete (see Section~\ref{sec:discussion}). The paper does not claim to derive the Standard Model, the fine-structure constant, the Weinberg angle, or the generation hierarchy from first principles; it presents a coordinated set of computed relations and structural correspondences around a single closure functional on the 600-cell, with gravity and several quantitative reductions remaining as separate programmes.
 \end{abstract}
 
 %==================================================================
@@ -54,21 +54,33 @@ Seventeen scripts verify every computational claim. The paper does not claim to 
 
 The VFD closure programme rests on three pillars:
 \begin{enumerate}
-    \item \textbf{Spectral-geometric masses} (Papers~I--V~\citep{SmartI, SmartV}): thirteen non-reference particle masses at 0.014\% average error from 600-cell Laplacian eigenvalues.
-    \item \textbf{Standard Model correspondence} (Papers~VI--XI~\citep{SmartVI, SmartXI}): gauge symmetry as projection invariance, mass as closure residual, confinement as connectivity constraint.
-    \item \textbf{Quantum dynamics} (Papers~XII--XXI~\citep{SmartXIV, SmartXVII, SmartXVIII, SmartXX, SmartXXI}): Schr\"odinger evolution as the equilibrium tangent limit of nonlinear closure-paired dynamics, with Witten Hamiltonian $\HW$.
+    \item \textbf{Spectral-geometric masses} (Papers~I--V~\citep{SmartI, SmartV}): Paper~V reports 13 numerical mass correspondences across non-reference particles at $0.014\%$ average relative error, using the exact rational value $R_D(4) = 15$ (Paper~V's shell-4 reflection-coefficient theorem), a non-unique rule-based $(S,w)$ scheme, and ten chain correspondences (five forward-traceable to 600-cell primitives, five reverse-identified post hoc); the 600-cell Laplacian eigenvalues enter as the mass-sector eigenvalues in that construction.
+    \item \textbf{Standard Model correspondence} (Papers~VI--XI~\citep{SmartVI, SmartXI}, plus the connectivity/confinement discussion in Paper~V~\citep{SmartV}): structural correspondences between closure-geometry constructs and Standard Model features (for example gauge-sector decomposition, mass-sector eigenvalues, and the Paper~V connectivity argument suggestive of a confinement-like reading).
+    \item \textbf{Quantum dynamics} (Papers~XII--XXI~\citep{SmartXIV, SmartXVII, SmartXVIII, SmartXX, SmartXXI}): formal Schr\"odinger recovery at equilibrium and to leading order near equilibrium within a nonlinear closure-paired dynamical framework, with Witten Hamiltonian $\HW$.
 \end{enumerate}
 
-These pillars share the closure functional $\Fcal$ but have not been formally connected. This paper constructs the bridges through explicit computation.
+These pillars share the closure functional $\Fcal$ but have not been formally connected. This paper collects several bridges through explicit computation.
 
 \subsection*{Scope and epistemic status}
 
-Results are classified at three levels throughout:
+This paper has \textbf{one theorem and many structural correspondences}. To prevent the theorem-grade result from being conflated with the surrounding interpretive material, the paper is organised as follows:
+
 \begin{itemize}
-    \item \textbf{Computed/proved:} exact results from eigenvalue computation, representation theory, or algebraic identity. Verified by accompanying scripts.
-    \item \textbf{Structural:} results that follow from the computed data under a specific physical interpretation (e.g.\ identifying eigenvalue ratios with coupling normalisations).
-    \item \textbf{Open:} questions not resolved by this paper.
+    \item \textbf{Part~I --- one proven theorem (Section~\ref{sec:spectral}):} Theorem~\ref{thm:decoupling} is the paper's single theorem-grade result. It is proved by importing the P2 shell-and-class substrate (icosian closure, shell = conjugacy class, class-sum centrality; all established in exact $\mathbb{Q}(\sqrt{5})$ arithmetic by \texttt{run\_icosian\_exact.py} and replicated by P2~\S 6) together with the standard $2I$ character-table labelling imported by P2 from Du~Val~\citep[Ch.~3]{DuVal1964}. Everything else in the paper is Part~II.
+    \item \textbf{Part~II --- structural correspondences and interpretive readings (Sections~\ref{sec:F}, \ref{sec:phi}, \ref{sec:coxeter}--\ref{sec:conjugate}, \ref{sec:constants}--\ref{sec:generations}, \ref{sec:mass}--\ref{sec:uv}, \ref{sec:predictions}--\ref{sec:open}, \ref{sec:discussion}--\ref{sec:conclusion}):} the $\varphi$-permeability discussion, the $E_8 \to H_4$ two-to-one pairing reading, the $\alpha^{-1} = 137 + \pi/87$ arithmetic coincidence, the Weinberg-angle $9/15$ ratio match, the $\mathbb{Z}_3$ generation spectrum, the mass-formula ansatz, the $9:0:4:9$ coupling ratios, the ``conjugate-pair'' matter/antimatter reading, and the falsifiability discussion are all \emph{structural correspondences or script-reported numerical matches}, not theorems. Each is labelled at the level it is supported.
 \end{itemize}
+Within Part~II, the fine-grained classification is:
+\begin{itemize}
+    \item \textbf{Computed / proved:} exact finite computations or algebraic identities stated with proof (e.g.\ Proposition~\ref{prop:gap}: $d_2^2 - d_1^2 = 1/\varphi$).
+    \item \textbf{Script-reported:} outputs of the accompanying scripts, not given a closed-form derivation in the paper.
+    \item \textbf{Structural:} claims that follow from computed or script-reported data under a specific physical interpretation, not theorems.
+    \item \textbf{Open:} questions flagged as unresolved.
+\end{itemize}
+The reader who is interested only in Part~I can read Sections~\ref{sec:intro} and~\ref{sec:spectral} and stop.
+
+\subsection*{Narrative placement (closure projection)}
+
+The structural correspondences collected in this paper ($\alpha^{-1} = 137 + \pi/87$ at 0.81~ppm, $\sin^2\theta_W = 3/8$, the $E_8 \to H_4$ two-to-one pairing, the $94+26$ isotypic decomposition of Theorem~\ref{thm:decoupling}, the $\varphi$-permeability identity $d_2^2 - d_1^2 = 1/\varphi$) are instances of the \textit{structural projection class} of the closure-projection framework introduced in Paper~XXXIII~\citep{SmartXXXIII}: ratio, inter-sector, and isotypic functionals of the 600-cell closure-functional spectrum, read through an observer-position placed as a bounded, stable, self-referential constraint substructure (Paper~XXIX~\citep{SmartXXIX}) inside the wave-substrate consolidated as the F1--F8 closure functional in Paper~XXXVI~\citep{SmartXXXVI}. The present paper presents these correspondences at the levels stated above (one theorem and the structural / script-reported / open classifications of Part~II); the projection-class identification is interpretive, made in Paper~XXXIII, and does not change the labels or evidentiary status of any claim in this paper.
 
 %==================================================================
 \section{The Closure Functional}\label{sec:F}
@@ -76,44 +88,48 @@ Results are classified at three levels throughout:
 
 \subsection{Explicit construction}
 
-\begin{definition}[600-cell closure functional]\label{def:F600}
+\begin{definition}[600-cell log-sum-exp functional]\label{def:F600}
 Let $\{v_1, \ldots, v_{120}\} \subset \mathbb{R}^4$ be the 600-cell vertices on the unit 3-sphere. For smoothing parameter $\varepsilon > 0$:
 \begin{equation}\label{eq:F}
     \Fcal(x) = -\varepsilon^2 \log\!\left(\sum_{i=1}^{120} \exp\!\left(-\frac{|x - v_i|^2}{2\varepsilon^2}\right)\right)
 \end{equation}
+The following properties hold.
+\begin{enumerate}
+    \item[(i)] \textbf{$H_4$ invariance:} for every $g \in H_4$, $\Fcal(g \cdot x) = \Fcal(x)$, because $H_4$ permutes the vertex set.
+    \item[(ii)] \textbf{Smoothness:} $\Fcal \in C^\infty(\mathbb{R}^4)$ as the log of a finite positive sum of $C^\infty$ Gaussians.
+    \item[(iii)] \textbf{Vertex-symmetry of values:} by vertex-transitivity of $H_4$, $\Fcal(v_i)$ is constant on the vertex set; denote this constant $\Fcal_0(\varepsilon)$. The constant is finite but not identically zero for finite $\varepsilon$; we use the additively renormalised functional $\widetilde{\Fcal}(x) \equiv \Fcal(x) - \Fcal_0(\varepsilon)$ in downstream discussion when a vertex-zero normalisation is convenient.
+    \item[(iv)] \textbf{Hessian structure at vertices (script-reported):} the Hessian of $\widetilde{\Fcal}$ at any $v_i$ is $H_4$-orbit-independent by vertex-transitivity; its explicit matrix form and conditioning are computed by the accompanying script.
+\end{enumerate}
+The present paper uses $\Fcal$ as a definitional object only. Claims labelled ``tight-binding'', ``Morse'', or ``instanton'' in downstream sections are heuristic applications of this functional, not theorems about $\Fcal$.
 \end{definition}
 
-\begin{proposition}[Properties]\label{prop:F}
-$\Fcal$ satisfies: (1) $\Fcal(v_i)$ is constant on the vertex set and can be normalised to zero; for small $\varepsilon$, vertex values differ from the sharp-minimum limit only by exponentially small corrections; (2) $\Fcal(x) > 0$ away from vertices; (3) $H_4$ invariance; (4) $C^\infty$ smoothness; (5) uniform Hessian at each vertex (by vertex-transitivity); (6) barrier height between adjacent vertices controlled by $\varepsilon$.
-\end{proposition}
-
-\textit{Proof sketch.} (1): At $x = v_j$, the $i=j$ term dominates the sum, giving $\Fcal \to 0$ as $\varepsilon \to 0$; for finite $\varepsilon$, corrections are exponentially small in $1/\varepsilon^2$. (2): Away from vertices, all $|x - v_i|^2 > 0$. (3): $H_4$ permutes the vertex set, leaving the sum invariant. (4): Log-sum-exp of $C^\infty$ functions. (5): $H_4$ is transitive on vertices. (6): The barrier midpoint has $\Fcal \approx d^2/(4\varepsilon^2)$ for $\varepsilon \ll d$. Verified computationally. \hfill$\square$
+\textit{Remarks on sharper analytic properties.} Strict positivity of $\widetilde{\Fcal}$ away from vertices, a precise midpoint barrier estimate, and a Morse-theoretic structure for the 600-cell landscape would require a further analysis that is not undertaken here; the properties listed above are the ones used in this paper.
 
 \subsection{Unit matching}
 
-The closure equation $i\partial_t\Psi = \HW\Psi$ with $\HW = -(\sigma^2/2)\Delta + \VW$ matches the physical Schr\"odinger equation $i\partial_t\psi = -(\hbar/2m)\Delta\psi + (V/\hbar)\psi$ under:
+Paper~XVIII~\citep{SmartXVIII} derives a Schr\"odinger-type equation $i\partial_t\Psi = \HW\Psi$ from closure dynamics at equilibrium and to leading order near equilibrium; Paper~XXI~\citep{SmartXXI} synthesises the surrounding structural picture. The effective parameters appear in $\HW = -(\sigma^2/2)\Delta + \VW$. A formal unit-matching between this effective equation and the physical Schr\"odinger equation $i\partial_t\psi = -(\hbar/2m)\Delta\psi + (V/\hbar)\psi$ requires an identification
 \begin{equation}\label{eq:units}
     \sigma^2 = \hbar/m, \qquad \VW = V/\hbar
 \end{equation}
-One physical energy scale fixes $\sigma^2$ completely.
+so that one physical energy scale fixes $\sigma^2$ completely. This identification is a consistency condition at the level of unit matching of the equilibrium/near-equilibrium effective equation; the source papers~\citep{SmartXVIII, SmartXXI} do not derive the physical units $\hbar, m$ from closure dynamics alone, and the identification above should be read as an input to the downstream physical interpretation, not as a theorem. The far-from-equilibrium nonlinear residual discussed in Section~\ref{sec:predictions} refers to that same programme's mathematical residual, with its physical interpretation deferred in the source.
 
 %==================================================================
 \section{The $\varphi$-Permeability}\label{sec:phi}
 %==================================================================
 
-The golden ratio $\varphi = (1+\sqrt{5})/2 = 2\cos 36^\circ$ is the fundamental geometric constant of the 600-cell. It determines the vacuum field permeability --- the tunneling scale between constraint-satisfying configurations.
+The golden ratio $\varphi = (1+\sqrt{5})/2 = 2\cos 36^\circ$ is the key geometric constant of the 600-cell: it sets the vertex separation ratios listed below. In the present paper, $\varphi$ enters downstream calculations as the shell-gap parameter in a heuristic tunnelling picture; the phrase ``$\varphi$-permeability'' used in this section and in Section~\ref{sec:conclusion} is shorthand for that heuristic role, not for an established continuum permeability.
 
 \subsection{Distance shells and angles}
 
-The 600-cell vertex separations on $S^3$ form eight distance shells. Every angular separation is a multiple of $\pi/5$ (the decagonal angle):
+The 600-cell vertex separations on $S^3$ form eight distance shells. The shell angles are the standard 600-cell angles, all determined by the $H_4$ symmetry and the $\varphi$-scale structure, and listed explicitly in the table below:
 
 \begin{table}[ht]
 \centering
-\caption{Distance shells of the 600-cell. All angles are $\varphi$-determined.}
+\caption{Distance shells of the 600-cell. The listed angles are the standard 600-cell angle set arising in $H_4$ geometry.}
 \label{tab:shells}
 \begin{tabular}{@{}rllrl@{}}
 \toprule
-Shell & Distance & Angle & Degree & $\cos(\text{angle})$ \\
+Shell & Distance & Angle & Count & $\cos(\text{angle})$ \\
 \midrule
 1 & $1/\varphi$ & $36^\circ = \pi/5$ & 12 & $\varphi/2$ \\
 2 & $1$ & $60^\circ = \pi/3$ & 20 & $1/2$ \\
@@ -140,33 +156,31 @@ The squared-distance difference between the first two shells is:
 $d_1^2 = 1/\varphi^2$ and $d_2^2 = 1$. Then $1 - 1/\varphi^2 = 1 - (\varphi-1)/\varphi = 1/\varphi$, using $1/\varphi = \varphi - 1$.
 \end{proof}
 
-This identity is the root of all $\varphi$-dependent physics: the WKB tunneling ratio between nearest and next-nearest neighbours is $t_2/t_1 = \exp(-C/\varphi\sigma^2)$, and mass ratios are exponentials of $\varphi$-weighted eigenvalue sums, producing the $\varphi^{(\mathrm{rational})}$ mass formulas of Papers~I--V.
+This algebraic identity serves as a heuristic geometric motivation for the $\varphi$-exponent structure used in the present paper's tunnelling framing: if one considers a WKB-style tunneling ratio between shells 1 and 2 for a landscape in which $\Fcal$ contributes a quadratic leading barrier term, the ratio is of the form $t_2/t_1 = \exp(-C\,(d_2^2 - d_1^2)/\sigma^2) = \exp(-C/(\varphi\sigma^2))$ for a constant $C$ dependent on the barrier shape, and mass ratios built as products of such tunneling factors then carry $\varphi^{\text{rational}}$ exponents. The WKB statement here is heuristic within the present paper, and this identity is not asserted to be the actual input controlling the quantitative mass formulas of Papers~I--V, which carry their own structural assumptions and parameterisations.
 
 %==================================================================
-\section{Spectral Decomposition}\label{sec:spectral}
+\section{Spectral Decomposition (Part~I: Theorem)}\label{sec:spectral}
 %==================================================================
 
-\subsection{The tight-binding bridge}
+\subsection{Tight-binding ansatz}
 
-\begin{proposition}[Tight-binding spectral bridge]\label{prop:tb}
-In the tight-binding regime ($\sigma^2 \ll$ barrier height), the Witten Hamiltonian on the 600-cell landscape is:
+In the tight-binding regime ($\sigma^2 \ll$ landscape barrier height), the Witten Hamiltonian on a Morse landscape with $N$ well-separated local minima reduces, to leading order in the semiclassical parameter, to a hopping Hamiltonian on the graph of minima with transition amplitudes determined by the WKB action between neighbouring minima~\citep{WittenMorse, HelfferSjostrand1988}. Applied heuristically to the 600-cell vertex landscape of Definition~\ref{def:F600}, this suggests the form
 \begin{equation}
     \HW^{\mathrm{eff}} \approx E_0\,\mathbf{I} + t\,\mathbf{A}_{600}
 \end{equation}
-where $\mathbf{A}_{600}$ is the adjacency matrix (uniform tunneling by vertex-transitivity).
-\end{proposition}
+where $\mathbf{A}_{600}$ is the nearest-neighbour adjacency matrix of the 600-cell vertex graph; $H_4$ vertex-transitivity ensures that if the WKB ansatz is valid with a single tunneling amplitude, then that amplitude is uniform across edges. The ansatz is heuristic in this paper: the Morse-theoretic prerequisites for $\Fcal$ have not been proved here, so this is offered as a candidate reduction rather than as a theorem.
 
 \subsection{Complete eigenvalue-representation map}
 
-The 120 vertices are the elements of the binary icosahedral group $2I$. The adjacency matrix, commuting with $2I$, is diagonal on irreducible representations with eigenvalue $\alpha_\rho = (\dim\rho)^{-1}\sum_{s \in S}\chi_\rho(s)$ where $S$ is the 12-element nearest-neighbour set. Numerical diagonalisation confirms:
+Under the P2 identification of the 600-cell vertex set with the binary icosahedral group $2I$ (P2 \S 6, theorem on icosian closure~\citep{CascadeAlgSubstrate}; the vertex-set closure under Hamilton multiplication is enumerated in \emph{exact} $\mathbb{Q}(\sqrt{5})$-arithmetic in \texttt{run\_icosian\_exact.py} and replicated by P2), the 120 vertices carry a left-regular $2I$ action under which the nearest-neighbour adjacency matrix is equivariant and therefore isotypically block-diagonal. The nearest-neighbour set $S_1^{\mathrm{id}}$ is a single $2I$-conjugacy class of 12 elements (exact verification in the same script), so the corresponding generating sum is a central element of $\mathbb{C}[2I]$, and the character-theoretic scalar formula $\alpha_\rho = (\dim \rho)^{-1} \sum_{s \in S_1^{\mathrm{id}}} \chi_\rho(s)$ gives the block value on each isotypic component. Numerical diagonalisation reproduced in \texttt{run\_600cell\_spectral\_verification.py} agrees, at floating-point precision, with the irrep labelling obtained in P2 from the standard $2I$ character table (imported from Du~Val~\citep[Ch.~3]{DuVal1964}).
 
 \begin{table}[ht]
 \centering
-\caption{Complete spectral decomposition (verified computationally).}
+\caption{Nearest-neighbour spectral decomposition: numerical spectrum script-reported from \texttt{run\_600cell\_spectral\_verification.py}; irrep labels imported from the standard $2I$ character table.}
 \label{tab:spectrum}
 \begin{tabular}{@{}llrlrll@{}}
 \toprule
-$2I$ irrep & dim & mult & Adj.\ $\alpha$ & Exact & Lap.\ $\lambda$ & Integer? \\
+$2I$ irrep $\rho$ & $\dim \rho$ & $(\dim \rho)^2$ (isotypic dim) & Adj.\ $\alpha$ & Exact & Lap.\ $\lambda$ & Integer? \\
 \midrule
 trivial & 1 & 1 & $12$ & $12$ & $0$ & Yes \\
 $\mathbf{2}$ & 2 & 4 & $9.708$ & $3{+}3\sqrt{5}$ & $9{-}3\sqrt{5}$ & No \\
@@ -181,44 +195,62 @@ $\mathbf{2'}$ & 2 & 4 & $-3.708$ & $3{-}3\sqrt{5}$ & $9{+}3\sqrt{5}$ & No \\
 \end{tabular}
 \end{table}
 
-\begin{proposition}[Integer selection principle]\label{prop:integer}
-Paper~V's mass eigenvalues $\{9,12,14,15\}$ are exactly the nontrivial integer Laplacian eigenvalues. The irrational eigenvalues (involving $\sqrt{5}$) are not used in the current particle assignments.
-\end{proposition}
+\begin{remark}[Alignment with Paper V's assignments]\label{rem:integer}
+The integer Laplacian eigenvalues shown in Table~\ref{tab:spectrum} are $\{0, 9, 12, 14, 15\}$. Paper~V's spectral-geometric particle-mass construction~\citep{SmartV} uses the four nontrivial integer eigenvalues $\{9, 12, 14, 15\}$ as mass-sector eigenvalues (with $\lambda_7 = 15 = \Delta C$ from Paper~III tied to the heaviest sector); the four irrational eigenvalues $\{9 \pm 3\sqrt{5}, 10 \pm 2\sqrt{5}\}$ are not invoked in Paper~V's 13-particle chain. The present paper registers this coincidence as observed; no ``number-theoretic selection principle'' is proved here, and no dynamical argument selecting the integer sector over the irrational sector is given.
+\end{remark}
 
 \subsection{Sector decoupling}
 
-\begin{theorem}[Exact integer/irrational decoupling]\label{thm:decoupling}
-Every distance-shell adjacency matrix $\mathbf{A}_d$ commutes with the $2I$ action and is therefore diagonal in the irrep basis. Since integer and irrational eigenvalue sectors occupy different irreps:
+\begin{theorem}[Restatement of the P2 shell-adjacency decomposition, with local notation]\label{thm:decoupling}
+Identify the 120 vertices of the 600-cell with the 120 unit icosians (the unit-norm elements of Coxeter's icosian ring of quaternions~\citep{Coxeter1973, MoodyPatera1993, CascadeAlgSubstrate}), via the standard coordinate construction: the 8 permutations of $(\pm 1, 0, 0, 0)$, the 16 sign choices of $(\pm 1/2, \pm 1/2, \pm 1/2, \pm 1/2)$, and the 96 even permutations of $(0, \pm 1/(2\varphi), \pm 1/2, \pm \varphi/2)$. Under this identification (verified by exact-arithmetic Hamilton-product enumeration in \texttt{run\_icosian\_exact.py}), the vertex set is closed under Hamilton multiplication and is therefore a subgroup of $\mathrm{Sp}(1)$ of order 120; the binary icosahedral group $2I$. Left-regular action $L_g(v) = g \cdot v$ realises $2I$ as a subgroup of $\mathrm{SO}(4)$ acting by $\mathbb{R}^4$ isometries. Index the eight distinct nonzero Euclidean distances of Table~\ref{tab:shells} by $k = 1, \ldots, 8$ (so $d_1 = 1/\varphi$, $d_2 = 1, \ldots, d_8 = 2$), and define the \emph{Euclidean shell-$k$ adjacency matrix} $\mathbf{A}_k$ on $\mathbb{C}^{120}$ by $(\mathbf{A}_k)_{v, w} = 1$ if $\|v - w\| = d_k$ and $0$ otherwise; in particular $\mathbf{A}_1$ is the nearest-neighbour adjacency matrix. Exact-arithmetic enumeration (same script) shows that each Euclidean shell $\{v \in 2I : \|1 - v\| = d_k\}$ is \emph{exactly one} $2I$-conjugacy class; the size-preserving bijection between the nine Euclidean distances $\{0, 1/\varphi, 1, \sqrt{3-\varphi}, \sqrt{2}, \varphi, \sqrt{3}, \sqrt{3+\varphi}, 2\}$ and the nine conjugacy classes of $2I$ (sizes $\{1, 12, 20, 12, 30, 12, 20, 12, 1\}$) is given explicitly in the script output. Consequently each shell-adjacency generating sum $\sum_{v \in S_k} v \in \mathbb{C}[2I]$ is a class sum, hence central in $\mathbb{C}[2I]$, and by Schur's lemma acts by a scalar on each isotypic component of $\mathbb{C}^{120} \cong \mathbb{C}[2I] = \bigoplus_\rho (\dim \rho) \cdot V_\rho$. The algebra $\mathcal{A}_{\mathrm{shell}}$ generated by $\{\mathbf{A}_k\}_{k=1}^{8}$ therefore preserves each isotypic component. Defining $W_{\mathrm{int}}$ as the direct sum of those isotypic components whose $\mathbf{A}_1$-eigenvalue is integer-valued (rows marked in Table~\ref{tab:spectrum}) and $W_{\mathrm{irr}}$ as the sum over the irrational-eigenvalue rows gives
 \begin{equation}
-    P_{\mathrm{int}}\, f(\mathbf{A}_d)\, P_{\mathrm{irr}} = 0
+    \mathbb{C}^{120} = W_{\mathrm{int}} \oplus W_{\mathrm{irr}}, \qquad \dim W_{\mathrm{int}} = 94, \quad \dim W_{\mathrm{irr}} = 26,
 \end{equation}
-for every shell $d$ and every function $f$. The 94-mode integer sector is exactly self-consistent.
+and each $\mathbf{A}_k$ (and every polynomial in them) preserves the summands:
+\begin{equation}
+    P_{\mathrm{int}}\, p(\mathbf{A}_1, \ldots, \mathbf{A}_8)\, P_{\mathrm{irr}} = 0
+\end{equation}
+for every polynomial $p$ in the shell-adjacency matrices.
 \end{theorem}
 
-This is an exact representation-theoretic result, not an approximation. Verified computationally for shells 1--3 and all powers of $\mathbf{A}$.
+\begin{proof}
+The substrate steps are imported from P2~\citep{CascadeAlgSubstrate}:
+\begin{itemize}
+    \item P2 \S 6 Theorem on icosian closure: the vertex set is closed under Hamilton multiplication and isomorphic to the binary icosahedral group $2I$ (via exact $\mathbb{Q}(\sqrt 5)$ arithmetic and Du~Val's classification~\citep[Ch.~3]{DuVal1964}).
+    \item P2 \S 6 Theorem on shell-to-class bijection: each of the nine Euclidean distance shells from the identity coincides with exactly one $2I$-conjugacy class. The shell-size / class-size multisets are both $\{1, 12, 20, 12, 30, 12, 20, 12, 1\}$.
+    \item P2 \S 6 Corollary on class-sum centrality: under $\mathbb{C}^{V_{600}} \cong \mathbb{C}[2I]$ (left-regular realisation), each shell-adjacency matrix $\mathbf{A}_k$ is right-convolution by the central class sum $C_k \in Z(\mathbb{C}[2I])$ and therefore acts by a scalar on every isotypic component of $\mathbb{C}[2I] = \bigoplus_\rho (\dim\rho)\cdot V_\rho$.
+\end{itemize}
+To obtain the $94{+}26$ decomposition of the theorem statement, partition the nine irreps of $2I$ by whether the $\mathbf{A}_1$-scalar $\alpha_\rho = (\dim\rho)^{-1} \sum_{s \in S_1^{\mathrm{id}}} \chi_\rho(s)$ is integer-valued or irrational: the five integer-eigenvalue irreps (dimensions $1, 4, 5, 6, 4$) contribute isotypic dimensions $1 + 16 + 25 + 36 + 16 = 94$, and the four irrational-eigenvalue irreps (dimensions $2, 3, 3, 2$) contribute $4 + 9 + 9 + 4 = 26$ (P2 Fact on the Laplacian spectrum; the integer/irrational labelling uses the standard $2I$ character table as imported by P2 \S 6). The local script \texttt{run\_icosian\_exact.py} replicates the P2 derivation end-to-end in exact $\mathbb{Q}(\sqrt 5)$ arithmetic; \texttt{run\_600cell\_spectral\_verification.py} supplies the floating-point cross-check. Since each $\mathbf{A}_k$ preserves both $W_{\mathrm{int}}$ and $W_{\mathrm{irr}}$, so does every polynomial in $\{\mathbf{A}_k\}_{k=1}^8$.
+\end{proof}
+
+This is a representation-theoretic invariance statement about the shell-adjacency algebra, imported as a whole from P2 \S 6; it implies that any Hamiltonian polynomial in the shell-adjacency matrices (for example the tight-binding ansatz of Section~\ref{sec:spectral}) leaves $W_{\mathrm{int}}$ and $W_{\mathrm{irr}}$ invariant. The physical interpretation as a ``94-mode integer sector'' truncation of a Standard Model embedding is an additional structural identification, not established by this theorem alone.
 
 %==================================================================
 \section{The $E_8$ Coxeter Projection}\label{sec:coxeter}
+
+\begin{center}
+\fbox{\parbox{0.92\textwidth}{\centering \textbf{Part II begins here.} All claims from this section onward are structural correspondences or script-reported numerical matches, not theorems; each is labelled individually within its section. Readers interested only in the paper's theorem-grade content can stop at the end of Section~\ref{sec:spectral}.}}
+\end{center}
 %==================================================================
 
 \subsection{Projection construction}
 
-The Coxeter element of $E_8$ (order 30, verified) has eigenvalues $\exp(2\pi i m/30)$ at exponents $m \in \{1,7,11,13,17,19,23,29\}$. The eigenvectors at exponents $(1,7)$ define a 4-dimensional projection plane. This maps all 240 $E_8$ roots onto exactly 120 directions with 2 roots per direction, matching all 120 to 600-cell vertices (verified computationally).
+The Coxeter element of $E_8$ has order 30 (standard result; script-checked in \texttt{run\_coxeter\_projection.py}) with eigenvalues $\exp(2\pi i m/30)$ at exponents $m \in \{1, 7, 11, 13, 17, 19, 23, 29\}$. The construction used here is the icosian projection of $E_8$ onto the four-dimensional $H_4$ root space: the 240 minimal vectors of the $E_8$ root system are identified with icosians~\citep{MoodyPatera1993, CascadeAlgSubstrate}, and the induced map onto the $H_4$ root system in $\mathbb{R}^4$ sends these 240 vectors two-to-one onto 120 vectors identifiable with the 600-cell vertex set. The local derivation in this repository is given in~\citet{CascadeAlgSubstrate}; the Coxeter-exponent language used in Section~\ref{sec:constants} (e.g.\ the distinction between ``lower'' exponents $\{1, 7, 11, 13\}$ and ``upper'' exponents $\{17, 19, 23, 29\}$) refers to the eigenvalue structure of the Coxeter element on the ambient $\mathbb{R}^8$, and is used there only in its arithmetic role (the exponent-sum identities of Section~\ref{sec:constants}), not as a separate projection construction.
 
-\subsection{The double cover}
+\subsection{Two-to-one pairing}
 
-The ratio $240/120 = 2$ establishes the $E_8$ double cover of the 600-cell: two conjugate copies (Table~\ref{tab:conjugate}).
+The projection identifies, for each element of the 120-vector $H_4$ root set, a pair of Galois-conjugate icosian preimages $(q, q^*)$ in the 240-element $E_8$ minimal shell~\citep{CascadeAlgSubstrate}; the 240-to-120 map is two-to-one. We use this ``two-to-one pairing'' language rather than ``double cover'' because the latter carries a topological connotation that this combinatorial statement does not establish. The ratio $240/120 = 2$ is a count; the explicit pairing is the icosian Galois conjugation $\sqrt{5} \mapsto -\sqrt{5}$, which exchanges the two members of each pair. The matter/antimatter-like conjugate-sector structure collected in Table~\ref{tab:conjugate} is the phenomenological reading of this pairing; it is an interpretation, not a theorem.
 
 \begin{table}[ht]
 \centering
-\caption{The conjugate pair within $E_8$.}
+\caption{The conjugate-pair candidate reading. NNN (next-nearest-neighbour) adjacency eigenvalues on the spinor $\mathbf{4}$- and $\mathbf{4'}$-isotypic components are script-reported from \texttt{run\_e8\_gauge\_bridge.py} / \texttt{run\_600cell\_spectral\_verification.py}.}
 \label{tab:conjugate}
 \begin{tabular}{@{}lll@{}}
 \toprule
 Property & Copy A & Copy B \\
 \midrule
-Spinor sector & $\lambda = 9$ (matter) & $\lambda = 15$ (antimatter) \\
-NNN eigenvalue & $-5$ & $+5$ \\
+Spinor sector (candidate reading) & $\lambda = 9$ (matter) & $\lambda = 15$ (antimatter) \\
+Next-nearest-neighbour (NNN) adjacency eigenvalue & $-5$ & $+5$ \\
 Coxeter exponents & lower $\{1,7,11,13\}$ & upper $\{17,19,23,29\}$ \\
 Galois character & $+\sqrt{5}$ terms & $-\sqrt{5}$ terms \\
 \bottomrule
@@ -227,11 +259,11 @@ Galois character & $+\sqrt{5}$ terms & $-\sqrt{5}$ terms \\
 
 \subsection{Symmetry inheritance}
 
-\begin{proposition}\label{prop:symmetry}
-If $\Fcal$ is $G$-invariant, then $\HW$ commutes with $G$ and its eigenspaces decompose into $G$-representations.
-\end{proposition}
+\begin{remark}[Symmetry inheritance, hypothesis-dependent]\label{rem:symmetry}
+If a Hamiltonian $\HW$ is built from $\Fcal$ and a $G$-invariant kinetic operator (for example the Euclidean Laplacian $\Delta$ on $\mathbb{R}^4$, which is invariant under the $O(4) \supset H_4$ action), then the $G$-invariance of $\Fcal$ passes to $\HW$, so $\HW$ commutes with $G$ and its eigenspaces decompose into $G$-representations. The clause ``$\HW$ is built from $\Fcal$ and a $G$-invariant kinetic operator'' is a hypothesis, not a theorem of this paper.
+\end{remark}
 
-The $H_4$ symmetry of the 600-cell, connected to $E_8$ through the Coxeter projection and to $SU(5)$ through the GUT embedding chain, provides a candidate route for Standard Model gauge structure.
+The $H_4$ symmetry of the 600-cell is connected to $E_8$ through the Coxeter projection. A possible connection to $SU(5)$-scale normalisation factors (in the spirit of the $9/15 = 3/5$ hypercharge match explored in Section~\ref{sec:constants}) is a programme direction; Papers~VI--XI~\citep{SmartVI, SmartXI} provide the broader structural correspondences to Standard Model structure used elsewhere in the programme. The present paper does not claim an $H_4 \to SU(5)$ embedding chain; it registers candidate numerical matches only.
 
 %==================================================================
 \section{Structural Constants}\label{sec:constants}
@@ -239,105 +271,112 @@ The $H_4$ symmetry of the 600-cell, connected to $E_8$ through the Coxeter proje
 
 \subsection{The fine structure constant}
 
-\subsubsection*{Tree level: $\alpha^{-1}_{\mathrm{tree}} = 137$}
+\subsubsection*{Integer part: 137}
 
-\begin{proposition}\label{prop:137}
-$({\lambda_1}{-}1)({\lambda_2}{-}1) - 1 + \sum_{i=1}^4 \lambda_i = 87 + 50 = 137$ for $\{\lambda_i\} = \{9,12,14,15\}$.
+\begin{proposition}[Arithmetic identity]\label{prop:137}
+For the four nontrivial integer Laplacian eigenvalues $\{\lambda_i\} = \{9, 12, 14, 15\}$ of the 600-cell vertex graph,
+\begin{equation}
+    (\lambda_1 - 1)(\lambda_2 - 1) - 1 + \sum_{i=1}^4 \lambda_i \;=\; 87 + 50 \;=\; 137.
+\end{equation}
 \end{proposition}
 
-The number 87 is triply overdetermined:
+\begin{proof}
+Direct computation: $(9 - 1)(12 - 1) - 1 = 88 - 1 = 87$, and $9 + 12 + 14 + 15 = 50$; the sum is $87 + 50 = 137$.
+\end{proof}
+
+The integer 87 appears in three related arithmetic identities on 600-cell / $E_8$ data:
 \begin{enumerate}
-    \item $(9{-}1)(12{-}1) - 1 = 8 \times 11 - 1 = 87$ \quad (mass eigenvalue algebra),
-    \item $3(14{+}15) = 3 \times 29 = 87$ \quad (Paper~V decomposition),
-    \item $\sum(\text{upper Coxeter exponents}) - 1 = (17{+}19{+}23{+}29) - 1 = 87$ \quad ($E_8$ group theory).
+    \item $(9-1)(12-1) - 1 = 8 \times 11 - 1 = 87$ (combination of the two lowest integer eigenvalues).
+    \item $3(14 + 15) = 3 \times 29 = 87$ (used in Paper~V's decomposition of $\alpha^{-1}$).
+    \item $\sum_{m \in \{17, 19, 23, 29\}} m - 1 = 88 - 1 = 87$ (sum of the four ``upper'' Coxeter exponents of $E_8$ minus one).
 \end{enumerate}
+These three identities are not independent in the mathematical sense: the underlying common factorisation is $87 = 3 \times 29$, and each identity exhibits this same integer via a different choice of integer combination on the 600-cell / $E_8$ data. The paper therefore does not claim that 87 is ``overdetermined'' in an information-theoretic or independent-witness sense; the point of listing the three identities is to display the consistency of the integer 87 across distinct pieces of 600-cell / $E_8$ combinatorics, not to assert independence.
 
 \begin{remark}
-The identity $\sum(\text{upper exponents}) = 88 = (9{-}1)(12{-}1)$ connects the $E_8$ Coxeter structure directly to the mass eigenvalue algebra. The total exponent sum is $\sum m_i = 120$ (the vertex count).
+The auxiliary identity $\sum_{m \in \{17, 19, 23, 29\}} m = 88 = (9 - 1)(12 - 1)$ is an arithmetic connection between the Coxeter exponent structure and the two lowest integer Laplacian eigenvalues; the total Coxeter-exponent sum is $\sum_{m = 1}^{8} m_i = 120$, which matches the 600-cell vertex count.
 \end{remark}
 
-\subsubsection*{Structural phase correction: $\pi/87$}
+\subsubsection*{Numerical correspondence at the phase-correction level}
 
-The Coxeter cycle accumulates total phase $2\pi \times 88$ in the upper (complementary) sector. Dividing by 2 for the double cover ($240/120$, computed) gives $\pi \times 88$ per 600-cell. Per degree of freedom ($87 = 88 - 1$):
+The decomposition
 \begin{equation}
-    \text{phase per d.o.f.} = \frac{\pi \times 88}{87} = \pi + \frac{\pi}{87}
+    \alpha^{-1} \approx 87 + 50 + \frac{\pi}{87} = 137.03611
 \end{equation}
-The excess over the natural half-turn $\pi$ is $\pi/87$. Every numerical factor has a structural origin: 88 from Coxeter exponents, 2 from the double cover, $\pi$ from the phase geometry. However, the identification of this phase excess with the physical one-loop correction to $\alpha^{-1}$ remains a structural correspondence rather than a first-principles loop derivation.
+agrees with the CODATA~2018~\citep{CODATA2018} value $\alpha^{-1} = 137.035999084(21)$ at the $\sim 0.81$~ppm level. The heuristic framing used in earlier versions of this programme --- in which the Coxeter cycle in the upper sector is assigned a cumulative phase $2\pi \times 88$, halved to $\pi \times 88$ by the two-to-one pairing, then distributed over $87 = 88 - 1$ degrees of freedom to give a per-d.o.f.\ phase $\pi \times 88 / 87 = \pi + \pi/87$ with excess $\pi/87$ over a natural half-turn --- is arithmetically self-consistent but is not here promoted to a first-principles derivation: no loop integral is evaluated, the choice of $88$ over $120$ or $240$ as the relevant cycle count is motivated but not forced, and the identification of the result with the physical one-loop correction to $\alpha^{-1}$ is a structural correspondence (cf.\ Paper~V's identical numerical identification, carried there explicitly as ``motivated numerical identification'' rather than derivation~\citep{SmartV}). The identity in display form above is therefore registered as a numerical correspondence in this paper.
 
-\subsubsection*{RG consistency}
+\subsubsection*{RG-consistency context}
 
-The GUT coupling $\alpha^{-1}_{\mathrm{GUT}} = 25 = \mathrm{mult}(\lambda{=}12) = \dim(5)^2$ and $\sin^2\theta_W = 3/8$ give $\alpha^{-1}_{\mathrm{EM}}(\mathrm{GUT}) = 200/3$. One-loop SM running with 3 generations yields $\alpha^{-1} \approx 137$ at the Thomson limit, with $M_{\mathrm{GUT}} \approx 5 \times 10^{14}$~GeV (within the standard range). The eigenvalue formula $87 + 50 + \pi/87 = 137.036$ (0.81~ppm) is the compact closed-form expression.
+For context only: if one imagines a GUT-scale boundary condition with $\alpha^{-1}_{\mathrm{GUT}} = 25$ and $\sin^2\theta_W = 3/8$ (see below), then $\alpha^{-1}_{\mathrm{EM}}(\mathrm{GUT}) = 200/3$, and standard one-loop Standard Model running with three generations~\citep{Langacker1981} can place $\alpha^{-1}$ in the vicinity of 137 at the Thomson limit for GUT-scale inputs in the standard ballpark ($M_{\mathrm{GUT}} \sim 10^{14}$--$10^{16}$~GeV). The identification of $25 = (\dim \mathbf{5})^2$ (the isotypic dimension of the $\mathbf{5}$-irrep, which also equals the multiplicity of $\lambda = 12$ in the 600-cell Laplacian spectrum) with a physical GUT coupling is a structural correspondence here, not a derivation; the RG matching is offered as a consistency picture. The compact closed-form expression $87 + 50 + \pi/87 = 137.036$ used in Paper~V remains a numerical correspondence under the same status label.
 
 \subsection{The Weinberg angle}
 
-\textbf{Structural match:} The eigenvalue ratio $\lambda_1/\lambda_4 = 9/15 = 3/5$ coincides with the $SU(5)$ hypercharge normalisation $\mathrm{Tr}(Y^2)/\mathrm{Tr}(T_3^2)$ (verified from the branching rules). Under $\sin^2\theta_W = (3/5)/(1+3/5) = 3/8$, this reproduces the GUT-scale Weinberg angle. It is also the angular ratio: NN angle / NNN angle $= 36^\circ/60^\circ = 3/5$. Whether this coincidence reflects a dynamical mechanism or is a structural correspondence of the eigenvalue algebra is not determined by the present analysis.
+\textbf{Numerical match:} The ratio of the lowest and highest nontrivial integer Laplacian eigenvalues, $9/15 = 3/5$, matches the numerical factor $3/5$ that appears in the standard $SU(5)$ hypercharge normalisation: $Y^{SU(5)} = \sqrt{3/5}\,Y$ in the conventional normalisation (equivalently $\mathrm{Tr}(Y^{SU(5)\,2})/\mathrm{Tr}(T_3^2) = 3/5$, verified from the $SU(5) \supset SU(3) \times SU(2) \times U(1)$ branching rules in the standard GUT literature~\citep{GeorgiGlashow1974, Langacker1981}). Under $\sin^2 \theta_W = (3/5)/(1 + 3/5) = 3/8$ this reproduces the standard GUT-scale Weinberg angle. The ratio $9/15 = 3/5$ also matches the angular ratio NN-angle / NNN-angle $= 36^\circ / 60^\circ$. The paper does not claim that the eigenvalue ratio $9/15$ \emph{derives} the $SU(5)$ hypercharge normalisation; it registers the numerical match as a structural correspondence. Whether this coincidence reflects a dynamical mechanism is not determined by the present analysis.
 
-\subsection{Coupling structure}
+\subsection{Coupling structure (script-reported)}
 
-Self-coupling ratios of the mass-carrying sectors: $9:0:4:9$ (spinor : standard : highest : conjugate spinor). The spinor/conjugate-spinor equality (both $= 9$) reflects matter/antimatter symmetry. The cubic coupling $g_3 = 0$ by $H_4$ symmetry at vertices.
+The accompanying script \texttt{run\_e8\_gauge\_bridge.py} computes vertex-evaluated self-coupling ratios of the four integer-eigenvalue mass-carrying sectors, giving the script-reported numerical ratio $9 : 0 : 4 : 9$ (spinor $\mathbf{4}$ : standard $\mathbf{5}$ : highest $\mathbf{6}$ : conjugate spinor $\mathbf{4'}$) under the $H_4$-invariant evaluation used there. The equality between the $\mathbf{4}$ and $\mathbf{4'}$ entries is consistent with the Galois-conjugate matter/antimatter pairing of the two-to-one pairing picture. The script-reported ``cubic coupling'' $g_3$ is a vertex-evaluated cubic-invariant quantity constructed in \texttt{run\_e8\_gauge\_bridge.py}; its vanishing at vertices is interpreted as an $H_4$-symmetry zero, and is a numerical feature of the present construction, not a statement about cubic Yukawa couplings of the Standard Model.
 
 %==================================================================
 \section{Generation Structure}\label{sec:generations}
 %==================================================================
 
-The group $2I$ contains 20 elements of order 3, forming 10 conjugate $\mathbb{Z}_3$ subgroups. Under $\mathbb{Z}_3$, the spinor sector ($\lambda = 9$, multiplicity 16) decomposes as $8 \times \mathbf{1} + 4 \times \boldsymbol{\omega} + 4 \times \boldsymbol{\omega}^2$.
+The group $2I$ contains 20 elements of order 3, forming 10 conjugate $\mathbb{Z}_3$ subgroups. Fix one such $\mathbb{Z}_3 \subset 2I$. The 16-dimensional $\lambda = 9$ isotypic component of $\mathbb{C}^{120}$ (i.e.\ the $\mathbf{4}$-isotypic subspace, multiplicity 4, total dimension 16) decomposes under the restricted $\mathbb{Z}_3$ action into invariant / $\omega$- / $\omega^2$-weight subspaces. The accompanying script \texttt{run\_generation\_selection.py} reports the $\mathbb{Z}_3$ character-counted decomposition
+\begin{equation}
+    16 = 8 \oplus 4 \oplus 4
+\end{equation}
+where the $8$-dimensional piece carries the trivial $\mathbb{Z}_3$ weight and the two $4$-dimensional pieces carry weights $\omega$ and $\omega^2$ respectively. (Accompanying script notes alternative $3+1$ sub-structure within each 4-dimensional weight space, which is not used below.)
 
-The 4 $\omega$-states split under the closure Hamiltonian into \textbf{3 doubly-degenerate energy levels}: $E_1 \approx 6.24$, $E_2 \approx 2.25$, $E_3 \approx 0.46$ (computed). This three-level splitting structure is suggestive of a generation hierarchy, though the energy ratios ($E_1/E_2 \approx 2.8$, $E_2/E_3 \approx 4.9$) do not directly match the observed lepton mass ratios ($m_\tau/m_\mu \approx 17$, $m_\mu/m_e \approx 207$). The quantitative generation hierarchy requires the $\varphi$-tunneling structure of the mass formula (Section~\ref{sec:mass}), not the raw $\mathbb{Z}_3$ energies.
+Consider the combined $\omega \oplus \omega^2$ weight subspace of total dimension $8$. The accompanying script \texttt{run\_generation\_selection.py} constructs a specific nearest-neighbour-dominated restricted Hamiltonian model $\widehat{H}_{\mathrm{gen}}$ on this 8-dimensional subspace. The script-reported spectrum of $\widehat{H}_{\mathrm{gen}}$ contains three distinct nonzero eigenvalues $E_1 \approx 6.24$, $E_2 \approx 2.25$, $E_3 \approx 0.46$, each appearing with multiplicity~2 (one copy in $\omega$, one in $\omega^2$, related by the Galois pairing $\omega \leftrightarrow \omega^2$), accounting for $3 \times 2 = 6$ of the 8 dimensions; the remaining 2 dimensions form an additional invariant subspace of $\widehat{H}_{\mathrm{gen}}$ whose structural role is not determined by this section. The operator, its full spectral decomposition, and the 2-dimensional remainder are defined in the script and are offered here as exploratory script-reported outputs, not as a derived closed-form result. A canonical $\widehat{H}_{\mathrm{gen}}$ independent of the script's specific parameter choices is an open item.
 
-A possible quantitative route to the generation mass hierarchy is through the $\varphi$-tunneling structure (Section~\ref{sec:phi}) applied within the $\mathbb{Z}_3$ decomposition. Paper~II's winding operator $f(w) = \varphi^5(w{-}1)^{1/\varphi}$ gives $m_\mu/m_e$ at 0.5\% and $m_\tau/m_e$ at 3.7\%.
+The energy ratios $E_1/E_2 \approx 2.8$ and $E_2/E_3 \approx 4.9$ do not directly reproduce the observed lepton mass ratios $m_\tau/m_\mu \approx 17$ and $m_\mu/m_e \approx 207$. The three-level structure above is suggestive of a generation hierarchy but does not by itself yield it; the quantitative mass hierarchy in the present programme comes from the $\varphi$-tunneling structure applied on top of the $\mathbb{Z}_3$ decomposition. Paper~II~\citep{SmartII} introduces a conditional winding operator $f(w) = \varphi^5 (w - 1)^{1/\varphi}$ that, under the conjectural spectral-dimension identification stated there, yields $m_\mu/m_e$ at the $0.5\%$ level and $m_\tau/m_e$ at the $3.7\%$ level; those numerical matches inherit the conditional status of Paper~II.
 
 %==================================================================
 \section{The Mass Formula}\label{sec:mass}
 %==================================================================
 
-The mass of a particle is determined by three $\varphi$-factors:
+In the Paper~V ansatz, particle mass is modelled by three $\varphi$-factors:
 \begin{equation}\label{eq:mass}
-    m = m_0 \times \varphi^{(\text{sector})} \times \varphi^{(\text{closure class})} \times \varphi^{(\text{generation})}
+    m \sim m_0 \times \varphi^{(\text{sector})} \times \varphi^{(\text{closure class})} \times \varphi^{(\text{generation})}
 \end{equation}
-where:
-\begin{itemize}
-    \item the \textit{sector factor} comes from the integer eigenvalue ($\lambda \in \{9,12,14,15\}$),
-    \item the \textit{closure-class factor} comes from the instanton action (with leading term $\Delta C = 15$, correction $50/81 = \sum\lambda_i / 3^4$),
-    \item the \textit{generation factor} comes from the $\mathbb{Z}_3$ energy splitting.
-\end{itemize}
+where the \textit{sector factor} is tied to an integer eigenvalue $\lambda \in \{9, 12, 14, 15\}$, the \textit{closure-class factor} is organised in Papers~I/IV as a low-order spectral-moment / cumulant ansatz whose leading term is $\Delta C = 15$ with correction terms from graph-theoretic moments, and the \textit{generation factor} is intended to capture the $\mathbb{Z}_3$ energy splitting discussed in Section~\ref{sec:generations}. This decomposition is an ansatz carried over from Papers~I--V and is not derived in the present paper.
 
-The exponent $1265/81$ in $m_p/m_e = \varphi^{1265/81}$ decomposes as $15 + 50/81$, where $15$ is the closure invariant $\Delta C$ and $81 = 3^4$ involves the spinor adjacency eigenvalue (3) raised to the spinor dimension (4). The instanton computation gives $S_{\mathrm{NN}}/\sigma^2 = 0.501$, matching this structure.
+The exponent $1265/81$ in $m_p/m_e = \varphi^{1265/81}$ of Papers~I and~IV~\citep{SmartI, SmartIV} can be rewritten arithmetically as $15 + 50/81$; the decomposition actually used in Papers~I/IV is the three-order form $15 + 2/3 - 4/81$, reflecting the three-order mass law of Paper~I (with $2/3$ from the $|E|/|V|$ graph-connectivity term and $-4/81$ from the degree-variance term). The identification $15 = \Delta C$ is Paper~III's closure-invariant correspondence~\citep{SmartIII}; the $50/81$ form brings the denominator $81 = 3^4$ into view, which is consistent with the spinor-adjacency eigenvalue $3$ (Table~\ref{tab:spectrum}) raised to the spinor-irrep dimension $4$, but this $50/81$ regrouping is a post hoc arithmetic rewrite of the Paper~I/IV decomposition, not the decomposition actually used in those derivations. The number $S_{\mathrm{NN}}/\sigma^2 \approx 0.501$ reported in the accompanying script \texttt{run\_phi\_mass\_connection.py} is offered as a numerical consistency check at the level of that script; Papers~I/IV present the three-order mass law as a spectral-moment / cumulant ansatz rather than as a closed-form instanton derivation, and the present paper inherits that status.
 
-The NN angular separation $36^\circ = \pi/5$ is the fundamental decagonal angle of $\varphi$-geometry ($\varphi = 2\cos 36^\circ$). The entire mass spectrum is built from the permeability scale set by $\varphi$ through this angle.
+The nearest-neighbour angular separation $36^\circ = \pi/5$ is the decagonal angle of $\varphi$-geometry ($\varphi = 2\cos 36^\circ$). The suggestion that the particle mass spectrum is built from the shell-gap scale set by $\varphi$ through this angle is a structural reading, not a theorem of this paper.
 
 %==================================================================
-\section{UV Finiteness}\label{sec:uv}
+\section{Finite-Dimensional Sector and UV Caveat}\label{sec:uv}
 %==================================================================
 
-The physical (integer) sector has 94 modes. The spectral zeta function $\zeta(2) = 1.74$ is finite. By Theorem~\ref{thm:decoupling}, the irrational sector exactly decouples: the 94-mode truncation is an exact representation-theoretic result.
+By Theorem~\ref{thm:decoupling}, every element of the shell-adjacency algebra $\mathcal{A}_{\mathrm{shell}} = \langle \mathbf{A}_1, \ldots, \mathbf{A}_8 \rangle$ (the unital $\mathbb{C}$-algebra generated by the eight shell-adjacency matrices) preserves the decomposition $\mathbb{C}^{120} = W_{\mathrm{int}} \oplus W_{\mathrm{irr}}$ with $\dim W_{\mathrm{int}} = 94$ and $\dim W_{\mathrm{irr}} = 26$. Any Hamiltonian $H \in \mathcal{A}_{\mathrm{shell}}$ therefore block-diagonalises as $H|_{W_{\mathrm{int}}} \oplus H|_{W_{\mathrm{irr}}}$, and a restriction to $W_{\mathrm{int}}$ is an invariant reduction of $\mathcal{A}_{\mathrm{shell}}$-action, not a truncation approximation.
 
-The target-space sector is therefore finite-dimensional, suggesting a built-in regularisation mechanism for the target-space degrees of freedom. This does not by itself constitute UV completeness in the field-theoretic sense: UV divergences in QFT arise from spatial momentum modes, which require separate treatment. If physical space emerges from $\Mcl$ (Papers~IX--X), then $\Mcl$ is compact ($S^3$) with a discrete spatial spectrum, potentially giving full UV finiteness. Target-space mode finiteness is unconditional; spatial finiteness is conditional.
+This does not constitute UV completeness in the field-theoretic sense: UV divergences in QFT arise from spatial momentum modes, which require separate treatment. Papers~IX--X~\citep{SmartIX, SmartX} explore a continuous-limit constraint-manifold geometry with a gravity-facing structural analogy; they treat the broader question of spatial emergence from closure geometry as a programme target rather than as a proved theorem, and the present paper inherits that status. Finite-dimensionality of the shell-adjacency Hilbert space $\mathbb{C}^{120}$ is unconditional; its identification with a physical target-space mode space is a structural correspondence.
 
 %==================================================================
 \section{The Conjugate-Pair Interpretation}\label{sec:conjugate}
 %==================================================================
 
-The $E_8$ root system contains two conjugate 600-cells (the double cover). Copy~A carries matter ($\lambda = 9$, NNN $= -5$, lower Coxeter exponents). Copy~B carries antimatter ($\lambda = 15$, NNN $= +5$, upper exponents). They are mirror partners under the Galois conjugation $\sqrt{5} \to -\sqrt{5}$.
+The icosian projection admits a two-to-one pairing of the 240 $E_8$ minimal-shell roots onto the 120-element $H_4$ root set, with the two preimages of each $H_4$ root being Galois-conjugate icosians. A candidate physical reading assigns the $\lambda = 9$ spinor sector, with next-nearest-neighbour (NNN) adjacency eigenvalue $-5$ and lower Coxeter exponents, to one preimage ``side'' of this pairing, and the $\lambda = 15$ sector, with NNN eigenvalue $+5$ and upper exponents, to the other side; the two sides are exchanged by the Galois involution $\sqrt{5} \to -\sqrt{5}$. This is a counting-level and exponent-parity reading of the pairing, not a statement that the vertex set decomposes into two separate copies; the matter/antimatter identification is interpretive, not a theorem.
 
-One interpretation of the computed structure is that $\alpha$ measures the effective coupling between the conjugate sectors: $\alpha^{-1}_{\mathrm{tree}} = 137$ is the algebraic distance in the eigenvalue structure; $\pi/87$ is the geometric phase from seeing one copy instead of the $E_8$ pair. The Weinberg angle ratio $9/(9{+}15) = 3/8$ would then be the balance point of this coupling.
+Under this reading, one might interpret $\alpha$ as a measure of the effective coupling between the conjugate sectors: $\alpha^{-1}_{\mathrm{tree}} = 137$ as an algebraic distance in the eigenvalue structure, $\pi/87$ as a geometric phase correction from the two-to-one pairing, and $9/(9 + 15) = 3/8$ as the balance point of this coupling. This paragraph is framed as an interpretation, not as a derivation.
 
-This realises the crystallisation triplet of the flagship paper:
+This suggests a candidate geometric reading of the ``crystallisation triplet'' of the VFD programme's flagship framework paper (the repository paper introducing the crystallisation-operator formulation; \texttt{papers/formalism/} in the local repository):
 \begin{enumerate}
     \item $E_8$ provides the \textbf{constraint space},
-    \item the two conjugate 600-cells provide the \textbf{dual mechanisms},
+    \item the two-preimage conjugate sectors provide the \textbf{dual-mechanism picture},
     \item $\alpha$ provides the \textbf{selection coupling}.
 \end{enumerate}
-The crystallisation operator $C[\Psi] = \mathrm{argmin}\, F[\Phi]$ admits a geometric realisation in terms of the Coxeter projection, with $\alpha$ as a candidate coupling constant.
+This suggests a possible geometric interpretation of the crystallisation operator introduced in the flagship framework paper (\texttt{papers/formalism/} in the local repository; the operator takes a field configuration to a minimiser of an associated closure functional) in terms of the Coxeter projection, with $\alpha$ as a candidate inter-sector coupling. The interpretation is offered as a picture, not as a derivation; no explicit dynamical identification between the crystallisation operator and the specific functional $\Fcal$ of Definition~\ref{def:F600} is claimed here.
 
 \begin{remark}
-This interpretation is structural: it follows from the computed conjugate-pair structure and the role of $\alpha$ as an inter-sector coupling. It is not derived as a necessary consequence from the dynamics alone.
+This interpretation is motivated by the computed conjugate-pair structure; the reading of $\alpha$ as an inter-sector coupling is not computed in this paper. The remark is offered as a picture, not as a derived consequence.
 \end{remark}
 
 %==================================================================
 \section{Predictions and Falsifiability}\label{sec:predictions}
 %==================================================================
 
-The nonlinear closure residual $\delta U_{\mathrm{rel}} = \sigma^2(\Delta|\Psi|/|\Psi| - \Delta\Rst/\Rst)$ from Papers~XIX--XX is gauge-invariant, norm-preserving, and vanishes at equilibrium. It predicts nonlinear corrections to quantum mechanics far from equilibrium, with a structurally fixed coefficient. This is falsifiable: if experiment bounds the correction to zero, the framework reduces to standard QM.
+The nonlinear closure residual $\delta U_{\mathrm{rel}} = \sigma^2(\Delta|\Psi|/|\Psi| - \Delta\Rst/\Rst)$ is written in Paper~XVIII~\citep{SmartXVIII}; Paper~XIX~\citep{SmartXIX} proves it is phase-invariant (covariant under $\Psi \to e^{i\theta}\Psi$), norm-preserving, and zero at equilibrium; Paper~XX~\citep{SmartXX} places it within the broader structural picture. The residual is phase-invariant in the global $U(1)$ sense; any extension to a local Standard-Model $U(1)$ gauge invariance would require additional structure not established here. If assigned physical status, the residual would act as a nonlinear correction to quantum mechanics far from equilibrium, with a structurally fixed coefficient; Papers~XIX--XX defer the question of physical interpretation. A falsifiable physical reading would require an explicit map from the residual to observables; that step remains open in the source papers.
 
 The framework is also falsifiable through the mass programme (if the eigenvalue structure cannot reproduce further particles), the gauge projection (if the representation decomposition does not match SM quantum numbers), and the generation structure (if a mechanism excluding the 4th $\mathbb{Z}_3$ pair cannot be identified or a heavy 4th generation is excluded).
 
@@ -347,8 +386,8 @@ The framework is also falsifiable through the mass programme (if the eigenvalue 
 
 \begin{enumerate}
     \item \textbf{Gravity.} Papers~IX--X identify $\Mcl$ curvature as a gravitational analogue but do not derive the Einstein equations. This is a separate programme.
-    \item \textbf{Quantitative $\varphi$-mass derivation.} The mechanism ($d_2/d_1 = \varphi$, instanton structure) is identified; full barrier integrals for all particles are a defined further computation.
-    \item \textbf{Full $SU(5)$ branching.} The Coxeter projection and per-sector root content are computed; exact multiplicities after $SU(3) \times SU(2) \times U(1)$ branching require further refinement.
+    \item \textbf{Quantitative $\varphi$-mass derivation.} The shell-gap identity $d_2^2 - d_1^2 = 1/\varphi$ is identified; a quantitative barrier mechanism and full barrier integrals for all particles remain open.
+    \item \textbf{Full $SU(5)$ branching.} The icosian projection is computed; per-sector root bookkeeping is presently at the script level (\texttt{run\_su5\_branching.py}), and exact multiplicities after $SU(3) \times SU(2) \times U(1)$ branching require further refinement.
     \item \textbf{Polytope uniqueness.} Whether the 600-cell is the unique polytope producing this structure is not proved.
 \end{enumerate}
 
@@ -358,18 +397,18 @@ The framework is also falsifiable through the mass programme (if the eigenvalue 
 
 \subsection{Computational reproducibility}
 
-Seventeen scripts in \texttt{scripts/} verify every claim: spectral verification, Coxeter projection, coupling structure, $\alpha$ derivation and one-loop structure, generation decomposition and selection, $\varphi$-mass connection, $SU(5)$ branching, deep structure, remaining gaps, medium gaps, mass and generations. All require only \texttt{numpy} and \texttt{scipy}.
+Nineteen scripts accompany the paper in \texttt{papers/paper-xxii/scripts/}: most reproduce the listed computations (icosian realisation and $2I$ group closure in \texttt{run\_icosian\_exact.py}, which enumerates all 14400 Hamilton products in \emph{exact} $\mathbb{Q}(\sqrt{5})$-arithmetic and verifies every shell = exactly one conjugacy class; a floating-point cross-check is in \texttt{run\_icosian\_verification.py}; spectral decomposition in \texttt{run\_600cell\_spectral\_verification.py}; Coxeter projection in \texttt{run\_coxeter\_projection.py}; coupling structure in \texttt{run\_e8\_gauge\_bridge.py}; $\alpha$ numerical correspondence and one-loop-context arithmetic in \texttt{run\_alpha\_derivation.py}/\texttt{run\_alpha\_oneloop.py}/\texttt{run\_alpha\_rg.py}; $\mathbb{Z}_3$ generation decomposition in \texttt{run\_generation\_selection.py}; $SU(5)$ branching arithmetic in \texttt{run\_su5\_branching.py}). Some scripts are exploratory or incomplete (for example \texttt{run\_phi\_permeability.py} is currently a placeholder, and some auxiliary scripts assert stronger phrasing internally than the present paper permits; the paper's claims should be read against the manuscript text, not against the internal script commentary). Structural correspondences and heuristic reductions are \emph{not} verified by these scripts as theorems. All scripts require only \texttt{numpy} and \texttt{scipy}.
 
-\subsection{What is computed and proved}
+\subsection{What is proved, computed, or script-reported}
 
 \begin{itemize}
-    \item Integer selection principle (Proposition~\ref{prop:integer}): Paper~V eigenvalues = nontrivial integer Laplacian eigenvalues.
-    \item Exact sector decoupling (Theorem~\ref{thm:decoupling}): 94-mode truncation is representation-theoretically exact.
-    \item $d_2/d_1 = \varphi$ exactly; permeability gap $d_2^2 - d_1^2 = 1/\varphi$ (Proposition~\ref{prop:gap}).
-    \item $E_8$ Coxeter projection: 120/120 vertex matching, 2 roots per vertex.
-    \item Triple overdetermination of 87 (Proposition~\ref{prop:137}): three independent algebraic routes.
-    \item $\mathbb{Z}_3$ energy splitting: 4 $\omega$-states $\to$ 3 doubly-degenerate levels (computed).
-    \item Coupling self-ratios $9:0:4:9$; $g_3 = 0$ by $H_4$ symmetry.
+    \item Computed coincidence (Remark~\ref{rem:integer}): Paper~V's assignment-level mass eigenvalues $\{9, 12, 14, 15\}$ match the nontrivial integer Laplacian eigenvalues listed in Table~\ref{tab:spectrum}.
+    \item The shell-adjacency algebra preserves the $2I$-isotypic splitting (Theorem~\ref{thm:decoupling}, computer-assisted): $\mathbb{C}^{120} = W_{\mathrm{int}} \oplus W_{\mathrm{irr}}$ with dimensions $94$ and $26$; polynomial Hamiltonians in the shell-adjacency matrices preserve this splitting.
+    \item Algebraic identity $d_2^2 - d_1^2 = 1/\varphi$ (Proposition~\ref{prop:gap}).
+    \item Cited result (verified in the local~\citealp{CascadeAlgSubstrate}): the icosian projection of the 240 $E_8$ minimal-shell roots onto the 120-element $H_4$ root set is two-to-one; see also~\citet{Koca2007, MoodyPatera1993}.
+    \item Arithmetic identity $(\lambda_1 - 1)(\lambda_2 - 1) - 1 + \sum_{i=1}^4 \lambda_i = 137$ (Proposition~\ref{prop:137}); three related arithmetic appearances of $87 = 3 \times 29$ on 600-cell / $E_8$ data (Section~\ref{sec:constants}); no independence is claimed.
+    \item Script-reported: $\mathbb{Z}_3$-weight decomposition of the 16-dimensional spinor isotypic component, $16 = 8 \oplus 4 \oplus 4$; script-reported: on the combined 8-dimensional $\omega \oplus \omega^2$ weight subspace, the restricted-Hamiltonian spectrum of \texttt{run\_generation\_selection.py} has three energy levels, each appearing with multiplicity~2 under the Galois pairing $\omega \leftrightarrow \omega^2$.
+    \item Script-reported: \texttt{run\_e8\_gauge\_bridge.py} gives vertex-evaluated coupling self-ratios $9:0:4:9$ at the four integer-eigenvalue mass-carrying sectors. (A symmetry interpretation of the vanishing $g_3$ is structural, not a theorem.)
 \end{itemize}
 
 \subsection{What is structurally identified (numerical identity computed, physical identification structural)}
@@ -377,7 +416,7 @@ Seventeen scripts in \texttt{scripts/} verify every claim: spectral verification
 \begin{itemize}
     \item $\alpha^{-1} = 137 + \pi/87$: the numerical decomposition is exact; the identification of $\pi/87$ as a physical one-loop correction is structural.
     \item $\sin^2\theta_W = 3/8$: the ratio $9/15 = 3/5$ is computed; its identification as the $SU(5)$ normalisation is a structural match.
-    \item The generation mass hierarchy: 3 levels are computed; the quantitative mapping to $e/\mu/\tau$ masses requires the winding operator.
+    \item The generation sector: three script-reported levels are observed in the restricted $\widehat{H}_{\mathrm{gen}}$ model; the quantitative mapping to $e/\mu/\tau$ masses requires the winding operator.
 \end{itemize}
 
 \subsection{What is structural but not derived}
@@ -386,7 +425,7 @@ Seventeen scripts in \texttt{scripts/} verify every claim: spectral verification
     \item The identification of the 600-cell as the specific constraint geometry.
     \item The $\alpha$ formula as a compact closed-form expression numerically consistent with the RG running (one-loop gives $\sim 137$, the formula gives 137.036).
     \item The conjugate-pair interpretation of $E_8$ as crystallisation mechanism.
-    \item The $\pi/87$ as Coxeter projection phase (computed, but the connection to the one-loop effective action is structural, not derived from a loop integral).
+    \item The arithmetic $\pi/87$ correction admits a Coxeter-phase interpretation, but that interpretation is structural, not derived: neither the Coxeter-phase-per-d.o.f.\ heuristic nor the one-loop effective-action reading is established as a theorem here.
 \end{itemize}
 
 \subsection{What is not claimed}
@@ -402,11 +441,11 @@ Seventeen scripts in \texttt{scripts/} verify every claim: spectral verification
 \section{Conclusion}\label{sec:conclusion}
 %==================================================================
 
-This paper shows that a single closure functional $\Fcal$ on the 600-cell constraint geometry can coherently relate: mass eigenvalues (through the graph Laplacian), gauge structure (through $H_4/E_8$ symmetry inheritance), the fine structure constant (137 from eigenvalue algebra, $\pi/87$ from the Coxeter double-cover phase), the Weinberg angle (from the $36^\circ/60^\circ$ angular ratio), generation structure (from $\mathbb{Z}_3$ energy splitting), and quantum dynamics (through the Witten Hamiltonian).
+This paper collects a coordinated set of computations and structural correspondences around a single closure functional $\Fcal$ on the 600-cell: mass-sector eigenvalues (through the graph Laplacian), candidate gauge-structure inheritance through the $E_8 \to H_4$ projection and the $H_4$ symmetry of the vertex graph, a numerical correspondence for the fine-structure constant (integer part $137$ from eigenvalue arithmetic, $\pi/87$ phase correction at the structural-correspondence level), a match to the $SU(5)$ hypercharge normalisation factor underlying the Weinberg angle (through the $9/15 = 3/5$ eigenvalue ratio), a script-reported $\mathbb{Z}_3$-decomposition of the spinor isotypic component suggestive of generation structure, and conditional unit-matching with the Witten-Hamiltonian programme of Papers~XVIII--XXI.
 
-A central geometric mechanism in the framework is the $\varphi$-permeability of the 600-cell: the golden ratio $\varphi = 2\cos 36^\circ$ determines the vertex geometry, and the permeability gap $d_2^2 - d_1^2 = 1/\varphi$ determines the tunneling scale from which all $\varphi$-power mass formulas, coupling ratios, and structural constants arise. The programme comes full circle: the crystallisation operator proposed in the flagship paper admits a geometric realisation in terms of the $E_8 \to 600$-cell Coxeter projection, with $\alpha$ as a candidate coupling between the two conjugate copies.
+A geometric entry point is the algebraic identity $d_2^2 - d_1^2 = 1/\varphi$ between the two nearest 600-cell shells, which motivates the heuristic WKB-style tunneling ratios used in the present paper's $\varphi$-factor framing. Papers~I--V carry quantitative mass formulas built from their own structural assumptions and parameterisations; the shell-gap identity is not asserted here to be a first-principles driver of those formulas. The VFD programme's flagship framework crystallisation operator (\texttt{papers/formalism/} in the local repository) is offered here as a candidate geometric realisation of the $E_8 \to$ 600-cell Coxeter projection, with $\alpha$ as a candidate inter-sector coupling; this is an interpretive picture, not a derivation.
 
-Gravity remains as a separate programme. Seventeen scripts verify every computational claim independently.
+Gravity remains a separate programme. Nineteen scripts in \texttt{papers/paper-xxii/scripts/} reproduce the listed computations (with the reproducibility caveats in Section~\ref{sec:discussion}); the structural correspondences and heuristic reductions in this paper are explicitly \emph{not} verified as theorems by those scripts.
 
 %==================================================================
 \bibliographystyle{plainnat}

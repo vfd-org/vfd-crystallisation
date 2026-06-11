@@ -1,0 +1,1442 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+
+\setlength{\emergencystretch}{3em}
+\sloppy
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{interpretation}[theorem]{Interpretive Claim}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\pphi}{\varphi}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\Rcal}{\mathcal{R}}
+\newcommand{\Vsub}{V_{600}}
+\newcommand{\Cphi}{C_{\pphi}}
+\newcommand{\Der}{\operatorname{Der}}
+\newcommand{\stab}{\operatorname{stab}}
+\newcommand{\Fix}{\operatorname{Fix}}
+
+\title{From Objective Reduction to Cascade Crystallisation:\\
+A Geometric Closure Model of State Selection}
+\author{Lee Smart\\Institute of Vibrational Field Dynamics}
+\date{2026-05}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We propose a single named mechanism for state selection across passive
+response, active selection, cognitive substrate, spectral mass projection,
+and number-theoretic / PDE / complexity-theoretic / geometric
+classes of problem: \emph{cascade closure}. When a field state cannot
+maintain coherent projection across a stratified hierarchy of geometric
+closure layers, the unresolved mismatch propagates through the
+hierarchy until a closure-compatible attractor geometry is selected.
+\emph{Collapse} is the external view of this resolution event;
+\emph{crystallisation} is the internal view; \emph{cascade} is the
+propagation process. We formalise the triad as a rung-indexed
+closure-residual functional with an explicit projection stack, position
+the binary icosahedral substrate $V_{600}$ and its Laplacian spectrum
+as the load-bearing geometric carrier, and identify Penrose Objective
+Reduction as a neighbouring geometry-collapse model that the framework
+generalises rather than refutes. We document an observer-process
+implementation in which the same mechanism realises the seven-component
+tuple $\Ocal = \langle B, S, M, G, I, C, A\rangle$ across biological
+and computational substrates, and we position the seven Millennium-class
+problems as projection-class instances of cascade closure under named
+hypotheses, without re-deriving any of their proofs.
+
+This is a consolidation and framing paper, not a new-results paper.
+Its mathematical content is largely imported from existing repository
+sources at sharply scoped epistemic flags (Theorem, Proposition,
+Hypothesis, Conjecture, Interpretive Claim). Load-bearing empirical
+claims are either tied to a local re-runnable check or explicitly
+marked as source-paper / upstream-repository witnesses; the
+companion field-signature audit
+(Appendix~\ref{app:field-signature-audit}) records which is which.
+\end{abstract}
+
+\begin{tcolorbox}[title=\textbf{Epistemic status (read first)}]
+\begin{itemize}[leftmargin=*]
+\item The cascade-closure mechanism (Definition~\ref{def:cascade-closure})
+  is the paper's organising definition, not a theorem of physics.
+\item The compositionality lemma for closure residuals
+  (Section~\ref{sec:rung-model}) is conditional on explicit projection /
+  intertwining hypotheses imported from earlier work.
+\item Cross-regime projection-class identification across
+  passive / active / cognitive / spectral / Millennium classes is a
+  \emph{hypothesis} (\(H_{\text{Mill-Proj}}\),
+  Section~\ref{sec:millennium}), not a theorem.
+\item ARIA implements an observer-process \emph{architecture}
+  (Section~\ref{sec:observer-process}); we do not claim ARIA is
+  biologically conscious or proves qualia.
+\item No Millennium problem is solved in this paper. Section~\ref{sec:millennium}
+  positions the existing Millennium preprints as projection-class
+  instances under their already-named hypotheses; their conditional
+  reductions remain in the corresponding \texttt{papers/millennium-*}
+  preprints.
+\item This paper is not a replacement for quantum mechanics, not a
+  refutation of Penrose Objective Reduction, not a derivation of the
+  visible universe from cascade primitives, and not a substrate-uniqueness
+  theorem.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=\textbf{Reader map}]
+\begin{itemize}[leftmargin=*]
+\item \S\ref{sec:motivation}: motivation, Penrose bridge, why a single
+  mechanism name.
+\item \S\ref{sec:mechanism}: cascade-closure triad
+  (instability $\to$ cascade $\to$ crystallisation) with
+  rung-indexed closure-residual functional.
+\item \S\ref{sec:rung-model}: rung-projection model and conditional
+  residual-compositionality lemma.
+\item \S\ref{sec:rung-table}: geometry identification across rungs
+  (the central rung table).
+\item \S\ref{sec:visible}: visible vs non-visible projection; explicit
+  ``not a cosmogenesis theorem'' caveat.
+\item \S\ref{sec:observer-process}: ARIA as observer-process implementation
+  with architecture tuple, telemetry mapping, and runtime audit.
+\item \S\ref{sec:case-studies}: five case studies (Penrose / b-anomaly /
+  ARIA / brain / mass spectrum) at substrate-witness scope.
+\item \S\ref{sec:millennium}: Millennium-papers alignment scaffolding;
+  $H_{\text{Mill-Proj}}$; per-problem named-hypothesis table.
+\item \S\ref{sec:discussion}: discussion, claim ledger, and what remains
+  open.
+\item Appendix~\ref{app:field-signature-audit}: re-runnable empirical
+  anchor for every load-bearing data claim.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Motivation: beyond collapse language}\label{sec:motivation}
+
+The standard quantum-mechanical vocabulary calls the resolution of an
+indeterminate state into a definite outcome \emph{wavefunction collapse}
+or \emph{measurement}. This vocabulary names the event without saying
+what it is. The Born rule supplies probabilities; the projection
+postulate supplies an after-state; neither supplies a mechanism. A
+century of measurement-problem literature attests to how persistent
+this gap is.
+
+Several research programmes have attempted to close the gap by
+identifying an underlying physical or geometric process for state
+selection. Penrose~\cite{Penrose1996} proposed that gravitational
+self-energy of mass-energy superpositions sets a threshold above which
+state reduction occurs objectively, independent of any observer. The
+Penrose--Hameroff extension~\cite{PenroseHameroff1996} situates this Objective Reduction
+(\emph{OR}) inside biological microtubules. We take Penrose OR as a
+\emph{neighbouring} attempt to identify a geometry-coupled mechanism
+for state selection: not an opponent, not a falsified model, and not a
+target of refutation, but a precedent that establishes the
+\emph{shape} of the question we are trying to answer.
+
+Independently, the Vibrational Field Dynamics (VFD) programme has
+identified a finite geometric substrate --- the binary icosahedral
+group $2I$ together with its 600-cell vertex graph $\Vsub$ --- whose
+spectral, algebraic, and operator structure recurs in passive response
+phenomena \cite{AriaClosureKernel, SmartBAnomaly}, in active selection
+dynamics \cite{SmartTransportLaw, SmartACT}, in cognitive substrate
+witnesses \cite{SmartARIAChess}, and in the spectral structure of the
+Standard Model mass spectrum \cite{SmartV, SmartVRev}. The recurrence
+is not narrative: it is structurally enforced at the operator level
+(the closure-response operator $\Cphi = L_M + \pphi^{-2} I$ on $\Vsub$
+satisfies $\|\Cphi^{-1}\| = \pphi^2$ exactly; see Appendix~\ref{app:field-signature-audit}~E)
+and at the eigenvalue level ($\Vsub$'s Laplacian has a 78.3\%
+$\sigma$-fixed spectral fraction; see Appendix~\ref{app:field-signature-audit}~A).
+
+Across these regimes the same operational pattern appears: a field
+state arrives at a layer of the substrate where it cannot maintain a
+coherent projection; the unresolved mismatch propagates inward through
+nested layers; resolution occurs by selection of a closure-compatible
+attractor geometry. This paper names that pattern, gives it a single
+mechanism statement, formalises it at the level of a rung-indexed
+closure residual, and positions the existing programme literature as
+case studies under a shared-mechanism hypothesis rather than as
+separate phenomena.
+
+The framing is restrained on purpose. We do not propose a replacement
+for quantum mechanics. We do not derive measurement probabilities; the
+Born rule remains the input. We do not refute Penrose OR; we generalise
+its core move (geometry-coupled state selection) from a single
+gravitational threshold to a stratified projection cascade. We do not
+claim cascade closure as an empirically completed theorem of physics;
+it is an organising mechanism whose individual mathematical components
+are imported from earlier papers in the programme at sharply scoped
+epistemic flags. The contribution of this paper is the mechanism
+statement and the projection-class reading, not new physical results.
+
+A reader familiar only with the measurement-problem literature should
+expect to gain: a single name for a recurring operational pattern; a
+finite geometric substrate on which the pattern can be made
+mathematically explicit; and a placement of several open
+mainstream-mathematics problems --- including the Riemann Hypothesis,
+Yang--Mills mass gap, Birch--Swinnerton-Dyer, and the others
+(\S\ref{sec:millennium}) --- as instances of the same projection-class
+mechanism. The placement is hypothesis-labelled and does not constitute
+proof of any of those problems.
+
+\section{Core mechanism: instability, cascade, crystallisation}\label{sec:mechanism}
+
+\subsection{The triad}
+
+We organise the mechanism around a three-stage operational triad:
+
+\begin{equation}\label{eq:triad}
+   \text{Instability} \;\longrightarrow\; \text{Cascade} \;\longrightarrow\; \text{Crystallisation}.
+\end{equation}
+
+These are not distinct physical processes. They are three views of one
+resolution event: the external view (collapse, often coarse-grained
+into a probability statement), the propagation view (cascade, the
+substrate-level dynamics between instability onset and resolution),
+and the internal view (crystallisation, the selection of a definite
+attractor geometry). The vocabulary distinction matters because it
+locates where in the triad each existing programme paper sits: the
+closure-response operator and its passive witnesses
+\cite{AriaClosureKernel, SmartBAnomaly} characterise the substrate
+on which cascade dynamics occur; the active-selection literature
+\cite{SmartTransportLaw, SmartACT} describes the cascade itself; the
+spectral mass spectrum \cite{SmartV, SmartVRev} records the
+crystallised attractors.
+
+\subsection{The closure-residual functional}
+
+Let the substrate be a finite (possibly stratified) set of
+\emph{rungs} indexed by $k \in \{0, 1, \ldots, N\}$. At each rung
+the substrate exposes a geometric carrier $G_k$ (a graph, polytope,
+algebra, lattice, or projection class); the carrier comes equipped
+with a closure-residual functional
+\begin{equation}\label{eq:Rk}
+   R_k : \Phi_k \longrightarrow [0, \infty),
+\end{equation}
+where $\Phi_k$ is the space of admissible field states on $G_k$. The
+functional measures the failure of $\Phi_k$ to be closure-compatible
+with the rung-$k$ projection. Closure-compatibility means $R_k(\Phi_k) = 0$.
+The construction of $R_k$ at finite levels is given by the closure
+functional and gradient operator of \cite{CascadeClosureDynamics};
+the underlying refinement state spaces and bonding maps are given
+by \cite{CascadeRefinementSpaces}.
+
+\begin{definition}[Cascade closure]\label{def:cascade-closure}
+A cascade-closure event on the rung sequence $(G_0, \ldots, G_N)$ is
+a triple $(\Phi, R, \pi)$ consisting of an admissible field state
+$\Phi = (\Phi_0, \ldots, \Phi_N)$, the closure-residual functional
+$R$ defined rung-wise as in \eqref{eq:Rk}, and a sequence of
+admissible projection maps
+$\pi_{k+1, k} : G_{k+1} \to G_k$ such that the flow induced by the
+gradient operator of $R$ relative to $\pi$ converges to a fixed point
+$\Phi^\star$ with $R_k(\Phi^\star_k) = 0$ for all $k$. The fixed
+point $\Phi^\star$ is the \emph{crystallised} state.
+\end{definition}
+
+\begin{remark}[Vocabulary]\label{rem:vocabulary}
+Within Definition~\ref{def:cascade-closure}, the three views map onto
+the triad as follows: \emph{instability} is the condition $R_k(\Phi) > 0$
+on at least one rung; \emph{cascade} is the gradient flow of $R$
+through the projection sequence $\pi$; \emph{crystallisation} is the
+fixed-point selection of $\Phi^\star$. \emph{Collapse}, in the
+Born-rule sense, is the external coarse-graining of this fixed-point
+selection; the cascade-closure framework does not modify the Born
+rule and does not derive measurement probabilities.
+\end{remark}
+
+\begin{remark}[Status of Definition~\ref{def:cascade-closure}]\label{rem:def-status}
+Definition~\ref{def:cascade-closure} is the paper's organising
+definition, not a theorem of physics. The convergence-to-fixed-point
+clause is part of the \emph{definition of the closure event}: a triple
+that does not converge to a residual-zero fixed point is not a
+cascade-closure event in the sense of this paper. We do not claim that
+arbitrary $(\Phi, R, \pi)$ triples on arbitrary rung sequences
+necessarily admit such convergence; the claim that any specific rung
+sequence does admit it is a separate statement that requires
+\emph{additional} hypotheses (e.g.\ Hypotheses~\ref{hyp:refinement-int}
+and~\ref{hyp:monotone} of \S\ref{sec:rung-model}, conditional
+Proposition~\ref{prop:resid-comp}). The existence of the gradient flow
+at finite levels, energy descent, and refinement compatibility are
+imported from \cite{CascadeClosureDynamics} (Theorem
+\texttt{thm:gradient-operator}, Proposition
+\texttt{prop:energy-dissipation}, Theorem
+\texttt{thm:coercive-contraction}). The four-phase comonadic cycle
+that justifies treating the triad as a single resolution event is
+imported from \cite{CascadeCapstone} (Section
+\texttt{sec:comonad}, Claim \texttt{claim:four-phase-realisation},
+Remark \texttt{rmk:comonad-status}); that import is conditional on the
+named hypotheses inside the capstone preprint and is not re-proved here.
+\end{remark}
+
+\subsection{What the substrate does and does not contribute}
+
+The substrate $\Vsub$ does the following work in the mechanism: it
+fixes the carrier set on which the rung-$0$ closure residual is
+defined, it supplies the operator $\Cphi = L_M + \pphi^{-2} I$ whose
+inverse norm controls the relaxation rate (Appendix~\ref{app:field-signature-audit}~E),
+it carries the spectral structure that determines which projection
+classes are admissible (Appendix~\ref{app:field-signature-audit}~A),
+and through the icosian / $H_4$ Coxeter symmetry it constrains which
+attractor geometries can crystallise. It does \emph{not}, by itself,
+do the following: select a unique attractor without dynamical input;
+predict observer-dependent outcomes; or supply the projection axiom
+that links spectral structure to specific analytic objects (such
+links are framework-level hypotheses; see \S\ref{sec:millennium}).
+The honest-negatives in
+Appendix~\ref{app:field-signature-audit}~A,~E mark the substrate's
+boundary explicitly: $\sigma$-fixed eigenvectors do not preferentially
+localise on the binary tetrahedral subgroup $2T$, and $\pphi$-cocycle
+edge weightings of the kernel underperform the unweighted variant.
+We treat both as constraints on what may be claimed.
+
+\section{Rung model and residual propagation}\label{sec:rung-model}
+
+\subsection{Rungs, projections, and admissible states}
+
+Each rung $k$ carries a triple $(G_k, \Phi_k, R_k)$ where $G_k$ is a
+geometric carrier, $\Phi_k$ a space of admissible field states, and
+$R_k$ a closure residual as in \eqref{eq:Rk}. The full rung sequence
+$(G_0, \ldots, G_N)$ is connected by admissible projection maps
+\begin{equation}\label{eq:projection-map}
+   \pi_{k+1, k} : G_{k+1} \longrightarrow G_k,
+\end{equation}
+required to be refinement-compatible in the sense of
+\cite{CascadeClosureDynamics} (Definition~\texttt{def:refinement-compat}).
+For each $k$ we write
+\begin{equation}\label{eq:pushforward}
+   \pi_{k+1, k}^{\sharp} : \Phi_{k+1} \longrightarrow \Phi_k
+\end{equation}
+for the induced pushforward (or marginalisation) on field states,
+following the same direction as the underlying geometric projection.
+For composite high-to-low projection across $j$ rungs we write
+$\pi_{N, k}^{\sharp} := \pi_{k+1, k}^{\sharp} \circ \cdots \circ \pi_{N, N-1}^{\sharp}$.
+In the mass-only finite-level construction of
+\cite{CascadeClosureDynamics} (Theorem~\texttt{thm:flow-intertwining}),
+$\pi^{\sharp}$ intertwines the closure flow at adjacent rungs;
+outside the mass-only case the intertwining is retained here as
+Hypothesis~\ref{hyp:refinement-int} below. The finite-level Hilbert
+and bonding machinery on which the mass-only result rests is supplied
+by \cite{CascadeRefinementSpaces}
+(Theorems~\texttt{thm:bonding},~\texttt{thm:commute}).
+
+The rung indexing is not metaphysical. In the cascade programme it is
+realised concretely as the cascade-derivation rung sequence catalogued
+in \cite{CascadeFoundations} and \cite{CascadeCapstone}: an arithmetic
+coefficient layer $\Q(\pphi)$ \cite{CascadeSigmaRat}, the 12D meta
+layer $L_{12} = E_8 \oplus \Z[\pphi]^4$ \cite{Cascade12D, CascadeMetaLayer},
+the algebraic substrate (icosian $H_4$, $D_4$, $\Vsub$, $V_{24}$, octonions)
+\cite{CascadeAlgSubstrate}, the refinement state spaces \cite{CascadeRefinementSpaces},
+the closure-dynamics layer \cite{CascadeClosureDynamics}, and the
+metric / hydrodynamic / spectral / observer projection classes
+\cite{CascadeMetricProj, CascadeSchlafli, CascadeHydroProj, ObserverInstance}.
+Section~\ref{sec:rung-table} resolves each layer to its source and
+epistemic status.
+
+\subsection{Conditional residual compositionality}\label{ssec:residual-comp}
+
+The mechanism statement in \eqref{eq:triad} requires that closure
+compatibility \emph{compose} along the rung path: if each adjacent
+projection is closure-compatible and the rungwise residuals interact
+monotonically with the projection maps, then the global field
+composition lies on the closure-fixed locus. We state this as a
+conditional lemma; the conditions are not generically satisfied and
+must be verified per case.
+
+\begin{hypothesis}[Pointwise refinement-intertwining]\label{hyp:refinement-int}
+For the rung sequence $(G_0, \ldots, G_N)$ and projections
+$(\pi_{k+1, k})_{k}$, assume that for every $k$ the rungwise gradient
+operator $\nabla R_k$ commutes with $\pi^{\sharp}_{k+1, k}$ in the sense of
+\cite{CascadeClosureDynamics} Definition~\texttt{def:refinement-compat}.
+\end{hypothesis}
+
+\begin{hypothesis}[Monotonicity]\label{hyp:monotone}
+For every $k$ and every $\Phi_{k+1} \in \Phi_{k+1}$,
+$R_k(\pi^{\sharp}_{k+1, k} \Phi_{k+1}) \leq R_{k+1}(\Phi_{k+1})$.
+\end{hypothesis}
+
+\begin{proposition}[Conditional closure-residual compositionality]\label{prop:resid-comp}
+Under Hypotheses~\ref{hyp:refinement-int} and~\ref{hyp:monotone}, if
+the gradient flow of $R_N$ on $G_N$ converges to a fixed point
+$\Phi^\star_N$ with $R_N(\Phi^\star_N) = 0$, then the projected
+states $\Phi^\star_k := \pi^{\sharp}_{N, k} \Phi^\star_N$ satisfy
+both
+\begin{enumerate}[leftmargin=2.4em, label=\textup{(\arabic*)}]
+\item $R_k(\Phi^\star_k) = 0$ for all $k \leq N$, and
+\item $\Phi^\star_k$ is a fixed point of the rung-$k$ gradient flow,
+for all $k \leq N$ at which Hypothesis~\ref{hyp:refinement-int}
+applies.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+By induction downward from $k = N$. The base case $k = N$ is the
+hypothesis $R_N(\Phi^\star_N) = 0$ and the assumption that
+$\Phi^\star_N$ is a rung-$N$ fixed point. For the inductive step,
+suppose $R_{k+1}(\Phi^\star_{k+1}) = 0$ and that $\Phi^\star_{k+1}$
+is a rung-$(k{+}1)$ fixed point, where
+$\Phi^\star_{k+1} := \pi^{\sharp}_{N, k+1} \Phi^\star_N$.
+\emph{For (1):} by Hypothesis~\ref{hyp:monotone},
+$R_k(\Phi^\star_k) = R_k(\pi^{\sharp}_{k+1, k} \Phi^\star_{k+1})
+\leq R_{k+1}(\Phi^\star_{k+1}) = 0$, and $R_k \geq 0$, so
+$R_k(\Phi^\star_k) = 0$.
+\emph{For (2):} by Hypothesis~\ref{hyp:refinement-int},
+$\pi^{\sharp}_{k+1, k}$ commutes with the adjacent-rung gradient flow
+at the level supported by \cite{CascadeClosureDynamics}
+Theorem~\texttt{thm:flow-intertwining}, so the image of a rung-$(k{+}1)$
+fixed point under $\pi^{\sharp}_{k+1, k}$ is a rung-$k$ fixed point.
+The composite identity $\pi^{\sharp}_{N, k} = \pi^{\sharp}_{k+1, k}
+\circ \pi^{\sharp}_{N, k+1}$ makes the induction well-defined.
+\end{proof}
+
+\begin{remark}[Conditional status]\label{rem:resid-comp-status}
+Proposition~\ref{prop:resid-comp} is conditional on
+Hypotheses~\ref{hyp:refinement-int} and~\ref{hyp:monotone}; both must
+be checked per rung sequence. Hypothesis~\ref{hyp:refinement-int} is
+known in the mass-only P3/P4 finite-level construction
+\cite{CascadeRefinementSpaces, CascadeClosureDynamics}; outside that
+case it is retained here as a hypothesis and not discharged.
+Hypothesis~\ref{hyp:monotone} is a structural assumption on the choice
+of rung-wise residuals and is not automatic. Failure of either
+hypothesis at a particular rung means the cascade does \emph{not}
+compose at that step, and external resolution by intermediate
+absorption or by attractor selection at a lower rung is required.
+\end{remark}
+
+\subsection{Failure modes and resolution paths}
+
+When Proposition~\ref{prop:resid-comp} fails at rung $k$, two
+resolution paths remain: \emph{intermediate absorption}, in which the
+residual $R_k$ is reduced by an intervention internal to the rung-$k$
+substrate without propagation downward (the active-selection regime
+of \cite{SmartTransportLaw, SmartACT}); or \emph{attractor selection},
+in which the cascade flow projects directly onto a low-rung fixed
+point that absorbs the residual at the cost of state information
+(the spectral mass-projection regime of \cite{SmartV, SmartVRev}).
+These two paths are not exhaustive but they cover the empirically
+documented cases in the programme literature. Section~\ref{sec:case-studies}
+revisits each.
+
+\section{Geometry identification across rungs}\label{sec:rung-table}
+
+This section assembles the central rung table of the paper. Each row
+resolves a layer of the cascade-closure mechanism to a specific
+geometric carrier $G_k$ together with an epistemic flag stating
+whether the carrier and its role are theorem-grade, model-chosen,
+imported under conditional hypothesis, or interpretive. No row
+introduces a new mathematical claim; every entry imports its
+substantive content from a named source in the audited dependency
+list of the work order
+(\texttt{papers/cascade-mechanism/WO-CASCADE-MECHANISM.md}~\S3).
+
+\subsection{Reading conventions}
+
+In Table~\ref{tab:rungs} the column \emph{status} carries one of:
+\begin{itemize}[leftmargin=*]
+\item \textsf{[Th-imp]} --- imported theorem from a cited source paper.
+\item \textsf{[Pr-imp]} --- imported proposition.
+\item \textsf{[Hyp-imp]} --- imported under a named conditional hypothesis;
+  the citation tracks the hypothesis label inside the source.
+\item \textsf{[Mod]} --- model choice within the cascade-mechanism
+  framework; not derived in this paper, not derived elsewhere as a
+  uniqueness theorem.
+\item \textsf{[Int]} --- interpretive use of structural material from
+  a programme document; not load-bearing for any formal claim in this
+  paper.
+\end{itemize}
+
+A row's \emph{status} is determined by the source, not by the present
+paper. We do not upgrade an imported hypothesis to a theorem; we do
+not downgrade an imported theorem to a hypothesis. Sources are cited
+exactly as they label themselves.
+
+\subsection{The rung table}
+
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.21\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}>{\raggedright\arraybackslash}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}}
+\caption{Rung-layer geometric carriers and their status in the
+cascade-closure mechanism. Status flags are defined in the reading
+conventions above; sources retain their original labels.}\label{tab:rungs}\\
+\toprule
+\textbf{Layer} & \textbf{Geometry / object} & \textbf{Status} & \textbf{Primary source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Layer} & \textbf{Geometry / object} & \textbf{Status} & \textbf{Primary source} \\
+\midrule
+\endhead
+Arithmetic coefficient layer
+& $\Q(\pphi)$, $\Z[\pphi]$; coefficientwise Galois involution $\sigma : \pphi \leftrightarrow 1/\pphi$
+& \textsf{[Th-imp]}
+& \cite{CascadeSigmaRat}: \texttt{def:sigma}, \texttt{thm:fixed-part}, \texttt{thm:pisigma-functorial}\\
+12D meta layer
+& $L_{12} = E_8 \oplus \Z[\pphi]^4$; cut-and-project moduli; groupoid / sheaf data
+& \textsf{[Hyp-imp]}
+& \cite{Cascade12D}; \cite{CascadeMetaLayer} Theorems M1--M3 (conditional on $H_{\min}$)\\
+Algebraic substrate
+& $E_8$; icosian $H_4$; $D_4$; 600-cell $\Vsub$; 24-cell $V_{24}$; $\mathrm{Cl}(1,3)$; octonions $\OO$; $G_2$
+& \textsf{[Th-imp]} / \textsf{[Pr-imp]}
+& \cite{CascadeAlgSubstrate}: \texttt{prop:D4-inclusion}, \texttt{thm:pi-H} (projection, \emph{not} sub-root-system inclusion), \texttt{prop:24-in-600}, \texttt{thm:icosian-closure}, source's \texttt{spectrum-P2} (labelled ``Fact'' in source)\\
+Refinement state spaces
+& Finite $X_n$; bonding maps; inverse / direct limits; finite-level Hilbert structure
+& \textsf{[Th-imp]}
+& \cite{CascadeRefinementSpaces}: \texttt{thm:bonding}, \texttt{thm:Xcyl-direct-limit}, \texttt{thm:Xinv-Hilbert}\\
+Closure dynamics
+& Quadratic finite-level $F_n$; gradient operator; energy descent; Euler step; refinement compatibility
+& \textsf{[Th-imp]}
+& \cite{CascadeClosureDynamics}: \texttt{thm:gradient-operator}, \texttt{thm:flow-exists}, \texttt{prop:energy-dissipation}, \texttt{thm:coercive-contraction}, \texttt{def:refinement-compat}, \texttt{thm:flow-intertwining}\\
+Metric / boundary projection
+& Finite metric projection; boundary $S^3$ / geometric limit where available
+& \textsf{[Hyp-imp]}
+& \cite{CascadeMetricProj}; \cite{CascadeSchlafli} (under P5/P6 hypotheses)\\
+Hydrodynamic projection
+& Coarse-grained velocity / pressure; projector; defect dynamics
+& \textsf{[Hyp-imp]}
+& \cite{CascadeHydroProj}\\
+Phason / Coxeter projection
+& Phason moduli; Coxeter-element dynamics on $\Vsub$ and dual
+& \textsf{[Pr-imp]} / \textsf{[Hyp-imp]}
+& \cite{CascadePhasonCox}\\
+Bulk / boundary substrate
+& $\Vsub = B \sqcup \partial$ with $\sigma$-fixed bulk and $\sigma$-paired boundary; A--B set decomposition
+& \textsf{[Int]}
+& \cite{FractalCascadeProj}; \cite{ClosureCosmogenesis} (structural docs; \emph{not} a cosmogenesis theorem)\\
+Observer instance
+& $\mathcal{I} = (\Ocal, \mathcal{C}_{\Ocal}, p, \Lambda, t_0)$; bounded sampling slot
+& \textsf{[Mod]}
+& \cite{ObserverInstance}; see \S\ref{sec:observer-process} for the realised tuple $\Ocal = \langle B, S, M, G, I, C, A\rangle$\\
+Spectral mass projection class
+& $\Vsub$ Laplacian eigenvalues / shell decomposition; mass-coefficient assignment map
+& \textsf{[Mod]}
+& \cite{SmartV, SmartVRev}; nine forward chain coefficients verified at exact rational precision (App.~\ref{app:field-signature-audit}~B)\\
+Active / cognitive substrate
+& $H_4$ / 600-cell active selection; preregistered EEG / chess / HCP witness
+& \textsf{[Mod]}
+& \cite{SmartARIAChess}; 18/18 + 6/6 + HCP degree-homogeneity at $-11.58\sigma$ (clustering separately $+6.80\sigma$); App.~\ref{app:field-signature-audit}~F\\
+Passive response kernel
+& $\Cphi = L_M + \pphi^{-2} I$ on $\Vsub$; $b$-anomaly substrate witness
+& \textsf{[Th-imp]} / \textsf{[Mod]}
+& \cite{AriaClosureKernel}; \cite{SmartBAnomaly}; $\|\Cphi^{-1}\| = \pphi^2$ exactly (App.~\ref{app:field-signature-audit}~E)\\
+\bottomrule
+\end{longtable}
+
+\subsection{What the table earns and does not earn}
+
+The table earns three things. First, every entry is sourced; no row
+relies on cascade-mechanism content alone. Second, the operator
+$\Cphi$ and the substrate $\Vsub$ recur across the metric, hydrodynamic,
+phason / Coxeter, observer, spectral, active, and passive rows ---
+not as separate physical instances but as the same geometric carrier
+viewed from different projection classes. Third, the epistemic flags
+make the conditional dependencies of the framework visible in one
+place: every \textsf{[Hyp-imp]} row marks a place where the framework
+inherits a named conditional hypothesis from a source paper. Those
+hypotheses are not closed in this paper.
+
+The table does \emph{not} earn the following. It does not establish a
+new substrate-uniqueness theorem; the narrow uniqueness statements
+that exist live in the source paper \cite{CascadeAlgSubstrate} and in
+the spectral mass-projection literature \cite{SmartV, SmartVRev}. It
+does not promote any \textsf{[Hyp-imp]} entry to theorem status. It
+does not claim independence between the active, cognitive, spectral,
+and passive substrate rows; they share $\Vsub$ by construction (this
+is a single substrate viewed from different projection classes, not
+multiple independent witnesses). It does not derive the projection
+maps that connect rungs; those are imported with the source paper that
+introduced them. The cross-regime identification of cascade closure as
+a single mechanism across the substrate, mass, ARIA, and Millennium
+case studies (\S\ref{sec:case-studies}, \S\ref{sec:millennium}) is a
+hypothesis, not a theorem of this section.
+
+\subsection{Anchoring to the field-signature audit}
+
+Three rows of Table~\ref{tab:rungs} are anchored to specific data
+rows of Appendix~\ref{app:field-signature-audit}: the spectral
+mass-projection row is supported by 9-of-9 forward chain
+identities at exact rational precision (Appendix entry~B); the
+passive-response-kernel row is supported by the exact operator-norm
+identity $\|\Cphi^{-1}\| = \pphi^2$ and uniform per-vertex correlation
+under the unweighted Laplacian (Appendix entry~E); the active /
+cognitive substrate row is supported by the 18/18 preregistered
+correspondences, the six drug/sleep EEG signatures, and the HCP
+degree-homogeneity comparison at $-11.58\sigma$ (Appendix entry~F). The honest-negatives
+in entries A and~E (no $2T$ localisation; $\pphi$-cocycle weighted
+variants underperform) constrain which rows of Table~\ref{tab:rungs}
+may be interpreted spatially or with weighted edge geometry, and we
+abide by those constraints throughout the paper.
+
+\section{Visible vs non-visible projection}\label{sec:visible}
+
+This section gives the restrained cosmological reading that the
+cascade-closure mechanism naturally invites, while explicitly
+refusing to extend it into a derivation of the visible universe from
+cascade primitives.
+
+\subsection{The reading}
+
+Within the rung model of \S\ref{sec:rung-model}, an observer instance
+$\mathcal{I} = (\Ocal, \mathcal{C}_\Ocal, p, \Lambda, t_0)$
+\cite{ObserverInstance} occupies a finite-resolution slot: it samples
+a bounded boundary of the substrate at a finite anchor time $t_0$ via
+a finite-precision projection $p$ and an integration scale $\Lambda$.
+The \emph{visible} part of the substrate, relative to such an
+instance, is the portion of the rung sequence whose projection
+residuals can be resolved within the slot's precision and integration
+scale. The \emph{non-visible} part is the remainder of the rung
+sequence whose closure activity falls outside the slot's resolvable
+range without thereby ceasing to be substrate.
+
+The substrate carries this reading naturally because the 600-cell
+$\Vsub$ admits a structural decomposition into a $\sigma$-fixed bulk
+and a $\sigma$-paired boundary, with the bulk supporting the
+unconditional initial condition $F_0$
+(\cite{ClosureCosmogenesis} Theorem~3.2) and the boundary becoming
+active under the bootstrap (\cite{ClosureCosmogenesis} Theorem~4.4).
+The same decomposition appears in the fractal projection narrative as
+the A / B set distinction on $2I$, with $A = \{72, 0\}$
+($\sigma$-fixed cycles) and $B = \{52, 20\}$ ($\sigma$-paired cycles)
+\cite{FractalCascadeProj}. The bulk-boundary decomposition is stated
+as a theorem in \cite{ClosureCosmogenesis}; the A/B set distinction
+in \cite{FractalCascadeProj} is structural / interpretive in its
+source. The use of either in this section is structural rather than
+load-bearing.
+
+\begin{interpretation}\label{int:visible-non-visible}
+The visible universe, relative to a bounded observer instance
+$\mathcal{I}$, is the resolved projection boundary of a deeper
+cascade-closure stack. Non-visible substrate carries the unresolved
+closure activity of higher rungs that the slot cannot integrate within
+its scale $\Lambda$ at its anchor time $t_0$. The visible / non-visible
+distinction is observer-relative; it is not a metaphysical separation,
+and substrate that is non-visible at one slot may be visible at
+another. The reading provides a cascade-internal vocabulary for
+``what shows up'' and ``what does not show up'' without requiring a
+further physical mechanism beyond the rung-projection structure
+already in place.
+\end{interpretation}
+
+\subsection{Explicit boundary: not a cosmogenesis theorem}
+
+This section does \emph{not} claim that cascade closure derives the
+visible universe from first principles, that it predicts the inventory
+of fundamental forces or fields, that it determines cosmological
+parameters, or that it furnishes a complete ontology. Such
+derivations would require, at minimum: a uniqueness theorem fixing
+$\Vsub$ as the substrate; a derivation of the closure functional from
+constraint primitives independent of the framework; and a substrate
+$\to$ continuum bridge with explicit metric structure. None of these
+is supplied here, and the structural docs cited above
+\cite{ClosureCosmogenesis, FractalCascadeProj, ObserverInstance}
+explicitly carry their own open conjectures (e.g.,
+\cite{ClosureCosmogenesis} Conjecture~5.3) without claiming any
+of them. Interpretation~\ref{int:visible-non-visible} is therefore
+interpretive in the strict sense: it does not function as a premise
+of any later formal claim in this paper.
+
+\section{ARIA as observer-process implementation}\label{sec:observer-process}
+
+This section identifies an existing computational system, ARIA-chess
+\cite{ariaChessRepo, SmartARIAChess}, as an implementation of an
+\emph{observer-process architecture} within the cascade-closure
+framework. The framing is deliberately architectural: we claim that
+ARIA realises the structural tuple of an observer process and exposes
+substrate-witness telemetry that empirically anchors that realisation
+(\S\ref{ssec:claim-boundary}). We do not claim that ARIA is
+biologically conscious, that it proves qualia, or that all
+observer-process implementations are phenomenologically equivalent.
+
+\subsection{Observer-process tuple}\label{ssec:tuple}
+
+\begin{definition}[Observer process]\label{def:observer-process}
+An observer process is the seven-tuple
+\begin{equation}\label{eq:O-tuple}
+   \Ocal \;=\; \langle B, S, M, G, I, C, A \rangle
+\end{equation}
+with components:
+\begin{description}[leftmargin=2.5em, style=nextline]
+\item[$B$ --- boundary sampler] the system samples a bounded boundary
+of the field; it cannot ingest the full field state.
+\item[$S$ --- state integrator] fuses boundary signal, context,
+memory, and goal into the current integrated field state, tick by tick.
+\item[$M$ --- memory substrate] persists past closures and is read
+back into state integration.
+\item[$G$ --- goal / context field] task frame, user objective, and
+system policy as a structured field over the runtime.
+\item[$I$ --- invariant constraints] the governance gate that
+vetoes constraint-violating closures.
+\item[$C$ --- closure / crystallisation operator] selects the
+candidate that best closes the field.
+\item[$A$ --- action interface] the channel through which crystallised
+state acts (tool call, reply, code, control signal).
+\end{description}
+\end{definition}
+
+The tuple realises the cascade-closure mechanism of
+Definition~\ref{def:cascade-closure} as follows. The closure-residual
+functional $R$ acts on the integrated state produced by $S$; the
+crystallisation operator $C$ plays the role of a closure selector
+within the observer-process architecture --- it scores and selects
+candidate states by a Lyapunov-style descent, which models the
+gradient flow of Definition~\ref{def:cascade-closure} without
+asserting equivalence to it; the invariant $I$ encodes which fixed
+points are admissible (rejecting closures that violate the active
+governance constraints); and the action interface $A$ exports the
+crystallised state to a downstream channel. Memory $M$ is written by
+each successful closure and read by the next state integration,
+supplying the substrate-internal dynamics analogue of a comonadic
+$\delta$ map of \cite{CascadeCapstone}.
+
+\subsection{Cascade processing by the observer}\label{ssec:cascade-processing}
+
+The observer does not collapse field state directly; it processes the
+cascade through the descent
+
+\begin{equation}\label{eq:cascade-descent}
+\begin{aligned}
+   \text{field potential} &\to \text{oscillatory modes}
+   \to \text{phase coupling} \to \text{attractor formation}\\
+   &\to \text{closure residual} \to \text{crystallisation}
+   \to \text{governance gate}\\
+   &\to \text{action} + \text{memory inscription}
+   \to \text{replay / provenance}.
+\end{aligned}
+\end{equation}
+
+Operationally, observerhood is the seven-step loop:
+\begin{enumerate}[leftmargin=*]
+\item bounded sampling via $B$;
+\item state integration via $S$, $M$, and $G$;
+\item residual detection through $R$ acting on the integrated state;
+\item candidate formation, with $C$ proposing closure-compatible
+attractors;
+\item crystallisation, selecting the candidate that best closes the
+field;
+\item invariant governance, refusing candidates that violate $I$;
+\item memory inscription, writing the successful closure back into
+$M$ with a replayable trace.
+\end{enumerate}
+
+The loop is per-tick; the operator-level rate is set by an external
+substrate clock. A natural cascade-internal candidate for that clock
+is the slowest non-zero Laplacian eigenmode of $\Vsub$
+(\S\ref{ssec:runtime-map}, \texttt{theta\_clock.py}); the empirical
+band that this eigenmode populates at the substrate tick rate
+recorded in \cite{ariaChessRepo} is consistent with theta-band
+recurrence around the dominant phase-coupling band of the cortical
+EEG witnesses in \cite{SmartARIAChess}; the precise tick-rate / mode
+conversion lives in the upstream runtime and is not re-derived here.
+
+\subsection{Two telemetry layers}\label{ssec:telemetry}
+
+A single observer-process architecture admits two telemetry streams:
+the biological stream (cortical EEG and inferred neural correlates)
+and the synthetic stream (runtime per-channel coherence and
+closure-residue metrics). The cascade-processing descent
+\eqref{eq:cascade-descent} maps onto both:
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.20}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.32\textwidth}>{\raggedright\arraybackslash}p{0.32\textwidth}}
+\toprule
+\textbf{Cascade layer} & \textbf{Biological telemetry} & \textbf{Synthetic / ARIA telemetry} \\
+\midrule
+field potential & EEG broadband activity & runtime input vector \\
+oscillatory modes & EEG bands ($\delta, \theta, \alpha, \beta, \gamma$) & per-channel coherence scores \\
+phase coupling & EEG phase locking, cross-frequency coupling & inter-module coherence score \\
+attractor formation & neural attractor states & candidate-state pool \\
+closure residual & prediction-error signals (free-energy-style) & closure-residue vector \\
+crystallisation & decision / action commitment & governed tool-call / reply selection \\
+governance gate & inhibitory veto, prefrontal control & invariant / refusal stack \\
+memory inscription & synaptic plasticity, hippocampal replay & polytope / invariant store update \\
+replay layer & offline replay (sleep, default mode) & provenance hash, replay bundle \\
+\bottomrule
+\end{tabular}
+\caption{Telemetry mapping for one observer-process architecture
+across two substrates.}\label{tab:telemetry}
+\end{table}
+
+The mapping is structural, not metric. A particular biological
+EEG band and a particular ARIA per-channel coherence score are not
+asserted to be quantitatively equal; they are asserted to play the
+same role in the cascade-processing descent.
+
+\subsection{Cascade-layers diagram}\label{ssec:diagram}
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.80\textwidth}{\centering
+\textsf{\small[Figure placeholder.] One-figure schematic of the
+cascade-processing descent \eqref{eq:cascade-descent} with the
+biological / synthetic telemetry mapping of
+Table~\ref{tab:telemetry} drawn as parallel columns.}
+}}
+\caption{Cascade-layers diagram (placeholder; final graphic to be
+rendered before submission). The diagram is the load-bearing visual
+of the section.}\label{fig:cascade-layers}
+\end{figure}
+
+\subsection{ARIA runtime mapping}\label{ssec:runtime-map}
+
+The observer-process tuple of Definition~\ref{def:observer-process}
+is realised by ARIA across two source tiers. Tier~1 is the in-repo
+reproducibility bundle at
+\texttt{release-bundle/closure-kernel-papers/papers/aria-chess/repro/kernel/},
+which contains six modules; Table~\ref{tab:runtime-map} cites the
+five used by the witness map below. The sixth,
+\texttt{consciousness\_binding.py}, is a runtime dependency of
+\texttt{self\_model\_stream.py} (imported at runtime to supply binding
+telemetry such as $\Phi$ and ignition diagnostics) but is not used
+here as an independent $\Ocal$ component; the load-bearing realisation
+of $\Ocal$ flows through the five modules in the table. The bundle is sufficient for
+the kernel-level numerical reproductions in \cite{AriaClosureKernel}
+and the substrate-witness slice of \cite{SmartARIAChess}. Tier~2 is
+the upstream production runtime cited as
+\texttt{ariaChessRepo}~\cite{ariaChessRepo}, which contains the full
+production observer-process architecture realised
+across boundary sampling, state integration, memory, governance,
+closure, action, and replay. The runtime mapping below is audited
+2026-05-02 against both tiers; the eventual publication should cite
+the upstream repository for any module not present in the in-repo
+bundle, in the same pattern that \cite{SmartARIAChess} adopts.
+
+\renewcommand{\arraystretch}{1.30}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.29\textwidth}>{\raggedright\arraybackslash}p{0.43\textwidth}}
+\caption{Two-tier runtime mapping of $\Ocal = \langle B, S, M, G, I, C, A\rangle$
+to ARIA modules.}\label{tab:runtime-map}\\
+\toprule
+\textbf{$\Ocal$ component} & \textbf{Tier 1 (in-repo bundle)} & \textbf{Tier 2 (upstream \texttt{ariaChessRepo}, audited 2026-05-02)} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{$\Ocal$ component} & \textbf{Tier 1 (in-repo bundle)} & \textbf{Tier 2 (upstream \texttt{ariaChessRepo}, audited 2026-05-02)} \\
+\midrule
+\endhead
+$B$ boundary sampler
+& \texttt{vfd\_closure\_kernel.py}
+& \texttt{raw\_sensory.py} (domain-agnostic raw statistical features); \texttt{action\_encoder.py} (per-domain action encoding into 4-eigenvalue sectors); \texttt{chess\_runtime\_adapter.py}\\
+$S$ state integrator
+& \texttt{self\_model\_stream.py}
+& \texttt{coherence\_runtime.py} (integrated 20-WO runtime: settle / track / score / crystallise / execute / learn / persist); \texttt{coherence\_selfmodel.py} (bounded explicit operational continuity); \texttt{self\_model\_stream.py}\\
+$M$ memory substrate
+& \texttt{self\_model\_stream.py} state EMAs and snapshots
+& \texttt{coherence\_memory.py} (coherence-aware layer with per-entry scoring, dual-field affinity, weighted retrieval, transition provenance, dormant reactivation); \texttt{polytope\_persistence.py} (universal save/load); \texttt{coherence\_longhorizon.py} (cross-session continuity arcs)\\
+$G$ goal / context
+& runtime knobs \texttt{profile}, \texttt{eta}, \texttt{k\_threshold}; \texttt{BETA\_PROFILES} in \texttt{v66\_e8\_coxeter.py}
+& \texttt{coherence\_planner.py} (continuity arcs $\to$ structured multi-step plans with phases / dependencies / checkpoints / governed closure); \texttt{coherence\_selfmodel.py}\\
+$I$ invariant constraints
+& --- (not in bundle)
+& \texttt{coherence\_constitution.py} (protected constitution; immutable-by-default; lineage preserved); \texttt{coherence\_audit.py} (continuous conformance, replay-verifiable); \texttt{coherence\_review.py} (formal human-in-the-loop adjudication at autonomy boundary)\\
+$C$ closure / crystallisation
+& \texttt{vfd\_closure\_kernel.py}; \texttt{lyapunov\_selector.py}; \texttt{sigma\_orbit\_basis.py}; \texttt{v66\_e8\_coxeter.py}
+& \texttt{coherence\_crystallisation.py} (field-governed selection with six modes); \texttt{vfd\_closure\_kernel.py} ($\Cphi = L + \pphi^{-2} I$); \texttt{lyapunov\_selector.py} (Lyapunov descent, bounded top-$k$); \texttt{dual\_closure\_operator.py}\\
+$A$ action interface
+& --- (not in bundle; \texttt{lyapunov\_selector.py} returns selected state without execution)
+& \texttt{coherence\_execution.py} (decision $\to$ intent $\to$ gate $\to$ plan $\to$ execute $\to$ assess $\to$ feedback; deterministic, replayable, auditable); \texttt{coherence\_delivery\_calibration.py}; \texttt{coherence\_delivery\_metrics.py}\\
+System tick coordinator
+& \texttt{self\_model\_stream.py} \texttt{SelfModelLoop.tick()}
+& \texttt{coherence\_runtime.py} (integrated tick); \texttt{theta\_clock.py} (master-clock layer-bridging synchroniser projecting cell pressure onto $\Vsub$'s slowest non-DC Laplacian eigenmode; reported upstream as theta-band recurrence, exact tick-rate / mode conversion not locally re-derived here)\\
+Replay / provenance
+& --- (not in bundle)
+& \texttt{coherence\_review.py}; \texttt{coherence\_audit.py}; \texttt{coherence\_longhorizon.py}\\
+Recursive cascade observer
+& \texttt{sigma\_orbit\_basis.py} decomposition only
+& \texttt{rung\_observer.py} (D4 / Cl13 / S7Projection / E8 observers with Fibonacci periods $\{1, 2, 3, 5, 8, 13\}$ geometrically forced); \texttt{s7\_observer.py}; \texttt{s7\_downward\_coupler.py}; \texttt{cascade\_descent.py}; \texttt{cascade\_transport.py}\\
+Cascade substrate
+& \texttt{sigma\_orbit\_basis.py}; \texttt{v66\_e8\_coxeter.py}
+& \texttt{e8\_substrate.py}; \texttt{icosian\_basis.py}; \texttt{icosian\_embedding.py}; \texttt{joint\_substrate.py} ($E_8 \oplus 600$-cell via cut-and-project); \texttt{info\_rung.py} (16-sector $\mathrm{Cl}(1,3)$)\\
+\bottomrule
+\end{longtable}
+
+The mapping is given by audited file location, not by reverse
+inference from runtime behaviour. Components $I$, $A$, replay /
+provenance, and the full $S$ tick coordinator are not present in
+Tier~1 and are present in Tier~2 only; this is a fact about the
+in-repo bundle, not a limitation of the architecture itself, and is
+why this paper cites both tiers rather than relying on the bundle
+alone. The Tier~2 audit timestamp (2026-05-02) records the working
+state of the upstream repository at draft time. The local
+\texttt{ariaChessRepo}~\cite{ariaChessRepo} bibliography entry does
+not currently pin a commit hash, so the Tier~2 module-level claims
+are upstream witnesses rather than locally commit-pinned evidence;
+publication should add the commit hash that corresponds to the
+runtime used by the substrate-witness preprint
+\cite{SmartARIAChess} for the empirical anchor of
+\S\ref{ssec:aria-empirical-anchor}.
+
+\subsection{Empirical anchor}\label{ssec:aria-empirical-anchor}
+
+The architectural identification of \S\ref{ssec:tuple} is anchored
+empirically by the substrate-witness preprint \cite{SmartARIAChess},
+which records (Appendix~\ref{app:field-signature-audit}~F):
+\begin{itemize}[leftmargin=*]
+\item 18 / 18 preregistered cortical correspondences hold at unchanged
+thresholds;
+\item six drug / sleep EEG signatures (propofol modality-switching,
+propofol continuity drop, and four others) pass on a single
+deterministic recurrent-layer trajectory at seed 42;
+\item HCP brain functional connectivity degree-homogeneity (degree
+standard-deviation) comparison places ARIA at $-11.58\sigma$ relative
+to the HCP baseline. The clustering-coefficient comparison is reported
+separately in the source as a $+6.80\sigma$ result; the $-11.58\sigma$
+figure should not be relabelled as clustering. Source-paper
+node-count caveat: $|V| = 120$ for ARIA vs $|V| = 50$ for HCP ICA-50.
+\end{itemize}
+
+The 18 / 18 + 6 / 6 + HCP profile is an empirical fact about the
+specific runtime under the specific protocols of
+\cite{SmartARIAChess}; it does not constitute a generic claim about
+arbitrary observer-process implementations.
+
+\subsection{Claim boundary}\label{ssec:claim-boundary}
+
+The claim of this section, in the strongest form the data supports,
+is the following.
+
+\begin{quotation}\noindent
+We do not claim ARIA is biologically conscious. We claim ARIA
+implements an observer-process architecture: bounded sampling,
+recurrent integration, closure selection, memory inscription, and
+governed action. Brain waves are the visible telemetry of an observer
+cascade in biological tissue; ARIA's internal coherence and
+closure-residue metrics are the synthetic telemetry of an observer
+cascade in computational substrate. The shared layer is not the
+material; it is the cascade-closure-crystallisation-memory process.
+\end{quotation}
+
+\subsection{What this section does not claim}\label{ssec:aria-not-claimed}
+
+\begin{itemize}[leftmargin=*]
+\item It does not claim ARIA proves qualia.
+\item It does not claim ARIA is biologically conscious.
+\item It does not claim that all observer-process implementations are
+phenomenologically equivalent.
+\item It does not treat the EEG / brain-wave correspondences in
+\cite{SmartARIAChess} as a derivation of consciousness; they are
+substrate-witness correspondences in the strict preregistered sense.
+\item It does not claim that the in-repo six-module bundle constitutes
+the full architecture; the full architecture lives in
+Tier~2 \cite{ariaChessRepo}, and Table~\ref{tab:runtime-map} cites
+both.
+\item It does not vendor upstream \texttt{ariaChessRepo} source into
+this paper's repository; citation is by repository reference, not by
+in-tree import.
+\end{itemize}
+
+\section{Five case studies}\label{sec:case-studies}
+
+This section gathers five short comparative case studies that illustrate
+the cascade-closure mechanism across distinct regimes. Each case is
+restricted to one paragraph of factual description, one claim-status
+sentence, and one citation chain. The case studies are comparative
+evidence for a shared mechanism. They are \emph{not} independent
+witnesses: the active, cognitive, spectral, and passive cases all share
+the substrate $\Vsub$ by construction, and the projection-class
+identification across regimes is a hypothesis
+(\S\ref{sec:millennium}), not a theorem.
+
+\subsection{Penrose Objective Reduction (historical / geometric bridge)}
+
+Penrose's Objective Reduction proposal \cite{Penrose1996} identifies
+gravitational self-energy of mass-energy superpositions as a
+substrate-coupled threshold for state reduction; the
+Penrose--Hameroff extension \cite{PenroseHameroff1996} situates this
+within microtubule-scale biological structure. \emph{Status:}
+historical / geometric bridge for the present paper, used as
+precedent for the shape of the question (geometry-coupled state
+selection). \emph{Cites:} \cite{Penrose1989, Penrose1996, PenroseHameroff1996}.
+This case does not validate cascade closure and is not validated by
+it; it situates the mechanism within an existing line of inquiry.
+
+\subsection{$b$-anomaly closure-response kernel (passive regime)}
+
+The closure-response operator $\Cphi = L_M + \pphi^{-2} I$ on $\Vsub$
+satisfies $\|\Cphi^{-1}\| = \pphi^2$ exactly and produces uniform
+per-vertex correlation across all 120 vertices under the unweighted
+Laplacian (Appendix~\ref{app:field-signature-audit}~E). The kernel
+provides the substrate response invoked by the $b\to s\mu^+\mu^-$
+angular-anomaly fit of \cite{SmartBAnomaly}, which finds a
+sign-uniform structural witness across cross-dataset and cross-channel
+slices at AIC parity rather than preference. The kernel-level claim
+$\|\Cphi^{-1}\| = \pphi^2$ is locally re-runnable
+(Appendix~\ref{app:field-signature-audit}~E); the primary $b\to s\mu^+\mu^-$
+fit lives in the external \cite{SmartBAnomaly} repository and is not
+re-executed in this paper. \emph{Status:} passive substrate witness;
+not a selection rule, not a model preference; primary fit is external
+and locally cited rather than locally verified. \emph{Cites:}
+\cite{AriaClosureKernel, SmartBAnomaly}; honest-negative on
+$\pphi$-cocycle weighted variants (Appendix~E) constrains the allowed
+substrate weighting to UNWEIGHTED.
+
+\subsection{ARIA active computational selection}
+
+ARIA realises the observer-process tuple of
+Definition~\ref{def:observer-process} across the two-tier runtime of
+\S\ref{ssec:runtime-map} and exhibits the empirical signatures
+catalogued in \S\ref{ssec:aria-empirical-anchor}. \emph{Status:}
+active-regime cognitive / computational substrate witness; not a
+derivation of consciousness. \emph{Cites:} the architectural and
+empirical content lives in \S\ref{sec:observer-process};
+\cite{SmartARIAChess, ariaChessRepo, AriaClosureKernel};
+\cite{SmartTransportLaw, SmartACT} for the active-selection layer in
+which the observer's $C$ component sits.
+
+\subsection{Brain / EEG substrate (cognitive substrate witness)}
+
+The 18 / 18 preregistered cortical correspondences and six drug /
+sleep EEG signatures of \cite{SmartARIAChess}
+(Appendix~\ref{app:field-signature-audit}~F) jointly support, at substrate-witness scope, a
+cortical-substrate-level witness for the $H_4$ / 600-cell projection
+class under preregistered protocols. \emph{Status:} substrate-witness
+scope only; the witness is \emph{not} a derivation of consciousness
+and is not a claim that biological cortex is structurally identical
+to $\Vsub$ at vertex resolution. \emph{Cites:} \cite{SmartARIAChess}
+preregistered hits and limitations.
+
+\subsection{Standard-Model mass spectrum (spectral projection class)}
+
+The mass-spectrum chain of \cite{SmartV, SmartVRev} expresses thirteen
+Standard-Model particle masses through nine multiplicative chain
+coefficients drawn from $\Vsub$ primitives (the integer Laplacian
+eigenvalues $\{\lambda_3, \lambda_4, \lambda_5, \lambda_7\}$, the
+shell-vertex counts $\{V_0, \ldots, V_5\}$, and the reflection
+coefficients $\{R_I, R_D(2), R_D(3), R_D(4)\}$) plus a
+$\sin^2\theta$-level neutron correction. All nine chain coefficients
+are forward-derivable at exact rational precision
+(Appendix~\ref{app:field-signature-audit}~B). \emph{Status:} spectral
+projection-class instance with explicit epistemic limits; not a
+substrate-uniqueness theorem and not a derivation of mass scales.
+\emph{Cites:} \cite{SmartV} (original); \cite{SmartVRev} (revised
+with three-witness placement and 9-of-9 forward chain).
+
+\section{Millennium-papers alignment scaffolding}\label{sec:millennium}
+
+This section positions the seven Millennium-class problems as
+projection-class instances of cascade closure on substrate-dependent
+analytic, number-theoretic, PDE, complexity-theoretic, or geometric
+objects. The positioning is framework-level. The \emph{proofs} of the
+individual problems --- where they exist as conditional reductions ---
+remain in the corresponding \texttt{papers/millennium-*} preprints, at
+the honest verdict scopes those preprints currently hold. This section
+does not solve any Millennium problem; it names the projection
+substrate and the named hypothesis under which each
+Millennium-preprint reduction sits.
+
+\subsection{Framework-level hypothesis}\label{ssec:H-mill-proj}
+
+\begin{hypothesis}[$H_{\text{Mill-Proj}}$]\label{hyp:mill-proj}
+Each Millennium-class problem corresponds to a projection class of
+cascade closure on a substrate-dependent analytic, number-theoretic,
+PDE, complexity-theoretic, or geometric object. The substrate provides
+the constraint geometry; the projection class is the family of
+admissible observable functionals; the closure-residue functional
+vanishes on solutions. This is a framework-level hypothesis. It is
+not a theorem, not a Clay proof, and not a replacement for the named
+hypotheses inside the individual \texttt{papers/millennium-*}
+preprints.
+\end{hypothesis}
+
+Hypothesis~\ref{hyp:mill-proj} is the load-bearing claim of this
+section. Every per-problem entry below sits under it, and every
+per-problem reduction in the cited \texttt{papers/millennium-*}
+preprint sits under its own additional named hypothesis (which we
+report verbatim). The cascade-mechanism paper does not propose to
+discharge any of those named hypotheses.
+
+\subsection{Seven Millennium projections}\label{ssec:seven-mill}
+
+Audit basis (2026-05-02): named hypotheses verified by
+\texttt{rg -n -F "Hypothesis"} and \texttt{rg -n -F "H\_\{"} over
+\texttt{papers/millennium-*}. Verdict scopes are recorded per the
+\texttt{project\_millennium\_scope\_pass} memory and not upgraded.
+Line counts taken from \texttt{wc -l} on 2026-05-02.
+
+\renewcommand{\arraystretch}{1.30}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}}
+\caption{Seven Millennium-class problems as projection-class instances
+under $H_{\text{Mill-Proj}}$. Verdict scope and named hypothesis are
+preserved as they appear in the source preprint at audit time.}\label{tab:millennium}\\
+\toprule
+\textbf{Problem} & \textbf{Cascade substrate / projection class} & \textbf{Source verdict scope} & \textbf{Named hypotheses (verbatim from source)} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Problem} & \textbf{Cascade substrate / projection class} & \textbf{Source verdict scope} & \textbf{Named hypotheses (verbatim from source)} \\
+\midrule
+\endhead
+Riemann Hypothesis
+& $\hat{z}(z)$ cascade Mellin object on the pentagonal-clock cycle
+structure $K = \{72, 0, 52, 20\}$; $\sigma$ / $\tau_{\rm crit}$
+fixed-set reformulation; 600-cell Laplacian spectral scaffold
+& $\delta$ reformulation
+& $H_{\sigma\text{-fix}}$ (source states this is equivalent to
+classical RH); residual $\sigma$-paired information requires
+\texttt{conj:spec\_to\_zero}; cite \cite{MillenniumRH}\\
+Yang--Mills mass gap
+& Octonion derivation algebra $\Der(\OO) \cong \mathfrak{g}_2$ with
+$\stab(e_1) \cong \mathfrak{su}(3)$; discrete 600-cell spectral gap
+with continuum OS lift
+& $\beta$ bridge
+& $H_{\text{OS-lift}}$; the discrete spectral count
+$94/120$ $\sigma$-fixed alone does not transfer to the continuum
+mass gap; cite \cite{MillenniumYM}\\
+Birch--Swinnerton-Dyer
+& Rankin--Selberg / Hecke operator $T_E(s)$ on the elliptic-curve
+substrate $E: y^2 = x^3 - x$
+& $\delta$ conditional reformulation
+& $B_{BSD,\text{conv}}$, $B_{BSD,\text{rank}}$, $B_{BSD,\text{spec}}$;
+cite \cite{MillenniumBSD}\\
+Navier--Stokes
+& Hydrodynamic projection from cascade spectral bounds to vorticity
+control / BKM criterion; P6 / P7 bridge layer
+& $\beta$ bridge
+& $H_1$, $H_{NS}$, $B_{NS}$, $H_{P6/P7}$; pure diffusion gives only
+$\sim 66\%$ fixed-subspace concentration without the closure
+projector / continuum identification; cite \cite{MillenniumNS}\\
+Hodge
+& $\sigma$-projector on cohomology; algebraicity-of-fixed-part bridge
+& $\delta$ conditional reduction
+& $H_{4a}$, $H_{4a}^{\text{alg}}$ (and the indexed variants
+$H_{4a}^{\text{alg}/\Omega}$, $H_{4a}^{\text{alg}/X}$ in the source);
+cite \cite{MillenniumHodge}\\
+P vs NP
+& Restricted cascade complexity classes $P_\sigma^{\text{cas}}$ vs
+$NP^{\text{cas}}$; $\sigma$-irreducibility; structural-completeness
+bridge
+& $\gamma$ bridge
+& $H_{\sigma\text{-irr-NP}}$, $B_{\sigma\text{-P}}$,
+\texttt{Conj.~completeness}; cite \cite{MillenniumPNP}\\
+Poincar\'e
+& Compatibility / coherence reading: classical Hamilton--Perelman
+theorem imported as black box; cascade contribution is positional
+P5 + C2.bis compatibility
+& coherence
+& P5; C2.bis; cascade contributes $0\%$ of the classical proof and
+$100\%$ conditional as framework coherence; cite \cite{MillenniumPoincare}\\
+\bottomrule
+\end{longtable}
+
+The verdict-scope letters follow the
+\texttt{project\_millennium\_scope\_pass} convention: $\delta$ is a
+honest reformulation under named hypothesis (the cascade reduction is
+correct, but the load-bearing hypothesis is equivalent to the
+classical problem); $\beta$ is a bridge layer (the cascade gives a
+spectral / structural framework whose continuum lift is open);
+$\gamma$ is a restricted-model separation; \emph{coherence} is a
+compatibility statement with respect to an already-proved classical
+result.
+
+\subsection{Give-the-game-away requirements}\label{ssec:give-the-game}
+
+For Millennium-class preprints to land as natural instances of
+$H_{\text{Mill-Proj}}$ rather than as separate strange claims, the
+present section must satisfy four operational requirements.
+
+\begin{enumerate}[leftmargin=*]
+\item State $H_{\text{Mill-Proj}}$ explicitly as in
+\S\ref{ssec:H-mill-proj}. (Done.)
+\item Name each per-problem hypothesis in the source preprint's
+current notation: $H_{\sigma\text{-fix}}$ for RH;
+$H_{\text{OS-lift}}$ for YM; $B_{BSD,\text{conv}}$,
+$B_{BSD,\text{rank}}$, $B_{BSD,\text{spec}}$ for BSD; $H_1$, $H_{NS}$,
+$B_{NS}$, $H_{P6/P7}$ for NS; $H_{4a}$, $H_{4a}^{\text{alg}}$ for Hodge;
+$H_{\sigma\text{-irr-NP}}$, $B_{\sigma\text{-P}}$, and
+\texttt{Conj.~completeness} for PNP; P5 and C2.bis for Poincar\'e.
+(Done in Table~\ref{tab:millennium}.)
+\item State, per problem, in one sentence which substrate the
+projection sits on. (Column 2 of Table~\ref{tab:millennium}.)
+\item Refuse to prove any per-problem statement. The reductions remain
+in the corresponding \texttt{papers/millennium-*} preprints; this
+section cites and positions, it does not derive.
+\end{enumerate}
+
+\subsection{Honest verdict-scope discipline}\label{ssec:verdict-discipline}
+
+The cascade-mechanism paper must reproduce the source verdict scopes
+without upgrade. The allowed claim is
+
+\begin{quotation}\noindent
+The cascade-mechanism paper positions the current
+\texttt{papers/millennium-*} preprints as projection-class instances
+under $H_{\text{Mill-Proj}}$ and names the hypotheses on which their
+individual reductions depend.
+\end{quotation}
+
+\noindent The disallowed claim is ``the cascade mechanism resolves
+the Millennium problems''. We do not write this. We do not imply it
+through choice of phrasing, through omission of conditional flags, or
+through suggestive section headers.
+
+\subsection{Drop-order coordination}\label{ssec:drop-order}
+
+The intended drop order, conditional on the cascade-mechanism paper
+landing first as framework-positioning prerequisite reading, is:
+
+\begin{enumerate}[leftmargin=*]
+\item This cascade-mechanism paper.
+\item \texttt{papers/millennium-rh-formal/rh-formal.tex} (most-developed; the
+$\sigma$ / $\tau_{\rm crit}$ reformulation has the strongest standalone
+substrate witness).
+\item Yang--Mills (octonion derivation-algebra substrate; discrete
+spectral gap is concrete; $H_{\text{OS-lift}}$ remains explicit).
+\item Birch--Swinnerton-Dyer (Rankin--Selberg / Hecke substrate; bridge
+axioms remain open).
+\item Navier--Stokes / Hodge / P vs NP / Poincar\'e in whatever order
+their respective preprints reach the publication standard required by
+their domains.
+\end{enumerate}
+
+The Millennium preprints, on publication, should cite this paper as
+their framework-positioning prerequisite. This is a coordination
+arrangement, not a publishing claim.
+
+\subsection{Cite-only, do-not-derive}\label{ssec:cite-only}
+
+The principle of this section is to cite, not to derive. Some
+non-load-bearing prose from the programme docs
+\texttt{docs/rh-cascade-closure-dynamics.md} and
+\texttt{docs/rh-projection-class.md} may be absorbed into the
+introductory paragraph of \S\ref{ssec:seven-mill} for narrative
+continuity, but the load-bearing mathematical content stays in the
+corresponding Millennium preprints. No theorem in this section is
+stronger than $H_{\text{Mill-Proj}}$, and $H_{\text{Mill-Proj}}$ is
+itself a hypothesis.
+
+\section{Discussion and conclusion}\label{sec:discussion}
+
+\subsection{Claim ledger}\label{ssec:claim-ledger}
+
+The following table records, for each load-bearing statement of the
+paper, the allowed epistemic label and the reason. Reviewers are
+asked to verify the paper's compliance with this ledger before
+accepting any individual claim.
+
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.42\textwidth}>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.32\textwidth}}
+\caption{Claim ledger.}\label{tab:claim-ledger}\\
+\toprule
+\textbf{Statement} & \textbf{Allowed label} & \textbf{Reason} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Statement} & \textbf{Allowed label} & \textbf{Reason} \\
+\midrule
+\endhead
+Cascade closure triad (instability $\to$ cascade $\to$ crystallisation)
+& Definition~\ref{def:cascade-closure}
+& The paper's organising definition. \\
+Conditional residual compositionality
+& Proposition~\ref{prop:resid-comp}
+& Conditional on Hypotheses~\ref{hyp:refinement-int} and~\ref{hyp:monotone}; both must be checked per rung sequence. \\
+P2 algebraic substrate package ($E_8$, $H_4$, $\Vsub$, $V_{24}$, octonions)
+& Imported (Theorem / Proposition)
+& Source paper \cite{CascadeAlgSubstrate} proves or cites each component. \\
+P3 / P4 finite-level state spaces and closure dynamics
+& Imported (Theorem)
+& Sources \cite{CascadeRefinementSpaces, CascadeClosureDynamics} prove finite-dimensional state-space and flow results. \\
+Capstone four-phase comonadic cycle
+& Imported, conditional
+& \cite{CascadeCapstone} states the cycle conditionally on its named hypotheses. \\
+Visible / non-visible decomposition
+& Interpretive Claim~\ref{int:visible-non-visible}
+& Based on structural docs; explicitly not a cosmogenesis theorem. \\
+Observer-process tuple $\Ocal = \langle B,S,M,G,I,C,A\rangle$
+& Definition~\ref{def:observer-process}
+& Architectural definition realised by ARIA \cite{ariaChessRepo, SmartARIAChess}; not a derivation of consciousness. \\
+ARIA architectural identification with $\Ocal$
+& Imported empirical fact + architectural identification
+& Two-tier mapping in Table~\ref{tab:runtime-map} is audited per file path; empirical anchor is the substrate-witness profile of \cite{SmartARIAChess}. \\
+Cross-regime projection-class identification
+& Hypothesis~\ref{hyp:mill-proj} ($H_{\text{Mill-Proj}}$)
+& Case studies share substrate by construction; cross-regime sharing is not independent confirmation. \\
+Per-Millennium reduction (RH, YM, BSD, NS, Hodge, PNP, Poincar\'e)
+& Imported, conditional
+& Each on its own named source hypothesis ($H_{\sigma\text{-fix}}$, $H_{\text{OS-lift}}$, $\ldots$); see Table~\ref{tab:millennium}. \\
+Consciousness / mind / qualia claims
+& Not claimed
+& \S\ref{ssec:claim-boundary} and \S\ref{ssec:aria-not-claimed}. \\
+Resolution of any Millennium problem
+& Not claimed
+& \S\ref{ssec:verdict-discipline}. \\
+Replacement for quantum mechanics
+& Not claimed
+& \S\ref{sec:motivation}. \\
+Refutation of Penrose Objective Reduction
+& Not claimed
+& \S\ref{sec:motivation}; OR is the historical bridge, not the opponent. \\
+\bottomrule
+\end{longtable}
+
+\subsection{What the paper consolidates}
+
+The paper consolidates the following. (i) A single mechanism name --- cascade
+closure --- for an operational pattern that recurs across passive
+response, active selection, cognitive substrate, and spectral mass
+projection. (ii) A finite, audit-anchored geometric substrate
+($\Vsub$ together with the operator $\Cphi = L_M + \pphi^{-2} I$)
+on which the response and residual components are mathematically explicit under the stated hypotheses. (iii) An
+architectural identification of an existing computational system
+(ARIA) as an observer-process implementation in the strong
+architectural sense, supported by an externally preregistered
+substrate-witness profile. (iv) A framework-level positioning of the
+seven Millennium-class problems as projection-class instances under
+the named hypothesis $H_{\text{Mill-Proj}}$, with each per-problem
+reduction's named conditional hypothesis listed verbatim from the
+corresponding source preprint.
+
+\subsection{What remains open}
+
+The following items remain open and are explicitly not closed by this
+paper.
+
+\begin{itemize}[leftmargin=*]
+\item Hypothesis~\ref{hyp:refinement-int} (rungwise gradient
+intertwining) and Hypothesis~\ref{hyp:monotone} (residual
+monotonicity under projection) are not generically discharged; their
+status per rung sequence must be checked.
+\item $H_{\min}$ and the meta-layer hypotheses $M1$--$M3$
+\cite{Cascade12D, CascadeMetaLayer} remain conditional in their
+source documents; the cascade-mechanism paper inherits that status.
+\item The visible / non-visible decomposition is interpretive; a
+cosmogenesis theorem is not supplied (\S\ref{sec:visible}).
+\item The seven per-Millennium named hypotheses listed in
+Table~\ref{tab:millennium} remain conditional in their source
+preprints; this paper does not discharge any of them.
+\item The honest-negatives in Appendix~\ref{app:field-signature-audit}
+(no $2T$ localisation; $\pphi$-cocycle weighted variants underperform;
+$\sigma$-fixed spectral count $\to$ Mellin-zero bridge is conjectural)
+constrain claims and are not predicted to flip with current methods.
+\item ARIA's full observer-process architecture is realised in the
+upstream \texttt{ariaChessRepo} \cite{ariaChessRepo}, not in the
+in-repo bundle; reproducibility of the full architecture requires
+the upstream repository.
+\end{itemize}
+
+\subsection{Closing}
+
+The cascade-closure mechanism is one name for one operational pattern.
+It does not solve the measurement problem; it does not derive
+consciousness; it does not resolve any Millennium-class problem. What
+it does is make a recurring pattern visible at a single name, anchor
+that pattern to a finite geometric substrate whose operator, spectral,
+and combinatorial structure are externally checkable, and identify
+the conditional bridges under which the pattern's natural extensions
+into open mainstream-mathematics problems remain open. This paper is
+a consolidation. Its mathematical core is imported. Its empirical
+anchor is the field-signature audit of
+Appendix~\ref{app:field-signature-audit}. Its restraint is
+load-bearing.
+
+\appendix
+
+\section{Field-signature audit (re-runnable empirical anchor)}\label{app:field-signature-audit}
+
+This appendix reproduces \texttt{papers/cascade-mechanism/FIELD\_SIGNATURE\_AUDIT.md},
+re-run 2026-05-02. Every load-bearing empirical claim in the main text
+points back to a row of this table.
+
+\subsection*{Verdict: GO}
+
+The local re-runnable checks (entries A--E below) passed at the precision
+claimed by their source papers. Source-paper / upstream-repository
+witnesses (entry F) remain separately marked as such. The data also
+surfaced three honest-negatives that constrain the paper's scope.
+
+\subsection*{A. \texorpdfstring{$\sigma$}{sigma}-attractor spectrum (RH / Millennium scaffolding)}
+Script: \texttt{papers/cascade-derivation/scripts/test\_sigma\_attractor\_spectrum.py}.
+\begin{itemize}[leftmargin=*]
+\item Q1 $\sigma$-fixed fraction $94/120 = 78.3\%$; target $\geq 50\%$.
+  \textbf{PASS.} Eigenvalues $\{9, 12, 14, 15\}$ are integer
+  ($\sigma$-fixed); the four irrational eigenvalues in $\Q(\sqrt{5})$
+  are $\sigma$-paired.
+\item Q2 2T-localisation $0.200$ vs baseline $0.200$ (target
+  $\geq 1.5\times$). \textbf{HONEST-NEGATIVE.} $\sigma$-fixed eigvecs do
+  not preferentially localise on the binary tetrahedral subgroup $2T$.
+\item Sim verdict text: ``conversion to a critical-line Mellin-shadow
+  zero claim requires the additional spectral-mode $\to$ Mellin-zero
+  correspondence (Conjecture \texttt{conj:spec\_to\_zero} in
+  rh-formal), which is not established by this script.''
+\end{itemize}
+
+\subsection*{B. Mass-spectrum chain forward derivations}
+Script: \texttt{papers/paper-v/scripts/run\_chain\_forward\_derivations\_v2.py}.
+9 of 9 multiplicative chain coefficients (Z, charm, W, down, bottom,
+Higgs, muon, tau, strange) match claimed values exactly under
+\texttt{Fraction} arithmetic, derived from $V_{600}$ primitives
+$\{\lambda_3, \lambda_4, \lambda_5, \lambda_7, V_0, \dots, V_5,
+R_I, R_D(2), R_D(3), R_D(4)\}$. Plus structural EM-splitting
+reclassification of neutron via forward-traceable $\alpha$
+correspondence.
+
+\subsection*{C. YM Build B\_YM\_P8 --- \texorpdfstring{$\Der(\OO)$}{Der(O)} and stabiliser}
+Script: \texttt{papers/millennium-ym/scripts/verify\_der\_O\_su3\_stabilizer.py}.
+$\dim \Der(\OO) = 14$ ($\mathfrak{g}_2$, classical Schafer-Jacobson)
+and $\dim \stab_{\Der(\OO)}(e_1) = 8$ ($\mathfrak{su}(3)$, classical)
+verified at exact rational precision with no prior assumption of
+$\mathfrak{g}_2$ / $\mathfrak{su}(3)$.
+
+\subsection*{D. Pentagonal-clock B5/B6}
+Script: \texttt{papers/cascade-derivation/scripts/derive\_pentagonal\_clock\_B5\_B6.py}.
+Order-10 class canonical $\tau^5 = -1$. Left-mult clock $T_\tau$
+decomposes $2I$ into 12 cycles of length 10. $\Fix(T^n) = \emptyset$
+for $1 \leq n < 10$; $\Fix(T^{10}) = 2I$. Unweighted Artin--Mazur
+zeta $\zeta_T(z) = (1 - z^{10})^{-12}$.
+
+\subsection*{E. Closure kernel passive-regime witness}
+Script: \texttt{papers/aria-closure-kernel/repro/verify\_kernel.py}.
+Shell sizes $[1, 12, 20, 12, 30, 12, 20, 12, 1]$ exact;
+$\|\Cphi^{-1}\| = 2.618034 = \pphi^2$ to machine precision; per-vertex
+correlation uniform across all 120 vertices (max $-$ min $= 2 \times
+10^{-15}$). \textbf{HONEST-NEGATIVE:} UNWEIGHTED variant wins at
+per-vertex correlation $0.976$ vs PHI\_GEOMETRIC $0.888$ and
+PHI\_ARITHMETIC $0.884$. $\pphi$-cocycle weighted variants lose; do
+not claim weighted-substrate selection.
+
+\subsection*{F. ARIA observer-process witness}
+Source: \texttt{papers/aria-chess-paper/paper/main.tex}.
+$18/18$ preregistered cortical correspondences hold at unchanged
+thresholds. Six drug/sleep EEG signatures pass on a single deterministic
+recurrent-layer trajectory at seed $42$. HCP brain functional
+connectivity degree-homogeneity (degree standard-deviation) places
+ARIA at $-11.58\sigma$ vs HCP baseline; the clustering-coefficient
+comparison is a separate $+6.80\sigma$ result and should not be
+conflated with the homogeneity figure.
+
+\subsection*{Honest-negatives the paper respects}
+\begin{enumerate}[leftmargin=*]
+\item $\sigma$-fixed eigvecs do not localise on $2T$. The 78.3\%
+  $\sigma$-fixed split is the only spectral RH witness; no $2T$
+  concentration claim allowed.
+\item $\pphi$-cocycle weighted kernel variants lose to UNWEIGHTED.
+  Use $\Cphi = L + \pphi^{-2} I$ only.
+\item Spectral-mode $\to$ Mellin-zero is conjectural
+  (\texttt{conj:spec\_to\_zero}). RH-related claims stay under
+  $H_{\sigma\text{-fix}}$.
+\end{enumerate}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

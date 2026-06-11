@@ -1,0 +1,359 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{microtype}
+
+\newcommand{\Vsix}{V_{600}}
+\newcommand{\Vtwentyfour}{V_{24}}
+\newcommand{\Lsix}{L_{600}}
+\newcommand{\Esix}{E_{600}}
+\newcommand{\Elift}{E_{\mathrm{lifted}}}
+\newcommand{\Eres}{E_{\mathrm{residual}}}
+\newcommand{\twoI}{2I}
+\newcommand{\twoT}{2T}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+% Avoid TeX-inserted hyphenated line breaks rendering as artifacts in some
+% viewers; keep breaks at existing hyphens.
+\hyphenpenalty=10000
+\exhyphenpenalty=100
+\setlength{\emergencystretch}{3em}
+
+\title{From Schl\"afli Decomposition to Spectral Bridge:\\
+\large A First Explicit Closure-Projection Channel in $\Vsix$}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{\parbox{0.92\textwidth}{\small
+\textbf{Status:} Synthesis note / programme map. Not peer-reviewed.
+
+\medskip
+This note introduces no new load-bearing mathematical claim.  It
+synthesises two previously published reproducible exact-arithmetic
+notes --- the Schl\"afli decomposition of the 600-cell~\cite{SmartSchlafli2026}
+and the 24--600 spectral bridge~\cite{SmartBridge2026} --- and
+explains their combined role as a first local-to-global spectral
+channel in the $\Vsix$ programme.  Both prior notes are
+self-contained and reproducible from public repositories; this note
+is a reader's map between them.
+}}
+\end{center}
+
+\bigskip
+
+\begin{abstract}
+The Schl\"afli decomposition of the 600-cell represents $\Vsix$ as
+the binary icosahedral group $\twoI$ and partitions it into five
+right cosets of the binary tetrahedral subgroup $\twoT$, each
+carrying intrinsic 24-cell structure.  The 24--600 spectral bridge
+then shows that the local $\lambda=12$ eigenspaces of these five
+24-cell sectors zero-extend exactly into the global $\lambda=12$
+eigenspace of the 600-cell Laplacian.  This note synthesises those
+two exact-arithmetic results and explains their combined role as a
+first explicit local-to-global spectral channel in the $\Vsix$ programme.
+No new physical claim is made.
+\end{abstract}
+
+\section{Why this synthesis note exists}\label{sec:why}
+
+Two reproducible exact-arithmetic notes have been published.  Read
+individually, each is narrow:
+
+\begin{itemize}
+  \item the Schl\"afli note~\cite{SmartSchlafli2026} proves the
+        five-sector finite geometry of the 600-cell;
+  \item the 24--600 spectral bridge~\cite{SmartBridge2026} proves
+        a single $\lambda=12$ local-to-global spectral lift.
+\end{itemize}
+
+Read together, they exhibit a pattern: a local shell structure
+inside the 600-cell does not merely sit inside the global geometry
+--- at a specific spectral value it couples \emph{exactly} to a
+global invariant sector.  The pattern is short and precise enough to
+warrant a brief synthesis.
+
+This note is a map, not a new claim-heavy paper.  Section~\ref{sec:dec}
+summarises the Schl\"afli decomposition; Section~\ref{sec:bridge}
+summarises the spectral bridge; Section~\ref{sec:nontrivial} explains
+why their combination is non-trivial; Section~\ref{sec:channel}
+defines the term ``closure-projection channel'' modestly;
+Section~\ref{sec:scope} states what is and is not established;
+Section~\ref{sec:programme} explains the role of the synthesis in the
+broader $\Vsix$ programme; Section~\ref{sec:repro} lists the
+dependency map and reproduction status.
+
+\section{Artifact I: the five 24-cell cosets}\label{sec:dec}
+
+The Schl\"afli note~\cite{SmartSchlafli2026} establishes, by exact
+$\mathbb{Q}(\sqrt 5)$ arithmetic, that:
+
+\[
+  \Vsix \;\cong\; \twoI, \qquad \twoT \subset \twoI, \qquad
+  [\twoI : \twoT] = 5,
+\]
+\[
+  \Vsix \;=\; C_0 \sqcup C_1 \sqcup C_2 \sqcup C_3 \sqcup C_4,
+  \quad C_i = \twoT\cdot g_i, \quad |C_i| = 24.
+\]
+Each coset $C_i$ is an isometric copy of the 24-cell as a metric
+subspace of $S^3$.  Two further structural facts are used below:
+
+\begin{itemize}
+  \item \textbf{Two distinct distance shells.}  Inside $\Vsix$, the
+        shortest non-zero squared distance is
+        $d^2_{600} = (3 - \sqrt 5)/2 \approx 0.382$ (the 600-cell
+        edge); inside each coset $C_i$, the shortest non-zero
+        squared distance between members is the next shell up,
+        $d^2_{24} = 1$.  The two graphs share \emph{no} edges: no
+        intra-coset pair is at separation $d^2_{600}$, and every
+        600-cell edge runs between two different cosets.
+  \item \textbf{Coset action.}  Right multiplication by $\twoI$
+        permutes the five cosets.  The kernel of this action is
+        exactly $\{\pm 1\}\subset\twoT$, and the image is $A_5 =
+        \twoI/\{\pm 1\}$ acting transitively on five points.
+\end{itemize}
+
+All three facts are certified by exact rational arithmetic; see
+\cite{SmartSchlafli2026} for the proofs and the reproduction
+instructions.
+
+\section{Artifact II: the $\lambda=12$ spectral bridge}\label{sec:bridge}
+
+For each coset $C_i$ let $L_{C_i}$ be the local 24-cell shell
+Laplacian (the unweighted combinatorial Laplacian of the
+$d^2_{24}=1$ graph on $C_i$), and let $\Lsix$ be the global
+600-cell shell Laplacian (the unweighted combinatorial Laplacian of
+the $d^2_{600}$ graph on $\Vsix$).  The bridge
+note~\cite{SmartBridge2026} establishes, by exact rational
+arithmetic, the following \emph{lift identity}:
+
+\begin{equation*}
+  \mathrm{lift}_i\bigl(E_{C_i}(12)\bigr) \;\subset\; \Esix(12),
+\end{equation*}
+where $\mathrm{lift}_i\colon\mathbb{R}^{C_i}\to\mathbb{R}^{\Vsix}$
+is zero-extension and $E_X(\lambda)$ denotes the
+$\lambda$-eigenspace of $L_X$.
+
+Stacking across the five cosets,
+\[
+  \Elift \;:=\; \bigoplus_{i=0}^{4}
+  \mathrm{lift}_i\bigl(E_{C_i}(12)\bigr),
+\]
+\[
+  \dim\Elift = 10, \qquad \dim\Esix(12) = 25.
+\]
+Under the $A_5$ action of Section~\ref{sec:dec} (after verifying
+that $\{\pm 1\}$ acts trivially on $\Esix(12)$),
+\[
+  \Elift \cong 2\!\cdot\!Y_5, \qquad
+  \Eres \cong 3\!\cdot\!Y_5, \qquad
+  \Esix(12) \cong 5\!\cdot\!Y_5,
+\]
+with $Y_5$ the 5-dimensional irreducible representation of $A_5$.
+
+The bridge is also \emph{selective}: $\lambda = 12$ is the only
+eigenvalue of $L_{C_i}$ that admits a full zero-extension.  At
+$\lambda = 0$ only the global constant (the symmetric sum of the
+five coset indicators) survives; at $\lambda \in \{4, 8, 10\}$
+these are not eigenvalues of $\Lsix$ at all (certified exactly),
+so the question is vacuous.
+
+\section{Why the bridge is non-trivial}\label{sec:nontrivial}
+
+Sections~\ref{sec:dec} and~\ref{sec:bridge} use \emph{different
+Laplacians on different graphs}.  The local Laplacian $L_{C_i}$ is
+built from the 24-cell edge graph on 24 vertices at squared
+distance $d^2_{24}=1$.  The global Laplacian $\Lsix$ is built from
+the 600-cell edge graph on 120 vertices at squared distance
+$d^2_{600}=(3-\sqrt 5)/2$.  These are not subgraphs of each other:
+no edge of $L_{C_i}$ is an edge of $\Lsix$, and conversely no
+$\Lsix$-edge joins two members of the same coset.
+
+In particular, for a function $v$ supported on a single coset
+$C_i$, the value $(\Lsix\, v)(u)$ at a vertex $u\notin C_i$ is in
+general non-zero --- it is minus the sum of $v$ over the global
+neighbours of $u$ that happen to lie in $C_i$.  The zero-extension
+of $v$ is therefore generically \emph{not} a $\Lsix$-eigenvector.
+
+The content of the lift identity is that, on the local
+$\lambda=12$ eigenspace specifically, all such off-coset
+couplings cancel \emph{identically}: a finite-rank linear
+condition that turns out to be satisfied at $\lambda=12$ and
+nowhere else in the local spectrum.
+
+\medskip
+\noindent
+Put compactly: \emph{the bridge is not a restriction theorem; it
+is a cancellation theorem.}  Equivalently, the $\lambda=12$ lift
+is a finite-dimensional compatibility condition between a local
+shell operator and a global shell operator built from different
+distance shells.
+
+\section{Closure-projection channel: a careful definition}\label{sec:channel}
+
+\begin{definition}[Closure-projection channel, working]\label{def:cpc}
+A \emph{closure-projection channel} (in the sense of the present
+$\Vsix$ programme) is a reproducible local-to-global compatibility
+relation: a class of modes defined on a local geometric sector
+projects, lifts, or embeds exactly into a global invariant sector
+of a larger geometry.
+\end{definition}
+
+Specialised to the 24--600 case:
+
+\begin{quote}
+The local $\lambda=12$ eigenspaces on the five 24-cell sectors of
+the 600-cell zero-extend exactly into the global $\lambda=12$
+eigenspace of $\Lsix$, and that lift is $A_5$-stable.
+\end{quote}
+
+Definition~\ref{def:cpc} is \emph{interpretive}.  The formal
+mathematical content is the combination of the two exact results
+cited in Sections~\ref{sec:dec} and~\ref{sec:bridge}: the
+five-coset partition and the $\lambda=12$ lift identity with its
+$A_5$ decomposition.  The phrase ``closure-projection channel''
+adds no new theorem; it is a name for the pattern.
+
+\section{What is and is not established}\label{sec:scope}
+
+\noindent\textbf{Established (by the two cited artifacts):}
+\begin{itemize}
+  \item $\Vsix$ decomposes into five 24-cell cosets (exact).
+  \item The induced coset action descends to $A_5$ (exact).
+  \item Local 24-cell shell operators and the global 600-cell
+        shell operator are distinct objects on different distance
+        shells (exact).
+  \item The local $\lambda=12$ eigenspaces zero-extend into the
+        global $\lambda=12$ sector (exact, $\mathbb{Q}$-rational).
+  \item The lifted subspace $\Elift$ is $A_5$-stable and
+        decomposes as $2\!\cdot\!Y_5$ (exact characters).
+\end{itemize}
+
+\noindent\textbf{Not established (in this note or in the two cited
+artifacts):}
+\begin{itemize}
+  \item No derivation of particle masses, the Standard Model, or
+        any specific physical observable.
+  \item No derivation of quantum mechanics or General Relativity.
+  \item No claim that $\lambda=12$ is physically realised, or that
+        the 600-cell is a physical structure.
+  \item No claim that all closure projection is explained by this
+        example.
+  \item No proof of the Riemann hypothesis or any number-theoretic
+        statement.
+\end{itemize}
+
+The synthesis is mathematical and interpretive only.
+
+\section{Why this matters for the $\Vsix$ programme}\label{sec:programme}
+
+The $\Vsix$ programme requires explicit mechanisms by which local
+finite-geometric structures can participate in global invariant
+sectors.  The Schl\"afli decomposition supplies local sectors; the
+spectral bridge supplies an exact compatibility channel.  Together,
+they provide a finite test case for the broader idea of
+\emph{closure projection}.
+
+The next mathematical step is not to identify this channel with a
+physical observable, but to formalise the general selection
+principle: \emph{given a local sector, a local operator, a global
+operator, and a projection/lift map, when does a local eigenspace
+contribute to a global invariant sector?}  The $\lambda=12$ lift in
+the 24--600 case is one positive instance and one negative-control
+template (at every other local eigenvalue) for that general
+question.
+
+\section{Reproducibility and dependency map}\label{sec:repro}
+
+This synthesis note introduces no new computation, so it carries no
+new formal certificate of its own.  The dependency on the two prior
+artifacts is direct:
+
+\medskip
+\noindent
+\begin{tabular}{p{0.30\textwidth}p{0.40\textwidth}p{0.22\textwidth}}
+\toprule
+Artifact & Role & Repro status \\
+\midrule
+Schl\"afli decomposition~\cite{SmartSchlafli2026}
+  & Proves the five 24-cell cosets and the $A_5$ coset action
+  & exact $\mathbb{Q}(\sqrt 5)$ certificate \\
+\addlinespace
+24--600 spectral bridge~\cite{SmartBridge2026}
+  & Proves the $\lambda=12$ local-to-global lift identity
+  & exact $\mathbb{Q}$-rational certificate \\
+\addlinespace
+This synthesis note
+  & Explains the combined interpretation
+  & no new formal certificate \\
+\bottomrule
+\end{tabular}
+\medskip
+
+Both prior artifacts are public:
+\begin{itemize}
+  \item \url{https://github.com/vfd-org/the-24-600-spectral-bridge}
+        --- run \texttt{pytest closure\_transform\_engine/tests/}
+        from a clone to re-assert every certificate-level claim of
+        both prior notes.
+\end{itemize}
+
+\smallskip
+\noindent
+Although named after the spectral-bridge artifact, this repository
+now serves as the public $\Vsix$ foundation bundle for all three
+notes:
+\begin{itemize}
+  \item Paper 1 (Schl\"afli decomposition): \texttt{docs/}\allowbreak\texttt{01-schlafli-decomposition/}
+  \item Paper 2 (spectral bridge): \texttt{docs/}\allowbreak\texttt{02-spectral-bridge/}
+  \item Paper 3 (this synthesis): \texttt{docs/}\allowbreak\texttt{03-closure-projection-channel/}
+\end{itemize}
+
+\bigskip
+\noindent
+\textbf{End of synthesis.}  The next paper in this programme will
+attempt to formalise Definition~\ref{def:cpc} into a general
+selection principle, but is out of scope here.
+
+\begin{thebibliography}{9}
+\bibitem[Smart 2026a]{SmartSchlafli2026}
+L.~Smart, \emph{The Schl\"afli Decomposition of the 600-cell:
+Five 24-cell Cosets and the Induced $A_5$ Action.}
+Public reproducible note, Institute of Vibrational Field Dynamics,
+2026.  Repository:
+\url{https://github.com/vfd-org/the-24-600-spectral-bridge}
+(folder \texttt{docs/01-schlafli-decomposition/}).
+\bibitem[Smart 2026b]{SmartBridge2026}
+L.~Smart, \emph{The 24--600 Spectral Bridge: A selective $\lambda=12$
+eigenspace embedding from five 24-cell cosets into the 600-cell.}
+Public reproducible note, Institute of Vibrational Field Dynamics,
+2026.  Repository:
+\url{https://github.com/vfd-org/the-24-600-spectral-bridge}
+(folder \texttt{docs/02-spectral-bridge/}).
+\bibitem[Coxeter 1973]{Coxeter1973}
+H.\,S.\,M.~Coxeter, \emph{Regular Polytopes}, 3rd ed., Dover, 1973.
+\bibitem[Conway--Sloane 1999]{ConwaySloane1999}
+J.\,H.~Conway and N.\,J.\,A.~Sloane, \emph{Sphere Packings, Lattices
+and Groups}, 3rd ed., Springer-Verlag, 1999.
+\bibitem[Conway et al.\ 1985]{ConwayAtlas1985}
+J.\,H.~Conway, R.\,T.~Curtis, S.\,P.~Norton, R.\,A.~Parker and
+R.\,A.~Wilson, \emph{Atlas of Finite Groups}, Oxford University
+Press, 1985.
+\end{thebibliography}
+
+\end{document}

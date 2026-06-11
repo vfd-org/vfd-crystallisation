@@ -1,0 +1,241 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Oo}{\mathbb{O}}
+\newcommand{\Gtwo}{G_2}
+\newcommand{\Spin}{\mathrm{Spin}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Stab}{\mathrm{Stab}}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\Kcal}{\mathcal{K}}
+
+\title{Observer Rung, $G_2$ Automorphisms, and the Observational Constraint}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed).
+
+\begin{abstract}
+Paper XXIX~\citep{SmartXXIX} identifies the observer as a constraint substructure on the cascade with a localised-basin admissibility condition (the LMC theorem); Paper XXXI~\citep{SmartXXXI} formulates measurement as sector separation. The present paper completes the observer line by identifying the observer rung (rung $8$ of the cascade, the octonion algebra $\Oo$) with a concrete automorphism group, proposed to be the exceptional Lie group $\Gtwo = \Aut(\Oo)$.
+
+Main structural results (all conditional on the foundations F1--F8 of Paper XXXVI~\citep{SmartXXXVI} and Paper XLII's partial-removability theorem for $\delta U_{\mathrm{rel}}$~\citep{SmartXLII}):
+\begin{itemize}
+\item (\emph{Identification}) The observer rung of the cascade is the octonion algebra $\Oo$, and the admissible-observer automorphism group is $\Aut(\Oo) = \Gtwo$, the 14-dimensional exceptional Lie group.
+\item (\emph{Structural theorem}) The LMC theorem of Paper XXIX is equivalent, under this identification, to the statement that admissible observers are $\Gtwo$-equivariant sub-structures of the cascade's $S^7 = \Spin(8)/\Spin(7)$ sphere.
+\item (\emph{Structural proposal}) Accessible observables at the observer rung are those invariants of $\Gtwo$ acting on the $\Oo$-sector of the cascade closure functional; inaccessible observables are those broken by the $\Gtwo$-action.
+\item (\emph{Compatibility with decoherence}) The $\Gtwo$ observer structure is compatible with the $H_4 \to \Cl(1,3)$ coarsening of Paper XLIV~\citep{SmartXLIV}: admissible observer frames are stable under the coarsening functor.
+\end{itemize}
+The paper is the capstone of the observer line in the VFD programme; it does not add new physical predictions but it organises the observer, measurement, probability, and information pieces into a single $\Gtwo$-automorphism framework.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The VFD programme develops the observer concept across four papers:
+\begin{itemize}
+\item Paper XXIX~\citep{SmartXXIX}: observer as constraint substructure, with LMC theorem on admissible basins.
+\item Paper XXX~\citep{SmartXXX}: Born rule from K\"ahler uniqueness + Gleason.
+\item Paper XXXI~\citep{SmartXXXI}: measurement as sector separation.
+\item Paper XXXIII~\citep{SmartXXXIII}: universal measurement principle.
+\end{itemize}
+What has been missing is a mathematically sharp identification of the observer rung's automorphism structure. This paper proposes that structure is $\Gtwo = \Aut(\Oo)$, the exceptional Lie group of octonion automorphisms.
+
+\subsection{Why $\Gtwo$}
+
+The cascade's $8$-rung is identified in Paper XXXVI~\citep{SmartXXXVI} as the octonion-algebra rung, with the tesseract's $\mathbb{Z}_2^4$ grading factoring through the $8$-dimensional octonionic sub-polytope. $\Gtwo = \Aut(\Oo)$ is the natural automorphism group of this rung: it is $14$-dimensional, compact, simply connected, and fits inside $\Spin(7)$ as a stabiliser of a unit octonion.
+
+Under the cascade's structural assignment, $S^7 = \Spin(8)/\Spin(7)$ is the seven-sphere of unit octonions, carrying both the $\Spin(8)$ isometry action and the $\Gtwo$ automorphism action. Admissible observers are conjectured (per Paper XXIX) to sit as localised basins on this sphere; the $\Gtwo$-automorphism structure characterises their admissible degrees of freedom.
+
+\subsection{Scope}
+
+\begin{itemize}
+\item Formalise the identification observer rung $=\Oo$, admissible-observer automorphisms $=\Gtwo$ (\S\ref{sec:G2-identification}).
+\item Recast the LMC theorem in $\Gtwo$-language (\S\ref{sec:LMC-recast}).
+\item Characterise accessible versus inaccessible observables (\S\ref{sec:accessible}).
+\item Verify compatibility with decoherence (\S\ref{sec:decoherence}).
+\item State the open questions for further observer-rung development (\S\ref{sec:open}).
+\end{itemize}
+
+%==================================================================
+\section{The $\Gtwo$-Identification}\label{sec:G2-identification}
+%==================================================================
+
+\subsection{Structural placement}
+
+\begin{proposition}[Obs1: $\Gtwo$ automorphism of the observer rung (structural proposal)]\label{prop:G2-identification}
+The cascade's observer rung (rung $8$) carries the octonion algebra $\Oo$, and the admissible-observer automorphism group is
+\begin{equation}
+\Aut_{\mathrm{obs}} \;=\; \Gtwo \;=\; \Aut(\Oo).
+\end{equation}
+\end{proposition}
+
+\begin{proof}[Argument]
+Paper XXXVI F3 places rung $8$ of the cascade at the octonionic $8$-vertex sub-polytope of the tesseract (rung $16$), identified with the Fano-plane multiplicative structure of $\Oo$~\citep{SmartXXXVI}. The natural automorphism group of an algebra is the group of algebra-isomorphisms; for $\Oo$, this is $\Gtwo$ (Cartan 1914, or \citep{Baez2002}).
+
+Under the admissibility hypothesis of Paper XXIX~\citep{SmartXXIX}, an admissible observer is a constrained substructure whose allowed transformations preserve the algebraic structure of its domain (otherwise the observer would lose its characterising constraint). On the $8$-rung, this domain is $\Oo$, and the structure-preserving transformations are $\Gtwo$.
+\end{proof}
+
+\subsection{The $S^7 = \Spin(8)/\Spin(7)$ embedding}
+
+The unit octonions form the sphere $S^7 \subset \Oo \cong \mathbb{R}^8$. Two Lie-group structures act on $S^7$:
+\begin{itemize}
+\item $\Spin(8)$: the isometry group (as a round sphere), acting transitively with stabiliser $\Spin(7)$, so $S^7 = \Spin(8) / \Spin(7)$.
+\item $\Gtwo$: the automorphism group (as an algebraic structure of the ambient $\Oo$), acting on $S^7$ with stabiliser $\mathrm{SU}(3)$, so $S^7 / \Gtwo$ has a four-parameter family of orbits (equivalently, $\Gtwo \subset \Spin(7)$ as a stabiliser of a unit octonion).
+\end{itemize}
+
+\begin{proposition}[Obs2: Admissible observers as $\Gtwo$-equivariant basins]\label{prop:admissible-basins}
+Under Proposition~\ref{prop:G2-identification} and the LMC theorem of~\citep{SmartXXIX}, admissible observer basins on $S^7$ are $\Gtwo$-equivariant substructures, i.e., subsets closed under the $\Gtwo$-automorphism action.
+\end{proposition}
+
+\begin{proof}[Argument]
+The LMC theorem characterises admissible basins as localised closure-coherent substructures on the cascade. Under Proposition~\ref{prop:G2-identification}, admissibility requires preservation of the algebra structure of $\Oo$, which is the $\Gtwo$-action. Hence admissible basins on the $8$-rung are $\Gtwo$-equivariant.
+\end{proof}
+
+%==================================================================
+\section{Recasting the LMC Theorem}\label{sec:LMC-recast}
+%==================================================================
+
+Paper XXIX's LMC theorem states that an admissible observer is characterised by a localised-basin coherence condition. Under Proposition~\ref{prop:G2-identification}, this reformulates as:
+
+\begin{theorem}[LMC in $\Gtwo$-language]\label{thm:LMC-G2}
+Let $B \subset S^7$ be a closure-coherent basin. $B$ is an admissible observer in the sense of Paper XXIX iff $B$ is $\Gtwo$-equivariant and the closure field $\Phi$ restricted to $B$ has vanishing cross-basin coherence with respect to the $\Gtwo$-action.
+\end{theorem}
+
+\begin{proof}
+$(\Rightarrow)$ An admissible observer under~\citep{SmartXXIX} has by definition a localised coherent basin and vanishing off-basin coherence. By Proposition~\ref{prop:admissible-basins}, the basin is $\Gtwo$-equivariant.
+
+$(\Leftarrow)$ A $\Gtwo$-equivariant basin with vanishing cross-basin coherence satisfies the conditions of Paper XXIX's Definition of an admissible basin, and hence defines an admissible observer.
+\end{proof}
+
+\begin{remark}[Simplification]
+The $\Gtwo$-equivariant reformulation is cleaner than Paper XXIX's prose definition: the admissibility condition becomes a single algebraic constraint (equivariance under a known Lie group), rather than a list of basin properties. This is the main structural advantage of the $\Gtwo$-identification.
+\end{remark}
+
+%==================================================================
+\section{Accessible versus Inaccessible Observables}\label{sec:accessible}
+%==================================================================
+
+\subsection{Invariants under $\Gtwo$}
+
+\begin{proposition}[Obs3: Accessible observables on the observer rung]\label{prop:accessible}
+The observables accessible to a $\Gtwo$-admissible observer on the $8$-rung of the cascade are the $\Gtwo$-invariants of the closure functional $F$ restricted to $\Oo$. Concretely, these are:
+\begin{itemize}
+\item The octonion norm $|x|^2 = \bar{x} x$ for $x \in \Oo$ (the unique degree-$2$ $\Gtwo$-invariant).
+\item The trace $\Tr(x) = x + \bar{x}$ (real part).
+\item Higher-degree $\Gtwo$-invariants constructible from the first two.
+\end{itemize}
+Observables that break $\Gtwo$-symmetry (e.g., a specific choice of imaginary unit in $\Oo$) are inaccessible to admissible observers on this rung.
+\end{proposition}
+
+\subsection{Measurement selection rules}
+
+\begin{remark}[Measurement restrictions]
+Under Proposition~\ref{prop:accessible}, any cascade-level measurement at the observer rung can only read off $\Gtwo$-invariant quantities. Observables that require a choice of imaginary unit (i.e., a non-$\Gtwo$-invariant decomposition of $\Oo$) are not measurable at this rung; they are observable only by descending to the $16$-rung (information rung, $\Cl(1,3)$) where the $\Gtwo$-symmetry is broken by the Clifford-algebra structure. This gives a structural distinction between ``observer-level'' (coarse, $\Gtwo$-invariant) and ``information-level'' (fine, $\Cl(1,3)$-structured) observables.
+\end{remark}
+
+%==================================================================
+\section{Compatibility with Decoherence}\label{sec:decoherence}
+%==================================================================
+
+Paper XLIV~\citep{SmartXLIV} introduces the coarsening functor $\Kcal : H_4 \to \Cl(1,3)$ implementing decoherence as a cross-rung process. The observer rung $8$ sits below the information rung $16$ in the cascade; Paper XLIV's coarsening operates at the $H_4 \to \Cl(1,3)$ level, not directly at the $\Cl(1,3) \to \Oo$ level. However, any observer-level observable ($\Gtwo$-invariant, Proposition~\ref{prop:accessible}) must be well-defined on the $\Cl(1,3)$ state-space as well.
+
+\begin{proposition}[Obs4: Stability under coarsening]\label{prop:coarsening-stable}
+$\Gtwo$-admissible observer frames are stable under the coarsening functor $\Kcal$ of Paper XLIV: the pushforward $\Kcal_*(\rho)$ of an $\Gtwo$-equivariant density matrix $\rho$ on $H_4$ yields a density matrix on $\Cl(1,3)$ whose induced observer-rung pullback is again $\Gtwo$-equivariant.
+\end{proposition}
+
+\begin{proof}[Argument]
+The coarsening $\Kcal$ commutes with the $\Gtwo$-action on the underlying closure-field substrate because $\Gtwo$ acts only on the $8$-rung content, which survives the $H_4 \to 16$ projection as the triality-equivariant sub-structure (Paper XLIV Proposition~3). Hence $\Kcal \circ \Gtwo = \Gtwo \circ \Kcal$ on the relevant state-space data, giving the stability result.
+\end{proof}
+
+This compatibility is important: it means observer admissibility at the $\Gtwo$-rung is preserved under the decoherence channel, so the measurement framework does not break down as the system dephases.
+
+%==================================================================
+\section{Connection to Paper XLII's $\delta U_{\mathrm{rel}}$}\label{sec:dUrel}
+%==================================================================
+
+Paper XLII~\citep{SmartXLII} splits $\delta U_{\mathrm{rel}} = \delta U^{\mathrm{gauge}} + \delta U^{\mathrm{phys}}$; the gauge part is removed by observer-frame transformations. The present paper's $\Gtwo$-identification specifies those transformations: $\mathcal{G}_{\mathrm{obs}}$ in Paper XLII is (a subgroup of) $\Gtwo$.
+
+\begin{proposition}[Obs5: $\Gtwo$ as the observer gauge group]\label{prop:G2-as-gauge}
+The admissible observer-frame transformation group $\mathcal{G}_{\mathrm{obs}}$ of Paper XLII is $\Gtwo$ (or a specified subgroup, depending on the specific observer class). The physical residual $\delta U^{\mathrm{phys}}$ of Paper XLII lives in the complement of $\Gtwo$-orbits in the $\delta U_{\mathrm{rel}}$ space.
+\end{proposition}
+
+\begin{proof}[Argument]
+Paper XLII's partial-removability theorem identifies $\mathcal{G}_{\mathrm{obs}}$ as the admissible observer-frame group without pinning its specific structure. Under Proposition~\ref{prop:G2-identification}, the admissible-observer automorphism group is $\Gtwo$; hence $\mathcal{G}_{\mathrm{obs}} = \Gtwo$ (or subgroup thereof).
+\end{proof}
+
+This gives a concrete finite-dimensional (14-dim) gauge group for the observer framework, replacing the abstract $\mathcal{G}_{\mathrm{obs}}$ of Paper XLII.
+
+%==================================================================
+\section{Falsifiable Predictions}\label{sec:predictions}
+%==================================================================
+
+\begin{description}
+\item[\textbf{O1}] Observer-level accessibility: observables at the cascade's observer rung are $\Gtwo$-invariants. Prediction: no cascade-level experiment at the observer rung can distinguish between two octonions related by a $\Gtwo$-automorphism. \emph{Status}: consistent with no observed octonionic asymmetry in physics.
+\item[\textbf{O2}] Stability of observer admissibility under decoherence (Proposition~\ref{prop:coarsening-stable}). \emph{Status}: theoretical consistency check.
+\item[\textbf{O3}] $\delta U^{\mathrm{phys}}$ residual (Paper XLII) lives in the $\Gtwo$-complement. A specific atom-interferometry phase shift with $\Gtwo$-non-invariant dependence on closure-field setup would test this. \emph{Status}: unobserved; prediction testable in the experimental target of Paper XLII.
+\item[\textbf{O4}] Observer-rung mass scale: under the cascade shell-depth placement, rung $8$ corresponds to $\varphi^{-N_{\mathrm{obs}}}$ with $N_{\mathrm{obs}}$ to be determined; tentatively $N_{\mathrm{obs}} \sim 8$, giving a mass scale $m_P \cdot \varphi^{-8} \approx 2 \times 10^{17}$~GeV. This is speculative and not derived.
+\end{description}
+
+%==================================================================
+\section{Scope, Open Questions, and Conclusion}\label{sec:open}
+%==================================================================
+
+\textbf{What this paper establishes}: an identification of the cascade observer rung's automorphism group as $\Gtwo$; an equivalent $\Gtwo$-formulation of the LMC theorem; characterisation of observer-rung accessible observables as $\Gtwo$-invariants; compatibility with decoherence (Paper XLIV); identification of the observer gauge group for Paper XLII.
+
+\textbf{Open}:
+\begin{enumerate}
+\item Determination of whether $\mathcal{G}_{\mathrm{obs}}$ is all of $\Gtwo$ or a specific subgroup (e.g., $\mathrm{SU}(3)$).
+\item Full Weyl-group / representation-theoretic analysis of the $\Gtwo$-action on cascade-accessible sectors.
+\item Explicit construction of the observer-rung Hamiltonian as a $\Gtwo$-invariant functional.
+\item Connection to F7 of Paper XXXVI: is there a $\Gtwo$-analogue of the Fierz--Pauli uniqueness theorem for the observer rung?
+\item Structural place of consciousness (per~\citep{SmartXXIX}) in the $\Gtwo$ framework.
+\end{enumerate}
+
+\textbf{Dependencies}: Paper XXIX, XXXVI, XLII, XLIV.
+
+\subsection{Conclusion}
+
+The observer rung of the VFD cascade is identified with the octonion algebra $\Oo$, and the admissible-observer automorphism group with the exceptional Lie group $\Gtwo = \Aut(\Oo)$. This identification recasts the LMC theorem (Paper XXIX) in clean algebraic form, characterises observer-rung accessible observables as $\Gtwo$-invariants, and ties the observer framework to the information-rung decoherence (Paper XLIV) and the nonlinear residual (Paper XLII). The paper completes the observer line of the VFD programme at a structural level, setting up the next phase: explicit observer-mechanism construction and experimental comparison.
+
+%==================================================================
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{SmartXXIX} L. Smart, \emph{Observer as Constraint Substructure}, Paper XXIX, VFD Programme, 2026.
+\bibitem{SmartXXX} L. Smart, \emph{Born Rule from K\"ahler Uniqueness plus Gleason}, Paper XXX, VFD Programme, 2026.
+\bibitem{SmartXXXI} L. Smart, \emph{Measurement as Sector Separation}, Paper XXXI, VFD Programme, 2026.
+\bibitem{SmartXXXIII} L. Smart, \emph{Universal Measurement Principle}, Paper XXXIII, VFD Programme, 2026.
+\bibitem{SmartXXXVI} L. Smart, \emph{Cascade Foundations: F1--F8}, Paper XXXVI, VFD Programme, 2026.
+\bibitem{SmartXLII} L. Smart, \emph{Physical Meaning of $\delta U_{\mathrm{rel}}$}, Paper XLII, VFD Programme, 2026.
+\bibitem{SmartXLIV} L. Smart, \emph{Information Rung and Decoherence}, Paper XLIV, VFD Programme, 2026.
+\bibitem{Baez2002} J. C. Baez, \emph{The Octonions}, Bulletin of the American Mathematical Society 39, 145--205 (2002).
+
+\end{thebibliography}
+
+\end{document}

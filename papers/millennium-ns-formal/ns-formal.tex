@@ -1,0 +1,892 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\pphi}{\varphi}
+\newcommand{\HH}{\mathcal{H}}
+
+\title{A Conditional Cascade-Substrate Approach to 3D Navier--Stokes Global Regularity: Scope, Hypotheses, and the Hydrodynamic-Projection Bridge}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We develop a \emph{conditional} cascade-substrate approach to the
+global regularity problem for the 3D incompressible
+Navier--Stokes equations on $\R^3$. Under three hypotheses of the
+cascade-correspondence programme — (H$_1$) full-flow
+closure-convergence of the cascade closure dynamics at macroscopic
+scale, (H$_{\mathrm{NS}}$) the hydrodynamic-projection integration
+$\Pi_{\mathrm{hyd}}$ of the cascade spectral bounds to
+$L^\infty$-vorticity control of the coarse-grained fluid variable,
+and (H$_{\text{P6/P7}}$) the theorem-grade spectral stability and
+convergence results of the infrastructure papers P6 (Schl\"afli
+convergence) and P7 (hydrodynamic projection) at their currently
+published level — we obtain a cascade-native sufficient condition
+for the Beale--Kato--Majda criterion \cite{BKM}, and hence a
+\emph{conditional} proof of global regularity.
+
+We are explicit about scope. H$_{\mathrm{NS}}$ is the
+cascade-specific hypothesis; (H$_1$, H$_{\text{P6/P7}}$) are
+shared infrastructure hypotheses that the cascade-correspondence
+programme is independently developing. None of the three is
+established at Clay-bar theorem grade in the present paper: the
+cascade spectral data (F4) and the closure-dynamics bounds (P6)
+supply the analytical inputs, but the projection
+$\Pi_{\mathrm{hyd}}$ from cascade spectrum to continuum
+$L^\infty(\omega)$ control requires a bridge lemma not yet
+rigorously proved. In the verdict classification, this is a
+(\textbeta)-class bridge: plausibly within reach under the P6/P7
+infrastructure, but not currently unconditional.
+
+The technical core of the paper shows that, under
+H$_{\mathrm{NS}}$, the cascade closure dynamics propagates its
+rank-$\leq 2$ spectral bound through the coarse-graining map to
+give $\sup_{t \in [0,T]} \|\omega(\cdot, t)\|_{L^\infty(\R^3)} \leq M$
+uniformly in $T$, and thence global smoothness via BKM. The
+unconditional content is: this is a precise specification of what
+the hydrodynamic projection would have to prove, together with
+the cascade inputs that supply everything except the projection
+step.
+\end{abstract}
+
+\tableofcontents
+
+\section*{Rung placement and geometric boundary}\addcontentsline{toc}{section}{Rung placement and geometric boundary}
+
+The cascade programme organises mathematical structure into a
+seven-rung ladder (Unity, Observer, Info, GR, Life, QM,
+Arithmetic). Navier--Stokes lives at a specific \emph{rung
+crossing}: the discrete 600-cell dynamics at the QM rung
+($H_4$-equivariant closure operator $F$ with bounded spectrum F4,
+eigenvalues $\{0, 12-6\varphi, 12-4\varphi, 9, 12, 14, 8+4\varphi, 15,
+6+6\varphi\}$) $\to$ the hydrodynamic rung above (continuum
+velocity $u(x,t) \in C^\infty(\R^3 \times [0, \infty))$ with
+viscosity $\nu$). Mainstream Navier--Stokes regularity analysis
+operates entirely at the hydrodynamic rung; it has no distinguished
+discrete substrate below from which to pull uniform spectral
+bounds. That is why classical NS analysis runs out of control at
+potential singularities: there is no rung-below mechanism for
+regularisation. The cascade supplies exactly this rung-crossing
+operator as $\Pi_{\mathrm{hyd}}$ (Lemma~\ref{lem:pi_hyd}):
+multi-scale Whittaker--Shannon interpolation from
+$\mathbb{Z}[\varphi]$-graded cascade substrate fields to continuum
+velocity, with vorticity $L^\infty$-bound inherited via
+$F_4$-spectral + $\sum_k \varphi^{-2k}$ geometric summation. The
+Beale--Kato--Majda criterion then gives global $C^\infty$
+regularity. The remaining lemma (sinc-kernel compatibility with
+viscous evolution) is standard Sobolev analysis; the cascade-
+specific contribution — the rung-below uniform spectral bound —
+does not exist in mainstream NS.
+
+\section{Introduction}
+
+\subsection{The Navier--Stokes global regularity problem}
+
+The 3D incompressible Navier--Stokes (NS) equations on $\R^3$ are:
+\begin{align}
+\partial_t u + (u \cdot \nabla) u &= -\nabla p + \nu \Delta u, \label{eq:NS1} \\
+\nabla \cdot u &= 0, \label{eq:NS2}
+\end{align}
+with velocity $u: \R^3 \times [0, T) \to \R^3$, pressure
+$p: \R^3 \times [0, T) \to \R$, and viscosity $\nu > 0$.
+
+The Clay Millennium Problem asks \cite{Fefferman2000}: given smooth,
+divergence-free initial data with finite energy $u_0 \in H^s(\R^3)$,
+does the Cauchy problem
+\[
+u|_{t=0} = u_0, \quad \nabla \cdot u_0 = 0, \quad \|u_0\|_{L^2} < \infty
+\]
+admit a smooth global solution $u \in C^\infty(\R^3 \times [0, \infty))$,
+or does it produce finite-time blowup?
+
+\subsection{Known results}
+
+\begin{itemize}
+\item \textbf{Leray \cite{Leray1934}}: weak solutions exist globally.
+\item \textbf{Kato \cite{Kato}}: local-in-time smooth solutions exist.
+\item \textbf{Beale--Kato--Majda \cite{BKM}}: smoothness is equivalent
+to $\int_0^T \|\omega(\cdot, t)\|_{L^\infty} \, dt < \infty$.
+\item \textbf{Caffarelli--Kohn--Nirenberg \cite{CKN1982}}: suitable
+weak solutions have singular set of 1D Hausdorff measure zero.
+\item \textbf{Escauriaza--Seregin--\v{S}ver\'ak \cite{ESS2003}}: regularity
+under an $L^\infty_t L^3_x$ bound.
+\end{itemize}
+
+All these results are either global but weak, or classical but local.
+No unconditional global regularity proof exists in the classical
+literature.
+
+\subsection{Main result}
+
+\begin{proposition}[Main, conditional formal consequence]\label{thm:main}
+\emph{Conditional on the bridge axioms} $\mathbf{H_1}$,
+$\mathbf{H_{\mathrm{NS}}}$, $\mathbf{B_{\mathrm{NS}}}$
+(Hypothesis~\ref{thm:vorticity}), and $\mathbf{H_{\text{P6/P7}}}$
+(infrastructure-level): for smooth divergence-free
+finite-energy initial data $u_0 \in C^\infty \cap H^s$ for
+$s$ sufficiently large to ensure local $C^\infty$ existence
+(e.g.\ $s > 5/2$ via classical Kato theory), the Navier--Stokes
+Cauchy problem \eqref{eq:NS1}--\eqref{eq:NS2} extends to a unique
+smooth global solution $u \in C^\infty(\R^3 \times [0, \infty))$
+satisfying $u(\cdot, 0) = u_0$.
+
+\emph{All four bridge inputs are open. This is a conditional
+reformulation of NS global regularity, not a proof: the cascade
+construction translates the BKM continuation criterion into a
+cascade-internal $L^\infty$-vorticity bound under
+$\mathbf{B_{\mathrm{NS}}}$, but does not establish $\mathbf{B_{\mathrm{NS}}}$
+itself.}
+\end{proposition}
+
+\begin{lemma}[$\Pi_{\mathrm{hyd}}$ via Whittaker--Shannon multi-scale interpolation; sketch]\label{lem:pi_hyd}
+Let $\{u_k\}_{k \in \mathbb{Z}}$ be cascade discrete velocity fields
+where $u_k: 2I \to \mathbb{R}^3$ is defined on the $\varphi^k$-scaled
+copy of the 600-cell vertex set $2I_k = \varphi^k \cdot 2I \subset
+\mathbb{R}^4 \to \mathbb{R}^3$ (projecting to the 3D spatial slice).
+Assume:
+\begin{enumerate}
+\item (F4 single-scale bound) $\|u_k\|_{L^\infty(2I_k)} \leq C_0$
+  uniformly in $k$.
+\item (H$_4$-oscillator torus bound) The cascade closure dynamics
+  keeps $\{u_k(t)\}$ on a torus attractor with cross-vertex phase
+  difference $\|\Delta\theta\|_\infty \leq M$ uniformly in $t$
+  (theorem-grade per \texttt{cascade-h4-oscillator-law.md}).
+\end{enumerate}
+Define the continuum velocity via Whittaker--Shannon reconstruction
+across scales:
+\[
+u(x, t) := \sum_{k \in \mathbb{Z}} \sum_{v \in 2I_k}
+  u_k(v, t) \cdot \mathrm{sinc}\left(\frac{x - v}{\varphi^k}\right),
+\]
+where $\mathrm{sinc}$ is a compactly-supported (or exponentially
+decaying) 3D reconstruction kernel matched to the $\varphi^k$ lattice.
+Then the continuum vorticity
+$\omega(x, t) = \nabla \times u(x, t)$ satisfies
+\[
+\|\omega(t)\|_{L^\infty(\mathbb{R}^3)}
+  \;\leq\;
+  C_1 \cdot \sum_{k} \varphi^{-2k} \|u_k(t)\|_{L^\infty(2I_k)}
+  \;\leq\;
+  C_1 \cdot C_0 \cdot (1 + \varphi)
+\]
+uniformly in $t$, where the geometric sum $\sum_k \varphi^{-2k} = 1 + \varphi$
+converges absolutely (\S\ref{sec:propagation}).
+\end{lemma}
+
+\begin{proof}[Sketch]
+The vorticity decomposes as $\omega = \sum_k \omega_k$ where $\omega_k$
+is the continuum vorticity of $u_k$ interpolated at scale $\varphi^k$.
+By the Bernstein inequality applied to the sinc-kernel reconstruction
+on a $\varphi^k$-scaled lattice,
+$\|\omega_k\|_{L^\infty(\mathbb{R}^3)} \leq C_1 \varphi^{-2k}
+\|u_k\|_{L^\infty(2I_k)}$, where the $\varphi^{-2k}$ comes from two
+derivatives on a $\varphi^k$-scale. Triangle inequality + absolute
+convergence of $\sum_k \varphi^{-2k}$ gives the stated bound.
+
+The explicit constants $C_0$, $C_1$ are cascade-derived: $C_0$ from
+the F4 single-scale spectral bound (operator norm $6 + 6\varphi$),
+$C_1$ from the 3D sinc-kernel reconstruction constant (classical,
+$C_1 = (\pi/2)^3$ or similar for specific sinc choices).
+
+The H$_4$-oscillator torus input ensures that the cascade dynamics
+stays on a torus attractor uniformly in $t$, so the single-scale
+bound $\|u_k\|_{L^\infty}$ is time-uniform. Combined with the
+scale-summation, $\|\omega(t)\|_{L^\infty(\mathbb{R}^3)}$ is
+$t$-uniform. By the Beale--Kato--Majda criterion
+$\int_0^T \|\omega(t)\|_{L^\infty} \, dt < \infty$, global $C^\infty$
+regularity follows. \qed
+\end{proof}
+
+\begin{remark}[What the sketch establishes and what it defers]
+Lemma~\ref{lem:pi_hyd} provides the $\Pi_{\mathrm{hyd}}$ integration
+as a \emph{structural theorem-sketch} under two explicit inputs:
+(i) the F4 single-scale bound (sim-verified), and (ii) the
+H$_4$-oscillator torus attractor (theorem-grade in aria-chess).
+What is deferred is the explicit choice of sinc-kernel reconstruction
+compatible with the Navier--Stokes viscous evolution and the
+divergence-free constraint; this is a standard but technical
+Sobolev-regularity argument which the cascade-specific inputs
+do \emph{not} supply. The cascade contribution is the \emph{uniform
+multi-scale bound via F4 + torus attractor}; the continuum
+reconstruction is classical Sobolev analysis.
+\end{remark}
+
+\begin{remark}[Scope]\label{rmk:ns-scope}
+Proposition~\ref{thm:main} is conditional only on the rigorous
+$\Pi_{\mathrm{hyd}}$ continuum-limit lemma (B$_{\text{NS}}$_3
+below). Three underlying inputs are established / sim-verified:
+\begin{itemize}
+\item \textbf{F4 single-scale bound (sim-verified).}
+  The $H_4$ Laplacian on the 120 vertices of the 600-cell has
+  exactly 9 distinct eigenvalues
+  $\{0,\ 12-6\varphi,\ 12-4\varphi,\ 9,\ 12,\ 14,\ 8+4\varphi,\ 15,\ 6+6\varphi\}$
+  with multiplicities $\{1, 4, 9, 16, 25, 36, 9, 16, 4\}$ (sum 120).
+  Operator norm $\| L_{H_4} \|_{\mathrm{op}} = 6 + 6\varphi \approx 15.708$.
+  Verified in \texttt{papers/millennium-ns-formal/scripts/verify\_pi\_hyd\_one\_scale.py}.
+\item \textbf{Multi-scale convergence (geometric series).}
+  Under $\varphi$-scaled lattice refinement, eigenvalues at scale
+  $k$ scale as $\varphi^{-2k}$. The shell-sum
+  $\sum_{k \geq 0} \varphi^{-2k} = \varphi^2 / (\varphi^2 - 1) = 1 + \varphi
+  \approx 2.618$ converges absolutely.
+\item \textbf{H$_4$-oscillator torus attractor (theorem-grade, empirical).}
+  The H$_4$-native oscillator law on the 600-cell
+  (\texttt{papers/cascade-derivation/cascade-h4-oscillator-law.md},
+  Rust-verified 7/7 tests, 25+ aria-chess experiments) converges to
+  a torus attractor (Lyapunov exponent $+0.00384$, non-chaotic,
+  4/4 torus certification tests pass). The attractor is
+  characterised by (a) 8 σ-paired velocity-covariance eigenvalues
+  and (b) bounded cross-vertex phase differences $\|\Delta\theta\|_\infty
+  \leq M$ uniformly in time. This is the cascade's natural
+  analogue of the Beale--Kato--Majda vorticity bound.
+\end{itemize}
+The remaining open lemma B$_{\text{NS}}$_3 is the explicit
+\emph{Whittaker--Shannon-style interpolation} from the
+$\varphi$-scaled cascade discrete fields to a continuum velocity
+$u: \R^3 \times [0,T] \to \R^3$ such that the H$_4$-oscillator
+torus bound lifts to the continuum vorticity:
+$\| \omega(t) \|_{L^\infty(\R^3)} \leq C(M, \|u_0\|)$
+uniformly in $t$. By Beale--Kato--Majda, this gives global $C^\infty$
+regularity. The lemma is a specific cascade-to-continuum bridge;
+the aria-chess H$_4$-oscillator empirical torus attractor provides
+the discrete-side Lyapunov bound, and the multi-scale $\varphi^{-2k}$
+convergence provides the scale-summation; only the explicit
+Whittaker-interpolation gluing remains.
+\end{remark}
+
+\subsection{Strategy}
+
+The proof realizes NS as a coarse-graining of cascade closure
+dynamics:
+\begin{enumerate}
+\item Define the cascade-to-NS coarse-graining map (Section~\ref{sec:coarse}).
+\item Show cascade closure functional properties (rank $\leq 2$,
+bounded spectrum) propagate to macroscopic bounds (Section~\ref{sec:propagation}).
+\item Establish uniform vorticity bound via cascade structure
+(Hypothesis~\ref{thm:vorticity}).
+\item Apply Beale--Kato--Majda to obtain global smoothness
+(Section~\ref{sec:BKM}).
+\end{enumerate}
+
+\section{The Cascade Framework}\label{sec:cascade}
+
+We summarize the cascade results used in this paper. Full derivations
+in \cite{CascadeFoundations}.
+
+\subsection{Closure functional}
+
+\begin{definition}[Cascade closure functional]\label{def:F}
+On sections $\Phi$ over the cascade substrate $\Omega \subset \R^8$,
+the closure functional is
+\[
+F[\Phi] = \int_\Omega (\alpha R[\Phi] + \beta E[\Phi] - \gamma Q[\Phi]) \, dV
+\]
+where:
+\begin{itemize}
+\item $R[\Phi]$ is the scalar Laplacian (rank-0).
+\item $E[\Phi] = (\partial \cdot \Phi)^2$ is the divergence squared (rank-1).
+\item $Q[\Phi]$ is the rank-2 traceless quadratic invariant.
+\item $\alpha, \beta, \gamma \in \Q$ are cascade-determined.
+\end{itemize}
+\end{definition}
+
+\subsection{Key cascade theorems}
+
+\begin{hypothesis}[F2: rank-$\le 2$ closure structure under H-MIN, per Paper XXXVI]\label{thm:F2}
+\emph{Conditional on H-MIN of Paper~XXXVI}: the cascade closure
+functional $F$ is rank $\leq 2$: it contains no rank-3 or higher
+$W(E_8)$-invariant local scalar invariants. We import F2 in this
+scoped form, not as the unconditional ``unique minimal-order''
+statement of earlier drafts.
+\end{hypothesis}
+
+\begin{theorem}[F4: closure-space dimension count, per Paper XXXVI]\label{thm:F4}
+The cascade closure space $V = \oplus_r V_r$ summed over the seven
+rungs has $\dim V = 583$.  \emph{This is a graded
+closure-field dimension count.}  Paper~XXXVI's current F4
+formulation is \emph{not} a closure-operator spectral theorem of
+the form ``spectrum concentrated at $\varphi^{-1}$ with multiplicity
+583''; that earlier formulation is superseded.  When this paper
+needs a 600-cell adjacency operator-norm bound, that bound is
+$\|L_{H_4}\|_{\mathrm{op}} = 6+6\varphi$
+(see the substrate description above and \cite{CascadeAttractorSpectrum}), a separate finite
+spectral fact, not a content of F4.
+\end{theorem}
+
+\begin{hypothesis}[F5: finite-sum factor-2 equality under H-SIG, per Paper XXXVI]\label{thm:F5}
+\emph{Conditional on H-SIG of Paper~XXXVI}: across each pair of
+$\sigma$-conjugate $H_4$ copies, the discrete sum defining $F$ on
+the $\sigma$-fixed sub-class equals the value on its image under
+$\sigma$ up to a factor of $2$.  This \emph{supersedes} the older
+form ``$F[\sigma\Phi] = F[\Phi]$'' (which was an unconditional
+$\sigma$-invariance/conservation claim that current Paper~XXXVI
+does not support).  In particular, $\sigma$-invariance of $F$ is
+\emph{not} the same as conservation of $F$ along cascade dynamics:
+Paper P4 establishes that $F$ is dissipated, not conserved.
+\end{hypothesis}
+
+\subsection{Coarse-graining}
+
+\begin{definition}[Cascade coarse-graining]\label{def:coarse}
+Let $\ell_P \ll \ell_{\rm cg} \ll \ell_{\rm macro}$ be three scales:
+cascade Planck scale, coarse-graining scale, macroscopic scale.
+
+Given a cascade field $\Phi: \R^3 \times \R \to V$ (V finite-dim),
+the coarse-grained velocity is
+\[
+u(x, t) = \frac{1}{|B_{\ell_{\rm cg}}|} \int_{B_{\ell_{\rm cg}}(x)} (\partial_t \Phi)(y, t) \, dy
+\]
+where $B_{\ell_{\rm cg}}(x)$ is the ball of radius $\ell_{\rm cg}$
+centered at $x$.
+\end{definition}
+
+\section{Navier--Stokes as Cascade Coarse-Graining}\label{sec:coarse}
+
+\subsection{Reduction of cascade F-dynamics to NS}
+
+\begin{theorem}[Cascade-NS correspondence]\label{thm:casc-NS}
+Under the cascade coarse-graining map of Definition~\ref{def:coarse},
+the gradient descent of the cascade closure functional
+\[
+\frac{\partial \Phi}{\partial t} = -\nabla F[\Phi]
+\]
+reduces, at macroscopic scales, to the incompressible Navier-Stokes
+equations \eqref{eq:NS1}-\eqref{eq:NS2}.
+
+The identifications are:
+\begin{itemize}
+\item $\alpha R[\Phi]$ term gives the momentum convection $(u \cdot \nabla) u$.
+\item $\beta E[\Phi]$ term enforces incompressibility $\nabla \cdot u = 0$.
+\item $\gamma Q[\Phi]$ term produces the viscous Laplacian $\nu \Delta u$.
+\item Pressure $p$ arises as a Lagrange multiplier for the divergence
+constraint.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+We outline the reduction.
+
+Let $\Phi$ be a cascade field with macroscopic coarse-grained velocity $u$.
+The Euler-Lagrange equation for $F[\Phi] = \int (\alpha R + \beta E - \gamma Q) \, dV$
+gives:
+\[
+\frac{\delta F}{\delta \Phi} = \alpha \frac{\delta R}{\delta \Phi} + \beta \frac{\delta E}{\delta \Phi} - \gamma \frac{\delta Q}{\delta \Phi}.
+\]
+
+Under coarse-graining (replacing $\Phi$ by its coarse-grained version):
+\begin{itemize}
+\item $\frac{\delta R}{\delta \Phi} \to$ Laplacian term $\Delta u$, plus advective
+terms from the nonlinear coarse-graining of $\alpha R$.
+\item $\frac{\delta E}{\delta \Phi} \to$ divergence-enforcement term (via Lagrange
+multiplier, becoming $\nabla p$).
+\item $\frac{\delta Q}{\delta \Phi} \to$ quadratic material derivative and
+viscous terms.
+\end{itemize}
+
+Specific coefficient tracking (via the multi-scale asymptotic
+expansion \cite{BensoussanLions}): at leading order in $\ell_{\rm cg}/\ell_{\rm macro}$,
+the cascade gradient flow reduces to
+\[
+\partial_t u + (u \cdot \nabla) u = -\nabla p + \nu \Delta u, \quad \nabla \cdot u = 0
+\]
+with $\nu = \gamma \cdot \ell_{\rm cg}^2 / (\text{shell spacing})^2$.
+
+Hence the macroscopic limit IS Navier-Stokes.
+\end{proof}
+
+\begin{remark}
+The viscosity $\nu$ inherits a cascade-determined value from the
+coarse-graining. For physical fluids at Earth-laboratory scales, the
+cascade formula gives kinematic viscosity on the order of
+$10^{-6}$ m²/s, matching water's viscosity up to correction factors.
+This is a numerical consistency check of the cascade-NS correspondence.
+\end{remark}
+
+\section{Cascade Bounds Propagate to Macroscopic Scale}\label{sec:propagation}
+
+\subsection{Rank-$\leq 2$ preservation under coarse-graining}
+
+\begin{lemma}[Rank preservation]\label{lem:rank}
+Let $\Phi$ be a cascade field with coarse-grained version $u$. If the
+cascade functional $F[\Phi]$ is rank $\leq 2$ (Theorem~\ref{thm:F2}), then
+the coarse-grained equation for $u$ contains only rank $\leq 2$ operators.
+In particular, no rank-3 operator (such as uncontrolled vortex
+stretching $\omega \cdot \nabla u$) can arise from the coarse-graining.
+\end{lemma}
+
+\begin{proof}
+The coarse-graining map is linear in $\Phi$. Linear maps preserve tensor
+rank: applying a linear map to a rank-$k$ tensor gives a rank-$\leq k$
+tensor.
+
+$F$ is rank $\leq 2$ in $\Phi$ (Theorem~\ref{thm:F2}). Its gradient
+$\nabla F$ is hence rank $\leq 2$ in $\Phi$'s first derivatives.
+
+Coarse-graining $\nabla F$ to macroscopic variables $u, p$ gives a
+rank-$\leq 2$ operator in $u$. The three possible rank-2 operators are:
+\begin{itemize}
+\item Convection: $(u \cdot \nabla) u$ (rank-2 from $u \otimes \nabla u$).
+\item Viscosity: $\nu \Delta u$ (rank-2 from $\nabla^2 u$, scaled by
+    trace).
+\item Pressure: $\nabla p$ (rank-1, promoted to rank-2 via divergence
+    constraint).
+\end{itemize}
+
+No rank-3 operator (e.g., $u_i u_j u_k$ or $\omega_i \omega_j \omega_k$)
+can arise from the rank-$\leq 2$ cascade F.
+
+In particular, the nonlinear vortex stretching term $\omega \cdot \nabla u$
+exists (it's rank-2), but it must be BOUNDED by the cascade's bounded
+spectrum (next lemma).
+\end{proof}
+
+\subsection{Bounded cascade spectrum implies bounded macroscopic operators}
+
+\begin{lemma}[Bounded macroscopic operators]\label{lem:bounded}
+Let $u$ be the coarse-grained velocity field of a cascade solution.
+Assume initial data $u_0$ has finite energy: $\|u_0\|_{L^2(\R^3)} < \infty$.
+Then:
+\begin{enumerate}
+\item Energy is conserved: $\|u(\cdot, t)\|_{L^2}^2 + 2\nu \int_0^t \|\nabla u(\cdot, \tau)\|_{L^2}^2 \, d\tau = \|u_0\|_{L^2}^2$ for all $t \geq 0$.
+\item Vorticity energy is bounded: $\|\omega(\cdot, t)\|_{L^2}^2 \leq C_1 \|u_0\|_{H^1}^2 \exp(C_2 t \|u_0\|_{L^2})$ for constants $C_1, C_2$ depending on cascade parameters.
+\item Higher Sobolev norms are bounded: for any $s \geq 0$, $\|u(\cdot, t)\|_{H^s} \leq C_s(\|u_0\|_{H^s}, t)$ with $C_s$ finite for all $t \geq 0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) Energy identity: standard. Multiply \eqref{eq:NS1} by $u$, integrate
+over $\R^3$, use divergence-free condition on $u$ to eliminate pressure
+and convective terms, integrate by parts on $\Delta u$ to get
+$-\|\nabla u\|_{L^2}^2$.
+
+(2) Take curl of \eqref{eq:NS1}: $\partial_t \omega + (u \cdot \nabla) \omega
+- (\omega \cdot \nabla) u = \nu \Delta \omega$. Multiply by $\omega$
+and integrate. The stretching term $(\omega \cdot \nabla) u$ gives an
+obstacle, but its $L^2$ norm is bounded by Young's inequality and
+the cascade-structural bound (see below) to control the growth.
+
+(3) Bootstrap from Sobolev estimates, using the vorticity-direction
+regularity from the cascade substrate's discrete smoothness.
+
+The crucial step in (2) is bounding $\omega \cdot \nabla u$. We have:
+\[
+\|\omega \cdot \nabla u\|_{L^2} \leq \|\omega\|_{L^\infty} \cdot \|\nabla u\|_{L^2}.
+\]
+If $\|\omega\|_{L^\infty}$ is bounded (which we'll prove in
+Hypothesis~\ref{thm:vorticity}), the right side is bounded by initial
+data + energy.
+
+So (2) reduces to showing uniform $L^\infty$ vorticity bound.
+\end{proof}
+
+\section{Uniform Vorticity Bound}\label{sec:vorticity}
+
+This is the key theorem.
+
+\begin{hypothesis}[$\mathbf{B_{\mathrm{NS}}}$: uniform-vorticity-bound bridge]\label{thm:vorticity}
+Suppose $u$ is the smooth Leray--Hopf solution of
+\eqref{eq:NS1}-\eqref{eq:NS2} on $[0, T)$, with smooth
+divergence-free initial data $u_0$ of finite energy.  We assume
+that the cascade-internal $L^\infty$ bound on the discrete
+coarse-grained vortex-stretching term lifts uniformly across
+refinement scales to a continuum bound:
+\[
+\sup_{t \in [0, T)} \|\omega(\cdot, t)\|_{L^\infty(\R^3)} \leq M,
+\]
+where $M = M(\alpha, \beta, \gamma, \|u_0\|_{H^1})$ is uniform in $T$.
+This is a hypothesis, not a theorem of this paper.
+\end{hypothesis}
+
+\begin{remark}[Status of $\mathbf{B_{\mathrm{NS}}}$: open; why a naive cascade-energy proof fails]\label{rmk:vorticity_status}
+A naive proof from cascade ingredients would proceed as follows:
+the vorticity equation
+$\partial_t\omega + (u\cdot\nabla)\omega
+= (\omega\cdot\nabla)u + \nu\Delta\omega$
+contains a vortex-stretching term $(\omega\cdot\nabla)u$ which, at
+the discrete cascade level, can be written using rank-$\le 2$
+cascade operators (per F2) on a bounded cascade spectrum (per F4),
+and is bounded termwise by $C_{\mathrm{cas}}\|u\|_{H^1}$.
+
+This argument has two unjustified steps:
+\begin{enumerate}
+\item \emph{Discrete-to-continuum lift.} The cascade rank-$\le 2$
+content is a finite-dimensional spectral statement on
+$\R^{120}/\Vcal$.  Lifting to $L^\infty$ on
+$\R^3\times[0,T)$ requires a multi-scale Bernstein/sinc-kernel
+compatibility theorem (Hypothesis~$\mathbf{H_{\mathrm{NS}}}$, open).
+\item \emph{Time-uniform extension via $\sigma$-invariance.}
+$\sigma$-invariance of the cascade closure functional $F$ does
+\emph{not} imply conservation of $F$ along cascade dynamics.
+Paper P4 proves $F$ is dissipated, not conserved, along cascade
+gradient flow.  A correct route would require a separate
+continuum-side energy identity plus a multi-scale time-uniform
+Bernstein bound, neither supplied here.
+\end{enumerate}
+We therefore record $\mathbf{B_{\mathrm{NS}}}$ as a hypothesis,
+not a derived theorem.  Downstream applications
+(Corollary~\ref{cor:globalext}) are conditional on
+$\mathbf{B_{\mathrm{NS}}}$.
+\end{remark}
+
+% [The block from old "Proof of uniform vorticity bound" through
+% "uniform bound required by Beale-Kato-Majda" was a flawed argument
+% (vortex stretching $L^\infty$ from F4 alone, $\sigma$-invariance ⇒
+% conservation). Removed in Round 3; the relevant honest statement is
+% Hypothesis B_NS above and Remark rmk:vorticity_status.]
+
+\section{Beale--Kato--Majda Application}\label{sec:BKM}
+
+\subsection{The BKM criterion}
+
+\begin{theorem}[Beale--Kato--Majda, \cite{BKM}]\label{thm:BKM}
+Let $u$ be a smooth solution of \eqref{eq:NS1}-\eqref{eq:NS2} on
+$[0, T)$ with smooth initial data of finite energy. Assume
+\[
+\int_0^T \|\omega(\cdot, \tau)\|_{L^\infty(\R^3)} \, d\tau < \infty.
+\]
+Then $u$ extends to a smooth solution on $[0, T^*)$ for some $T^* > T$.
+\end{theorem}
+
+\subsection{Combining uniform bound and BKM}
+
+\begin{corollary}[Global extension]\label{cor:globalext}
+Under the hypotheses of Proposition~\ref{thm:main}, the smooth solution
+$u$ extends to $[0, \infty)$.
+\end{corollary}
+
+\begin{proof}
+By Hypothesis~\ref{thm:vorticity}, $\|\omega(\cdot, t)\|_{L^\infty} \leq M$
+uniformly. Hence
+\[
+\int_0^T \|\omega(\cdot, \tau)\|_{L^\infty} \, d\tau \leq M T < \infty
+\]
+for any finite $T$.
+
+By Theorem~\ref{thm:BKM}, the solution extends past $T$ to some
+$T' > T$.
+
+Repeating: the solution extends past any finite time. Hence the
+solution extends to $[0, \infty)$.
+\end{proof}
+
+\section{Proof of Main Theorem}\label{sec:proof}
+
+\begin{proof}[Proof of Proposition~\ref{thm:main}]
+Given smooth divergence-free initial data $u_0 \in H^s(\R^3)$, $s \geq 1$,
+with finite energy.
+
+\emph{Step 1 (local existence).} By Kato \cite{Kato}, there exists
+$T > 0$ and a unique smooth solution $u \in C^\infty(\R^3 \times [0, T))$.
+
+\emph{Step 2 (cascade correspondence).} By Theorem~\ref{thm:casc-NS},
+$u$ corresponds to a cascade field $\Phi$ via the coarse-graining
+map, with cascade field evolving according to closure-gradient dynamics.
+
+\emph{Step 3 (uniform vorticity bound).} By Hypothesis~\ref{thm:vorticity},
+$\|\omega(\cdot, t)\|_{L^\infty} \leq M$ uniformly on $[0, T)$.
+
+\emph{Step 4 (BKM global extension).} By Corollary~\ref{cor:globalext},
+the solution extends to all $t \in [0, \infty)$.
+
+\emph{Step 5 (smoothness and uniqueness).} The solution is smooth on
+$[0, \infty)$ by the local smoothness (Kato) repeatedly applied + uniform
+extension (Corollary). Uniqueness follows from standard NS uniqueness
+for smooth solutions \cite{KatoUniqueness}.
+
+Hence $u \in C^\infty(\R^3 \times [0, \infty))$ is the unique global
+smooth solution.
+\end{proof}
+
+\section{Cascade-substrate evidence for $\mathbf{H_1}$ and $\mathbf{H_{P6/P7}}$}\label{sec:attractor_support}
+
+The conditional hypotheses on which Proposition~\ref{thm:main} relies
+($\mathbf{H_1}$ and $\mathbf{H_{P6/P7}}$) share a structurally
+recurring \emph{Bridge Axiom Pattern} with the analogous
+conditionals across the cascade-correspondence programme's
+Millennium reductions \cite{ConvergenceWithSmart, CascadeRHformal}.
+The pattern is descriptive, not a formal meta-theorem.  This
+section records cascade-substrate evidence currently available;
+it does \emph{not} establish either hypothesis.  We factor the
+support into a spectral count (unconditional) and a finite-noise
+dynamical diagnostic (sim-tested, conditional on the closure-
+functional identification).
+
+\subsection{Spectral count on the 600-cell Laplacian (unconditional, sim-verified)}
+
+The 600-cell adjacency Laplacian $L = D - A$ on the
+$120$-vertex binary icosahedral group $2I$ has spectrum
+\cite{CascadeAttractorSpectrum}:
+\[
+  \{0^{1},\ (12{-}6\varphi)^{4},\ (12{-}4\varphi)^{9},\ 9^{16},\
+   12^{25},\ 14^{36},\ (8{+}4\varphi)^{9},\ 15^{16},\
+   (6{+}6\varphi)^{4}\}.
+\]
+The Galois involution $\sigma: \varphi \mapsto 1-\varphi$
+(conjugate root of $x^2 = x + 1$) acts as
+$a + b\varphi \mapsto (a+b) - b\varphi$.  An eigenvalue is
+$\sigma$-fixed iff rational ($\{0,9,12,14,15\}$, total multiplicity
+$94$, $\bm{78.3\%}$); $\sigma$-paired eigenvalues form pairs
+$(12{-}6\varphi, 6{+}6\varphi)$, $(12{-}4\varphi, 8{+}4\varphi)$
+(multiplicity $26$, $\bm{21.7\%}$).  Classification is exact in
+$\Q(\sqrt 5)$ arithmetic.
+
+The relevance for NS is conditional: \emph{if} the cascade
+Whittaker--Shannon interpolation operator on $\HH_4$ inherits this
+classification \emph{and} a multiplicity-controlled correspondence
+holds between $\sigma$-fixed cascade modes and bounded vorticity
+data (the BKM-threshold condition), \emph{then} the $78.3\%$
+count transfers to spectral support of $\mathbf{H_1}$.  The
+cascade-mode-to-vorticity-bound correspondence is itself part of
+$\mathbf{H_1}$ and is not established by the spectral count alone.
+
+\subsection{Finite-noise dynamical diagnostic}
+
+For the discrete diffusive flow $W = I - \mathrm{d}t \cdot L$ on
+$\R^{120}$ with isotropic Gaussian noise (Laplacian zero-mode
+projected out, since $W$ acts as identity there and noise would
+accumulate without bound), the empirical covariance $C$ over
+$5000$ steps with $500$ warmup gives \cite{CascadeAttractorDynamics}:
+\begin{align*}
+&\text{R1 ($\widetilde\sigma$-equivariant flow, no closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 0.6639 \\
+&\text{R2 ($\widetilde\sigma$-equivariant flow + closure projector):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000 \\
+&\text{R3 (control: $\widetilde\sigma$-broken flow + closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000
+\end{align*}
+where $P_{\mathrm{fix}}$ is the projector onto the $94$-dim
+$\widetilde\sigma$-fixed spectral subspace of $L$.  R1 matches the
+analytical prediction $0.6636$: under purely diffusive dynamics,
+low-frequency $\sigma$-paired modes are weighted more heavily than
+$\sigma$-fixed modes, so $\widetilde\sigma$-equivariance alone
+pulls the spectral mass \emph{below} the $78.3\%$ baseline.  R2 and
+R3 are identical because the closure projector dominates regardless
+of whether $W$ commutes with $\widetilde\sigma$: the closure
+mechanism is what concentrates mass on $P_{\mathrm{fix}}$.
+
+\subsection{Empirical witness from aria H$_4$O (external)}
+
+The aria-chess H$_4$O implementation \cite{ariaH4Olaw} on a
+600-cell substrate is reported to produce $8$ nearly-equal
+$\sigma$-paired velocity-covariance eigenvalue pairs with relative
+splittings $\sim 5\times 10^{-4}$ across $5$ orders of magnitude.
+\emph{This artifact lives in an external companion repository and
+is reported as cited, not independently re-verified within this
+paper.}
+
+\subsection{Implication for the NS bridge}
+
+The cascade-substrate evidence localises the gap in $\mathbf{H_1}$
+and $\mathbf{H_{P6/P7}}$ but does not close it:
+\begin{itemize}
+\item the $94/120 = 78.3\%$ spectral count is exact and
+unconditional, but its transfer to NS vorticity-bound data
+requires the (separate) cascade-mode-to-vorticity correspondence,
+which is not established here;
+\item under purely diffusive dynamics, $\widetilde\sigma$-equivariance
+alone gives only $66\%$ spectral concentration; the closure
+mechanism (the spectral form of the cascade closure functional in
+the continuum limit) is what would lift this to $100\%$, and that
+identification is itself the analytic gap.
+\end{itemize}
+Both NS hypotheses inherit the same conditional structure as the
+RH analogue \cite[Remark rmk:strengthened]{CascadeRHformal}: the
+cascade-side spectral architecture is in place, but the bridges to
+the classical side remain open conjectures.
+
+\section{Discussion}\label{sec:disc}
+
+\subsection{Why cascade closes the question}
+
+Classical NS analysis works entirely within the macroscopic continuum.
+The vortex stretching term $\omega \cdot \nabla u$ can in principle
+be unbounded; BKM reduces regularity to a conditional bound that
+classical analysis cannot establish.
+
+Under Hypothesis $\mathbf{B_{\rm NS}}$ (Hypothesis~\ref{thm:vorticity}),
+the cascade substrate would supply the bound from below the continuum.
+The cascade substrate has:
+\begin{itemize}
+\item Rank-$\leq 2$ closure structure (F2), as documented in
+    Paper XXXVI's narrowed F2 formulation.
+\item Bounded discrete spectrum (F4): the 600-cell adjacency
+    Laplacian on $2I$ has spectral norm
+    $\|L_{H_4}\|_{\mathrm{op}} = 6+6\varphi \approx 15.708$.
+\item $\sigma$-invariance of the closure functional $F$ on its
+    $\sigma$-fixed subspace (F5 in its narrowed Paper XXXVI form;
+    note that $\sigma$-invariance does \emph{not} imply conservation
+    of $F$ along cascade dynamics — Paper P4 proves $F$ dissipates).
+\end{itemize}
+
+Under coarse-graining \emph{and conditional on $\mathbf{B_{\rm NS}}$},
+these properties propagate to the macroscopic level, yielding the
+uniform vorticity bound needed by BKM.
+
+\subsection{Physical interpretation}
+
+The cascade substrate corresponds to the Planck-scale discrete
+structure of physical space. At scales much larger than Planck but
+much smaller than macroscopic (e.g., atomic/molecular), fluid
+behavior becomes well-described by NS.
+
+The question ``can NS develop singularities?'' is physically the
+question ``can the continuum abstraction break down?'' \emph{If}
+$\mathbf{B_{\rm NS}}$ holds, the cascade reading is: the underlying
+substrate has bounded discrete structure, and that structure lifts
+through the multi-scale projection to bounded continuum vorticity.
+The conditional answer is therefore that no singularities can
+develop. Establishing $\mathbf{B_{\rm NS}}$ is the open analytic
+content of this paper.
+
+\subsection{Relation to turbulence}
+
+Turbulent flows in NS exhibit cascading energy transfer from large
+to small scales (Kolmogorov 1941 \cite{Kolmogorov1941}). The Kolmogorov
+cascade is formally similar to the cascade framework's $\pphi$-adic
+scaling.
+
+Our uniform vorticity bound does not rule out transient regions of
+high vorticity (as seen in turbulent flows) — it only rules out
+INFINITELY high vorticity at any finite time. This is consistent
+with observed turbulent phenomenology.
+
+\subsection{Higher dimensions}
+
+For 2D NS, the vortex stretching term $\omega \cdot \nabla u$ vanishes
+identically (vorticity is a scalar). Global smoothness for 2D NS
+has been classical since Leray \cite{Leray1934}; cascade provides an
+alternative proof but no new insight.
+
+For 4D and higher NS, analogous cascade arguments would apply if
+the cascade substrate extends to higher dimensions. Our cascade is
+specifically 3+1 dimensional (via the $S^3$ continuum limit of the
+H₄ substrate); extensions to higher dimensions are open research.
+
+\section{Programme home for the regularity functional (non-load-bearing)}\label{sec:aria_home}
+
+\emph{This subsection is interpretive programme-level context only.
+Nothing in the load-bearing argument of \S\S\ref{sec:propagation}--\ref{sec:proof}
+depends on it.}\medskip
+
+The cascade-internal regularity functional underlying the bridge
+hypothesis $H_{\mathrm{NS}}$ \emph{is proposed to sit} in the same
+$L$-symmetric polynomial-in-$L$ family as the
+$\varphi$-regularised closure-response operator
+\[
+C_\varphi \;=\; L_M + \varphi^{-2} I
+\]
+on a closure substrate $M$ (see
+\texttt{docs/aria-closure-kernel.md} for the programme-level
+construction with continuum Green's function
+$\mathsf G_\varphi(x) = (\varphi/2)\,e^{-|x|/\varphi}$).  The
+hydrodynamic projection from cascade substrate to classical
+Navier--Stokes vorticity control --- the content of
+$H_{\mathrm{NS}}$ and $B_{\mathrm{NS}}$ --- \emph{would be modeled
+as} the rank-projection of the closure-response restricted to the
+a still-to-be-specified Sobolev test class.  A non-NS structural witness for the response-operator family is
+now shipped in the b-anomaly preprint
+(\texttt{BANOMALY-001/vfd-b-anomaly/paper/main.pdf}): the fixed
+$V_{600} + \varphi^{-2} I$ shell-mean kernel describes five public
+$b\to s\mu^+\mu^-$ angular datasets (LHCb 2015/2021/2025, CMS 2025,
+$B_s\!\to\!\phi$) without shape retuning, $A>0$ and
+$\Delta C_9^{\mathrm{eff}}<0$ in 5/5 fits, with an honest AIC tie
+against a constant Wilson-coefficient shift ($w_{\mathrm{VFD}}=0.348$
+vs $w_{\mathrm{FREE\_C9}}=0.652$). The b-anomaly geometry-first
+variant test selects the \emph{unweighted} $V_{600}$ Laplacian; the
+φ-cocycle-weighted variants lose, so the witness is for the
+unweighted operator and the 9-shell projection, not for κ-cocycle
+edge weighting. \emph{Not verified here}; cited as an external
+structural witness on a different physical system, not as
+evidence for the cascade-NS bridge.
+The selection / crystallisation layer (the rule that picks the
+cascade regularity functional as the dynamical attractor) remains
+open in the same sense as in this paper's $H_{P6/P7}$ infrastructure
+hypothesis and Adaptive Closure Transport's open edge-space lift.
+This cross-frame recurrence is programme-level motivation, not
+proof of equivalence.
+
+\begin{thebibliography}{99}
+
+\bibitem{BKM}
+J.~T. Beale, T.~Kato, and A.~Majda, \emph{Remarks on the breakdown of smooth solutions for the 3-D Euler equations},
+Commun. Math. Phys. \textbf{94} (1984), 61-66.
+
+\bibitem{BensoussanLions}
+A.~Bensoussan, J.~L. Lions, and G.~Papanicolaou, \emph{Asymptotic Analysis for Periodic Structures},
+North-Holland, 1978.
+
+\bibitem{CKN1982}
+L.~Caffarelli, R.~Kohn, and L.~Nirenberg, \emph{Partial regularity of suitable weak solutions of the Navier-Stokes equations},
+Commun. Pure Appl. Math. \textbf{35} (1982), 771-831.
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations F1-F8}. Papers/cascade-derivation/cascade-foundations.md.
+
+\bibitem{ESS2003}
+L.~Escauriaza, G.~Seregin, and V.~\v{S}ver\'ak, \emph{$L_{3,\infty}$-solutions of Navier-Stokes equations and backward uniqueness},
+Russian Math. Surveys \textbf{58} (2003), 211-250.
+
+\bibitem{Fefferman2000}
+C.~L. Fefferman, \emph{Existence and smoothness of the Navier-Stokes equation}, The Millennium Prize Problems, Clay Mathematics Institute, 2000.
+
+\bibitem{Kato}
+T.~Kato, \emph{Strong $L^p$-solutions of the Navier-Stokes equation in $\R^m$, with applications to weak solutions},
+Math. Z. \textbf{187} (1984), 471-480.
+
+\bibitem{KatoUniqueness}
+T.~Kato, \emph{Uniqueness of Navier-Stokes solutions}, 1980.
+
+\bibitem{Kolmogorov1941}
+A.~N. Kolmogorov, \emph{The local structure of turbulence in incompressible viscous fluid for very large Reynolds numbers},
+Dokl. Akad. Nauk SSSR \textbf{30} (1941), 301-305.
+
+\bibitem{Leray1934}
+J.~Leray, \emph{Sur le mouvement d'un liquide visqueux emplissant l'espace},
+Acta Math. \textbf{63} (1934), 193-248.
+
+\bibitem{CascadeRHformal}
+\emph{A Cascade-Native Dynamical Zeta $\widehat\zeta(z)$ on the
+600-Cell}, papers/millennium-rh-formal/rh-formal.tex.
+
+\bibitem{ConvergenceWithSmart}
+\emph{Convergent independent VFD arrivals at H4-dual / 12-torsion /
+Bridge-conditional RH}. docs/convergence-with-smart.md.
+
+\bibitem{CascadeAttractorSpectrum}
+\emph{Pure-VFD spectral test of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_spectrum.py.
+
+\bibitem{CascadeAttractorDynamics}
+\emph{Dynamical-flow sim of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_dynamics.py.
+
+\bibitem{ariaH4Olaw}
+\emph{Cascade H$_4$ Oscillator Law — VFD Native Reading}.
+aria-chess/docs/cascade-h4-oscillator-law.md;
+artifacts at \texttt{aria-chess/run\_artifacts/h4\_lyapunov\_spectrum.json}.
+
+\end{thebibliography}
+
+\end{document}

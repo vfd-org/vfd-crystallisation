@@ -1,0 +1,138 @@
+% =====================================================================
+\section{The 600-cell substrate}\label{sec:substrate}
+% =====================================================================
+
+This section gives the discrete instance used by the two empirical
+witnesses: $M = \Rsixhundred$, the 600-cell regular 4-polytope
+under H$_4$ Coxeter symmetry, with the standard short-edge graph
+Laplacian. The choice of this polytope is post-hoc motivated by
+the empirical landings (\S\ref{sec:limitations}); the
+construction itself is a classical Coxeter-group result we cite,
+not prove, here~\citep{CoxeterRegularPolytopes}. All facts in
+this section are reproduced numerically by
+\texttt{repro/verify\_kernel.py} from the canonical generators
+alone.
+
+\subsection{Vertex set}\label{ssec:vertices}
+
+$\Rsixhundred$ has $|V|=120$ unit vectors on the unit $3$-sphere
+$S^{3} \subset \mathbb{R}^{4}$~\citep{CoxeterRegularPolytopes,
+Weisstein600Cell}. With $\Ph = (1+\sqrt{5})/2$ the canonical vertex
+list partitions into three standard coordinate families:
+\begin{itemize}\itemsep=2pt
+\item \textbf{Axis family} ($8$ vertices): all permutations of
+  $(\pm 1, 0, 0, 0)$;
+\item \textbf{Half-integer family} ($16$ vertices): all sign
+  combinations of $(\pm 1, \pm 1, \pm 1, \pm 1)/2$;
+\item \textbf{$\Ph$-mixed family} ($96$ vertices): all even
+  permutations of $(\pm \Ph, \pm 1, \pm 1/\Ph, 0)/2$ (with the
+  $\Ph^{2} = \Ph + 1$ identity, equivalently
+  $(\pm \Ph, \pm 1, \pm \Ph^{-1}, 0)/2$).
+\end{itemize}
+The total is $8 + 16 + 96 = 120$ unit vectors. These are coordinate
+families, not H$_4$ orbits: H$_4$ acts transitively on the full
+$120$-vertex set, so the three families lie in a single H$_4$
+orbit. Reproduced by \texttt{repro/verify\_kernel.py:build\_v600};
+the numerical check $\max_{v} |\,\|v\| - 1\,| < 10^{-10}$ confirms
+all vertices on $S^{3}$.
+
+The H$_4$ Coxeter group (order $14400$) acts transitively on the
+$120$ vertices. Every vertex therefore has \emph{identical} local
+structure under $H_{4}$; in particular, every vertex has the same
+degree in the short-edge graph defined below.
+
+\subsection{Short-edge nearest-neighbour graph}\label{ssec:graph}
+
+For two unit vectors $v, w \in \Rsixhundred$ on $S^{3}$, the
+Euclidean chord distance is
+\[
+\|v - w\| \;=\; \sqrt{2 - 2\,\langle v, w\rangle}.
+\]
+The \emph{short-edge graph} $G_{V_{600}}=(V,E)$ connects two vertices
+if their inner product equals the canonical short-edge value
+\begin{equation}\label{eq:short_edge}
+\langle v, w\rangle \;=\; \Ph/2 \;\approx\; 0.809,
+\end{equation}
+equivalently chord distance
+$\|v-w\|=\sqrt{2-\Ph} = 1/\Ph \approx 0.618$. This is the
+nearest-neighbour adjacency on the canonical 600-cell embedding
+into $S^{3}$~\citep{CoxeterRegularPolytopes}.
+
+\paragraph{Graph facts (forced by the construction).}
+The graph $G_{V_{600}}$ has:
+\begin{itemize}\itemsep=2pt
+\item $|V|=120$ vertices,
+\item $|E|=720$ edges,
+\item every vertex has degree exactly $12$ (H$_4$ transitivity on
+  the vertex set forces \emph{uniformity} of the local structure;
+  the short-edge nearest-neighbour construction gives the
+  numerical degree $12$, verified by
+  \texttt{repro/verify\_kernel.py}),
+\item the graph is connected (verified numerically by counting
+  connected components of the short-edge adjacency matrix; the
+  classical 600-cell connectivity result is well known
+  in~\citep{CoxeterRegularPolytopes}).
+\end{itemize}
+All four facts are reproduced numerically:
+\texttt{repro/verify\_kernel.py} reports $|V|=120$, $|E|=720$,
+degree-min/max $=12/12$ (uniform), and one connected component.
+
+\subsection{$9$-shell H$_3$ partition}\label{ssec:shells}
+
+Choose any vertex $v_{0}$ as the pole; the H$_3$ subgroup of H$_4$
+fixing $v_{0}$ partitions the remaining $119$ vertices into shells
+of constant inner product with $v_{0}$. The nine canonical inner
+products are
+\begin{equation}\label{eq:shell_inner}
+\langle v, v_{0}\rangle
+\;\in\;
+\bigl\{1,\, \Ph/2,\, 1/2,\, 1/(2\Ph),\, 0,\,
+       -1/(2\Ph),\, -1/2,\, -\Ph/2,\, -1\bigr\},
+\end{equation}
+indexing shells $s = 0, 1, \ldots, 8$ from the pole to the
+antipode. The shell-size sequence is
+\begin{equation}\label{eq:shell_sizes}
+(|S_{0}|, |S_{1}|, \ldots, |S_{8}|)
+\;=\;
+(1,\ 12,\ 20,\ 12,\ 30,\ 12,\ 20,\ 12,\ 1).
+\end{equation}
+The middle shell $S_{4}$ has $30$ equatorial vertices forming the
+icosidodecahedral ring. The total is
+$1+12+20+12+30+12+20+12+1 = 120$, matching $|V|$. Reproduced
+verbatim by \texttt{repro/verify\_kernel.py:shell\_indices}.
+
+\paragraph{Antipodal symmetry.} The map $v \mapsto -v$ takes the
+shell-$s$ vertices to the shell-$(8-s)$ vertices: $s(-v) = 8 - s(v)$.
+The antipode $-v_{0}$ is the unique shell-$8$ vertex.
+
+\subsection{Inner-product check}\label{ssec:inner_product_check}
+
+The canonical short-edge criterion (Eq.~\eqref{eq:short_edge}) and
+the canonical shell inner products (Eq.~\eqref{eq:shell_inner})
+are jointly consistent: a vertex in shell $s_{1}$ is connected to a
+vertex in shell $s_{2}$ if and only if their pairwise inner product
+is $\Ph/2$, which restricts the admissible $(s_{1}, s_{2})$
+adjacency types to those compatible with the H$_3$ orbit structure.
+The numerically constructed graph respects this: every edge has
+inner product exactly $\Ph/2$ within machine precision (tolerance
+$10^{-10}$ in \texttt{repro/verify\_kernel.py:build\_short\_edge\_graph}).
+
+\subsection{What the substrate fixes, and what it does not}
+
+\begin{itemize}\itemsep=2pt
+\item \textbf{Fixed by the construction once $\Rsixhundred$ is
+  chosen}: $|V|=120$, uniform degree $12$, $9$-shell partition
+  $\{1,12,20,12,30,12,20,12,1\}$, antipodal symmetry, and the
+  Laplacian spectrum (\S\ref{sec:spectrum}).
+\item \textbf{Fixed by the design-level $\Ph^{-2}$ shift}:
+  $\Cph$ is positive definite with smallest eigenvalue $\Ph^{-2}$
+  (\S\ref{ssec:opnorm}); the operator-norm bound
+  $\|\Cph^{-1}\| = \Ph^{2}$.
+\item \textbf{Not fixed by this paper}: the choice of
+  $\Rsixhundred$ over the $24$-cell, $120$-cell, or other regular
+  4-polytopes / Coxeter substrates. The 600-cell choice is
+  post-hoc motivated by the empirical landings
+  (\S\ref{sec:passive_witness}, \S\ref{sec:active_witness}). A
+  formal substrate ablation is an
+  open build (\S\ref{sec:limitations}).
+\end{itemize}

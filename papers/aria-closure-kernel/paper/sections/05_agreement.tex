@@ -1,0 +1,153 @@
+% =====================================================================
+\section{Discrete-to-continuum agreement}\label{sec:agreement}
+% =====================================================================
+
+This is the central geometric diagnostic of the paper: the
+discrete response $\psi = \Cph^{-1} f$ on $\Rsixhundred$ for a
+localised source has high per-vertex Pearson correlation in radial
+shape with the continuum kernel
+$G(x) = (\Ph/2)\,e^{-|x|/\Ph}$ at the vertex's chord distance from
+the source. Pearson correlation is a shape similarity statistic, not
+an equality claim. We give the test, the numerical result, and a variant
+comparison in which the unweighted Laplacian ranks highest among
+the three tested variants (unweighted, $\Ph$-geometric weighted,
+$\Ph$-arithmetic weighted).
+
+\subsection{The test}\label{ssec:test}
+
+Pick a pole vertex $v_{0}$ (we use the canonical $+x_{0}$ axis
+vertex). Set $f = e_{v_{0}}$ (the unit vector at $v_{0}$, all
+other entries zero). Compute
+\[
+\psi \;=\; \Cph^{-1} f \;=\; (\Lop + \Ph^{-2} I)^{-1} e_{v_{0}}
+\]
+by direct linear solve (no eigenmode truncation). For each vertex
+$v \in V$, compute the Euclidean chord distance
+$x(v) = \|v - v_{0}\|$ and the continuum prediction
+\[
+G(x(v)) \;=\; (\Ph/2)\,\exp(-\,x(v)/\Ph).
+\]
+The agreement criterion is the Pearson correlation between
+$\psi(v)$ and $G(x(v))$ across $v \in V \setminus \{v_{0}\}$ (the
+source itself is excluded, since the discrete response there is
+trivially the diagonal of $\Cph^{-1}$ and the chord distance is
+zero, both degenerate for the comparison).
+
+\subsection{Result on the unweighted Laplacian}\label{ssec:result_unweighted}
+
+\texttt{repro/verify\_kernel.py:variant\_correlation} returns:
+\begin{itemize}\itemsep=2pt
+\item \textbf{Multiplicity-weighted per-vertex Pearson correlation
+  over shell-constant responses}: $\rho = 0.976$. ($\psi$ is
+  shell-constant to machine precision under H$_3$-fixed source, so
+  the per-vertex test is mathematically a multiplicity-weighted
+  shell-radius correlation rather than $119$ independent radial
+  samples; see the within-shell-variance discussion at the end of
+  this subsection.)
+\item \textbf{Shell-mean Pearson correlation}: $\rho = 0.923$
+  (averaging $\psi(v)$ over each H$_3$ shell first, then
+  correlating the $9$-point shell-mean trajectory with the
+  continuum prediction at the shell mean radius).
+\end{itemize}
+The two correlations measure the same shell-radius fact at
+different weightings and with different source-vertex conventions:
+\begin{itemize}\itemsep=2pt
+\item Per-vertex test: $|V|-1 = 119$ data points (every
+  non-source vertex), source $v_{0}$ \emph{excluded} (the discrete
+  response there is the diagonal of $\Cph^{-1}$ and the chord
+  distance is $0$, both degenerate for the comparison).
+\item Shell-mean test: $9$ data points (one per H$_3$ shell);
+  shell $0$ contains only the source vertex, so it is included
+  on the shell-mean side and contributes a single
+  ($\psi(v_{0}), G(0)$) point.
+\end{itemize}
+On the unweighted 600-cell graph with an H$_3$-fixed source,
+$\psi$ is shell-constant up to numerical precision — the
+within-shell standard deviations are at machine precision
+($\sim 10^{-16}$). The two tests therefore differ in weighting and
+source convention, not in noise content: the per-vertex test
+weights each shell by its multiplicity
+($\{12, 20, 12, 30, 12, 20, 12, 1\}$ for the non-source shells)
+and excludes the source vertex, while the shell-mean test gives
+equal weight to every shell and includes the source. The
+per-vertex test is the headline agreement criterion in this paper.
+
+\subsection{Variant comparison}\label{ssec:variant_comparison}
+
+Two $\Ph$-cocycle weighted Laplacian variants are tested as
+controls:
+
+\begin{itemize}\itemsep=2pt
+\item \textbf{$\Ph$-geometric weights}: edge weight
+  $w_{vw} = \sqrt{\omega_{+}(v)\,\omega_{+}(w)}$ with vertex weight
+  $\omega_{+}(v) = \Ph^{\kappa(v)}$, where $\kappa(v) \in \{0,\ldots,8\}$
+  is the shell index of $v$.
+\item \textbf{$\Ph$-arithmetic weights}: edge weight
+  $w_{vw} = \tfrac12[\omega_{+}(v) + \omega_{+}(w)]$ with the same
+  $\omega_{+}$.
+\end{itemize}
+The weighted Laplacian is then
+$L_{w} = D_{w} - A_{w}$ where $A_{w}$ is the weighted adjacency.
+We re-run the discrete-to-continuum test on each variant.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Per-vertex and shell-mean Pearson correlations between the
+discrete response $\psi = (L_{w} + \Ph^{-2} I)^{-1} e_{v_{0}}$
+and the continuum prediction $G(\|v - v_{0}\|)$ for three
+Laplacian variants ($L_{w}$ unweighted or $\Ph$-cocycle weighted).
+Computed by \texttt{repro/verify\_kernel.py:variant\_correlation}.}
+\label{tab:variant_correlation}
+\begin{tabular}{l c c}
+\toprule
+Variant            & Per-vertex correlation & Shell-mean correlation \\
+\midrule
+\textbf{Unweighted}     & $\mathbf{0.976}$ & $\mathbf{0.923}$ \\
+$\Ph$-geometric weighted    & $0.888$  & $0.880$ \\
+$\Ph$-arithmetic weighted   & $0.884$  & $0.878$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Reading.} Among the three tested variants, the unweighted
+Laplacian ranks highest on both reported criteria
+($+0.088$ per-vertex over the next variant, $+0.044$ shell-mean).
+This reproduces, on a different test, the qualitative ranking the
+b-anomaly paper~\citep{SmartBAnomaly2026} established
+independently against its data-$\chi^{2}$ criterion
+on the LHCb 2025 dataset (see \S\ref{sec:passive_witness} for the
+b-anomaly numbers). Two independent criteria — geometry-only
+correlation here, and angular-anomaly $\chi^{2}$ in b-anomaly —
+agree on which of the three tested variants ranks highest. We do not claim
+this is a uniqueness or blind-selection result; we report it as a
+two-criterion agreement on the highest-ranked tested variant (the
+b-anomaly paper's own caveat that the data was looked at first
+and the geometry criterion verified afterward is inherited
+verbatim).
+
+\subsection{What the agreement does and does not establish}
+
+\paragraph{Does establish.} A geometric agreement: the discrete
+response of a fixed-shift Green operator on a fixed graph
+correlates per-vertex in radial shape, at Pearson $0.976$, with
+the closed-form continuum exponential at the same length scale
+$\Ph$. This is a non-trivial Pearson correlation between
+separately evaluated discrete and continuum Green responses
+sharing the same design-level scale $\Ph^{-2}$: (i) the discrete
+inverse of a $120\times 120$ Laplacian-plus-shift matrix; and
+(ii) a one-dimensional continuum exponential. The $\Ph$-mediated
+agreement is an empirical fact about the chosen substrate and
+shift, computed (not fitted) by the verification script.
+
+\paragraph{Does not establish.} Operator uniqueness on either
+empirical landing — the b-anomaly paper documents a free-width
+Gaussian alternative that fits comparably in $\chi^{2}$ at the
+cost of one extra shape parameter, and the aria-chess preprint
+does not run a substrate ablation; both caveats are inherited
+verbatim. The agreement also does not establish that
+$\Rsixhundred$ is the unique discrete substrate with this
+property; the $24$-cell, $120$-cell, and other H$_n$ Coxeter
+graphs would need to be tested on the same correlation criterion
+to make any comparative claim, and a formal substrate ablation is
+an open build (\S\ref{sec:limitations}).

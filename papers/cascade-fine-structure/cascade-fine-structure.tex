@@ -1,0 +1,1143 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{axiom}[theorem]{Axiom}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\Irr}{\operatorname{Irr}}
+\newcommand{\rk}{\operatorname{rank}}
+\newcommand{\Hmin}{\mathbf{H}_{\min}}
+\newcommand{\Hor}{\mathbf{H}_{\mathrm{or}}}
+\newcommand{\Hdist}{\mathbf{H}_{\mathrm{dist}}}
+\newcommand{\Hquot}{\mathbf{H}_{\mathrm{quot}}}
+\newcommand{\Hfifty}{\mathbf{H}_{50}}
+\newcommand{\Hgauge}{\mathbf{H}_{\mathrm{gauge}}}
+\newcommand{\Ophi}{\mathbb{Z}[\varphi]}
+\newcommand{\Wph}{W_{\mathrm{ph}}}
+\newcommand{\Nslot}{N_{\mathrm{slot}}}
+\newcommand{\kappaTwoI}{\kappa_{2I}}
+\newcommand{\Phiraw}{\Phi_{\mathrm{raw}}}
+\newcommand{\PhiHfour}{\Phi_{H_4}}
+\newcommand{\Irrrat}{\Irr_{\mathrm{rat}}}
+
+\title{The Fine-Structure Theorem:\\
+  $\alpha^{-1} = 137 + \pi/87$\\
+  as a Conditional Identity in the $\alpha$-Chain}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This is the third and final entry of the $\alpha$-chain in
+the cascade-correspondence programme. It assembles the
+inherited results of $\alpha$-1 (\emph{The 12D Closure
+Theorem}) and $\alpha$-2 (\emph{Phason--Coxeter Alignment})
+together with classical icosian / 600-cell / Coxeter theory
+into the conditional mathematical identity
+\[
+  \alpha^{-1} \;=\; 137 \;+\; \pi/87,
+\]
+where the integer $137 = 87 + 50$ decomposes as
+\begin{itemize}
+\item $87 = \Nslot$, the phason slot count from $\alpha$-2's
+  Theorem $T_B$ (slot-count clause), citable conditionally on
+  $\alpha$-2's hypothesis stack
+  $\Hmin + \Hor + \Hdist + \Hquot$;
+\item $50 = \kappaTwoI$, the sum of nontrivial rational-sector
+  Laplacian eigenvalues of the binary icosahedral group $2I$
+  acting on the $600$-cell graph, identified with $50$ under
+  a named structural hypothesis $\Hfifty$
+  (Hypothesis~\ref{hyp:H50}).
+\end{itemize}
+The phase term $\pi/87$ is derived from the per-slot
+distribution of the $H_4$-observable phase
+$\PhiHfour = 88\pi$ across $\Nslot = 87$ slots, after
+separating a center-gauge contribution of magnitude $\pi$.
+The center-gauge separation is encoded as a named structural
+hypothesis $\Hgauge$ (Hypothesis~\ref{hyp:Hgauge}).
+
+The final identity (Theorem~\ref{thm:Talpha}) is conditional
+on the full seven-hypothesis stack
+\[
+  \Hmin \,+\, \Hor \,+\, \Hdist \,+\, \Hquot \,+\,
+  \Hfifty \,+\, \Hphasehalve \,+\, \Hgauge,
+\]
+where $\Hphasehalve$ (Hypothesis~\ref{hyp:phase-halving})
+asserts that the classical $E_8 \to H_4$ root-layer $2$-to-$1$
+projection transfers to a factor-of-$2$ halving of the
+cumulative Coxeter phase.
+We make no claim that this identity is unconditional, that
+$\alpha^{-1}$ here equals an experimental observable, that
+this paper proves any law of nature, or that the
+hypothesis stack is itself reducible to lower-level
+mathematics within $\alpha$-3. The paper's deliverable is
+the strictly mathematical conditional identity above.
+
+We make no claim about photons, microtubules, biology, the
+Standard Model, or any phenomenology. We do not depend on the
+infrastructure papers P1--P7. We do not cite the
+\texttt{cascade-derivation/} working notes,
+\texttt{paper-xxii}, \texttt{paper-xxxiv}, or any other
+downstream VFD manuscript as proof source.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{Position of the paper}
+
+This is the third and final entry of the $\alpha$-chain in
+the cascade-correspondence programme: a strictly mathematical
+synthesis paper that combines the inherited results of
+$\alpha$-1 \cite{Cascade12D} and $\alpha$-2
+\cite{CascadePhasonCoxeter} with classical icosian /
+$600$-cell theory into a conditional identity for $\alpha^{-1}$
+as a \emph{derived mathematical constant}.
+
+The paper is parallel to the infrastructure stack P1--P7 and
+does not depend on it. It does not depend on any
+\texttt{cascade-derivation/} working note, on any downstream
+VFD paper, or on any computer-algebra session.
+
+\subsection{What this paper proves}
+
+\textbf{Inherited (cited from $\alpha$-1, $\alpha$-2).}
+\begin{description}
+\item[\textbf{$\alpha$-1, $C_1$, $C_2$, $C_3$}
+  \cite{Cascade12D}.] $C_2$ unconditional; $C_1$, $C_3$
+  conditional on $\Hmin$.
+\item[\textbf{$\alpha$-2, $T_A$, $T_B$-$88$, $T_B$-$87$}
+  \cite{CascadePhasonCoxeter}.] $T_A$ and $T_B$-$88$
+  conditional on $\Hmin + \Hor + \Hdist$; $T_B$-$87$
+  conditional on $\Hmin + \Hor + \Hdist + \Hquot$.
+\end{description}
+
+\textbf{Classical inputs.}
+\begin{description}
+\item[\textbf{Lemma~\ref{lem:McKay-recap}.}] McKay
+  correspondence $2I \leftrightarrow \widetilde{E}_8$
+  (recap from $\alpha$-2).
+\item[\textbf{Lemma~\ref{lem:c15}.}] $c^{15} = -I$ in
+  $W(E_8)$, the standard $\Z/2$ central involution generated
+  by powers of a Coxeter element.
+\item[\textbf{Lemma~\ref{lem:E8-to-H4-2to1}.}] The classical
+  $E_8 \to H_4$ cut-and-project package is two-to-one on the
+  minimal-vector / root layer (Moody--Patera). Transfer of
+  this root-layer datum to a halving of the cumulative phase
+  bookkeeping is not classical; it is the content of
+  Hypothesis~\ref{hyp:phase-halving} ($\Hphasehalve$), and is
+  used only under that hypothesis.
+\end{description}
+
+\textbf{Layer A (definitions inheriting the full $\alpha$-1
++ $\alpha$-2 stack $\Hmin + \Hor + \Hdist + \Hquot$).}
+\begin{description}
+\item[\textbf{Definition~\ref{def:Nslot}.}] $\Nslot := 87$
+  cited from $\alpha$-2's $T_B$-$87$
+  (Fact~\ref{fact:imports}(e), under
+  $\Hmin + \Hor + \Hdist + \Hquot$).
+\item[\textbf{Definitions~\ref{def:phi-raw}, \ref{def:phi-H4}.}]
+  Total Coxeter phase $\Phiraw = 88 \cdot 2\pi = 176\pi$
+  (from $\alpha$-2's $T_B$-$88$, conditional on
+  $\Hmin + \Hor + \Hdist$); two-to-one $H_4$-observable
+  phase $\PhiHfour = \Phiraw / 2 = 88\pi$ (using
+  Lemma~\ref{lem:E8-to-H4-2to1} \emph{together with}
+  Hypothesis~\ref{hyp:phase-halving}, which transfers the
+  root-layer 2-to-1 to the phase bookkeeping).
+\end{description}
+
+\textbf{Layer B (conditional on $\alpha$-2 stack + $\Hfifty$).}
+\begin{description}
+\item[\textbf{Theorem~\ref{thm:T137}}] (\textbf{$T_{137}$},
+  integer decomposition): $137 = \Nslot + \kappaTwoI = 87
+  + 50$, conditional on $\Hmin + \Hor + \Hdist + \Hquot +
+  \Hfifty$.
+\end{description}
+
+\textbf{Layer C (conditional on $\alpha$-2 stack + $\Hphasehalve + \Hgauge$).}
+\begin{description}
+\item[\textbf{Theorem~\ref{thm:Tpi}}] (\textbf{$T_{\pi/87}$},
+  per-slot phase): $\PhiHfour / \Nslot = \pi + \pi/87$,
+  with the $\PhiHfour = 88\pi$ identification requiring
+  $\Hphasehalve$ and the $+\pi$ identification as the $\Z/2$
+  center gauge under $\Hgauge$. Conditional on
+  $\Hmin + \Hor + \Hdist + \Hquot + \Hphasehalve + \Hgauge$.
+\end{description}
+
+\textbf{Layer D (final synthesis, conditional on the full
+seven-hypothesis stack).}
+\begin{description}
+\item[\textbf{Theorem~\ref{thm:Talpha}}] (\textbf{$T_\alpha$}):
+  $\alpha^{-1} = 137 + \pi/87$ as a derived mathematical
+  constant. Conditional on $\Hmin + \Hor + \Hdist + \Hquot
+  + \Hfifty + \Hphasehalve + \Hgauge$.
+\end{description}
+
+\subsection{What this paper does NOT claim}
+
+\begin{enumerate}
+\item No claim that $T_\alpha$ is unconditional. Every
+  hypothesis in the stack is named and tracked.
+\item No claim that $\alpha^{-1}$ as defined here equals the
+  experimental fine-structure constant. Inside the proof
+  layer, $\alpha^{-1}$ is a mathematical quantity derived from
+  $\Nslot$, $\kappaTwoI$, and the residual phase term. Any
+  comparison with empirical measurement is outside the proof
+  layer.
+\item No claim about photons, microtubules, biology, the
+  Standard Model, or any phenomenology.
+\item No claim that $\Hfifty$ or $\Hgauge$ is itself a
+  theorem of $\alpha$-3. Both are named structural
+  hypotheses with explicit motivation
+  (Remarks~\ref{rmk:H50-status}, \ref{rmk:Hgauge-status});
+  reducing them to upstream mathematics is deferred.
+\item No first-principles-physics rhetoric.
+\item No dependence on the infrastructure papers P1--P7, on
+  \texttt{cascade-derivation/} working notes, on
+  \texttt{paper-xxii}, \texttt{paper-xxxiv}, or on any
+  downstream VFD manuscript.
+\item No computer-algebra session is cited as proof source;
+  any GAP / numerical cross-check appears only in non-load-bearing
+  remarks.
+\end{enumerate}
+
+\subsection{Source audit}
+
+\textbf{Internal.}
+\begin{itemize}
+\item Axiom $\mathbf{F1}$ from
+  \cite[\S F1]{CascadeFoundations}: chain provenance only.
+\item $\alpha$-1 \cite{Cascade12D}: $C_2$ unconditional;
+  $C_1$, $C_3$ conditional on $\Hmin$.
+\item $\alpha$-2 \cite{CascadePhasonCoxeter}: $T_A$,
+  $T_B$-$88$ conditional on $\Hmin + \Hor + \Hdist$;
+  $T_B$-$87$ conditional on $\Hmin + \Hor + \Hdist + \Hquot$.
+\end{itemize}
+
+\textbf{Classical.}
+\begin{itemize}
+\item McKay 1980 \cite{McKay80}: ADE / $2I$ /
+  $\widetilde{E}_8$ correspondence.
+\item Conway--Sloane \cite{ConwaySloane} Ch.~8: icosian
+  ring, $E_8$ embedding, $H_4$ / $600$-cell interface.
+\item Moody--Patera \cite{MoodyPatera}: $E_8 \to H_4$
+  cut-and-project.
+\item Bourbaki \cite{Bourbaki46} Ch.~4--6 / Humphreys
+  \cite{Humphreys} \S 3.16--3.20: Coxeter element
+  eigenvalues, exponents, $E_8$ data.
+\item Du Val \cite{DuVal} Ch.~3: standard $2I$ character
+  table.
+\item In-paper Proposition~\ref{prop:class-sum}: class-sum /
+  Cayley-graph spectral formula (proved here for self-contained
+  reference).
+\end{itemize}
+
+%=====================================================================
+\section{Preliminaries: Imports from $\alpha$-1, $\alpha$-2,
+  and Classical Sources}
+\label{sec:prelims}
+%=====================================================================
+
+\subsection{Inherited convention}
+
+We adopt $\alpha$-2's resolved convention
+\cite[Notation~not:rank-conv]{CascadePhasonCoxeter}:
+\emph{rank} means $\rk_\Ophi$ unless explicitly marked
+$\rk_\Z$. We do not re-litigate the $\rk_\Z$-vs-$\rk_\Ophi$
+distinction; for $\alpha$-3 the load-bearing inherited
+quantities are integers and real numbers
+($\Nslot$, $\Wph$, etc.), so the convention does not enter
+visibly here.
+
+\subsection{Inherited theorem statements}
+
+\begin{fact}[Imports from $\alpha$-1 and $\alpha$-2]
+\label{fact:imports}
+We freely cite the following.
+\begin{enumerate}
+\item[(a)] $\alpha$-1 Theorem $C_2$ (\emph{unconditional}):
+  the upward cascade closes at $\Z$-rank $12$
+  \cite[Thm.~thm:C2]{Cascade12D}.
+\item[(b)] $\alpha$-1 Hypothesis $\Hmin$
+  (\emph{conditional}): the phason coefficient ring is
+  $\Ophi$ \cite[Hyp.~hyp:Hmin]{Cascade12D}.
+\item[(b1)] $\alpha$-1 Theorem $C_1$ (\emph{conditional on
+  $\Hmin$}): the phason complement satisfies $M \cong
+  \Ophi^{2}$ as $\Ophi$-module
+  \cite[Thm.~thm:C1]{Cascade12D}.
+\item[(b2)] $\alpha$-1 Theorem $C_3$ (\emph{conditional on
+  $\Hmin$}): the phason coefficient ring at $L_{12}$
+  closure equals $\Ophi$
+  \cite[Thm.~thm:C3]{Cascade12D}.
+\item[(c)] $\alpha$-2 Theorem $T_A$ (\emph{conditional on
+  $\Hmin + \Hor + \Hdist$, relative to a fixed Coxeter
+  element $c \in W(E_8)$}): the Coxeter-resolved phason
+  module $M_{\rm Cox}(c) \cong \Ophi^{4}$ has one
+  $\Ophi$-line per Coxeter plane $P_k(c)$
+  \cite[Thm.~thm:TA]{CascadePhasonCoxeter}.
+\item[(d)] $\alpha$-2 Theorem $T_B$-$88$ (\emph{conditional
+  on $\Hmin + \Hor + \Hdist$}): the total phason winding is
+  $\Wph = \sum_{k=1}^{4} m_k^+ = 17 + 19 + 23 + 29 = 88$
+  \cite[Thm.~thm:TB-88]{CascadePhasonCoxeter}.
+\item[(e)] $\alpha$-2 Theorem $T_B$-$87$ (\emph{conditional
+  on $\Hmin + \Hor + \Hdist + \Hquot$}): the phason slot
+  count is $\Nslot = \Wph - 1 = 87$
+  \cite[Thm.~thm:TB-87]{CascadePhasonCoxeter}.
+\end{enumerate}
+\end{fact}
+
+\begin{definition}[Phason slot count, inherited]
+\label{def:Nslot}
+$\Nslot := 87$, cited from $\alpha$-2 Theorem $T_B$-$87$
+(Fact~\ref{fact:imports}(e)). The integer $\Nslot$ is used
+in $\alpha$-3 only as an inherited quantity; it carries the
+$\alpha$-2 conditional fence
+$\Hmin + \Hor + \Hdist + \Hquot$.
+\end{definition}
+
+%=====================================================================
+\section{The $2I$ / $600$-cell / McKay Package}
+\label{sec:McKay-pack}
+%=====================================================================
+
+\begin{lemma}[McKay correspondence: $2I \leftrightarrow
+  \widetilde{E}_8$, recap]
+\label{lem:McKay-recap}
+The binary icosahedral group $2I \subset SU(2)$ corresponds
+to the affine Dynkin diagram $\widetilde{E}_8$ under the
+McKay correspondence: the irreducible representations of
+$2I$ are in canonical bijection with the nodes of
+$\widetilde{E}_8$ (including the trivial representation on
+the affine node).
+\end{lemma}
+
+\begin{proof}
+Classical McKay 1980 \cite[\S 3, pp.~183--186]{McKay80};
+recap of \cite[Lem.~lem:McKay]{CascadePhasonCoxeter}.
+\end{proof}
+
+\begin{definition}[$2I$ rational sector $\Irrrat(2I)$]
+\label{def:Irr-rat}
+We define $\Irrrat(2I) \subset \Irr(2I)$ as the set of
+\emph{complex irreducibles of $2I$ with rational-valued
+character}, i.e., $\rho \in \Irr(2I)$ such that
+$\chi_\rho(g) \in \Q$ for all $g \in 2I$. The nontrivial
+rational sector is $\Irrrat^\times(2I) := \Irrrat(2I)
+\setminus \{\mathbf{1}\}$ (the trivial representation
+$\mathbf{1}$ is excluded by definition).
+\end{definition}
+
+\begin{remark}[Why ``rational''?]
+\label{rmk:Irr-rat-justif}
+The choice of rational sector is the algebraic restriction
+under which the Laplacian spectrum (Def.~\ref{def:Lambda})
+gives integer-valued plus rational-valued eigenvalues, which
+will sum to an integer $\kappaTwoI$. Other restrictions of
+the spectrum (full complex sector, real sector) give
+non-integer sums and do not align with the integer $50$
+target. The choice ``rational sector'' is a definitional
+restriction, not derived; we make it explicit so that
+$\Hfifty$ below has unambiguous content.
+\end{remark}
+
+\begin{definition}[$600$-cell graph and Laplacian on a
+  $2I$-isotypic component]
+\label{def:Lambda}
+Let $\Gamma$ be the $1$-skeleton of the $600$-cell viewed as
+a $12$-regular Cayley graph of $2I$ with respect to a fixed
+neighbour conjugacy class $S \subset 2I$ of size $|S| = 12$
+(the $12$ icosahedral neighbours). Let $L = 12 I - A$
+be the unnormalised graph Laplacian, where $A$ is the
+adjacency matrix of $\Gamma$.
+
+For each complex irreducible $\rho \in \Irr(2I)$, the
+isotypic component $V_\rho \subset \C[2I]$ is
+$L$-invariant, and $L|_{V_\rho}$ acts as a scalar
+$\lambda_\rho \in \R$ given by the class-sum formula stated
+in Proposition~\ref{prop:class-sum} below.
+\end{definition}
+
+\begin{proposition}[Class-sum / Cayley-graph spectral
+  formula]
+\label{prop:class-sum}
+Let $G$ be a finite group, $S \subset G$ a symmetric
+($S = S^{-1}$) union of conjugacy classes of $G$, and
+$\Gamma = \mathrm{Cay}(G, S)$ the Cayley graph of $G$ with
+respect to $S$. Let $A$ be the adjacency matrix and $L =
+|S| \cdot I - A$ the unnormalised Laplacian. Decompose the
+regular representation as
+\[
+  \C[G] \;\cong\; \bigoplus_{\rho \in \Irr(G)}
+    W_\rho^{\oplus \dim \rho},
+\]
+where $W_\rho$ is the irreducible carrier of $\rho$ (with
+$\dim W_\rho = \dim \rho$), so that the $\rho$-\emph{isotypic
+component} of $\C[G]$ is $V_\rho := W_\rho^{\oplus \dim \rho}$
+(of total $\C$-dimension $(\dim \rho)^2$).
+Then on each irreducible carrier $W_\rho$ (and hence as the
+same scalar on every copy in $V_\rho$), $A$ and $L$ act as
+scalars $a_\rho, \lambda_\rho$ given by
+\[
+  a_\rho \;=\; \frac{\sum_{s \in S} \chi_\rho(s)}{\dim \rho},
+  \qquad
+  \lambda_\rho \;=\; |S| - a_\rho.
+\]
+When $S$ is a single conjugacy class with representative
+$s_0 \in S$, this simplifies to $a_\rho = |S| \cdot
+\chi_\rho(s_0) / \dim \rho$, hence
+\[
+  \lambda_\rho \;=\; |S| \cdot \left(1 -
+    \frac{\chi_\rho(s_0)}{\dim \rho}\right).
+\]
+\end{proposition}
+
+\begin{proof}
+The class sum $\Sigma := \sum_{s \in S} s$ lies in the centre
+of $\C[G]$, hence by Schur's lemma acts on the irreducible
+carrier $W_\rho$ as a scalar $a_\rho \in \C$. Computing the
+trace of $\Sigma$ on $W_\rho$:
+\[
+  \mathrm{tr}_{W_\rho}\bigl(\rho(\Sigma)\bigr)
+  \;=\; \sum_{s \in S} \chi_\rho(s),
+\]
+while the trace of the scalar $a_\rho \cdot I_{W_\rho}$ on
+$W_\rho$ is $a_\rho \cdot \dim W_\rho = a_\rho \cdot \dim
+\rho$. Hence
+\[
+  a_\rho \;=\;
+  \frac{\sum_{s \in S} \chi_\rho(s)}{\dim \rho}.
+\]
+On the isotypic component $V_\rho = W_\rho^{\oplus \dim
+\rho}$, $\Sigma$ acts as the same scalar $a_\rho$ on each
+copy of $W_\rho$ (since the class sum is central).
+The Cayley adjacency matrix is $A = \rho_{\rm reg}(\Sigma)$
+(where $\rho_{\rm reg}$ is the regular representation),
+so $A$ inherits this scalar action on each $V_\rho$.
+The Laplacian formula $\lambda_\rho = |S| - a_\rho$ is
+direct. The single-class simplification uses that $\chi_\rho$
+is constant on conjugacy classes.
+\end{proof}
+
+\begin{remark}[Application to $\Gamma$ and the $600$-cell]
+\label{rmk:Lambda-application}
+For $G = 2I$ and $S = $ the $12$-element neighbour conjugacy
+class on the $600$-cell with representative $s_0 \in S$,
+Proposition~\ref{prop:class-sum} gives
+\[
+  \lambda_\rho \;=\; 12 - \frac{12 \, \chi_\rho(s_0)}{\dim
+    \rho}.
+\]
+This is the formula entering Def.~\ref{def:Lambda} and the
+sum $\kappaTwoI$ of Def.~\ref{def:kappa}.
+\end{remark}
+
+\begin{definition}[Sum $\kappaTwoI$]
+\label{def:kappa}
+The \emph{rational-sector Laplacian sum} is
+\[
+  \kappaTwoI \;:=\; \sum_{\rho \in \Irrrat^\times(2I)}
+    \lambda_\rho \;\in\; \R.
+\]
+\end{definition}
+
+\begin{lemma}[$2I$ rational sector and Laplacian spectrum,
+  classical content]
+\label{lem:2I-laplacian}
+The complex irreducible representations of $2I$ have
+dimensions $\{1, 2, 2, 3, 3, 4, 4, 5, 6\}$, with the unique
+$1$-dimensional being the trivial representation $\mathbf{1}$
+\cite[Ch.~3]{DuVal}. The character table is classical and
+records that the rational-character sector
+$\Irrrat(2I)$ consists of those irreducibles whose character
+values lie in $\Q$ for every conjugacy class. The
+Laplacian eigenvalues $\lambda_\rho$ of
+Def.~\ref{def:Lambda} are the standard rationals (or
+quadratic irrationals over $\Q(\sqrt 5)$ on certain
+non-rational classes) given by the class-sum formula.
+\end{lemma}
+
+\begin{proof}
+Du Val \cite[Ch.~3]{DuVal} for the $2I$ character table; the
+class-sum / Cayley-graph spectrum formula is the in-paper
+Proposition~\ref{prop:class-sum}. The dimension list and the
+rational-character classification follow by direct inspection
+of the character table.
+\end{proof}
+
+%=====================================================================
+\section{Hypothesis $\Hfifty$: the $\kappaTwoI = 50$
+  identification}
+\label{sec:H50}
+%=====================================================================
+
+\begin{hypothesis}[$\Hfifty$: $\kappaTwoI = 50$ with explicit eigenvalue breakdown]
+\label{hyp:H50}
+The rational-sector Laplacian sum $\kappaTwoI$ of
+Def.~\ref{def:kappa}, computed for the $2I$-Cayley structure on
+the $600$-cell of Def.~\ref{def:Lambda}, is given by the sum
+\[
+  \kappaTwoI \;=\; \sum_{\rho \in \Irrrat^\times(2I)}
+    \lambda_\rho \;=\; 9 + 12 + 14 + 15 \;=\; 50,
+\]
+where the four nontrivial rational-sector eigenvalues $9, 12,
+14, 15$ are identified with the rational-sector irreps of $2I$
+(of dimensions $1, 3, 4, 5$ respectively) via the class-sum
+formula $\lambda_\rho = 12 - 12\chi_\rho(s)/\dim\rho$ for the
+neighbour class $S$ on the $600$-cell. The hypothesis asserts
+both the identification of each individual eigenvalue with a
+specific rational-sector irrep and the summation identity.
+\end{hypothesis}
+
+\begin{remark}[Status of $\Hfifty$]
+\label{rmk:H50-status}
+$\Hfifty$ is a \emph{named structural hypothesis}, not a
+theorem of $\alpha$-3. To upgrade $\Hfifty$ to a theorem one
+would (i) compute the rational-character sector
+$\Irrrat^\times(2I)$ explicitly using
+Lemma~\ref{lem:2I-laplacian}'s character table, (ii) compute
+each $\lambda_\rho$ via the class-sum formula
+$\lambda_\rho = 12 - 12\,\chi_\rho(s)/\dim\rho$ for the
+neighbour class $S$ on the $600$-cell, and (iii) sum the
+results. This computation is in principle finite and
+classical; we do not carry it out at full theorem grade in
+$\alpha$-3 because doing so requires committing to a single
+classical convention for the $2I$ character table, the
+$600$-cell adjacency, and the rational-sector definition,
+all of which are mildly choice-dependent in the literature
+(\cite{DuVal} vs other quaternionic-icosahedral
+references). Pinning the conventions to an exact fixed
+point and verifying $\kappaTwoI = 50$ thereunder is left
+as a cross-check task for a downstream paper. In the
+meantime, $\Hfifty$ stays an explicit hypothesis whose
+content is exactly the equation $\kappaTwoI = 50$.
+
+A non-load-bearing remark: independent computer-algebra
+sessions reportedly give $\kappaTwoI = 50$ under the
+conventions specified above; this aligns with $\Hfifty$ but
+is not a proof.
+\end{remark}
+
+\begin{theorem}[$\mathbf{T_{137}}$: integer decomposition
+  $137 = \Nslot + \kappaTwoI$;
+  conditional on $\Hmin + \Hor + \Hdist + \Hquot + \Hfifty$]
+\label{thm:T137}
+Assume the full $\alpha$-2 hypothesis stack
+$\Hmin + \Hor + \Hdist + \Hquot$ together with $\Hfifty$.
+Then
+\[
+  \Nslot + \kappaTwoI \;=\; 87 + 50 \;=\; 137.
+\]
+\end{theorem}
+
+\begin{proof}
+By Def.~\ref{def:Nslot} (Fact~\ref{fact:imports}(e),
+$\alpha$-2's $T_B$-$87$ under the $\alpha$-2 stack),
+$\Nslot = 87$. By $\Hfifty$, $\kappaTwoI = 50$. The
+arithmetic $87 + 50 = 137$ is direct.
+\end{proof}
+
+\begin{remark}[On $T_{137}$]
+\label{rmk:T137-status}
+Theorem~\ref{thm:T137} is an \emph{arithmetic} statement:
+once both $\Nslot = 87$ (inherited) and $\kappaTwoI = 50$
+(hypothesis $\Hfifty$) hold, the sum is $137$ tautologically.
+The substantive content of the theorem is therefore the
+hypothesis stack: nothing in $\alpha$-3 derives $137$ from
+deeper structure; $\alpha$-3 only asserts that $137$ admits
+the stated decomposition under the listed hypotheses.
+\end{remark}
+
+%=====================================================================
+\section{Phase Machinery: Total, Observable, Center Gauge}
+\label{sec:phase}
+%=====================================================================
+
+\begin{definition}[Total raw phase per Coxeter cycle]
+\label{def:phi-raw}
+The \emph{total raw phase per Coxeter cycle} is
+\[
+  \Phiraw \;:=\; \Wph \cdot 2\pi \;=\; 88 \cdot 2\pi
+  \;=\; 176\pi,
+\]
+using $\Wph = 88$ from $\alpha$-2's $T_B$-$88$
+(Fact~\ref{fact:imports}(d)).
+\end{definition}
+
+\begin{lemma}[$E_8$ minimal-vector layer projects two-to-one
+  onto the $H_4$ root system]
+\label{lem:E8-to-H4-2to1}
+The classical Elser--Sloane cut-and-project from $E_8$ to
+$H_4$ projects the $240$ minimal vectors of $E_8$ onto the
+$120$ roots of the $H_4$ root system, with each $H_4$ root
+arising from a pair $\{v, -v\}$ of $E_8$ minimal vectors
+(equivalently, from a $\sigma$-twist-related pair of
+icosian / co-icosian points). The factor of $2$ at this
+\emph{minimal-vector layer} is the only $2$-to-$1$ datum
+needed in this paper to halve the raw Coxeter phase from
+$\Phiraw = 176\pi$ to $\PhiHfour = 88\pi$.
+\end{lemma}
+
+\begin{proof}
+Moody--Patera \cite[Thm.~4.1, Prop.~4.2]{MoodyPatera}
+establishes that the cut-and-project from the $E_8$ root
+system onto the physical $H_4$ root system maps the $240$
+$E_8$-roots onto the $120$ $H_4$-roots with each $H_4$ root
+having two preimages related by sign reversal (equivalently,
+the $\sigma$-twist on the icosian / co-icosian splitting of
+$E_8 = I \oplus \sigma(I)$
+\cite[Ch.~8]{ConwaySloane}).
+\end{proof}
+
+\begin{remark}[Scope of Lemma~\ref{lem:E8-to-H4-2to1}]
+\label{rmk:2to1-scope}
+We do \emph{not} claim a global $2$-to-$1$ structure on the
+full $H_4$-quasicrystal $Q_{H_4}$ of $\alpha$-1's classical
+package; that quasicrystal is a model set
+\cite[Def.~def:cap]{Cascade12D}, not an orbit space. The
+load-bearing $2$-to-$1$ datum of
+Lemma~\ref{lem:E8-to-H4-2to1} is restricted to the
+minimal-vector / root layer: $240$ $E_8$-roots project to $120$
+$H_4$-roots with sign-paired preimages. This root-layer
+statement does \emph{not} automatically transfer to a halving
+of phase bookkeeping, which is a different datum; that
+transfer is the content of the phase-halving hypothesis
+Hypothesis~\ref{hyp:phase-halving} below.
+\end{remark}
+
+\begin{hypothesis}[$\Hphasehalve$: root-layer $2$-to-$1$ transfers to the $H_4$-observable phase]
+\label{hyp:phase-halving}
+The $2$-to-$1$ sign-paired projection from the $E_8$
+minimal-vector layer onto the $H_4$ root layer
+(Lemma~\ref{lem:E8-to-H4-2to1}) transfers to the raw cumulative
+phase $\Phiraw = 176\pi$ as an exact factor of $2$:
+$\Phiraw \mapsto \Phiraw / 2$ under the $H_4$-observable phase
+bookkeeping.
+\end{hypothesis}
+
+\begin{remark}[Status of $\Hphasehalve$]
+\label{rmk:phase-halving-status}
+The root-layer $2$-to-$1$ projection is a classical statement
+about orbits of pairs of vectors $\{v, -v\}$; a transfer to the
+\emph{cumulative} phase $\Phiraw$ is a statement about
+integrating the sign-pairing over a plane-wise winding cycle
+consistently with the $\sigma$-twist orientation $\Hor$ of
+$\alpha$-2. Verifying this transfer requires a careful analysis
+of how plane-wise windings at each Coxeter plane descend
+through the sign-pair quotient, which we do not carry out
+here. We adopt $\Hphasehalve$ as an explicit named hypothesis
+of $\alpha$-3 (distinct from $\Hor, \Hdist, \Hquot, \Hfifty,
+\Hgauge$).
+\end{remark}
+
+\begin{definition}[$H_4$-observable phase per cycle, conditional on $\Hphasehalve$]
+\label{def:phi-H4}
+Assuming Hypothesis~\ref{hyp:phase-halving}, the
+\emph{$H_4$-observable phase per cycle} is
+\[
+  \PhiHfour \;:=\; \Phiraw / 2 \;=\; 176\pi / 2 \;=\; 88\pi.
+\]
+\end{definition}
+
+\begin{lemma}[$c^{15} = -I$ in $W(E_8)$]
+\label{lem:c15}
+Let $c \in W(E_8)$ be a Coxeter element of order $h = 30$.
+Then $c^{15} = -I$ acts as $-\mathrm{id}$ on the reflection
+representation $V = \R^8$.
+\end{lemma}
+
+\begin{proof}
+$c$ has order exactly $h = 30$ on $V$
+\cite[\S 3.18]{Humphreys}. Its eigenvalues on $V \otimes \C$
+are $\zeta^{m_k^\pm}$ with $\zeta = e^{2\pi i / 30}$ and
+$\{m_k^\pm\} = \{1, 7, 11, 13, 17, 19, 23, 29\}$
+(\cite[Lem.~lem:E8-data]{CascadePhasonCoxeter}). Then
+$c^{15}$ has eigenvalues $\zeta^{15 m_k^\pm} = e^{i \pi
+m_k^\pm}$. Since each exponent $m_k^\pm$ is odd (every
+member of $\{1, 7, 11, 13, 17, 19, 23, 29\}$ is odd),
+$e^{i \pi m_k^\pm} = -1$ for all $k$. Hence $c^{15}$ has
+all eigenvalues equal to $-1$ on $V \otimes \C$, so
+$c^{15} = -I$ on $V$.
+\end{proof}
+
+\begin{definition}[$\Z/2$ center generator]
+\label{def:center}
+The \emph{$\Z/2$ center generator} of $W(E_8)$ acting on
+$V$ is the involution $z := c^{15} = -I$ of
+Lemma~\ref{lem:c15}. The corresponding center quotient is
+$V / \Z/2 = V / \langle -I \rangle$, which collapses
+antipodal pairs.
+\end{definition}
+
+\begin{remark}[On the center quotient]
+\label{rmk:center-pi}
+A full Coxeter cycle on $V$ accumulates phase $2\pi$ in each
+$2$D Coxeter plane $P_k$ (since $c|_{P_k}$ is rotation by
+$2\pi m_k^- / 30$, and after $30$ steps the phase is
+$2\pi m_k^-$, a multiple of $2\pi$). The center generator
+$c^{15} = -I$ acts in each $P_k$ as a half-cycle: rotation
+by $\pi$. Hence on each plane, the center generator
+``accounts for'' a phase contribution of $\pi$ per cycle,
+in the precise sense that one full Coxeter cycle equals
+two applications of $c^{15}$ (since $c^{30} = (c^{15})^2 =
+(-I)^2 = I$). At the level of accumulated phase
+\emph{per slot}, this central involution is the natural
+candidate for separating a $\pi$ contribution from the
+fractional remainder; this candidacy is formalised as
+$\Hgauge$ below.
+\end{remark}
+
+%=====================================================================
+\section{Hypothesis $\Hgauge$: the $\pi$ center-gauge
+  separation}
+\label{sec:Hgauge}
+%=====================================================================
+
+\begin{hypothesis}[$\Hgauge$: $\pi$ separates as the
+  $\Z/2$ center gauge]
+\label{hyp:Hgauge}
+Let $\PhiHfour = 88\pi$ be the $H_4$-observable phase per
+cycle (Def.~\ref{def:phi-H4}) and $\Nslot = 87$ be the
+phason slot count (Def.~\ref{def:Nslot}). The per-slot
+phase
+\[
+  \PhiHfour / \Nslot \;=\; 88\pi / 87
+\]
+admits the canonical decomposition
+\[
+  88\pi / 87 \;=\; \pi + \pi/87,
+\]
+with the $+\pi$ term identified as the $\Z/2$ center-gauge
+contribution generated by $c^{15} = -I$
+(Lemma~\ref{lem:c15}, Remark~\ref{rmk:center-pi}). The
+\emph{residual phase per slot} is
+\[
+  \Phi_{\rm res} \;:=\; (\PhiHfour / \Nslot) - \pi
+                 \;=\; \pi/87.
+\]
+\end{hypothesis}
+
+\begin{remark}[Status of $\Hgauge$]
+\label{rmk:Hgauge-status}
+$\Hgauge$ is a \emph{named structural hypothesis}, not a
+theorem of $\alpha$-3. The arithmetic identity
+$88\pi/87 = \pi + \pi/87$ is a pure algebraic computation
+and requires no hypothesis. What $\Hgauge$ asserts beyond
+the arithmetic is the \emph{identification} of the $+\pi$
+piece with the $\Z/2$ center-gauge contribution generated
+by $c^{15} = -I$.
+
+The motivation
+(Remark~\ref{rmk:center-pi}) is that the central involution
+$c^{15}$ acts as a half-cycle (rotation by $\pi$) on each
+Coxeter plane and naturally accounts for one half-revolution
+per cycle. To upgrade $\Hgauge$ to a theorem one would
+construct an explicit gauge-theoretic quotient of the
+phason bookkeeping by the $\Z/2$ central action and prove
+that this quotient removes exactly $\pi$ of phase per slot
+(not, say, $0$ or $2\pi$). Such a construction would require
+formalising the cut-and-project's phason bundle as a
+$\Z/2$-equivariant object over the Coxeter base; this is
+beyond the scope of $\alpha$-3.
+
+In the meantime, $\Hgauge$ stays an explicit hypothesis
+whose content is exactly the canonical separation of the
+$\pi$ piece from the fractional remainder $\pi/87$ via the
+center-gauge identification.
+\end{remark}
+
+\begin{theorem}[$\mathbf{T_{\pi/87}}$: per-slot residual
+  phase; conditional on $\Hmin + \Hor + \Hdist + \Hquot +
+  \Hphasehalve + \Hgauge$]
+\label{thm:Tpi}
+Assume the full $\alpha$-2 stack $\Hmin + \Hor + \Hdist +
+\Hquot$, together with $\Hphasehalve$ (so that
+Def.~\ref{def:phi-H4} gives $\PhiHfour = 88\pi$) and
+$\Hgauge$. Then the per-slot $H_4$-observable phase decomposes
+canonically as
+\[
+  \PhiHfour / \Nslot \;=\; 88\pi / 87 \;=\; \pi + \pi/87,
+\]
+with the $+\pi$ piece identified as the $\Z/2$ center
+gauge (under $\Hgauge$); the residual phase per slot is
+\[
+  \Phi_{\rm res} \;=\; \pi/87.
+\]
+\end{theorem}
+
+\begin{proof}
+The identity $88\pi/87 = \pi + \pi/87$ is direct
+arithmetic: $88\pi/87 = (87 + 1)\pi / 87 = \pi + \pi/87$.
+The values $\PhiHfour = 88\pi$ and $\Nslot = 87$ are
+inherited from the $\alpha$-2 stack via
+Defs.~\ref{def:phi-H4}, \ref{def:Nslot} (carrying the
+$\Hmin + \Hor + \Hdist + \Hquot$ fence). The
+identification of the $+\pi$ piece with the $\Z/2$ center
+gauge is the content of $\Hgauge$.
+\end{proof}
+
+%=====================================================================
+\section{The Final Synthesis: Theorem $T_\alpha$}
+\label{sec:Talpha}
+%=====================================================================
+
+\begin{definition}[$\alpha^{-1}$ as a derived constant, conditional on the full hypothesis stack]
+\label{def:alpha-inv}
+The symbol $\alpha^{-1}$ is a \emph{formal assembly} of three
+ingredients of the $\alpha$-chain, each of which is available
+only under the hypothesis stack named after it:
+\[
+  \alpha^{-1} \;:=\; (\Nslot + \kappaTwoI) + \Phi_{\rm res},
+\]
+where $\Nslot$ (the inherited phason slot count of
+Def.~\ref{def:Nslot}) requires $\Hmin + \Hor + \Hdist + \Hquot$
+(inherited from $\alpha$-2), $\kappaTwoI$ (the rational-sector
+Laplacian sum of Def.~\ref{def:kappa}) requires $\Hfifty$, and
+$\Phi_{\rm res}$ (the residual phase per slot) requires
+$\Hphasehalve + \Hgauge$. Without these hypotheses, the value
+of $\alpha^{-1}$ is not defined by this paper. \emph{Inside the
+proof layer of $\alpha$-3, $\alpha^{-1}$ is a mathematical
+symbol whose evaluated value is only available conditional on
+the seven-hypothesis stack of Theorem~\ref{thm:Talpha}; no claim
+about identification with the experimental fine-structure
+constant is made within the theorem statements.} The identity
+$\alpha^{-1} = 137 + \pi/87$ is not part of this definition; it
+is the content of Theorem~\ref{thm:Talpha} under the
+appropriate hypothesis stack.
+\end{definition}
+
+\begin{theorem}[$\mathbf{T_\alpha}$: the fine-structure
+  identity, fully conditional]
+\label{thm:Talpha}
+Assume the seven-hypothesis stack
+\[
+  \Hmin \,+\, \Hor \,+\, \Hdist \,+\, \Hquot \,+\,
+  \Hfifty \,+\, \Hphasehalve \,+\, \Hgauge.
+\]
+Then the derived constant $\alpha^{-1}$ of
+Def.~\ref{def:alpha-inv} satisfies
+\[
+  \alpha^{-1} \;=\; 137 + \pi/87.
+\]
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:T137} (under $\Hmin + \Hor + \Hdist +
+\Hquot + \Hfifty$), the integer part is $\Nslot +
+\kappaTwoI = 87 + 50 = 137$. By Theorem~\ref{thm:Tpi}
+(under $\Hmin + \Hor + \Hdist + \Hquot + \Hphasehalve +
+\Hgauge$), the residual phase part is $\Phi_{\rm res} =
+\pi/87$. The sum $137 + \pi/87$ is the value of $\alpha^{-1}$
+by Def.~\ref{def:alpha-inv}. The full hypothesis stack is the
+union $\Hmin + \Hor + \Hdist + \Hquot + \Hfifty + \Hphasehalve
++ \Hgauge$ as claimed.
+\end{proof}
+
+\begin{remark}[Status of $T_\alpha$]
+\label{rmk:Talpha-status}
+Theorem~\ref{thm:Talpha} is the main deliverable of
+$\alpha$-3. It is conditional on seven named hypotheses;
+none of them is itself a theorem of $\alpha$-3.
+\begin{itemize}
+\item $\Hmin$, $\Hor$, $\Hdist$, $\Hquot$ are inherited
+  from $\alpha$-1 and $\alpha$-2 (where they are also
+  named hypotheses, not theorems).
+\item $\Hfifty$, $\Hphasehalve$, $\Hgauge$ are introduced
+  for the first time in $\alpha$-3, with structural
+  justifications in Remarks~\ref{rmk:H50-status},
+  \ref{rmk:phase-halving-status}, \ref{rmk:Hgauge-status}.
+\end{itemize}
+What $\alpha$-3 \emph{does} prove is the conditional
+arithmetic-and-phase identity that, given all seven
+hypotheses, $\alpha^{-1} = 137 + \pi/87$. We make no claim
+that this $\alpha^{-1}$ equals the experimental
+fine-structure constant; that identification is outside the
+proof layer of $\alpha$-3.
+\end{remark}
+
+%=====================================================================
+\section{Self-Audit}
+\label{sec:audit}
+%=====================================================================
+
+\textbf{Inherited (cited from $\alpha$-1 / $\alpha$-2;
+not claimed as theorems of $\alpha$-3).}
+\begin{itemize}
+\item[[1]] $\alpha$-1 $C_1, C_2, C_3$
+  (Fact~\ref{fact:imports}(a), (b1), (b2)) cited at their
+  respective conditional levels ($C_2$ unconditional;
+  $C_1, C_3$ on $\Hmin$).
+\item[[2]] $\alpha$-2 $T_A$, $T_B$-$88$
+  (Fact~\ref{fact:imports}(c)--(d)) cited conditionally on
+  $\Hmin + \Hor + \Hdist$.
+\item[[3]] $\alpha$-2 $T_B$-$87$
+  (Fact~\ref{fact:imports}(e)) cited conditionally on
+  $\Hmin + \Hor + \Hdist + \Hquot$.
+\end{itemize}
+
+\textbf{Classical layer (unconditional).}
+\begin{itemize}
+\item[[4]] Lemma~\ref{lem:McKay-recap} (McKay $2I
+  \leftrightarrow \widetilde{E}_8$): McKay 1980 \S 3.
+\item[[5]] Lemma~\ref{lem:c15} ($c^{15} = -I$): direct
+  computation from the $E_8$ exponent table; all exponents
+  $\{1, 7, 11, 13, 17, 19, 23, 29\}$ are odd, so $\zeta^{15
+  m} = -1$ for $\zeta = e^{2\pi i/30}$.
+\item[[6]] Lemma~\ref{lem:E8-to-H4-2to1} ($2$-to-$1$
+  $E_8 \to H_4$): Moody--Patera Thm.~4.1, Prop.~4.2.
+\item[[7]] Lemma~\ref{lem:2I-laplacian} ($2I$ rational
+  irreps + Laplacian formula): Du Val Ch.~3 (character table)
+  + in-paper Proposition~\ref{prop:class-sum} (class-sum /
+  Cayley-graph spectral formula, proved here).
+\end{itemize}
+
+\textbf{New named structural hypotheses (NOT theorems of
+$\alpha$-3).}
+\begin{itemize}
+\item[[8]] $\Hfifty$ (Hypothesis~\ref{hyp:H50}):
+  $\kappaTwoI = 50$; structural motivation in
+  Remark~\ref{rmk:H50-status}, with the gap explicitly
+  identified (convention pinning + finite computation).
+\item[[9]] $\Hgauge$ (Hypothesis~\ref{hyp:Hgauge}): the
+  $+\pi$ piece of $88\pi/87$ is canonically the $\Z/2$
+  center-gauge contribution; structural motivation in
+  Remarks~\ref{rmk:center-pi}, \ref{rmk:Hgauge-status},
+  with the gap explicitly identified
+  ($\Z/2$-equivariant phason-bundle quotient construction).
+\end{itemize}
+
+\textbf{Conditional theorems of $\alpha$-3.}
+\begin{itemize}
+\item[[10]] Theorem~\ref{thm:T137} ($T_{137}$, integer
+  decomposition $137 = 87 + 50$) conditional on
+  $\Hmin + \Hor + \Hdist + \Hquot + \Hfifty$. Substantive
+  content lives in the hypothesis stack
+  (Remark~\ref{rmk:T137-status}).
+\item[[11]] Theorem~\ref{thm:Tpi} ($T_{\pi/87}$, per-slot
+  residual phase) conditional on $\Hmin + \Hor + \Hdist +
+  \Hquot + \Hphasehalve + \Hgauge$. Arithmetic identity is
+  direct; substantive content is the phase-halving transfer
+  ($\Hphasehalve$) and center-gauge identification
+  ($\Hgauge$).
+\item[[12]] Theorem~\ref{thm:Talpha} ($T_\alpha$,
+  $\alpha^{-1} = 137 + \pi/87$) conditional on the full
+  seven-hypothesis stack
+  $\Hmin + \Hor + \Hdist + \Hquot + \Hfifty + \Hphasehalve + \Hgauge$.
+\end{itemize}
+
+\textbf{Not claimed.}
+\begin{itemize}
+\item No unconditional $T_\alpha$.
+\item No claim that $\alpha^{-1}$ as defined equals an
+  experimental observable.
+\item No phenomenology, photons, microtubules, biology,
+  Standard Model, or first-principles physics rhetoric.
+\item No CODATA / measurement comparison inside the proof
+  layer.
+\item No dependence on P1--P7, on \texttt{cascade-derivation/}
+  working notes, on \texttt{paper-xxii},
+  \texttt{paper-xxxiv}, or any other downstream VFD
+  manuscript.
+\item No GAP / computer-algebra session is cited as proof
+  source.
+\end{itemize}
+
+%=====================================================================
+\section{Citation Contract and Downstream Handoff}
+\label{sec:handoff}
+%=====================================================================
+
+\textbf{Unconditionally citable.}
+\begin{itemize}
+\item Lemmas~\ref{lem:McKay-recap}, \ref{lem:c15},
+  \ref{lem:E8-to-H4-2to1}, \ref{lem:2I-laplacian}
+  (classical layer).
+\end{itemize}
+
+\textbf{Conditional on $\alpha$-1's $\Hmin$.}
+\begin{itemize}
+\item $\alpha$-1's $C_1$, $C_3$ (cited as inputs).
+\end{itemize}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist$.}
+\begin{itemize}
+\item $\alpha$-2's $T_A$, $T_B$-$88$ (cited as inputs);
+  $\Phiraw$, $\PhiHfour$ definitions.
+\end{itemize}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist + \Hquot$.}
+\begin{itemize}
+\item $\alpha$-2's $T_B$-$87$ (cited as input); $\Nslot$
+  definition.
+\end{itemize}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist + \Hquot +
+\Hfifty$.}
+\begin{itemize}
+\item Theorem~\ref{thm:T137}: $\Nslot + \kappaTwoI = 137$.
+\end{itemize}
+
+\textbf{Conditional on $\Hmin + \Hor + \Hdist + \Hquot +
+\Hphasehalve + \Hgauge$.}
+\begin{itemize}
+\item Theorem~\ref{thm:Tpi}: per-slot residual $\pi/87$.
+\end{itemize}
+
+\textbf{Conditional on the full seven-hypothesis stack.}
+\begin{itemize}
+\item Theorem~\ref{thm:Talpha}: $\alpha^{-1} = 137 + \pi/87$.
+\end{itemize}
+
+\textbf{Does NOT close.}
+\begin{itemize}
+\item Any of the seven hypotheses as a theorem of $\alpha$-3.
+  $\Hmin$, $\Hor$, $\Hdist$, $\Hquot$ remain open from
+  $\alpha$-1 / $\alpha$-2; $\Hfifty$, $\Hphasehalve$, and
+  $\Hgauge$ are introduced here as named hypotheses with
+  structural motivation but not theorem-grade derivations.
+\item Any identification of $\alpha^{-1}$ with an
+  experimental observable.
+\end{itemize}
+
+\textbf{Downstream usage.} Any future paper wishing to
+identify the derived constant $\alpha^{-1} = 137 + \pi/87$
+of $\alpha$-3 with the experimentally measured fine-structure
+constant must:
+\begin{enumerate}
+\item Either upgrade some or all of the seven hypotheses to
+  theorems, or assume them explicitly with downstream
+  conditional fences.
+\item Bridge the mathematical $\alpha^{-1}$ of
+  Def.~\ref{def:alpha-inv} to a physical observable, which
+  is outside the strictly mathematical scope of $\alpha$-3.
+\end{enumerate}
+
+%=====================================================================
+\section{Notation Audit}
+\label{sec:notation}
+%=====================================================================
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Symbol & Meaning & First use \\
+\hline
+$\Nslot$ & phason slot count $= 87$ (from $\alpha$-2) &
+  Def.~\ref{def:Nslot} \\
+$2I$ & binary icosahedral group &
+  Lemma~\ref{lem:McKay-recap} \\
+$\Irrrat(2I)$ & $2I$ irreducibles with rational character &
+  Def.~\ref{def:Irr-rat} \\
+$\Irrrat^\times(2I)$ & nontrivial part of $\Irrrat(2I)$ &
+  Def.~\ref{def:Irr-rat} \\
+$L = 12 I - A$ & $600$-cell graph Laplacian &
+  Def.~\ref{def:Lambda} \\
+$\lambda_\rho$ & eigenvalue of $L$ on $V_\rho$-isotypic
+  component & Def.~\ref{def:Lambda} \\
+$\kappaTwoI$ & $\sum_{\rho \in \Irrrat^\times(2I)}
+  \lambda_\rho$ & Def.~\ref{def:kappa} \\
+$\Wph$ & total phason winding $= 88$ (from $\alpha$-2) &
+  Fact~\ref{fact:imports}(d) \\
+$\Phiraw$ & $\Wph \cdot 2\pi = 176\pi$ &
+  Def.~\ref{def:phi-raw} \\
+$\PhiHfour$ & $\Phiraw / 2 = 88\pi$, $H_4$-observable phase
+  per cycle & Def.~\ref{def:phi-H4} \\
+$c$ & Coxeter element of $W(E_8)$, order $30$ &
+  Lemma~\ref{lem:c15} \\
+$z = c^{15}$ & $\Z/2$ center generator, $-I$ on $V$ &
+  Def.~\ref{def:center} \\
+$\Phi_{\rm res}$ & residual phase per slot $= \pi/87$ under
+  $\Hgauge$ & Hyp.~\ref{hyp:Hgauge} \\
+$\alpha^{-1}$ & derived constant $= 137 + \pi/87$ under
+  full stack & Def.~\ref{def:alpha-inv} \\
+$\Hmin, \Hor, \Hdist, \Hquot$ & inherited hypotheses
+  ($\alpha$-1, $\alpha$-2) &
+  Fact~\ref{fact:imports} \\
+$\Hfifty$ & $\kappaTwoI = 50$ identification &
+  Hyp.~\ref{hyp:H50} \\
+$\Hgauge$ & $+\pi$ separates as $\Z/2$ center gauge &
+  Hyp.~\ref{hyp:Hgauge} \\
+$T_{137}, T_{\pi/87}, T_\alpha$ &
+  Theorems~\ref{thm:T137}, \ref{thm:Tpi},
+  \ref{thm:Talpha} & \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Correspondence Foundations},
+\texttt{papers/cascade-correspondence-foundations/foundations.tex}.
+Cited solely for the statement of Axiom $\mathbf{F1}$ (\S F1).
+
+\bibitem{Cascade12D}
+\emph{The 12D Closure Theorem} ($\alpha$-1),
+\texttt{papers/cascade-12d-closure/cascade-12d-closure.tex}.
+Theorems $C_1$, $C_2$, $C_3$ and Hypothesis $\Hmin$.
+
+\bibitem{CascadePhasonCoxeter}
+\emph{Phason--Coxeter Alignment} ($\alpha$-2),
+\texttt{papers/cascade-phason-coxeter/cascade-phason-coxeter.tex}.
+Theorems $T_A$, $T_B$-$88$, $T_B$-$87$ and Hypotheses
+$\Hor$, $\Hdist$, $\Hquot$.
+
+\bibitem{Bourbaki46}
+N.~Bourbaki, \emph{Groupes et alg\`ebres de Lie}, Chapitres
+4--6, Hermann/Springer, 1968. $E_8$ data: Ch.~6, \S4 No.~12,
+Planche~VII; Coxeter elements and exponent symmetry: Ch.~5,
+\S6.
+
+\bibitem{Humphreys}
+J.~E.~Humphreys, \emph{Reflection Groups and Coxeter Groups},
+Cambridge Stud. Adv. Math.~29, Cambridge UP, 1990.
+\S 3.16 (Coxeter element); \S 3.18 (Coxeter number);
+\S 3.19--3.20 (eigenvalues / exponents).
+
+\bibitem{ConwaySloane}
+J.~H.~Conway, N.~J.~A.~Sloane, \emph{Sphere Packings,
+Lattices and Groups}, 3rd ed., Springer, 1999. Icosian
+ring and $E_8$ embedding: Ch.~8, \S2 (pp.~206--209);
+$600$-cell: Ch.~8, \S2.3.
+
+\bibitem{MoodyPatera}
+R.~V.~Moody, J.~Patera, \emph{Quasicrystals and icosians},
+J.~Phys.~A \textbf{26} (1993), 2829--2853. Theorem~4.1 and
+Proposition~4.2 (the $E_8 \to H_4$ cut-and-project, including
+the $2$-to-$1$ observable structure).
+
+\bibitem{McKay80}
+J.~McKay, \emph{Graphs, singularities, and finite groups},
+in: \emph{Finite Groups (Santa Cruz, 1979)},
+Proc.~Symp.~Pure Math.~37, AMS, 1980, pp.~183--186.
+
+\bibitem{DuVal}
+P.~Du~Val, \emph{Homographies, Quaternions and Rotations},
+Oxford Mathematical Monographs, Clarendon Press, 1964.
+Ch.~3: $2I$ and its character table.
+
+\end{thebibliography}
+
+\end{document}

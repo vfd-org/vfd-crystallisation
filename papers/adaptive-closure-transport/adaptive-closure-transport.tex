@@ -1,0 +1,720 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\setlength{\emergencystretch}{3em}
+\sloppy
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\Zphi}{\mathbb{Z}[\varphi]}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Mcal}{\mathcal{M}}
+\newcommand{\Rcal}{\mathcal{R}}
+\newcommand{\Vcal}{\mathcal{V}}
+\newcommand{\Wcal}{\mathcal{W}}
+\newcommand{\twoI}{2\mathbf{I}}
+
+\title{Adaptive Closure Transport\\[6pt]
+\large From fixed response kernels to learned substrate selection}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We extend the Schr\"{o}dinger-limit transport-law framework of~\citep{SmartTransportLaw} to the \emph{adaptive} regime, in which the transport substrate co-evolves with the transported field. The extension is a 4-tuple $(M, L_M, W, R_{\mathrm{hom}})$ with a learning rule $\dot W = G(\rho, j, W)$, splitting cleanly into a definitional \emph{passive} regime ($\dot W \equiv 0$, recovering the transport-law setting) and an \emph{active} regime ($\dot W \not\equiv 0$, with $W$-dependent feedback). On the cascade-compatible $V_{600}$ substrate we deliver two new theorems --- an explicit $\twoI$ edge-space decomposition and a closure-derived strongly convex Lyapunov $V_f(W)$ on the closed positive cone with linear-contraction subgradient flow --- and state a \emph{conditional} selection hypothesis on the reduced slow-manifold $W$-flow. The hypothesis chains through six explicitly listed analytic conditions (timescale separation, Lyapunov existence in the application, hyperbolicity, global existence / precompactness, {\L}ojasiewicz-Simon, Morse genericity); only the closure-derived $V_{600}$ worked example discharges them in this paper. Convergence of the \emph{full} coupled system (beyond the worked example) is not asserted.
+\end{abstract}
+
+\medskip
+\noindent\fbox{\begin{minipage}{0.95\textwidth}
+\textbf{Epistemic status.} Two unconditional theorems on the cascade-compatible $V_{600}$ substrate (Theorems~\ref{thm:edge-decomp} and~\ref{thm:lyapunov-closure}) plus a conditional selection hypothesis (Hypothesis~\ref{hyp:selection}) and a conditional cascade-selection hypothesis (Hypothesis~\ref{hyp:cascade-selection}); six open items catalogued in \S\ref{sec:open}, all reduced-scope after the two theorems. ARIA (\texttt{aria-chess} preprint~\citep{SmartARIAChess2026}) is presented as a candidate active-regime substrate witness; the row-by-row identification of ARIA's update with the $G(\rho, j, W)$ framework is \emph{not} verified here. Biological / chemical instantiations (microtubule, phyllotaxis, neural plasticity, cell metabolism, DNA methylation) are \emph{roadmap, not results}; none is derived here. Both theorems are independently reproducible from numerical scripts in \texttt{papers/adaptive-closure-transport/repro/} (machine precision; wallclock seconds; no fitted parameters).
+\end{minipage}}
+
+\medskip
+\noindent\fbox{\begin{minipage}{0.95\textwidth}
+\textbf{Contributions.}
+\begin{itemize}\itemsep=2pt
+\item \textbf{Theorem~\ref{thm:edge-decomp}} (\emph{explicit $\twoI$ edge-space decomposition}). Identifying $V_{600}$ with the binary icosahedral group $\twoI$ via the standard quaternion embedding, the lifted left-action on the $720$-edge space decomposes into exactly $\boxed{6}$ free $\twoI$-orbits, hence (after complexification) into $9$ isotypic components with explicit $\C$-dimensions $\{6, 24, 24, 54, 54, 96, 96, 150, 216\}$ summing to $720$. This closes hypothesis (EdgeDec) of the cascade-selection statement.
+\item \textbf{Theorem~\ref{thm:lyapunov-closure}} (\emph{closure-derived Lyapunov, worked example}). On the closed positive cone $\Omega = \R^{E_M}_{\geq 0}$, the explicit $V_f(W) = \tfrac{1}{2}\langle f, (L_W + \varphi^{-2} I)^{-1} f\rangle + \tfrac{1}{2}\lambda\|W - W_0\|^2$ is strongly convex (Hessian $\succeq \lambda I$), coercive, and induces a globally convergent subgradient flow $\dot W \in -\partial(V_f + I_\Omega)(W)$ with linear contraction $\|W(t) - W^*\| \leq e^{-\lambda t}\|W(0) - W^*\|$ (Br\'{e}zis 1973). On the open interior $\Omega^\circ$ the flow is the unconstrained gradient flow $\dot W = -\nabla V_f(W)$; strong convexity gives the Polyak--{\L}ojasiewicz inequality with exponent $\theta = 1/2$. Hyperbolicity of the fast subsystem is automatic.
+\item \textbf{Definitional dichotomy} (Fact~\ref{fact:classification}). Every learning rule $G$ is either passive ($G \equiv 0$, recovering the transport-law paper) or active ($G \not\equiv 0$). This is a classification of \emph{flows / learning rules}, not of operating points.
+\item \textbf{Selection hypothesis} (Hypothesis~\ref{hyp:selection}). On the reduced slow-manifold $W$-flow under the six analytic conditions, $W$ is hypothesised to converge to a critical point of $V$, generically a local minimum --- a \emph{candidate selected operating point}. Cascade-equivariant version (Hypothesis~\ref{hyp:cascade-selection}) under $\twoI$-equivariance of the learning rule, fast subsystem, and Lyapunov potential.
+\item \textbf{ARIA dictionary} (Remark~\ref{rem:aria}). A candidate object-level correspondence between the 4-tuple and the ARIA cognitive substrate, stated as a \emph{proposal pending repository-backed verification}.
+\end{itemize}
+\end{minipage}}
+
+\medskip
+\noindent\fbox{\begin{minipage}{0.95\textwidth}
+\textbf{Reader map.} The reader interested in the \emph{theorems} should read \S\S\ref{sec:selection}--\ref{sec:cascade-selection}, where Theorems~\ref{thm:lyapunov-closure} and~\ref{thm:edge-decomp} are stated, proved, and numerically witnessed. The reader interested in the \emph{framework} should read \S\S\ref{sec:4tuple}--\ref{sec:active} (the 4-tuple, learning rule, and passive / active dichotomy). The reader interested in the \emph{open conditional chain} should read \S\ref{sec:selection} (selection hypothesis) and \S\ref{sec:open} (six explicitly catalogued open items, distinguishing what is closed in this paper from what remains). The reader interested in the \emph{ARIA candidate witness or biological roadmap} should read \S\ref{sec:aria} and \S\ref{sec:applications}, both of which are explicitly disclaimed as proposals / roadmap rather than derived results.
+\end{minipage}}
+
+\tableofcontents
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+\subsection{Programme position}
+
+The VFD transport-law paper~\citep{SmartTransportLaw} collects the conditional probability-current layer of the closure-dynamics programme on the $600$-cell substrate of P2~\S 6~\citep{CascadeAlgSubstrate}. That paper handles the \emph{passive} case: a fixed conductivity structure, Fick-type linear transport, free-field propagation. Its principal hypothesis is a discrete continuity equation (the programme-target continuity hypothesis of that paper); its principal conditional result is $U(1)$-phase conservation of total probability.
+
+The transport-law paper does \emph{not} describe \emph{adaptive} transport --- the regime in which the substrate itself is a dynamical degree of freedom that co-evolves with the field it is transporting. This is a structurally different regime. It is the regime of non-equilibrium steady states (NESS) in the sense of~\citep{Prigogine1967}, Nernst-Planck-type transport in chemistry, Hebbian learning in neuroscience, and the couple\_tick dynamics of ARIA. It is the regime in which \emph{selection} becomes possible: the substrate ``remembers'' the field it has transported, and subsequent transport is biased by that memory.
+
+This paper extends the transport-law framework into the adaptive regime. It introduces the mathematical object that carries adaptive transport, states a conditional selection hypothesis, and proposes a cascade-motivated constraint on the selection landscape. The edge-space lift that this constraint requires is not supplied by P2 directly but is delivered in Theorem~\ref{thm:edge-decomp} below; the remaining conditions of the cascade-selection hypothesis (learning-rule and metric equivariance) are documented as scoped open items. The paper identifies the two candidate regimes (passive and active) as a definitional dichotomy (Fact~\ref{fact:classification}) and records their structurally distinct \emph{long-time behaviour} conditional on the cumulative hypothesis load of Hypothesis~\ref{prop:classification}.
+
+\subsection{What this paper delivers}
+
+\begin{enumerate}
+    \item A definition of an \emph{adaptive-closure-transport substrate} as a 4-tuple $(M, L_M, W, R_{\mathrm{hom}})$ with learning rule $\dot W = G(\rho, j, W)$.
+    \item The identification of two structurally distinct regimes --- passive ($G \equiv 0$) and active ($G \not\equiv 0$) --- as a definitional dichotomy (Fact~\ref{fact:classification}, classifying learning rules / flows, not operating points) together with a separate long-time-behaviour conjecture (Hypothesis~\ref{prop:classification}) requiring the full analytic load of Hypothesis~\ref{hyp:selection}.
+    \item A conditional \emph{selection hypothesis} (Hypothesis~\ref{hyp:selection}): under separation of timescales, existence of a Lyapunov potential, hyperbolicity of the fast subsystem, global existence and forward-orbit precompactness of the reduced flow (e.g.\ coercive / proper $V$), a {\L}ojasiewicz-Simon-type gradient inequality for $V$, and a Morse-genericity condition, the slow $W$-dynamics converges to a critical point of $V$ --- generically a local minimum. Each such local minimum is a candidate selected operating point.
+    \item A conditional \emph{cascade-selection hypothesis} (Hypothesis~\ref{hyp:cascade-selection}): motivated by the P2~\S 6 shell-adjacency commutant structure on the vertex space $\C^{V_{600}}$. The edge-space decomposition required for the lift (Remark~\ref{rem:type-mismatch}) is not supplied by P2 itself but is delivered in Theorem~\ref{thm:edge-decomp} of the present paper; the $94 + 26$ integer / irrational split is a \emph{vertex}-space statement, and its specific relation to the now-explicit edge-space $6$-orbit / $9$-isotypic decomposition is the residual open piece.
+    \item An \emph{ARIA dictionary} (Remark~\ref{rem:aria}) proposing the ARIA cognitive substrate as a candidate instantiation, pending repository-backed verification.
+    \item An \emph{application catalogue} (Section~\ref{sec:applications}) listing photon transport (passive limit), microtubule dynamics, phyllotaxis, neural plasticity, cell metabolism, and DNA methylation as candidate further instantiations of the same framework.
+\end{enumerate}
+
+\subsection{What this paper does not deliver}
+
+\begin{enumerate}
+    \item \emph{Heredity / replication.} This paper describes adaptive transport, not life. Adaptive transport is strictly weaker than life: a river shaping its bed is adaptive, a cell is alive. The distinction is a \emph{replication operator} $R: M \to M \times M$ copying the learned $W$, which this paper does not introduce. That extension is deferred to a companion paper.
+    \item \emph{Measurement / observer content.} The framework says nothing about what adaptive-transport systems \emph{report} about their own state. Paper~XXXIII~\citep{SmartXXXIII} proposes a candidate closure-projection measurement principle (which that paper itself labels a proposal / candidate unifying principle, not a closed theorem); we neither invoke nor rebuild it here.
+    \item \emph{Subjective experience.} Whether an adaptive-transport system has qualia is a philosophical question about which this paper is silent. If qualia are physical, they live on an adaptive-closure-transport substrate; the converse (every such substrate has qualia) is not claimed.
+    \item \emph{A derivation of the specific biological learning rules.} Applying the framework to microtubules, phyllotaxis, etc.\ requires biological / chemical inputs we do not derive.
+\end{enumerate}
+
+\subsection{Structure}
+
+\S\ref{sec:4tuple} defines the 4-tuple and the learning rule.
+\S\ref{sec:passive} recovers the passive regime as the transport-law paper's content.
+\S\ref{sec:active} defines the active regime and relates it to Paper XIX's closure residual.
+\S\ref{sec:selection} states the conditional selection statement with explicit Lyapunov and timescale hypotheses.
+\S\ref{sec:cascade-selection} imports the P2~\S 6 cascade constraint.
+\S\ref{sec:classification} records the passive / active classification.
+\S\ref{sec:aria} presents the ARIA candidate instantiation.
+\S\ref{sec:applications} catalogues candidate further applications, each as a target, not a derivation.
+\S\ref{sec:consistency} cross-checks against the transport-law paper, Paper~XIX, Paper~XXX, and P2.
+\S\ref{sec:open} lists six open items.
+\S\ref{sec:aria_home} records non-load-bearing programme context (closure-response operator, b-anomaly witness, selection-layer recurrence).
+\S\ref{sec:numerical} reports the delivered numerical verification of the two new theorems.
+\S\ref{sec:conclusion} summarises.
+
+\subsection{Notation}
+
+Throughout, $M$ denotes a finite graph with vertex set $V_M$, undirected edge set $E_M$, and oriented edge set $\vec E_M := \{(v,w) : \{v,w\} \in E_M\}$ (with $|\vec E_M| = 2|E_M|$). The conductivity $W \in \R^{E_M}$ assigns a scalar to each \emph{undirected} edge; the current $j \in \R^{\vec E_M}$ assigns a signed scalar to each \emph{oriented} edge, satisfying the antisymmetry $j_{v\to w} = -j_{w \to v}$ (so the two orientations carry the same information up to sign).
+$L_M$ is a self-adjoint operator on $\C^{V_M}$ built from adjacency-type data on $M$ (for the cascade application, $L_M$ is constructed from the shell-adjacency algebra of P2~\S 6).
+$\rho: V_M \times \R_{\geq 0} \to \R_{\geq 0}$ denotes a density field.
+$R_{\mathrm{hom}}$ denotes a linear projection onto a subspace of $\C^{V_M}$ (the homeostatic image).
+$G: \R^{V_M} \times \R^{\vec E_M} \times \R^{E_M} \to \R^{E_M}$ denotes a learning rule assigning to $(\rho, j, W)$ a time derivative $\dot W \in \R^{E_M}$ (the learning rule's input current is oriented; its output conductivity is undirected).
+
+%==================================================================
+\section{The 4-tuple $(M, L_M, W, R_{\mathrm{hom}})$ and the learning rule}\label{sec:4tuple}
+%==================================================================
+
+\begin{definition}[Adaptive-closure-transport substrate]\label{def:4tuple}
+An \emph{adaptive-closure-transport substrate} is a 4-tuple $(M, L_M, W, R_{\mathrm{hom}})$ with:
+\begin{itemize}
+    \item $M$ a finite graph with vertex set $V_M$, undirected edge set $E_M$ (used for conductivities $W$, which are scalar weights on undirected edges), and oriented edge set $\vec E_M = \{(v,w) : \{v,w\} \in E_M\}$ (used for currents $j_{v\to w}$, which are signed scalars on oriented edges);
+    \item $L_M$ a self-adjoint operator on $\C^{V_M}$ (the \emph{passive Laplacian}) built from an adjacency-type structure on $M$;
+    \item $W \in \R^{E_M}$ a scalar conductivity assigned to each undirected edge, time-dependent in general. (Non-negativity $W \geq 0$ is natural for diffusive transport; the worked-example Theorem~\ref{thm:lyapunov-closure} below restricts to the closed positive cone $\Omega = \R^{E_M}_{\geq 0}$ where $L_W \succeq 0$ is automatic and the projected gradient flow preserves $\Omega$. Without this restriction, the unprojected gradient flow can leave the positivity domain.)
+    \item $R_{\mathrm{hom}}: \C^{V_M} \to \C^{V_M}$ a linear projection (the \emph{homeostatic reset}), time-independent.
+\end{itemize}
+\emph{Cascade compatibility} (for the applications of interest in this paper) adds: $V_M = V_{600}$ (the $600$-cell vertex set), $E_M$ the edges of the $600$-cell vertex graph, $L_M$ lies in the real polynomial algebra generated by the P2~\S 6 shell-adjacency matrices $\{\mathbf{A}_1, \ldots, \mathbf{A}_8\}$~\citep{CascadeAlgSubstrate}, and $R_{\mathrm{hom}}$ commutes with the left-regular $\twoI$-action on $\C^{V_{600}} \cong \C[\twoI]$ of P2~\S 6. Non-cascade instantiations (e.g.\ a generic neural graph) drop the cascade compatibility condition.
+\end{definition}
+
+\begin{definition}[Learning rule]\label{def:learning}
+A \emph{learning rule} for the substrate of Definition~\ref{def:4tuple} is a smooth map
+\[
+    G: \R^{V_M} \times \R^{\vec E_M} \times \R^{E_M} \to \R^{E_M},
+    \qquad (\rho, j, W) \mapsto \dot W
+\]
+together with a dimensionless \emph{learning-rate parameter} $\varepsilon > 0$ such that the coupled evolution is
+\begin{equation}\label{eq:coupled}
+    \partial_t \rho_v \;=\; -\sum_{w \sim v} j_{v \to w}, \qquad
+    \dot W \;=\; \varepsilon\, G(\rho, j, W).
+\end{equation}
+The \emph{separation-of-timescales assumption} is $\varepsilon \ll 1$.
+\end{definition}
+
+\begin{remark}[On the form of the edge current]
+Equation~\eqref{eq:coupled} leaves the form of $j_{v \to w}$ unspecified: in the passive regime, when $H = L$ (the graph Laplacian of $V_{600}$) and the dynamics is restricted to its Schr\"{o}dinger-limit, we take $j_{v \to w} = -2\,\mathrm{Im}(\overline{\psi_v}\,L_{vw}\,\psi_w)$ — the explicit antisymmetric current of~\citep{SmartTransportLaw}, Theorem on $U(1)$ conservation (which proves continuity, antisymmetry, and total-probability conservation unconditionally in that regime). For the fuller \emph{dissipative} closure dynamics $\dot\psi = -\nabla\Fcal + \text{noise}$, the form of $j_{v\to w}$ is a programme target of~\citep{SmartTransportLaw} rather than a proved object. In the active regime we take $j_{v \to w}$ to depend on $W$ via the schematic antisymmetric Nernst-Planck-type ansatz of Remark~\ref{rem:nernst} (Section~\ref{sec:active}). The 4-tuple framework is agnostic between these; the choice of current is a modelling input of the paper being applied.
+\end{remark}
+
+\begin{remark}[Two regimes from one framework]
+The distinction between passive and active transport, elsewhere treated as categorically different (e.g.\ Fickian diffusion vs.\ Nernst-Planck chemistry, free-field vs.\ gauge-field, rock vs.\ neuron), is in this framework a single parametric distinction: $\dot W = 0$ (passive) vs.\ $\dot W \neq 0$ (active). The rest of this paper explores the consequences of that distinction.
+\end{remark}
+
+%==================================================================
+\section{Passive regime: $\dot W = 0$}\label{sec:passive}
+%==================================================================
+
+When $G \equiv 0$, the 4-tuple reduces to the transport-law setting of~\citep{SmartTransportLaw}: a fixed substrate with a fixed passive Laplacian. We record the reduction:
+
+\begin{fact}[Passive regime reduces to the transport-law framework]\label{fact:passive}
+With $G \equiv 0$, the coupled evolution~\eqref{eq:coupled} reduces to a single-field equation for $\rho$ on the fixed substrate $(M, L_M, W_0, R_{\mathrm{hom}})$ with $W \equiv W_0$ constant in time. Specialised to the cascade case $V_M = V_{600}$ (the $600$-cell vertex set), $E_M$ the edges of the $600$-cell vertex graph, $L_M = L$ the $600$-cell Laplacian, $W_0$ uniform and positive (all edges equal to a common positive constant), and $R_{\mathrm{hom}} = \mathrm{id}$, the resulting dynamics is the setting of~\citep{SmartTransportLaw}. In particular:
+\begin{itemize}
+    \item The $U(1)$-phase total-probability conservation of~\citep{SmartTransportLaw} now holds unconditionally in the Schr\"{o}dinger limit on $H = L$: the explicit current $j_{v\to w} = -2\,\mathrm{Im}(\overline{\psi_v}\,L_{vw}\,\psi_w)$ is antisymmetric and satisfies the discrete continuity equation pointwise, and total probability is conserved exactly (the explicit $U(1)$ theorem of the transport-law paper, \S 4 there, and~\citep{SmartTransportLaw}). For the full Langevin-with-noise closure dynamics, the discrete continuity hypothesis and current antisymmetry remain programme targets of the transport-law paper rather than proved consequences.
+    \item The Schr\"{o}dinger-limit dispersion hypothesis of~\citep{SmartTransportLaw} applies unchanged: $\omega^2 = c_{\text{eff}}^2 k^2 + m_\rho^2$ with $m_\rho^2 = \beta\lambda_\rho$. This is also a hypothesis, not a theorem.
+    \item The $\lambda = 0$ eigenmode sits in the trivial $\twoI$-isotypic sector and corresponds to massless dispersion. Whether this mode is the \emph{photon} sector is a further conditional identification under the open $T_{\text{PH}}$ chain of~\citep{CascadeAlphaChain}; we do not claim it here.
+\end{itemize}
+Note the distinction between $W_0 > 0$ uniform (the passive-transport-law regime of this fact) and $W \equiv 0$ identically (zero diffusive transport, no propagation). These are different special cases; the application catalogue entry for ``photon'' in \S\ref{sec:applications} uses $W_0 > 0$ uniform, not $W = 0$.
+\end{fact}
+
+\begin{remark}[Entropy in the passive regime: scope and caveats]
+Entropy-maximising behaviour in the passive regime requires more than gradient flow alone. Gradient flow $\dot\psi = -\nabla\Fcal$ dissipates $\Fcal$, but that does not directly say anything about the Shannon entropy $H[\rho] = -\sum_v \rho_v \log\rho_v$: the relation $\dot H \geq 0$ (modulo boundary flux) holds for the forward Kolmogorov equation of a reversible Markov process under detailed balance (e.g.\ a Fokker-Planck equation with the correct fluctuation-dissipation structure), and is well-known to follow from an H-theorem argument in those settings. Whether the transport-law paper's Fokker--Planck-lift of the closure dynamics satisfies the detailed-balance condition required for such an H-theorem is \emph{not} established in that paper, and is not claimed here. We therefore do not assert entropy-monotonicity in the passive regime of the present framework; we note only that the regime lies in the structural regime where such monotonicity is \emph{possible} under the standard detailed-balance hypothesis.
+\end{remark}
+
+%==================================================================
+\section{Active regime: $\dot W \neq 0$}\label{sec:active}
+%==================================================================
+
+\begin{definition}[Active regime]\label{def:active}
+A \emph{non-trivial learning rule} is a learning rule $G$ for which $G(\rho, j, W) \not\equiv 0$ on an open subset of configurations $(\rho, j, W)$. The \emph{active regime} of the substrate is the dynamics~\eqref{eq:coupled} with a non-trivial learning rule at learning-rate $\varepsilon > 0$.
+\end{definition}
+
+The active regime differs from the passive regime in three structural ways:
+
+\begin{enumerate}
+    \item The substrate itself is a dynamical degree of freedom. $W$ records a history of transport.
+    \item The edge current $j_{v \to w}$ depends on $W$ via a Nernst-Planck-type ansatz (below), so a change in $W$ changes the subsequent current, which in turn changes $W$ via the learning rule. This is a feedback loop.
+    \item Entropy-monotonicity statements require additional detailed-balance hypotheses (see the caveat in \S\ref{sec:passive}); we do \emph{not} claim in this paper a general entropy law for the active regime. The intuition that the learning step ``injects information into $W$'' is descriptive, not a theorem.
+\end{enumerate}
+
+\begin{remark}[Schematic Nernst-Planck-type ansatz under a non-trivial $W$]\label{rem:nernst}
+A schematic candidate for the edge current on the adaptive substrate is the (oriented, antisymmetric) form
+\begin{equation}\label{eq:nernst}
+    j_{v \to w} \;=\; -W_{vw}\,\bigl(\rho_w - \rho_v\bigr) \;+\; \mu\,\tfrac{\rho_v + \rho_w}{2}\,\bigl(\Phi(W)_w - \Phi(W)_v\bigr),
+\end{equation}
+where $\Phi: \R^{E_M} \to \R^{V_M}$ is a vertex-valued potential constructed from $W$ (e.g.\ $\Phi(W)_v := \tfrac{1}{\deg v}\sum_{w \sim v} W_{vw}$, the local degree-averaged edge weight at $v$, or any other $\twoI$-equivariant choice). Both terms are manifestly antisymmetric in $v \leftrightarrow w$: the diffusive Fick term reverses sign with $\rho_w - \rho_v$, and the drift term reverses sign with $\Phi(W)_w - \Phi(W)_v$ while the symmetric average $\tfrac{\rho_v + \rho_w}{2}$ stays put. The diffusion coefficient $W_{vw}$ is a local conductivity, $\mu$ a mobility along the $\Phi$-gradient. Setting $\mu = 0$ and taking $W \equiv 1$ uniform recovers a Fickian diffusion current; the transport-law paper~\citep{SmartTransportLaw} states its discrete continuity law at the hypothesis level without fixing a specific current form, so the identification is at the level of compatible ansatz, not inheritance. We do \emph{not} derive~\eqref{eq:nernst} from the closure dynamics here, and we do \emph{not} fix the choice of $\Phi$; both are modelling inputs of the present paper, listed as part of the open items of \S\ref{sec:open}.
+\end{remark}
+
+\begin{remark}[Relation to Paper XIX's closure residual]
+The nonlinear closure residual of Paper~XIX~\citep{SmartXIX} --- the remainder of the dynamics that cannot be captured by the linear Witten-Hamiltonian regime --- is a candidate source of $G$: the $W$-dynamics may realise the closure residual as a substrate-level feedback. We do \emph{not} claim in this paper that Paper XIX's residual explicitly gives a learning rule of the form $G(\rho, j, W)$; the connection is structural, not derived. Establishing it would be one of the open items of \S\ref{sec:open}.
+\end{remark}
+
+%==================================================================
+\section{The selection statement}\label{sec:selection}
+%==================================================================
+
+We now state the main conditional hypothesis: in the active regime, the \emph{reduced slow-manifold $W$-flow} derived from~\eqref{eq:coupled} under separation of timescales is hypothesised to converge to a critical point of a Lyapunov potential $V(W)$, giving a candidate discrete selected operating point. Convergence of the \emph{full} coupled system is not asserted.
+
+\begin{definition}[Selection]\label{def:selection}
+Throughout this paper, ``selection'' refers to the following precise mathematical statement and \emph{nothing more}: under the cumulative analytic conditions of Hypothesis~\ref{hyp:selection} below, the reduced slow-manifold $W$-flow converges as $t \to \infty$ to a critical point $W^* \in \R^{E_M}$ of a Lyapunov potential $V$ --- generically a local minimum under the Morse condition --- and the pair $(W^*, \rho^*(W^*))$ is then called a \emph{selected operating point}. The word does \emph{not} carry biological / Darwinian content (no replication operator is introduced; cf.\ \S\ref{sec:intro} ``does not deliver: heredity / replication''), \emph{nor} does it imply optimality in any economic, fitness, or information-theoretic sense beyond local minimisation of the supplied $V$, \emph{nor} does it imply convergence of the full coupled system (only of the reduced flow). Whether biological selection in the Darwinian or Hebbian sense maps onto Definition~\ref{def:selection} is conjectural and is the content of Remark~\ref{rem:selection-biology} below.
+\end{definition}
+
+\begin{hypothesis}[Separation of timescales]\label{hyp:timescales}
+$\varepsilon \ll 1$: the field $\rho$ equilibrates on a fast timescale relative to $W$. For each frozen value of $W$ the fast subsystem has a unique (or generically unique) stable attractor $\rho^*(W)$ depending continuously on $W$.
+\end{hypothesis}
+
+\begin{hypothesis}[Lyapunov potential]\label{hyp:lyapunov}
+There exists a real-valued locally-bounded-below function $V: \R^{E_M} \to \R$ and an inner product $\langle\cdot,\cdot\rangle_E$ on $\R^{E_M}$ (the \emph{edge-space metric}, induced by but not identical to the underlying graph metric) such that, with $\rho = \rho^*(W)$ substituted, $G(\rho^*(W), j^*(W), W) = -\nabla_W V(W)$ where $\nabla_W$ is the gradient with respect to $\langle\cdot,\cdot\rangle_E$. (If $W \geq 0$ is required by the application, an additional boundary hypothesis such as inward-normal $-\nabla_W V$ at $\partial \R^{E_M}_{\geq 0}$, or a projected-gradient structure, is needed to preserve the non-negative orthant; we do not supply it here.)
+\end{hypothesis}
+
+\begin{hypothesis}[Selection statement, subject to further analytic conditions]\label{hyp:selection}
+Under Hypotheses~\ref{hyp:timescales} and~\ref{hyp:lyapunov}, together with (a) hyperbolicity of the fast subsystem so that $\rho^*(W)$ is well-defined generically, (b) global existence of the reduced slow-manifold $W$-flow on $[0, \infty)$ and precompactness of its forward orbit --- which holds, for instance, if $V$ is coercive / proper (i.e.\ $V(W) \to \infty$ as $\|W\| \to \infty$) and the reduced vector field is locally Lipschitz, strengthening the ``locally bounded below'' hypothesis of Hypothesis~\ref{hyp:lyapunov}; coercive proper $V$ is sufficient but not equivalent in general, (c) a {\L}ojasiewicz-Simon-type gradient inequality for $V$ in a neighbourhood of each critical point, and (d) generic non-degeneracy of critical points (e.g.\ a Morse condition on $V$), the reduced slow-manifold $W$-flow converges to a critical point of $V$ as $t \to \infty$ at any fixed sufficiently small $\varepsilon > 0$, along trajectories that do not leave the slow manifold; under the additional Morse condition the critical-point set is discrete and the generic limit is a local minimum, giving a \emph{selected operating point} $(W^*, \rho^*(W^*))$. The joint $t \to \infty, \varepsilon \to 0$ limit and the convergence of the \emph{full coupled} system (not merely the reduced flow) require further invariant-manifold-style arguments not supplied here. Without (b), trajectories may escape to infinity in finite time or fail to accumulate; without (c) and (d), gradient-flow convergence need neither be to a minimum nor be pointwise.
+\end{hypothesis}
+
+\begin{remark}[Status]
+Hypothesis~\ref{hyp:selection} is stated as a hypothesis, not a theorem. Its content reduces to a Lyapunov / slow-manifold argument that is standard in adaptive-control and slow-fast-system theory: \citep{Wiggins2003} gives the invariant-manifold theorem under hyperbolicity, the finite-dimensional {\L}ojasiewicz gradient inequality is \citep{Lojasiewicz1993}, its Simon-type infinite-dimensional upgrade (the {\L}ojasiewicz--Simon inequality as typically cited in this context) is \citep{Simon1983}, and point convergence of descent methods on analytic cost functions is \citep{AbsilMahonyAndrews2005}. \emph{What would elevate Hypothesis~\ref{hyp:selection} to a theorem} on the cascade substrate is an explicit verification of (a) hyperbolicity of the fast subsystem at each $W$, (b) existence of a coercive / proper $V$ (so that forward orbits are precompact) for a specific closure-derived learning rule (e.g.\ the Paper XIX residual form), and (c) Lojasiewicz-Simon-type gradient inequality for $V$ to ensure point convergence. Each of those is a discrete follow-up problem. None is attempted here.
+\end{remark}
+
+\begin{remark}[Selection as the bridge between mathematics and biology]\label{rem:selection-biology}
+Hypothesis~\ref{hyp:selection} is where ``selection'' \emph{in the precise sense of Definition~\ref{def:selection}} sits as a candidate bridge to biology: a selected operating point in that sense is the fixed point at which substrate-modification by past transport has reached a self-consistent state under a supplied $V$. Biological selection (Darwinian, Hebbian, developmental) maps \emph{conjecturally} onto Definition~\ref{def:selection}; the specific Lyapunov potential $V$ encodes the specific biological cost. The framework does \emph{not} specify $V$ --- that is the biology-dependent input --- and the selection statement is conditional on the full analytic load of Hypothesis~\ref{hyp:selection}. Under that load, the framework would constrain the structural form of the answer: a discrete set of selected operating points indexed by the critical-point set of whatever $V$ the biology provides, subject to Morse genericity. The bridge to biology is itself part of the conjectural content; Definition~\ref{def:selection} stands on its own without it.
+\end{remark}
+
+\begin{theorem}[Closure-derived Lyapunov, worked example on $V_{600}$ closed positive cone]\label{thm:lyapunov-closure}
+Let $V_M = V_{600}$, $E_M$ the $720$ undirected edges of the $600$-cell graph (so $W \in \R^{E_M}$ assigns a scalar to each undirected edge). Fix a source $f \in \R^{V_{600}}$, a homeostatic baseline $W_0 \in \R^{E_M}_{>0}$, and a regularisation strength $\lambda > 0$. Restrict the conductivity to the closed positive cone $\Omega := \R^{E_M}_{\geq 0}$. On $\Omega$, define
+\[
+   V_f(W) \;:=\; \tfrac{1}{2}\,\bigl\langle f,\; (L_W + \varphi^{-2} I)^{-1}\,f\bigr\rangle \;+\; \tfrac{1}{2}\lambda\,\|W - W_0\|^2,
+\]
+where $L_W := \sum_{e\in E_M} W_e\,E_e$ is the $W$-weighted graph Laplacian (and $E_e$ the elementary edge-Laplacian satisfying $\langle\psi, E_e\psi\rangle = (\psi_v - \psi_w)^2$ for $e = \{v,w\}$). Write $C_\varphi(W) := L_W + \varphi^{-2}\, I$ for the closure-response operator at $W$.
+\begin{enumerate}
+\item For all $W \in \Omega$, $L_W \succeq 0$, hence $C_\varphi(W) \succeq \varphi^{-2}\, I \succ 0$. Therefore $V_f$ is the restriction to $\Omega$ of a smooth ($C^\infty$) function defined on the open neighbourhood $\{W \in \R^{E_M} : L_W \succ -\varphi^{-2}\, I\} \supset \Omega$.
+\item $V_f$ is strictly convex on $\Omega$ with Hessian $\nabla^2 V_f(W) \succeq \lambda I$, and proper / coercive on $\Omega$: $V_f(W) \to +\infty$ as $\|W\| \to \infty$ within $\Omega$.
+\item The minimiser $W^* := \arg\min_{W \in \Omega} V_f(W)$ is unique. The constrained-gradient flow on $\Omega$ is the maximal-monotone subgradient flow~\citep{Brezis1973}
+\[
+   \dot W \;\in\; -\partial\bigl(V_f + I_\Omega\bigr)(W),
+\]
+equivalently the differential inclusion $\dot W \in -\nabla V_f(W) - N_\Omega(W)$ where $N_\Omega(W)$ is the normal cone of $\Omega$ at $W$ and $I_\Omega$ is the indicator function. Equivalently in tangent-cone form, $\dot W = \Pi_{T_\Omega(W)}(-\nabla V_f(W))$, where $\Pi_{T_\Omega(W)}$ is the metric projection onto the tangent cone $T_\Omega(W)$ of $\Omega$ at $W$ (concretely: the projected velocity equals $-\nabla V_f(W)$ in components $e$ for which $W_e > 0$, and equals $\max(-\partial V_f/\partial W_e, 0)$ in components $e$ for which $W_e = 0$ — i.e.\ the inward-only velocity is kept and the outward-pointing component is zeroed at the boundary). For the strongly-convex coercive $V_f$ of (2), this flow is well-posed on $\Omega$, $\Omega$-invariant, and converges to $W^*$ at exponential rate $\geq \lambda$ (Brezis 1973 theorem on subgradient flows of convex functions; the strong convexity gives the linear contraction explicitly). On the open subset $\Omega^\circ = \R^{E_M}_{>0}$, the tangent-cone projection is trivial and the flow is the unconstrained gradient flow $\dot W = -\nabla V_f(W)$.
+\item The gradient is explicit:
+\[
+   \frac{\partial V_f}{\partial W_e} \;=\; -\tfrac{1}{2}\bigl(\psi^*_v - \psi^*_w\bigr)^{2} \;+\; \lambda\,(W_e - W_{0,e}),
+   \qquad e = \{v, w\},\quad \psi^* := C_\varphi(W)^{-1} f.
+\]
+This is a closure-derived gradient-flow example compatible with the abstract learning-rule slot $G(\rho, j, W)$ of Definition~\ref{def:learning} after identifying the abstract density $\rho$ with the fast equilibrium $\psi^*(W) = C_\varphi(W)^{-1}f$ (suppressing the $j$-argument in the gradient-flow case): the $\psi^*$-disagreement on each edge (a ``field-driven'' growth term, positive in the gradient flow because the inverse-response term $\langle f, C_\varphi(W)^{-1} f\rangle$ is Loewner-decreasing in $W$) is balanced against the regularisation pull toward homeostasis $W_0$. (For arbitrary signed source $f$, $\psi^*$ is signed; identifying $\psi^*$ literally with a non-negative density $\rho \geq 0$ requires the positivity hypothesis $f \geq 0$, in which case $\psi^* = C_\varphi^{-1}f \geq 0$ since $C_\varphi^{-1}$ is positivity-preserving on $V_{600}$.)
+\item For $W \in \Omega^\circ$, the fast-equilibrium specification is $\dot\rho = -\bigl(C_\varphi(W)\rho - f\bigr)$, with linearisation $-C_\varphi(W) \prec 0$ at $\rho = \rho^*(W)$. The fast subsystem is therefore exponentially stable / hyperbolic at every operating $W \in \Omega^\circ$, with relaxation rate $\geq \varphi^{-2}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof]
+\emph{(1) Positive-definiteness on $\Omega$.}
+For $W \in \Omega$, each $W_e \geq 0$, so $\langle\psi, L_W \psi\rangle = \sum_e W_e (\psi_v - \psi_w)^2 \geq 0$, i.e.\ $L_W \succeq 0$. Hence $C_\varphi(W) \succeq \varphi^{-2}\, I \succ 0$ uniformly on $\Omega$. The inverse $C_\varphi(W)^{-1}$ depends smoothly on $W$, and so does $V_f$.
+
+\emph{(2) Strict convexity + coercivity.}
+The function $W \mapsto \langle f, C_\varphi(W)^{-1} f\rangle$ is convex in $W$: $C_\varphi(W)$ is affine in $W$ and positive-definite on $\Omega$, and the map $M \mapsto \langle f, M^{-1} f\rangle$ from the cone $\mathrm{PD}(\R^n)$ to $\R$ is operator-convex (\citep{Bhatia2007}, Chapter 5). The regulariser $\tfrac{1}{2}\lambda\|W - W_0\|^2$ is strongly convex with Hessian $\lambda I$. Their sum is strongly convex with Hessian $\succeq \lambda I$. Coercivity on $\Omega$: the regulariser dominates as $\|W\| \to \infty$ (the energy term is bounded below by $0$).
+
+\emph{(3) Existence + uniqueness of $W^*$ + tangent-cone-projected-flow convergence.}
+$\Omega$ is closed and convex; $V_f$ is strongly convex and coercive on $\Omega$; hence the constrained minimum $W^* = \arg\min_\Omega V_f$ exists and is unique. $V_f + I_\Omega$ is a proper, lower-semicontinuous, strongly convex function on $\R^{E_M}$, so its subdifferential is maximal monotone and the subgradient flow $\dot W \in -\partial(V_f + I_\Omega)(W)$ has a unique absolutely-continuous solution from any $W(0) \in \Omega$ (Brezis 1973~\citep{Brezis1973}, Théorème 3.1). Strong convexity (Hessian $\succeq \lambda I$) gives the linear-contraction estimate $\|W(t) - W^*\|^2 \leq e^{-2\lambda t}\,\|W(0) - W^*\|^2$ and the energy estimate $V_f(W(t)) - V_f(W^*) \leq e^{-2\lambda t}(V_f(W(0)) - V_f(W^*))$ (Brezis 1973~\citep{Brezis1973}, Théorème 3.7 / Corollary). On the interior $\Omega^\circ$, the normal cone is $\{0\}$, so $\partial(V_f + I_\Omega)(W) = \{\nabla V_f(W)\}$ and the flow reduces to the unconstrained gradient flow $\dot W = -\nabla V_f(W)$.
+
+\emph{(4) Gradient formula.}
+Differentiating $\langle f, M(W)^{-1} f\rangle$ via $\partial(M^{-1})/\partial W_e = -M^{-1} E_e M^{-1}$ with $\partial M/\partial W_e = E_e$ and $\langle\psi, E_e \psi\rangle = (\psi_v - \psi_w)^2$ for $e = \{v,w\}$ yields the stated formula. The minus sign on the energy term reflects $\partial(M^{-1})/\partial W_e = -M^{-1} E_e M^{-1}$.
+
+\emph{(5) Fast-subsystem hyperbolicity.}
+With $F(\rho, W) := -(C_\varphi(W)\rho - f)$, the fast equation $\dot\rho = F(\rho, W)$ has unique fixed point $\rho^*(W) = C_\varphi(W)^{-1}f$, and $D_\rho F|_{\rho^*} = -C_\varphi(W) \prec -\varphi^{-2}\, I$ uniformly on $\Omega^\circ$. Hyperbolic with all eigenvalues $\leq -\varphi^{-2}$.
+
+A numerical witness for the unconstrained interior-flow regime --- monotone descent of $V_f$ along the explicit-Euler flow, gradient-norm collapse to $\sim 6 \times 10^{-5}$ in $2000$ steps at $\Delta t = 0.05$, and exponential late-time contraction at rate $\sim 3.5 \times 10^{-2}$ per step (consistent with the strong-convex linear-contraction rate $\geq \lambda$) --- is performed by \texttt{repro/verify\_lyapunov\_selection.py}; the script applies a positivity floor $W \gets \max(W, 10^{-3})$ at each step which keeps the iterate in a strict interior of $\Omega$ where the subgradient flow reduces to the unconstrained gradient flow (this floor is a numerical-stability device, not a discretisation of the tangent-cone projection at the boundary $\partial\Omega$, which is not exercised in this run). Output recorded in \texttt{repro/results\_lyapunov\_selection.json}.
+\end{proof}
+
+\begin{remark}[Theorem~\ref{thm:lyapunov-closure} closes ACT open items (1) and (2) for the worked example]\label{rem:lyapunov-status}
+Hypothesis~\ref{hyp:lyapunov} (existence of $V$) and the Lyapunov-existence half of Hypothesis~\ref{hyp:selection} are now \emph{delivered for the closure-derived gradient-flow worked example}: $V_f$ is explicitly specified as the restriction to $\Omega$ of a smooth function on an open neighbourhood, strongly convex (Hessian $\succeq \lambda I$), coercive on $\Omega$, and induces a globally convergent subgradient flow with linear contraction rate $\geq \lambda$ from Br\'{e}zis' theorem; on the unconstrained interior $\Omega^\circ$, strong convexity gives the Polyak--{\L}ojasiewicz inequality $\|\nabla V_f\|^2 \geq 2\lambda(V_f - V_f(W^*))$, i.e.\ a {\L}ojasiewicz inequality with exponent $\theta = 1/2$ for the analytic strongly-convex case. The hyperbolicity of the fast subsystem (Hypothesis~\ref{hyp:timescales}, item~(a) of Hypothesis~\ref{hyp:selection}) is automatic because the fast equilibrium $\rho^* = \psi^*(W) = (L_W + \varphi^{-2} I)^{-1} f$ is the unique solution of a linear positive-definite system, depending smoothly on $W$. What remains open in \S\ref{sec:open} is the construction of $V_f$ for biologically-relevant non-Lyapunov learning rules (where no global potential need exist), and the cascade-equivariance lift of $V_f$ for the cascade-selection statement of Hypothesis~\ref{hyp:cascade-selection}.
+\end{remark}
+
+%==================================================================
+\section{The cascade-selection statement}\label{sec:cascade-selection}
+%==================================================================
+
+The cascade substrate of P2~\S 6 may constrain which operating points can be selected; doing so requires an edge-space lift not supplied by P2, which is delivered explicitly in Theorem~\ref{thm:edge-decomp} below. Remark~\ref{rem:type-mismatch} makes the type-mismatch caveat precise and points to that theorem as its resolution. The symmetry group used throughout this section is the binary icosahedral group $\twoI$ (order $120$), which is the group acting by left multiplication on $\C^{V_{600}} \cong \C[\twoI]$ as in P2~\S 6; the full Coxeter group $H_4$ (order $14{,}400$) is \emph{not} invoked here, and any statement we make under the $\twoI$-action does not automatically lift to an $H_4$-statement.
+
+\begin{fact}[Isotypic preservation, from P2~\S 6]\label{fact:isotypic}
+In the cascade case $V_M = V_{600}$ (the $600$-cell vertex set), $E_M$ the edges of the $600$-cell vertex graph, $L_M$ in the shell-adjacency algebra, the left-regular $\twoI$-action on $\C^{V_{600}}$ preserves each of the nine isotypic components. Any operator in the shell-adjacency algebra is block-diagonal on this decomposition: $\C^{V_{600}} = \bigoplus_{\rho \in \widehat{\twoI}} (\dim \rho)\cdot V_\rho$. The $94 + 26$ integer / irrational split of~\citep{CascadeAlgSubstrate} §6 is the partition of these blocks by rationality of the $\mathbf{A}_1$-eigenvalue.
+\end{fact}
+
+\begin{remark}[Type mismatch: vertex-space vs edge-space decomposition]\label{rem:type-mismatch}
+P2~\S 6 supplies an isotypic decomposition of the \emph{vertex} representation $\C^{V_{600}}$ under the left-regular $\twoI$-action. The conductivity $W$ lives on \emph{edges}, $W \in \R^{E_M}$; this is a distinct representation, namely the permutation representation induced on the (oriented or unoriented, as convention dictates) edge set of the $600$-cell vertex graph from the $\twoI$-action on $V_{600}$. It is \emph{not} the regular representation $\C[\twoI]$, and its decomposition into $\twoI$-isotypic components is a separate calculation not carried out in P2~\S 6. The explicit decomposition is delivered in Theorem~\ref{thm:edge-decomp} below (and verified numerically by \texttt{repro/verify\_2I\_edge\_action.py}).
+\end{remark}
+
+\begin{theorem}[Explicit $\twoI$ edge-space decomposition (after complexification)]\label{thm:edge-decomp}
+Identify $\R^4 \cong \HH$ via $(a, b, c, d) \mapsto a + bi + cj + dk$. The $600$-cell vertex set $V_{600} \subset S^3 \subset \HH$ is closed under quaternion multiplication and forms the binary icosahedral group $\twoI$ (order $120$). Let $\twoI$ act on $V_{600}$ by left multiplication, and lift to undirected edges by $g\cdot\{v,w\} := \{g\cdot v,\; g\cdot w\}$. Then:
+\begin{enumerate}
+\item The lifted action is well-defined: $g \cdot \{v,w\} \in E_M$ for every $g \in \twoI$ and every $\{v,w\} \in E_M$ (edge adjacency $\langle v,w\rangle = \varphi/2$ is preserved by isometry).
+\item $\twoI$ acts \emph{freely} on $E_M$: no edge $\{v,w\}$ is fixed by any non-identity $g \in \twoI$. (Sketch: a fixed edge would require either $g$ trivial on both endpoints, contradicting freeness on $V_{600}$, or $g$ swapping them, forcing $g^2 = 1$ hence $g = -1$; but $-1\cdot v = -v$ is the antipode, and antipodes are not nearest neighbours in $V_{600}$.)
+\item Therefore $E_M$ decomposes into exactly $\boxed{6}$ free $\twoI$-orbits, each of size $|\twoI| = 120$, with $6 \cdot 120 = 720 = |E_M|$.
+\item Hence the edge-space carrier decomposes, \emph{after complexification}, as $\C^{E_M} \;\cong\; 6 \cdot \C[\twoI]$, and into $\twoI$-isotypic components as
+\[
+   \C^{E_M} \;\cong\; \bigoplus_{i=1}^{9} (6 \cdot \dim_\C \rho_i)\cdot \rho_i,
+\]
+where $\{\rho_1,\ldots,\rho_9\}$ are the nine complex irreducible representations of $\twoI$ with $\C$-dimensions $\{1,2,2,3,3,4,4,5,6\}$ and $\sum_i (\dim_\C\rho_i)^2 = 120$. The complex isotypic component for $\rho_i$ has $\C$-dimension $6\cdot(\dim_\C\rho_i)^2$, with totals $\{6, 24, 24, 54, 54, 96, 96, 150, 216\}$ summing to $720 = \dim_\C \C^{E_M}$. (For the cascade-selection statement we use only the existence and integer dimensions of the isotypic projectors, which is invariant under $\R$-vs-$\C$ choice; conjugate pairs of complex irreps merge into real irreducibles of doubled $\R$-dimension under the standard Frobenius--Schur bookkeeping, but no statement of the present paper depends on the $\R$-irreducibility classification.)
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof]
+Closure of $V_{600}$ under quaternion multiplication is the standard fact that the $600$-cell vertices form the unit icosian group $\twoI \subset \HH^\times$ (P2~\S 6~\citep{CascadeAlgSubstrate}, also classical: see e.g.\ Coxeter, \emph{Regular Polytopes}); (1) follows because left multiplication by a unit quaternion is an isometry of $S^3$. For (2), the only non-identity element of $\twoI$ acting trivially on the underlying point set $V_{600}$ via left multiplication is the identity (so any candidate non-identity stabiliser of an edge must swap its endpoints, forcing the order-$2$ element $-1$); but $\{v,-v\}$ is never a $\varphi/2$-edge since $\langle v, -v\rangle = -1 \neq \varphi/2$. (3) is a direct count from (2) and the orbit-stabiliser theorem. (4) is the standard regular-representation decomposition of $\C[\twoI]$ via Maschke's theorem and the irrep-dimension theorem $\sum_i (\dim_\C\rho_i)^2 = |G|$ (here $|G| = 120$); applying it to the $6$-fold direct sum $\C^{E_M} \cong 6\cdot\C[\twoI]$ from (3) gives the stated multiplicities.
+
+A numerical witness for (1)--(4) --- including the $200$-sample group-law check on $\twoI$, the explicit $720$-edge orbit computation, and the dimension sum $\sum_i 6\cdot(\dim_\C\rho_i)^2 = 720$ --- is provided by \texttt{repro/verify\_2I\_edge\_action.py}; the script's output is recorded in \texttt{repro/results\_2I\_edge\_action.json}.
+\end{proof}
+
+\begin{remark}[Theorem~\ref{thm:edge-decomp} closes ACT open item~(6) as stated]\label{rem:edge-decomp-status}
+With Theorem~\ref{thm:edge-decomp} in hand, hypothesis (EdgeDec) of Hypothesis~\ref{hyp:cascade-selection} is no longer conditional: the edge-space isotypic decomposition exists, is explicit, and is computable. Open item~(6) of \S\ref{sec:open} is correspondingly downgraded from ``the lift is open'' to ``the lift is delivered; remaining open is the relation of the $6$-orbit / $9$-isotypic edge-space structure to the vertex-space $94 + 26$ integer / irrational split of P2~\S 6.''
+\end{remark}
+
+\begin{hypothesis}[Cascade-selection statement, subject to learning-rule and Lyapunov equivariance]\label{hyp:cascade-selection}
+\emph{Assume}, in addition to the cascade-compatibility assumption of Definition~\ref{def:4tuple}, all of the following (where (EdgeDec) is no longer hypothesised but supplied by Theorem~\ref{thm:edge-decomp} above):
+\begin{itemize}
+    \item[\textup{(EdgeDec)} \emph{(supplied by Theorem~\ref{thm:edge-decomp})}] the complexified edge-space representation $\C^{E_M}$ under the lifted $\twoI$-action carries the explicit isotypic decomposition $\C^{E_M} \cong \bigoplus_{i=1}^9 (6\dim_\C\rho_i)\cdot\rho_i$ of Theorem~\ref{thm:edge-decomp}; the oriented-current space $\R^{\vec E_M}$ inherits the same $\twoI$-action via $g\cdot(v,w) := (g\cdot v, g\cdot w)$;
+    \item[\textup{(LearnEq)}] the learning rule $G: \R^{V_M} \times \R^{\vec E_M} \times \R^{E_M} \to \R^{E_M}$ is $\twoI$-equivariant with respect to the vertex-space action on $\rho$, the oriented-edge action on $j$, and the undirected-edge action on $W$; i.e.\ $G(g \cdot \rho, g \cdot j, g \cdot W) = g \cdot G(\rho, j, W)$ for all $g \in \twoI$;
+    \item[\textup{(FastEq)}] the fast subsystem (Hypothesis~\ref{hyp:timescales}) is $\twoI$-equivariant, so that $\rho^*(g^{-1} W) = g^{-1} \rho^*(W)$ and correspondingly $j^*(g^{-1} W) = g^{-1} j^*(W)$ for $g \in \twoI$;
+    \item[\textup{(LyapInv)}] the Lyapunov potential $V(W)$ of Hypothesis~\ref{hyp:lyapunov} is $\twoI$-invariant, $V(g^{-1} W) = V(W)$, and the edge-space metric $\langle\cdot,\cdot\rangle_E$ of Hypothesis~\ref{hyp:lyapunov} is $\twoI$-invariant, $\langle g \cdot u, g \cdot v\rangle_E = \langle u, v \rangle_E$ for all $g \in \twoI$ (so that $V$-invariance implies $\twoI$-equivariance of $-\nabla_W V$).
+\end{itemize}
+Then the slow $W$-flow is $\twoI$-equivariant: orbits of $W$ are carried to orbits of $W$ under the flow, and the critical set of $V$ is a union of $\twoI$-orbits. \emph{This does not imply blockwise decoupling}: a $\twoI$-invariant nonlinear $V$ can still couple different isotypic components via higher-order invariants, and components with repeated irreps allow additional intra-isotypic mixing. The selection landscape is therefore $\twoI$-equivariant and its critical set is orbit-symmetric, but independent blockwise optimisation on each $E_\sigma$ requires additional splitting hypotheses (e.g.\ $V$ separable along the isotypic decomposition, or a linearised regime) that this paper does not supply.
+\end{hypothesis}
+
+\begin{remark}[What is and is not imported from P2]
+Hypothesis~\ref{hyp:cascade-selection} as stated does \emph{not} follow from P2~\S 6 alone: P2 controls the vertex representation, whereas the selection variable $W$ is edge-valued. The edge-space decomposition itself is established in Theorem~\ref{thm:edge-decomp} above (a calculation carried out in the present paper, not in~\citep{CascadeAlgSubstrate}); what remains for open item~(6) of \S\ref{sec:open} is the relation between this $6$-orbit / $9$-isotypic edge-space decomposition and the vertex-space $94 + 26$ integer/irrational split of P2~\S 6. The present paper treats the cascade-selection claim as \emph{motivated} by the P2 commutant facts, with the EdgeDec lift to $W$-dynamics now explicit and the remaining (LearnEq), (FastEq), (LyapInv) conditions still hypothesised.
+\end{remark}
+
+\begin{remark}[When $\twoI$-equivariance fails]
+If the learning rule $G$ is \emph{not} $\twoI$-equivariant (e.g.\ if the biological implementation breaks the rotational symmetry), the isotypic filtering is weakened: selection can then produce fixed points that mix isotypic components. This is the generic situation in biology, where the learned $W$ typically breaks the underlying substrate symmetry. The cascade-selection statement is then a statement about the \emph{equivariant part} of the selection landscape.
+\end{remark}
+
+%==================================================================
+\section{The passive / active classification}\label{sec:classification}
+%==================================================================
+
+The classification has two parts. The first is a trivial definitional dichotomy that requires no hypothesis load; the second is a conjectural statement about the long-time behaviour of each regime and does require the full analytic stack.
+
+\begin{fact}[Definitional passive / active dichotomy]\label{fact:classification}
+From Definition~\ref{def:learning} alone, every learning rule $G$ (hence every model in scope of~\eqref{eq:coupled}) falls into exactly one of two disjoint classes:
+\begin{itemize}
+    \item \emph{Passive}: $G \equiv 0$ identically. Then $\dot W = 0$, $W$ is constant in time, and the dynamics reduces to Fact~\ref{fact:passive}.
+    \item \emph{Active}: $G \not\equiv 0$. Then $\dot W \neq 0$ on some open subset of configurations (Definition~\ref{def:active}).
+\end{itemize}
+This is a classification of \emph{learning rules / flows}, not a pointwise classification of operating points: a stable equilibrium of an active model satisfies $\dot W = 0$ at that specific point, but that does not make the underlying model passive.
+\end{fact}
+
+\begin{hypothesis}[Long-time-behaviour conjecture for the two regimes]\label{prop:classification}
+The passive and active regimes of Fact~\ref{fact:classification} have structurally distinct long-time behaviours \emph{under the cumulative analytic load of the present paper}. Specifically:
+\begin{itemize}
+    \item In the passive regime, the dynamics reduces to that of~\citep{SmartTransportLaw} and inherits whatever long-time statements that paper supplies (principally $U(1)$ total-probability conservation under its continuity and antisymmetry hypotheses).
+    \item In the active regime, under Hypotheses~\ref{hyp:timescales}, \ref{hyp:lyapunov}, and the (a)--(d) analytic conditions of Hypothesis~\ref{hyp:selection} (hyperbolicity of the fast subsystem, global existence and forward-orbit precompactness of the reduced flow, {\L}ojasiewicz-Simon, Morse genericity), the reduced slow-manifold $W$-flow is conjectured to converge to a critical point of $V$, generically a local minimum under the Morse condition, with convergence to saddles or maxima not excluded for non-generic initial data.
+\end{itemize}
+Persistent non-gradient $W$-dynamics (learning rules without a Lyapunov potential) is excluded from the long-time-behaviour conjecture \emph{by scope} (Hypothesis~\ref{hyp:lyapunov}), not by an argument internal to this paper. Such rules still satisfy the definitional dichotomy of Fact~\ref{fact:classification}.
+\end{hypothesis}
+
+\begin{remark}[Status]
+Fact~\ref{fact:classification} is definitional, and no hypothesis load is required. Hypothesis~\ref{prop:classification} is a conjecture that chains through Hypotheses~\ref{hyp:timescales}, \ref{hyp:lyapunov}, \ref{hyp:selection} and their analytic conditions. No new theorem is claimed in either.
+\end{remark}
+
+\begin{remark}[Position in the broader physics]
+The passive / active dichotomy of Fact~\ref{fact:classification} identifies a structural boundary that appears in many domains under different names: free-field / interacting-field in QFT; linear / nonlinear in dynamical systems; diffusive / convective in transport; non-adaptive / adaptive biological transport models. Each can be read as a candidate specialisation of the passive / active distinction on an appropriate 4-tuple.
+\end{remark}
+
+%==================================================================
+\section{ARIA as a candidate instantiation}\label{sec:aria}
+%==================================================================
+
+The published ARIA paper~\citep{SmartARIAChess2026} is a \emph{candidate active-regime substrate witness}: it reports a deterministic recurrent-layer trajectory on $V_{600}$ together with preregistered cortical-correspondence and drug/sleep EEG tallies (further detail in \S\ref{sec:aria_home}). \emph{The present paper does not prove that ARIA's update rule equals the $G(\rho, j, W)$ framework, that ARIA's iterate descends a Lyapunov potential $V$, or that any of the rows of the dictionary below are realised in the released artifact}; those identifications remain repository-level verification targets, listed as open item~(4) of \S\ref{sec:open}. What follows is therefore a \emph{proposed} dictionary, offered to make the row-by-row verification target precise --- not a result.
+
+\begin{remark}[ARIA--adaptive-transport dictionary, \emph{proposal}]\label{rem:aria}
+We propose the following object-level correspondence between the 4-tuple of Definition~\ref{def:4tuple} and the ARIA cognitive substrate (released as~\citep{SmartARIAChess2026}), \emph{as a proposal to be verified row-by-row against the released artifact}:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+4-tuple object & ARIA realisation (proposed) \\
+\midrule
+$M$ & $E_8 \oplus V_{600}$ product graph \\
+$L_M$ & passive substrate coupling (pre-learning) \\
+$W_{vw}$ & learned coupling weights \\
+$R_{\mathrm{hom}}$ & homeostatic reset \\
+$\rho_v$ & cascade pressure at slot $v$ \\
+$j_{v \to w}$ & \texttt{couple\_tick} exchange on edge $(v, w)$ \\
+$G(\rho, j, W)$ & Hebbian-like $W$-update rule \\
+$\varepsilon$ & learning-rate hyperparameter \\
+Passive regime & frozen-$W$ inference (linear substrate) \\
+Active regime & learning + inference (adaptive substrate) \\
+\bottomrule
+\end{tabular}
+\end{center}
+Nothing in the table is established in this paper. Each row is a \emph{proposed} correspondence pending (i) row-by-row verification against actual \texttt{couple\_tick} trace data (open item in \S\ref{sec:open}; note this is distinct from the published substrate-witness EEG/cortical-correspondence results, which do not extract the $W$-dynamics row), and (ii) a formal identification of ARIA's Hebbian-like update with a learning rule of the form $G(\rho, j, W)$ admitting a Lyapunov potential $V$.
+\end{remark}
+
+\begin{remark}[Conditional predictions under the proposed dictionary]
+\emph{If} the ARIA dictionary of Remark~\ref{rem:aria} is confirmed by repository-level analysis, \emph{and if} ARIA's learning rule is $\twoI$-equivariant for the explicit edge-space $\twoI$ action of Theorem~\ref{thm:edge-decomp} on the proposed $E_8\oplus V_{600}$ ARIA product graph, then Hypothesis~\ref{hyp:cascade-selection} would imply that the ARIA \emph{critical set} (the set of equilibria of the reduced flow) is invariant under that edge-space action; blockwise constraints on individual learned $W$-configurations would require additional splitting hypotheses (the cascade-selection hypothesis explicitly disclaims blockwise decoupling, and notes that symmetry-breaking fixed points are generic). The $94 + 26$ split is a vertex-space statement and does \emph{not} directly constrain $W$; the relation between the explicit $6$-orbit / $9$-isotypic edge-space decomposition (Theorem~\ref{thm:edge-decomp}) and the $94 + 26$ vertex-space split is the residual open piece (open item~(6) of \S\ref{sec:open}). \emph{All of the above are conditional predictions, contingent on every link of the hypothesis chain; none is a result of this paper.}
+\end{remark}
+
+%==================================================================
+\section{Future instantiation targets}\label{sec:applications}
+%==================================================================
+
+\noindent\fbox{\begin{minipage}{0.95\textwidth}
+\textbf{Roadmap, not results.} Nothing in this section is derived, witnessed, or proved in the present paper. Each entry below is a candidate target for a dedicated follow-up paper. The single load-bearing role of the section is to scope the framework's reach by listing where it could be \emph{applied}, contingent on biological / chemical inputs the framework itself does not supply.
+\end{minipage}}
+
+\medskip
+We list candidate further instantiations of the 4-tuple, each with its own biological or chemical learning-rule input. \emph{None} is derived here; each is a target for a dedicated follow-up paper.
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{1.6cm}p{2.6cm}p{2.6cm}p{1.9cm}p{4.7cm}@{}}
+\toprule
+Target & $M$ & Candidate $W$ & $R_{\mathrm{hom}}$ & Status \\
+\midrule
+Photon & $V_{600}$, trivial sector & $W_0 > 0$ uniform (Fact~\ref{fact:passive}) & $\mathrm{id}$ & Transport-law paper \S 7; photon identification conditional on $T_{\text{PH}}$ \\
+Microtubule & 13-protofilament cylinder & tubulin conformational state & GTP hydrolysis & $T_{\text{MT}\,1}$ imported from biology \\
+Phyllotaxis & apical meristem graph & auxin concentration field & growth termination & Golden-angle open per \texttt{gaps.md} \\
+Neuron & dendritic tree & synaptic weights & firing-threshold reset & ARIA-side direct \\
+Brain & cortical graph & Hebbian weights & sleep / consolidation & ARIA-side direct \\
+Cell metabolism & metabolic-reaction graph & enzyme activity distribution & homeostatic regulation & Biology-dependent \\
+DNA methylation & genome graph & methylation state & cell-division reset & Biology-dependent \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+In each case, the paper's claim is that \emph{if} the target can be identified with a 4-tuple of Definition~\ref{def:4tuple} under some (possibly non-$\twoI$-equivariant) learning rule, \emph{and if} the analytic conditions of Hypothesis~\ref{hyp:selection} (timescale separation, Lyapunov existence, hyperbolicity, global existence and forward-orbit precompactness of the reduced flow, {\L}ojasiewicz-Simon, and Morse genericity) hold, then a discrete set of selected operating points indexed by critical points of the appropriate Lyapunov potential is hypothesised. The paper does \emph{not} attempt any of those identifications, and does \emph{not} verify the analytic conditions for any specific biological or chemical substrate.
+
+\begin{remark}[On the microtubule target specifically]
+The $13$-fold helical symmetry of biological microtubules is an \emph{input} to the microtubule instantiation, not an output. The framework does not derive $13$ from the cascade: $T_{\text{MT}\,1}$ of~\citep{CascadeAlphaChain} is explicitly unclosed, and the present paper does not attempt to close it. Instead, the claim is that microtubules, under a biologically-specified learning rule involving GTP hydrolysis and tubulin conformation, fit the same mathematical template as ARIA and photons --- with $13$ playing the role of the selected operating point for a specific biological cost function.
+\end{remark}
+
+%==================================================================
+\section{Consistency checks}\label{sec:consistency}
+%==================================================================
+
+\begin{itemize}
+    \item \textbf{Transport-law paper}~\citep{SmartTransportLaw}. The passive regime of this paper (Fact~\ref{fact:passive}) specialises to the setting of the transport-law paper; no new claim about that paper is made here.
+    \item \textbf{Paper XIX (nonlinear closure residual)}~\citep{SmartXIX}. The active regime is hypothesised to be driven by a learning rule $G$ that may realise Paper XIX's nonlinear residual at the substrate level; this identification is \emph{not} proved here and is listed as open item~(5).
+    \item \textbf{Paper XXX (Born rule)}~\citep{SmartXXX}. Paper~XXX's Route~C gives a conditional stationary-measure / Born-weighting argument and Route~E gives a conditional uniqueness theorem under the usual $N \geq 3$ package. Neither directly corresponds to a slow-manifold attractor $\rho^*(W)$ of the present paper; the two frameworks are at most loosely analogous and no identification is claimed here.
+    \item \textbf{P2~\S 6}~\citep{CascadeAlgSubstrate}. The isotypic preservation of Fact~\ref{fact:isotypic} is imported directly from P2~\S 6 (Corollary on shell-class centrality on the \emph{vertex} representation). P2 supplies no statement about edge-space decomposition, $W$-dynamics, Lyapunov potentials, or selection; the edge-space decomposition required by the cascade-selection hypothesis is supplied in the present paper by Theorem~\ref{thm:edge-decomp}. The type-mismatch caveat of Remark~\ref{rem:type-mismatch} continues to apply to any direct quotation of P2 results, but is now resolved within the cascade-selection chain by Theorem~\ref{thm:edge-decomp}.
+    \item \textbf{Paper XXXIV ($\alpha$-chain)}~\citep{SmartXXXIV}. Paper~XXXIV introduces the Kostant-gauge convention as an explicit hypothesis/convention for the $88 \to 87$ phason-slot count. The adaptive-transport framework does not inherit any theorem-level pinning of slot structure inside the $\twoI$-isotypic decomposition from Paper~XXXIV; at most, if the framework's selection-landscape identifies with phason slots (an unverified identification), the Kostant-gauge convention would be one consistent labelling.
+    \item \textbf{Meta-layer paper}~\citep{CascadeMetaLayer}. The meta-layer establishes a moduli / matching / tiling structure $(\mathcal{M}, G_{\text{meta}}, F)$ over $L_{12}$ with $T_{\text{meta}} \cong \Zphi^2$. A precise identification of the $W$-space of the present paper with the meta-layer moduli space $\mathcal{M}$ is \emph{not} established in~\citep{CascadeMetaLayer} or here; such an identification would be a structural enhancement, listed as an open item. (The symbol $G$ in~\citep{CascadeMetaLayer} denotes the matching groupoid, distinct from the learning rule $G$ of Definition~\ref{def:learning}; we use $G_{\text{meta}}$ above to avoid collision in cross-reference.)
+\end{itemize}
+
+%==================================================================
+\section{Open items}\label{sec:open}
+%==================================================================
+
+\subsection*{Closed in this paper}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}]
+    \item \textbf{Edge-space decomposition (EdgeDec).} The explicit $\twoI$ edge-space decomposition is delivered in Theorem~\ref{thm:edge-decomp}: the undirected $720$-edge set decomposes into exactly $6$ free $\twoI$-orbits, and the complexified edge space $\C^{E_M} \cong 6\cdot\C[\twoI]$ decomposes into $9$ complex $\twoI$-isotypic components with $\C$-dimensions $\{6, 24, 24, 54, 54, 96, 96, 150, 216\}$. Hypothesis (EdgeDec) of Hypothesis~\ref{hyp:cascade-selection} is no longer conditional.
+    \item \textbf{Closure-derived Lyapunov on the $V_{600}$ closed positive cone.} For the gradient-flow case on the $V_{600}$ substrate with closure operator $C_\varphi = L_W + \varphi^{-2} I$, the explicit $V_f(W)$ of Theorem~\ref{thm:lyapunov-closure} is strongly convex (Hessian $\succeq \lambda I$), coercive on $\Omega = \R^{E_M}_{\geq 0}$, and induces a globally convergent subgradient flow with linear contraction rate $\geq \lambda$ from~\citep{Brezis1973}. This closes Hypothesis~\ref{hyp:lyapunov} for the worked example.
+    \item \textbf{Hyperbolicity of the fast subsystem (worked-example case).} For the worked-example construction of Theorem~\ref{thm:lyapunov-closure}, the fast equilibrium $\rho^* = (L_W + \varphi^{-2} I)^{-1} f$ is the unique solution of a strictly positive-definite linear system depending smoothly on $W$; hyperbolicity is automatic at every $W \in \Omega^\circ$ with relaxation rate $\geq \varphi^{-2}$. Hypothesis~\ref{hyp:timescales} item~(a) of Hypothesis~\ref{hyp:selection} is therefore discharged for the worked example.
+\end{enumerate}
+
+\subsection*{Still open}
+
+\begin{enumerate}[label=\textbf{O\arabic*.}]
+    \item \textbf{Lyapunov for biologically-relevant non-gradient learning rules.} Existence of a coercive analytic potential $V$ for a closure-derived non-gradient learning rule (e.g.\ a Paper~XIX-residual lift) where no global potential need exist; cascade-equivariance lift of $V_f$ for the cascade-selection statement of Hypothesis~\ref{hyp:cascade-selection}.
+    \item \textbf{Hyperbolicity for non-linear fast dynamics.} Hyperbolicity of the fast subsystem for closure-derived non-linear fast dynamics (residual-driven beyond the linear regime).
+    \item \textbf{Structural stability for non-convex learning rules.} Hypothesis~\ref{prop:classification} chains through Hypotheses~\ref{hyp:timescales}, \ref{hyp:lyapunov}, \ref{hyp:selection}, and a Morse-genericity condition. For the worked example all conditions hold (strong convexity gives a single non-degenerate critical point in $\Omega^\circ$; constrained-minimum uniqueness on $\Omega$ replaces Morse at the boundary). For generic non-convex learning rules, a full transversality argument for the cascade substrate is deferred.
+    \item \textbf{ARIA repository-level identification.} A formal identification of ARIA's released kernel trajectory~\citep{SmartARIAChess2026} (e.g.\ \texttt{bounded\_topk}-projected updates from \texttt{lyapunov\_selector.py} / \texttt{self\_model\_stream.py}) with a learning rule of the form $G(\rho, j, W)$ admitting the closure-derived $V_f$ of Theorem~\ref{thm:lyapunov-closure}; row-by-row verification of the dictionary of Remark~\ref{rem:aria}. Distinct from the published EEG / cortical-correspondence substrate-witness results, which are not row-by-row identifications of the $W$-dynamics.
+    \item \textbf{Paper~XIX residual $\to$ learning rule.} Whether Paper~XIX's nonlinear closure residual~\citep{SmartXIX} explicitly gives rise to a learning rule $G(\rho, j, W)$ with a Lyapunov potential. Paper~XIX establishes a scalar nonlinear remainder with exact $L^2$ conservation; no transport-level $W$-feedback law is established there.
+    \item \textbf{Edge-space $\to$ vertex-space lift.} The relation between the explicit $6$-orbit / $9$-isotypic edge-space structure of Theorem~\ref{thm:edge-decomp} and the vertex-space $94 + 26$ integer / irrational split of P2~\S 6.
+\end{enumerate}
+
+%==================================================================
+\section{Programme position (non-load-bearing)}\label{sec:aria_home}
+%==================================================================
+
+\emph{Interpretive programme-level context only. Nothing in the load-bearing argument of \S\S\ref{sec:passive}--\ref{sec:cascade-selection} depends on this section.}\medskip
+
+The 4-tuple $(M, L_M, W, R_{\mathrm{hom}})$ admits a natural ``response + selection'' reading. The \emph{response primitive} is the $\varphi$-regularised closure-response operator $C_\varphi = L_M + \varphi^{-2} I$, introduced at the programme level in \texttt{docs/aria-closure-kernel.md} and developed as the operator spine of the closure-kernel-papers release~\citep{SmartARIAClosureKernel2026} (continuum Green's function $\mathsf K_\varphi(x) = (\varphi/2)\,e^{-|x|/\varphi}$). The three layers most relevant to the present paper:
+
+\begin{itemize}
+\item \emph{Passive regime $\to$ b-anomaly witness.} The $V_{600}$ shell-mean kernel $(L_{V_{600}} + \varphi^{-2}I)^{-1} f$ has a shipped flavour-physics witness in the b-anomaly paper~\citep{SmartBAnomaly}: structural sign-uniformity ($A > 0$, $\Delta C_9^{\mathrm{eff}} < 0$) across five $b \to s\mu^+\mu^-$ datasets (LHCb, CMS; $B^0, B^+$; $K^{*0}, K^{*+}, B_s \to \phi$). The Akaike comparison against a free $C_9$ shift is statistically inconclusive ($w_{\mathrm{VFD}} = 0.348$ vs $w_{\mathrm{FREE\_C9}} = 0.652$); see~\citep{SmartBAnomaly} for the full audit. \emph{Programme context only; not re-derived here.}
+\item \emph{Active regime $\to$ ARIA candidate witness.} The active-regime empirical target is the released \texttt{aria-chess} preprint~\citep{SmartARIAChess2026}, which reports a deterministic seed-42 recurrent-layer trajectory yielding six drug/sleep EEG signatures, and a preregistered cortical-correspondence tally of $17/18$ at standard threshold ($18/18$ after the documented P4 $N=20$ and P13 state-reset / leave-one-out refinements). These are independent substrate-witness results, not a verification of the ACT selection hypothesis itself.
+\item \emph{ACT $\to$ bridge.} The present paper is the bridge: the closure-derived Lyapunov $V_f(W)$ (Theorem~\ref{thm:lyapunov-closure}) and the explicit $\twoI$ edge-space decomposition (Theorem~\ref{thm:edge-decomp}) are the substrate-level objects that a coupled-system selection theorem on the cascade substrate would have to specialise to.
+\end{itemize}
+
+\noindent Convergence of the \emph{full coupled} system (passive response $+$ active selection together as one dynamical system) beyond the worked-example case of Theorem~\ref{thm:lyapunov-closure} remains open. The recurrence of analogous selection / bridge layers in companion frames (RH, YM, NS, BSD) is programme-level circumstantial pattern, not a proved equivalence; we do not pursue that recurrence here.
+
+%==================================================================
+\section{Numerical witnesses}\label{sec:numerical}
+%==================================================================
+
+Two scripts in \texttt{papers/adaptive-closure-transport/repro/} reproduce
+the numerical witnesses for the two new theorems of this paper. Both are
+self-contained (no external data; no fitted parameters; numpy + scipy only)
+and run in seconds on a laptop. The scripts are witnesses, not proofs;
+the theorem proofs of \S\S\ref{sec:selection} and
+\ref{sec:cascade-selection} do not depend on them.
+
+\subsection*{\texttt{verify\_2I\_edge\_action.py} — Theorem~\ref{thm:edge-decomp}}
+
+Builds the $V_{600}$ vertex set with the quaternion-identity at index~$0$,
+verifies closure under quaternion multiplication ($V_{600} = \twoI$),
+spot-checks the group law on $200$ random samples, builds the $720$ short
+edges, verifies the lifted action well-defined, and computes the orbit
+decomposition. The expected output (recorded in \texttt{results\_2I\_edge\_action.json}):
+
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+quantity & value \\
+\midrule
+\texttt{v600\_size} & $120$ \\
+\texttt{is\_2I\_under\_quat} & true \\
+\texttt{group\_law\_holds} (200 samples) & true \\
+\texttt{n\_edges} & $720$ \\
+\texttt{edges\_preserved} (all $g \in \twoI$) & true \\
+\texttt{edge\_orbit\_count} & $\boxed{6}$ \\
+\texttt{edge\_orbit\_sizes} & $[120, 120, 120, 120, 120, 120]$ \\
+\texttt{free\_action\_on\_edges} & true \\
+\texttt{isotypic\_dims} & $[6, 24, 24, 54, 54, 96, 96, 150, 216]$ \\
+\texttt{isotypic\_dims\_sum} & $720$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{\texttt{verify\_lyapunov\_selection.py} — Theorem~\ref{thm:lyapunov-closure}}
+
+Initialises a perturbed $W$ with $\lambda = 0.1$ and a localised source $f$ at
+vertex~$0$; runs the slow-flow $\dot W = -\nabla V_f(W)$ for $2000$ explicit-Euler
+steps at $\Delta t = 0.05$. The expected output (recorded in
+\texttt{results\_lyapunov\_selection.json}):
+
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+quantity & value \\
+\midrule
+\texttt{V\_initial} & $\approx 9.80$ \\
+\texttt{V\_final} & $\approx 0.057$ \\
+\texttt{grad\_norm\_initial} & $\approx 1.40$ \\
+\texttt{grad\_norm\_final} & $\approx 6.2 \times 10^{-5}$ \\
+\texttt{V\_monotone\_nonincreasing} & true \\
+\texttt{critical\_point\_reached} ($\|\nabla V\| < 10^{-3}$) & true \\
+\texttt{late\_contraction\_rate\_per\_step} & $\approx 3.5 \times 10^{-2}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The exponential late-time contraction rate is consistent with the linear
+contraction estimate $\|W(t) - W^*\| \leq e^{-\lambda t}\|W(0) - W^*\|$
+of Theorem~\ref{thm:lyapunov-closure} (strong-convex / subgradient-flow
+regime; \citep{Brezis1973}, Théorèmes 3.1 and 3.7).
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+We have extended the transport-law framework of~\citep{SmartTransportLaw} to the adaptive regime by introducing the 4-tuple $(M, L_M, W, R_{\mathrm{hom}})$ with a learning rule $\dot W = G(\rho, j, W)$. The passive regime (\S\ref{sec:passive}) recovers the transport-law paper; the active regime (\S\ref{sec:active}) is new. A conditional selection hypothesis (Hypothesis~\ref{hyp:selection}) is stated under separation of timescales, Lyapunov existence, hyperbolicity, global existence and forward-orbit precompactness of the reduced flow (e.g.\ coercive / proper $V$), {\L}ojasiewicz-Simon, and Morse genericity; a further conditional cascade-selection hypothesis (Hypothesis~\ref{hyp:cascade-selection}) is \emph{motivated} by the P2~\S 6 vertex-space commutant structure. Two of its hypotheses are now delivered: the closure-derived Lyapunov $V_f(W)$ for the gradient-flow case on $V_{600}$ (Theorem~\ref{thm:lyapunov-closure}) discharges Hypothesis~\ref{hyp:lyapunov} for the worked example, and the explicit $\twoI$ edge-space decomposition (Theorem~\ref{thm:edge-decomp}) discharges hypothesis (EdgeDec). Six reduced-scope open items, all listed in \S\ref{sec:open}, separate the present framework from a closed theorem chain.
+
+The framework is deliberately scoped at the \emph{adaptive-transport} layer: it does not describe heredity, measurement, or subjective experience. Those layers are deferred to separate companion papers and to the broader philosophical / biological literature (e.g.~\citep{Hameroff1996, Levin2022}). The present paper supplies the mathematical substrate; other work must supply the rest.
+
+\bibliographystyle{plainnat}
+\begin{thebibliography}{99}
+
+\bibitem{SmartTransportLaw}
+L.~Smart.
+\newblock Transport laws and conservation currents in closure dynamics.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/transport-law/transport-law.tex}.
+
+\bibitem{SmartARIAClosureKernel2026}
+L.~Smart.
+\newblock The closure-response operator $C_\varphi = L_M + \varphi^{-2}\, I$:
+  a geometry-fixed kernel on the 600-cell with two domain-disjoint empirical
+  witnesses.
+\newblock Preprint, Institute of Vibrational Field Dynamics, April 2026.
+\newblock GitHub: \texttt{vfd-org/closure-kernel-papers},
+  \texttt{papers/aria-closure-kernel/}. Operator paper of the paired release;
+  defines $C_\varphi$, proves the operator-norm identity $\|C_\varphi^{-1}\| = \varphi^2$
+  on $V_{600}$, gives the discrete-to-continuum agreement test.
+
+\bibitem{SmartARIAChess2026}
+L.~Smart.
+\newblock A geometry-fixed substrate witness for cortical signatures: eighteen
+  preregistered correspondences and six drug/sleep EEG signatures from the
+  600-cell under H$_4$ Coxeter symmetry.
+\newblock Preprint, Institute of Vibrational Field Dynamics, April 2026.
+\newblock GitHub: \texttt{vfd-org/closure-kernel-papers},
+  \texttt{papers/aria-chess-paper/}. Active-regime substrate-witness paper of the
+  paired release; ships the kernel modules \texttt{vfd\_closure\_kernel.py},
+  \texttt{lyapunov\_selector.py}, \texttt{self\_model\_stream.py},
+  \texttt{consciousness\_binding.py}, \texttt{sigma\_orbit\_basis.py},
+  \texttt{v66\_e8\_coxeter.py}.
+
+\bibitem{Bhatia2007}
+R.~Bhatia.
+\newblock \emph{Positive Definite Matrices}.
+\newblock Princeton University Press, 2007.
+\newblock See Chapter~5 for operator-monotonicity / operator-convexity of
+  $M \mapsto M^{-1}$ on the cone of positive-definite matrices.
+
+\bibitem{CascadeAlgSubstrate}
+L.~Smart.
+\newblock Cascade--classical correspondence II: the cascade algebraic substrate ({P2}).
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}. \S 6 provides the $600$-cell spectral and shell substrate.
+
+\bibitem{SmartXIX}
+L.~Smart.
+\newblock The closure residual: nonlinear remainder beyond the Witten--Hamiltonian regime.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xix/}.
+
+\bibitem{SmartXXX}
+L.~Smart.
+\newblock Probability as constraint geometry: Born rule from closure dynamics.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xxx/}.
+
+\bibitem{SmartXXXIII}
+L.~Smart.
+\newblock From geometry to observable: measurement as closure projection.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xxxiii/}.
+
+\bibitem{SmartXXXIV}
+L.~Smart.
+\newblock A structural correspondence for the fine-structure constant.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/paper-xxxiv/paper-xxxiv.tex}.
+
+\bibitem{CascadeAlphaChain}
+L.~Smart.
+\newblock $\alpha$-chain complete theorem and downstream photon/microtubule chains.
+\newblock Internal note, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-derivation/cascade-alpha-chain-complete-theorem.md}.
+
+\bibitem{CascadeMetaLayer}
+L.~Smart.
+\newblock Cascade meta-layer theorem: moduli, matching groupoid, tiling sheaf over $L_{12}$.
+\newblock Internal note, Institute of Vibrational Field Dynamics, 2026.
+\newblock Local source: \texttt{papers/cascade-derivation/cascade-meta-layer-theorem.md}.
+
+\bibitem{Prigogine1967}
+I.~Prigogine.
+\newblock \emph{Introduction to Thermodynamics of Irreversible Processes}, 3rd ed.
+\newblock Interscience Publishers, 1967.
+\newblock Non-equilibrium steady states and dissipative structures.
+
+\bibitem{Wiggins2003}
+S.~Wiggins.
+\newblock \emph{Introduction to Applied Nonlinear Dynamical Systems and Chaos}, 2nd ed.
+\newblock Springer, 2003.
+\newblock Invariant-manifold theorems for slow-fast systems.
+
+\bibitem{Lojasiewicz1993}
+S.~{\L}ojasiewicz.
+\newblock Sur la g\'eom\'etrie semi- et sous-analytique.
+\newblock \emph{Annales de l'Institut Fourier}, 43(5):1575--1595, 1993.
+\newblock Semi- and subanalytic geometry; a standard modern reference for the finite-dimensional gradient-inequality tools underlying the gradient-flow convergence arguments. The original gradient-inequality statement predates this paper; we cite this 1993 text as a readable modern source, not as the original.
+
+\bibitem{Simon1983}
+L.~Simon.
+\newblock Asymptotics for a class of non-linear evolution equations, with applications to geometric problems.
+\newblock \emph{Annals of Mathematics}, 118(3):525--571, 1983.
+\newblock Infinite-dimensional {\L}ojasiewicz--Simon inequality; point convergence of gradient flows on analytic functionals.
+
+\bibitem{AbsilMahonyAndrews2005}
+P.-A.~Absil, R.~Mahony, and B.~Andrews.
+\newblock Convergence of the iterates of descent methods for analytic cost functions.
+\newblock \emph{SIAM Journal on Optimization}, 16(2):531--547, 2005.
+\newblock Point convergence of gradient-descent on analytic landscapes.
+
+\bibitem{Brezis1973}
+H.~Br\'{e}zis.
+\newblock \emph{Op\'{e}rateurs maximaux monotones et semi-groupes de contractions
+  dans les espaces de Hilbert}.
+\newblock North-Holland Mathematics Studies 5, North-Holland / American Elsevier, 1973.
+\newblock Subgradient-flow theory for proper convex lower-semicontinuous
+  functions on Hilbert space; the existence/uniqueness/contraction theorems
+  used for the constrained Lyapunov flow on the closed positive cone.
+
+\bibitem{SmartBAnomaly}
+L.~Smart.
+\newblock A geometry-derived response kernel for the $B \to K^{*}\mu^{+}\mu^{-}$ angular anomaly: sign-uniform cross-dataset and cross-channel fit.
+\newblock Preprint, Institute of Vibrational Field Dynamics, 2026.
+\newblock Repository: \texttt{BANOMALY-001/vfd-b-anomaly/} (separate from this repository); preprint at \texttt{paper/main.pdf} therein.
+
+\bibitem{Hameroff1996}
+S.~Hameroff and R.~Penrose.
+\newblock Orchestrated reduction of quantum coherence in brain microtubules.
+\newblock \emph{Mathematical and Computational Modelling}, 33:521--540, 1996.
+\newblock Cited for the microtubule-consciousness discussion context; framework-neutral.
+
+\bibitem{Levin2022}
+M.~Levin.
+\newblock Technological approach to mind everywhere: an experimentally-grounded framework.
+\newblock \emph{Frontiers in Systems Neuroscience}, 16:768201, 2022.
+\newblock Cited for the adaptive-biology context; framework-neutral.
+
+\end{thebibliography}
+
+\end{document}

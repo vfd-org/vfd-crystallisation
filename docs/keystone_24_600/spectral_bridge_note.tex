@@ -1,0 +1,717 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{microtype}
+
+\newcommand{\Vsix}{V_{600}}
+\newcommand{\Vtwentyfour}{V_{24}}
+\newcommand{\Lsix}{L_{\Vsix}}
+\newcommand{\Loc}{L_{C}}
+\newcommand{\Esix}{E_{\Vsix}}
+\newcommand{\Elift}{E_{\mathrm{lifted}}}
+\newcommand{\Eres}{E_{\mathrm{residual}}}
+\newcommand{\Phigold}{\varphi}
+\newcommand{\twoI}{2I}
+\newcommand{\twoT}{2T}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+
+% Avoid TeX-inserted (discretionary) hyphenated line breaks: these get
+% rendered as bad characters in some PDF viewers / extractors.  Keep
+% breakable points at existing hyphens (e.g. "v600-programme") since those
+% are visible glyphs anyway.  Allow TeX to stretch the line if needed.
+\hyphenpenalty=10000
+\exhyphenpenalty=100
+\setlength{\emergencystretch}{3em}
+
+\title{The 24--600 Spectral Bridge\\
+\large A selective $\lambda{=}12$ eigenspace embedding from five 24-cell cosets into the 600-cell}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{\parbox{0.92\textwidth}{\small
+\textbf{Status:} Reproducible mathematical note / exact computational
+certificate.  Not peer-reviewed.
+
+\medskip
+\textbf{Reproducibility.} The formal claims of this note ---
+Theorem~\ref{thm:lift} (the $\lambda{=}12$ lift identity); the
+$\dim \Esix(\lambda)$ entries for $\lambda\in\{0,4,8,10,12\}$ used
+in the selectivity table of Section~\ref{sec:selectivity};
+Lemma~\ref{lem:minusone} ($\{\pm 1\}$-triviality);
+Lemma~\ref{lem:invariance} ($\twoI$-invariance of $\Elift, \Eres$);
+Theorem~\ref{thm:chars} (integer $A_5$ class characters); and
+Corollary~\ref{cor:A5} (irrep multiplicities) --- are all certified
+by exact rational arithmetic in the accompanying repository (integer
+Laplacians, $\mathbb{Q}$-rational nullspace bases, exact zero
+residuals; the $A_5$ character projection uses exact
+$\mathbb{Q}(\sqrt 5)$ character-table entries).  The numerical
+quantities reported in Remark~\ref{rmk:floatcheck} and the
+``max-residual'' column of the selectivity table are floating-point
+cross-checks only.  One-command reproduction and the frozen output
+artifacts are described in Section~\ref{sec:repro}.
+}}
+\end{center}
+
+\bigskip
+
+\begin{abstract}
+The 600-cell is the regular 4-polytope whose 120 vertices form the
+binary icosahedral group $\twoI$.  The binary tetrahedral group
+$\twoT\subset\twoI$ has index 5; its right cosets partition $\Vsix$
+into five disjoint copies of the 24-cell.  Each coset carries a
+$d{=}1$ (nearest-neighbour) graph isomorphic to the 24-cell edge
+graph (8-regular); on the full vertex set the $d{=}1$ graph is the
+600-cell edge graph (12-regular).
+
+We prove that the 2-dimensional $\lambda{=}12$ eigenspace of each
+local 24-cell Laplacian zero-extends into the 25-dimensional
+$\lambda{=}12$ eigenspace of the full 600-cell Laplacian.  The
+identity is established \emph{exactly over} $\mathbb{Q}$: from the
+local $\mathbb{Q}$-rational nullspace of each $L_C - 12 I$ (an
+integer matrix), every zero-extended basis vector is verified to
+lie in the kernel of $\Lsix - 12 I$ by exact rational matrix
+multiplication.  A floating-point cross-check independently gives
+residual $\le 6.2\times 10^{-15}$.
+
+Among the five local 24-cell Laplacian eigenvalues
+$\{0,4,8,10,12\}$, $\lambda{=}12$ is the only one that gives a full
+zero-extension into a corresponding global 600-cell eigenspace.  The
+$\lambda{=}0$ case contributes exactly one direction (the global
+constant, reconstructed from the symmetric sum of the five coset
+indicators) of the 5-dimensional lift image; the local eigenvalues
+$\lambda\in\{4,8,10\}$ are not eigenvalues of the 600-cell Laplacian
+at all, so the question is vacuous there.
+
+Under the induced $A_5 = \twoI/\{\pm1\}$ action on the five cosets,
+$\Esix(12) = \Elift \oplus \Eres$ with $\Elift\cong 2\!\cdot\!Y_5$,
+$\Eres\cong 3\!\cdot\!Y_5$, $\Esix(12)\cong 5\!\cdot\!Y_5$, where
+$Y_5$ is the 5-dimensional irreducible representation of $A_5$.
+\end{abstract}
+
+\section{Introduction}
+
+The 600-cell is the regular 4-polytope $\{3,3,5\}$ with 120 vertices,
+720 edges and icosahedral symmetry.  Its vertex set is naturally
+identified with the binary icosahedral group $\twoI\subset
+\mathrm{Sp}(1)$.  The 24-cell is the regular 4-polytope $\{3,4,3\}$
+with 24 vertices, 96 edges and $F_4$-symmetry; its vertex set is the
+binary tetrahedral group $\twoT$.
+
+It is classical that $\twoT$ has index 5 in $\twoI$ and that the
+five cosets of $\twoT$ in $\twoI$ form five inscribed 24-cells whose
+vertex sets partition $\Vsix$~\cite{Coxeter1973, ConwaySloane1999}.
+An explicit machine-verified treatment within the present programme
+is~\cite{SmartXXXV}: the Schl\"afli decomposition is proved in
+section~\texttt{sec:bio:schlafli}
+(Theorem~\texttt{thm:schlafli}; supporting script
+\texttt{papers/}\allowbreak\texttt{cascade-derivation/}\allowbreak\texttt{scripts/}\allowbreak\texttt{verify\_schlafli\_via\_2T.py}),
+and the $A_5$ origin of the coset action is proved in
+section~\texttt{sec:gr:lorentz}
+(Theorem~\texttt{thm:A5action}; script
+\texttt{papers/}\allowbreak\texttt{cascade-derivation/}\allowbreak\texttt{scripts/}\allowbreak\texttt{coset\_action\_2I\_on\_5\_skeletons.py}).
+
+The question this note answers is sharper: \emph{does the spectral
+structure of each local 24-cell graph embed exactly into the spectral
+structure of the global 600-cell graph?}  The answer is ``yes, but
+only at $\lambda{=}12$ in full''.  Full zero-extension to a global
+$\lambda$-eigenspace occurs only at $\lambda{=}12$; at $\lambda{=}0$
+exactly one symmetric combination (the sum of the five coset
+indicators, equal to the global constant) lands in the global
+eigenspace, while at every other tested $\lambda$ the lift image
+intersects the global eigenspace only at $0$.
+
+\paragraph{Why the comparison is non-trivial.}
+The local 24-cell Laplacian $\Loc$ and the global 600-cell Laplacian
+$\Lsix$ are built from \emph{different} graphs: $\Loc$ uses the
+24-cell edge graph on the 24 vertices of a single coset (edges at
+squared distance $1$), while $\Lsix$ uses the 600-cell edge graph on
+all 120 vertices (edges at squared distance $(3-\sqrt5)/2 < 1$).
+These graphs are not subgraphs of one another; in fact \emph{no} edge
+of $\Loc$ is an edge of $\Lsix$ (the local 24-cell edge length is the
+next distance shell up of $\Vsix$).  Consequently, for a function $v$
+supported on a coset $C_i$, the value $(\Lsix v)(u)$ at a vertex
+$u\notin C_i$ is in general non-zero --- it is minus the sum of $v$
+over the global neighbours of $u$ that happen to lie in $C_i$ --- so
+the zero-extension of $v$ is generically \emph{not} a
+$\Lsix$-eigenvector.  The content of Theorem~\ref{thm:lift} is that
+this off-coset coupling cancels \emph{identically} on the local
+$\lambda{=}12$ eigenspace --- a finite-rank linear condition that
+turns out to be satisfied --- and the content of the selectivity
+table is that no other local eigenspace satisfies it.  This is what
+makes the $\lambda{=}12$ channel a genuine local-to-global bridge
+rather than a trivial restriction-and-extension.
+
+\section{Construction}
+
+\subsection{$\Vsix$ as $\twoI$}
+
+We work in exact $\mathbb{Q}(\sqrt5)$ arithmetic.  The 120 vertices
+of $\Vsix$ are:
+\begin{itemize}
+  \item 8 vertices $\pm e_i$, $i=0,\dots,3$;
+  \item 16 vertices $(\pm 1,\pm 1,\pm 1,\pm 1)/2$;
+  \item 96 vertices: even permutations of
+        $(0,\pm 1/(2\Phigold),\pm 1/2,\pm \Phigold/2)$,
+        $\Phigold=(1+\sqrt5)/2$.
+\end{itemize}
+These 120 unit quaternions form $\twoI$ under quaternion
+multiplication; the construction (exact $\mathbb{Q}(\sqrt5)$
+arithmetic, all 120 vertices) lives in the package
+\texttt{vfd\_v600}~\cite{Vsixprog}.  Closure of the vertex set under
+multiplication is exercised end-to-end by the $A_5$ certificate of
+Section~\ref{sec:a5} (which enumerates every $h\in\twoI$ and looks up
+$v h\in\twoI$ for every $v\in\twoI$); any non-closure would manifest
+as a missing index lookup and abort the certificate.
+
+\subsection{$\Vtwentyfour$ as $\twoT$ = $\sigma$-fixed subset}
+
+The Galois twist $\sigma\colon\sqrt5\mapsto-\sqrt5$ acts component-wise
+on $\mathbb{Q}(\sqrt5)$.  Its fixed subset in $\Vsix$ is the
+24-element binary tetrahedral group $\Vtwentyfour = \twoT$: the 8
+unit vectors $\pm e_i$ together with the 16 half-integer vectors.
+Verification is in~\cite{Vsixprog} (\texttt{vfd\_v600.sigma}).
+
+\subsection{Right cosets of $\twoT$ in $\twoI$ and the $A_5$ action}\label{sec:cosets}
+
+\paragraph{Convention.}
+We work with the \emph{right cosets} $\twoT\!\cdot\! v$ in $\twoI$;
+equivalently, with the orbits of left multiplication by $\twoT$ on
+$\twoI$.  Left and right cosets give different partitions of $\twoI$
+(since $\twoT$ is not normal in $\twoI$), but both partition the
+120-vertex set into five sets of 24, both contain $\twoT$ itself as
+the identity coset, and both produce isomorphic 24-cell edge graphs
+on each block by isometry.  The right-coset convention is the one
+used throughout the keystone-artifact code; the left-coset version
+is treated in~\cite{SmartXXXV} (section~\texttt{sec:bio:schlafli}).
+The two conventions are related by the involution $g\mapsto g^{-1}$
+of $\twoI$, which is a bijection between left and right cosets
+fixing the identity coset $\twoT$; hence the spectral-bridge claims
+of this note transfer between conventions.
+
+\paragraph{Cosets.}
+The five right cosets of $\twoT$ in $\twoI$ are
+\begin{itemize}
+  \item one coset $C_0 = \twoT$ itself (the $\sigma$-fixed orbit);
+  \item four cosets $C_1,\dots,C_4$: the four $\twoT$-orbits on the
+        96 $\sigma$-mobile vertices.
+\end{itemize}
+Each $|C_i| = 24$, and $\bigsqcup C_i = \Vsix$~\cite{SmartXXXV,
+Vsixprog}.
+
+\paragraph{Action on cosets.}
+$\twoI$ acts on the five right cosets by right multiplication:
+$(\twoT\!\cdot\! v)\cdot g = \twoT\!\cdot\!(vg)$.  The kernel of this
+\emph{coset-level} action contains $\{\pm1\}$ because $-1 \in \twoT$
+(since $\twoT$ contains $\pm e_0 = \pm1$ as one of its 24 elements),
+so for any right coset $\twoT v$ we have $\twoT v\cdot(-1) =
+\twoT(-v) = (-\twoT)\,v = \twoT v$.  By the parallel left-coset
+result in~\cite{SmartXXXV} (proved at all 120 elements of $\twoI$ by
+\texttt{papers/cascade-derivation/scripts/coset\_action\_2I\_on\_5\_skeletons.py})
+combined with the involution $g \mapsto g^{-1}$ which exchanges
+left- and right-coset families, the kernel of this action is exactly
+$\{\pm 1\}$ and the image on five letters is exactly
+$A_5 = \twoI/\{\pm 1\}$, acting transitively.
+
+\paragraph{Vertex action vs.\ coset action.}
+By contrast, right multiplication on \emph{vertices} of $\Vsix$ has
+trivial kernel: $v \cdot g = v$ for some $v$ forces $g = 1$.  When
+we use the term ``$A_5$ action'' on a subspace $E\subset
+\mathbb{R}^{\Vsix}$ below, we mean the action induced on $E$ by
+right multiplication of vertices, restricted to subspaces on which
+$-1$ acts trivially (so that the linear action descends through
+$\{\pm 1\}$ to $A_5$).  Whether $-1$ acts trivially on a given
+$E\subset\mathbb{R}^{\Vsix}$ is a non-trivial fact specific to $E$;
+we prove it for $E = \Esix(12)$ in
+Section~\ref{sec:a5} (Lemma~\ref{lem:minusone}).
+
+\medskip
+\noindent
+\begin{tabular}{lrrl}
+\toprule
+Object & $|V|$ & $|E|$ & Graph (= shortest non-zero distance shell)\\
+\midrule
+$\Vsix$ & 120 & 720 & shortest-$\Vsix$ shell, squared distance $(3-\sqrt5)/2$, 12-regular\\
+$\twoT$-coset (any) & 24 & 96 & shortest intra-coset shell, squared distance $1$, 8-regular\\
+\bottomrule
+\end{tabular}
+
+\smallskip\noindent
+The two distance shells are distinct: \emph{no} pair within a single
+coset has separation $(3-\sqrt5)/2$, and conversely no $\Vsix$-edge
+joins two vertices of the same coset.  Throughout this note, ``$d{=}1$
+graph'' is shorthand for ``shell-1 (nearest-neighbour) graph at the
+shortest non-zero distance of whichever vertex set we are working on'';
+the squared distances are different for $\Vsix$ and a coset, as the
+table makes explicit.
+
+\subsection{The two $d{=}1$ shells}\label{sec:two-shells}
+
+Inside $\mathbb{Q}(\sqrt5)$, there are 8 distinct non-zero squared
+distances between pairs in $\Vsix$.  The shortest is
+\[
+  d^2_{V_{600}} \;=\; \tfrac{3-\sqrt5}{2} \;\approx\; 0.382,
+\]
+which defines the 600-cell edge graph (12-regular, 720 edges).
+Inside each right coset $C_i$, the shortest non-zero squared distance
+between members is the next shell up:
+\[
+  d^2_C \;=\; 1,
+\]
+which on $C_i$ realises the standard 24-cell edge graph (8-regular,
+96 edges).  The two distances are distinct: \emph{no} pair within a
+single coset has separation $d^2_{V_{600}}$.
+
+These two distinct shells underlie the two Laplacians compared in
+this note.
+
+\subsection{Laplacians}\label{sec:laplacians}
+
+We use the unweighted combinatorial Laplacian $L = D - A$.  Both
+graphs are regular and have integer 0/1 adjacency matrices and
+integer regular degree, so the Laplacians are integer matrices.
+Numerical diagonalisation (the local spectrum agrees with the
+floating-point computation in \cite{SmartV},
+\texttt{papers/paper-v/scripts/run\_polytope\_uniqueness\_narrow.py};
+every integer-eigenvalue multiplicity in both spectra below is
+additionally certified by exact $\mathbb{Q}$-rational SymPy
+nullspace of $\Lsix - \lambda I$ and $\Loc - \lambda I$ at the
+specific integer $\lambda$ values shown in the spectra, via
+\texttt{closure\_transform\_engine.keystone.exact\_integer\_spectrum\_check}):
+\[
+  \mathrm{spec}\,\Loc \;=\; \{0^{\,1},\,4^{\,4},\,8^{\,9},\,10^{\,8},\,12^{\,2}\},
+\]
+\[
+  \mathrm{spec}\,\Lsix \;=\;
+   \{0^{\,1},\,(\approx\!2.29)^{\,4},\,(\approx\!5.53)^{\,9},\,9^{\,16},\,
+     12^{\,25},\,14^{\,36},\,(\approx\!14.47)^{\,9},\,15^{\,16},\,(\approx\!15.71)^{\,4}\},
+\]
+in multiset notation $\lambda^{\,m}$; the four non-integer
+eigenvalues take values in $\mathbb{Q}(\sqrt 5)$.  The integer
+eigenvalues of $\Lsix$ (including the multiplicity
+$\dim\Esix(12) = 25$ at $\lambda = 12$ used in
+Corollary~\ref{cor:dim} and Section~\ref{sec:a5}) coincide with
+the $\mathbb{Q}$-rational kernel dimensions computed by the SymPy
+nullspace routine in
+\texttt{closure\_transform\_engine.keystone}, so $\dim\Esix(12)$
+is itself an exact rational-arithmetic spectral fact.
+
+\section{The $\lambda{=}12$ lift identity}\label{sec:lift}
+
+For a coset $C_i$, define the zero-extension map
+\[
+  \mathrm{lift}_i\colon \mathbb{R}^{24}\to\mathbb{R}^{120},\qquad
+  (\mathrm{lift}_i u)(v) = \begin{cases} u(v) & v\in C_i,\\
+                                          0    & v\notin C_i.\end{cases}
+\]
+
+\begin{theorem}[$\lambda{=}12$ lift identity]\label{thm:lift}
+For every coset $C_i$,
+\[
+  \mathrm{lift}_i\bigl(E_{C_i}(12)\bigr) \;\subset\; \Esix(12).
+\]
+\end{theorem}
+
+\begin{proof}[Proof by exact rational certificate]
+Since the local Laplacian $\Loc$ has integer entries and 12 is an
+integer eigenvalue, $E_{C_i}(12) = \ker(\Loc - 12I)$ is a
+$\mathbb{Q}$-rational subspace of $\mathbb{Q}^{24}$, and $\Lsix$
+likewise has integer entries.  The accompanying repository produces
+a checkable certificate consisting of:
+(i) the integer matrices $\Loc - 12I$ and $\Lsix - 12I$;
+(ii) a $\mathbb{Q}$-rational basis $\{v_1, v_2\}$ of each
+$E_{C_i}(12) = \ker(\Loc - 12I)$, obtained by exact Gaussian
+elimination over $\mathbb{Q}$;
+(iii) for each $v_k$, the vector $(\Lsix - 12I)\,\mathrm{lift}_i(v_k)
+\in \mathbb{Q}^{120}$, computed by exact rational matrix
+multiplication, with every one of its 120 coordinates equal to $0$.
+Item (iii) is the certificate of $\Lsix\,\mathrm{lift}_i(v_k) =
+12\,\mathrm{lift}_i(v_k)$ in $\mathbb{Q}^{120}$, for both $k=1,2$
+and all five cosets $i$; no floating-point arithmetic enters.  The
+certificate is regenerated and re-checked by
+\texttt{closure\_transform\_engine.keystone.exact\_certify\_lambda12\_lift}
+and asserted by the test suite.
+\end{proof}
+
+\begin{remark}[Floating-point cross-check]\label{rmk:floatcheck}
+Independent floating-point diagonalisation of $\Lsix$ and each $\Loc$
+via \texttt{numpy.linalg.eigh}, followed by zero-extension of each
+basis vector $v$ of $E_{C_i}(12)$ and evaluation of
+$\|\Lsix v_{\mathrm{lifted}} - 12 v_{\mathrm{lifted}}\|$, gives
+maximum residual $\le 6.2\times10^{-15}$ across all 10 lifted basis
+vectors.  This is consistent with Theorem~\ref{thm:lift} at the
+level of numerical precision.
+\end{remark}
+
+\begin{corollary}\label{cor:dim}
+Setting $\Elift := \bigoplus_i \mathrm{lift}_i(E_{C_i}(12))$, the
+five lifted local eigenspaces are linearly independent (their
+supports are the disjoint cosets), so
+$\dim \Elift = 5\cdot 2 = 10$.  Since $\dim \Esix(12) = 25$, the
+subspace $\Elift\subset\Esix(12)$ is proper.
+\end{corollary}
+
+\section{Selectivity}\label{sec:selectivity}
+
+We test whether the analogue of Theorem~\ref{thm:lift} holds for
+other eigenvalues $\lambda$ of $\Loc$.  The natural measure is the
+\emph{intersection dimension}
+\[
+  \mathfrak{s}(\lambda) \;:=\; \dim\Bigl(\;
+     \mathrm{Im}\bigl(\mathrm{lift}\bigr)\big|_{\lambda}
+     \;\cap\;\Esix(\lambda)\;\Bigr),
+\]
+where $\mathrm{Im}(\mathrm{lift})\big|_{\lambda} = \sum_i
+\mathrm{lift}_i\bigl(E_{C_i}(\lambda)\bigr)\subset\mathbb{R}^{120}$.
+A ``full'' lift would have $\mathfrak{s}(\lambda)$ equal to the
+total lift-image dimension; a generic eigenvalue has
+$\mathfrak{s}(\lambda)=0$.
+
+\begin{center}
+\begin{tabular}{rrrrl}
+\toprule
+local $\lambda$ & lift-image dim & $\dim \Esix(\lambda)$ &
+   $\mathfrak{s}(\lambda)$ & verdict \\
+\midrule
+0  & 5  & 1  & 1 & PARTIAL — only global constant \\
+4  & 20 & 0  & 0 & $\Esix(\lambda) = \{0\}$ \\
+8  & 45 & 0  & 0 & $\Esix(\lambda) = \{0\}$ \\
+10 & 40 & 0  & 0 & $\Esix(\lambda) = \{0\}$ \\
+12 & 10 & 25 & 10 & FULL \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The PARTIAL row at $\lambda{=}0$ is the substantive control: here
+$\Esix(0)$ is one-dimensional (the global constant), and one might
+ask whether the lift hits it.  It does --- but only through the
+symmetric combination: $\mathbf{1}_{V_{600}}$ is the sum of the five
+coset indicators, each a local $\lambda{=}0$ eigenvector, so exactly
+one direction of the 5-dimensional lift image lands in $\Esix(0)$.
+No single-coset $\lambda{=}0$ lift lies in $\Esix(0)$; only the
+$A_5$-invariant combination does.  This is the sense in which even
+the one eigenvalue that the lift ``partly'' reaches, it reaches only
+in the symmetry-forced way.
+
+For $\lambda\in\{4,8,10\}$ the control is weaker: these are simply
+not eigenvalues of $\Lsix$ at all.  The exact $\mathbb{Q}$-rational
+sympy nullspace of $\Lsix - \lambda I$ has dimension $0$ for each of
+$\lambda\in\{4,8,10\}$ (certified by
+\texttt{exact\_integer\_spectrum\_check}), so $\Esix(\lambda) = \{0\}$
+and $\mathfrak{s}(\lambda) = 0$ holds for trivial dimensional reasons.
+We list these rows for completeness --- and the floating-point lift
+residuals at these $\lambda$ ($3.16$ to $9.38$, far above machine
+precision) confirm the lifted vectors are nowhere near an
+approximate $\lambda$-eigenfunction of $\Lsix$ --- but we do not
+claim they constitute a strong falsification test in the way the
+$\lambda{=}0$ row does.
+
+Hence among the five eigenvalues of $\Loc$, only $\lambda{=}12$
+satisfies the lift identity in full; at $\lambda{=}0$ the lift is
+partial in the single symmetry-forced way; and at the remaining
+$\lambda$ the question is empty for spectral reasons.
+
+\section{Direct-sum decomposition and $A_5$ structure}\label{sec:a5}
+
+Inside $\Esix(12)$, the lifted subspace $\Elift$ (dim 10) has an
+orthogonal complement
+\[
+  \Eres \;:=\; \Esix(12)\;\ominus\;\Elift,\qquad \dim\Eres = 15.
+\]
+We call $\Eres$ the \emph{residual subspace}; it consists of those
+global $\lambda{=}12$ eigenvectors that are orthogonal to every
+zero-extension of a local $\lambda{=}12$ eigenfunction.
+
+\subsection{Descent of right multiplication to $A_5$ on $\Esix(12)$}
+
+For every $h\in\twoI$ let $P_h\in\mathrm{Perm}(\Vsix)$ be the
+120-permutation matrix induced by right multiplication
+$v\mapsto v h$ on the vertex set.  Right multiplication is an
+isometry of $\Vsix$, so $P_h$ commutes with $\Lsix$ and restricts to
+a linear action on $\Esix(12)$.  Right multiplication on
+\emph{vertices} has trivial kernel; descent to an $A_5$ action on a
+subspace $E\subset\mathbb{R}^{\Vsix}$ is the separate question of
+whether $-1$ acts trivially on $E$.
+
+\begin{lemma}[$\{\pm 1\}$ acts trivially on $\Esix(12)$]\label{lem:minusone}
+$P_{-1}$ restricted to $\Esix(12)$ is the identity.
+\end{lemma}
+
+\begin{proof}[Proof by exact rational computation]
+Compute the $\mathbb{Q}$-rational nullspace
+$B_{\mathrm{global}}\in\mathbb{Q}^{120\times 25}$ of $\Lsix - 12 I$
+(an integer matrix), giving a rational basis for $\Esix(12)$.  For
+each column $v$ of $B_{\mathrm{global}}$, apply the integer
+permutation matrix $P_{-1}$ exactly and verify
+$P_{-1}\,v - v = 0 \in \mathbb{Q}^{120}$ componentwise (no
+floating point).  Every one of the $25\cdot 120 = 3000$ rational
+component checks returns $0$.  Hence $P_{-1} = \mathrm{Id}$ on
+the basis, and therefore on $\Esix(12)$.  The computation is
+reproduced by
+\texttt{closure\_transform\_engine.keystone.exact\_a5\_characters}
+(field \texttt{minus\_one\_acts\_trivially}).
+\end{proof}
+
+By Lemma~\ref{lem:minusone}, the action of $\twoI$ on $\Esix(12)$
+factors through $A_5 = \twoI/\{\pm 1\}$.  To restrict this action to
+the summands $\Elift$ and $\Eres$ we need $\twoI$-invariance of each.
+
+\begin{lemma}[$\Elift$ and $\Eres$ are $\twoI$-invariant]\label{lem:invariance}
+For every $h\in\twoI$, $P_h \Elift = \Elift$ and $P_h \Eres = \Eres$.
+\end{lemma}
+
+\begin{proof}
+Right multiplication by $h\in\twoI$ permutes the right cosets:
+$P_h$ sends $C_i$ bijectively to $C_{\sigma_h(i)}$, where
+$\sigma_h\in S_5$ is the induced coset permutation
+(Section~\ref{sec:cosets}).  Restricted to a coset, $P_h\!\restriction_{C_i}\colon
+C_i \to C_{\sigma_h(i)}$ is an isometry between two metric spaces
+that are each isomorphic to the 24-cell.  It therefore intertwines
+the two local shell-1 Laplacians: $L_{C_{\sigma_h(i)}} (P_h v) =
+P_h (L_{C_i} v)$ for $v\in\mathbb{R}^{C_i}$.  Consequently $P_h$
+maps $E_{C_i}(12)$ to $E_{C_{\sigma_h(i)}}(12)$, and by linearity of
+zero-extension, $P_h$ maps $\mathrm{lift}_i(E_{C_i}(12))$ to
+$\mathrm{lift}_{\sigma_h(i)}(E_{C_{\sigma_h(i)}}(12))$.  Summing
+over $i$ gives $P_h \Elift \subseteq \Elift$; equality follows from
+invertibility of $P_h$.  $\Eres$ is the orthogonal complement of
+$\Elift$ in $\Esix(12)$, and $P_h$ is orthogonal (a permutation
+matrix), so $P_h$ also preserves $\Eres$.
+
+\smallskip
+\noindent
+Independent of this prose proof, the repository carries an exact
+$\mathbb{Q}$-rational certificate: for every $h\in\twoI$ and for
+$B\in\{B_{\Elift},\,B_{\Eres}\}$, sympy computes
+$P_h B - B\,(B^\top B)^{-1} B^\top(P_h B)$ over $\mathbb{Q}$ and
+verifies that every component is exactly $0$.  This certifies
+$P_h B \subseteq \mathrm{col}(B)$, hence $P_h$ preserves $\Elift$
+and $\Eres$, with no reference to the prose argument.  Reproduced by
+the \texttt{lifted\_2I\_invariant} and \texttt{residual\_2I\_invariant}
+fields of \texttt{exact\_a5\_characters}.
+\end{proof}
+
+By Lemmas \ref{lem:minusone}--\ref{lem:invariance}, the $A_5$ action
+on $\Esix(12)$ restricts to each of $\Elift$ and $\Eres$.
+
+\subsection{Exact $A_5$ class characters}
+
+Using rational bases of $\Elift$, $\Eres$, and $\Esix(12)$
+constructed by sympy nullspace, we compute the trace of $P_h$ on
+each subspace by exact rational matrix multiplication for every
+$h\in\twoI$, and average by $A_5$ conjugacy class.  The five
+$A_5$ conjugacy classes 1A, 2A, 3A, 5A, 5B are obtained by
+explicit orbit enumeration: we first enumerate the 60 distinct
+5-letter permutations $\pi(h)$ for $h\in\twoI$ (the image of the
+coset action), then partition them into orbits under conjugation
+$g\mapsto \pi\,g\,\pi^{-1}$ by all $\pi\in\pi(\twoI)$.  The
+non-trivial cycle structures $(1,1,1,1,1)$, $(1,2,2)$ and $(1,1,3)$
+each give a single $A_5$ class (sizes 1, 15, 20); the cycle
+structure $(5)$ splits into two $A_5$ orbits of size 12 each, which
+we label 5A and 5B.  Class sizes $(1, 15, 20, 12, 12)$ match the
+standard $A_5$ character table.
+
+\begin{theorem}[Exact $A_5$ class characters]\label{thm:chars}
+The $A_5$ class characters of $\Esix(12)$, $\Elift$, and $\Eres$
+are constant on each conjugacy class and take exact integer values:
+
+\smallskip
+\begin{tabular}{lrrrrr}
+\toprule
+subspace & 1A & 2A & 3A & 5A & 5B \\
+\midrule
+$\Esix(12)$ & 25 & 5  & $-5$ & 0 & 0 \\
+$\Elift$    & 10 & 2  & $-2$ & 0 & 0 \\
+$\Eres$     & 15 & 3  & $-3$ & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\smallskip
+
+Each entry is computed in $\mathbb{Q}$ (no floating point).
+\end{theorem}
+
+Projecting the exact characters of Theorem~\ref{thm:chars} against
+the $A_5$ character table (irreps of dimensions $1, 3, 3, 4, 5$;
+see \cite{ConwayAtlas1985}) gives:
+
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+irrep & dim & in $\Elift$ & in $\Eres$ & in $\Esix(12)$\\
+\midrule
+$Y_1$  & 1 & 0 & 0 & 0 \\
+$Y_3$  & 3 & 0 & 0 & 0 \\
+$Y_3'$ & 3 & 0 & 0 & 0 \\
+$Y_4$  & 4 & 0 & 0 & 0 \\
+$Y_5$  & 5 & 2 & 3 & 5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{corollary}[$A_5$ irrep decomposition]\label{cor:A5}
+With $Y_5$ the 5-dimensional irreducible representation of $A_5$,
+\[
+  \Elift \cong 2\!\cdot\! Y_5,\qquad
+  \Eres  \cong 3\!\cdot\! Y_5,\qquad
+  \Esix(12) \cong 5\!\cdot\! Y_5,
+\]
+with every other complex $A_5$ irrep having multiplicity exactly $0$
+(the character inner products that compute these multiplicities are
+themselves computed in $\mathbb{Q}(\sqrt 5)$ using the exact
+character-table entries).
+\end{corollary}
+
+The ``$15 = 3\times 5$'' is representation-theoretic — three copies
+of the 5-dim $A_5$ irrep — \emph{not} five cosets each contributing
+three local modes.
+
+\section{Interpretation and limits}
+
+This is a reproducible spectral-graph result in the 24-cell/600-cell
+coset geometry.  It does not by itself derive particle physics,
+quantum mechanics, or cosmology.
+
+\smallskip
+\noindent
+Within the broader closure-geometry programme that motivated this
+work, the result may be interpreted as one example of a
+``closure-projection channel'': a local shell structure lifting
+exactly into a global invariant sector.  That interpretation is
+provided here only for context and is not load-bearing for any claim
+in this note.
+
+\section{Reproducibility}\label{sec:repro}
+
+\paragraph{One-command reproduction.}
+From the repository root:
+\begin{verbatim}
+python closure_transform_engine/examples/run_wo008_keystone.py
+pytest  closure_transform_engine/tests/test_wo008_keystone_artifact.py
+\end{verbatim}
+The first command (a few minutes on commodity hardware) builds the
+600-cell from exact $\mathbb{Q}(\sqrt5)$ icosian quaternions, runs
+all certificates, and writes the frozen output artifacts listed
+below; the second re-asserts the certificate-level claims listed
+below as a test.
+
+\paragraph{Environment.}
+The repository pins the toolchain in \texttt{requirements.txt} and
+\texttt{pyproject.toml}: Python~$\ge 3.8$ (developed on 3.8.10),
+NumPy~$\ge 1.20$ (1.24.4), SymPy~$\ge 1.12$ (1.13.3), SciPy~$\ge 1.7$
+(1.10.1).  The formal certificates use only exact $\mathbb{Q}$
+arithmetic (SymPy \texttt{Rational}/\texttt{Matrix}); NumPy enters
+only the floating-point cross-check of Remark~\ref{rmk:floatcheck}.
+The \texttt{wo008\_reproducibility\_log.txt} output records the run
+UTC timestamp, elapsed time, Python version, repository path, and
+the repository's commit hash (with an
+``uncommitted changes present'' marker if the working tree was dirty
+at run time), so the artifact set is anchored to a specific source
+revision.
+
+\paragraph{Repository contents (proof package).}
+The repository is part of the proof package, not an afterthought.  It
+contains: the exact construction of $\Vsix$, $\twoT$, the five
+cosets, and the $d{=}1$ graph Laplacians; the exact nullspace and
+certificate routines for Theorem~\ref{thm:lift},
+Lemma~\ref{lem:minusone}, Theorem~\ref{thm:chars}, and the integer
+spectrum; the $A_5$ conjugacy-class enumeration and character
+projection; the test suite; and the frozen output artifacts
+(\texttt{wo008\_summary.json}, \texttt{wo008\_verdict\_table.csv},
+\texttt{wo008\_reproducibility\_log.txt}).  The companion scripts cited from~\cite{SmartV} and~\cite{SmartXXXV}
+live in the main VFD research repository (paths given in the
+bibliography); the self-contained reproduction bundle for this note
+vendors only the \texttt{vfd\_v600} icosian package it depends on.
+\emph{The claims of this note do not require rerunning Paper~V or
+Paper~XXXV.}  Those upstream references justify the broader
+programme context and provide an independent treatment of the coset
+construction; the standalone bundle reconstructs from scratch the
+objects needed for the certificates used here, so a reader can
+verify every theorem of this note without access to the main
+research repository.
+
+\medskip
+\noindent What the runner verifies:
+\begin{itemize}
+  \item Theorem~\ref{thm:lift} via the $\mathbb{Q}$-rational
+        certificate (integer matrices, $\mathbb{Q}$-rational nullspace
+        bases, exact zero off-coset components after lift in every one
+        of $5\cdot 2 = 10$ local basis vectors).
+  \item The floating-point cross-check of
+        Remark~\ref{rmk:floatcheck} (max residual
+        $\le 10^{-10}$; observed $\approx 6.2\times 10^{-15}$).
+  \item Every integer-eigenvalue multiplicity of $\Loc$ and $\Lsix$
+        listed in the spectra (exact $\mathbb{Q}$-rational sympy
+        nullspace at each integer $\lambda$).
+  \item The intersection-dimension table of
+        Section~\ref{sec:selectivity}.
+  \item Lemma~\ref{lem:minusone} ($-1\in\twoI$ acts trivially on
+        $\Esix(12)$) by exact $\mathbb{Q}$-rational basis check.
+  \item Lemma~\ref{lem:invariance} ($\twoI$-invariance of $\Elift$
+        and $\Eres$): exact $\mathbb{Q}$-rational check of
+        $P_h B = B\,(B^\top B)^{-1} B^\top(P_h B)$ for every
+        $h\in\twoI$ and both $B=B_{\Elift},\,B_{\Eres}$.
+  \item Theorem~\ref{thm:chars} (exact integer $A_5$ class
+        characters) and Corollary~\ref{cor:A5} ($A_5$ irrep
+        multiplicities) by exact rational trace and character
+        projection.
+\end{itemize}
+
+Outputs:
+\begin{itemize}
+  \item \texttt{wo008\_summary.json} — full structured result
+        including the certificate's per-coset status.
+  \item \texttt{wo008\_verdict\_table.csv}
+  \item \texttt{wo008\_reproducibility\_log.txt}
+\end{itemize}
+
+\begin{thebibliography}{9}
+\bibitem[Coxeter 1973]{Coxeter1973}
+H.\,S.\,M.~Coxeter, \emph{Regular Polytopes}, 3rd ed., Dover, 1973.
+\bibitem[Conway--Sloane 1999]{ConwaySloane1999}
+J.\,H.~Conway and N.\,J.\,A.~Sloane, \emph{Sphere Packings, Lattices and
+Groups}, 3rd ed., Springer-Verlag, 1999.
+\bibitem[Conway et al.\ 1985]{ConwayAtlas1985}
+J.\,H.~Conway, R.\,T.~Curtis, S.\,P.~Norton, R.\,A.~Parker and R.\,A.~Wilson,
+\emph{Atlas of Finite Groups}, Oxford University Press, 1985.
+\bibitem[Paper~V]{SmartV}
+\emph{Polytope-uniqueness theorem and spectra.}  In the main VFD
+research repository:
+\texttt{papers/paper-v/paper-v.tex}; supporting scripts
+\texttt{papers/paper-v/scripts/run\_polytope\_uniqueness\_narrow.py}
+and \texttt{papers/paper-v/scripts/run\_rigorous\_verification.py}.
+\bibitem[Paper~XXXV]{SmartXXXV}
+\emph{Schl\"afli decomposition of the 600-cell and the $A_5$ origin of
+the five inscribed 24-cells.} In this repository:
+\texttt{papers/paper-xxxv/paper-xxxv.tex}; supporting scripts at
+\texttt{papers/cascade-derivation/scripts/verify\_schlafli\_via\_2T.py}
+and
+\texttt{papers/cascade-derivation/scripts/coset\_action\_2I\_on\_5\_skeletons.py}.
+Paper~XXXV proves the left-coset version explicitly; the right-coset
+version used here follows from the involution $g\mapsto g^{-1}$ of
+$\twoI$, which exchanges the left- and right-coset families and
+preserves their common identity coset.
+\bibitem[V$_{600}$-programme]{Vsixprog}
+\emph{Exact $\mathbb{Q}(\sqrt5)$ icosian arithmetic and
+$\twoI$/$\twoT$/$\sigma$-Galois machinery.}  In this repository:
+\texttt{papers/v600-programme/lib/vfd\_v600/}.
+\end{thebibliography}
+
+\end{document}

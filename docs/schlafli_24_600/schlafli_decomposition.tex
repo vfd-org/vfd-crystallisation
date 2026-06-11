@@ -1,0 +1,450 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{microtype}
+
+\newcommand{\Vsix}{V_{600}}
+\newcommand{\Vtwentyfour}{V_{24}}
+\newcommand{\Phigold}{\varphi}
+\newcommand{\twoI}{2I}
+\newcommand{\twoT}{2T}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+
+% Avoid TeX-inserted (discretionary) hyphenated line breaks: these get
+% rendered as bad characters in some PDF viewers / extractors.
+\hyphenpenalty=10000
+\exhyphenpenalty=100
+\setlength{\emergencystretch}{3em}
+
+\title{The Schl\"afli Decomposition of the 600-cell:\\
+\large Five 24-cell Cosets and the Induced $A_5$ Action}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{\parbox{0.92\textwidth}{\small
+\textbf{Status:} Reproducible mathematical note / exact computational
+certificate.  Not peer-reviewed.
+
+\medskip
+\textbf{Reproducibility.} The formal claims of this note ---
+construction of $\Vsix$ as the binary icosahedral group $\twoI$,
+identification of the $\sigma$-fixed subset as the binary tetrahedral
+group $\twoT$, the partition of $\Vsix$ into five right cosets of
+$\twoT$, verification that each coset carries the intrinsic 24-cell
+distance structure, and the induced action of $\twoI$ on the five
+cosets descending through $\{\pm 1\}$ to a transitive $A_5$ on five
+points --- are certified by exact $\mathbb{Q}(\sqrt 5)$ arithmetic in
+the accompanying repository.  No floating-point computation enters
+any formal certificate; if any floating computations appear they are
+cross-checks only.  One-command reproduction is described in
+Section~\ref{sec:repro}.
+}}
+\end{center}
+
+\bigskip
+
+\begin{abstract}
+The 600-cell vertex set is represented exactly as the 120 unit
+icosian quaternions, i.e.\ the binary icosahedral group $\twoI$.  The
+24-cell vertex set is represented as the 24-element binary
+tetrahedral group $\twoT$, characterised as the
+$\sigma$-fixed subset of $\twoI$ under the Galois twist
+$\sigma\colon\sqrt 5\mapsto-\sqrt 5$.  We prove that $\twoT$ has
+index $5$ in $\twoI$, that its five right cosets partition $\Vsix$
+into five disjoint 24-element subsets, that each subset carries the
+intrinsic 24-cell distance structure (an 8-regular graph at squared
+distance $1$, $96$ edges), and that right multiplication by $\twoI$
+induces a transitive action on the five cosets with kernel exactly
+$\{\pm 1\}$, so the image is $A_5 = \twoI/\{\pm 1\}$ acting on five
+points.  Each claim is certified by exact $\mathbb{Q}(\sqrt 5)$
+arithmetic.
+\end{abstract}
+
+\section{Introduction}
+
+The 600-cell is the regular 4-polytope $\{3,3,5\}$ with $120$
+vertices.  The 24-cell is the regular 4-polytope $\{3,4,3\}$ with
+$24$ vertices.  Classically~\cite{Coxeter1973, ConwaySloane1999},
+the vertex set of the 600-cell can be identified with the binary
+icosahedral group $\twoI$, the vertex set of the 24-cell with the
+binary tetrahedral group $\twoT$, and $\twoT$ sits inside $\twoI$ as
+a subgroup of index $5$.  Its cosets therefore give five copies of
+the 24-cell whose union is $\Vsix$ --- a finite-geometric
+decomposition that we make explicit, exact, and reproducible here.
+
+This note supplies the finite-geometric substrate used by the
+24--600 spectral bridge of~\cite{Smart24600Bridge}.  That spectral
+note asks a further question: whether the local Laplacian
+eigenspaces on the 24-cell sectors zero-extend into corresponding
+eigenspaces of the global 600-cell Laplacian.  Here we prove and
+certify the underlying coset decomposition independently of any
+spectral claim.
+
+Because $\twoT$ is not normal in $\twoI$, left and right cosets
+give different partitions of $\Vsix$; we fix the right-coset
+convention $\twoT\!\cdot\! g$ throughout, matching the spectral
+bridge.
+
+No physical claim is made.  Within the broader closure-geometry
+programme that motivated this work, the decomposition is one of the
+finite geometric structures used downstream; in the present note it
+is a self-contained finite-group / finite-geometry result.
+
+\section{Exact construction of $\Vsix$ as $\twoI$}\label{sec:v600}
+
+We work in $\mathbb{Q}(\sqrt 5)$, represented as ordered pairs
+$(a, b) \mapsto a + b\sqrt 5$ with $a, b\in\mathbb{Q}$.  Set
+$\Phigold = (1+\sqrt 5)/2$.  Define $\Vsix\subset\mathbb{Q}(\sqrt 5)^4$ as
+the $120$-element set:
+\begin{itemize}
+  \item $8$ vertices $\pm e_i$, $i = 0, \dots, 3$;
+  \item $16$ vertices $(\pm 1, \pm 1, \pm 1, \pm 1)/2$;
+  \item $96$ vertices: even permutations of
+        $(0, \pm 1/(2\Phigold), \pm 1/2, \pm \Phigold/2)$.
+\end{itemize}
+This vertex set is the standard \emph{icosian model} of the 600-cell
+vertex set; under quaternion multiplication it is the binary
+icosahedral group $\twoI$ in its classical
+presentation~\cite{Coxeter1973,ConwaySloane1999}.  Theorem~\ref{thm:v600}
+verifies, by exact arithmetic, that the explicit 120-element model
+above does satisfy the group axioms (closure, identity, inverses) on
+this set; the identification with the abstract $\twoI$ is the
+classical reference, not a consequence of the certificate alone.
+
+\begin{theorem}[Exact group structure of the icosian model]\label{thm:v600}
+The 120 vectors above are pairwise distinct; each has squared
+$\mathbb{Q}(\sqrt 5)$-norm exactly $1$; the set contains the
+identity quaternion $(1, 0, 0, 0)$; it is closed under quaternion
+multiplication; and the conjugate of every element (which equals its
+inverse since norms are $1$) is again in $\Vsix$.  Hence $\Vsix$,
+equipped with quaternion multiplication, is a finite group of order
+$120$.  By~\cite{Coxeter1973,ConwaySloane1999} this is the standard
+icosian model of $\twoI$.
+\end{theorem}
+
+\begin{proof}[Proof by exact rational certificate]
+The accompanying repository certifies each clause by exact
+$\mathbb{Q}(\sqrt 5)$ arithmetic in the routine
+\texttt{certify\_v600\_construction}\allowbreak{} in module
+\texttt{closure\_transform\_engine}\allowbreak.\texttt{decomposition}.
+Distinctness is checked on $\mathbb{Q}(\sqrt 5)$ keys; unit norm
+componentwise; closure runs all $120^2 = 14\,400$ products
+$u\cdot v$ and verifies each lies in the key set; inverses run all
+$120$ conjugates and verify membership.  No floating-point
+arithmetic is used.
+\end{proof}
+
+\section{The $\sigma$-fixed 24-cell as $\twoT$}\label{sec:v24}
+
+Let $\sigma\colon \mathbb{Q}(\sqrt 5) \to \mathbb{Q}(\sqrt 5)$ be the
+Galois twist $\sqrt 5 \mapsto -\sqrt 5$.  We extend $\sigma$
+componentwise to $\mathbb{Q}(\sqrt 5)^4$.  Define
+\[
+  \Vtwentyfour \;:=\; \{\,v \in \Vsix \;:\; \sigma(v) = v\,\}.
+\]
+The $\sigma$-fixed subset consists exactly of the $8$ unit vectors
+$\pm e_i$ and the $16$ half-integer vectors
+$(\pm 1, \pm 1, \pm 1, \pm 1)/2$ from Section~\ref{sec:v600}, since
+these are precisely the vectors with no $\sqrt 5$ component.
+
+\begin{theorem}[Exact subgroup structure of the $\sigma$-fixed set]\label{thm:v24}
+$|\Vtwentyfour| = 24$.  The set $\Vtwentyfour\subset\Vsix$ is closed
+under quaternion multiplication, contains the identity, and contains
+the inverse of each of its elements.  Hence $\Vtwentyfour$ is a
+subgroup of $\Vsix$ of order $24$, and the index of
+$\Vtwentyfour$ in $\Vsix$ is $|\Vsix|/|\Vtwentyfour| = 120/24 = 5$.
+The 24-element set --- the eight units $\pm e_i$ together with the
+sixteen half-integer vectors $(\pm 1, \pm 1, \pm 1, \pm 1)/2$ --- is
+the standard Hurwitz-unit model of the binary tetrahedral group
+$\twoT$~\cite{Coxeter1973,ConwaySloane1999}; the certificate
+verifies that this explicit model satisfies the subgroup axioms
+inside $\Vsix$.
+\end{theorem}
+
+\begin{proof}[Proof by exact rational certificate]
+\texttt{certify\_v24\_subgroup} computes the fixed set
+$\Vtwentyfour$ in exact $\mathbb{Q}(\sqrt 5)$ arithmetic, verifies
+its size is $24$, runs all $24^2 = 576$ products $u\cdot v$ for
+$u, v\in\Vtwentyfour$ and checks each lies in $\Vtwentyfour$,
+verifies that the identity is fixed, and verifies that the conjugate
+of every fixed element is fixed.  The index follows from
+$|\twoI|/|\twoT|$.
+\end{proof}
+
+\section{The five right cosets}\label{sec:cosets}
+
+\paragraph{Convention.}
+We work with the right cosets $\twoT\!\cdot\! g$ of $\twoT$ in
+$\twoI$.  Concretely, for any $v\in\Vsix$ the orbit $\twoT\!\cdot\! v
+= \{h\cdot v : h\in\twoT\}$ is the right coset containing $v$.  Note
+that $\twoT$ is not normal in $\twoI$: left and right cosets give
+different partitions of $\twoI$, related by the inversion map
+$g\mapsto g^{-1}$ which exchanges the two coset families and fixes
+the identity coset $\twoT$ itself.  We use right cosets to match the
+convention of the 24--600 spectral bridge
+artifact~\cite{Smart24600Bridge}.
+
+\paragraph{Cosets.}
+Label them $C_0, C_1, C_2, C_3, C_4$ with $C_0 = \Vtwentyfour$ itself.
+The remaining four cosets $C_1, \dots, C_4$ are the four
+$\Vtwentyfour$-orbits on the $96$ $\sigma$-mobile vertices.
+
+\begin{theorem}[Schl\"afli decomposition]\label{thm:schlafli}
+The five right cosets of $\twoT$ in $\twoI$ partition $\Vsix$:
+\[
+  \Vsix \;=\; C_0 \sqcup C_1 \sqcup C_2 \sqcup C_3 \sqcup C_4,
+  \qquad |C_i| = 24 \text{ for each } i,
+\]
+$C_0 = \twoT$, and $C_1 \cup C_2 \cup C_3 \cup C_4$ is exactly the
+set of $96$ $\sigma$-mobile vertices.  In particular, every vertex
+of $\Vsix$ belongs to exactly one coset.
+\end{theorem}
+
+\begin{proof}[Proof by exact rational certificate]
+\texttt{right\_cosets} and \texttt{certify\_right\_cosets} compute
+the five orbits, verify that there are exactly $5$ of them with
+sizes $24$ each, that they are pairwise disjoint, that their union
+is $\Vsix$, that $C_0 = \Vtwentyfour$, and that the union
+$C_1\cup C_2\cup C_3\cup C_4$ equals the $\sigma$-mobile complement
+of $\Vtwentyfour$.  Each membership check is an exact set operation
+on vertex indices.
+\end{proof}
+
+\section{Each coset carries the 24-cell structure}\label{sec:24cell}
+
+For any pair $u, v\in\Vsix$ define the squared
+$\mathbb{Q}(\sqrt 5)$-distance
+$d^2(u, v) = |u - v|^2 \in \mathbb{Q}(\sqrt 5)$.
+
+There are 8 distinct non-zero values of $d^2$ on $\Vsix$.  The
+shortest is
+\[
+  d^2_{V_{600}} \;=\; \frac{3 - \sqrt 5}{2} \;\approx\; 0.382,
+\]
+which defines the 600-cell edge graph (12-regular, 720 edges).
+Inside each coset $C_i$ the shortest non-zero $d^2$ between members
+is the next shell up:
+\[
+  d^2_{24} \;=\; 1.
+\]
+
+\begin{theorem}[Each coset is a 24-cell]\label{thm:24cell-on-coset}
+For each $i\in\{0,1,2,3,4\}$, $C_i = \twoT\cdot g_i$ is isometric to
+$\twoT$ as a metric subspace of $S^3$.  In particular, the shortest
+non-zero squared distance between members of $C_i$ is exactly $1$,
+and the graph on $C_i$ whose edges are the pairs at $d^2 = 1$ is the
+standard 24-cell edge graph (24 vertices, 96 edges, 8-regular).
+Furthermore, no pair of vertices within a single coset is joined by
+a $\Vsix$-edge: every pair within $C_i$ at separation
+$d^2_{V_{600}}$ counts to zero.
+\end{theorem}
+
+\begin{proof}
+For any unit quaternion $g\in\twoI$, right multiplication
+$v\mapsto v\,g$ is a Euclidean isometry of $\mathbb{R}^4$
+restricted to $S^3$: indeed $|v_1 g - v_2 g| = |(v_1 - v_2)g|
+= |v_1 - v_2|$ since $|g| = 1$.  Hence the map $\twoT \to
+\twoT\!\cdot\! g_i$, $h\mapsto h\,g_i$, is an isometric bijection;
+the intrinsic metric on $C_i = \twoT\!\cdot\! g_i$ is the metric on
+$\twoT$ pulled across.  Since the standard Hurwitz-unit model of
+$\twoT$ has shortest non-zero squared distance $1$ and its $d^2{=}1$
+graph is the 24-cell edge graph
+(\cite{Coxeter1973,ConwaySloane1999}), each coset $C_i$ inherits
+exactly that structure.
+
+The accompanying repository (\texttt{certify\_each\_coset\_is\_24cell})
+additionally verifies, as a numerical check on the explicit
+coordinates, that for each coset: the minimum non-zero squared
+distance is exactly $(1, 0)$ (i.e.\ $1$); the count of directed
+$d^2{=}1$ pairs is $192$ (so $96$ undirected edges); every vertex
+has exactly $8$ such neighbours inside the coset; and the count of
+intra-coset pairs at the $\Vsix$-shell distance $(3-\sqrt 5)/2$ is
+zero.
+\end{proof}
+
+\begin{remark}\label{rmk:not-induced}
+Theorem~\ref{thm:24cell-on-coset} says that each coset is an
+isometric copy of the 24-cell, but the 24-cell edges live at the
+next $\Vsix$-distance shell, not at the shortest one.  Equivalently,
+the five 24-cells are \emph{not} induced subgraphs of the 600-cell
+edge graph: every 600-cell edge runs between two different cosets,
+and every intra-coset 24-cell edge runs at a strictly longer
+distance than a 600-cell edge.  This separation is the structural
+feature that the 24--600 spectral bridge then exploits to compare
+local and global Laplacians.
+\end{remark}
+
+\section{Induced action on the five cosets}\label{sec:a5}
+
+Right multiplication by $g\in\twoI$ permutes the right cosets:
+\[
+  (\twoT\!\cdot\! v) \cdot g \;=\; \twoT\!\cdot\!(v g).
+\]
+This well-defined map from $\twoI$ to the symmetric group on the
+five cosets is the focus of this section.
+
+\begin{theorem}[$A_5$ coset action]\label{thm:a5action}
+The induced map $\twoI \to \mathrm{Sym}\{C_0, C_1, C_2, C_3, C_4\}$:
+\begin{enumerate}
+  \item is transitive on the five cosets;
+  \item has image of size $60$ (i.e.\ exactly $60$ distinct
+        coset-level permutations arise from the $120$ elements of
+        $\twoI$);
+  \item has kernel exactly $\{+1, -1\}$, the centre of $\twoI$;
+  \item lands entirely in the alternating group: every element of
+        the image is an even permutation;
+  \item has image equal to $A_5\subset S_5$, with conjugacy-class
+        sizes $(1, 15, 20, 12, 12)$, matching the standard $A_5$
+        character table.
+\end{enumerate}
+Equivalently, the coset action factors through the surjection
+$\twoI \twoheadrightarrow \twoI/\{\pm 1\} = I \cong A_5$.
+\end{theorem}
+
+\begin{proof}[Proof by exact rational certificate]
+\texttt{certify\_a5\_coset\_action} enumerates all $120$ vertex
+permutations $P_h$ for $h\in\twoI$, reads off the induced coset
+permutation $\pi(h)\in S_5$ (well-defined by
+Theorem~\ref{thm:schlafli}), and computes:
+
+\begin{itemize}
+  \item the number of distinct images
+        $|\{\pi(h) : h\in\twoI\}|$, which equals $60$ exactly;
+  \item the kernel
+        $\{h : \pi(h) = \mathrm{id}\}$, which contains exactly two
+        elements --- the identity quaternion and its negative, by
+        direct exact equality of $\mathbb{Q}(\sqrt 5)$ entries;
+  \item the parity of every element of the image, which is even
+        in all $60$ cases;
+  \item the conjugacy-class partition of the image under its own
+        conjugation, which has class sizes
+        $(1, 15, 20, 12, 12)$ matching $A_5$.
+\end{itemize}
+
+Transitivity follows from the orbit of $C_0$ under the image, which
+covers all five cosets.  All $60$ image permutations are verified
+even, so the image lies inside $A_5\subset S_5$; since $|A_5|=60$
+and the image has $60$ elements, the image equals all of $A_5$.
+\end{proof}
+
+\section{Relationship to the 24--600 spectral bridge}
+
+This note proves the finite-geometric decomposition used by the
+24--600 spectral bridge artifact~\cite{Smart24600Bridge}.  The
+spectral bridge then asks a further question: whether local
+eigenspaces of the 24-cell shell Laplacians on each coset
+zero-extend into eigenspaces of the global 600-cell Laplacian.  It
+proves that the $\lambda{=}12$ local eigenspaces do so exactly, and
+that no other local eigenvalue admits a non-trivial lift.
+
+That spectral result is independent and is not reproved here; the
+two artifacts can be read in either order, but the finite-geometric
+decomposition certified in this note is logically prior.
+
+\section{Reproducibility}\label{sec:repro}
+
+\paragraph{One-command reproduction.}
+\begin{verbatim}
+python closure_transform_engine/examples/run_wo007_schlafli_decomposition.py
+pytest  closure_transform_engine/tests/test_wo007_schlafli_decomposition.py
+\end{verbatim}
+The first command (under a minute) builds $\Vsix$ from exact
+$\mathbb{Q}(\sqrt 5)$ icosian quaternions, runs every certificate,
+and writes the frozen output artifacts below.  The second
+re-asserts the certificate-level claims as a test.
+
+\paragraph{Environment.}
+Pinned in \texttt{requirements.txt} and \texttt{pyproject.toml}:
+Python~$\ge 3.8$ (developed on 3.8.10), NumPy~$\ge 1.20$ (1.24.4),
+SymPy~$\ge 1.12$ (1.13.3).  All formal certificates use exact
+arithmetic via \texttt{vfd\_v600} ($\mathbb{Q}(\sqrt 5)$-rational
+pairs) and integer set operations on vertex indices; NumPy and
+SymPy enter only auxiliary computations and never a formal claim.
+The reproducibility log
+\texttt{wo007\_reproducibility\_log.txt} records UTC timestamp,
+elapsed time, Python and dependency versions, platform, commit
+hash, and per-certificate pass/fail states.
+
+\paragraph{Dependency chain.}
+The claims of this note do not require any external repository.  A
+reader can verify every theorem by running the two commands above.
+The vendored \texttt{vfd\_v600} package supplies exact
+$\mathbb{Q}(\sqrt 5)$ icosian arithmetic; it is the only dependency
+beyond the standard scientific Python stack.
+
+\medskip
+\noindent What the runner verifies:
+\begin{itemize}
+  \item Theorem~\ref{thm:v600} (exact $\Vsix = \twoI$):
+        $120$ distinct unit-norm vertices, closure under
+        multiplication, identity and inverses present.
+  \item Theorem~\ref{thm:v24} ($\Vtwentyfour = \twoT$): exactly
+        $24$ $\sigma$-fixed vertices, subgroup property, index $5$
+        in $\twoI$.
+  \item Theorem~\ref{thm:schlafli} (Schl\"afli decomposition):
+        five right cosets, each of size $24$, pairwise disjoint,
+        union equals $\Vsix$, $C_0 = \twoT$.
+  \item Theorem~\ref{thm:24cell-on-coset} (each coset is a
+        24-cell): shortest intra-coset $d^2$ is exactly $1$,
+        $8$-regular, $96$ edges, and no intra-coset
+        $\Vsix$-edge.
+  \item Theorem~\ref{thm:a5action} ($A_5$ coset action): $60$
+        distinct permutations, kernel exactly $\{\pm 1\}$, image
+        all even with class sizes $(1, 15, 20, 12, 12)$, hence
+        $A_5$.
+\end{itemize}
+
+Outputs (under the docs outputs directory):
+\begin{itemize}
+  \item \texttt{wo007\_summary.json} --- full structured
+        certificate result.
+  \item \texttt{wo007\_cosets.json} --- the five coset vertex-index
+        lists.
+  \item \texttt{wo007\_coset\_action\_table.csv} --- for each
+        $h\in\twoI$, the induced coset permutation, its cycle
+        structure, identity flag, and parity.
+  \item \texttt{wo007\_distance\_shells.csv} --- the eight non-zero
+        $\Vsix$-distance shells and their pair counts.
+  \item \texttt{wo007\_reproducibility\_log.txt} --- run UTC
+        timestamp, elapsed time, environment, commit hash, and
+        per-certificate pass/fail states.
+\end{itemize}
+
+\begin{thebibliography}{9}
+\bibitem[Coxeter 1973]{Coxeter1973}
+H.\,S.\,M.~Coxeter, \emph{Regular Polytopes}, 3rd ed., Dover, 1973.
+\bibitem[Conway--Sloane 1999]{ConwaySloane1999}
+J.\,H.~Conway and N.\,J.\,A.~Sloane, \emph{Sphere Packings, Lattices and
+Groups}, 3rd ed., Springer-Verlag, 1999.
+\bibitem[Conway et al.\ 1985]{ConwayAtlas1985}
+J.\,H.~Conway, R.\,T.~Curtis, S.\,P.~Norton, R.\,A.~Parker and R.\,A.~Wilson,
+\emph{Atlas of Finite Groups}, Oxford University Press, 1985.
+\bibitem[Smart 2026]{Smart24600Bridge}
+L.~Smart, \emph{The 24--600 Spectral Bridge: A selective $\lambda{=}12$
+eigenspace embedding from five 24-cell cosets into the 600-cell.}
+Public reproducible note, Institute of Vibrational Field Dynamics,
+2026.  Repository:
+\url{https://github.com/vfd-org/the-24-600-spectral-bridge}.
+\end{thebibliography}
+
+\end{document}

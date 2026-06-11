@@ -1,0 +1,626 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{observation}[theorem]{Observation}
+
+\newcommand{\phig}{\varphi}
+
+\title{The 13-Protofilament Microtubule as a $C_{13}$ Selector\\[6pt]
+\large Primality, Uniqueness, and a Taxane-Binding Structural Prediction}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+Microtubules in eukaryotic cells are protofilament bundles with a
+near-universal count of exactly 13 protofilaments --- a specific
+integer that is not obviously forced by polymerisation kinetics or
+by tubulin's dimer geometry. We formalise two results (following
+the upstream programme~\cite{CascadePhotonMicrotubuleAlpha}):
+\begin{itemize}
+\item \textbf{Theorem~\ref{thm:T1}} (primality selection): if the
+  microtubule lattice implements a cyclic selector $C_n$ matching a
+  13-dimensional adjacency structure, then $n = 13$, and
+  primality of 13 implies $C_{13}$ has 13 distinct one-dimensional
+  irreducible representations, all non-trivial characters generating
+  the full group. This forces all 13 protofilament sites to be
+  independently addressable.
+\item \textbf{Theorem~\ref{thm:T2}} (non-$13$ degeneracy): the
+  protofilament counts $11, 12, 14, 15, 16$ --- occasionally observed
+  in vitro and in some non-mammalian species --- are all either
+  too small ($C_{11}$: fewer than 13 adjacency directions),
+  composite-structured ($C_{12}, C_{14}, C_{15}$: their cyclic
+  structure partitions modes into subgroup blocks, degrading the
+  addressing), or redundant ($n > 15$ gives more modes than the
+  13-adjacency requires). None matches the 13-adjacency selector
+  cleanly.
+\end{itemize}
+The helical pitch of the 13-protofilament lattice, and the
+taxane-binding-pocket symmetry analysis with direct
+cancer-chemotherapy relevance, are stated as conjectures with
+explicit falsification criteria against published cryo-EM and PDB
+data. No empirical comparison against tubulin-taxane PDB entries
+is carried out here; the comparison infrastructure mirrors the
+WO-1 capsid pipeline and is flagged as WAITING\_FOR\_DATA pending
+assembly of the comparison dataset.
+
+Every step is classified as \textbf{derived} (proved),
+\textbf{identified} (structural correspondence), or
+\textbf{open}, so the reader can locate exactly where the chain
+rests on which type of support.
+\end{abstract}
+
+%==================================================================
+\section{Introduction and Scope}\label{sec:intro}
+%==================================================================
+
+\subsection{The 13-protofilament puzzle}
+
+In eukaryotic cells under normal physiological conditions,
+microtubules form a highly conserved lattice of \emph{exactly
+13 protofilaments} arranged in a helical stagger (the B-lattice
+geometry). This integer is:
+\begin{itemize}
+\item \emph{Universal across species}: the 13-protofilament count
+  is preserved from yeast and plants through vertebrates;
+\item \emph{Distinct from in vitro-assembled microtubules}, which
+  commonly polymerise at protofilament counts in
+  $\{11, 12, 13, 14, 15, 16\}$ depending on nucleation conditions
+  but converge to 13 in most cellular contexts;
+\item \emph{Not obviously forced by chemistry}: tubulin dimer
+  interactions accommodate a range of lateral curvatures
+  corresponding to different protofilament counts, so 13 is not
+  uniquely picked out by pairwise binding energetics alone.
+\end{itemize}
+The question is: \emph{why 13, specifically, in vivo?}
+
+\subsection{Cancer-chemotherapy relevance}
+
+Microtubules are the molecular target of the taxane family of
+chemotherapy drugs (paclitaxel / Taxol, docetaxel, cabazitaxel),
+used in front-line treatment of breast, ovarian, prostate, lung,
+and several other carcinomas. Taxanes bind to a specific pocket
+in the tubulin lumen (the taxane binding site on
+$\beta$-tubulin), stabilising the lattice and disrupting mitotic
+spindle dynamics; taxane-resistant tumours often show altered
+tubulin isotype expression ($\beta$III-tubulin upregulation is
+common) or acquired tubulin mutations that subtly perturb the
+binding pocket without destabilising the lattice itself. A
+structural theory of which binding-pocket geometries are
+\emph{therapeutically privileged} versus which are \emph{inert or
+resistance-prone} would be clinically significant.
+
+The present paper takes only the first step: it formalises the
+$C_{13}$ primality argument from the upstream
+programme~\cite{CascadePhotonMicrotubuleAlpha}, making the
+integer-$13$ selection a theorem rather than a qualitative claim,
+and flags the taxane-binding analysis as a follow-up where the
+cascade machinery would plausibly have something to say. No
+taxane-pocket theorem is proved here; that would require the
+Tier-3 extension of the programme and is recorded as open.
+
+\subsection{Relation to upstream and sibling WOs}
+
+This paper is WO-3 of the biology-rung programme. It depends on
+WO-1 (capsid)~\cite{SmartCapsid} for the catalogue convention and
+the 600-cell / $2I$ substrate. It shares the $\phig$-helical
+closure-orbit machinery with WO-2 (amyloid, in
+preparation)~\cite{SmartAmyloid}. The microtubule chain
+(T\_MT\_1 through T\_MT\_5) is from the upstream programme
+\cite{CascadePhotonMicrotubuleAlpha}, Tier 2 (conjectural); here
+we promote T\_MT\_1 and T\_MT\_2 to Tier-1 theorems under an
+explicit hypothesis and leave T\_MT\_3 as computational, T\_MT\_4
+and T\_MT\_5 as open conjectures.
+
+%==================================================================
+\section{Preliminaries}\label{sec:prelim}
+%==================================================================
+
+Notation throughout: $\phig = (1+\sqrt{5})/2$ is the golden ratio.
+$2I \subset \mathrm{SU}(2)$ is the binary icosahedral group of
+order 120, $I = 2I/\{\pm 1\} \cong A_5$ of order 60, acting as the
+biological substrate~\cite[\S 2.1--2.3]{CascadeBio}. $C_n$ denotes
+the cyclic group of order $n$.
+
+\subsection{The 13-source: closed $H_4$ vertex neighborhood (Route K)}
+
+The upstream photon-microtubule-alpha programme has moved on
+from the older ``T\_PH\_1 / 13-dimensional adjacency'' framing.
+Per the current programme
+(\cite{CascadePhotonMicrotubuleAlpha} and the
+meta-layer-theorem document
+\cite{CascadeMetaLayerTheorem}) the refined
+object is $T_{\mathrm{meta}} \cong \mathbb{Z}[\varphi]^2$ ---
+rank-$2$ phason/matching data, not a 13-adjacency structure.
+A descent functor from $T_{\mathrm{meta}}$ to a
+13-selector is not currently supplied by local sources (Route Q,
+\S D of the codex gap report \texttt{docs/codex-derive/}); a
+\emph{different} route supplies the count $13$ cleanly, which we
+label \textbf{Route K}.
+
+Route K imports the count $13$ as the \emph{closed $H_4$ vertex
+neighborhood}: every vertex $v$ of the 600-cell has exactly 12
+nearest neighbours (the 600-cell vertex graph is 12-regular), so
+the closed neighborhood $N[v] := \{v\} \cup N(v)$ has
+\[
+|N[v]| = 1 + 12 = 13.
+\]
+
+\paragraph{$B_{\mathrm{hnb}}$ sim-verification (2026-04-24).} This
+is \emph{computationally verified} by direct enumeration in
+\texttt{papers/biology-rung/scripts/wo3\_sim\_close\_microtubule.py}:
+all 120 vertices of the 600-cell have degree exactly 12 (no
+variance), nearest-neighbour squared distance is
+$2 - (1+\sqrt{5})/2 \approx 0.381966$, and every closed
+neighborhood has size 13. Route K's foundation is therefore a
+computed fact, not a hypothesis.
+
+\paragraph{$B_{\mathrm{pfcount\_exclusion}}$: 600-cell is the unique
+H_4-adjacent substrate.} The same script compares degree of
+vertex graphs across candidate four-polytope substrates:
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Polytope & NN-degree & $|N[v]|$ & 13-match? \\
+\midrule
+600-cell (H\_4) & 12 & \textbf{13} & \textbf{yes} \\
+120-cell (H\_4 dual) & 4 & 5 & no \\
+24-cell (F\_4) & 8 & 9 & no \\
+16-cell (D\_4) & 6 & 7 & no \\
+8-cell / tesseract (B\_4) & 4 & 5 & no \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The 600-cell is the \emph{unique} H\_4-adjacent four-polytope
+providing a 13-element closed neighborhood. Under (H-MT)
+--- the biological-instantiation hypothesis that microtubule
+protofilaments correspond to elements of such a neighborhood
+--- the 13-protofilament count is therefore forced by
+substrate choice.
+
+\paragraph{$B_{\mathrm{3start}}$: $13$ prime $\Rightarrow$ all
+helical starts equidistribute.} The canonical microtubule
+B-lattice uses a 3-start helix on 13 protofilaments. More
+strongly: since 13 is prime, $\gcd(k, 13) = 1$ for every
+$k \in \{1, \ldots, 12\}$, so \emph{every} $k$-start helix
+equidistributes (visits each protofilament exactly once before
+returning). For comparison, 12 (composite) admits only 4
+equidistributing starts ($k \in \{1, 5, 7, 11\}$); the other 7
+starts fail to equidistribute, giving orbits that tile the
+cylinder irregularly. This is the direct structural reason
+$C_{13}$ provides a \emph{cleaner} helical-addressing lattice
+than $C_{12}$, supporting the uniqueness conclusion of
+Theorem~\ref{thm:T2} geometrically as well as representation-
+theoretically.
+
+The 13-adjacency chamber Definition~\ref{def:D1} below is then to
+be read as a \emph{biological-instantiation hypothesis}
+$(\mathrm{H\text{-}MT})$: the microtubule protofilament lattice
+implements a selector on the closed $H_4$ neighborhood structure,
+with 13 protofilaments corresponding to the 13 vertices of $N[v]$
+for some pivot vertex $v$ per
+\texttt{papers/cascade-derivation/cascade-phase-tmt1-closure.md}.
+
+%==================================================================
+\section{Primality and the 13-Protofilament Theorem}\label{sec:C13}
+%==================================================================
+
+\begin{definition}[$\blacktriangleright$ 13-adjacency chamber with minimality]\label{def:D1}
+A \emph{13-adjacency chamber} is a physical lattice $\Lambda$
+equipped with a cyclic symmetry group $C_n$ and a
+$\mathbb{C}$-linear action of $C_n$ on an internal $13$-dimensional
+state space $V$ such that:
+\begin{enumerate}
+\item[(D.1a)] Each of the 13 adjacency directions of an
+  upstream 13-dimensional adjacency structure (upstream
+  T\_MT\_1~\cite{CascadePhotonMicrotubuleAlpha}) is realised as a
+  distinct $C_n$-eigenmode in $V$;
+\item[(D.1b)] \textbf{Minimality / no unused characters}: every
+  character of $C_n$ corresponds to a physical adjacency
+  direction (i.e.\ $\dim V = n$). This is an extra axiom, not a
+  consequence of (D.1a) alone; we state it explicitly.
+\item[(D.1c)] \textbf{Primitive non-uniform characters}: every
+  non-trivial character $\chi \in \widehat{C_n}$ appearing in
+  the chamber's decomposition of $V$ is \emph{primitive} (i.e.\
+  $\chi$ has order exactly $n$ in $\widehat{C_n}$, equivalently
+  generates the full $\widehat{C_n}$ as a cyclic group).
+\end{enumerate}
+The microtubule protofilament lattice is the empirical candidate
+for such a chamber.
+\end{definition}
+
+\begin{theorem}[$\blacktriangleright$ Primality-based uniqueness of $n = 13$]\label{thm:T1}
+Under Definition~\ref{def:D1}, $n = 13$ is the unique cyclic
+order: axioms (D.1a) and (D.1b) together force $n = 13$, and
+primality of $13$ means axiom (D.1c) is automatic (every
+non-trivial character of $C_{13}$ generates the full group).
+\end{theorem}
+
+\begin{proof}
+$C_n$ has exactly $n$ one-dimensional complex irreducible
+representations with characters $\chi_k(g) = e^{2\pi i k/n}$.
+Axiom (D.1a) requires 13 distinct characters in the chamber's
+action, so $n \ge 13$. Axiom (D.1b) requires $\dim V = n$, i.e.
+all characters are used; since $\dim V = 13$, we obtain $n = 13$.
+
+For the primality claim on axiom (D.1c): for $k = 1, \ldots, 12$,
+$\gcd(k, 13) = 1$, so $\chi_k(g) = e^{2\pi i k / 13}$ has kernel
+$\{e\}$ and order $13$ in $\widehat{C_{13}}$. Hence every
+non-trivial character of $C_{13}$ is primitive, and (D.1c) is
+automatic under primality.
+\end{proof}
+
+\begin{theorem}[$\blacktriangleright$ Non-$13$ counts in $[11, 16]$]\label{thm:T2}
+Under Definition~\ref{def:D1}, no $n \in \{11, 12, 14, 15, 16\}$
+realises a 13-adjacency chamber:
+\begin{itemize}
+\item $n = 11, 12$ fail axiom (D.1a) by count: $C_n$ has fewer
+  than 13 distinct characters.
+\item $n = 14, 15, 16$ can realise 13 distinct characters
+  (axiom D.1a is satisfiable) but cannot simultaneously satisfy
+  (D.1b): $\dim V = 13 \ne n$, so some characters of $C_n$ are
+  unused (there are $n - 13$ unused characters). Additionally,
+  (D.1c) fails structurally at these composite $n$: the
+  non-trivial subgroup lattice of $C_{14}, C_{15}, C_{16}$
+  produces characters of different orders (orders 2, 7, 14 for
+  $C_{14}$; orders 3, 5, 15 for $C_{15}$; orders 2, 4, 8, 16 for
+  $C_{16}$), whereas in the prime case $C_{13}$ every non-trivial
+  character has the same order $13$.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+For $n = 11, 12$: $C_n$ has $n < 13$ distinct one-dimensional
+characters, so axiom (D.1a)'s requirement of 13 distinct
+characters cannot be met.
+
+For $n = 14, 15, 16$: $C_n$ has $n > 13$ characters, so (D.1a) is
+satisfiable by choosing 13 of them. However $\dim V = 13$ then
+implies $n - 13 \ge 1$ unused characters, violating (D.1b).
+Additionally, for these composite $n$ the characters split into
+different-order orbits under the multiplicative group structure
+(e.g.\ $C_{14}$ has 6 characters of order 14 and 6 of order 7 and
+1 of order 2 and the trivial one, making 14 = 1 + 1 + 6 + 6);
+any selection of 13 characters leaves a preferred orbit
+structure, violating the indecomposability of (D.1c).
+\end{proof}
+
+\begin{corollary}[$\blacktriangleright$ $C_{13}$ is unique in $[2, 16]$ under D.1]\label{cor:C13-unique}
+Under Definition~\ref{def:D1}'s three axioms, $C_{13}$ is the
+unique cyclic group of order $n \in [2, 16]$ realising a
+13-adjacency chamber. Conditional on the upstream 13-adjacency
+hypothesis and on adopting (D.1b)--(D.1c) as modelling axioms,
+this provides a group-theoretic account of why cellular
+microtubules are observed with $n = 13$ protofilaments.
+\end{corollary}
+
+\subsection{Caveats on the primality argument}
+
+\begin{remark}[Hypothetical nature of T\_PH\_1]\label{rem:hypoth}
+Theorems~\ref{thm:T1} and \ref{thm:T2} are proved
+\emph{conditional} on Definition~\ref{def:D1}'s 13-adjacency
+hypothesis, which in turn depends on T\_PH\_1 from the upstream
+photon programme~\cite[\S 2]{CascadePhotonMicrotubuleAlpha}.
+T\_PH\_1 is itself Tier-2 (conjectural, architecturally stated
+but not yet promoted to theorem). A falsification of T\_PH\_1
+would correspondingly weaken the present results: the
+$C_{13}$ primality argument remains mathematically correct but
+its biological applicability would become a separate question.
+
+We therefore record Theorems~\ref{thm:T1} and \ref{thm:T2} as
+``derived under the T\_PH\_1 hypothesis'' rather than as
+unconditional.
+\end{remark}
+
+\begin{remark}[In vitro polymorphs]\label{rem:in-vitro}
+The 13-protofilament universality is a \emph{cellular} statement
+(microtubules assembled in cellular cytoplasm under physiological
+conditions). In vitro, purified tubulin at non-physiological
+conditions assembles into lattices with
+$n \in \{11, 12, 13, 14, 15, 16\}$ with relative frequencies
+depending on ionic strength, temperature, associated proteins,
+and GTP/GDP ratio. The cellular dominance of $n=13$ is therefore
+not in conflict with in-vitro heterogeneity: the cellular
+environment selects the unique cascade-indecomposable count;
+non-cellular conditions do not apply the selector.
+\end{remark}
+
+%==================================================================
+\section{The Taxane Binding Pocket (Conjectural)}\label{sec:taxane}
+%==================================================================
+
+\subsection{The cancer-chemotherapy target}
+
+The taxane binding site is a well-characterised luminal pocket on
+$\beta$-tubulin, first mapped by electron crystallography
+\cite{LoweNogalesDowning2001} and subsequently refined by
+electron-crystallography and
+cryo-EM~\cite{NogalesWolfDowning1995,LoweNogalesDowning2001,Snyder2001}. Bound paclitaxel is a key
+therapeutic agent: it stabilises microtubule lattices, blocks
+mitotic spindle dynamics, and is front-line chemotherapy for
+several carcinomas. Docetaxel and cabazitaxel are second- and
+third-generation analogues with partially distinct binding
+orientations and different resistance profiles. Clinically
+relevant taxane-resistance mechanisms include:
+\begin{itemize}
+\item Upregulation of $\beta$III-tubulin isotype (reduces taxane
+  binding affinity)~\cite{MozziconacciKavallarisReview};
+\item Tubulin point mutations near the pocket (e.g.\ various
+  $\beta$-tubulin mutations in taxane-resistant cell lines);
+\item Efflux-pump upregulation (non-tubulin mechanism; out of
+  scope for a structural cascade theory).
+\end{itemize}
+
+\subsection{Cascade-level conjecture}
+
+\begin{conjecture}[$\circ$ Taxane pocket selects a $C_{13}$-compatible geometry]\label{conj:C1}
+Therapeutically effective taxanes bind the tubulin luminal pocket
+in a configuration that preserves $C_{13}$ modal structure
+(Theorems~\ref{thm:T1},~\ref{thm:T2}) by stabilising an
+indecomposable 13-mode spectrum. Taxane-resistance-conferring
+mutations shift the pocket geometry so that the bound drug
+breaks the $C_{13}$ indecomposability (e.g.\ by lifting a
+Galois-conjugate degeneracy between two characters, effectively
+splitting the 13-mode selector into a reducible sub-block).
+
+\emph{Empirical test:} a curated set of PDB entries of
+tubulin-taxane complexes plus tubulin point-mutants (e.g.\ the
+$\beta$III-isotype, clinically-observed resistance mutations)
+should show measurable pocket-geometry differences between
+effective-taxane and resistant-variant structures, with the
+cascade predicting that the shift can be characterised by a
+specific group-theoretic decomposition of the pocket's local
+symmetry action.
+
+\textbf{Status: conjecture only; no PDB comparison performed in
+this paper.} The comparison infrastructure mirrors the WO-1
+capsid pipeline: a \texttt{wo3\_tubulin\_fetch.py} script would
+query the PDB REST API for tubulin / taxane / tubulin-mutant
+entries, a \texttt{wo3\_compare.py} script would perform the
+geometric decomposition test. These are flagged as
+\texttt{WAITING\_FOR\_DATA} in the WO-3 programme spec; they
+will be written in a follow-up note.
+\end{conjecture}
+
+\begin{conjecture}[$\circ$ Helical pitch from cascade geometry; T\_MT\_4]\label{conj:C2}
+The helical pitch of the 13-protofilament B-lattice (3-start
+helix, $\sim 0.92$ nm axial rise per tubulin dimer, pitch angle
+$\sim 10^{\circ}$) is fixed by the $H_4$ Coxeter angle $\pi/5$
+(or a $\phig$-scaled multiple), via the shared
+$\phig$-helical-closure-orbit machinery of WO-2
+(\cite{SmartAmyloid}). Status: conjectural; magnitude prediction
+to be worked out in conjunction with WO-2's helical-pitch
+enumeration.
+\end{conjecture}
+
+\begin{conjecture}[$\circ$ Anesthetic mode disabling; T\_MT\_5]\label{conj:C3}
+Anesthetic molecules binding the tubulin lattice perturb the
+$C_{13}$ mode structure. Different anesthetic classes disable
+different subsets of the 13 modes; the mapping anesthetic-class
+$\leftrightarrow$ disabled-mode-subset $\leftrightarrow$
+consciousness-alteration-type is a falsifiable prediction
+\cite[T\_MT\_5]{CascadePhotonMicrotubuleAlpha}. Status:
+speculative; out of scope here.
+\end{conjecture}
+
+%==================================================================
+\section{Empirical Prediction and Planned Tests}\label{sec:empirical}
+%==================================================================
+
+The minimum empirical content of this paper is:
+
+\begin{enumerate}
+\item \textbf{Cellular microtubules should show $n = 13$ under
+  cascade-compatible conditions.} This is empirically true across
+  eukaryotes~\cite{LudueñaReview,TilneyByers}. No falsifier
+  known.
+\item \textbf{In-vitro non-13 protofilament counts should
+  correlate with non-physiological (cascade-incompatible)
+  assembly conditions.} Also empirically true~\cite{ChretienWade1991}.
+\item \textbf{Tubulin-taxane binding should show the
+  $C_{13}$-compatible pocket geometry predicted by
+  Conjecture~\ref{conj:C1}.} Not yet tested against PDB.
+\item \textbf{The microtubule helical pitch should match the
+  cascade's $\phig$-helical / $H_4$ Coxeter prediction
+  (Conjecture~\ref{conj:C2}).} Not yet tested.
+\end{enumerate}
+
+Items 1 and 2 are satisfied by existing biological literature at
+$\sim 100\%$ level; they confirm the
+hypothesis~(Definition~\ref{def:D1} + T\_PH\_1) rather than
+falsifying it. Items 3 and 4 are the substantive future
+empirical work. The comparison scripts follow the WO-1 pattern
+(prediction + fetch + compare, graceful
+\texttt{WAITING\_FOR\_DATA} mode) and will be written as a
+separate empirical note.
+
+%==================================================================
+\section{Summary and Logical Chain}\label{sec:chain}
+%==================================================================
+
+\paragraph{What is derived ($\blacktriangleright$).}
+\begin{itemize}
+\item Theorem~\ref{thm:T1} (T\_MT\_1 + T\_MT\_2): under
+  Definition~\ref{def:D1}, $n = 13$ uniquely, and $C_{13}$'s
+  13 characters give an indecomposable selector on 13 adjacency
+  directions.
+\item Theorem~\ref{thm:T2} (T\_MT\_3): non-13 counts in
+  $[11, 16] \setminus \{13\}$ fail the selector either by count
+  mismatch or by reducibility through non-trivial subgroups.
+\item Corollary~\ref{cor:C13-unique}: $C_{13}$ is unique in its
+  range; in-vivo 13-protofilament microtubule count is a forced
+  structural prediction under the T\_PH\_1 hypothesis.
+\end{itemize}
+
+\paragraph{What is identified ($\triangleright$).}
+\begin{itemize}
+\item The 13-protofilament integer is the cascade answer to why
+  cellular microtubules are 13-fold, not 11/12/14/15. The
+  argument is group-theoretic (primality + indecomposability) and
+  does not invoke chemistry.
+\item The argument is \emph{conditional on T\_PH\_1}
+  (Remark~\ref{rem:hypoth}); a falsification of T\_PH\_1
+  correspondingly weakens the biological claim (but not the
+  group-theoretic one).
+\end{itemize}
+
+\paragraph{What is open ($\circ$).}
+\begin{itemize}
+\item Conjecture~\ref{conj:C1} (taxane pocket geometry vs.\
+  cascade selector): the main open empirical question with direct
+  cancer-chemotherapy relevance. Not tested in this paper.
+\item Conjecture~\ref{conj:C2} (helical pitch from $H_4$
+  Coxeter): needs WO-2's $\phig$-helical enumeration to be
+  completed first.
+\item Conjecture~\ref{conj:C3} (anesthetic mode disabling):
+  speculative, out of scope here.
+\item Upstream T\_PH\_1 itself: Tier-2 conjecture whose promotion
+  to theorem would unconditionalise Theorems~\ref{thm:T1} and
+  \ref{thm:T2} above.
+\end{itemize}
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+This manuscript lives at
+\texttt{papers/biology-rung-tubulin/biology-rung-tubulin.tex};
+umbrella-programme artefacts are in \texttt{papers/biology-rung/}
+(shared math-catalogue ledger, WO-3 spec). The upstream
+microtubule-chain source is
+\texttt{papers/cascade-derivation/cascade-photon-microtubule-alpha-programme.md}.
+
+The primality / subgroup-structure arguments of
+Theorems~\ref{thm:T1} and~\ref{thm:T2} are classical and
+checkable by inspection; no new computational artefact is needed
+for this paper. The PDB / taxane / mutant comparison work
+required to test Conjecture~\ref{conj:C1} is flagged as
+\texttt{WAITING\_FOR\_DATA}: \texttt{wo3\_tubulin\_fetch.py} and
+\texttt{wo3\_compare.py} are planned but not yet written.
+
+\begin{thebibliography}{99}
+
+\bibitem{CascadeBio}
+\emph{Cascade Biology Rung: The 600-Cell Cell-Level Substrate},
+internal manuscript,
+\texttt{papers/cascade-derivation/cascade-bio.md}. Preprint,
+Institute of Vibrational Field Dynamics.
+
+\bibitem{CascadePhotonMicrotubuleAlpha}
+\emph{Cascade Photon--Microtubule--Alpha Programme},
+\texttt{papers/cascade-derivation/cascade-photon-microtubule-alpha-programme.md}.
+Preprint, Institute of Vibrational Field Dynamics.
+
+\bibitem{CascadeMetaLayerTheorem}
+\emph{Cascade Meta-Layer Theorem: $T_{\mathrm{meta}} \cong
+\mathbb{Z}[\varphi]^2$ refinement of $T_{\mathrm{PH}\_1}$},
+\texttt{papers/cascade-derivation/cascade-meta-layer-theorem.md}.
+Preprint, Institute of Vibrational Field Dynamics.
+
+\bibitem{SmartCapsid}
+Smart, L.,
+\emph{Caspar--Klug Triangulation Numbers from a Face-Level
+Cascade Operator: Uniqueness under Local Hexagonal-Lattice
+Symmetry and the $T \neq 5$ Correction},
+\texttt{papers/biology-rung-capsid/biology-rung-capsid.tex}
+(WO-1). Preprint, Institute of Vibrational Field Dynamics, 2026.
+
+\bibitem{SmartAmyloid}
+Smart, L.,
+\emph{Cross-$\beta$ Amyloid Fibril Twist from $2I$ Helical-Orbit
+Classes} (WO-2), in preparation, Institute of Vibrational Field
+Dynamics, 2026.
+
+\bibitem{LoweNogalesDowning2001}
+L\"owe, J., Li, H., Downing, K.~H., and Nogales, E.,
+\emph{Refined structure of $\alpha\beta$-tubulin at 3.5 \AA\
+resolution},
+Journal of Molecular Biology \textbf{313} (2001), 1045--1057.
+
+\bibitem{NogalesWolfDowning1995}
+Nogales, E., Wolf, S.~G., Khan, I.~A., Ludue\~na, R.~F., and
+Downing, K.~H.,
+\emph{Structure of tubulin at 6.5 \AA\ and location of the
+taxol-binding site},
+Nature \textbf{375} (1995), 424--427. (Original identification of
+the Taxol binding site on $\beta$-tubulin by electron
+crystallography.)
+
+\bibitem{LoweNogalesDowning2001}
+L\"owe, J., Li, H., Downing, K.~H., and Nogales, E.,
+\emph{Refined structure of $\alpha\beta$-tubulin at 3.5 \AA\
+resolution},
+Journal of Molecular Biology \textbf{313} (2001), 1045--1057.
+(Refined structure with Taxol in the luminal pocket.)
+
+\bibitem{Snyder2001}
+Snyder, J.~P., Nettles, J.~H., Cornett, B., Downing, K.~H., and
+Nogales, E.,
+\emph{The binding conformation of Taxol in $\beta$-tubulin: A
+model based on electron crystallographic density},
+Proceedings of the National Academy of Sciences USA
+\textbf{98} (2001), 5312--5316.
+
+\bibitem{Prota2014}
+Prota, A.~E., Bargsten, K., Northcote, P.~T., Marsh, M.,
+Altmann, K.-H., Miller, J.~H., Diaz, J.~F., and Steinmetz, M.~O.,
+\emph{Structural basis of microtubule stabilization by laulimalide
+and peloruside A},
+Angewandte Chemie International Edition \textbf{53} (2014),
+1621--1625.
+(Note: laulimalide / peloruside A bind a unique \emph{non-taxane}
+MSA site on $\beta$-tubulin; cited here as evidence of
+additional binding sites \emph{distinct from} the taxane-site
+pocket referenced above.)
+
+\bibitem{MozziconacciKavallarisReview}
+Kavallaris, M.,
+\emph{Microtubules and resistance to tubulin-binding agents},
+Nature Reviews Cancer \textbf{10} (2010), 194--204.
+
+\bibitem{LudueñaReview}
+Lude\~na, R.~F.,
+\emph{A hypothesis on the origin and evolution of tubulin},
+International Review of Cell and Molecular Biology \textbf{302}
+(2013), 41--185.
+
+\bibitem{TilneyByers}
+Tilney, L.~G., Bryan, J., Bush, D.~J., Fujiwara, K.,
+Mooseker, M.~S., Murphy, D.~B., and Snyder, D.~H.,
+\emph{Microtubules: Evidence for 13 protofilaments},
+Journal of Cell Biology \textbf{59} (1973), 267--275.
+
+\bibitem{ChretienWade1991}
+Chr\'etien, D., and Wade, R.~H.,
+\emph{New data on the microtubule surface lattice},
+Biology of the Cell \textbf{71} (1991), 161--174.
+
+\end{thebibliography}
+
+\end{document}

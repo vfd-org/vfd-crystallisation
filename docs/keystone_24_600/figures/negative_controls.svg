@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" font-family="Inter,Helvetica,Arial,sans-serif" font-size="14">
+  <style>
+    .axis { stroke: #1f2937; stroke-width: 1.5; }
+    .grid { stroke: #d1d5db; stroke-width: 0.5; stroke-dasharray: 3 3; }
+    .neg { fill: #ef4444; }
+    .pos { fill: #16a34a; }
+    .lbl { fill: #111827; font-size: 13px; }
+    .small { fill: #4b5563; font-size: 11px; }
+    .threshold { stroke: #2563eb; stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .axislabel { fill: #1f2937; font-size: 13px; }
+  </style>
+
+  <text x="360" y="30" text-anchor="middle" font-size="20" font-weight="600">Lift residual ‖L₆₀₀ v − λ v‖ by local Laplacian eigenvalue λ</text>
+  <text x="360" y="50" text-anchor="middle" class="small">y-axis: log₁₀(max residual);  positive bridge requires residual ≪ 1 (here &lt; 10⁻¹⁰)</text>
+
+  <!-- Plot area: x [80, 680], y [380, 80] -->
+  <line class="axis" x1="80" y1="380" x2="680" y2="380"/>
+  <line class="axis" x1="80" y1="80" x2="80" y2="380"/>
+
+  <!-- y grid for log scale: -16 to 2 -->
+  <!-- map y_val = -16..2 to y_px = 380..80 (linearly, so step = (380-80)/18 = ~16.67 per unit) -->
+  <g class="grid">
+    <line x1="80" y1="80" x2="680" y2="80"/>
+    <line x1="80" y1="130" x2="680" y2="130"/>
+    <line x1="80" y1="180" x2="680" y2="180"/>
+    <line x1="80" y1="230" x2="680" y2="230"/>
+    <line x1="80" y1="280" x2="680" y2="280"/>
+    <line x1="80" y1="330" x2="680" y2="330"/>
+  </g>
+
+  <g class="small">
+    <text x="68" y="83" text-anchor="end">10²</text>
+    <text x="68" y="133" text-anchor="end">10⁰</text>
+    <text x="68" y="183" text-anchor="end">10⁻³</text>
+    <text x="68" y="233" text-anchor="end">10⁻⁶</text>
+    <text x="68" y="283" text-anchor="end">10⁻⁹</text>
+    <text x="68" y="333" text-anchor="end">10⁻¹²</text>
+    <text x="68" y="383" text-anchor="end">10⁻¹⁵</text>
+  </g>
+
+  <!-- Threshold: residual = 1e-10 -->
+  <line class="threshold" x1="80" y1="305" x2="680" y2="305"/>
+  <text x="685" y="309" class="small" fill="#2563eb">10⁻¹⁰  (pass threshold)</text>
+
+  <!-- Bars at x positions for λ = 0, 4, 8, 10, 12 -->
+  <!-- approximate log10 values: 1.13, 0.97, 0.72, 0.50, -14.21 -->
+  <!-- y_px = 130 - log10(val)*16.67 (so log10=1 -> 113, log10=0 -> 130, log10=-15 -> 380) -->
+
+  <!-- λ=0, val=13.42, log10=1.128 -->
+  <g>
+    <rect class="neg" x="120" y="113" width="60" height="267"/>
+    <text x="150" y="402" text-anchor="middle" class="lbl">λ = 0</text>
+    <text x="150" y="420" text-anchor="middle" class="small">res = 1.34 × 10¹</text>
+    <text x="150" y="436" text-anchor="middle" class="small" fill="#dc2626" font-weight="600">NEGATIVE</text>
+  </g>
+
+  <!-- λ=4, val=9.38, log10=0.972 -->
+  <g>
+    <rect class="neg" x="220" y="116" width="60" height="264"/>
+    <text x="250" y="402" text-anchor="middle" class="lbl">λ = 4</text>
+    <text x="250" y="420" text-anchor="middle" class="small">res = 9.38 × 10⁰</text>
+    <text x="250" y="436" text-anchor="middle" class="small" fill="#dc2626" font-weight="600">NEGATIVE</text>
+  </g>
+
+  <!-- λ=8, val=5.29, log10=0.723 -->
+  <g>
+    <rect class="neg" x="320" y="120" width="60" height="260"/>
+    <text x="350" y="402" text-anchor="middle" class="lbl">λ = 8</text>
+    <text x="350" y="420" text-anchor="middle" class="small">res = 5.29 × 10⁰</text>
+    <text x="350" y="436" text-anchor="middle" class="small" fill="#dc2626" font-weight="600">NEGATIVE</text>
+  </g>
+
+  <!-- λ=10, val=3.16, log10=0.500 -->
+  <g>
+    <rect class="neg" x="420" y="124" width="60" height="256"/>
+    <text x="450" y="402" text-anchor="middle" class="lbl">λ = 10</text>
+    <text x="450" y="420" text-anchor="middle" class="small">res = 3.16 × 10⁰</text>
+    <text x="450" y="436" text-anchor="middle" class="small" fill="#dc2626" font-weight="600">NEGATIVE</text>
+  </g>
+
+  <!-- λ=12, val=6.16e-15, log10 = -14.21 -->
+  <g>
+    <rect class="pos" x="520" y="367" width="60" height="13"/>
+    <text x="550" y="402" text-anchor="middle" class="lbl">λ = 12</text>
+    <text x="550" y="420" text-anchor="middle" class="small">res = 6.16 × 10⁻¹⁵</text>
+    <text x="550" y="436" text-anchor="middle" class="small" fill="#16a34a" font-weight="600">POSITIVE</text>
+  </g>
+
+</svg>

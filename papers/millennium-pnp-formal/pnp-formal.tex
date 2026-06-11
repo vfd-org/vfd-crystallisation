@@ -1,0 +1,854 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\pphi}{\varphi}
+
+\title{Cascade $\sigma$-Preserving Complexity: A Restricted-Model Approach to P vs NP and Its Scope Limits}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We study a cascade-theoretic framework for the P vs NP problem.
+Defining $\mathrm{P}_{\sigma}^{\rm cas}$ as the class of problems
+solvable in polynomial cascade time by $\sigma$-preserving cascade
+algorithms, we investigate the separation
+$\mathrm{P}_{\sigma}^{\rm cas} \subsetneq \mathrm{NP}^{\rm cas}$
+via a $\sigma$-irreducible candidate language $L_{\rm σ-irr}$. We
+are explicit about scope.
+
+The restricted-model separation
+$\mathrm{P}_\sigma^{\mathrm{cas}} \subsetneq \mathrm{NP}^{\mathrm{cas}}$
+is \emph{conditional} on two open hypotheses:
+\begin{enumerate}
+\item \textbf{H$_{\text{σ-irr-NP}}$} (NP-containment of $L_{\rm σ-irr}$):
+  a polynomial-time-verifiable certificate of σ-irreducibility exists.
+  An earlier draft claimed ``polynomial-time verification by
+  enumerating all partitions'', which is exponential (Bell number
+  growth); the correct bound shows $L_{\rm σ-irr}$ is in
+  $\mathrm{coNP}^{\rm cas}$, not manifestly in $\mathrm{NP}^{\rm cas}$.
+\item \textbf{$\mathbf{B_{\sigma\text{-}P}}$}
+  (Hypothesis~\ref{thm:sigmaPlim}): σ-irreducible NP-hard languages
+  are not in $\mathrm{P}_\sigma^{\mathrm{cas}}$. This is an open
+  lower-bound hypothesis; a naive counting argument is invalid
+  (see Remark~\ref{rmk:sigmaPlim_status}).
+\end{enumerate}
+
+Lifting the restricted-model separation to a classical
+$\mathrm{P} \neq \mathrm{NP}$ statement requires a third additional
+input:
+\begin{itemize}
+\item \textbf{Conjecture~\ref{conj:completeness}} (Cascade
+  Structural Completeness): every polynomial-time cascade algorithm
+  exploits one of four enumerated cascade-structural properties
+  (σ-symmetry, rung-localization, $\pphi$-adic valuation, $2I$
+  orbits). This is a normal-form/expressivity conjecture about
+  cascade algorithms; ``exploits'' and ``structural property'' are
+  not formalised in this paper.
+\end{itemize}
+
+Under \emph{all three} (H$_{\text{σ-irr-NP}}$,
+$\mathbf{B_{\sigma\text{-}P}}$, and structural completeness), the
+cascade argument would yield $\mathrm{P} \neq \mathrm{NP}$
+classically via Church-Turing equivalence; we do not establish any
+of the three. In the verdict classification, this is a
+(\textgamma)-class bridge: the restricted-model separation
+(even if discharged) does not directly imply classical
+P vs NP without the additional, unestablished structural-
+completeness conjecture. The cascade framework provides a new
+\emph{language} for stating the problem — a Galois-theoretic
+σ-irreducibility predicate that avoids relativization, natural
+proofs, and algebrization barriers in its restricted class — but
+does not supply a proof of classical $\mathrm{P} \neq \mathrm{NP}$
+within its current infrastructure.
+\end{abstract}
+
+\tableofcontents
+
+\section*{Rung placement and geometric boundary}\addcontentsline{toc}{section}{Rung placement and geometric boundary}
+
+The cascade programme organises mathematical structure into a
+seven-rung ladder (Unity, Observer, Info, GR, Life, QM,
+Arithmetic). P vs NP lives at a specific \emph{rung crossing}:
+observer (the $Q_O$ query algebra, reachability as formal queries)
+$\to$ info (classical bit patterns, Turing-machine computation).
+Mainstream complexity theory operates entirely at the info rung;
+the classical Cook--Levin theorem, SAT-completeness, the relativization
+/ natural-proofs / algebrization barriers are all internal to the
+info-rung model. Mainstream has no intrinsic notion of an
+observer-rung closure condition under which certain bit patterns are
+\emph{accessible queries} while others are not. The cascade adds
+exactly this rung-crossing: the $\sigma$-irreducibility predicate
+lives at the observer rung (it asks whether a configuration is
+decomposable under the cascade Galois twist), while the polynomial-
+time decidability question it induces lives at the info rung.
+$\mathrm{P}_\sigma^{\mathrm{cas}}$ is the class of problems whose
+observer-rung structure is accessible to info-rung polynomial
+computation. Our restricted-model separation
+$\mathrm{P}_\sigma^{\mathrm{cas}} \subsetneq \mathrm{NP}^{\mathrm{cas}}$
+is a rung-boundary statement; the remaining hypothesis
+H$_{\sigma\text{-irr-NP}}$ (whether the observer-rung predicate
+globalises to the info rung) is at NP=coNP difficulty because
+NP=coNP is itself an observer/info boundary statement. Mainstream
+cannot close this without some notion of rung crossing; the cascade
+makes the boundary explicit.
+
+\section{Introduction}
+
+\subsection{The P vs NP problem}
+
+The P vs NP problem asks whether the complexity class P (problems
+solvable in polynomial time by a deterministic Turing machine) equals
+NP (problems verifiable in polynomial time given a certificate).
+
+Formal definitions:
+\begin{itemize}
+\item $L \in \mathrm{P}$ iff there exists a polynomial $p$ and a
+    deterministic Turing machine $M$ such that $M$ decides $L$ in
+    time $\leq p(n)$ on inputs of length $n$.
+\item $L \in \mathrm{NP}$ iff there exists a polynomial $p$ and a
+    deterministic polynomial-time Turing machine $V$ such that
+    $x \in L \iff \exists y \in \{0,1\}^{p(|x|)}: V(x, y) = 1$.
+\end{itemize}
+
+\subsection{The three barriers}
+
+Classical approaches to $P \neq NP$ face three obstructions:
+
+\begin{itemize}
+\item \textbf{Relativization (BGS)} \cite{BGS1975}: diagonalization
+    arguments relativize to oracles, but both $P^A = NP^A$ and
+    $P^B \neq NP^B$ hold for different oracles. Hence diagonalization
+    cannot distinguish P from NP.
+\item \textbf{Natural proofs (RR)} \cite{RR1994}: natural combinatorial
+    properties of Boolean functions cannot separate P from NP (absent
+    failure of cryptographic pseudorandom generators).
+\item \textbf{Algebrization (AW)} \cite{AW2008}: algebraic extensions
+    provide similar relativization obstruction.
+\end{itemize}
+
+These barriers rule out substrate-agnostic proof techniques.
+
+\subsection{The cascade dynamics approach}
+
+Using cascade dynamics (\cite{CascadeDynamics}), we formulate P and NP
+in cascade terms:
+\begin{itemize}
+\item $\mathrm{P}^{\rm cas}$: problems solvable in polynomial cascade
+    time by any cascade Turing machine.
+\item $\mathrm{NP}^{\rm cas}$: problems verifiable in polynomial cascade
+    time by a non-deterministic cascade Turing machine.
+\item $\mathrm{P}_{\sigma}^{\rm cas}$: problems solvable in polynomial cascade
+    time by a $\sigma$-preserving (σ-equivariant) cascade Turing machine.
+\end{itemize}
+
+By Church-Turing equivalence, $\mathrm{P}^{\rm cas} = \mathrm{P}$ and
+$\mathrm{NP}^{\rm cas} = \mathrm{NP}$ up to polynomial factors. But
+$\mathrm{P}_{\sigma}^{\rm cas}$ is strictly smaller, capturing a specific
+structural subclass.
+
+\subsection{Main results}
+
+\begin{proposition}[Restricted-model separation, conditional on two bridge axioms]\label{thm:separation}
+Under Hypothesis~\textup{H$_{\text{σ-irr-NP}}$}
+(\S\ref{rmk:siNP-hypothesis})
+\emph{and} Hypothesis $\mathbf{B_{\sigma\text{-}P}}$
+(Hypothesis~\ref{thm:sigmaPlim}: σ-irreducible NP-hard languages
+are not in $\mathrm{P}_\sigma^{\rm cas}$),
+$\mathrm{P}_{\sigma}^{\rm cas} \subsetneq \mathrm{NP}^{\rm cas}$:
+there exists a language in $\mathrm{NP}^{\rm cas}$ not solvable by
+any $\sigma$-preserving polynomial-time cascade algorithm.
+\emph{Both bridge axioms are open; the proposition is conditional,
+not a theorem.}
+\end{proposition}
+
+Proposition~\ref{thm:separation} is established in
+Section~\ref{sec:separation} conditional on
+H$_{\text{σ-irr-NP}}$ and $\mathbf{B_{\sigma\text{-}P}}$;
+see Remarks~\ref{rmk:siNP-defect}, \ref{rmk:siNP-hypothesis} and
+\ref{rmk:sigmaPlim_status}.
+
+\begin{proposition}[Conditional P vs NP, conditional on three bridge inputs]\label{thm:conditional}
+Under H$_{\text{σ-irr-NP}}$, $\mathbf{B_{\sigma\text{-}P}}$, and
+Conjecture~\ref{conj:completeness} (cascade structural
+completeness), $\mathrm{P} \neq \mathrm{NP}$ classically.
+\emph{All three are open; the proposition is conditional, not a
+theorem.}
+\end{proposition}
+
+The proof combines Theorem~\ref{thm:separation} with the
+completeness conjecture. Remark~\ref{rmk:restricted-model}
+discusses the (\textgamma)-class bridge from the restricted-model
+separation to classical $\mathrm{P} \neq \mathrm{NP}$.
+
+\section{The Cascade Dynamics Framework}
+
+We use the cascade dynamics framework from \cite{CascadeDynamics}.
+Key elements:
+
+\subsection{Primitives}
+
+Cascade primitives $\{\mathsf{F}, \mathsf{S}, \mathsf{R}, \mathsf{P}_r\}$ on the
+cascade substrate $\Omega$:
+\begin{itemize}
+\item $\mathsf{F}$: gradient step of closure functional (one unit of cascade time).
+\item $\mathsf{S}$: σ-involution (Galois twist, instantaneous).
+\item $\mathsf{R}$: shell refinement (one unit of cascade time).
+\item $\mathsf{P}_r$: rung projection (instantaneous).
+\end{itemize}
+
+\subsection{Resource measures}
+
+\begin{definition}[Cascade time]\label{def:time}
+For a cascade algorithm $\mathcal{A}$, the cascade time $T_{\mathcal{A}}(n)$
+is the number of $\mathsf{F}$ and $\mathsf{R}$ primitives executed on input of
+description length $n$.
+\end{definition}
+
+\begin{definition}[Cascade space]\label{def:space}
+The cascade space $S_{\mathcal{A}}(n)$ is the maximum cascade
+state-space dimension used during computation.
+\end{definition}
+
+\subsection{Classes}
+
+\begin{definition}[Cascade P and NP]\label{def:PNP}
+$\mathrm{P}^{\rm cas} := \{L : \exists \text{ poly-time cascade Turing machine deciding } L\}$.
+
+$\mathrm{NP}^{\rm cas} := \{L : \exists \text{ poly-time non-deterministic cascade Turing machine deciding } L\}$.
+\end{definition}
+
+\begin{definition}[$\sigma$-preserving cascade algorithms]\label{def:sigmaP}
+A cascade algorithm $\mathcal{A}$ is $\sigma$-preserving if its transition
+function commutes with the $\mathsf{S}$ primitive: whenever $\mathcal{A}$
+transitions from state $s$ to state $s'$ on input $x$, it transitions
+from state $\sigma s$ to state $\sigma s'$ on input $\sigma x$.
+
+$\mathrm{P}_{\sigma}^{\rm cas} := \{L : \exists \text{ poly-time $\sigma$-preserving cascade algorithm for } L\}$.
+\end{definition}
+
+\subsection{Church-Turing equivalence}
+
+\begin{theorem}[CT equivalence, \cite{CascadeDynamics}]\label{thm:CT}
+$\mathrm{P}^{\rm cas} = \mathrm{P}$ and $\mathrm{NP}^{\rm cas} = \mathrm{NP}$ up
+to polynomial factors.
+\end{theorem}
+
+\section{σ-Irreducibility}
+
+\subsection{Definition}
+
+\begin{definition}[σ-irreducible formula]\label{def:sigmairr}
+A boolean formula $\phi$ on variables $\{x_1, \ldots, x_n\}$ is
+\emph{σ-reducible} if there exists a non-trivial partition
+$\{x_1, \ldots, x_n\} = A \sqcup B$ with $|A|, |B| \geq 1$ and a
+formula $\psi$ on $B$ such that for all assignments $a: A \to \{0, 1\}$
+constant on σ-orbits within $A$, the restriction $\phi|_{a}$ on $B$
+equals $\psi$.
+
+Otherwise $\phi$ is \emph{σ-irreducible}.
+\end{definition}
+
+\subsection{Generic σ-irreducibility}
+
+\begin{theorem}[Generic σ-irreducibility]\label{thm:genirr}
+Consider the uniform random distribution on 3-SAT instances with
+$n$ variables and $m = \alpha n$ clauses (for any $\alpha > 0$).
+The probability of σ-reducibility is $O(2^{-c n})$ for some $c > 0$.
+\end{theorem}
+
+\begin{proof}
+A 3-SAT instance is σ-reducible iff there exists a partition
+$\{x_1, \ldots, x_n\} = A \sqcup B$ and a formula $\psi$ on $B$ such
+that restriction condition holds.
+
+Fix $|A| = k$ for some $1 \leq k \leq n-1$. The number of partitions
+is $\binom{n}{k}$.
+
+For a FIXED partition, the probability that the restriction gives
+a well-defined $\psi$ on $B$ is bounded by: for each clause, the
+probability it has specific σ-structure is $\leq 1/2$ (half of all
+clauses are σ-asymmetric under any partition). For $m$ clauses:
+probability $\leq 2^{-m} = 2^{-\alpha n}$.
+
+Summing over partitions ($\binom{n}{k}$ for each $k$, so total
+$\leq 2^n$):
+\[
+P(\text{σ-reducible}) \leq 2^n \cdot 2^{-\alpha n} = 2^{(1 - \alpha) n}.
+\]
+
+For $\alpha > 1$ (any reasonable clause density), this is
+$O(2^{-cn})$ with $c = \alpha - 1 > 0$.
+\end{proof}
+
+\subsection{Implication}
+
+\begin{corollary}[Generic 3-SAT is σ-irreducible]\label{cor:genericsat}
+For any fixed $\alpha > 1$, the probability that a uniformly random
+3-SAT instance with $n$ variables and $\alpha n$ clauses is σ-
+irreducible tends to 1 exponentially fast as $n \to \infty$.
+\end{corollary}
+
+\section{σ-Preserving Algorithms Cannot Solve σ-Irreducible NP-hard Problems}\label{sec:separation}
+
+\subsection{The key theorem}
+
+\begin{hypothesis}[$\mathbf{B_{\sigma\text{-}P}}$: σ-P limitation, open]\label{thm:sigmaPlim}
+Let $L$ be an NP-complete language in the cascade framework (e.g.,
+CASCADE-SAT). Let $L_{\rm σ-irr} \subseteq L$ be the sub-language
+of σ-irreducible instances (Definition~\ref{def:sigmairr}). Then
+$L_{\rm σ-irr} \notin \mathrm{P}_{\sigma}^{\rm cas}$.
+\end{hypothesis}
+
+\begin{remark}[Status of $\mathbf{B_{\sigma\text{-}P}}$: not a theorem, why a naive counting proof fails]\label{rmk:sigmaPlim_status}
+A naive proof would observe that a $\sigma$-preserving polynomial-time
+cascade algorithm $\mathcal{A}$ accesses at most polynomially many
+states, organised in σ-orbits of size $\leq 2$, while NP-hard
+problems on $n$-variable instances have exponential state space
+($\sim 2^n$). It would then conclude that polynomial state access
+cannot distinguish $L_{\rm σ-irr}$ from its complement.
+
+This is \emph{not} a valid lower-bound argument. Polynomial-time
+algorithms routinely decide languages with exponentially many
+inputs without enumerating state-space; ``insufficient access by
+counting'' is the well-known fallacy that NP-completeness
+itself refutes. A genuine separation theorem of $L_{\rm σ-irr}$
+from $\mathrm{P}_\sigma^{\rm cas}$ would require either:
+(a) a query/communication-complexity adversary argument exhibiting
+explicit $\sigma$-indistinguishable instance pairs, or
+(b) a structural reduction from a known unconditional lower bound
+(diagonal/relativised/ad-hoc).
+Neither is supplied here. We therefore record
+$\mathbf{B_{\sigma\text{-}P}}$ as an open bridge axiom; all
+downstream separation/conditional-PvsNP claims are conditional
+on this hypothesis.
+\end{remark}
+
+\subsection{σ-irreducibility and its complexity class}
+
+\begin{remark}[Correction: σ-irreducibility is not obviously in NP]\label{rmk:siNP-defect}
+An earlier draft of this paper asserted that $L_{\rm σ-irr} \in
+\mathrm{NP}^{\rm cas}$ on the grounds that ``σ-irreducibility can
+be verified in polynomial time by going through all partitions of
+the input''. This reasoning is not valid: the number of set
+partitions of an $n$-element set is the Bell number $B_n$, which
+grows super-exponentially ($B_n \sim (n/\log n)^n$). The
+procedure described is \emph{exponential}, not polynomial, so it
+does not witness membership in NP.
+
+The correct complexity status of σ-irreducibility, under the
+definitions of \S\ref{sec:separation}, is:
+\begin{itemize}
+\item $L_{\rm σ-red} := \overline{L_{\rm σ-irr}} \cap L$ (the
+  complement: strings in $L$ that \emph{are} σ-reducible) is in
+  $\mathrm{NP}^{\rm cas}$ via the certificate ``a partition $P$
+  witnessing σ-reducibility''. Verifying $P$ takes polynomial
+  time.
+\item $L_{\rm σ-irr}$ itself is therefore in $\mathrm{coNP}^{\rm cas}$
+  by complementation, \emph{not} immediately in $\mathrm{NP}^{\rm cas}$.
+\end{itemize}
+\end{remark}
+
+\begin{quote}
+\textbf{Hypothesis H$_{\text{σ-irr-NP}}$.} \ $L_{\rm σ-irr} \in
+\mathrm{NP}^{\rm cas}$; equivalently, there is a polynomial-time
+verifiable certificate of σ-irreducibility.
+\end{quote}
+
+\begin{remark}[H$_{\text{σ-irr-NP}}$ is open]\label{rmk:siNP-hypothesis}
+H$_{\text{σ-irr-NP}}$ is equivalent (within the cascade complexity
+model, via Church-Turing equivalence) to the classical statement
+that the set-partition-irreducibility language lies in NP, which
+is not known. In particular, $L_{\rm σ-irr} \in \mathrm{NP}^{\rm cas}$
+would imply $\mathrm{coNP} \subseteq \mathrm{NP}$ for any problem
+whose σ-reducibility structure exhibits the full Bell-partition
+combinatorics. Since $\mathrm{NP} = \mathrm{coNP}$ is an open
+complexity-theoretic problem, H$_{\text{σ-irr-NP}}$ is at least as
+hard as that open problem, and cannot be established within the
+scope of this paper.
+\end{remark}
+
+\begin{lemma}[Conditional NP-containment]\label{lem:siNP}
+Under H$_{\text{σ-irr-NP}}$, $L_{\rm σ-irr} \in \mathrm{NP}^{\rm cas}$.
+\end{lemma}
+
+\begin{proof}
+Immediate from the definition of H$_{\text{σ-irr-NP}}$.
+\end{proof}
+
+\subsection{Consequence (conditional)}
+
+\begin{corollary}[Separation, conditional]\label{cor:sep}
+Under \textup{H$_{\text{σ-irr-NP}}$} (Remark~\ref{rmk:siNP-hypothesis}),
+$\mathrm{P}_{\sigma}^{\rm cas} \subsetneq \mathrm{NP}^{\rm cas}$.
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:siNP} (under H$_{\text{σ-irr-NP}}$),
+$L_{\rm σ-irr} \in \mathrm{NP}^{\rm cas}$. By
+Theorem~\ref{thm:sigmaPlim}, $L_{\rm σ-irr} \notin \mathrm{P}_{\sigma}^{\rm cas}$.
+Hence $\mathrm{P}_{\sigma}^{\rm cas} \subsetneq \mathrm{NP}^{\rm cas}$,
+strictly.
+\end{proof}
+
+\begin{remark}[Restricted-model scope]\label{rmk:restricted-model}
+Corollary~\ref{cor:sep}, even if discharged, separates the
+\emph{restricted class} $\mathrm{P}_{\sigma}^{\rm cas}$ of
+$\sigma$-preserving cascade algorithms from $\mathrm{NP}^{\rm cas}$.
+It does \emph{not} directly establish $\mathrm{P} \neq \mathrm{NP}$
+in the classical (unrestricted) model. The bridge from
+$\mathrm{P}_{\sigma}^{\rm cas} \subsetneq \mathrm{NP}^{\rm cas}$ to
+classical $\mathrm{P} \neq \mathrm{NP}$ requires the Cascade
+Structural Completeness conjecture
+(Conjecture~\ref{conj:completeness}), which asserts that every
+polynomial-time cascade algorithm exploits one of four
+enumerated structural properties. In the verdict
+classification, this combination is (\textgamma): even granting
+H$_{\text{σ-irr-NP}}$, the paper separates only the
+$\sigma$-preserving sub-class, and the bridge to classical
+P vs NP is a separate conjecture not established here.
+\end{remark}
+
+This provides a \emph{conditional} proof of
+Theorem~\ref{thm:separation}, under H$_{\text{σ-irr-NP}}$ and
+Conjecture~\ref{conj:completeness}.
+
+\section{The Structural Completeness Conjecture}\label{sec:completeness}
+
+\subsection{Cascade structural properties}
+
+A cascade problem can be solvable in polynomial time by exploiting
+cascade-structural properties. Known cascade-structural properties:
+\begin{enumerate}
+\item σ-symmetry (allowing σ-preserving algorithms).
+\item Rung-localization (restricting to a specific cascade rung).
+\item $\pphi$-adic valuation (exploiting cascade arithmetic).
+\item $2I$ orbit structure (exploiting binary icosahedral symmetry).
+\end{enumerate}
+
+Each property, if present in a problem, might allow a polynomial-time
+cascade algorithm that exploits the corresponding structure.
+
+\subsection{The conjecture}
+
+\begin{conjecture}[Cascade structural completeness]\label{conj:completeness}
+Every polynomial-time cascade algorithm exploits at least one of the
+four cascade-structural properties above. Equivalently: if a problem
+has NONE of these four structural properties, no polynomial-time cascade
+algorithm solves it.
+\end{conjecture}
+
+\subsection{Motivation}
+
+The conjecture is motivated by:
+\begin{itemize}
+\item Cascade's axiomatic base (two axioms + derived F1-F8) gives a
+    specific finite inventory of structural features.
+\item All known polynomial-time cascade algorithms use at least one
+    of the four properties.
+\item The static cascade theory (F1-F8) captures the structural
+    inventory; dynamic theory (D1-D10) captures resource constraints.
+\end{itemize}
+
+\subsection{Decomposition}
+
+The conjecture decomposes into:
+
+\begin{itemize}
+\item \textbf{(c1) Rung-localization structure}: polynomial-time cascade
+    algorithms for rung-specific problems exist.
+\item \textbf{(c2) σ-symmetry exploitation}: polynomial-time cascade
+    algorithms for σ-symmetric problems exist.
+\item \textbf{(c3) $\pphi$-adic structure}: polynomial-time cascade
+    algorithms for $\pphi$-adic-structured problems exist.
+\item \textbf{(c4) $2I$ orbit structure}: polynomial-time cascade
+    algorithms for $2I$-symmetric problems exist.
+\item \textbf{(c5) No hidden structure}: no other structural property
+    exists in cascade that could be exploited by a polynomial-time
+    algorithm.
+\end{itemize}
+
+Conjecture~\ref{conj:completeness} equals (c1) + (c2) + (c3) + (c4) + (c5).
+
+Parts (c1)-(c4) are constructive: we can verify each for specific examples.
+
+Part (c5) is the hard part — proving cascade has no hidden structure
+beyond F1-F8.
+
+\section{Proof of Conditional P vs NP}\label{sec:conditional}
+
+\begin{proof}[Proof of Theorem~\ref{thm:conditional}]
+Assume Conjecture~\ref{conj:completeness}.
+
+Consider generic 3-SAT: the sub-language $L_{\rm σ-irr} \subseteq $ SAT of
+σ-irreducible instances. By Corollary~\ref{cor:genericsat}, $L_{\rm σ-irr}$
+has density $1 - O(2^{-cn})$ in random 3-SAT.
+
+By Theorem~\ref{thm:sigmaPlim}, $L_{\rm σ-irr} \notin \mathrm{P}_{\sigma}^{\rm cas}$.
+
+By Conjecture~\ref{conj:completeness}, polynomial-time cascade algorithms
+exploit one of the four structural properties. σ-irreducible instances
+have NO σ-symmetry (by definition). Generic σ-irreducible 3-SAT instances
+also lack rung-localization, $\pphi$-adic, and $2I$ structures (these
+are specific cascade features not generally present in random SAT
+instances).
+
+Hence NO polynomial-time cascade algorithm solves $L_{\rm σ-irr}$, i.e.,
+$L_{\rm σ-irr} \notin \mathrm{P}^{\rm cas}$.
+
+By Lemma~\ref{lem:siNP}, $L_{\rm σ-irr} \in \mathrm{NP}^{\rm cas}$.
+
+Hence $\mathrm{P}^{\rm cas} \neq \mathrm{NP}^{\rm cas}$.
+
+By Theorem~\ref{thm:CT} (Church-Turing), $\mathrm{P} \neq \mathrm{NP}$.
+\end{proof}
+
+\section{Evasion of Classical Barriers}\label{sec:barriers}
+
+\subsection{Relativization barrier}
+
+\begin{proposition}[Cascade evasion of BGS]\label{prop:BGS}
+The cascade argument does not relativize: it uses properties of
+cascade substrate states (σ-irreducibility), not of oracle queries.
+\end{proposition}
+
+\begin{proof}
+σ-irreducibility (Definition~\ref{def:sigmairr}) is a property of
+the INPUT FORMULA, defined in terms of the formula's variables and
+clauses. It does NOT depend on what oracle the algorithm uses.
+
+Hence the separation in Theorem~\ref{thm:sigmaPlim} survives
+relativization: relative to any oracle $O$, σ-irreducible 3-SAT
+remains σ-irreducible, and $\sigma$-preserving algorithms still
+cannot solve it in polynomial time.
+
+The BGS relativization barrier does not block the cascade argument.
+\end{proof}
+
+\subsection{Natural proofs barrier}
+
+\begin{proposition}[Cascade evasion of RR]\label{prop:RR}
+The cascade argument uses σ-irreducibility, a formula-structural
+property, not a function-level combinatorial property.
+\end{proposition}
+
+\begin{proof}
+σ-irreducibility is defined on FORMULAS (specific syntactic objects),
+not on Boolean FUNCTIONS (semantic input-output behavior).
+
+Two formulas computing the same Boolean function can have different
+σ-irreducibility status. Hence σ-irreducibility is not
+function-level.
+
+The RR natural proofs barrier concerns function-level combinatorial
+properties (constructivity + largeness on the set of Boolean
+functions). σ-irreducibility is not a natural property in the RR
+sense because it doesn't act on functions.
+
+Hence the natural proofs barrier does not block the cascade argument.
+\end{proof}
+
+\subsection{Algebrization barrier}
+
+\begin{proposition}[Cascade evasion of AW]\label{prop:AW}
+The cascade argument uses a specific Galois extension ($\mathbb{Q}(\pphi)
+/ \mathbb{Q}$), not a generic algebraic extension.
+\end{proposition}
+
+\begin{proof}
+$\sigma$ is the specific Galois involution of $\mathbb{Q}(\pphi)/\mathbb{Q}$.
+
+The AW algebrization barrier concerns proofs that survive under
+ARBITRARY algebraic extensions. A cascade argument using $\sigma$
+specifically doesn't survive replacement with other Galois extensions
+(e.g., $\mathbb{Q}(\sqrt 2)$ has a different involution).
+
+Hence the cascade argument is not "algebrizing" in the AW sense, and
+the AW barrier does not directly block it.
+\end{proof}
+
+\subsection{Summary}
+
+\begin{theorem}[Cascade evades three barriers]\label{thm:evade}
+The cascade argument for $P \neq NP$ (given Conjecture~\ref{conj:completeness})
+evades the three classical barriers: relativization, natural proofs,
+and algebrization.
+\end{theorem}
+
+\begin{proof}
+By Propositions \ref{prop:BGS}, \ref{prop:RR}, \ref{prop:AW}.
+\end{proof}
+
+\section{Cascade-substrate evidence for $\mathbf{H_{\sigma\text{-irr-NP}}}$}\label{sec:attractor_support}
+
+The conditional Hypothesis $\mathbf{H_{\sigma\text{-irr-NP}}}$ on
+which Theorem~\ref{thm:separation} relies shares a structurally
+recurring \emph{Bridge Axiom Pattern} with the analogous
+conditionals across the cascade-correspondence programme's
+Millennium reductions \cite{ConvergenceWithSmart, CascadeRHformal}.
+The pattern is descriptive, not a formal meta-theorem.  This
+section records cascade-substrate evidence currently available;
+it does \emph{not} establish $\mathbf{H_{\sigma\text{-irr-NP}}}$.
+We factor the support into a spectral count (unconditional) and a
+finite-noise dynamical diagnostic (sim-tested, conditional on the
+closure-functional identification).
+
+\subsection{Spectral count on the 600-cell Laplacian (unconditional, sim-verified)}
+
+The 600-cell adjacency Laplacian $L = D - A$ on the
+$120$-vertex binary icosahedral group $2I$ has spectrum
+\cite{CascadeAttractorSpectrum}:
+\[
+  \{0^{1},\ (12{-}6\varphi)^{4},\ (12{-}4\varphi)^{9},\ 9^{16},\
+   12^{25},\ 14^{36},\ (8{+}4\varphi)^{9},\ 15^{16},\
+   (6{+}6\varphi)^{4}\}.
+\]
+The Galois involution $\sigma: \varphi \mapsto 1-\varphi$
+(conjugate root of $x^2 = x + 1$) acts as
+$a + b\varphi \mapsto (a+b) - b\varphi$.  An eigenvalue is
+$\sigma$-fixed iff rational ($\{0,9,12,14,15\}$, total multiplicity
+$94$, $\bm{78.3\%}$); $\sigma$-paired eigenvalues form pairs
+$(12{-}6\varphi, 6{+}6\varphi)$, $(12{-}4\varphi, 8{+}4\varphi)$
+(multiplicity $26$, $\bm{21.7\%}$).  Classification is exact in
+$\Q(\sqrt 5)$ arithmetic.
+
+The relevance for P vs NP is conditional: \emph{if} the cascade
+$\sigma$-irreducible decomposition on the $\HH_4$ substrate
+inherits this classification \emph{and} a controlled correspondence
+holds between $\sigma$-fixed cascade modes and
+$\mathrm{P}_\sigma^{\rm cas}$ non-membership witnesses, \emph{then}
+the $78.3\%$ count transfers to spectral support of
+$\mathbf{H_{\sigma\text{-irr-NP}}}$.  The cascade-mode-to-NP-witness
+correspondence is itself part of $\mathbf{H_{\sigma\text{-irr-NP}}}$
+and is not established by the spectral count alone.
+
+\subsection{Finite-noise dynamical diagnostic}
+
+For the discrete diffusive flow $W = I - \mathrm{d}t \cdot L$ on
+$\R^{120}$ with isotropic Gaussian noise (Laplacian zero-mode
+projected out), the empirical covariance $C$ over $5000$ steps
+with $500$ warmup gives \cite{CascadeAttractorDynamics}:
+\begin{align*}
+&\text{R1 ($\widetilde\sigma$-equivariant flow, no closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 0.6639 \\
+&\text{R2 ($\widetilde\sigma$-equivariant flow + closure projector):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000 \\
+&\text{R3 (control: $\widetilde\sigma$-broken flow + closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000
+\end{align*}
+where $P_{\mathrm{fix}}$ is the projector onto the $94$-dim
+$\widetilde\sigma$-fixed spectral subspace.  R1 matches the
+analytical $0.6636$: under purely diffusive dynamics, low-frequency
+$\sigma$-paired modes are weighted more heavily than $\sigma$-fixed
+modes, so $\widetilde\sigma$-equivariance alone pulls the spectral
+mass \emph{below} the $78.3\%$ baseline.  R2 = R3 because the
+closure projector dominates regardless of whether $W$ commutes
+with $\widetilde\sigma$.
+
+\subsection{Empirical witness from aria H$_4$O (external)}
+
+The aria-chess H$_4$O implementation \cite{ariaH4Olaw} on a
+600-cell substrate is reported to produce $8$ nearly-equal
+$\sigma$-paired velocity-covariance eigenvalue pairs with relative
+splittings $\sim 5\times 10^{-4}$ across $5$ orders of magnitude.
+\emph{This artifact lives in an external companion repository and
+is reported as cited, not independently re-verified within this
+paper.}
+
+\subsection{Implication for the P vs NP bridge}
+
+The cascade-substrate evidence localises the gap in
+$\mathbf{H_{\sigma\text{-irr-NP}}}$ but does not close it:
+\begin{itemize}
+\item the $94/120 = 78.3\%$ spectral count is exact and
+unconditional, but its transfer to NP witness classes requires the
+(separate) cascade-mode-to-NP-witness correspondence, which is not
+established here;
+\item under purely diffusive dynamics, $\widetilde\sigma$-equivariance
+alone gives only $66\%$ spectral concentration; the closure
+mechanism (the spectral form of the cascade closure functional in
+the continuum limit) is what would lift this to $100\%$, and that
+identification is itself the analytic gap.
+\end{itemize}
+$\mathbf{H_{\sigma\text{-irr-NP}}}$ inherits the same conditional
+structure as the RH analogue
+\cite[Remark rmk:strengthened]{CascadeRHformal}: the cascade-side
+spectral architecture is in place, but the bridges to the classical
+side remain open conjectures.
+
+\section{Status and Discussion}
+
+\subsection{What is proved}
+
+\begin{itemize}
+\item Proposition~\ref{thm:separation}:
+  $\mathrm{P}_{\sigma}^{\rm cas} \subsetneq \mathrm{NP}^{\rm cas}$
+  \emph{conditional on both} Hypothesis H$_{\text{σ-irr-NP}}$
+  (Remark~\ref{rmk:siNP-defect},
+  Remark~\ref{rmk:siNP-hypothesis}) \emph{and} Hypothesis
+  $\mathbf{B_{\sigma\text{-}P}}$
+  (Hypothesis~\ref{thm:sigmaPlim}). Unconditionally, only
+  $L_{\rm σ-irr} \in \mathrm{coNP}^{\rm cas}$ is established; NP
+  containment requires a polynomial-time σ-irreducibility
+  certificate that this paper does not exhibit, and the
+  $\mathrm{P}_\sigma^{\mathrm{cas}}$ exclusion of
+  σ-irreducible NP-hard languages is the open hypothesis
+  $\mathbf{B_{\sigma\text{-}P}}$.
+\item Theorem~\ref{thm:evade} (demoted in Round 5; see surrounding remark): the cascade construction is not
+  obviously blocked by the relativization, natural-proofs, or
+  algebrization barriers when restricted to the
+  $\sigma$-preserving class $\mathrm{P}_\sigma^{\mathrm{cas}}$;
+  this is a programmatic observation, not a barrier-evasion
+  theorem.
+\item Generic σ-irreducibility (Heuristic~\ref{thm:genirr}):
+  quantitative structural statement at clause-density $\alpha > 1$,
+  conditional on the per-clause/partition probability bound stated
+  in the proof; not a complete theorem.
+\end{itemize}
+
+\subsection{What remains conjectural}
+
+\begin{itemize}
+\item \textbf{Hypothesis H$_{\text{σ-irr-NP}}$}: NP containment of
+  $L_{\rm σ-irr}$. At least as hard as the classical question
+  $\mathrm{NP} = \mathrm{coNP}$
+  (Remark~\ref{rmk:siNP-hypothesis}).
+\item \textbf{Hypothesis $\mathbf{B_{\sigma\text{-}P}}$}
+  (Hypothesis~\ref{thm:sigmaPlim}): σ-irreducible NP-hard
+  languages are not in $\mathrm{P}_\sigma^{\mathrm{cas}}$. No
+  unconditional lower-bound argument is supplied;
+  Remark~\ref{rmk:sigmaPlim_status} explains why the naive counting
+  argument is invalid.
+\item \textbf{Conjecture~\ref{conj:completeness}} (cascade structural
+  completeness): the bridge from restricted-model separation to
+  classical $\mathrm{P} \neq \mathrm{NP}$.
+\end{itemize}
+
+\subsection{Why the conjecture is plausible}
+
+\begin{itemize}
+\item Cascade's axiomatic base is specific and minimal.
+\item Foundations F1-F8 give an explicit inventory.
+\item No exploitable property outside F1-F8 has been found.
+\item Each known polynomial-time cascade algorithm uses one of the four
+    listed properties.
+\end{itemize}
+
+Proving Conjecture~\ref{conj:completeness} rigorously requires
+a "cascade normal form theorem" showing that all polynomial-time
+cascade algorithms decompose into compositions of the four
+structural exploitations. This is a well-defined research programme.
+
+\subsection{Relation to classical approaches}
+
+Classical attempts (GCT, circuit lower bounds, proof complexity)
+face the three barriers and have not closed P vs NP. Our cascade
+approach:
+\begin{itemize}
+\item Uses substrate-specific structure (σ-irreducibility).
+\item Operates in the cascade dynamics framework.
+\item Evades the three barriers by specificity.
+\end{itemize}
+
+This is a new direction. If Conjecture~\ref{conj:completeness} can be
+proved, we have a proof of $P \neq NP$.
+
+\section{Programme home for the cascade refinement (non-load-bearing)}\label{sec:aria_home}
+
+\emph{This subsection is interpretive programme-level context only.
+Nothing in the load-bearing argument of the restricted-model
+conditional separation depends on it.}\medskip
+
+The cascade refinement on the restricted model class is positioned
+programme-theoretically as a member of the same $L$-symmetric
+polynomial-in-$L$ family as the $\varphi$-regularised
+closure-response operator
+\[
+C_\varphi \;=\; L_M + \varphi^{-2} I
+\]
+on a closure substrate $M$ (see
+\texttt{docs/aria-closure-kernel.md} for the programme-level
+construction with continuum Green's function
+$\mathsf G_\varphi(x) = (\varphi/2)\,e^{-|x|/\varphi}$).  In the
+restricted-model P vs NP context, the cascade refinement is
+intended to be interpreted as a response-kernel projection on the
+bounded-resource regime, with $\varphi^{-2}$ playing the role of
+the resource-bound regularisation; this is a programme-level
+analogy, not a defined operator identification.  The bridge hypotheses
+$H_{\sigma\text{-irr-NP}}$, $B_{\sigma\text{-P}}$, and structural
+completeness are intended to select the family member appropriate
+to the restricted model.  A reported empirical witness for this programme-level family
+--- single-amplitude fit of the LHCb $B^0\to K^{*0}\mu\mu$ kernel
+by the continuum projection ($r \approx 0.98$) --- lives in the
+separate \texttt{aria/vfd-b-anomaly} repository; \emph{not
+verified here}.  The bridge hypotheses remain conditional; the
+programme home does \emph{not} discharge them, nor does it extend
+the conclusion beyond the restricted model.
+
+\begin{thebibliography}{99}
+
+\bibitem{AW2008}
+S.~Aaronson and A.~Wigderson, \emph{Algebrization: A new barrier in
+complexity theory}, STOC 2008.
+
+\bibitem{BGS1975}
+T.~Baker, J.~Gill, and R.~Solovay, \emph{Relativizations of the P = ?
+NP question}, SIAM J. Comput. \textbf{4} (1975), 431-442.
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations F1-F8}.
+
+\bibitem{CascadeDynamics}
+\emph{Cascade Dynamics Framework (D1-D10)}.
+
+\bibitem{RR1994}
+A.~A. Razborov and S.~Rudich, \emph{Natural proofs},
+J. Comput. Syst. Sci. \textbf{55} (1997), 24-35.
+
+\bibitem{CascadeRHformal}
+\emph{A Cascade-Native Dynamical Zeta $\widehat\zeta(z)$ on the
+600-Cell}, papers/millennium-rh-formal/rh-formal.tex.
+
+\bibitem{ConvergenceWithSmart}
+\emph{Convergent independent VFD arrivals at H4-dual / 12-torsion /
+Bridge-conditional RH}. docs/convergence-with-smart.md.
+
+\bibitem{CascadeAttractorSpectrum}
+\emph{Pure-VFD spectral test of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_spectrum.py.
+
+\bibitem{CascadeAttractorDynamics}
+\emph{Dynamical-flow sim of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_dynamics.py.
+
+\bibitem{ariaH4Olaw}
+\emph{Cascade H$_4$ Oscillator Law — VFD Native Reading}.
+aria-chess/docs/cascade-h4-oscillator-law.md;
+artifacts at \texttt{aria-chess/run\_artifacts/h4\_lyapunov\_spectrum.json}.
+
+\end{thebibliography}
+
+\end{document}

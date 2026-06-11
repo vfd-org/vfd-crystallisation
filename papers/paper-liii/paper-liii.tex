@@ -1,0 +1,355 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\twoI}{2\mathbf{I}}
+\newcommand{\Hq}{\mathbb{H}}
+\newcommand{\Th}{\Theta}
+
+\title{Einstein's Equations from Substrate Closure\\[6pt]
+\large The Stress-Tensor Reidentification, Fierz--Pauli by Chart-Freedom Uniqueness,\\ and the Bootstrap Completion of the VFD Gravity Chain}
+\author{Lee Smart\\ \textit{Institute of Vibrational Field Dynamics}\\ \texttt{contact@vibrationalfielddynamics.org}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed). Every finite-dimensional claim is verified by \texttt{scripts/verify\_gr\_closure.py} (39/39 PASS); the named residuals of \S\ref{sec:residuals} state exactly what remains open.
+
+\begin{abstract}
+The VFD gravity chain previously stood at: Newtonian limit derived from the substrate boundary response \citep{SmartKappa}; Schwarzschild compactness $\kappa = 2GM/(rc^2)$ conditional on four named hypotheses; and a Fierz--Pauli conjecture blocked by a documented obstacle --- the substrate action is quadratic in the field $F$, hence apparently quartic in the candidate metric perturbation $h_{\mu\nu} \sim \langle\partial F, \partial F\rangle$, so no quadratic spin-2 action seemed derivable.
+
+This paper closes the chain. The key step is a reidentification: the symmetric bilinear $\langle\partial_\mu F, \partial_\nu F\rangle$ is not the metric perturbation but (up to its trace part) the canonical Noether \emph{stress-energy tensor} of the substrate field --- the source of gravity, properly quadratic in matter. The metric perturbation is instead the coarse \emph{collective} deformation field of the rendered scene; its effective action is quadratic in the Gaussian/large-$N$ regime by a Wishart argument, independently of the microscopic action's order in $F$. Three substrate-derived inputs --- a symmetric rank-2 collective field, second-order time, and invariance under chart redescription --- then force the Fierz--Pauli action by the classical uniqueness theorem, which we re-derive numerically from scratch. Trace reversal, the weak-field factor of two, the full spatial metric components, and light deflection $4GM/(bc^2)$ become theorems rather than ansatz inputs; the conserved coupling and its universality (the equivalence principle) follow from chart-freedom consistency; and the unique nonlinear completion is the Einstein field equations with cosmological constant, via the classical Gupta--Kraichnan--Feynman--Deser bootstrap. The one constant the chain leaves free, $\Lambda$, is fixed independently by the programme's cosmology branch \citep{SmartL}.
+
+Two bridges are included. Quantum: the envelope of a massive substrate mode obeys the free Schr\"odinger equation with $m = \hbar\omega_0/c^2$, and the inertial and gravitating masses of one simulated wavepacket agree quantitatively, making the equivalence principle a theorem of the one-field origin. Standard Model: the same uniqueness mechanism one rank down forces the Maxwell action; the non-abelian gauge group content and the heavy sector remain open and are listed as such.
+
+All 39 verification items pass, each with a genuine falsifiable null. The remaining gaps are rigor-grade, not mechanism-grade: the strict discrete-to-continuum limit (the Paper~XL programme), the Gaussian-regime restriction, and the imported classical bootstrap theorems.
+\end{abstract}
+
+%==================================================================
+\section{Introduction and positioning}\label{sec:intro}
+%==================================================================
+
+The VFD programme derives physical structure from the 600-cell substrate $V_{600} \subset S^3 \subset \Hq$ and its closure dynamics. For gravity, the state of the chain before this paper was recorded in the kappa derivation notes \citep{SmartKappa} and the continuum-targets programme paper \citep{SmartXL}:
+
+\begin{itemize}
+\item \emph{Newtonian tier (closed).} The boundary response of a $\sigma$-paired point source gives $\Phi(r) = -GM/r$ and $\vec g = -GM/r^2\,\hat r$, with the Poisson equation $\nabla^2\Phi = 4\pi G\rho_m$ from a substrate scalar action.
+\item \emph{Schwarzschild tier (conditional).} $\kappa(r) = 2GM/(rc^2)$ held only under four hypotheses: (H-wave) an emergent wave operator, (H-tensor) a rank-2 perturbation, (H-stress) a stress tensor from the $\sigma$-paired residual, and (H-trace) the trace-reversed coupling with its $16\pi$ normalisation.
+\item \emph{Fierz--Pauli tier (blocked).} The direct construction failed on a documented obstacle: the natural substrate action is quadratic in the quaternionic field $F$, while the candidate metric $h_{\mu\nu} = \langle\partial_\mu F, \partial_\nu F\rangle$ is bilinear in $F$, so any action quadratic in $h$ is quartic in $F$. Three obstacles were named; the first was load-bearing.
+\end{itemize}
+
+This paper closes the conditional tier and dissolves the blocked one. The structure of the argument is worth stating plainly, because it is not a continuation of the failed construction but a correction of its premise.
+
+\paragraph{The reidentification.} The bilinear $\langle\partial_\mu F, \partial_\nu F\rangle$ was being read as the metric perturbation. It is not. Completed with its trace term it is the canonical Noether stress-energy tensor of the substrate field (Theorem~\ref{thm:noether}) --- conserved on shell, positive in energy, exactly conserved tick-by-tick in the discrete dynamics on the actual 600-cell graph (Lemma~\ref{lem:discrete}). ``Quadratic in $F$'' is then exactly right: the \emph{source} of a field equation is quadratic in the matter fields in every field theory. Obstacle~1 was a category error, and once the object is moved to the correct side of the field equation there is nothing left of it.
+
+\paragraph{What gravity is instead.} The metric perturbation is identified as the coarse, kernel-smoothed \emph{collective} deformation of the rendered scene (Definition~\ref{def:collective}) --- a constrained statistic of many substrate modes, in the same sense in which a phonon field is a collective coordinate of an atomic lattice. Its effective action is quadratic at leading order in the coarse limit regardless of the microscopic action's order (Proposition~\ref{prop:wishart}), and it transforms as a rank-2 tensor under the substrate symmetry (Proposition~\ref{prop:tensorial}, verified on $V_{600}$ itself).
+
+\paragraph{Why the dynamics is forced.} The rendered chart is observer bookkeeping; no substrate quantity depends on it. An infinitesimal redescription of the chart shifts the rendered metric components by exactly a linearised diffeomorphism (Proposition~\ref{prop:chart}), so the effective action must be gauge invariant. The most general two-derivative quadratic action for a symmetric rank-2 field has six parameters; gauge invariance collapses the solution space to one dimension --- the Fierz--Pauli action, with the mass terms killed and two physical polarisations (Theorem~\ref{thm:unique}). The substrate does not construct the spin-2 dynamics; it supplies premises whose unique consistent consequence the dynamics is.
+
+\paragraph{What then falls out.} Varying the unique action yields the linearised Einstein tensor, so the trace-reversed field equation and its factor of two are theorems (Theorem~\ref{thm:trace}); the full weak-field Schwarzschild metric, including the spatial components the earlier Nordstr\"om-style fallback could not produce, follows by the Green-function computation already on record; light bending comes out at $4GM/(bc^2)$, twice the Newtonian-corpuscle value, and we verify this by tracing rays through the numerically solved metric with a scalar-gravity control giving exactly half (\S\ref{sec:schwarzschild}). Gauge-invariance consistency forces the source to be the conserved stress tensor, and the one-substrate origin of all matter forces one coupling constant for everything --- the equivalence principle as a structural fact (\S\ref{sec:coupling}). The nonlinear completion to the full Einstein equations rides the classical bootstrap \citep{Gupta1954, Kraichnan1955, Feynman1995, Deser1970, BoulwareDeser1975, Wald1986}, imported and named as such (\S\ref{sec:bootstrap}).
+
+\paragraph{Honesty contract.} Section~\ref{sec:residuals} lists the named residuals. They are rigor-grade: the strict discrete-to-continuum limit (the Paper~XL targets \citep{SmartXL}), the Gaussian-regime restriction on the effective-action argument, the imported bootstrap theorems, and the calibration status of $G$. None is of the missing-mechanism kind the previous obstacles were. The derivation stands at the level at which condensed-matter physics derives sound from atoms: effective, quantitative, numerically verified, and not yet a continuum theorem in the strict mathematical sense.
+
+%==================================================================
+\section{Substrate inputs}\label{sec:inputs}
+%==================================================================
+
+All inputs are previously derived; none is new to this paper.
+
+\begin{itemize}
+\item[\textbf{(I1)}] \emph{Wave dynamics.} Second-order time is forced by the inner clock reversal: elements $g \in \twoI$ with $g\tau g^{-1} = \tau^{-1}$ exist, and equivariance of the residual law under the induced involution forbids first-order $\partial_t$ terms \citep{SmartRendering}. The spatial generator satisfies $L_\partial/a^2 \to -\nabla^2$ in the long-wavelength limit, with the exact dispersion relation on $V_{600}$ as witness. Together: $\Box = c^{-2}\partial_t^2 - \nabla^2$ with $c = a/\tau$. The remaining second-difference formality is closed in \S\ref{sec:hwave}.
+\item[\textbf{(I2)}] \emph{Arena and chart.} The rendered arena is the intrinsic $S^3$ with spectral dimension 3; the canonical kernel is $\pi_r = (I + r^2 L)^{-1}$; the anchor chart is the quaternion-exponential normal chart with frame $\{v_0 i, v_0 j, v_0 k\}$ \citep{SmartRendering}. The chart is explicitly non-canonical.
+\item[\textbf{(I3)}] \emph{Newtonian tier.} $\nabla^2\Phi = 4\pi G \rho_m$, $\Phi = -GM/r$ \citep{SmartKappa}.
+\item[\textbf{(I4)}] \emph{Quaternionic substrate field.} $F : V_{600} \times \mathbb{Z} \to \Hq$ with tangent-frame derivatives $\partial_\mu F$ and quadratic action $S_F = \int [-\tfrac{\alpha}{2}\langle\partial_\mu F, \partial^\mu F\rangle + \langle F, J\rangle]$, equation of motion $\alpha\,\Box F = -J$ \citep{SmartKappa}.
+\item[\textbf{(I5)}] \emph{Response family.} $C_\varphi = L_\partial + \varphi^{-2} I$: the $\varphi^{-1} \to 0$ end is the Newton regime; finite $\varphi^{-1}$ is the massive (Yukawa) regime \citep{SmartKappa}. Used for the quantum bridge in \S\ref{sec:qm}.
+\end{itemize}
+
+Signature is $(-,+,+,+)$ throughout; $\eta = \mathrm{diag}(-1,1,1,1)$.
+
+%==================================================================
+\section{The bilinear is the stress tensor}\label{sec:stress}
+%==================================================================
+
+\begin{theorem}[Canonical stress tensor; discharges (H-stress)]\label{thm:noether}
+For the substrate field of (I4), the canonical Noether current of spacetime-translation invariance is
+\begin{equation}
+\Th_{\mu\nu} \;=\; \alpha\left[\langle\partial_\mu F, \partial_\nu F\rangle \;-\; \tfrac{1}{2}\,\eta_{\mu\nu}\,\langle\partial_\rho F, \partial^\rho F\rangle\right],
+\label{eq:theta}
+\end{equation}
+which is (i) symmetric; (ii) conserved on shell, $\partial^\mu \Th_{\mu\nu} = \alpha\langle\Box F, \partial_\nu F\rangle = 0$ when $\Box F = 0$; and (iii) of non-negative energy density, $\Th_{00} = \tfrac{\alpha}{2}\big(\langle\partial_0 F,\partial_0 F\rangle + \langle\partial_i F,\partial_i F\rangle\big) \ge 0$.
+\end{theorem}
+
+\begin{proof}
+Direct computation: $\partial^\mu\Th_{\mu\nu} = \alpha\big[\langle\Box F, \partial_\nu F\rangle + \langle\partial_\mu F, \partial^\mu\partial_\nu F\rangle - \langle\partial_\rho F, \partial_\nu\partial^\rho F\rangle\big]$, and the last two terms cancel. Symmetry is manifest in \eqref{eq:theta}; positivity of $\Th_{00}$ is a sum of squares.
+\end{proof}
+
+On the discrete substrate the time-direction statements are exact, not approximate.
+
+\begin{lemma}[Exact discrete conservation on $V_{600}$]\label{lem:discrete}
+Let $F_{t+1} = 2F_t - F_{t-1} - \varepsilon^2 L F_t$ be the leapfrog substrate dynamics on the 600-cell graph Laplacian $L$. Then:
+\begin{itemize}
+\item[(a)] the discrete energy $E_{t+1/2} = \tfrac{1}{2}\|(F_{t+1}-F_t)/\tau\|^2 + \tfrac{c^2}{2a^2}\langle F_t, L F_{t+1}\rangle$ is conserved tick-by-tick exactly (sim T5: relative drift $< 10^{-10}$ over 2000 ticks);
+\item[(b)] for the semi-discrete dynamics $\ddot F = -(c^2/a^2) L F$, the local energy $e_v = \tfrac12 \dot F_v^2 + \tfrac{c^2}{4a^2}\sum_{w \sim v}(F_v - F_w)^2$ and edge flux $J_{vw} = \tfrac{c^2}{2a^2}(F_v - F_w)(\dot F_v + \dot F_w)$ satisfy the exact continuity equation $\dot e_v + \sum_{w\sim v} J_{vw} = 0$ at every vertex (sim T6: machine precision).
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+(b) is a two-line computation from $\ddot F_v = -(c^2/a^2)\sum_{w\sim v}(F_v - F_w)$; the flux $J_{vw}$ is antisymmetric in $v \leftrightarrow w$, so the law is a genuine local conservation law on the graph. (a) is the standard St\"ormer--Verlet invariant for symmetric $L$.
+\end{proof}
+
+\begin{lemma}[Dust limit]\label{lem:dust}
+For a slowly modulated carrier mode of the massive equation $(\Box - \mu^2)F = 0$ with envelope/carrier scale ratio $\epsilon$, the period-averaged components satisfy $\langle\Th_{11}\rangle/\langle\Th_{00}\rangle = k^2/\omega^2 = O(\epsilon^2)$ (sim T7c: exact to $10^{-6}$ at two values of $k$). Matter wavepackets therefore source gravity as static dust at leading order.
+\end{lemma}
+
+\begin{remark}[Obstacle 1 dissolved]
+The previous diagnosis --- ``action quadratic in $F$ is quartic in $h$'' --- assumed $h \sim \langle\partial F, \partial F\rangle$. With the bilinear identified as $\Th_{\mu\nu}$, quadratic-in-$F$ means quadratic-in-matter, which is what a source must be. The question becomes: where does the metric live? That is \S\ref{sec:collective}.
+\end{remark}
+
+%==================================================================
+\section{The collective metric field}\label{sec:collective}
+%==================================================================
+
+\begin{definition}[Rendered deformation field]\label{def:collective}
+Let $\delta F$ be the substrate fluctuation about the homogeneous closure background and $\pi_r$ the canonical kernel of (I2). The rendered deformation field at chart point $x$ is the coarse-grained, background-subtracted second moment
+\begin{equation}
+h_{\mu\nu}(x) \;\propto\; \pi_r\!\left[\langle \partial_\mu \delta F\,\partial_\nu \delta F\rangle\right](x) \;-\; \text{(homogeneous background)},
+\end{equation}
+a symmetric rank-2 field with 10 components --- a constrained statistic of many substrate modes per kernel cell, not a pointwise function of $F$.
+\end{definition}
+
+\begin{proposition}[Tensoriality]\label{prop:tensorial}
+Under the substrate symmetry $\twoI \times \twoI$ (left/right icosian multiplication), the frame components $h_{ab}$ transform as a rank-2 tensor: left multiplication transports the right-quaternionic frame trivially, $g(v\,i) = (gv)\,i$; right multiplication by $g^{-1}$ rotates the frame by the adjoint action $q \mapsto g q g^{-1}$, so $h \mapsto R_g^{\top} h R_g$ with $R_g = \mathrm{Ad}(g) \in SO(3)$.
+\end{proposition}
+
+\begin{proof}
+Associativity of quaternion multiplication and orthogonality of unit-quaternion translation. Verified to machine precision on the actual 600-cell with random fields, both actions (sims T14a--b); the kernel $\pi_r$ commutes with the induced vertex permutations (T14c), so the coarse field transforms identically.
+\end{proof}
+
+\begin{proposition}[Quadratic effective action]\label{prop:wishart}
+Let $h$ be the sample second moment of $N$ independent substrate modes per kernel cell in the Gaussian (linear-response) regime, with background $\Sigma_0$. The effective action (constrained log-density) is
+\begin{equation}
+\Gamma[\Sigma_0 + \delta h] \;=\; \frac{N}{4}\,\mathrm{tr}\!\left[(\Sigma_0^{-1}\delta h)^2\right] + O\!\left(N\,\delta h^3\right),
+\end{equation}
+and since equilibrium fluctuations scale as $\delta h \sim N^{-1/2}$, the cubic term is $O(N^{-1/2})$ relative to the quadratic. In the coarse limit the effective action of the collective field is quadratic.
+\end{proposition}
+
+\begin{proof}
+For Gaussian modes the sample covariance is Wishart \citep{Wishart1928}; the log-density is $N$ times an analytic function with a nondegenerate quadratic minimum at $\Sigma_0$. Sims T15a--c verify the quadratic coefficient (ratio $1.00001$), the $N^{-1/2}$ decay of the cubic-to-quadratic ratio at the fluctuation scale, and the empirical $N^{-1/2}$ scaling of sample-second-moment fluctuations.
+\end{proof}
+
+This is the standard emergent-field mechanism --- it is how phonons acquire a quadratic action from an anharmonic microscopic crystal --- and it makes the order of the \emph{microscopic} action in $F$ irrelevant to the order of the \emph{effective} action in $h$. What it does not fix is which quadratic action. That is forced next.
+
+%==================================================================
+\section{Gauge invariance from chart freedom}\label{sec:gauge}
+%==================================================================
+
+\begin{proposition}[Chart redescription acts as linearised diffeomorphism]\label{prop:chart}
+The anchor chart of (I2) is observer bookkeeping; no substrate quantity depends on it. An infinitesimal redescription $x \mapsto x + \xi(x)$ changes the components of the rendered metric $g = \eta + h$ by the Lie derivative; at linear order
+\begin{equation}
+h_{\mu\nu} \;\longmapsto\; h_{\mu\nu} + \partial_\mu \xi_\nu + \partial_\nu \xi_\mu + O(\xi\,\partial h,\ \xi^2).
+\end{equation}
+Chart-independence of the substrate therefore requires the effective action $\Gamma[h]$ to be invariant under this shift.
+\end{proposition}
+
+\begin{proof}
+The transformation law is the textbook pullback; sim T8 verifies it numerically by exact re-charting of a metric built from explicit Fourier modes, with the residual converging at $O(\xi^2)$ (ratio $4.00$ under halving) and constituting a vanishing fraction of the shift.
+\end{proof}
+
+\begin{remark}
+Two honesty notes. (i) The substrate has a preferred \emph{frame} (the tick direction $u^\mu$); a frame is a state of motion, not a chart restriction, and does not reduce the redescription freedom --- the situation is the same as in cosmology, where the CMB frame coexists with diffeomorphism invariance. (ii) The discrete lattice has no continuous diffeomorphisms; the statement lives at the level of the rendered (kernel-smoothed) fields, where the chart is literally an arbitrary choice. The local-frame non-canonicity previously flagged as a worry in \citep{SmartKappa} \emph{is} the gauge freedom.
+\end{remark}
+
+%==================================================================
+\section{Fierz--Pauli by uniqueness}\label{sec:unique}
+%==================================================================
+
+\begin{theorem}[Uniqueness of the quadratic action]\label{thm:unique}
+The most general local Lorentz-invariant action for a symmetric rank-2 field with at most two derivatives is, modulo total derivatives, the 6-parameter family
+\begin{equation}
+S[h] = \!\int\! d^4x\Big[a_1 \partial_\rho h_{\mu\nu}\partial^\rho h^{\mu\nu} + a_2 \partial_\mu h^{\mu\nu}\partial^\rho h_{\rho\nu} + a_3 \partial_\mu h^{\mu\nu}\partial_\nu h + a_4 \partial_\mu h\,\partial^\mu h + b_1 h_{\mu\nu}h^{\mu\nu} + b_2 h^2\Big].
+\end{equation}
+Invariance under $h_{\mu\nu} \to h_{\mu\nu} + \partial_\mu\xi_\nu + \partial_\nu\xi_\mu$ for all $\xi$ forces $b_1 = b_2 = 0$ and $(a_1, a_2, a_3, a_4) \propto (-\tfrac12, 1, -1, \tfrac12)$: the solution space is exactly one-dimensional and is the Fierz--Pauli action \citep{FierzPauli1939}. The graviton is massless and carries exactly two physical polarisations.
+\end{theorem}
+
+\begin{proof}
+Finite linear algebra in momentum space. Writing the action as a quadratic form $Q(h, h; k)$ and imposing $Q(h, \delta_\xi h; k) = 0$ for all $(h, \xi, k)$ yields a linear system on the six coefficients whose null space is computed by SVD over random samples: dimension 1, with the stated ratios to $10^{-9}$ and the mass terms vanishing (sim T1). At null momentum the kinetic operator has a 6-dimensional kernel containing the 4-dimensional gauge orbit, leaving $10 - 4 - 4 = 2$ physical polarisations (sim T2). The result is the classical Fierz--Pauli uniqueness theorem (see \citealp{Hinterbichler2012} for a modern review); the simulation re-derives it from scratch so that no step of the chain assumes it.
+\end{proof}
+
+\begin{corollary}\label{cor:einstein-tensor}
+The variation of the Fierz--Pauli action is the linearised Einstein tensor: $\delta S_{FP}/\delta h^{\mu\nu} \propto G^{\mathrm{lin}}_{\mu\nu}[h]$, with one proportionality constant across random fields and momenta (sim T3a, residual $< 10^{-15}$).
+\end{corollary}
+
+%==================================================================
+\section{Coupling, conservation, universality}\label{sec:coupling}
+%==================================================================
+
+\begin{proposition}[Conservation forced; coupling consistent]\label{prop:conserved}
+With matter coupling $S_{\rm int} = \lambda \int h_{\mu\nu}\Th^{\mu\nu}$, gauge invariance of the total action requires $\int \xi_\nu\,\partial_\mu\Th^{\mu\nu} = 0$ for all $\xi$: the source must be a conserved symmetric tensor, which $\Th_{\mu\nu}$ is by Theorem~\ref{thm:noether}. Conversely, the conserved symmetric rank-2 current of the substrate matter sector is unique up to improvement terms, so the coupling is unique up to normalisation \citep{Weinberg1964}.
+\end{proposition}
+
+\begin{proposition}[Universality; equivalence principle]\label{prop:universal}
+All foreground matter consists of $\sigma$-paired modes of the one substrate field $F$, rendered through the same chart and kernel. There is therefore a single coupling $\lambda$ for all matter: no per-species gravitational charge exists because there is only one substrate. A quantitative check is given in Theorem~\ref{thm:equiv}.
+\end{proposition}
+
+%==================================================================
+\section{Trace reversal, Schwarzschild, light bending}\label{sec:schwarzschild}
+%==================================================================
+
+\begin{theorem}[Trace-reversed field equation; discharges (H-trace)]\label{thm:trace}
+The stationary point of $S_{FP} + S_{\rm int}$ in harmonic gauge is
+\begin{equation}
+\Box \bar h_{\mu\nu} \;=\; -\frac{16\pi G}{c^4}\,\Th_{\mu\nu}, \qquad \bar h_{\mu\nu} = h_{\mu\nu} - \tfrac12 \eta_{\mu\nu} h,
+\label{eq:lin-einstein}
+\end{equation}
+with the normalisation fixed by matching the Newtonian tier (I3). The trace reversal is generated by the variation of the kinetic term (Corollary~\ref{cor:einstein-tensor}); it is kinematics of the unique action, not a property of the matter coupling. For static dust the solution is
+\begin{equation}
+h_{00} = h_{11} = h_{22} = h_{33} = \frac{2GM}{rc^2}, \qquad h_{0i} = 0,
+\end{equation}
+i.e.\ the full weak-field Schwarzschild metric in isotropic gauge, including the spatial components.
+\end{theorem}
+
+\begin{proof}
+Corollary~\ref{cor:einstein-tensor} plus the standard Green-function computation of \citep{SmartKappa} \S6, now unconditional. Sim T3 solves \eqref{eq:lin-einstein} on a $48^3$ grid with a Gaussian dust blob: isotropy and the factor 2 hold exactly (machine precision, being algebraic identities of the trace reversal), the radial profile fits $2GM/r$ to 3\%, and --- the strong check --- the harmonic-gauge solution satisfies the full gauge-unfixed linearised Einstein equation mode by mode with a single coupling constant (residual $< 10^{-15}$).
+\end{proof}
+
+\begin{corollary}[Schwarzschild compactness, now unconditional]\label{cor:kappa}
+$\kappa(r) = 2GM/(rc^2)$ holds with no hypotheses beyond the calibration of $G$ and the residuals of \S\ref{sec:residuals}. The earlier Nordstr\"om-style fallback, which produced only $g_{00}$, is retired.
+\end{corollary}
+
+\begin{corollary}[Light bending; the discriminator]\label{cor:bending}
+Null rays in the derived metric deflect by $\alpha = 4GM/(bc^2)$, twice the Newtonian-corpuscle value, because $h_{ij} \neq 0$. Sim T4 traces rays through the numerically solved metric of T3 and recovers $4GM/(bc^2)$ to 5\%; the $h_{00}$-only scalar control gives the ratio $2.0000$.
+\end{corollary}
+
+%==================================================================
+\section{Nonlinear completion: the Einstein equations}\label{sec:bootstrap}
+%==================================================================
+
+\begin{theorem}[Conditional on the classical bootstrap]\label{thm:einstein}
+A massless spin-2 field with gauge-invariant quadratic action, coupled universally to the total stress-energy including its own, has the Einstein--Hilbert action as its unique consistent nonlinear completion; hence
+\begin{equation}
+G_{\mu\nu} + \Lambda g_{\mu\nu} \;=\; \frac{8\pi G}{c^4}\,T_{\mu\nu},
+\end{equation}
+with $\Lambda$ the single undetermined constant. This is the Gupta--Kraichnan--Feynman--Deser bootstrap \citep{Gupta1954, Kraichnan1955, Feynman1995, Deser1970}, closing in one step in first-order form \citep{Deser1970}, with uniqueness per \citep{Wald1986} and the massive alternative excluded by \citep{BoulwareDeser1975}. The substrate supplies all premises: massless spin-2 (\S\ref{sec:collective}--\S\ref{sec:unique}), universal conserved coupling (\S\ref{sec:coupling}), and the self-coupling requirement ($\Th_{00} \ge 0$ applies to the $h$-sector's own collective energy on the same one-substrate footing).
+\end{theorem}
+
+\begin{remark}[The cosmological constant]\label{rem:lambda}
+The bootstrap permits $\Lambda$ and cannot fix it. The programme fixes it elsewhere: the $\sigma$-paired complement determination of \citep{SmartL} reproduces $\Omega_\Lambda = 0.6844$ ($-0.083\%$ against Planck). The one constant the gravity chain leaves free is the one the cosmology chain determines, by an independent route --- a consilience check, not a fit.
+\end{remark}
+
+\begin{remark}[Relation to the $D_4$/cascade route]
+Paper~XL \citep{SmartXL} pursues the same target geometrically, by continuum limit of the 24-cell rung (targets T1--T4). The present paper closes the field-equation question at effective level first; Paper~XL remains the home of the rigorous continuum-limit programme, i.e.\ of residual (R-cont) below. The routes are complementary.
+\end{remark}
+
+%==================================================================
+\section{Consequences}\label{sec:consequences}
+%==================================================================
+
+\subsection{(H-wave), final formality}\label{sec:hwave}
+$\big(F_{t+1} - 2F_t + F_{t-1}\big)/\tau^2 = \partial_t^2 F + \tfrac{\tau^2}{12}\partial_t^4 F + O(\tau^4)$; combined with $L/a^2 \to -\nabla^2$ this gives $\Box$ with $c = a/\tau$. Sim T10 verifies both the Taylor step and, on the 600-cell itself, that the leapfrog eigenmode frequency converges to the continuum value at $O(\tau^2)$. (H-wave) is fully discharged.
+
+\subsection{Gravitational waves}
+In transverse-traceless gauge the field equation gives $\Box h^{TT}_{\mu\nu} = 0$: two polarisations (Theorem~\ref{thm:unique}), dispersion $\omega = c|k|$ exactly (sim T9: $h_+$ and $h_\times$ solve the equation on the light cone and fail it off), and --- because gravity and matter ride the same substrate wave operator (I1) --- the gravitational-wave speed equals the light/matter speed identically, consistent with the GW170817 bound $|c_{GW}/c - 1| < 10^{-15}$ \citep{GW170817} as a structural fact rather than a coincidence.
+
+\subsection{Time dilation and geodesics}
+$g_{00} = -(1 - 2GM/(rc^2))$ is Corollary~\ref{cor:kappa}; the inner-clock rate at depth $\Phi$ scales as $\sqrt{-g_{00}}$, with the time direction the real-quaternion clock axis. Conservation $\partial_\mu T^{\mu\nu} = 0$ in the curved background implies geodesic wavepacket motion at leading order by the standard argument \citep{GerochJang1975}; the null-ray case is exercised directly by sim T4.
+
+%==================================================================
+\section{The quantum bridge}\label{sec:qm}
+%==================================================================
+
+\begin{proposition}[Envelope $\to$ Schr\"odinger]\label{prop:schrodinger}
+A substrate mode at the massive end of the response family (I5) obeys $\partial_t^2 F = c^2(\nabla^2 - \mu^2)F$ with $\mu = \varphi^{-1}$. Writing $F = \mathrm{Re}[\psi\,e^{-i\omega_0 t}\hat q]$ with rest carrier $\omega_0 = c\mu$ and slowly varying envelope $\psi$,
+\begin{equation}
+i\,\partial_t\psi = -\frac{c^2}{2\omega_0}\nabla^2\psi + O(\epsilon^2), \qquad \epsilon = \frac{c\,k_{\rm env}}{\omega_0},
+\end{equation}
+the free Schr\"odinger equation with $m = \hbar\omega_0/c^2$. Sim T11 evolves the exact Klein--Gordon field spectrally and verifies the envelope error is $O(\epsilon^2)$ (ratio $3.97$ under halving of $\epsilon$). This complements the Nelson-pairing route of Paper~XVIII \citep{SmartXVIII}, which handles the interacting/equilibrium structure; the envelope route is the direct free-sector reduction.
+\end{proposition}
+
+\begin{theorem}[Equivalence principle, quantitative]\label{thm:equiv}
+For one wavepacket of the substrate field: the inertial mass read from its kinematics (momentum per quantum over group velocity) and the gravitating mass read from its stress tensor (energy per quantum, the quantity that sources \eqref{eq:lin-einstein}) agree identically, both being moments of the same field. Sim T12 measures both on one simulated packet: $m_{\rm grav} = 8.0403$, $m_{\rm inert} = 8.0420$ (carrier $\mu = 8$, deviations $O(\epsilon^2)$ as predicted).
+\end{theorem}
+
+\begin{remark}[Resolution bridge]
+The quantum and gravitational descriptions sample one substrate at two grains: the coarse-rung eigenfunctions are the fine-rung eigenfunctions sampled on shared vertices (the 24-cell inside the 600-cell; \citealp{SmartXL}). Sections \ref{sec:bootstrap} and \ref{sec:qm} are the two grains' effective laws.
+\end{remark}
+
+%==================================================================
+\section{The Standard-Model bridge: forced form, open content}\label{sec:sm}
+%==================================================================
+
+\begin{proposition}[Maxwell forced]\label{prop:maxwell}
+The uniqueness scan of Theorem~\ref{thm:unique} applied to a rank-1 collective field $A_\mu$ with chart-phase redundancy $A_\mu \to A_\mu + \partial_\mu\chi$ collapses the general 3-parameter quadratic action to the 1-dimensional null space $(1, -1, 0)$ --- the Maxwell action $-\tfrac14 F_{\mu\nu}F^{\mu\nu}$ --- with two photon polarisations and conserved charge forced exactly as in Proposition~\ref{prop:conserved} (sims T13a--c).
+\end{proposition}
+
+The form of both long-range force laws is therefore forced by one theorem applied at rank 1 and rank 2. What the substrate has \emph{not} supplied for the Standard Model, stated plainly: the non-abelian gauge group content (why $SU(3)\times SU(2)\times U(1)$); the heavy sector (W/Z/Higgs, heavy quarks) and neutrino placement. The existing contact points are the light-sector mass-ladder placements, the b-anomaly response-family shape (the same $C_\varphi$ family whose two ends are Newton and Yukawa), and the conditional $\alpha$-chain. This section is the honest boundary of the bridge.
+
+%==================================================================
+\section{Named residuals}\label{sec:residuals}
+%==================================================================
+
+\begin{itemize}
+\item[\textbf{(R-cont)}] \emph{Continuum-limit rigor.} The chain operates at effective-field level, with the exact dispersion relation and $O(\tau^2)/O(a^2)$ convergence as witnesses. The strict discrete-to-continuum theorem is the Paper~XL programme \citep{SmartXL}. This is now the only mathematically deep gap in the gravity chain.
+\item[\textbf{(R-Gauss)}] Proposition~\ref{prop:wishart} covers the Gaussian regime; strongly-coupled substrate regimes are not covered (physically, the deep-nonlinear region is taken over by the bootstrap completion, but the substrate-side statement is Gaussian).
+\item[\textbf{(R-boot)}] Theorem~\ref{thm:einstein} cites the bootstrap rather than re-deriving it. The cited results are mainstream and unconditional, but imported.
+\item[\textbf{(R-G)}] $G$ remains the substrate-to-physical mass calibration of \citep{SmartKappa}, Definition 4.2.
+\item[\textbf{(R-$\Lambda$)}] $\Lambda$ is not fixed by this chain; it is fixed independently by \citep{SmartL} (Remark~\ref{rem:lambda}).
+\end{itemize}
+
+None of these is of the missing-mechanism kind that the previous Obstacles 1--3 were.
+
+%==================================================================
+\section{Verification manifest}\label{sec:manifest}
+%==================================================================
+
+All claims are verified by \texttt{scripts/verify\_gr\_closure.py} (39 checks, all passing, each with a falsifiable null).
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Sim & Verifies & Result \\
+\midrule
+T1 & FP uniqueness: 1-dim null space, ratios $(-\tfrac12,1,-1,\tfrac12)$, masses killed & exact \\
+T2 & $\dim\ker = 6 \supset$ 4-dim gauge orbit $\Rightarrow$ 2 polarisations & exact \\
+T3a & $\delta S_{FP}/\delta h = G^{\mathrm{lin}}$ & $<10^{-15}$ \\
+T3 & grid solve: factor 2, isotropy, full gauge-unfixed equation & exact/3\% \\
+T4 & ray deflection $4GM/(bc^2)$; scalar control half & 5\%/0.5\% \\
+T5--T6 & exact tick-energy and local continuity on $V_{600}$ & $<10^{-10}$ \\
+T7 & $\Th_{\mu\nu}$: positivity, conservation $O(\delta^2)$, dust limit & exact \\
+T8 & chart shift = gauge direction, $O(\xi^2)$ & ratio 4.00 \\
+T9 & TT waves on the light cone only & exact \\
+T10 & second difference and eigenmode frequency, $O(\tau^2)$ & ratio 4.00 \\
+T11 & envelope $\to$ Schr\"odinger, error $O(\epsilon^2)$ & ratio 3.97 \\
+T12 & inertial = gravitating mass on one packet & $2\times10^{-4}$ \\
+T13 & Maxwell uniqueness, 2 photon polarisations & exact \\
+T14 & rank-2 tensoriality on $V_{600}$, $\pi_r$ equivariance & $<10^{-10}$ \\
+T15 & Wishart quadratic dominance, $N^{-1/2}$ scaling & 1.00001 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+This manuscript lives at \texttt{papers/paper-liii/paper-liii.tex}. The derivation source is \texttt{docs/gr-closure-derivation.md}; the verification suite is \texttt{scripts/verify\_gr\_closure.py} (run from the repository root with \texttt{python3 scripts/verify\_gr\_closure.py}; requires only NumPy and the bundled \texttt{scripts/600cell\_data.npz}). Companion suites: \texttt{verify\_rendering\_layer.py} (21/21), \texttt{verify\_gap\_strengthening.py} (22/22), \texttt{verify\_boundary\_green\_function.py} (Newtonian tier). The pre-closure state of the chain, including the documented failure of the direct construction, is preserved in \texttt{docs/kappa-derivation-math.md} \S6.7 as the honest record.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

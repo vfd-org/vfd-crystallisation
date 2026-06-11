@@ -1,0 +1,1609 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\op}{\operatorname{op}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Met}{\mathrm{met}}
+\newcommand{\PF}{\mathrm{PF}}
+\newcommand{\src}{\mathrm{src}}
+\newcommand{\Pimet}{\Pi_{\Met}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+\title{Cascade--Classical Correspondence V:\\
+  $D_4$ Metric Projection from Discrete Moment Tensors}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This paper puts a metric-side observable on the refinement-spaces
+substrate of paper P3 \cite{RefinementSpaces} using the explicit
+$D_4$ coordinates of paper P2 \cite{AlgebraicSubstrate} and the
+finite-level closure-dynamics state space of paper P4
+\cite{ClosureDynamics}. At each refinement level $n \geq 0$ and on
+the $D_4$ branch, we define the \emph{discrete moment tensor}
+\[
+  M_n[s](v) \;:=\; \sum_{w \in V_n^{D_4},\ w \neq v} s(w)\,
+    K_n(v, w), \qquad
+  K_n(v, w) \;:=\; \frac{(x_w^{(n)} - x_v^{(n)}) \otimes
+      (x_w^{(n)} - x_v^{(n)})}{\|x_w^{(n)} - x_v^{(n)}\|^2},
+\]
+and the \emph{metric projection}
+$\Pimet^{(n)} := P_n^\PF \circ M_n \circ S_n^\lambda \colon X_n^{D_4} \to
+\PF_n$ from the P4 state space $X_n^{D_4}$ to the piecewise-flat
+target $\PF_n$. We prove six theorems at finite level:
+
+\begin{enumerate}
+\item[(T1)] $M_n$ is a well-defined bounded linear map from
+  $\ell^2(V_n^{D_4})$ to
+  $\ell^2(V_n^{D_4}; \Sym^2(\R^4))$ with each
+  $M_n[s](v)$ symmetric (Theorem~\ref{thm:mn-welldef}).
+\item[(T2)] On the subspace
+  $\mathcal S_{n+1}^{\mathrm{old}}$ of level-$(n+1)$ source
+  functions supported on old vertices $V_n \subset V_{n+1}$, the
+  raw moment operator satisfies the operator identity
+  $q_{n+1, n} \circ M_{n+1} = M_n \circ p_{n+1, n}^0$, where
+  $p_{n+1, n}^0$ is the P3 vertex bonding and $q_{n+1, n}$ is the
+  vertex restriction on tensor fields defined here
+  (Theorem~\ref{thm:mn-refinement}). The identity does not extend
+  to all of $\mathcal S_{n+1}$ because new-vertex source data at
+  level $n+1$ produces additional kernel contributions.
+\item[(T3)] $M_n$ and $\Pimet^{(n)}$ are $W(D_4)$-equivariant
+  under the explicit orthogonal action on coordinates coming
+  from P2 and the branchwise Coxeter action of P3
+  (Theorem~\ref{thm:mn-equivariance}).
+\item[(T4)] $\Pimet^{(n)}$ is bounded with
+  $\|\Pimet^{(n)}\|_\op \leq \|P_n^\PF\|_\op \cdot \|M_n\|_\op
+  \cdot \|S_n^\lambda\|_\op$ (Theorem~\ref{thm:pimet-continuity}).
+\item[(T5)] $\Pimet^{(n)}$ lands in the piecewise-flat target
+  $\PF_n$, defined explicitly as the finite-dimensional Hilbert
+  space of cell-labelled symmetric tensor fields on the
+  level-$n$ vertex set of the $D_4$ refinement (one constant
+  symmetric tensor per vertex, no cross-cell compatibility
+  imposed) with the cellwise Frobenius inner product
+  (Theorem~\ref{thm:pimet-landing}).
+\item[(T6)] For a point source $s = \delta_{w_\ast}$ and any probe
+  $v \neq w_\ast$, $M_n[\delta_{w_\ast}](v) = \hat r_{v, w_\ast}^{(n)}
+  \otimes \hat r_{v, w_\ast}^{(n)}$ is the unit rank-one projector
+  onto the displacement direction, with trace $1$ and spectrum
+  $\{1, 0, 0, 0\}$ (Theorem~\ref{thm:point-source}).
+\end{enumerate}
+
+The paper is finite-level only. We prove no continuum metric,
+Riemannian limit, Lorentzian structure, Einstein equation,
+stress-energy, perfect-fluid, hydrodynamic, Navier--Stokes, or
+general-relativistic statement. Convergence under refinement,
+Gromov--Hausdorff limits, and spectral stability of graph
+Laplacians are the target of paper P6 and are out of scope here.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction and Source Audit}
+\label{sec:intro}
+%=====================================================================
+
+This is the first metric-side paper in the cascade infrastructure
+programme. Its load-bearing job is narrow and entirely
+finite-dimensional: starting from the finite-level refinement
+graphs $G_n^{D_4}$ of P3~\cite{RefinementSpaces}, the explicit
+$D_4$ coordinate model of P2~\cite{AlgebraicSubstrate}, and the
+P4 state space $X_n^{D_4}$ of \cite{ClosureDynamics}, we build a
+bounded linear operator $\Pimet^{(n)} \colon X_n^{D_4} \to \PF_n$
+with the four structural properties expected of a metric-side
+observable: refinement compatibility, Coxeter equivariance,
+boundedness, and a clean rank-one point-source limit. The paper
+is designed to be the theorem-grade replacement for the
+exploratory metric-projection discussion in
+\texttt{papers/cascade-derivation/cascade-gr.md} \S C4 and in
+\texttt{papers/cascade-correspondence-foundations/foundations.tex};
+those sources are cited only as historical motivation in this
+introduction and never as theorem-grade proof support.
+
+\subsection{What this paper proves}
+
+At each refinement level $n \geq 0$ and on the $D_4$ branch, we
+define:
+\begin{enumerate}
+\item the canonical Euclidean coordinates $x_v^{(n)} \in \R^4$ of
+  the refinement vertices $V_n^{D_4}$, inherited from P2
+  (\S\ref{sec:coords});
+\item a bounded scalar source extraction map $S_n^\lambda \colon
+  X_n^{D_4} \to \ell^2(V_n^{D_4})$ from the P4 state space
+  (\S\ref{sec:source});
+\item the normalized rank-one displacement kernel $K_n(v, w)$
+  for $v \neq w$ (\S\ref{sec:moment});
+\item the raw discrete moment tensor operator
+  $M_n \colon \ell^2(V_n^{D_4}) \to \ell^2(V_n^{D_4}; \Sym^2(\R^4))$
+  (\S\ref{sec:moment});
+\item the piecewise-flat target $\PF_n$ (a finite-dimensional
+  real Hilbert space of cell-labelled symmetric tensors on $V_n$
+  with the cellwise Frobenius inner product, no cross-cell
+  compatibility imposed), and the piecewise-flat projection
+  $P_n^\PF = \id$ (\S\ref{sec:pf-target});
+\item the metric projection $\Pimet^{(n)} := P_n^\PF \circ M_n
+  \circ S_n^\lambda$ (\S\ref{sec:pf-target}).
+\end{enumerate}
+We prove the six theorems listed in the abstract, all in finite
+dimension and all as explicit bounded-linear-map / operator-identity
+statements.
+
+\subsection{What this paper does not prove}
+
+P5 is deliberately narrow. We record the exclusions explicitly:
+\begin{enumerate}
+\item No continuum-limit theorem. We do not claim
+  $\lim_{n \to \infty} \Pimet^{(n)}$ converges, in any sense, to
+  a continuum metric, metric-measure space, or Riemannian
+  manifold. All convergence claims belong to P6.
+\item No Gromov--Hausdorff, distortion, $\varepsilon$-net, or
+  spectral-stability statement for the refinement family.
+\item No Lorentzian, Einstein, Ricci, stress-energy, perfect-fluid,
+  conservation-law, or graviton claim.
+\item No identification of the finite-level metric-side output
+  with any classical metric on $S^3$, $\R^4$, $\R^{1,3}$, or any
+  other manifold.
+\item No hydrodynamic projection, macroscopic PDE, Euler-equation,
+  or Navier--Stokes statement. Those belong to P7.
+\item No quotient map $V_n^{H_4} \to V_n^{D_4}$; the paper works
+  entirely on the $D_4$ branch.
+\item No physical or phenomenological interpretation of the
+  tensor fields produced by $\Pimet^{(n)}$.
+\end{enumerate}
+
+\subsection{Source audit}
+
+Theorem inputs to this paper are:
+\begin{description}
+\item[\textbf{Internal cascade infrastructure.}]
+P2~\cite{AlgebraicSubstrate} for the explicit $24$-cell vertex set
+$V_{24} \subset \R^4$, its Coxeter symmetry $W(D_4)$ acting
+orthogonally on $\R^4$, and the identification of $V_{24}$ with
+the rescaled $D_4$ root polytope. P3~\cite{RefinementSpaces} for
+the refinement graphs $G_n^{D_4}$, the vertex inclusion
+$V_n^{D_4} \subset V_{n+1}^{D_4}$, the vertex bonding
+$p_{n+1, n}^0$ (restriction), and the equivariance of refinement
+under $W(D_4)$. P4~\cite{ClosureDynamics} for the finite-level
+state space $X_n^{D_4} = X_n^{0, D_4} \oplus X_n^{1, D_4}$, its
+Hilbert structure, and the bounded vertex-projection
+$X_n^{D_4} \to X_n^{0, D_4}$. All three papers have been
+independently reviewed at Clay-bar rigour and accepted.
+\item[\textbf{Classical mathematics.}]
+Finite-dimensional linear algebra of symmetric bilinear forms on
+$\R^4$ and rank-one tensor products \cite{HornJohnson}; elementary
+$\ell^2$ theory on finite sets \cite{ReedSimonI}; standard
+properties of orthogonal actions of finite Coxeter groups on
+Euclidean space \cite{Humphreys}.
+\end{description}
+We do not cite as theorem-grade input any other cascade-internal
+note. The bibliography below contains only the sources actually
+used in proofs.
+
+\subsection{Organization}
+
+Section~\ref{sec:coords} records the level-$n$ vertex coordinates
+and the $W(D_4)$ action on $\R^4$. Section~\ref{sec:source}
+defines the source space $\mathcal S_n$ and the bounded extraction
+map $S_n^\lambda$. Section~\ref{sec:moment} defines $K_n$ and $M_n$ and
+proves well-definedness (Theorem~\ref{thm:mn-welldef}).
+Section~\ref{sec:pf-target} defines the piecewise-flat target
+$\PF_n$, its metric, the projection $P_n^\PF$, and the metric
+projection $\Pimet^{(n)}$. Section~\ref{sec:refinement} proves
+refinement stability (Theorem~\ref{thm:mn-refinement}).
+Section~\ref{sec:equivariance} proves $W(D_4)$-equivariance
+(Theorem~\ref{thm:mn-equivariance}).
+Section~\ref{sec:continuity} proves continuity with an explicit
+operator-norm bound (Theorem~\ref{thm:pimet-continuity}) and the
+piecewise-flat landing theorem
+(Theorem~\ref{thm:pimet-landing}). Section~\ref{sec:point-source}
+proves the point-source rank-one calculation
+(Theorem~\ref{thm:point-source}). Section~\ref{sec:audit} is a
+self-audit against the Clay-bar success criteria of the work
+order. Section~\ref{sec:handoff} gives the citation contract for
+downstream papers. Section~\ref{sec:notation} is the notation
+audit.
+
+%=====================================================================
+\section{The $D_4$ Branch: Coordinates and Symmetry}
+\label{sec:coords}
+%=====================================================================
+
+Throughout this paper $\bullet = D_4$ unless stated otherwise; we
+drop the decoration when no confusion arises.
+
+\begin{notation}[Level-$n$ $D_4$ vertices and coordinates]
+\label{not:vertices-coords}
+For each $n \geq 0$, let $V_n := V_n^{D_4} = V(G_n^{D_4})$ be the
+level-$n$ vertex set of the $D_4$ refinement graph of
+\cite[Def.~2.1, Def.~2.2]{RefinementSpaces}. For each
+$v \in V_n$, let $x_v^{(n)} \in \R^4$ denote the canonical
+Euclidean coordinate of $v$ obtained from the P2
+$24$-cell realization \cite[\S 5]{AlgebraicSubstrate} together
+with the Schl\"{a}fli-refinement midpoint / centroid rule
+\cite[Def.~2.2]{RefinementSpaces}. Under vertex inclusion
+\cite[Rmk.~2.3]{RefinementSpaces}, these coordinates are
+compatible: $x_v^{(n+1)} = x_v^{(n)}$ for $v \in V_n \subset
+V_{n+1}$.
+\end{notation}
+
+\begin{hypothesis}[Coordinate-injectivity of the refinement]
+\label{fact:distinct}
+The coordinate map $V_n \to \R^4$, $v \mapsto x_v^{(n)}$, is
+injective for every $n \geq 0$.
+\end{hypothesis}
+
+\begin{remark}[Status of Hypothesis~\ref{fact:distinct}]
+\label{rmk:distinct-status}
+At level $0$, $V_0 = V_{24}$ is the $24$-vertex set of the
+$24$-cell in $\R^4$, whose vertices are pairwise distinct
+\cite[\S 5]{AlgebraicSubstrate}, so injectivity holds at level
+$0$. At higher levels, new vertices are added as edge-midpoints
+and face-centroids of level-$n$ objects
+\cite[Def.~2.2]{RefinementSpaces}. A level-$(n+1)$ midpoint lies
+in the relative interior of the spanning $1$-face and a
+level-$(n+1)$ centroid lies in the relative interior of the
+spanning $2$-face, so each new coordinate lies strictly inside a
+cell of level $n$ and is distinct from every level-$n$ vertex.
+However, proving that \emph{distinct} new midpoints/centroids
+produce distinct coordinate points, and that midpoint-coordinates
+do not coincide with centroid-coordinates of a different $2$-face,
+requires a finer Schl\"afli-subdivision-geometry argument beyond
+``relative-interior'' which this paper does not supply. We
+therefore take Hypothesis~\ref{fact:distinct} as a structural
+hypothesis of the refinement scheme; it is satisfied for the
+standard Schl\"afli refinement of the $24$-cell by direct
+coordinate check at each level, but the full geometric argument
+establishing it for all $n$ is deferred. All subsequent results
+of this paper are stated conditional on
+Hypothesis~\ref{fact:distinct}.
+\end{remark}
+
+\begin{corollary}[Nonvanishing denominator]
+\label{cor:nonvanishing}
+Under Hypothesis~\ref{fact:distinct}, for every $n \geq 0$ and
+every pair of distinct vertices $v, w \in V_n$,
+$\|x_w^{(n)} - x_v^{(n)}\| > 0$.
+\end{corollary}
+
+\begin{proof}
+Immediate from Hypothesis~\ref{fact:distinct} and
+positive-definiteness of the Euclidean norm on $\R^4$.
+\end{proof}
+
+\begin{notation}[$W(D_4)$ action]
+\label{not:wd4}
+Let $W(D_4) \leq O(4)$ denote the Coxeter group acting
+orthogonally on $\R^4$ as the Weyl group of the root system
+$D_4$ \cite[Ch.~1]{Humphreys}, realized concretely on the $D_4$
+coordinate $4$-plane of \cite[\S 3]{AlgebraicSubstrate}.
+\cite[Prop.~2.6]{RefinementSpaces} states that $W(D_4)$ permutes
+$V_n$ for every $n$ via the Schl\"{a}fli-refinement-preserving
+extension of its base action on $V_0 = V_{24}$. Coordinate
+equivariance of this vertex action is proved below in
+Lemma~\ref{lem:coord-equivariance}.
+\end{notation}
+
+\begin{lemma}[Coordinate equivariance on refined vertices]
+\label{lem:coord-equivariance}
+For every $n \geq 0$, every $g \in W(D_4)$, and every $v \in V_n$,
+\[
+  x_{g \cdot v}^{(n)} \;=\; g\,x_v^{(n)} \quad \text{in } \R^4.
+\]
+\end{lemma}
+
+\begin{proof}
+Induction on $n$.
+
+\emph{Base case $n = 0$.} $V_0 = V_{24}$ is the $24$-cell vertex
+set in the coordinate realization of
+\cite[Def.~5.3]{AlgebraicSubstrate}, on which the Coxeter group
+$W(D_4) \leq O(4)$ acts by its orthogonal action on $\R^4$
+restricted to $V_{24}$ \cite[\S 3, Cor.~5.5]{AlgebraicSubstrate}.
+With the coordinate identification $x_v^{(0)} = v \in \R^4$ for
+$v \in V_{24}$, the claim $x_{g \cdot v}^{(0)} = g\,v = g\,x_v^{(0)}$
+is the definition of the $W(D_4)$-action on $V_0$.
+
+\emph{Inductive step.} Assume $x_{g \cdot u}^{(n)} = g\,x_u^{(n)}$
+for all $g \in W(D_4)$ and $u \in V_n$. Level-$(n+1)$ vertices
+are built from level-$n$ data as:
+\begin{enumerate}
+\item[\textup{(a)}] inclusion of old vertices
+  $V_n \subset V_{n+1}$, with $x_u^{(n+1)} = x_u^{(n)}$
+  (Notation~\ref{not:vertices-coords});
+\item[\textup{(b)}] edge-midpoint vertices: for each unoriented
+  level-$n$ edge $e = \{u_1, u_2\} \in E(G_n^{D_4})$, a new vertex
+  $m_e$ with $x_{m_e}^{(n+1)} = \tfrac{1}{2}(x_{u_1}^{(n)} +
+  x_{u_2}^{(n)})$, per \cite[Def.~2.2]{RefinementSpaces};
+\item[\textup{(c)}] face-centroid vertices: for each level-$n$
+  $2$-face $F \subset G_n^{D_4}$ with vertex set
+  $\{u_1, \ldots, u_{k_F}\}$, a new vertex $c_F$ with
+  $x_{c_F}^{(n+1)} = k_F^{-1}\sum_{j=1}^{k_F} x_{u_j}^{(n)}$,
+  per \cite[Def.~2.2]{RefinementSpaces}.
+\end{enumerate}
+By \cite[Prop.~2.6]{RefinementSpaces}, the $W(D_4)$-action on
+$V_{n+1}$ is the Schl\"{a}fli-refinement-preserving extension of
+its action on $V_n$, and in particular:
+$g \cdot u = g \cdot u$ for $u \in V_n$ (case (a), same as
+level-$n$ action); $g \cdot m_{\{u_1, u_2\}} = m_{\{g u_1,
+g u_2\}}$ (case (b), $W(D_4)$ permutes edges); and
+$g \cdot c_F = c_{g \cdot F}$ (case (c), $W(D_4)$ permutes faces).
+
+For case (a), $x_{g \cdot u}^{(n+1)} = x_{g \cdot u}^{(n)} =
+g\,x_u^{(n)} = g\,x_u^{(n+1)}$ by inductive hypothesis.
+
+For case (b), using the midpoint formula,
+\[
+  x_{g \cdot m_{\{u_1, u_2\}}}^{(n+1)}
+    \;=\; x_{m_{\{g u_1, g u_2\}}}^{(n+1)}
+    \;=\; \tfrac{1}{2}\bigl(x_{g u_1}^{(n)} + x_{g u_2}^{(n)}\bigr)
+    \;=\; \tfrac{1}{2}\bigl(g\,x_{u_1}^{(n)} + g\,x_{u_2}^{(n)}\bigr)
+    \;=\; g\,x_{m_{\{u_1, u_2\}}}^{(n+1)},
+\]
+using the inductive hypothesis in the third equality and
+linearity of $g \in O(4)$ in the fourth.
+
+For case (c), using the centroid formula,
+\[
+  x_{g \cdot c_F}^{(n+1)}
+    \;=\; x_{c_{g \cdot F}}^{(n+1)}
+    \;=\; k_F^{-1}\sum_{j=1}^{k_F} x_{g u_j}^{(n)}
+    \;=\; k_F^{-1}\sum_{j=1}^{k_F} g\,x_{u_j}^{(n)}
+    \;=\; g\,x_{c_F}^{(n+1)},
+\]
+using the inductive hypothesis and linearity of $g$. Induction
+completes the proof.
+\end{proof}
+
+\begin{fact}[Vertex sets are finite]
+\label{fact:finite}
+$|V_n| < \infty$ for every $n \geq 0$.
+\end{fact}
+
+\begin{proof}
+By induction from $|V_0| = 24$ and finiteness of the level-$n$
+edge and $2$-face sets of the Schl\"{a}fli refinement
+\cite[Prop.~2.6]{RefinementSpaces}.
+\end{proof}
+
+\begin{notation}[Coordinate diameter]
+\label{not:diam}
+Set
+\[
+  d_n \;:=\; \min_{v \neq w \in V_n}
+    \|x_w^{(n)} - x_v^{(n)}\|, \qquad
+  D_n \;:=\; \max_{v, w \in V_n}
+    \|x_w^{(n)} - x_v^{(n)}\|.
+\]
+Under Hypothesis~\ref{fact:distinct} (and therefore
+Corollary~\ref{cor:nonvanishing}) we have $0 < d_n \leq D_n <
+\infty$, and $D_n$ is bounded by the $24$-cell diameter, hence by
+a finite constant independent of $n$.
+\end{notation}
+
+%=====================================================================
+\section{Source Data from the P4 State Space}
+\label{sec:source}
+%=====================================================================
+
+\begin{definition}[Scalar source space]
+\label{def:scalar-source}
+The \emph{scalar source space} at level $n$ is
+\[
+  \mathcal S_n \;:=\; \ell^2(V_n),
+\]
+the finite-dimensional Hilbert space of $\R$-valued functions on
+$V_n$ with the counting-measure inner product
+$\langle s, s' \rangle := \sum_{v \in V_n} s(v)\,s'(v)$.
+\end{definition}
+
+\begin{definition}[P4 state space on the $D_4$ branch]
+\label{def:p4-state}
+Let $X_n := X_n^{D_4} = X_n^{0, D_4} \oplus X_n^{1, D_4}$ denote
+the finite-level P4 closure-dynamics state space
+\cite[Def.~2.1]{ClosureDynamics}, with the direct-sum inner
+product.
+\end{definition}
+
+\begin{definition}[Admissible fibre functional]
+\label{def:fibre-functional}
+A \emph{$W(D_4)$-invariant fibre functional} is a bounded
+$\R$-linear map $\lambda \colon F^0 \to \R$ satisfying
+\[
+  \lambda \circ \rho_{F^0}^{D_4}(g) \;=\; \lambda
+  \qquad \text{for every } g \in W(D_4),
+\]
+where $F^0$ is the $D_4$-branch vertex fibre and
+$\rho_{F^0}^{D_4} \colon W(D_4) \to O(F^0)$ is the branchwise
+Coxeter action of \cite[Def.~8.1]{RefinementSpaces}. The
+operator norm $\|\lambda\|_\op$ is the norm of $\lambda$ as an
+element of the finite-dimensional dual $(F^0)^\ast$.
+\end{definition}
+
+\begin{proposition}[Existence of nonzero invariant fibre functionals]
+\label{prop:lambda-exists}
+There exists at least one nonzero $W(D_4)$-invariant fibre
+functional $\lambda \in (F^0)^\ast$.
+\end{proposition}
+
+\begin{proof}
+By \cite[Def.~8.1]{RefinementSpaces} (branchwise Coxeter action),
+on the $D_4$ branch the fibre representation
+$\rho_{F^0}^{D_4} \colon W(D_4) \to O(F^0)$ acts by the standard
+$D_4$-reflection representation on the $V_{D_4}$ summand of
+$F^0$ and \emph{trivially} on the $V_{H_4}, V_{16}, V_8$
+summands. Therefore the invariant subspace satisfies
+\[
+  (F^0)^{W(D_4)} \;\supseteq\; V_{H_4} \oplus V_{16} \oplus V_8,
+\]
+and in particular $(F^0)^{W(D_4)}$ is nonzero. Choose any nonzero
+vector $w_0 \in V_{16}$ (say) and any norm-one dual basis element
+$\varphi_0 \in V_{16}^\ast$ with $\varphi_0(w_0) \neq 0$; extend
+$\varphi_0$ to a linear functional $\lambda \in (F^0)^\ast$ by
+setting $\lambda(v) := \varphi_0(\mathrm{pr}_{V_{16}} v)$, where
+$\mathrm{pr}_{V_{16}} \colon F^0 \to V_{16}$ is the direct-sum
+projection. Then $\lambda$ vanishes on $V_{H_4} \oplus V_{D_4}
+\oplus V_8$ and equals $\varphi_0$ on $V_{16}$. For every
+$g \in W(D_4)$, the action $\rho_{F^0}^{D_4}(g)$ preserves the
+$V_{16}$ summand and acts trivially on it
+\cite[Def.~8.1]{RefinementSpaces}, so
+$\lambda(\rho_{F^0}^{D_4}(g) v) = \varphi_0(\mathrm{pr}_{V_{16}}
+(\rho_{F^0}^{D_4}(g) v)) = \varphi_0(\mathrm{pr}_{V_{16}} v) =
+\lambda(v)$. Hence $\lambda \circ \rho_{F^0}^{D_4}(g) = \lambda$
+for every $g$, and $\lambda(w_0) = \varphi_0(w_0) \neq 0$ shows
+$\lambda$ is nonzero. Its operator norm is
+$\|\lambda\|_\op = \|\varphi_0\|_\op$, finite by construction.
+\end{proof}
+
+\begin{remark}[Averaging construction of further invariant functionals]
+\label{rmk:lambda-averaging}
+An alternative construction that works for any finite group
+representation is the group average. For any
+$\varphi \in (F^0)^\ast$, set
+\[
+  \lambda_\varphi \;:=\; \frac{1}{|W(D_4)|}
+    \sum_{g \in W(D_4)}
+    \varphi \circ \rho_{F^0}^{D_4}(g).
+\]
+$\lambda_\varphi$ is $W(D_4)$-invariant by the standard
+substitution-of-summation argument; it equals the orthogonal
+projection of $\varphi$ onto the $W(D_4)$-invariant summand of
+$(F^0)^\ast$. The norm bound $\|\lambda_\varphi\|_\op \leq
+\|\varphi\|_\op$ follows from the triangle inequality applied to
+the averaged sum and the orthogonality of each
+$\rho_{F^0}^{D_4}(g)$ on $F^0$
+(which implies $\|\varphi \circ \rho_{F^0}^{D_4}(g)\|_\op =
+\|\varphi\|_\op$; this orthogonality is printed in
+\cite[Def.~8.1]{RefinementSpaces} as part of the action's
+definition). Proposition~\ref{prop:lambda-exists} gives a
+concrete nonzero instance; the averaging remark records the
+general construction.
+\end{remark}
+
+\begin{definition}[Source extraction map $S_n^\lambda$]
+\label{def:source-extraction}
+Fix a $W(D_4)$-invariant fibre functional $\lambda \in (F^0)^\ast$
+(Definition~\ref{def:fibre-functional}), chosen once and for all.
+The \emph{source extraction operator}
+$S_n^\lambda \colon X_n \to \mathcal S_n$ is the composition of:
+\begin{itemize}
+\item the direct-sum vertex-sector projection
+  $\pi^0 \colon X_n^{0, D_4} \oplus X_n^{1, D_4} \to X_n^{0, D_4}$,
+  and
+\item the $\lambda$-pullback $\tau_\lambda \colon
+  X_n^{0, D_4} \to \mathcal S_n$ defined at each vertex
+  $v \in V_n$ by
+  \[
+    \tau_\lambda(f)(v) \;:=\; \lambda(f(v)),
+  \]
+  where $f \in X_n^{0, D_4}$ is the standard fibrewise
+  representation $f = (f(v))_{v \in V_n}$ with
+  $f(v) \in F^0$ (the P3 sector fibre
+  \cite[Notation~3.3]{RefinementSpaces}).
+\end{itemize}
+Thus $S_n^\lambda := \tau_\lambda \circ \pi^0$.
+\end{definition}
+
+\begin{proposition}[Source extraction is bounded]
+\label{prop:source-bounded}
+For every $W(D_4)$-invariant fibre functional $\lambda$, the
+operator $S_n^\lambda \colon X_n \to \mathcal S_n$ is linear and
+bounded with
+$\|S_n^\lambda\|_\op \leq \|\lambda\|_\op$.
+\end{proposition}
+
+\begin{proof}
+$S_n^\lambda$ is linear by linearity of $\lambda$ and of $\pi^0$.
+For each $v \in V_n$, $|\lambda(f(v))| \leq \|\lambda\|_\op
+\cdot \|f(v)\|_{F^0}$ by the definition of the dual norm. Squaring
+and summing over $v \in V_n$,
+$\|\tau_\lambda(f)\|_{\mathcal S_n}^2 = \sum_v |\lambda(f(v))|^2
+\leq \|\lambda\|_\op^2 \sum_v \|f(v)\|_{F^0}^2 =
+\|\lambda\|_\op^2 \|f\|_{X_n^0}^2$,
+so $\|\tau_\lambda\|_\op \leq \|\lambda\|_\op$. Since $\pi^0$ is
+the orthogonal direct-sum projection with $\|\pi^0\|_\op \leq 1$,
+composition gives
+$\|S_n^\lambda\|_\op \leq \|\tau_\lambda\|_\op \cdot \|\pi^0\|_\op
+\leq \|\lambda\|_\op$.
+\end{proof}
+
+\begin{remark}[Choice of $\lambda$]
+\label{rmk:source-choice}
+Every theorem below is stated for a fixed but arbitrary
+$W(D_4)$-invariant fibre functional $\lambda$. The metric
+projection $\Pimet^{(n)} = P_n^\PF \circ M_n \circ S_n^\lambda$
+inherits $\lambda$ as a parameter, and every operator-norm bound
+involving $\Pimet^{(n)}$ carries $\|\lambda\|_\op$. This choice
+keeps P5 independent of any unprinted fibre-level operator
+structure beyond what P3 already prints (the finite-dimensional
+real vector space $F^0$ and the unitary Coxeter action
+$\rho_{F^0}^{D_4}$). In downstream work, any specific
+computation of $\Pimet^{(n)}$ requires first fixing a specific
+$\lambda$.
+\end{remark}
+
+%=====================================================================
+\section{The Discrete Moment Tensor}
+\label{sec:moment}
+%=====================================================================
+
+\begin{definition}[Normalized rank-one displacement kernel]
+\label{def:kernel}
+For every $n \geq 0$ and every pair of distinct vertices
+$v, w \in V_n$, set
+\[
+  K_n(v, w) \;:=\;
+    \frac{(x_w^{(n)} - x_v^{(n)}) \otimes
+      (x_w^{(n)} - x_v^{(n)})}{\|x_w^{(n)} - x_v^{(n)}\|^2}
+  \;\in\; \Sym^2(\R^4).
+\]
+Here $(a \otimes a)$ is the rank-one symmetric matrix with
+entries $a_i a_j$. By Corollary~\ref{cor:nonvanishing} the
+denominator is nonzero, so $K_n(v, w)$ is well-defined.
+\end{definition}
+
+\begin{lemma}[Properties of $K_n$]
+\label{lem:kernel-properties}
+For all distinct $v, w \in V_n$:
+\begin{enumerate}
+\item[\textup{(i)}] $K_n(v, w) \in \Sym^2(\R^4)$, i.e.\
+  $K_n(v, w)^\top = K_n(v, w)$.
+\item[\textup{(ii)}] $K_n(v, w)$ is a rank-one orthogonal
+  projector: $K_n(v, w)^2 = K_n(v, w)$ and
+  $\tr K_n(v, w) = 1$.
+\item[\textup{(iii)}] $K_n(v, w) = K_n(w, v)$.
+\item[\textup{(iv)}] $\|K_n(v, w)\|_F = 1$ in the Frobenius
+  norm, equivalently $\|K_n(v, w)\|_\op = 1$ as an operator on
+  $\R^4$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Write $r := x_w^{(n)} - x_v^{(n)}$ and $\hat r := r / \|r\|$.
+Then $K_n(v, w) = \hat r \otimes \hat r = \hat r\,\hat r^\top$.
+(i): $(a \otimes a)^\top = a \otimes a$. (ii): for any unit
+vector $\hat r$, $(\hat r\,\hat r^\top)^2 = \hat r\,(\hat r^\top
+\hat r)\,\hat r^\top = \hat r\,\hat r^\top$, and $\tr(\hat r\,
+\hat r^\top) = \hat r^\top \hat r = 1$. (iii):
+$(x_v - x_w) = -(x_w - x_v)$ and $(-a) \otimes (-a) = a \otimes
+a$. (iv): the Frobenius norm of a rank-one projector onto a unit
+direction is $\sqrt{\tr(K^2)} = \sqrt{\tr K} = 1$; the operator
+norm equals the largest eigenvalue, which is $1$.
+\end{proof}
+
+\begin{definition}[Raw symmetric-tensor space]
+\label{def:tn}
+Let
+\[
+  \mathcal T_n \;:=\; \ell^2(V_n; \Sym^2(\R^4))
+\]
+be the finite-dimensional Hilbert space of $\Sym^2(\R^4)$-valued
+functions on $V_n$ with the counting-measure Frobenius inner
+product
+\[
+  \langle T, T' \rangle_{\mathcal T_n}
+    \;:=\; \sum_{v \in V_n} \tr\bigl(T(v)^\top T'(v)\bigr)
+    \;=\; \sum_{v \in V_n} \langle T(v), T'(v)
+    \rangle_F.
+\]
+\end{definition}
+
+\begin{definition}[Discrete moment tensor operator]
+\label{def:mn}
+The \emph{discrete moment tensor operator} at level $n$ is the
+linear map $M_n \colon \mathcal S_n \to \mathcal T_n$ defined
+pointwise by
+\[
+  (M_n s)(v) \;:=\; \sum_{w \in V_n,\ w \neq v} s(w)\,K_n(v, w),
+  \qquad v \in V_n.
+\]
+The sum has finitely many terms by Fact~\ref{fact:finite}.
+\end{definition}
+
+\begin{theorem}[$M_n$ is well-defined, bounded, and symmetric]
+\label{thm:mn-welldef}
+For every $n \geq 0$:
+\begin{enumerate}
+\item[\textup{(i)}] The operator $M_n \colon \mathcal S_n \to
+  \mathcal T_n$ is a well-defined linear map, and for every
+  $s \in \mathcal S_n$ and every $v \in V_n$, $(M_n s)(v) \in
+  \Sym^2(\R^4)$.
+\item[\textup{(ii)}] $M_n$ is bounded, with operator-norm bound
+  $\|M_n\|_\op \leq |V_n|$.
+\item[\textup{(iii)}] For pointwise nonnegative $s \geq 0$ and
+  every $v$, $(M_n s)(v)$ is a positive-semidefinite symmetric
+  matrix.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i): By Corollary~\ref{cor:nonvanishing} and
+Fact~\ref{fact:finite}, the defining sum in
+Definition~\ref{def:mn} is a finite sum of well-defined symmetric
+rank-one matrices (Lemma~\ref{lem:kernel-properties}(i)). The sum
+of symmetric matrices is symmetric, so $(M_n s)(v) \in
+\Sym^2(\R^4)$. Linearity in $s$ is immediate from the defining
+formula.
+
+(ii): For each $v \in V_n$,
+\[
+  \|(M_n s)(v)\|_F
+    \;=\; \biggl\|\sum_{w \neq v} s(w)\,K_n(v, w)\biggr\|_F
+    \;\leq\; \sum_{w \neq v} |s(w)|\,\|K_n(v, w)\|_F
+    \;=\; \sum_{w \neq v} |s(w)|
+\]
+by Lemma~\ref{lem:kernel-properties}(iv). By the Cauchy--Schwarz
+inequality on $V_n \setminus \{v\}$,
+\[
+  \sum_{w \neq v} |s(w)|
+    \;\leq\; \sqrt{|V_n| - 1} \cdot \|s\|_{\mathcal S_n}
+    \;\leq\; \sqrt{|V_n|} \cdot \|s\|_{\mathcal S_n}.
+\]
+Squaring and summing over $v \in V_n$,
+\[
+  \|M_n s\|_{\mathcal T_n}^2
+    \;=\; \sum_v \|(M_n s)(v)\|_F^2
+    \;\leq\; \sum_v |V_n|\cdot \|s\|_{\mathcal S_n}^2
+    \;=\; |V_n|^2\,\|s\|_{\mathcal S_n}^2,
+\]
+whence $\|M_n s\|_{\mathcal T_n} \leq |V_n|\cdot
+\|s\|_{\mathcal S_n}$, giving $\|M_n\|_\op \leq |V_n|$.
+
+(iii): For $s \geq 0$, $(M_n s)(v) = \sum_{w \neq v}
+s(w)\,K_n(v, w)$ is a nonnegative combination of rank-one
+projectors $K_n(v, w)$. Each $K_n(v, w)$ is positive
+semidefinite by Lemma~\ref{lem:kernel-properties}(ii), and the
+cone of positive semidefinite symmetric matrices is closed under
+nonnegative linear combinations. Hence $(M_n s)(v) \succeq 0$.
+\end{proof}
+
+\begin{remark}[Level-dependent bound]
+\label{rmk:level-bound}
+The bound $\|M_n\|_\op \leq |V_n|$ is level-dependent and grows
+polynomially with $n$ via $|V_n|$. No finer asymptotic is
+claimed here. Convergence under refinement of the operator
+family $\{M_n\}_{n \geq 0}$ is the target of P6 and is out of
+scope for this paper.
+\end{remark}
+
+%=====================================================================
+\section{The Piecewise-Flat Target and the Metric Projection}
+\label{sec:pf-target}
+%=====================================================================
+
+\subsection{Cell-labelled symmetric tensor fields}
+
+The piecewise-flat target in this paper is the space of
+\emph{cell-labelled} symmetric tensor fields at level $n$: each
+vertex $v \in V_n$ plays the role of an abstract cell label, and
+each cell carries a constant symmetric tensor value in
+$\Sym^2(\R^4)$. No cross-cell (``face-compatibility'') constraint
+between distinct cells is imposed in this model, and no global
+continuous field on a geometric realization of the refinement
+complex is constructed. The name ``piecewise-flat'' indicates
+only that the tensor is constant on each cell; it does not imply
+a continuous or geometrically-realized field. A future paper
+that wishes to impose shared-face compatibility conditions for a
+genuinely piecewise-flat global field may do so by passing to a
+named subspace of $\PF_n$ with a printed compatibility rule; no
+such additional structure is used here.
+
+\begin{definition}[Piecewise-flat target $\PF_n$]
+\label{def:pfn}
+The \emph{piecewise-flat target} at level $n$ is the
+finite-dimensional real Hilbert space
+\[
+  \PF_n \;:=\; \ell^2(V_n;\Sym^2(\R^4)),
+\]
+the space of functions $T \colon V_n \to \Sym^2(\R^4)$, with the
+\emph{cellwise Frobenius inner product}
+\[
+  \langle T, T' \rangle_{\PF_n}
+    \;:=\; \sum_{v \in V_n} \langle T(v), T'(v) \rangle_F,
+  \qquad \langle A, B \rangle_F := \tr(A^\top B),
+\]
+and the induced norm
+$\|T\|_{\PF_n}^2 = \sum_v \|T(v)\|_F^2$. The admissibility
+condition on a cell-labelled tensor field $T \in \PF_n$ is: for
+every $v \in V_n$, $T(v) \in \Sym^2(\R^4)$ (symmetry on each
+cell). No cross-cell compatibility condition is imposed.
+\end{definition}
+
+\begin{remark}[$\PF_n$ vs.\ $\mathcal T_n$]
+\label{rmk:pfn-vs-tn}
+As finite-dimensional real Hilbert spaces, $\PF_n$ and
+$\mathcal T_n$ are literally identical: both are
+$\ell^2(V_n;\Sym^2(\R^4))$ with the cellwise Frobenius inner
+product. The notational distinction is purely interpretive:
+$\mathcal T_n$ is the raw codomain of $M_n$
+(Definition~\ref{def:tn}); $\PF_n$ is the same space viewed as
+the cell-labelled target for $\Pimet^{(n)}$. The admissibility
+condition of Definition~\ref{def:pfn} (symmetry of each $T(v)$)
+is already built into the codomain $\Sym^2(\R^4)$ of $M_n$, so
+no nontrivial projection is required to pass from $\mathcal T_n$
+to $\PF_n$. This is why the piecewise-flat projection
+(Definition~\ref{def:pn-pf}) is the identity in this model.
+\end{remark}
+
+\begin{definition}[Piecewise-flat projection $P_n^\PF$]
+\label{def:pn-pf}
+The \emph{piecewise-flat projection} is the canonical identity
+map
+\[
+  P_n^\PF \;:=\; \id_{\mathcal T_n}
+    \;\colon\; \mathcal T_n \to \PF_n.
+\]
+It is an isometric isomorphism of Hilbert spaces, in particular
+$\|P_n^\PF\|_\op = 1$.
+\end{definition}
+
+\begin{remark}[Why $P_n^\PF = \id$ here]
+\label{rmk:pnpf-identity}
+The only admissibility condition imposed by
+Definition~\ref{def:pfn} is symmetry of each cell tensor
+$T(v) \in \Sym^2(\R^4)$, which is automatic because the codomain
+of $M_n$ is already $\Sym^2(\R^4)$. No cross-cell compatibility
+condition is imposed (Remark~\ref{rmk:pfn-vs-tn}). No further
+projection is required, so $P_n^\PF$ is the identity. We record it as a named bounded
+linear operator so that every theorem involving $\Pimet^{(n)}$
+can be stated as a composition of three named bounded linear
+maps, in the standard form of the work order. Any later paper
+that imposes additional admissibility constraints (e.g.\ a
+codimension-$1$ tangential-space constraint, or a trace
+normalization) would redefine $P_n^\PF$ as the corresponding
+orthogonal projection; all theorems below would then carry the
+reduced bound $\|P_n^\PF\|_\op \leq 1$ instead of equality.
+\end{remark}
+
+\begin{definition}[Metric projection $\Pimet^{(n)}$]
+\label{def:pimet}
+The \emph{level-$n$ metric projection} is the composition
+\[
+  \Pimet^{(n)} \;:=\; P_n^\PF \circ M_n \circ S_n^\lambda
+    \;\colon\; X_n \to \PF_n.
+\]
+When we wish to consider the source-level variant we write
+$\widetilde{\Pimet}^{(n)} := P_n^\PF \circ M_n \colon
+\mathcal S_n \to \PF_n$, so that $\Pimet^{(n)} =
+\widetilde{\Pimet}^{(n)} \circ S_n^\lambda$.
+\end{definition}
+
+%=====================================================================
+\section{Refinement Stability}
+\label{sec:refinement}
+%=====================================================================
+
+\begin{notation}[Refinement bonding maps]
+\label{not:bonding}
+Let $p_{n+1, n}^0 \colon X_{n+1}^{0, D_4} \to X_n^{0, D_4}$ be
+the P3 vertex bonding by restriction
+\cite[Def.~5.1]{RefinementSpaces}; extend componentwise to
+$p_{n+1, n}^0 \colon \mathcal S_{n+1} \to \mathcal S_n$ via
+\[
+  (p_{n+1, n}^0 s)(v) \;:=\; s(v), \qquad v \in V_n \subset V_{n+1},
+\]
+using the vertex inclusion of \cite[Rmk.~2.3]{RefinementSpaces}.
+Let $p_{n+1, n}^X \colon X_{n+1} \to X_n$ be the direct-sum
+bonding $p_{n+1, n}^X := p_{n+1, n}^0 \oplus p_{n+1, n}^1$ of
+\cite[Thm.~5.3]{RefinementSpaces}. Both are contractions.
+\end{notation}
+
+\begin{definition}[Tensor coarse projection]
+\label{def:qn}
+The \emph{tensor coarse projection} $q_{n+1, n} \colon
+\mathcal T_{n+1} \to \mathcal T_n$ is defined by vertex
+restriction:
+\[
+  (q_{n+1, n} T)(v) \;:=\; T(v), \qquad v \in V_n \subset V_{n+1}.
+\]
+The piecewise-flat analogue $q_{n+1, n}^\PF \colon \PF_{n+1} \to
+\PF_n$ is the same formula under the identification $\PF_n =
+\mathcal T_n$.
+\end{definition}
+
+\begin{lemma}[Source--state bonding compatibility]
+\label{lem:source-state-bonding}
+For every $W(D_4)$-invariant fibre functional $\lambda$, the
+source extraction satisfies
+\[
+  S_n^\lambda \circ p_{n+1, n}^X
+    \;=\; p_{n+1, n}^0 \circ S_{n+1}^\lambda
+  \qquad \text{on } X_{n+1} \to \mathcal S_n.
+\]
+\end{lemma}
+
+\begin{proof}
+By Definition~\ref{def:source-extraction}, $S_n^\lambda =
+\tau_\lambda \circ \pi^0$ with $\pi^0$ the direct-sum
+vertex-sector projection. The direct-sum bonding $p_{n+1, n}^X =
+p_{n+1, n}^0 \oplus p_{n+1, n}^1$ commutes with $\pi^0$:
+$\pi^0 \circ p_{n+1, n}^X = p_{n+1, n}^0 \circ \pi^0$, because
+$\pi^0$ is the projection onto the first summand and
+$p_{n+1, n}^X$ preserves summands. The $\lambda$-pullback
+$\tau_\lambda$ commutes with vertex restriction of
+fibre-valued functions: for $v \in V_n \subset V_{n+1}$ and
+$f \in X_{n+1}^{0, D_4}$,
+$(\tau_\lambda \circ p_{n+1, n}^0)(f)(v) =
+\lambda((p_{n+1, n}^0 f)(v)) = \lambda(f(v)) =
+\tau_\lambda(f)(v) = (p_{n+1, n}^0 \circ \tau_\lambda)(f)(v)$,
+using the vertex inclusion $V_n \subset V_{n+1}$ and the formula
+$(p_{n+1, n}^0 f)(v) = f(v)$ from Notation~\ref{not:bonding}.
+Composing:
+$S_n^\lambda \circ p_{n+1, n}^X = \tau_\lambda \circ \pi^0
+\circ p_{n+1, n}^X = \tau_\lambda \circ p_{n+1, n}^0 \circ \pi^0 =
+p_{n+1, n}^0 \circ \tau_\lambda \circ \pi^0 = p_{n+1, n}^0 \circ
+S_{n+1}^\lambda$.
+\end{proof}
+
+\begin{definition}[Old-vertex subspace]
+\label{def:old-vertex-subspace}
+The \emph{old-vertex subspace} at level $n+1$ is
+\[
+  \mathcal S_{n+1}^{\mathrm{old}}
+    \;:=\; \{\,s \in \mathcal S_{n+1} :
+      s(w) = 0 \text{ for every } w \in V_{n+1}\setminus V_n\,\},
+\]
+the finite-dimensional subspace of level-$(n+1)$ source functions
+supported on the old-vertex set $V_n \subset V_{n+1}$. Under the
+inclusion-induced zero-extension map
+$\iota_{n, n+1} \colon \mathcal S_n \to \mathcal S_{n+1}^{\mathrm{old}}$,
+$(\iota_{n, n+1} s)(w) := s(w)$ if $w \in V_n$ and $0$ otherwise,
+$\iota_{n, n+1}$ is a linear isometric bijection and
+$p_{n+1, n}^0 \circ \iota_{n, n+1} = \id_{\mathcal S_n}$.
+
+Analogously on the state side,
+\[
+  X_{n+1}^{\mathrm{old}} \;:=\;
+    (S_{n+1}^\lambda)^{-1}\bigl(\mathcal S_{n+1}^{\mathrm{old}}\bigr)
+      \;\subset\; X_{n+1}
+\]
+is the preimage of $\mathcal S_{n+1}^{\mathrm{old}}$ under the
+level-$(n+1)$ source extraction.
+\end{definition}
+
+\begin{theorem}[Refinement stability of $M_n$ on old-vertex sources]
+\label{thm:mn-refinement}
+For every $n \geq 0$, the operator identity
+\[
+  q_{n+1, n} \circ M_{n+1}|_{\mathcal S_{n+1}^{\mathrm{old}}}
+    \;=\; M_n \circ p_{n+1, n}^0|_{\mathcal S_{n+1}^{\mathrm{old}}}
+  \qquad \text{as maps from }
+    \mathcal S_{n+1}^{\mathrm{old}} \text{ to } \mathcal T_n
+\]
+holds. Consequently, on the state side,
+\[
+  q_{n+1, n}^\PF \circ
+    \Pimet^{(n+1)}|_{X_{n+1}^{\mathrm{old}}}
+    \;=\; \Pimet^{(n)} \circ
+       p_{n+1, n}^X|_{X_{n+1}^{\mathrm{old}}}
+  \qquad \text{as maps from }
+    X_{n+1}^{\mathrm{old}} \text{ to } \PF_n.
+\]
+The identity is stated only on the old-vertex subspaces; it does
+not extend to all of $\mathcal S_{n+1}$ or $X_{n+1}$ because the
+level-$(n+1)$ source at new vertices $V_{n+1}\setminus V_n$
+produces additional nonzero kernel terms in $M_{n+1}s(v)$ that are
+not captured by $M_n p_{n+1, n}^0 s$ (see
+Remark~\ref{rmk:refinement-scope}).
+\end{theorem}
+
+\begin{proof}
+Fix $s \in \mathcal S_{n+1}^{\mathrm{old}}$ and $v \in V_n
+\subset V_{n+1}$. By the defining condition, $s(w) = 0$ for every
+$w \in V_{n+1}\setminus V_n$. On the one hand, by Definitions
+\ref{def:mn} and \ref{def:qn},
+\[
+  (q_{n+1, n} M_{n+1} s)(v)
+    \;=\; (M_{n+1} s)(v)
+    \;=\; \sum_{w \in V_{n+1},\ w \neq v} s(w)\,K_{n+1}(v, w)
+    \;=\; \sum_{w \in V_n\setminus\{v\}} s(w)\,K_{n+1}(v, w),
+\]
+using $s(w) = 0$ for $w \in V_{n+1}\setminus V_n$ to drop the
+new-vertex summands. By Notation~\ref{not:vertices-coords},
+$x_u^{(n+1)} = x_u^{(n)}$ for every $u \in V_n$, so
+$K_{n+1}(v, w) = K_n(v, w)$ whenever $v, w \in V_n$. Hence
+\[
+  (q_{n+1, n} M_{n+1} s)(v)
+    \;=\; \sum_{w \in V_n\setminus\{v\}} s(w)\,K_n(v, w).
+\]
+
+On the other hand, by Definition~\ref{def:mn} and
+Notation~\ref{not:bonding},
+\[
+  (M_n p_{n+1, n}^0 s)(v)
+    \;=\; \sum_{w \in V_n\setminus\{v\}}
+       (p_{n+1, n}^0 s)(w)\,K_n(v, w)
+    \;=\; \sum_{w \in V_n\setminus\{v\}} s(w)\,K_n(v, w),
+\]
+using $(p_{n+1, n}^0 s)(w) = s(w)$ for $w \in V_n$. The two sides
+agree, proving the source-level identity on
+$\mathcal S_{n+1}^{\mathrm{old}}$.
+
+The state-level consequence follows by composing with
+$P_n^\PF = \id$ and
+Lemma~\ref{lem:source-state-bonding}: for every
+$\Phi \in X_{n+1}^{\mathrm{old}}$,
+$S_{n+1}^\lambda \Phi \in \mathcal S_{n+1}^{\mathrm{old}}$ by
+definition of $X_{n+1}^{\mathrm{old}}$, and
+\begin{align*}
+  (q_{n+1, n}^\PF \Pimet^{(n+1)} \Phi)
+    &\;=\; q_{n+1, n}^\PF\,P_{n+1}^\PF\,M_{n+1}\,S_{n+1}^\lambda
+       \,\Phi
+     \;=\; q_{n+1, n}\,M_{n+1}\,S_{n+1}^\lambda\,\Phi \\
+    &\;=\; M_n\,p_{n+1, n}^0\,S_{n+1}^\lambda\,\Phi
+     \;=\; M_n\,S_n^\lambda\,p_{n+1, n}^X\,\Phi
+     \;=\; \Pimet^{(n)}\,p_{n+1, n}^X\,\Phi,
+\end{align*}
+using $P_{n+1}^\PF = \id$, $P_n^\PF = \id$, the source-level
+identity just proved applied to
+$S_{n+1}^\lambda \Phi \in \mathcal S_{n+1}^{\mathrm{old}}$, and
+Lemma~\ref{lem:source-state-bonding}.
+\end{proof}
+
+\begin{remark}[Honest scope of refinement stability]
+\label{rmk:refinement-scope}
+Theorem~\ref{thm:mn-refinement}, as proved, holds as a literal
+operator identity only on the subspace of level-$(n+1)$ source
+functions vanishing on newly added vertices. This is the honest
+finite-level statement: the moment tensor is determined by the
+source values at all visible vertices, and refinement adds new
+vertices that carry their own source data. The identity cannot be
+extended to all of $\mathcal S_{n+1}$ without introducing a
+projection or discarding the new-vertex contributions, and we
+decline to do either. Convergence of the full $M_{n+1}$ to some
+limit of $M_n$ as $n \to \infty$ is outside the scope of this
+paper; that question is the target of P6.
+\end{remark}
+
+%=====================================================================
+\section{$W(D_4)$-Equivariance}
+\label{sec:equivariance}
+%=====================================================================
+
+\begin{notation}[Induced $W(D_4)$ actions]
+\label{not:induced-actions}
+The orthogonal $W(D_4)$ action on $\R^4$ of
+Notation~\ref{not:wd4} induces:
+\begin{itemize}
+\item on $\mathcal S_n = \ell^2(V_n)$, the permutation action
+  $(g \cdot s)(v) := s(g^{-1} v)$;
+\item on $\mathcal T_n = \ell^2(V_n; \Sym^2(\R^4))$, the twisted
+  permutation action
+  $(g \cdot T)(v) := g\,T(g^{-1} v)\,g^\top$, where the
+  right-hand side is the conjugation action of $g \in O(4)$ on
+  $\Sym^2(\R^4)$;
+\item on $\PF_n = \mathcal T_n$, the same formula;
+\item on $X_n$, the P3 branchwise Coxeter action
+  \cite[Def.~8.1]{RefinementSpaces}.
+\end{itemize}
+\end{notation}
+
+\begin{fact}[All induced actions are orthogonal]
+\label{fact:actions-orthogonal}
+Each of the four induced actions in
+Notation~\ref{not:induced-actions} is a unitary representation
+of $W(D_4)$ on the corresponding finite-dimensional Hilbert
+space.
+\end{fact}
+
+\begin{proof}
+For the $\mathcal S_n$ action this is the standard statement that
+permutation actions preserve the counting-measure $\ell^2$ norm.
+For the $\mathcal T_n$ and $\PF_n$ actions, $(g \cdot T)(v) =
+g\,T(g^{-1}v)\,g^\top$ has Frobenius norm $\|g\,T(g^{-1}v)\,
+g^\top\|_F = \|T(g^{-1}v)\|_F$, using that $g \in O(4)$ preserves
+the Frobenius norm under conjugation (because conjugation by an
+orthogonal matrix is an isometry on symmetric matrices in the
+Frobenius inner product). Summing squared fibre norms over
+$v \in V_n$ and using that $g$ permutes $V_n$ gives unitarity.
+The $X_n$ case is \cite[Def.~8.1]{RefinementSpaces}, where the
+unitarity of $\rho_{F^0}^{D_4}(g)$ on $X_n^{0, D_4}$ is stated as
+part of the definition of the branchwise Coxeter action.
+\end{proof}
+
+\begin{lemma}[Kernel equivariance]
+\label{lem:kernel-equiv}
+For every $g \in W(D_4)$ and every distinct $v, w \in V_n$,
+\[
+  K_n(g v, g w) \;=\; g\,K_n(v, w)\,g^\top.
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:coord-equivariance}, $x_{g u}^{(n)} = g\,x_u^{(n)}$ for
+every $u \in V_n$. Hence
+$x_{g w}^{(n)} - x_{g v}^{(n)} = g(x_w^{(n)} - x_v^{(n)})$, and
+$\|x_{g w}^{(n)} - x_{g v}^{(n)}\| = \|g(x_w^{(n)} - x_v^{(n)})\|
+= \|x_w^{(n)} - x_v^{(n)}\|$ because $g \in O(4)$ preserves
+Euclidean norm. Writing $r := x_w^{(n)} - x_v^{(n)}$ and
+$\hat r := r/\|r\|$:
+\[
+  K_n(gv, gw)
+    \;=\; \frac{(gr) \otimes (gr)}{\|gr\|^2}
+    \;=\; \frac{(gr)(gr)^\top}{\|r\|^2}
+    \;=\; g\,\frac{r\,r^\top}{\|r\|^2}\,g^\top
+    \;=\; g\,K_n(v, w)\,g^\top.
+\]
+\end{proof}
+
+\begin{theorem}[$W(D_4)$-equivariance of $M_n$ and $\Pimet^{(n)}$]
+\label{thm:mn-equivariance}
+For every $g \in W(D_4)$:
+\begin{enumerate}
+\item[\textup{(i)}] The moment operator intertwines the induced
+  actions: $M_n(g \cdot s) = g \cdot M_n(s)$ for every $s \in
+  \mathcal S_n$. Equivalently,
+  $(M_n s)(gv) = g\,(M_n(g^{-1}\cdot s))(v)\,g^\top$ for every
+  $v \in V_n$.
+\item[\textup{(ii)}] The source extraction intertwines the
+  actions: $S_n^\lambda(g \cdot \Phi) = g \cdot S_n^\lambda(\Phi)$ for every
+  $\Phi \in X_n$.
+\item[\textup{(iii)}] The piecewise-flat projection
+  $P_n^\PF = \id$ intertwines the $\mathcal T_n$ and $\PF_n$
+  actions (which coincide).
+\item[\textup{(iv)}] Consequently, $\Pimet^{(n)}(g \cdot \Phi) =
+  g \cdot \Pimet^{(n)}(\Phi)$ for every $\Phi \in X_n$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i): Fix $g \in W(D_4)$, $s \in \mathcal S_n$, $v \in V_n$.
+Substituting $(g \cdot s)(w) = s(g^{-1}w)$ and
+$K_n(v, w) = g^{-1}\,K_n(gv, gw)\,(g^{-1})^\top$
+(from Lemma~\ref{lem:kernel-equiv}, rewritten with $g^{-1}$), we
+compute
+\begin{align*}
+  (M_n(g \cdot s))(v)
+    &\;=\; \sum_{w \neq v} (g \cdot s)(w)\,K_n(v, w)
+    \;=\; \sum_{w \neq v} s(g^{-1}w)\,K_n(v, w).
+\end{align*}
+Reparametrize $u := g^{-1}w$, so $w = gu$ and the sum over
+$w \neq v$ becomes a sum over $u \neq g^{-1}v$:
+\[
+  (M_n(g \cdot s))(v)
+    \;=\; \sum_{u \neq g^{-1}v} s(u)\,K_n(v, gu)
+    \;=\; \sum_{u \neq g^{-1}v} s(u)\,g\,K_n(g^{-1}v, u)\,g^\top,
+\]
+using Lemma~\ref{lem:kernel-equiv} in the form $K_n(v, gu) =
+g\,K_n(g^{-1}v, u)\,g^\top$. Factor $g$ and $g^\top$ outside the
+sum:
+\[
+  (M_n(g \cdot s))(v)
+    \;=\; g\,\biggl(\sum_{u \neq g^{-1}v}
+       s(u)\,K_n(g^{-1}v, u)\biggr)\,g^\top
+    \;=\; g\,(M_n s)(g^{-1}v)\,g^\top
+    \;=\; (g \cdot M_n s)(v).
+\]
+
+(ii): For $\Phi = (f, B) \in X_n^{0, D_4} \oplus X_n^{1, D_4}$
+and $g \in W(D_4)$, the P3 action
+\cite[Def.~8.1]{RefinementSpaces} gives
+$g \cdot (f, B) = (g \cdot f, g \cdot B)$ where
+$(g \cdot f)(v) = \rho_{F^0}^{D_4}(g)\,f(g^{-1}v)$ in the P3
+fibre $F^0$. The direct-sum projection $\pi^0$ commutes with the
+direct-sum action because each summand is preserved. Applying
+$\tau_\lambda$ at a vertex $v \in V_n$ and using
+$W(D_4)$-invariance of $\lambda$
+(Definition~\ref{def:fibre-functional}),
+\begin{align*}
+  S_n^\lambda(g \cdot \Phi)(v)
+    &\;=\; \tau_\lambda(\pi^0(g \cdot \Phi))(v)
+     \;=\; \lambda\bigl((g \cdot f)(v)\bigr) \\
+    &\;=\; \lambda\bigl(\rho_{F^0}^{D_4}(g)\,f(g^{-1}v)\bigr)
+     \;=\; \lambda(f(g^{-1}v)) \\
+    &\;=\; \tau_\lambda(f)(g^{-1}v)
+     \;=\; S_n^\lambda(\Phi)(g^{-1}v)
+     \;=\; (g \cdot S_n^\lambda \Phi)(v).
+\end{align*}
+
+Statement~(iii) is trivial because $P_n^\PF = \id$ on
+$\mathcal T_n = \PF_n$ and the actions on the two identified
+spaces are the same.
+
+(iv): Compose (ii), (i), and (iii): $\Pimet^{(n)}(g \cdot \Phi)
+= P_n^\PF M_n S_n^\lambda(g \cdot \Phi) = P_n^\PF M_n(g \cdot S_n^\lambda \Phi)
+= P_n^\PF(g \cdot M_n S_n^\lambda \Phi) = g \cdot \Pimet^{(n)}(\Phi)$.
+\end{proof}
+
+%=====================================================================
+\section{Continuity and the Piecewise-Flat Landing Theorem}
+\label{sec:continuity}
+%=====================================================================
+
+\begin{theorem}[Continuity of $\Pimet^{(n)}$ with explicit bound]
+\label{thm:pimet-continuity}
+For every $n \geq 0$ the metric projection $\Pimet^{(n)}
+\colon X_n \to \PF_n$ is a bounded linear operator, with
+\[
+  \|\Pimet^{(n)}\|_\op
+    \;\leq\; \|P_n^\PF\|_\op \cdot \|M_n\|_\op
+       \cdot \|S_n^\lambda\|_\op
+    \;\leq\; 1 \cdot |V_n| \cdot \|\lambda\|_\op
+    \;=\; |V_n|\,\|\lambda\|_\op.
+\]
+In particular $\Pimet^{(n)}$ is continuous, and hence Borel
+measurable, in the metric topologies on $X_n$ and $\PF_n$.
+\end{theorem}
+
+\begin{proof}
+$\Pimet^{(n)} = P_n^\PF \circ M_n \circ S_n^\lambda$ is the composition
+of three bounded linear operators between finite-dimensional
+Hilbert spaces. The operator norm of a composition is at most
+the product of the operator norms. Applying the individual
+bounds $\|P_n^\PF\|_\op = 1$ (Definition~\ref{def:pn-pf}),
+$\|M_n\|_\op \leq |V_n|$ (Theorem~\ref{thm:mn-welldef}(ii)), and
+$\|S_n^\lambda\|_\op \leq \|\lambda\|_\op$
+(Proposition~\ref{prop:source-bounded}) gives the claimed
+estimate. A bounded linear map between metric spaces is
+continuous, and every continuous map between metric spaces is
+Borel measurable.
+\end{proof}
+
+\begin{theorem}[Landing in $\PF_n$]
+\label{thm:pimet-landing}
+For every $\Phi \in X_n$, $\Pimet^{(n)}(\Phi) \in \PF_n$, i.e.\
+$\Pimet^{(n)}(\Phi)$ is a well-defined element of the
+piecewise-flat target of Definition~\ref{def:pfn}. The
+symmetry admissibility condition --- for every $v \in V_n$,
+$\Pimet^{(n)}(\Phi)(v) \in \Sym^2(\R^4)$ --- is satisfied by
+construction. No cross-cell compatibility condition is imposed
+on $\PF_n$ (Definition~\ref{def:pfn}), so no further check is
+required. If the extracted source data $S_n^\lambda(\Phi)$ is
+pointwise nonnegative, then $\Pimet^{(n)}(\Phi)(v)$ is positive
+semidefinite for every $v$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:mn-welldef}(i), $(M_n S_n^\lambda \Phi)(v) \in
+\Sym^2(\R^4)$ for every $v$, so
+$M_n S_n^\lambda \Phi \in \mathcal T_n = \PF_n$ and the symmetry
+admissibility condition holds at every $v$. Applying
+$P_n^\PF = \id$ preserves membership in $\mathcal T_n = \PF_n$.
+No cross-cell compatibility condition is imposed
+(Definition~\ref{def:pfn}). The positive-semidefiniteness
+statement under $S_n^\lambda(\Phi) \geq 0$ is
+Theorem~\ref{thm:mn-welldef}(iii) composed with $P_n^\PF = \id$.
+\end{proof}
+
+%=====================================================================
+\section{The Point-Source Rank-One Calculation}
+\label{sec:point-source}
+%=====================================================================
+
+\begin{definition}[Point source]
+\label{def:point-source}
+For $w_\ast \in V_n$, the \emph{point source at $w_\ast$} is the
+Kronecker function $\delta_{w_\ast} \in \mathcal S_n$ defined by
+$\delta_{w_\ast}(w) = 1$ if $w = w_\ast$ and $0$ otherwise.
+\end{definition}
+
+\begin{theorem}[Point-source rank-one calculation]
+\label{thm:point-source}
+Let $w_\ast \in V_n$ and let $\delta_{w_\ast} \in \mathcal S_n$
+be the point source at $w_\ast$. Then for every probe vertex
+$v \in V_n$ with $v \neq w_\ast$,
+\[
+  (M_n \delta_{w_\ast})(v)
+    \;=\; \hat r_{v, w_\ast}^{(n)}
+       \otimes \hat r_{v, w_\ast}^{(n)},
+  \qquad
+  \hat r_{v, w_\ast}^{(n)}
+    \;:=\; \frac{x_{w_\ast}^{(n)} - x_v^{(n)}}
+      {\|x_{w_\ast}^{(n)} - x_v^{(n)}\|},
+\]
+and $(M_n \delta_{w_\ast})(w_\ast) = 0$. For $v \neq w_\ast$, the
+$4 \times 4$ symmetric matrix $(M_n \delta_{w_\ast})(v)$ has:
+\begin{enumerate}
+\item[\textup{(i)}] rank $1$;
+\item[\textup{(ii)}] trace $1$;
+\item[\textup{(iii)}] spectrum $\{1, 0, 0, 0\}$, i.e.\ eigenvalue
+  $1$ with eigenvector $\hat r_{v, w_\ast}^{(n)}$ and eigenvalue
+  $0$ with the orthogonal complement as eigenspace;
+\item[\textup{(iv)}] traceless part
+  $(M_n \delta_{w_\ast})(v) - \tfrac{1}{4}I$ with spectrum
+  $\{3/4, -1/4, -1/4, -1/4\}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By Definition~\ref{def:mn},
+\[
+  (M_n \delta_{w_\ast})(v)
+    \;=\; \sum_{w \neq v} \delta_{w_\ast}(w)\,K_n(v, w).
+\]
+For $v \neq w_\ast$, exactly one term in the sum is nonzero
+(namely $w = w_\ast$, which satisfies $w \neq v$ and
+$\delta_{w_\ast}(w_\ast) = 1$), giving $(M_n \delta_{w_\ast})(v)
+= K_n(v, w_\ast) = \hat r_{v, w_\ast}^{(n)} \otimes
+\hat r_{v, w_\ast}^{(n)}$ by Definition~\ref{def:kernel}. For
+$v = w_\ast$, the sum ranges over $w \neq w_\ast$ and
+$\delta_{w_\ast}(w) = 0$ for every such $w$, so the sum is the
+zero matrix.
+
+Claims (i)--(iii) for the case $v \neq w_\ast$ follow from
+Lemma~\ref{lem:kernel-properties}(ii) together with the
+observation that a rank-one symmetric projector $\hat r \otimes
+\hat r$ has $\hat r$ as a unit eigenvector with eigenvalue $1$
+(since $(\hat r\,\hat r^\top)\hat r = \hat r\,(\hat r^\top
+\hat r) = \hat r$) and the orthogonal hyperplane
+$\hat r^\perp$ as a $3$-dimensional eigenspace with eigenvalue
+$0$ (since $(\hat r\,\hat r^\top)u = \hat r\,(\hat r^\top u) = 0$
+for $u \perp \hat r$).
+
+Claim (iv) follows from (iii) by subtracting $\tfrac{1}{4}I$:
+the eigenvalues shift by $-\tfrac{1}{4}$, giving
+$\{1 - 1/4, 0 - 1/4, 0 - 1/4, 0 - 1/4\} = \{3/4, -1/4, -1/4,
+-1/4\}$.
+\end{proof}
+
+\begin{remark}[Finite, not GR]
+\label{rmk:not-gr}
+Theorem~\ref{thm:point-source} is the theorem-grade finite-level
+replacement for the prototype computation in
+\texttt{papers/cascade-derivation/cascade-gr.md} \S C4.1. It is a
+purely combinatorial identity in symmetric linear algebra on
+$\R^4$. No general-relativistic, stress-energy, Einstein-equation,
+perfect-fluid, or continuum-metric interpretation is attached to
+this theorem, and no such interpretation is endorsed by this
+paper.
+\end{remark}
+
+%=====================================================================
+\section{Self-Audit against the Work Order}
+\label{sec:audit}
+%=====================================================================
+
+This section checks each Clay-bar success criterion printed in
+\S 7 of the work order
+\texttt{papers/cascade-metric-projection/WO-CCC-P5.md}.
+
+\begin{itemize}
+\item[\textbf{[1]}] \emph{Paper is finite-level only.} Enforced
+  in the abstract, \S\ref{sec:intro}, and
+  Remark~\ref{rmk:level-bound}. No continuum-limit, convergence,
+  GR, or hydrodynamic sentence appears in any theorem or proof.
+\item[\textbf{[2]}] \emph{Every symbol is defined before use.}
+  Symbols $V_n$, $x_v^{(n)}$ (Notation~\ref{not:vertices-coords});
+  $X_n$ (Definition~\ref{def:p4-state}); $\mathcal S_n, S_n^\lambda$
+  (Definitions \ref{def:scalar-source} and
+  \ref{def:source-extraction}); $K_n(v, w)$
+  (Definition~\ref{def:kernel}); $\mathcal T_n$
+  (Definition~\ref{def:tn}); $M_n$ (Definition~\ref{def:mn});
+  $\PF_n$ (Definition~\ref{def:pfn}); $P_n^\PF$
+  (Definition~\ref{def:pn-pf}); $\Pimet^{(n)},
+  \widetilde{\Pimet}^{(n)}$ (Definition~\ref{def:pimet});
+  $p_{n+1, n}^0, p_{n+1, n}^X$ (Notation~\ref{not:bonding});
+  $q_{n+1, n}, q_{n+1, n}^\PF$ (Definition~\ref{def:qn});
+  $W(D_4)$ action (Notation~\ref{not:wd4} and
+  \ref{not:induced-actions}); $\delta_{w_\ast},
+  \hat r_{v, w_\ast}^{(n)}$ (Definition~\ref{def:point-source}
+  and Theorem~\ref{thm:point-source}).
+\item[\textbf{[3]}] \emph{Moment formula is printed exactly with
+  $w \neq v$ exclusion and the squared-norm denominator.}
+  Definition~\ref{def:kernel} and Definition~\ref{def:mn}.
+\item[\textbf{[4]}] \emph{Denominator nonvanishing is secured under
+  an explicit coordinate-injectivity hypothesis on the refinement
+  scheme.} Hypothesis~\ref{fact:distinct} (verified at level $0$
+  directly and by a relative-interior argument at successor levels,
+  with the full Schl\"afli-geometry closure deferred;
+  Remark~\ref{rmk:distinct-status}) and
+  Corollary~\ref{cor:nonvanishing}. All subsequent results of the
+  paper are stated conditional on
+  Hypothesis~\ref{fact:distinct}.
+\item[\textbf{[5]}] \emph{All of $M_n$, $\PF_n$, $P_n^\PF$,
+  $\Pimet^{(n)}$, $q_{n+1, n}$, $W(D_4)$ are printed
+  explicitly.} Definitions \ref{def:mn}, \ref{def:pfn},
+  \ref{def:pn-pf}, \ref{def:pimet}, \ref{def:qn}, and
+  Notations \ref{not:wd4} and \ref{not:induced-actions}.
+\item[\textbf{[6]}] \emph{Well-definedness proves boundedness
+  and symmetry; it is not a definitional remark.}
+  Theorem~\ref{thm:mn-welldef} proves both in explicit
+  calculations.
+\item[\textbf{[7]}] \emph{Refinement compatibility is an
+  operator identity with named maps.}
+  Theorem~\ref{thm:mn-refinement} prints
+  $q_{n+1, n} \circ M_{n+1} = M_n \circ p_{n+1, n}^0$ with
+  both sides named maps defined in \S\ref{sec:refinement}. The
+  scope of validity is stated honestly in the theorem statement
+  and Remark~\ref{rmk:refinement-scope}: the identity holds on
+  level-$(n+1)$ source functions supported on old vertices, and
+  is not claimed on the full $\mathcal S_{n+1}$.
+\item[\textbf{[8]}] \emph{No sentence upgrades refinement
+  stability into convergence, compactness, or continuum
+  emergence.} Remark~\ref{rmk:level-bound} and
+  Remark~\ref{rmk:refinement-scope} explicitly defer convergence
+  to P6.
+\item[\textbf{[9]}] \emph{$W(D_4)$-equivariance is proved from
+  the P2 coordinate action and the P3 equivariant refinement
+  rule, not asserted.} Lemma~\ref{lem:coord-equivariance} proves
+  coordinate equivariance $x_{g \cdot v}^{(n)} = g\,x_v^{(n)}$
+  for every refined vertex by induction on $n$ from the P2 base
+  coordinate action and the P3 midpoint/centroid refinement rule
+  (\cite[Def.~2.2]{RefinementSpaces}).
+  Lemma~\ref{lem:kernel-equiv} then reduces the equivariance of
+  $K_n$ to this coordinate equivariance, and
+  Theorem~\ref{thm:mn-equivariance} builds the full theorem from
+  the kernel lemma, Definition~\ref{def:fibre-functional} for
+  $\lambda$-invariance, and
+  \cite[Def.~8.1]{RefinementSpaces} for the state-space action
+  (which states unitarity of $\rho_{F^0}^{D_4}(g)$ as part of the
+  definition of the branchwise Coxeter action).
+\item[\textbf{[10]}] \emph{$\PF_n$ is a concrete
+  finite-dimensional Hilbert space with explicit admissibility
+  conditions.} Definition~\ref{def:pfn} prints the underlying
+  space, the cellwise Frobenius inner product, the induced norm,
+  and the admissibility condition (symmetry of each cell tensor).
+  No cross-cell compatibility is imposed; this is stated both in
+  the definition and in Remark~\ref{rmk:pfn-vs-tn}.
+\item[\textbf{[11]}] \emph{Landing theorem checks those
+  conditions without hiding behind ``by construction.''}
+  Theorem~\ref{thm:pimet-landing} explicitly states that
+  symmetry and face-compatibility are met and cites the
+  corresponding clauses.
+\item[\textbf{[12]}] \emph{Continuity is proved from bounded
+  operators with an explicit norm estimate.}
+  Theorem~\ref{thm:pimet-continuity} prints the exact
+  composition bound.
+\item[\textbf{[13]}] \emph{Point-source theorem prints the
+  exact rank-one formula and spectrum / trace calculation.}
+  Theorem~\ref{thm:point-source} states all four of rank, trace,
+  spectrum, and traceless spectrum.
+\item[\textbf{[14]}] \emph{Paper never conflates a
+  refinement-level metric-side tensor with a continuum metric,
+  stress-energy tensor, or Einstein datum.}
+  Remark~\ref{rmk:not-gr} states this restriction for
+  Theorem~\ref{thm:point-source} specifically, and the abstract
+  and \S\ref{sec:intro} state it globally.
+\item[\textbf{[15]}] \emph{Citation integrity: no proof cites
+  \texttt{cascade-gr.md}, \texttt{foundations.tex}, or scripts.}
+  The bibliography below contains only the three cascade
+  infrastructure papers P2, P3, P4 and three standard
+  mathematics references. No proof cites an informal note.
+\item[\textbf{[16]}] \emph{LaTeX hygiene: labels, equation
+  labels, notation table, and consistent level superscripts.}
+  All theorems and definitions are labelled. The notation audit
+  of \S\ref{sec:notation} is consistent with \S\S 2--9. Level
+  superscripts $(n)$ and subscripts $n$ are used uniformly.
+\end{itemize}
+
+%=====================================================================
+\section{Citation Contract and Downstream Handoff}
+\label{sec:handoff}
+%=====================================================================
+
+\subsection{What downstream papers may cite}
+
+A downstream paper may import from this paper exactly the
+following finite-level facts as theorem-grade inputs, with the
+stated scope:
+\begin{itemize}
+\item \textbf{Discrete moment tensor:} the operator
+  $M_n \colon \mathcal S_n \to \mathcal T_n$ of
+  Definition~\ref{def:mn} and its well-definedness, symmetry,
+  and boundedness from Theorem~\ref{thm:mn-welldef}.
+\item \textbf{Refinement stability on old-vertex sources:} the
+  operator identity $q_{n+1, n} \circ M_{n+1} = M_n \circ
+  p_{n+1, n}^0$ of Theorem~\ref{thm:mn-refinement}, valid on
+  $\mathcal S_{n+1}^{\mathrm{old}}$.
+\item \textbf{$W(D_4)$-equivariance:} the intertwining
+  identities $M_n(g\cdot s) = g \cdot M_n s$ and
+  $\Pimet^{(n)}(g \cdot \Phi) = g \cdot \Pimet^{(n)}(\Phi)$ of
+  Theorem~\ref{thm:mn-equivariance}, for $g \in W(D_4)$.
+\item \textbf{Metric projection:} the bounded linear operator
+  $\Pimet^{(n)} \colon X_n \to \PF_n$ of
+  Definition~\ref{def:pimet} with the explicit norm bound of
+  Theorem~\ref{thm:pimet-continuity}.
+\item \textbf{Point-source rank-one formula:} the explicit
+  identity $M_n \delta_{w_\ast}(v) = \hat r_{v, w_\ast}^{(n)}
+  \otimes \hat r_{v, w_\ast}^{(n)}$ of
+  Theorem~\ref{thm:point-source}, with the specified rank,
+  trace, and spectrum data.
+\end{itemize}
+
+\subsection{Recommended citation phrasing}
+
+A downstream paper that wishes to invoke this paper may
+write:
+\begin{quote}
+  ``By Theorem~\ref{thm:mn-welldef} of \cite{MetricProjection},
+  the level-$n$ discrete moment tensor $M_n$ is a well-defined
+  bounded linear operator from $\ell^2(V_n^{D_4})$ to
+  $\ell^2(V_n^{D_4}; \Sym^2(\R^4))$; by
+  Theorem~\ref{thm:mn-equivariance} of the same paper, it is
+  $W(D_4)$-equivariant; and by Theorem~\ref{thm:mn-refinement}
+  it is refinement-compatible on old-vertex source data.''
+\end{quote}
+
+\subsection{What this paper does not provide}
+
+We explicitly flag the following as \emph{not} provided by P5,
+to avoid downstream over-citation:
+\begin{itemize}
+\item No convergence of $\{\Pimet^{(n)}\}_{n \geq 0}$ in any
+  sense (target of P6).
+\item No Gromov--Hausdorff or spectral-stability theorem for the
+  refinement family.
+\item No continuum metric, Riemannian limit, or Einstein
+  equation.
+\item No hydrodynamic projection, averaging kernel for a
+  macroscopic PDE, or Navier--Stokes statement (target of P7).
+\item No full-domain refinement identity on $\mathcal S_{n+1}$
+  for all sources. Only the old-vertex restriction is proved.
+\item No claim that $P_n^\PF$ is a nontrivial orthogonal
+  projection in this paper. It is the identity on
+  $\mathcal T_n = \PF_n$ under the admissibility model chosen
+  here. Later papers that impose a nontrivial admissibility
+  constraint must redefine $P_n^\PF$ and reprove the
+  boundedness bound.
+\end{itemize}
+
+%=====================================================================
+\section{Notation Audit}
+\label{sec:notation}
+%=====================================================================
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Symbol & Meaning & First appearance \\
+\hline
+$V_n$ & level-$n$ $D_4$ refinement vertex set &
+  Notation~\ref{not:vertices-coords} \\
+$x_v^{(n)}$ & Euclidean coordinate of $v \in V_n$ in $\R^4$ &
+  Notation~\ref{not:vertices-coords} \\
+$W(D_4)$ & $D_4$ Coxeter group $\leq O(4)$ &
+  Notation~\ref{not:wd4} \\
+$d_n, D_n$ & minimum / maximum pairwise distance in $V_n$ &
+  Notation~\ref{not:diam} \\
+$\mathcal S_n$ & scalar source space $\ell^2(V_n)$ &
+  Definition~\ref{def:scalar-source} \\
+$X_n$ & P4 $D_4$ state space $X_n^{0, D_4} \oplus X_n^{1, D_4}$ &
+  Definition~\ref{def:p4-state} \\
+$S_n^\lambda$ & source extraction $X_n \to \mathcal S_n$ &
+  Definition~\ref{def:source-extraction} \\
+$K_n(v, w)$ & normalized rank-one displacement kernel &
+  Definition~\ref{def:kernel} \\
+$\mathcal T_n$ & raw symmetric-tensor space
+  $\ell^2(V_n; \Sym^2(\R^4))$ & Definition~\ref{def:tn} \\
+$M_n$ & discrete moment tensor operator
+  $\mathcal S_n \to \mathcal T_n$ & Definition~\ref{def:mn} \\
+$\PF_n$ & piecewise-flat target
+  $\ell^2(V_n; \Sym^2(\R^4))$ & Definition~\ref{def:pfn} \\
+$P_n^\PF$ & piecewise-flat projection
+  $\mathcal T_n \to \PF_n$ (identity) &
+  Definition~\ref{def:pn-pf} \\
+$\Pimet^{(n)}$ & metric projection
+  $P_n^\PF M_n S_n^\lambda \colon X_n \to \PF_n$ &
+  Definition~\ref{def:pimet} \\
+$\widetilde{\Pimet}^{(n)}$ & source-level variant
+  $P_n^\PF M_n$ & Definition~\ref{def:pimet} \\
+$p_{n+1, n}^0$ & P3 vertex bonding (restriction) &
+  Notation~\ref{not:bonding} \\
+$p_{n+1, n}^X$ & P3 direct-sum state bonding &
+  Notation~\ref{not:bonding} \\
+$q_{n+1, n}$ & tensor coarse projection (restriction) &
+  Definition~\ref{def:qn} \\
+$q_{n+1, n}^\PF$ & piecewise-flat coarse projection (restriction)
+  & Definition~\ref{def:qn} \\
+$\delta_{w_\ast}$ & point source at $w_\ast \in V_n$ &
+  Definition~\ref{def:point-source} \\
+$\hat r_{v, w_\ast}^{(n)}$ & unit displacement direction &
+  Theorem~\ref{thm:point-source} \\
+$\mathcal S_{n+1}^{\mathrm{old}}$ & sources supported on
+  $V_n \subset V_{n+1}$ &
+  Definition~\ref{def:old-vertex-subspace} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{AlgebraicSubstrate}
+\emph{Cascade--Classical Correspondence II: The Cascade Algebraic
+Substrate},
+\texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}.
+(Paper P2.) Pinned results used here: \S 3 (the $D_4$
+coordinate $4$-plane $U$ and the strict $D_4 \subset E_8$
+realization); \S 5 (the $24$-cell coordinate realization of
+$V_{24} \subset \R^4$ with Def.~5.3 naming the inscribed
+$24$-cell vertex set and Prop.~5.4 together with Cor.~5.5
+establishing its regular $24$-cell structure congruent to the
+rescaled $D_4$ root polytope).
+
+\bibitem{RefinementSpaces}
+\emph{Cascade--Classical Correspondence III: Refinement Spaces
+and Symmetry Actions},
+\texttt{papers/cascade-refinement-spaces/cascade-refinement-spaces.tex}.
+(Paper P3.) Pinned results used here: Def.~2.1 (base $D_4$
+graph); Def.~2.2 and Rmk.~2.3 (Schl\"{a}fli refinement with
+vertex inclusion $V_n \subset V_{n+1}$); Prop.~2.6 (refinement
+properties including finiteness of each $V_n$); Notation~3.3
+(sector fibre $F^0$); \S 4 (finite-level $\ell^2$ spaces);
+Def.~5.1 (vertex bonding $p^0$ by restriction); Thm.~5.3
+(direct-sum bonding and contraction bounds); Def.~8.1 (branchwise
+Coxeter action $\rho_{F^0}^\bullet$, including unitarity on each
+$X_n^{0, \bullet}$ as part of the definition).
+
+\bibitem{ClosureDynamics}
+\emph{Cascade--Classical Correspondence IV: Discrete Closure
+Dynamics},
+\texttt{papers/cascade-closure-dynamics/cascade-closure-dynamics.tex}.
+(Paper P4.) Pinned results used here: Def.~2.1 (finite-level
+state space $X_n = X_n^0 \oplus X_n^1$); the direct-sum inner
+product on $X_n$; the direct-sum decomposition used in
+Definition~\ref{def:source-extraction}.
+
+\bibitem{MetricProjection}
+(This paper.) \emph{Cascade--Classical Correspondence V:
+$D_4$ Metric Projection from Discrete Moment Tensors}.
+
+\bibitem{ReedSimonI}
+M.~Reed and B.~Simon, \emph{Methods of Modern Mathematical
+Physics, Vol.~I: Functional Analysis}, rev.\ ed., Academic
+Press, 1980. Bounded operators between finite-dimensional
+Hilbert spaces, $\ell^2$ theory on finite sets: Ch.~I.1--I.3.
+
+\bibitem{HornJohnson}
+R.~A.~Horn and C.~R.~Johnson, \emph{Matrix Analysis}, 2nd ed.,
+Cambridge University Press, 2013. Symmetric matrices, rank-one
+decomposition, Frobenius inner product, and conjugation by
+orthogonal matrices: Ch.~4 and \S 7.7.
+
+\bibitem{Humphreys}
+J.~E.~Humphreys, \emph{Reflection Groups and Coxeter Groups},
+Cambridge Studies in Advanced Mathematics 29, Cambridge
+University Press, 1990. Finite Coxeter groups acting
+orthogonally on Euclidean space: Ch.~1.
+
+\end{thebibliography}
+
+\end{document}

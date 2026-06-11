@@ -1,0 +1,1188 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{observation}[theorem]{Observation}
+
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Fint}{\Fcal_{\mathrm{int}}}
+\newcommand{\Ftot}{\Fcal_{\mathrm{tot}}}
+\newcommand{\HW}{H_{\mathrm{W}}}
+\newcommand{\Sadm}{\mathcal{S}_{\mathrm{adm}}}
+\newcommand{\Mcl}{\mathcal{M}_{\mathrm{cl}}}
+\newcommand{\phig}{\varphi}
+\newcommand{\lbar}{\bar{\lambda}}
+
+\title{The Closure Functional from First Principles:\\[6pt]
+\large Self-Similar Permeability, the 600-Cell, and the Derived Interaction}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed)
+
+\begin{abstract}
+The closure functional $\Fcal$ and the interaction functional $\Fint$ have been
+the foundation of the VFD programme, but both were previously
+introduced as constructions rather than derived from first principles.
+This paper narrows that gap within stated structural assumptions.
+
+Starting from the permeability axiom (the vacuum field is permeable, with a self-similar tunnelling hierarchy) --- together with
+the geometric-mean closure condition, we derive $\phig$ as the unique
+positive fixed point of the resulting recursion. Under the additional
+structural assumptions of compact $S^3$ configuration space,
+finite-subgroup closure, and maximal vertex-transitivity, the
+$\phig$-determined $\pi/5$ angular scale uniquely selects the binary
+icosahedral orbit within the ADE classification --- i.e., the 600-cell.
+Within the class of continuous regularised soft-min functionals on
+finite vertex sets satisfying sharp-limit closure, additive
+composition under independent products, and the Faddeev grouping
+(recursivity) axiom, the log-sum-exp functional is the Shannon/Faddeev-Khinchin choice. Product additivity alone is not sufficient (R\'enyi entropies also satisfy it), so the grouping axiom is indispensable for uniqueness; the paper states this explicitly as axiom A4. The interaction functional is
+then derived from $\Fcal$ via vertex-exclusion in the two-basin
+partition function: $\Fint = -\varepsilon^2\log(1 - \eta)$, where
+$\eta$ is the basin overlap ratio.
+
+A spectral decomposition of $\Fint$ motivates two retained mode sectors at nuclear distances (the other modes are assumed to be negligible at those distances, not derived as such from the $\Fint$ expansion): a \textit{phase-coherence channel}
+on the Hopf fibres over the nucleon support graph (identified with
+pion exchange, six shell-matched channels on $P_3$) and the
+\textit{graph-Laplacian zero mode} (identified with photon exchange,
+coupling $\alpha$). The resulting structural separation factor
+$(6 + \alpha)$ yields a deuteron charge radius
+$r_d = 2.12800$~fm, in agreement with experiment within $1\sigma$ against both CODATA anchors (CODATA 2018 $r_d = 2.12799(74)$~fm: $0.02\sigma$; CODATA 2022 $r_d = 2.12778(27)$~fm: $0.83\sigma$), improving the leading-order result by $\sim$100$\times$ (CODATA 2018) and $\sim$9$\times$ (CODATA 2022) in absolute error. The structural-separation coefficient $(6+\alpha)$ is obtained as a \emph{conditional identification} (see Proposition~\ref{thm:factor}), not a first-principles derivation from $\Fint$: the value $\pi\,\lbar_p$ of the kinematic coefficient $-g'(r_*^{(\pi)})/K_\pi$ is inherited from the half-period identification $r_\pi = \pi\,\lbar_p$ of~\citep{SmartRadius}, while the derivative/curvature identity $-g'(r_*^{(\pi)})/K_\pi = \pi\,\lbar_p$ itself is introduced here as a kinematic identification, not derived from the vertex-exclusion overlap integral of this paper.
+
+Every step is classified as \textbf{derived}, \textbf{identified}
+(structural correspondence), or \textbf{open}, so the reader can locate
+exactly where the logical chain rests on each type of support.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The VFD closure programme has reported conditional numerical correspondences for particle masses at $0.014\%$
+average error~\citep{SmartV}, structural constants
+($\alpha^{-1} = 137 + \pi/87$)~\citep{SmartXXII}, gauge
+structure~\citep{SmartVI}, and six hadron charge
+radii~\citep{SmartRadius}. All results flow from the closure functional
+$\Fcal$ on the 600-cell. Yet $\Fcal$ itself was introduced as a
+definition~\citep{SmartXXII}, and the interaction functional $\Fint$ was
+an explicit ansatz with unspecified weights~\citep{SmartXIII}.
+
+This paper derives both within a clearly stated set of structural
+axioms. The logical chain is:
+\begin{enumerate}
+    \item \textbf{Geometric-mean self-similar permeability} uniquely selects $\phig$ (Section~\ref{sec:phi}).
+    \item Under compact $S^3$, finite-subgroup closure, and maximal vertex-transitivity, $\phig$ \textbf{selects the 600-cell} via the ADE classification (Section~\ref{sec:600cell}).
+    \item The 600-cell vertex set + axioms \textbf{A1--A4} (including A3 extensivity and A4 Faddeev grouping) uniquely characterise $\Fcal$ within the class of regularised soft-min functionals (Section~\ref{sec:F}; A4 is indispensable --- product-additivity alone is also satisfied by R\'enyi entropies, so the grouping axiom is required to single out Shannon/log-sum-exp).
+    \item $\Fcal$ + \textbf{vertex exclusion} yields $\Fint$ from the two-basin partition function (Section~\ref{sec:Fint}).
+    \item \textbf{Heuristic spectral expansion} of $\Fint$ motivates retaining two mode sectors (phase-coherence and graph-Laplacian zero mode), identified with pion and photon exchange (Section~\ref{sec:modes}); the spectral expansion itself is heuristic, not a proved identity.
+    \item The separation factor $(6 + \alpha)$ --- obtained as a conditional identification (Proposition~\ref{thm:factor}) rather than a first-principles derivation from $\Fint$ --- gives the deuteron to $0.02\sigma$ against CODATA 2018 and $0.83\sigma$ against CODATA 2022 (Section~\ref{sec:deuteron}).
+\end{enumerate}
+
+\subsection*{Epistemic classification}
+
+Each result is marked at one of three levels:
+\begin{itemize}
+    \item \textbf{Derived} ($\blacktriangleright$): follows mathematically from stated axioms. Proved or provable from known theorems.
+    \item \textbf{Identified} ($\triangleright$): a structural correspondence --- a quantity computed within the framework is identified with a physical observable. Numerically verified but not deduced from the axioms alone.
+    \item \textbf{Open} ($\circ$): not resolved by this paper.
+\end{itemize}
+
+\subsection*{Narrative placement (closure projection)}
+
+The deuteron radius result of this paper is an instance of the \textit{composite projection class} of the closure-projection framework introduced in Paper~XXXIII~\citep{SmartXXXIII}: a quadrature combination of the spatial projection class (boundary-resolvent and phase-coherence projections of $\Fcal$ onto an electromagnetic-probe boundary) and the interaction-mode projection from $\Fint$ derived in Sections~\ref{sec:Fint}--\ref{sec:modes}. The wave-substrate $\Fcal$ is derived from first principles in this paper itself; the observer-position is placed as a bounded, stable, self-referential constraint substructure in Paper~XXIX~\citep{SmartXXIX}, with the upstream consolidation in Paper~XXXVI~\citep{SmartXXXVI}. The closure-projection identification organises the proton, pion, and deuteron radii of the radius programme as instances of one measurement principle; it is interpretive, made in Paper~XXXIII, and does not alter the conditional identifications (H1--H4) of Sections~\ref{sec:modes}--\ref{sec:deuteron}, all of which retain the hypothesis flags imposed there.
+
+%==================================================================
+\section{Self-Similar Permeability and the Golden Ratio}\label{sec:phi}
+%==================================================================
+
+\subsection{The permeability axiom}
+
+\begin{definition}[Permeable vacuum]\label{def:permeable}
+The vacuum field admits discrete tunnelling channels between
+constraint-satisfying configurations. Let $d_1^2$ be the squared
+distance to the nearest-neighbour (NN) configuration and $d_2^2$ be the
+squared distance to the next-nearest-neighbour (NNN) configuration. The
+\textbf{permeability gap} is $\Delta = d_2^2 - d_1^2$.
+\end{definition}
+
+The WKB tunnelling amplitude between two configurations separated by
+squared distance $d^2$ is $t \sim \exp(-C\,d^2/\sigma^2)$, where
+$\sigma^2 = \hbar/m$ is the diffusion parameter. The gap $\Delta$
+controls the ratio of NN to NNN tunnelling:
+\begin{equation}\label{eq:tunnel_ratio}
+    t_2/t_1 = \exp(-C\,\Delta/\sigma^2).
+\end{equation}
+
+\subsection{The geometric-mean condition}
+
+\begin{proposition}[$\blacktriangleright$ Geometric-mean self-similarity selects $\phig$]\label{prop:phi}
+Define $r = \Delta/d_1^2$ (the ratio of the permeability gap to the
+NN squared distance). Among two-step tunnelling hierarchies
+parametrised by $(d_1^2, \Delta, d_2^2)$ with $d_2^2 = d_1^2 +
+\Delta$, the \textbf{geometric-mean self-similarity axiom}
+\begin{equation}\label{eq:geomean}
+    \Delta^2 \;=\; d_1^2 \cdot d_2^2 \qquad\Longleftrightarrow\qquad
+    r \;=\; 1 \,+\, \tfrac{1}{r}
+\end{equation}
+has the unique positive solution $r = \phig = (1+\sqrt{5})/2$.
+\end{proposition}
+
+\begin{remark}[Scope of Proposition~\ref{prop:phi}]
+The proposition does not claim that ``self-similar permeability''
+selects $\phig$ in full generality; it selects $\phig$ under the
+specific geometric-mean closure condition $\Delta^2 = d_1^2 d_2^2$.
+Other self-similarity conditions (e.g., arithmetic mean, harmonic
+mean) would select other ratios. The geometric-mean condition is
+singled out as the two-step invariant compatible with a
+scale-free log-tunnelling hierarchy (Remark~\ref{rem:hurwitz}), and
+its selection of $\phig$ is then reinforced \textit{a posteriori}
+by the maximal Diophantine non-approximability of $\phig$.
+\end{remark}
+
+\begin{proof}
+The geometric-mean condition $\Delta^2 = d_1^2\,d_2^2$ with
+$d_2^2 = d_1^2 + \Delta$ gives $\Delta^2 = d_1^2(\Delta + d_1^2)$.
+Dividing by $d_1^4$: $r^2 = r + 1$, with unique positive root
+$r = \phig$. Under the \emph{shell-normalisation hypothesis} $d_2 = 1$ (i.e., the NNN squared chordal distance is normalised to unity; this is a choice of scale used throughout the paper and not forced by the geometric-mean condition), $d_1^2 = 1/\phig^2$ and $\Delta = 1/\phig$. Different scale choices rescale $d_1, d_2, \Delta$ simultaneously without changing the ratios.
+\end{proof}
+
+\begin{remark}[Physical meaning of the geometric-mean condition]
+The condition states: \textit{the ratio of the permeability gap to the NN
+scale equals the ratio of the NNN scale to the gap}. Equivalently,
+$d_1^2 : \Delta : d_2^2 = 1 : \phig : \phig^2$. In the tunnelling-rate
+language, the log-suppression from NN to the gap and from the gap to NNN
+are in the same ratio as the rates themselves --- the hierarchy is
+scale-invariant.
+\end{remark}
+
+\begin{remark}[Maximal non-resonance (motivational)]\label{rem:hurwitz}
+Hurwitz's theorem~\citep{Hurwitz1891} states that for any irrational $\xi$, there are \emph{infinitely many} rationals $p/q$ satisfying $|\xi - p/q| < 1/(\sqrt{5}\,q^2)$, and that the constant $\sqrt{5}$ is sharp exactly for $\xi$ lying in the $\mathrm{SL}_2(\mathbb Z)$-equivalence class of $\phig$ --- i.e., $\phig$ is ``most poorly approximable'' in the sense that it saturates the Hurwitz bound; no larger constant can replace $\sqrt{5}$ for this equivalence class. Concretely, if the tunnelling ratio $r$ were rational,
+$r = p/q$, the tunnelling amplitudes at shells $n$ and $n{+}q$ would
+satisfy $t_n/t_{n+q} = \exp(-C\,q\,\log r\,/\sigma^2)$ with rationally
+commensurate phases, producing zero-gap resonant channels in the
+linearised transfer operator. The $\phig$-ratio minimises the density of
+such near-resonances: by Hurwitz's theorem, for any irrational $\xi$ there are infinitely many rationals $m/n$ with $|\xi - m/n| < 1/(\sqrt{5}\,n^2)$, and the constant $\sqrt{5}$ is sharp exactly for $\xi$ equivalent to $\phig$ under $\mathrm{SL}_2(\mathbb Z)$. The resonance-avoidance claim made here is \emph{motivational}, drawing on the sharpness of Hurwitz; converting it into a precise transfer-operator spectral-gap theorem is an identified open item.
+\end{remark}
+
+\subsection{The angular structure}
+
+Throughout this paper, distances on the unit 3-sphere $S^3 \subset \mathbb{R}^4$ are taken to be \emph{chordal} (ambient Euclidean) distances; the chordal squared distance in terms of the geodesic angle $\theta$ is $d_{\mathrm{ch}}^2 = 2(1 - \cos\theta)$. Chordal and geodesic distances agree to $O(\theta^4)$ for small $\theta$ (the chordal squared distance is $\theta^2 - \theta^4/12 + O(\theta^6)$, the geodesic squared distance is $\theta^2$), and the sharp-limit axiom A2 of Section~\ref{sec:F} uses the same chordal cost as the soft-min construction~\eqref{eq:softmin_class} (the two conventions are therefore consistent with each other; see A2 and Theorem~\ref{thm:F}).
+From $d_1^2 = 1/\phig^2$ (under the shell-normalisation $d_2 = 1$ of Proposition~\ref{prop:phi}):
+\begin{equation}\label{eq:angle}
+    \cos\theta_1 = 1 - \frac{1}{2\phig^2} = \frac{\phig}{2}
+    \qquad\Longrightarrow\qquad
+    \theta_1 = \frac{\pi}{5} = 36^\circ.
+\end{equation}
+
+($\blacktriangleright$ Derived.) The fundamental angular separation is the
+decagonal angle $\pi/5$, forced by the geometric-mean permeability axiom applied under the chordal $S^3$-embedding convention above. The
+complete set of pairwise cosines consistent with this angle and
+vertex-transitivity is
+$\{0, \pm 1/(2\phig), \pm 1/2, \pm \phig/2, \pm 1\}$ --- all elements
+of $\tfrac{1}{2}\mathbb{Z}[\phig]$.
+
+%==================================================================
+\section{The 600-Cell from the ADE Classification}\label{sec:600cell}
+%==================================================================
+
+\subsection{Finite subgroups of SU(2)}
+
+The configuration space $S^3 \cong \mathrm{SU}(2)$ admits a classified
+set of finite subgroups (the ADE series):
+
+\begin{table}[ht]
+\centering
+\caption{Finite subgroups of $\mathrm{SU}(2)$ and their NN angular separations.}
+\label{tab:ade}
+\begin{tabular}{@{}llccl@{}}
+\toprule
+Group & Type & Order & NN angle & NN degree \\
+\midrule
+$\mathbb{Z}_n$ & Cyclic & $n$ & $2\pi/n$ & 2 \\
+$2D_n$ & Binary dihedral & $4n$ & $\pi/n$ & 2 \\
+$2T$ & Binary tetrahedral & 24 & $\pi/3$ & 8 \\
+$2O$ & Binary octahedral & 48 & $\pi/4$ & 6 \\
+$2I$ & Binary icosahedral & 120 & $\pi/5$ & 12 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{theorem}[$\blacktriangleright$ The $\pi/5$ angular constraint selects $2I$ within ADE]\label{thm:600cell}
+Adopt the following structural assumptions:
+\begin{enumerate}
+    \item[(H1)] the configuration space is $S^3 \cong \mathrm{SU}(2)$;
+    \item[(H2)] the closure symmetry is a finite subgroup $G \leq \mathrm{SU}(2)$ (ensuring a discrete, vertex-transitive orbit);
+    \item[(H3)] the nearest-neighbour angular separation is $\pi/5$ (as selected by Proposition~\ref{prop:phi} under geometric-mean self-similarity);
+    \item[(H4)] $G$ is maximal (not a proper subgroup of another finite subgroup of $\mathrm{SU}(2)$ satisfying (H3)).
+\end{enumerate}
+Then, within the ADE classification of finite subgroups of
+$\mathrm{SU}(2)$, $G$ is uniquely the binary icosahedral group $2I$,
+whose 120 elements on $S^3$ are the vertices of the 600-cell.
+\end{theorem}
+
+\begin{remark}[Status of the structural assumptions]
+Assumptions (H1) and (H2) are genuine modelling inputs, not consequences
+of the permeability axiom. (H1) places the theory on a compact,
+simply-connected 3-manifold --- connected to the open question of why
+spacetime has $3+1$ dimensions (see Section~\ref{sec:chain}). (H2)
+restricts to discrete symmetry groups, appropriate for a tunnelling
+hierarchy with sharply localised configurations. (H4) selects the
+largest group compatible with (H3), motivated \textit{a posteriori} by
+maximal non-resonance (Remark~\ref{rem:hurwitz}). Within this stated
+class of models, the theorem is an unconditional classification
+statement.
+\end{remark}
+
+\begin{proof}
+The finite subgroups of $\mathrm{SU}(2)$ are classified (ADE
+theorem~\citep{McKay1980,Klein1884}): cyclic $\mathbb{Z}_n$, binary
+dihedral $2D_n$, binary tetrahedral $2T$, binary octahedral $2O$, and
+binary icosahedral $2I$. No others exist. The NN angle formula for the
+binary polyhedral groups is $\theta_{\mathrm{NN}} = \pi/p$, where $p$ is
+the vertex valence of the associated Platonic solid $\{3,p\}$. For the
+icosahedron $\{3,5\}$: $p = 5$, giving $\theta_{\mathrm{NN}} = \pi/5$.
+For the binary dihedral groups, $\theta_{\mathrm{NN}} = \pi/n$, so
+$2D_5$ also has $\pi/5$; but $|2D_5| = 20 < 120 = |2I|$, and
+$2D_5 < 2I$ is a proper subgroup. For cyclic groups,
+$\theta_{\mathrm{NN}} = 2\pi/n = \pi/5$ requires $n = 10$, but
+$|\mathbb{Z}_{10}| = 10 < 120$ and $\mathbb{Z}_{10} < 2I$. The groups
+$2T$ and $2O$ have NN angles $\pi/3$ and $\pi/4$ respectively, and do
+not contain $\pi/5$ as an NN separation. Exhausting the ADE list, $2I$
+is the unique maximal finite subgroup of $\mathrm{SU}(2)$ with
+$\theta_{\mathrm{NN}} = \pi/5$.
+\end{proof}
+
+\begin{remark}[$\triangleright$ Classification note (assumed, not proved)]\label{cor:phi_determined}
+Invoking the standard classification of finite $H_4$-invariant configurations on $S^3$ (cited below), the 600-cell vertex set is the \emph{unique $H_4$-invariant} 120-vertex orbit of $2I$ in $S^3$; the 600-cell is therefore maximal among finite $H_4$-invariant subsets satisfying the pairwise-inner-product constraint, in the sense that no strict $H_4$-invariant superset preserves all pairwise inner products in $\tfrac{1}{2}\mathbb{Z}[\phig]$. The distance spectrum consists of 8 shells, all $\phig$-determined (Table~\ref{tab:shells}). Note that ``$H_4$-invariant'' is \emph{not} synonymous with ``closed under $2I$-action'': $H_4$ is the Coxeter (reflection) group of the 600-cell, while $2I$ is its binary-icosahedral rotation subgroup; we use $H_4$-invariance in its reflection-group sense. This is invoked here as an imported classification fact, not re-derived in the present paper; see the discussion below.
+\end{remark}
+
+\noindent The maximality statement under the $H_4$-invariance hypothesis is asserted on the basis of the standard classification of $H_4$-invariant configurations on $S^3$ (the 120-vertex orbit of $2I$ is the unique vertex-transitive polytope on $S^3$ whose root system is $H_4$, and $H_4$ is the unique non-crystallographic Coxeter group in dimension 4~\citep[Ch.~8]{ConwaySloane1999}); a full classification proof is not supplied here. Dropping $H_4$-invariance, the stronger statement ``unique maximal finite subset of $S^3$ whose pairwise inner products all lie in $\tfrac{1}{2}\mathbb{Z}[\phig]$'' is \emph{not} established here; it would require a separate classification result without the invariance hypothesis, which we do not supply.
+
+\begin{table}[ht]
+\centering
+\caption{Distance shells of the 600-cell.}
+\label{tab:shells}
+\begin{tabular}{@{}rllrl@{}}
+\toprule
+Shell & $d^2$ & Angle & Degree & $\cos(\text{angle})$ \\
+\midrule
+1 & $2 - \phig$ & $36^\circ$ & 12 & $\phig/2$ \\
+2 & $1$ & $60^\circ$ & 20 & $1/2$ \\
+3 & $3 - \phig$ & $72^\circ$ & 12 & $1/(2\phig)$ \\
+4 & $2$ & $90^\circ$ & 30 & $0$ \\
+5 & $1 + \phig$ & $108^\circ$ & 12 & $-1/(2\phig)$ \\
+6 & $3$ & $120^\circ$ & 20 & $-1/2$ \\
+7 & $2 + \phig$ & $144^\circ$ & 12 & $-\phig/2$ \\
+8 & $4$ & $180^\circ$ & 1 & $-1$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[$\phig^2$-chains]
+The self-similar permeability condition (Proposition~\ref{prop:phi})
+holds exactly for the first two shells: $d_1^2 : \Delta : d_2^2 =
+1/\phig^2 : 1/\phig : 1$. The full 8-shell spectrum organises into
+$\phig^2$-chains: shells $1 \to 2 \to 5$ form a geometric progression
+with ratio $\phig^2$ (squared distances $2{-}\phig, 1, 1{+}\phig$), as
+do shells $3 \to 7$ ($3{-}\phig, 2{+}\phig$). The integer shells (2, 4,
+6, 8) form an arithmetic progression. The self-similarity is exact at
+the fundamental level and organises the higher shells into
+$\phig$-determined families.
+\end{remark}
+
+%==================================================================
+\section{The Closure Functional: Uniqueness}\label{sec:F}
+%==================================================================
+
+Given the 600-cell vertex set $V = \{v_1, \ldots, v_{120}\} \subset S^3$,
+we derive the closure functional from four axioms.
+
+\subsection{Axioms}
+
+\begin{enumerate}
+    \item[\textbf{A1.}] \textbf{Continuity.} $\Fcal_\varepsilon^V : M \to \mathbb{R}$ is continuous for each $\varepsilon > 0$ and each compact Riemannian manifold $M$ equipped with a finite vertex set $V \subset M$.
+    \item[\textbf{A2.}] \textbf{Sharp limit.} $\Fcal_\varepsilon^V(x) \to \tfrac{1}{2}\min_{v \in V} c(x, v)$ as $\varepsilon \to 0$, where $c(x, v) = |x - v|^2$ is the squared chordal distance when $M$ is embedded in a Euclidean ambient space (so that on the unit $S^3 \subset \mathbb{R}^4$ used in this paper, $c(x, v) = 2(1 - \cos\theta_{xv})$ agrees with the squared geodesic distance $\theta_{xv}^2$ to $O(\theta^4)$). A2 thus fixes the cost function used to select the nearest vertex; geodesic and chordal squared distances select the same nearest vertex on $S^3$, so the nearest-vertex selection claim of A2 is unambiguous, but the explicit cost used in the soft-min class~\eqref{eq:softmin_class} is the chordal form throughout.
+    \item[\textbf{A3.}] \textbf{Extensivity under independent composition.} For independent closure systems $(M_1, V_1)$ and $(M_2, V_2)$, the product system $(M_1 \times M_2, V_1 \times V_2)$ satisfies
+    \begin{equation}\label{eq:A3}
+        \Fcal_\varepsilon^{V_1 \times V_2}(x_1, x_2) = \Fcal_\varepsilon^{V_1}(x_1) + \Fcal_\varepsilon^{V_2}(x_2)
+        \qquad \forall\,(x_1, x_2) \in M_1 \times M_2.
+    \end{equation}
+    \item[\textbf{A4.}] \textbf{Grouping (Faddeev recursivity).} The regulariser $R$ defining the soft-min class~\eqref{eq:softmin_class} satisfies the Faddeev grouping relation: for any probability vector $p = (p_1, \ldots, p_n) \in \Delta_n$ with $n \geq 3$ and any partition of the first two components into a compound,
+    \begin{equation}\label{eq:A4}
+        R(p_1, p_2, p_3, \ldots, p_n) \;=\; R(p_1 + p_2, p_3, \ldots, p_n) \;+\; (p_1 + p_2)\,R\!\left(\frac{p_1}{p_1 + p_2},\,\frac{p_2}{p_1 + p_2}\right),
+    \end{equation}
+    together with the symmetry and continuity conditions of Faddeev~\citep{Faddeev1956}.
+\end{enumerate}
+
+Axiom~A2 says the functional selects the nearest vertex in the sharp
+limit --- it is a closure functional. Axiom~A3 is formulated at the
+level of the \textit{family} $\{\Fcal_\varepsilon^V\}_V$ of functionals
+indexed by the vertex set: two independent closure systems, living on
+distinct configuration manifolds with disjoint vertex sets, must
+compose additively on their product manifold. This is the analogue of
+extensivity in thermodynamics: independent subsystems contribute
+independently to the total free energy. Axiom~A4 is the Faddeev
+grouping (recursivity) axiom in its standard form; it is required in
+addition to product additivity because product additivity alone is
+satisfied by the R\'enyi entropies $R_\alpha(p) = (1-\alpha)^{-1}\log\sum_i p_i^\alpha$ for every $\alpha > 0$, $\alpha \neq 1$ (all of which satisfy $R_\alpha(p \otimes q) = R_\alpha(p) + R_\alpha(q)$; the limit $\alpha \to 1$ recovers Shannon entropy), so A3 alone does not uniquely single out Shannon entropy; the grouping axiom A4 is the classical additional ingredient for uniqueness~\citep{Faddeev1956}. The single-manifold functional $\Fcal_\varepsilon^V$ on the 600-cell is then the restriction of the family to the fixed choice $(M, V) = (S^3, 2I)$.
+
+\subsection{The variational representation}
+
+\begin{theorem}[$\blacktriangleright$ Uniqueness of the closure functional under A1--A4]\label{thm:F}
+Consider the class $\mathcal{C}$ of continuous regularised soft-min
+functionals
+\begin{equation}\label{eq:softmin_class}
+    \Fcal_\varepsilon^V(x) \;=\; \mathrm{opt}_{p \in \Delta_{|V|}}
+    \Bigl[\sum_i p_i\,c_i(x) \,+\, \varepsilon^2 R(p)\Bigr],
+\end{equation}
+with cost $c_i(x) = \tfrac{1}{2}|x - v_i|^2$ (half the squared chordal distance; the factor $\tfrac{1}{2}$ is a normalisation convention carried through the Gaussian kernels that appear later. Here $|x - v_i|^2$ is the ambient Euclidean squared distance in the embedding of the unit $S^3 \subset \mathbb{R}^4$, equal to $2(1-\cos\theta)$ in terms of the geodesic angle, and agrees with the squared geodesic distance to $O(\theta^4)$), regulariser $R :
+\Delta_{|V|} \to \mathbb{R}$ continuous, permutation-symmetric, and
+normalised so that $R(\delta_i) = 0$ at every vertex of the simplex,
+and $\mathrm{opt} \in \{\min, \max\}$. Within $\mathcal{C}$, the
+unique functional satisfying axioms A1--A4 (up to reparametrisation of
+$\varepsilon$ and additive constants) is:
+\begin{equation}\label{eq:F}
+    \Fcal(x) \;=\; -\varepsilon^2\log\!\left(\sum_{i=1}^{120}
+    \exp\!\left(-\frac{|x - v_i|^2}{2\varepsilon^2}\right)\right)
+\end{equation}
+Equivalently:
+\begin{equation}\label{eq:F_var}
+    \Fcal(x) \;=\; \min_{p\,\in\,\Delta_{120}}\left[
+    \sum_i p_i\,\frac{|x - v_i|^2}{2} + \varepsilon^2\sum_i p_i\log p_i
+    \right]
+\end{equation}
+where $\Delta_{120}$ is the probability simplex and the minimiser is the
+Gibbs distribution $p_i^*(x) = \exp(-|x - v_i|^2/2\varepsilon^2) /
+Z(x)$.
+\end{theorem}
+
+\begin{proof}
+Write $\Fcal_\varepsilon = \operatorname{opt}_p[\sum_i p_i\,c_i(x)
++ \varepsilon^2 R(p)]$ for some regulariser $R$ and cost
+$c_i(x) = |x - v_i|^2/2$ (squared chordal distance on the unit $S^3$). Extensivity (A3) requires $R(p \otimes q) = R(p) + R(q)$ for product distributions. Grouping (A4) together with continuity and permutation symmetry is the Faddeev axiom system; by the Faddeev--Khinchin uniqueness theorem~\citep{Faddeev1956}, the unique continuous permutation-symmetric functional on probability vectors satisfying both product additivity (A3) and grouping (A4) with $R(\delta_i) = 0$ is Shannon entropy, $R(p) = \beta\sum_i p_i\log p_i$ for some $\beta > 0$ (the constant $\beta$ is the Shannon base-of-logarithm parameter). Product additivity alone is not sufficient --- it is also satisfied by every R\'enyi entropy --- so A4 is indispensable for selecting Shannon entropy uniquely (see the discussion after A4 above). The sharp limit (A2) forces $\operatorname{opt} = \min$
+(the entropy penalty vanishes as $\varepsilon \to 0$, collapsing $p^*$
+onto the cost minimiser). The Shannon-base parameter $\beta$ is absorbed into the
+definition of $\varepsilon$. Substituting the Gibbs minimiser into the
+variational form recovers~\eqref{eq:F}. This is the Gibbs variational
+principle~\citep{ShoreJohnson1980}.
+\end{proof}
+
+\begin{remark}[Why not other smooth approximations?]
+The $p$-norm approximation $(\sum |x - v_i|^{-p})^{-1/p}$ fails
+smoothness at vertices. The Moreau envelope $\min_y[f(y) +
+|x-y|^2/2\varepsilon]$ achieves only $C^{1,1}$, not $C^\infty$. Polynomial
+smoothings fail extensivity. The log-sum-exp is the \textit{only}
+functional in class $\mathcal{C}$ satisfying A1--A4.
+\end{remark}
+
+\subsection{Properties}
+
+The following are consequences, not axioms:
+
+\begin{remark}[$\blacktriangleright / \triangleright$ Expected properties of $\Fcal$ (proof sketches)]\label{prop:properties}
+The closure functional~\eqref{eq:F} has the following properties (those marked $\blacktriangleright$ admit direct proof from the log-sum-exp form, those marked $\triangleright$ are stated here as expected properties with proof-sketch level support): (1)~$C^\infty$ smoothness for $\varepsilon > 0$~$\blacktriangleright$ (from differentiation of the log-sum-exp form); (2)~$H_4$ invariance (symmetry of the vertex set under the reflection group of the 600-cell)~$\blacktriangleright$ (from $H_4$-invariance of the sum in~\eqref{eq:F}); (3)~vertex minimality ($\Fcal(v_i) \leq \Fcal(x)$ for $\varepsilon^2\log 120 < d_{\min}^2/2$, where $d_{\min}$ is the nearest-neighbour chordal distance)~$\triangleright$ (proof-sketch: follows from the sharp-limit axiom A2 by continuity at $\varepsilon \to 0$; a full quantitative proof would need the explicit Hessian estimate); (4)~monotonicity (if $|x - v_i| \geq |y - v_i|$ for all $i$, then $\Fcal(x) \geq \Fcal(y)$)~$\blacktriangleright$ (direct: the log-sum-exp is a monotone increasing function of each squared distance when all distances are increased); (5)~uniform Hessian at vertices (by vertex-transitivity)~$\blacktriangleright$ (from $H_4$-invariance of $\Fcal$ and the vertex-transitivity of the 600-cell vertex orbit); (6)~barrier height between adjacent vertices controlled by $\varepsilon$~$\triangleright$ (proof-sketch: follows from the sharp-limit behaviour as $\varepsilon \to 0$ in which the barrier tends to $\tfrac{1}{2}d_{\mathrm{mid}}^2$ where $d_{\mathrm{mid}}$ is the distance from the midpoint to the nearest vertex; a full proof with explicit $\varepsilon$-dependence is not supplied here).
+\end{remark}
+
+%==================================================================
+\section{The Interaction Functional: Vertex Exclusion}\label{sec:Fint}
+%==================================================================
+
+\subsection{The two-basin partition function}
+
+When two states $\psi_1, \psi_2$ occupy basins on the same 600-cell
+landscape, the \textit{unrestricted} joint partition function
+$Z(\psi_1)\,Z(\psi_2)$ factors and gives zero interaction. Interaction
+arises from the constraint that two states cannot simultaneously
+occupy the same vertex --- the combinatorial analogue of the Pauli
+exclusion principle.
+
+\begin{definition}[$\blacktriangleright$ Exclusion-constrained partition function]\label{def:Z2}
+\begin{equation}\label{eq:Z2}
+    Z_2(\psi_1, \psi_2) = \sum_{\substack{i,j=1 \\ i \neq j}}^{120}
+    \exp\!\left(-\frac{|\psi_1 - v_i|^2 + |\psi_2 - v_j|^2}{2\varepsilon^2}\right)
+\end{equation}
+\end{definition}
+
+\begin{proposition}[$\blacktriangleright$ Factorisation failure]\label{prop:Z2}
+$Z_2 = Z(\psi_1)\,Z(\psi_2) - D(\psi_1, \psi_2)$, where the
+\textbf{diagonal sum} is:
+\begin{equation}\label{eq:D}
+    D(\psi_1, \psi_2) = \sum_{i=1}^{120}
+    \exp\!\left(-\frac{|\psi_1 - v_i|^2 + |\psi_2 - v_i|^2}{2\varepsilon^2}\right)
+    = \exp\!\left(-\frac{|\psi_1 - \psi_2|^2}{4\varepsilon^2}\right)\,
+    \widetilde{Z}(\bar{\psi})
+\end{equation}
+where $\bar{\psi} = (\psi_1 + \psi_2)/2$ and
+$\widetilde{Z}(\bar{\psi}) = \sum_i \exp(-|v_i - \bar{\psi}|^2/\varepsilon^2)$
+is the midpoint partition function at halved temperature.
+\end{proposition}
+
+\begin{proof}
+Complete the square:
+$|\psi_1 - v_i|^2 + |\psi_2 - v_i|^2 = 2|v_i - \bar{\psi}|^2 + \tfrac{1}{2}|\psi_1 - \psi_2|^2$.
+\end{proof}
+
+\subsection{The derived interaction functional}
+
+\begin{theorem}[$\blacktriangleright$ Interaction from exclusion]\label{thm:Fint}
+The total two-state closure functional is $\Ftot = -\varepsilon^2\log Z_2$.
+The interaction functional
+$\Fint = \Ftot - \Fcal(\psi_1) - \Fcal(\psi_2)$ is:
+\begin{equation}\label{eq:Fint}
+    \Fint(\psi_1, \psi_2) = -\varepsilon^2\log(1 - \eta)
+    = \varepsilon^2\sum_{n=1}^{\infty}\frac{\eta^n}{n}
+\end{equation}
+where $\eta = D(\psi_1,\psi_2)/[Z(\psi_1)\,Z(\psi_2)]$ is the
+\textbf{overlap ratio}.
+\end{theorem}
+
+\begin{proposition}[$\blacktriangleright$ Properties of $\Fint$]\label{prop:Fint_props}
+\begin{enumerate}
+    \item \textbf{Repulsive}: $\Fint \geq 0$ for all $\varepsilon > 0$ (since $\eta \in [0,1)$, so $-\log(1 - \eta) \geq 0$).
+    \item \textbf{Cluster decomposition}: for $|\psi_1 - \psi_2| \gg \varepsilon$,
+    $\Fint \leq C\,\varepsilon^2\exp(-|\psi_1 - \psi_2|^2/4\varepsilon^2) \to 0$.
+    \item \textbf{Hard core (sharp-localisation limit)}: For any fixed
+    $\varepsilon > 0$, $\Fint$ is bounded above by
+    $-\varepsilon^2 \log(1 - \|\mathbf{p}^*\|_2^2)$ and attains its
+    maximum at $\psi_1 = \psi_2$, but remains finite. Divergence
+    $\Fint \to +\infty$ occurs only in the coordinated limit
+    $\varepsilon \to 0$ with $\psi_1, \psi_2 \to v_i$ at a common
+    vertex (so that $\eta \to 1$).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\textit{(1) $\eta \in [0,1)$.}\ Define the vertex-indexed vectors
+$a_i = \exp(-|\psi_1 - v_i|^2/2\varepsilon^2)$ and
+$b_i = \exp(-|\psi_2 - v_i|^2/2\varepsilon^2)$. Then
+$Z(\psi_1) = \sum_i a_i$, $Z(\psi_2) = \sum_i b_i$, and
+$D(\psi_1,\psi_2) = \sum_i a_i b_i$. By Cauchy--Schwarz in
+$\ell^2(\{1,\ldots,120\})$,
+\begin{equation}\label{eq:CS}
+    D(\psi_1,\psi_2) = \sum_i a_i b_i
+    \leq \Bigl(\sum_i a_i^2\Bigr)^{1/2}\Bigl(\sum_i b_i^2\Bigr)^{1/2}
+    \leq \Bigl(\sum_i a_i\Bigr)\Bigl(\sum_i b_i\Bigr) = Z(\psi_1)Z(\psi_2),
+\end{equation}
+using $\sum_i x_i^2 \leq (\sum_i x_i)^2$ for nonnegative $x_i$. Hence
+$\eta \leq 1$. Equality holds iff $a_i \propto b_i$ \textit{and} the
+support reduces to a single vertex, i.e.\ $\psi_1 = \psi_2$ \textit{and}
+$\varepsilon \to 0$. For distinct basins or $\varepsilon > 0$,
+$\eta < 1$ strictly, so $-\log(1 - \eta) > 0$ is well-defined and
+nonnegative.
+
+\textit{(2) Cluster decomposition.}\ From Proposition~\ref{prop:Z2},
+$D(\psi_1,\psi_2) = \exp(-|\psi_1 - \psi_2|^2/4\varepsilon^2)
+\widetilde{Z}(\bar\psi)$ with $\widetilde{Z}(\bar\psi) \leq 120$. Hence
+$\eta \leq 120\,\exp(-|\psi_1 - \psi_2|^2/4\varepsilon^2) /
+[Z(\psi_1)Z(\psi_2)]$. For states near basin centres $Z(\psi_k) \geq 1$,
+giving $\Fint \leq C\varepsilon^2 \exp(-|\psi_1 - \psi_2|^2/4\varepsilon^2)$
+with $C = 120$.
+
+\textit{(3) Hard core.}\ As $\psi_1 \to \psi_2$, the exponential factor
+$\exp(-|\psi_1 - \psi_2|^2/4\varepsilon^2) \to 1$, and
+$D/(Z_1 Z_2) \to \sum_i (p_i^*(\psi_1))^2 \equiv \|\mathbf{p}^*\|_2^2$,
+which is strictly positive and equals 1 iff $\mathbf{p}^*$ is a
+delta-distribution on a single vertex (i.e., $\varepsilon \to 0$). For
+finite $\varepsilon$, $\|\mathbf{p}^*\|_2^2 < 1$. When also $\psi_1$
+approaches a specific vertex $v_i$ with $\varepsilon \to 0$ in a
+coordinated limit, $\|\mathbf{p}^*\|_2^2 \to 1$ and $\Fint \to +\infty$.
+\end{proof}
+
+\begin{remark}[Relationship to Paper~XIII]
+Paper~XIII's ansatz~\citep{SmartXIII} postulated four interaction
+components with unspecified weights. The derived $\Fint = -\varepsilon^2\log(1-\eta)$ of this paper replaces those four components with a single repulsive overlap-based functional on the base 600-cell vertex graph, with no free parameters beyond the regulariser $\varepsilon$. The proximity, alignment, and compatibility terms of Paper~XIII's ansatz are naturally carried by the geometric information in the overlap ratio $\eta$; the binding term, however, is \emph{not} reproduced by the repulsive $\Fint$ on its own --- binding in the present framework arises from the separate phase-bundle lift (Proposition~\ref{thm:factor}'s pion-sector binding-minimum hypothesis (H4)), not from vertex exclusion. A full replacement of Paper~XIII's binding content by a derivation from a joint base+fibre construction is an identified open item.
+\end{remark}
+
+%==================================================================
+\section{Mode Decomposition of the Interaction}\label{sec:modes}
+%==================================================================
+
+\subsection{Spectral expansion}
+
+Let $\{\lambda_k, \phi_k\}$ be the eigenvalue--eigenfunction pairs of
+the 600-cell graph Laplacian $\mathbf{L}$. The \textbf{Gaussian
+spectral weight} of mode $k$ at vertex $v_a$ is:
+\begin{equation}\label{eq:wk}
+    w_k(v_a;\varepsilon) = \frac{1}{Z(v_a)}\sum_{i=1}^{120}
+    \exp\!\left(-\frac{|v_a - v_i|^2}{2\varepsilon^2}\right)\phi_k(v_i)
+\end{equation}
+
+The 120 eigenfunctions $\{\phi_k\}_{k=0}^{119}$ of $\mathbf{L}$ form a
+complete orthonormal basis of $L^2(V) \cong \mathbb{R}^{120}$:
+$\sum_{k=0}^{119} \phi_k(v_i)\phi_k(v_j) = \delta_{ij}$. For states
+localised at vertices $v_a, v_b$, we expand the Gaussian kernel
+$K_\varepsilon(v,w) = \exp(-|v-w|^2/2\varepsilon^2)$ in this basis on
+$V$, yielding the interaction to leading order in $\eta$:
+\begin{equation}\label{eq:Fint_spectral}
+    \Fint \approx \varepsilon^2\,\eta =
+    \varepsilon^2\exp\!\left(-\frac{|v_a - v_b|^2}{4\varepsilon^2}\right)
+    \sum_{k=0}^{119} w_k(v_a;\varepsilon)\,w_k(v_b;\varepsilon)
+\end{equation}
+where the parallelogram identity $|v_a - v_i|^2 + |v_b - v_i|^2 = \tfrac{1}{2}|v_a - v_b|^2 + 2\,|v_i - \tfrac{1}{2}(v_a+v_b)|^2$ has been used to factor the bilinear exponential $\exp(-|v_a - v_b|^2/4\varepsilon^2)$ out of the overlap $\eta$, and the residual sum $\sum_i \exp(-|v_i - m|^2/\varepsilon^2)$ (with $m = \tfrac{1}{2}(v_a+v_b)$) has been re-expressed heuristically in the Laplacian eigenbasis $\{\phi_k\}$ with weights $w_k(v_a;\varepsilon),\,w_k(v_b;\varepsilon)$ encoding the Gaussian source profiles at $v_a, v_b$. We do not supply an exact identity between $\sum_i \exp(-|v_i - m|^2/\varepsilon^2)$ and $\sum_k w_k(v_a;\varepsilon)\,w_k(v_b;\varepsilon)$: a precise completeness-relation derivation must separate the heat-kernel prefactor from the eigenbasis weights, which we leave as an identified open item. Equation~\eqref{eq:Fint_spectral} is therefore a \emph{heuristic spectral decomposition} used to motivate the two-sector mode structure below, not a proved identity ($\circ$).
+
+The Gaussian weights $w_k$ act as a low-pass filter: modes with large
+$\lambda_k$ are exponentially suppressed (the support of
+$K_\varepsilon$ is concentrated on shell-1 neighbours of $v_a$, and
+oscillatory eigenfunctions average to zero against a localised kernel),
+and the dominant contributions come from the lowest-lying modes.
+
+\subsection{Two surviving mode classes at nuclear distances}\label{sec:two_modes}
+
+At inter-nucleon separations ($r \sim$ few fm), two classes of modes
+contribute to $\Fint$. They live in \textit{different operator spaces}
+and must be carefully distinguished.
+
+\begin{definition}[Mode classification]\label{def:mode_classes}
+\begin{enumerate}
+    \item The \textbf{fibre phase-coherence channel} is the flat
+    direction of the closure functional along the Hopf-fibre phase
+    coordinate $\phi$ at each support vertex. This channel lives on
+    the tangent bundle $TS^1$ over the vertex set --- the phase
+    degree of freedom attached to each basin. We identify this
+    channel with \textit{pion exchange} at nuclear distances
+    ($\triangleright$; see Section~\ref{sec:fibre_hessian}).
+
+    \item The \textbf{graph-Laplacian zero mode} is the zero
+    eigenvalue ($\lambda = 0$, multiplicity~1) of the 600-cell graph
+    Laplacian $\mathbf{L}$. This operator acts on $L^2(V)$ ---
+    functions on the vertex set. The zero mode has exact closure
+    ($\mathbf{L}\phi_0 = 0$) and propagates with zero mass gap
+    ($\phi_0 = 1/\sqrt{120}$). We identify this mode with
+    \textit{photon exchange} with coupling $\alpha$
+    ($\triangleright$; see Section~\ref{sec:photon_exchange} and
+    Papers~VI~\citep{SmartVI} and~XXII~\citep{SmartXXII}).
+\end{enumerate}
+\end{definition}
+
+The two channels live in \textbf{different operator spaces}: the
+fibre phase-coherence channel is a lift of $\Fcal$ along
+phase-bundle coordinates, while the graph-Laplacian zero mode is an
+eigenfunction on $L^2(V)$. Because they act on different spaces they are not orthogonal in a common Hilbert space. We \emph{assume} (not prove here) that the two contributions enter the total free energy as separate additive pieces on their respective operator spaces, with no cross-coupling at the order considered; deriving this additive decomposition from a joint operator-space construction (e.g., a fibred Hilbert-space completion) is an identified open item ($\circ$).
+
+The remaining modes are \emph{assumed to be negligible at nuclear distances} (not derived here from the $\Fint$ expansion): the massive
+gauge bosons ($m_W, m_Z \sim 80$--$91$~GeV) have Compton wavelengths
+$\lbar_W \sim 0.002$~fm $\ll r_{\mathrm{str}}$, suppressing their
+propagators by $\exp(-m_W r_{\mathrm{str}}) \sim e^{-1600}$. The
+irrational-sector modes are exactly decoupled from the integer sector by
+the representation-theoretic theorem of Paper~XXII.
+
+\subsection{Fibre phase-coherence channels and the pion correspondence}\label{sec:fibre_hessian}
+
+We now make the ``fibre phase-coherence channel'' of
+Definition~\ref{def:mode_classes}(1) precise, and state carefully the
+correspondence with pion exchange. This section provides a
+\textit{structural} account of the six-channel counting;
+Proposition~\ref{prop:pion} below is therefore labelled
+identified ($\triangleright$) rather than derived.
+
+\subsubsection*{Hopf structure of the configuration manifold}
+
+The configuration manifold $S^3 \cong \mathrm{SU}(2)$ is the total space
+of the Hopf fibration
+\begin{equation}\label{eq:hopf}
+    U(1) \hookrightarrow S^3 \xrightarrow{\,\pi_H\,} S^2,
+\end{equation}
+with fibre action $R_\theta : x \mapsto x \cdot e^{i\theta}$ (right
+quaternion multiplication by $e^{i\theta} \in U(1) \subset \mathrm{SU}(2)$,
+$\theta \in [0, 2\pi)$). For each vertex $v_i \in V$, the Hopf fibre
+through $v_i$ is $F_i = \{v_i e^{i\theta} : \theta \in [0, 2\pi)\}
+\subset S^3$; since $2I$ is discrete, $F_i \cap V = \{v_i\}$. Each
+basin centre therefore lies on its own Hopf fibre, giving the vertex
+set $V$ a natural $U(1)$-bundle structure.
+
+\subsubsection*{Phase-lifted closure states}
+
+The closure functional~\eqref{eq:F} assigns a free energy to a
+spatial configuration $x \in S^3$. A \textit{phase-lifted closure
+state} is the pair $\Psi_i = (v_i, \phi_i)$ consisting of a basin
+centre $v_i \in V$ together with an internal Hopf-fibre phase
+$\phi_i \in S^1 \cong F_i$. We define the lifted functional on the
+extended configuration space $V \times (S^1)^{|V|}$ by
+\begin{equation}\label{eq:F_gauged}
+    \Fcal_{\mathrm{g}}(x; \{\phi_i\}) \;\equiv\; \Fcal(x).
+\end{equation}
+
+\begin{remark}[Status of the phase lift]\label{rem:phase_lift_status}
+The lift~\eqref{eq:F_gauged} is \textit{trivial}: by construction,
+$\Fcal_{\mathrm{g}}$ has no $\phi_i$-dependence because the raw closure
+functional~\eqref{eq:F} depends only on Euclidean distances between
+$x$ and the vertex set. Therefore any flatness of
+$\Fcal_{\mathrm{g}}$ in the fibre directions is a kinematic property
+of the lift, not a consequence of a nontrivial symmetry of a
+physical action. In particular, Goldstone's theorem does not apply
+directly to~\eqref{eq:F_gauged}, because there is no genuine
+continuous symmetry of a physical action being spontaneously
+broken: the phases $\phi_i$ are auxiliary coordinates with no
+kinetic term. The fibre-flatness observation below is a structural
+statement about the configuration space, and the identification with
+pion exchange is a physical correspondence, not a derivation.
+\end{remark}
+
+\begin{observation}[Fibre-direction flatness]\label{obs:fibre_flat}
+From~\eqref{eq:F_gauged},
+\begin{equation}\label{eq:hess_zero}
+    \frac{\partial^2 \Fcal_{\mathrm{g}}}{\partial \phi_i\,\partial \phi_j}(x; \{\phi_k\}) \;=\; 0
+    \qquad \forall\, i, j \in \{1,\ldots,120\}.
+\end{equation}
+The Hessian of the lifted functional restricted to the fibre
+directions is identically zero. The fibre bundle
+$V \times (S^1)^{|V|}$ therefore carries $|V|$ flat coordinate
+directions per configuration.
+\end{observation}
+
+Observation~\ref{obs:fibre_flat} records a tautology of the trivial
+lift~\eqref{eq:F_gauged}, not a dynamical result. It identifies a
+natural set of $|V|$ phase coordinates at which a full field theory
+(equipped with a nontrivial $U(1)^{|V|}$-invariant kinetic term)
+would exhibit massless fluctuations. Within such a theory,
+Goldstone's theorem would supply $|V(P_3)|$ massless modes per
+nucleon upon basin localisation; the present paper does not
+construct that theory.
+
+\subsubsection*{Structural correspondence with pion exchange}
+
+\begin{proposition}[$\triangleright$ Pion-exchange channel count, conditional]\label{prop:pion}
+Adopt the structural identification (Definition~\ref{def:mode_classes}(1))
+of the fibre phase-coherence channel with pion exchange at nuclear
+distances, and assume the following additional structural hypothesis, \emph{not derived here} from the two-basin vertex-exclusion constraint alone: the two nucleon probes localise on \emph{disjoint} three-vertex support graphs $P_3^{(1)}, P_3^{(2)}$ with $V(P_3^{(1)}) \cap V(P_3^{(2)}) = \emptyset$. (The constraint $i \neq j$ in Definition~\ref{def:Z2} excludes coincidence of a single pair but does not by itself force disjoint support; disjointness is the additional hypothesis.) Each nucleon has support graph $P_3$ on shells
+$\{2,3,4\}$, with $|V(P_3)| = 3$ occupied vertices; by
+Observation~\ref{obs:fibre_flat}, the lifted closure functional has
+three flat phase directions per nucleon. Under the disjoint-support hypothesis, the two nucleons' phase directions are independent coordinates on the extended configuration space.
+The total pion-exchange channel count is therefore
+\begin{equation}\label{eq:pion_count}
+    n_\pi \;=\; 2 \times |V(P_3)| \;=\; 6.
+\end{equation}
+\end{proposition}
+
+\begin{remark}[What is derived vs.\ identified in Proposition~\ref{prop:pion}]
+The counting $2 \times |V(P_3)| = 6$ is a \textbf{conditional} structural
+count: given the support graph $P_3$ and the \emph{assumed} disjoint-support hypothesis stated in Proposition~\ref{prop:pion}, the number of
+independent flat phase coordinates in the extended configuration
+space is exactly~6. The disjoint-support hypothesis is not derived from the $i \neq j$ vertex-exclusion constraint of Definition~\ref{def:Z2} alone; it is an identified open item (Section~\ref{sec:chain}). What is \textbf{identified} ($\triangleright$)
+is that these six phase-coherence channels correspond to pion
+exchange between the two nucleons, with coherence length $\pi\,\lbar_p$
+per channel (Section~\ref{sec:pion_coherence} below). The
+identification is supported by: (i) the charge-radius agreement
+$r_\pi = \pi\,\lbar_p$ derived directly in the radius
+paper~\citep{SmartRadius} (0.26\% error); (ii) the pion's
+pseudo-Goldstone status in QCD, making its association with phase
+coherence on the confinement orbit physically natural; (iii) the
+numerical success of the resulting deuteron radius. It is not
+derived from a dynamical action on $V \times (S^1)^{|V|}$, which
+remains open.
+\end{remark}
+
+\subsection{Pion coherence length}\label{sec:pion_coherence}
+
+Under the structural identification of Proposition~\ref{prop:pion},
+each of the six phase-coherence channels contributes one coherence
+length to the inter-basin structural separation. Identifying the
+channel with a phase excitation on the Hopf fibre $S^1$ of angular
+period $2\pi$, the natural coherence length is the half-period
+(the maximum phase displacement before wrap-around at $\pi$):
+\begin{equation}\label{eq:r_pi_hp}
+    r_\pi \;=\; \pi\,\lbar_p \qquad (\triangleright\text{ identified}),
+\end{equation}
+with $\lbar_p = \hbar/(m_p c)$ setting the physical scale. Summing
+over the $n_\pi = 6$ channels:
+\begin{equation}\label{eq:r_pion}
+    r_{\mathrm{str}}^{(\pi)} \;=\; n_\pi\,r_\pi \;=\; 6\,\pi\,\lbar_p.
+\end{equation}
+This matches the leading-order structural result
+of~\citet{SmartRadius}, where $r_\pi = \pi\,\lbar_p$ is also
+identified with the pion charge radius (experimental:
+$0.659 \pm 0.004$~fm, 0.26\% error). The $\pi\,\lbar_p$ kinematic
+coefficient is \textit{not} derived in the present paper from a
+dynamical action on the phase bundle; it is imported from the
+half-period identification in~\citep{SmartRadius} and is part of
+the structural correspondence with pion exchange.
+
+\subsection{Photon exchange: the graph-Laplacian zero mode}\label{sec:photon_exchange}
+
+\begin{proposition}[$\triangleright$ Photon exchange]\label{prop:photon}
+The $\lambda = 0$ mode of the graph Laplacian $\mathbf{L}$ propagates at
+all distances with zero mass gap; its eigenfunction is the constant
+mode $\phi_0 = 1/\sqrt{120}$. The coupling of this mode to each closure
+basin is identified with the fine-structure constant $\alpha = 1/(137 +
+\pi/87)$ (Paper~XXII, reviewed below). Under the kinematic
+correspondence of Section~\ref{sec:fibre_hessian} (massless modes on
+the closure orbit contribute in units of $\pi\,\lbar_p$ per channel,
+weighted by coupling strength), the photon exchange contributes at
+first order in $\alpha$:
+\begin{equation}\label{eq:r_photon}
+    r_{\mathrm{str}}^{(\gamma)} \;=\; \alpha\,\pi\,\lbar_p.
+\end{equation}
+\end{proposition}
+
+\subsubsection*{Review: $\alpha^{-1} = 137 + \pi/87$ from the 600-cell
+eigenvalue algebra}
+
+For reviewer convenience, we transcribe the key arithmetic correspondence from
+Paper~XXII~\citep{SmartXXII}.
+
+\paragraph{Tree level ($137$).}
+The four integer mass eigenvalues of the 600-cell closure Hamiltonian
+are $\{\lambda_i\} = \{9,12,14,15\}$ (Paper~V~\citep{SmartV}). The
+graph invariant
+\begin{equation}\label{eq:alpha_tree}
+    (\lambda_1 - 1)(\lambda_2 - 1) \;-\; 1 \;+\; \sum_{i=1}^4 \lambda_i
+    \;=\; 87 \;+\; 50 \;=\; 137
+\end{equation}
+is exact. The number $87$ in~\eqref{eq:alpha_tree} appears in three related arithmetic identities (Paper~XXII documents explicitly that the three routes are not algebraically independent and ultimately reflect the same underlying $E_8$/2I structure):
+\begin{enumerate}
+    \item $(9-1)(12-1) - 1 = 8 \times 11 - 1 = 87$ \qquad (mass-eigenvalue algebra),
+    \item $3(14+15) = 3 \times 29 = 87$ \qquad (Paper~V eigenvalue decomposition),
+    \item $(17+19+23+29) - 1 = 87$ \qquad (upper Coxeter exponents of $E_8$).
+\end{enumerate}
+The coincidence $\sum(\text{upper exponents}) = 88 = (9-1)(12-1)$
+connects the $E_8$ Coxeter structure to the mass eigenvalue algebra;
+the total exponent sum $\sum m_i = 120$ equals the vertex count.
+
+\paragraph{One-loop correction ($\pi/87$).}
+The Coxeter element of $E_8$ (order 30) acts on the upper (conjugate)
+spinor sector with phase accumulation $2\pi \times 88$. The ratio
+$240/120 = 2$ records the $240$-to-$120$ two-to-one icosian/Coxeter pairing between the $E_8$ root system and the 600-cell vertex set (counting/projection pairing in the Galois-involutive sense of Paper~XXII / \texttt{cascade-algebraic-substrate}, not a topological double cover of manifolds); dividing the phase by 2 gives
+$\pi \times 88$ per 600-cell cycle. Per degree of freedom
+($87 = 88 - 1$, subtracting the cyclic redundancy),
+\begin{equation}\label{eq:alpha_oneloop}
+    \text{phase per d.o.f.} \;=\; \frac{\pi \times 88}{87} \;=\; \pi \;+\; \frac{\pi}{87}.
+\end{equation}
+The excess over the natural half-turn $\pi$ is $\pi/87$. Combining
+with~\eqref{eq:alpha_tree}:
+\begin{equation}\label{eq:alpha_full}
+    \alpha^{-1} \;=\; 137 \;+\; \frac{\pi}{87} \;=\; 137.036\ldots
+\end{equation}
+which agrees with the CODATA value $137.035999\ldots$ to $0.81$~ppm.
+
+\paragraph{Epistemic note.}
+The pion channel count ($n_\pi = 6$) is a \textbf{conditional structural count}, obtained from the fibre--support structure (Proposition~\ref{prop:pion}) under the disjoint-support hypothesis stated in that proposition. The
+photon coupling ($\alpha$) is \textbf{identified}:
+equations~\eqref{eq:alpha_tree}--\eqref{eq:alpha_full} compute the
+number $137 + \pi/87$ from the 600-cell eigenvalue algebra and
+identify it with the physical fine-structure constant. This
+identification is supported by the 0.81~ppm numerical agreement and
+the three related arithmetic appearances of the tree-level term $87$ (which are not algebraically independent; see the discussion above), but the chain
+from the vertex-exclusion overlap~\eqref{eq:Fint_spectral} to the
+exact value of the photon coupling coefficient has not been
+computed from the inter-basin overlap integral alone. Closing this
+link --- deriving $\alpha$ directly from the $\Fint$ spectral
+expansion rather than importing it from the Coxeter phase account
+--- remains open ($\circ$).
+
+%==================================================================
+\section{The Structural Separation Factor}\label{sec:combined}
+%==================================================================
+
+\begin{proposition}[$\triangleright$\ $(6 + \alpha)$ separation factor, conditional identification]\label{thm:factor}
+Under the following hypotheses:
+\begin{enumerate}[label=\textup{(H\arabic*)}]
+    \item Proposition~\ref{prop:pion} (six phase-coherence channels on the $P_3$ support graph under the disjoint-support hypothesis of that proposition, $\triangleright$ identified with pion exchange);
+    \item Proposition~\ref{prop:photon} (graph-Laplacian zero mode $\triangleright$ identified with photon exchange at coupling $\alpha$);
+    \item the kinematic identification~\eqref{eq:kinematic_id} (each massless channel contributes one half-period $\pi\,\lbar_p$ of the closure orbit, imported from~\citep{SmartRadius} and \emph{not} derived from the vertex-exclusion overlap integral of the present paper);
+    \item \textbf{Pion binding minimum (assumed).} The pion-sector interaction $\Fint^{(\pi)}$ has a \emph{local minimum} at $r_*^{(\pi)} = 6\,\pi\,\lbar_p$ with strictly positive curvature $K_\pi \equiv \Fint^{(\pi)\prime\prime}(r_*^{(\pi)}) > 0$. This is an additional assumption, \emph{not} derived from the base-vertex-graph $\Fint = -\varepsilon^2\log(1-\eta)$ (which is repulsive, Proposition~\ref{prop:Fint_props}); the binding minimum is a feature of the separate phase-bundle lift, and bridging the two --- exhibiting a genuine pion binding minimum from a joint base+fibre construction --- is an identified open item.
+\end{enumerate}
+Under (H1)--(H4), the structural separation between two nucleon closure basins takes the form
+\begin{equation}\label{eq:r_str}
+    r_{\mathrm{str}} \;=\; (6 + \alpha)\,\pi\,\lbar_p \;+\; O(\alpha^2\,\pi\,\lbar_p),
+\end{equation}
+obtained after the kinematic coefficient $-g'(r_*^{(\pi)})/K_\pi = \pi\,\lbar_p$ is identified. Deriving that coefficient directly from the $\Fint$ spectral expansion is an identified open item ($\circ$).
+\end{proposition}
+
+\begin{proof}
+Let $r$ denote the inter-basin separation. The total free energy along
+the separation coordinate is
+\begin{equation}\label{eq:Ftot_r}
+    \Ftot(r) \;=\; \Fcal(\psi_1) \,+\, \Fcal(\psi_2) \,+\, \Fint^{(\pi)}(r) \,+\, \Fint^{(\gamma)}(r),
+\end{equation}
+where the two single-basin terms are $r$-independent and
+$\Fint^{(\pi)}(r)$ is minimised at $r_*^{(\pi)} \equiv
+r_{\mathrm{str}}^{(\pi)} = 6\,\pi\,\lbar_p$
+(Prop.~\ref{prop:pion}, Eq.~\eqref{eq:r_pion}). Write the pion
+contribution locally as
+\begin{equation}\label{eq:pion_quad}
+    \Fint^{(\pi)}(r) \;=\; \Fint^{(\pi)}(r_*^{(\pi)}) \;+\; \tfrac{1}{2}\,K_\pi\,(r - r_*^{(\pi)})^2 \;+\; O((r - r_*^{(\pi)})^3),
+\end{equation}
+with curvature $K_\pi \equiv \Fint^{(\pi)\prime\prime}(r_*^{(\pi)}) > 0$
+(the pion channel is binding, so the Hessian is positive-definite at
+its minimum). The photon contribution enters linearly at order $\alpha$:
+\begin{equation}\label{eq:gamma_lin}
+    \Fint^{(\gamma)}(r) \;=\; \alpha\,g(r),
+\end{equation}
+where $g(r) = O(1)$ is the single-photon overlap kernel evaluated from
+\eqref{eq:Fint_spectral} on the $\phi_0$ mode. Substituting into
+\eqref{eq:Ftot_r} and setting $\partial_r \Ftot = 0$:
+\begin{equation}\label{eq:foc}
+    K_\pi\,(r - r_*^{(\pi)}) \;+\; \alpha\,g'(r) \;=\; O((r-r_*^{(\pi)})^2).
+\end{equation}
+Evaluating $g'$ at the leading-order minimum and iterating once:
+\begin{equation}\label{eq:shift}
+    r_{\mathrm{str}} \;=\; r_*^{(\pi)} \;-\; \alpha\,\frac{g'(r_*^{(\pi)})}{K_\pi} \;+\; O(\alpha^2).
+\end{equation}
+At this point we invoke the \textbf{kinematic identification} (marked
+$\triangleright$) that bridges the structural calculation to the
+numerical correction:
+
+\medskip
+\noindent\fbox{\parbox{0.95\linewidth}{%
+\textbf{Identification ($\triangleright$).}\ Both the pion and the
+photon are massless modes on the same closure orbit of circumference
+$2\pi\,\lbar_p$, integrated against the same Gaussian kernel
+$K_\varepsilon$ in~\eqref{eq:Fint_spectral}. Under the kinematic
+correspondence of Section~\ref{sec:fibre_hessian} (each massless
+channel contributes one half-period $\pi\,\lbar_p$ of the closure
+orbit, weighted by coupling strength), the first-order shift
+coefficient in~\eqref{eq:shift} is
+\begin{equation}\label{eq:kinematic_id}
+    -\,\frac{g'(r_*^{(\pi)})}{K_\pi} \;=\; \pi\,\lbar_p.
+\end{equation}
+This identification is \textit{not} derived from the
+vertex-exclusion overlap integral~\eqref{eq:Fint_spectral} in the
+present paper; its justification is the $r_\pi = \pi\,\lbar_p$
+identification inherited from~\citep{SmartRadius}. Deriving
+$\pi\,\lbar_p$ directly from the $\Fint$ spectral expansion remains
+open ($\circ$, Section~\ref{sec:chain}).
+}}
+\medskip
+
+Substituting~\eqref{eq:kinematic_id} into~\eqref{eq:shift}:
+\begin{equation}\label{eq:6plusalpha}
+    r_{\mathrm{str}} \;=\; 6\,\pi\,\lbar_p \,+\, \alpha\,\pi\,\lbar_p \,+\, O(\alpha^2)
+    \;=\; (6 + \alpha)\,\pi\,\lbar_p \,+\, O(\alpha^2).
+\end{equation}
+The $O(\alpha^2)$ neglected terms arise from the quadratic correction
+in~\eqref{eq:foc}, which scales as $(\alpha/K_\pi)^2 K_\pi = O(\alpha^2)$ in the coefficient of $(r - r_*^{(\pi)})^2$. With the dimensionless expansion parameter $\alpha/n_\pi \approx 1.2 \times 10^{-3}$, these terms are \emph{expected to be small} but are \emph{not rigorously bounded here} without an explicit estimate of the hidden constant (the constant depends on $K_\pi$ and on the third derivative $g''(r_*^{(\pi)})$, neither of which is computed in the present paper); whether the $O(\alpha^2)$ correction sits below experimental precision is therefore an open item, not established.
+\end{proof}
+
+\begin{remark}[Additivity is perturbative, not exact]
+The linear addition $r_{\mathrm{str}} = r_{\mathrm{str}}^{(\pi)} +
+r_{\mathrm{str}}^{(\gamma)}$ holds to first order in $\alpha$ because
+$\Fint^{(\gamma)}$ is a small perturbation. The $O(\alpha^2)$ terms,
+while negligible ($\sim 5 \times 10^{-5}\,\pi\,\lbar_p$), are not
+computed here. Whether they vanish exactly (by spectral completeness of
+the integer sector) or are merely small is an open question ($\circ$).
+\end{remark}
+
+%==================================================================
+\section{Application: Deuteron Charge Radius}\label{sec:deuteron}
+%==================================================================
+
+The deuteron charge radius decomposes as~\citep{SmartRadius}:
+\begin{equation}\label{eq:deuteron}
+    r_d^2 = r_p^2 + \langle r_n^2\rangle + \frac{r_{\mathrm{str}}^2}{4}
+\end{equation}
+
+With the conditional separation factor (Proposition~\ref{thm:factor}):
+\begin{align}
+    r_p &= 4\,\lbar_p = 0.84124~\text{fm}
+    && (\blacktriangleright\text{ Appendix~\ref{app:proton}}) \label{eq:rp} \\
+    \langle r_n^2\rangle &= -\tfrac{8}{3}\,\lbar_n^2 = -0.11762~\text{fm}^2
+    && (\blacktriangleright\text{ \citep{SmartRadius}}) \label{eq:rn2} \\
+    r_{\mathrm{str}} &= (6 + \alpha)\,\pi\,\lbar_p = 3.96905~\text{fm}
+    && (6\text{: }\blacktriangleright;\;\alpha\text{: }\triangleright)
+    \label{eq:rstr}
+\end{align}
+where the reduced Compton wavelengths are taken to full available precision from CODATA~\citep{CODATA2022}: $\lbar_p = \hbar/(m_p c) = 0.2103089103(24)$~fm, $\lbar_n = \hbar/(m_n c) = 0.2100194143(24)$~fm; the fine-structure constant used here is the VFD-identified value $\alpha^{-1} = 137 + \pi/87 = 137.0361103...$ (VFD value; differing from CODATA 2022's $\alpha^{-1} = 137.035999177(21)$ by $\sim 1.11 \times 10^{-4}$ in the reciprocal, i.e., $\sim 0.81$~ppm --- within the VFD programme's claimed numerical correspondence precision for $\alpha^{-1}$ (Paper~XXII), but $\sim 5300$ CODATA standard deviations apart, since CODATA's uncertainty on $\alpha^{-1}$ is at the $2.1 \times 10^{-8}$ level). The rounded values $\lbar_p = 0.21031$~fm shown above are for readability; the $0.02\sigma$ and $0.83\sigma$ headline figures use the full-precision inputs.
+
+\begin{remark}[Supporting derivations for $r_p$ and $\langle r_n^2 \rangle$]
+Equation~\eqref{eq:rp} is the boundary-resolvent result on the proton
+support graph $P_3$ (Appendix~\ref{app:proton}); the factor $4$ is
+\textit{structurally triply determined} --- it equals
+$\mathrm{Tr}(L(P_3)) = 2|E(P_3)|/|V(P_3)| \times |V(P_3)| = 4$, equals
+$\max(S_p) = 4$ (shell index), and equals the leading cumulant
+coefficient $\sqrt{12 \cdot \mathrm{Tr}(L)/|V|}$ of the heat-kernel
+expansion on $P_3$. Equation~\eqref{eq:rn2} follows from the dipole
+mode $v_1 = [1, 0, -1]/\sqrt{2}$ of the $P_3$ Laplacian (eigenvalue
+$\lambda_1 = 1$): $\langle r_n^2 \rangle = -q \,(n_{\max}^2 -
+n_{\min}^2)\,\lbar_n^2$ with $q = \mathrm{Var}(\deg) = 2/9$ and
+$(n_{\max}^2 - n_{\min}^2) = 16 - 4 = 12$, giving
+$\langle r_n^2 \rangle = -(2/9)(12)\lbar_n^2 = -(8/3)\lbar_n^2$.
+\end{remark}
+
+\begin{proposition}[$\triangleright$ Deuteron charge radius, computed conditional on Proposition~\ref{thm:factor}]\label{prop:deuteron}
+\begin{equation}\label{eq:rd}
+    r_d = \sqrt{r_p^2 + \langle r_n^2\rangle +
+    \frac{(6{+}\alpha)^2\pi^2\lbar_p^2}{4}}
+    = 2.12800~\text{fm}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$r_d^2 = 0.70768 - 0.11762 + 3.93834 = 4.52840$~fm$^2$;
+$r_d = \sqrt{4.52840} = 2.12800$~fm.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{Deuteron charge radius: leading order vs.\ conditional NLO correction (Proposition~\ref{thm:factor}), against two experimental anchors. The $\sigma$ column depends on which anchor is used; both are reported.}
+\label{tab:deuteron}
+\begin{tabular}{@{}lllcccc@{}}
+\toprule
+& Formula & Status & VFD (fm) & Expt.\ (fm) & Error & $\sigma$ \\
+\midrule
+LO, CODATA 2018 & $r_{\mathrm{str}} = 6\pi\lbar_p$ & $\triangleright$ &
+    2.1258 & $2.12799(74)$~\citep{Pohl2016} & 0.10\% & 3.0 \\
+\textbf{NLO, CODATA 2018} & $\boldsymbol{r_{\mathrm{str}} = (6{+}\alpha)\pi\lbar_p}$ &
+    $\triangleright$ &
+    \textbf{2.12800} & $\boldsymbol{2.12799(74)}$~\citep{Pohl2016} & \textbf{0.0006\%} &
+    \textbf{0.02} \\
+LO, CODATA 2022 & $r_{\mathrm{str}} = 6\pi\lbar_p$ & $\triangleright$ &
+    2.1258 & $2.12778(27)$~\citep{CODATA2022} & 0.09\% & 7.4 \\
+\textbf{NLO, CODATA 2022} & $\boldsymbol{r_{\mathrm{str}} = (6{+}\alpha)\pi\lbar_p}$ &
+    $\triangleright$ &
+    \textbf{2.12800} & $\boldsymbol{2.12778(27)}$~\citep{CODATA2022} & \textbf{0.010\%} &
+    \textbf{0.83} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The NLO result is within $1\sigma$ of both CODATA 2018 (based on the Pohl~\emph{et~al.} muonic deuterium measurement) and the tighter CODATA 2022 adjustment (which combines muonic and electronic data with reduced uncertainty). The $\sigma$ headline therefore depends on which anchor is adopted; the NLO formula improves on LO by a factor of $\sim$100 in absolute error against CODATA 2018 and by a factor of $\sim$9 against CODATA 2022.
+
+%==================================================================
+\section{Testable Prediction}\label{sec:prediction}
+%==================================================================
+
+\begin{quote}
+\textbf{Assumption ($\triangleright$, prediction).} Assuming linear charge scaling for the photon contribution to the inter-basin separation in a nucleus with $Z$ protons,
+\begin{equation}\label{eq:Zalpha}
+    r_{\mathrm{str}}^{(\gamma)}(Z) = Z\,\alpha\,\pi\,\lbar_p,
+\end{equation}
+the per-proton correction gives $0.005$--$0.015$~fm for light nuclei. This is \emph{not} a derivation from $\Fint$; it is a charge-additive extrapolation of the $Z=1$ result of Proposition~\ref{thm:factor}, stated as a testable prediction to be checked against precision isotope-shift spectroscopy and muonic-atom measurements~\citep{Pohl2010}.
+\end{quote}
+
+\begin{table}[ht]
+\centering
+\caption{Predicted electromagnetic corrections.}
+\label{tab:Zalpha}
+\begin{tabular}{@{}lccl@{}}
+\toprule
+Nucleus & $Z$ & $Z\alpha$ & EM correction (fm) \\
+\midrule
+Deuteron & 1 & 0.00730 & 0.00482 \\
+Helion & 2 & 0.01459 & 0.00964 \\
+${}^6$Li & 3 & 0.02189 & 0.01446 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%==================================================================
+\section{Summary of the Logical Chain}\label{sec:chain}
+%==================================================================
+
+\begin{table}[ht]
+\centering
+\caption{Complete derivation chain with epistemic status.}
+\label{tab:chain}
+\begin{tabular}{@{}rlll@{}}
+\toprule
+Step & Result & Status & Method \\
+\midrule
+1 & $\phig$ from geometric-mean self-similarity & $\blacktriangleright$ & Unique positive fixed point of $r = 1 + 1/r$ \\
+2 & 600-cell from $\phig$, under (H1)--(H4) & $\blacktriangleright^\ast$ & ADE classification within stated axioms \\
+3 & $\Fcal$ (log-sum-exp) & $\blacktriangleright^\ast$ & Faddeev--Khinchin uniqueness within class $\mathcal{C}$ \\
+4 & $\Fint$ from vertex exclusion & $\blacktriangleright$ & Partition function ratio, Cauchy--Schwarz bound \\
+5a & Six flat phase-coherence channels on $P_3$ & $\blacktriangleright^\ast$ & Structural count $2 \times |V(P_3)|$ under disjoint-support hypothesis (Prop.~\ref{prop:pion}) \\
+5b & Identification of 5a with pion exchange & $\triangleright$ & Correspondence with $r_\pi = \pi\,\lbar_p$~\citep{SmartRadius} \\
+5c & Photon: graph-Laplacian $\lambda{=}0$ mode & $\blacktriangleright$ & Automatic from spectral graph theory \\
+5d & Photon coupling $= \alpha = 1/(137 + \pi/87)$ & $\triangleright$ & $0.81$~ppm match to Paper~XXII eigenvalue algebra \\
+5e & Half-period kinematic coefficient $\pi\,\lbar_p$ & $\triangleright$ & Bridge identification~\eqref{eq:kinematic_id} \\
+6 & $(6{+}\alpha)$ factor & $\triangleright$ & Conditional identification under 5a--5e (Proposition~\ref{thm:factor}) \\
+7 & $r_d = 2.12800$~fm & computed & $0.0006\%$ / $0.02\sigma$ vs CODATA 2018; $0.010\%$ / $0.83\sigma$ vs CODATA 2022 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\footnotesize{$\blacktriangleright^\ast$ denotes ``derived
+within the stated class of models or axioms'' (as distinct from
+unconditional first-principles derivation).}
+
+\subsection{What is derived ($\blacktriangleright$)}
+
+\begin{enumerate}
+    \item $\phig$ as the unique positive fixed point of the geometric-mean self-similarity recursion $r = 1 + 1/r$ (Proposition~\ref{prop:phi}).
+    \item The $\pi/5$ angular scale from the permeability ratio on the round $S^3$ metric (Eq.~\ref{eq:angle}).
+    \item Under (H1)--(H4), the selection of $2I$ (hence the 600-cell) within the ADE classification (Theorem~\ref{thm:600cell}): a derivation within the stated structural assumptions, not unconditional.
+    \item Within the class $\mathcal{C}$ of continuous regularised soft-min functionals, the uniqueness of the log-sum-exp form $\Fcal$ satisfying A1--A4 (Theorem~\ref{thm:F}).
+    \item The interaction functional $\Fint = -\varepsilon^2\log(1-\eta)$ from vertex exclusion in the two-basin partition function, with cluster decomposition, repulsion ($\eta \in [0,1)$ via Cauchy--Schwarz), and sharp-localisation hard core (Theorem~\ref{thm:Fint}, Proposition~\ref{prop:Fint_props}).
+    \item The structural count of six flat phase-coherence coordinates on the deuteron configuration bundle: $n = 2 \times |V(P_3)| = 6$ (Proposition~\ref{prop:pion}, structural counting part; conditional on the disjoint-support hypothesis for the two $P_3$ probes, see the open-items list below).
+    \item The graph-Laplacian zero mode as an automatic consequence of spectral graph theory ($\phi_0 = \text{constant}$).
+    \item The first-order minimisation giving $r_{\mathrm{str}} = (6 + \alpha)\,\pi\,\lbar_p + O(\alpha^2)$, once the kinematic identifications are granted (Proposition~\ref{thm:factor}).
+\end{enumerate}
+
+\subsection{What is identified ($\triangleright$)}
+
+\begin{enumerate}
+    \item \textbf{Phase channels} $\leftrightarrow$ \textbf{pion exchange.} The six flat phase-coherence coordinates on the extended configuration bundle are identified with pion-exchange channels. This is a structural correspondence, not a derivation from a dynamical action (Remark~\ref{rem:phase_lift_status}); its support is the independent $r_\pi = \pi\,\lbar_p$ identification in~\citep{SmartRadius} and the numerical success of the deuteron fit.
+    \item \textbf{Graph-Laplacian zero mode} $\leftrightarrow$ \textbf{photon exchange.} The $\lambda = 0$ eigenfunction is identified with photon exchange. The coupling strength $\alpha = 1/(137 + \pi/87)$ is computed in Paper~XXII from the 600-cell eigenvalue algebra (Eqs.~\ref{eq:alpha_tree}--\ref{eq:alpha_full}, 0.81~ppm agreement); the identification of this number with the physical fine-structure constant is not derived from the vertex-exclusion integral.
+    \item \textbf{Half-period kinematic coefficient} $\pi\,\lbar_p$. Each massless channel contributes one half-period of the closure orbit per unit coupling (Eq.~\ref{eq:kinematic_id}); this bridges the structural count to the numerical correction and inherits its $\pi\,\lbar_p$ value from~\citep{SmartRadius}.
+    \item \textbf{$Z\alpha$ scaling.} The extension to heavier nuclei assumes the photon coupling scales linearly with nuclear charge (charge-additive extrapolation, Section~\ref{sec:prediction}).
+\end{enumerate}
+
+\subsection{What is open ($\circ$)}
+
+\begin{enumerate}
+    \item \textbf{Why $S^3$?} The choice of a compact, simply-connected 3-manifold as the configuration space is assumed (H1), not derived. It is connected to the open question of why spacetime has $3+1$ dimensions.
+    \item \textbf{Why a finite subgroup?} (H2) restricts to discrete closure symmetries, appropriate for a tunnelling hierarchy but not proved necessary.
+    \item \textbf{Why maximal?} The selection of $2I$ (rather than a smaller group with the same NN angle) via (H4) is motivated by maximal non-resonance but not proved necessary from a variational principle.
+    \item \textbf{A dynamical action on the phase bundle.} A field theory on $V \times (S^1)^{|V|}$ with nontrivial kinetic term, under which the six flat coordinates would become genuine Goldstone excitations via Goldstone's theorem. The present paper does not construct such an action.
+    \item \textbf{Deriving $\alpha$ from $\Fint$.} Computing the photon coupling coefficient directly from the vertex-exclusion overlap integral, rather than importing it from Paper~XXII.
+    \item \textbf{Deriving $\pi\,\lbar_p$ from $\Fint$.} Likewise for the kinematic half-period coefficient~\eqref{eq:kinematic_id}.
+    \item \textbf{$O(\alpha^2)$ corrections.} Whether the second-order terms in the perturbative expansion vanish exactly or are merely small.
+    \item \textbf{Multi-body extension.} The phase-channel count for nuclei beyond the deuteron.
+    \item \textbf{Shell-normalisation hypothesis.} The normalisation $d_2 = 1$ used in Proposition~\ref{prop:phi} to fix absolute scales (and propagated through the $\theta_1 = \pi/5$ angle and the 600-cell selection under H1--H4) is a choice of units, not a derivation. Different shell-normalisation choices rescale $d_1, d_2, \Delta$ simultaneously without changing ratios, but the match to the physical nuclear scale requires a separate calibration.
+    \item \textbf{Spectral decomposition of $\Fint$.} The heuristic spectral formula~\eqref{eq:Fint_spectral} is \emph{not} supplied with an exact completeness-relation proof; it is used as a motivation for the two-sector mode structure. An exact spectral identity for the overlap $\eta$ in the Laplacian eigenbasis is an identified open item.
+    \item \textbf{Joint operator-space additive decomposition.} The two retained mode sectors (phase-coherence and graph-Laplacian zero mode) live on different operator spaces; we \emph{assume} they combine additively in the free energy without cross-coupling at the order considered. A fibred Hilbert-space / joint-operator construction proving this additivity is an identified open item.
+    \item \textbf{Disjoint-support hypothesis for $P_3$ probes.} The six-channel phase-coherence count in Proposition~\ref{prop:pion} uses the assumption that the two three-vertex $P_3$ support graphs are disjoint; vertex-exclusion $i \neq j$ does not by itself force disjoint support. Proving or relaxing this disjointness is an identified open item.
+    \item \textbf{Pion-minimum positive-curvature assumption.} Proposition~\ref{thm:factor}'s perturbative algebra assumes $\Fint^{(\pi)}$ has a binding minimum at $r_*^{(\pi)} = 6\,\pi\,\lbar_p$ with positive curvature $K_\pi > 0$. The base $\Fint = -\varepsilon^2\log(1-\eta)$ is repulsive (Proposition~\ref{prop:Fint_props}); the binding pion-sector minimum is therefore a feature of the separate phase-bundle lift, not of $\Fint$ on the base vertex graph. Bridging these --- exhibiting a genuine pion binding minimum from a joint base+fibre construction --- is an identified open item.
+    \item \textbf{Classification of finite configurations in $\tfrac{1}{2}\mathbb{Z}[\phig]$.} Remark~\ref{cor:phi_determined} invokes a classification of finite $H_4$-invariant configurations on $S^3$ as an imported standard fact; the analogous classification without $H_4$-invariance is not supplied.
+\end{enumerate}
+
+%==================================================================
+\section{Reproducibility}\label{sec:reproducibility}
+%==================================================================
+
+The derivation chain reduces to:
+\begin{enumerate}
+    \item $r^2 = r + 1 \Rightarrow r = \phig$, $\cos\theta_1 = \phig/2 \Rightarrow \theta_1 = \pi/5$. (Algebra.)
+    \item $2I$ has 120 elements, NN angle $\pi/5$, degree~12. (Finite group theory; verified by explicit quaternion construction in \texttt{build\_600cell.py}.)
+    \item $n_\pi = 2 \times 3 = 6$. $\alpha^{-1} = 137 + \pi/87 = 137.0361$. (Arithmetic.)
+    \item $r_{\mathrm{str}} = (6 + \alpha)\,\pi \times 0.21031 = 3.96905$~fm. (Calculator.)
+    \item $r_d = \sqrt{0.70768 - 0.11762 + 3.93834} = \sqrt{4.52840} = 2.12800$~fm. (Calculator.)
+\end{enumerate}
+
+%==================================================================
+\section{Conclusion}\label{sec:conclusion}
+%==================================================================
+
+The closure functional of the VFD programme is variationally characterised within the stated axiom class rather than merely postulated. Starting from the permeability axiom (self-similar vacuum permeability) --- together with the geometric-mean closure
+condition, the shell-normalisation $d_2 = 1$, and a minimal set of structural assumptions (compact
+$S^3$, finite-subgroup closure, maximal vertex-transitivity (H1--H4 of Section~\ref{sec:600cell}), and the regularised soft-min axioms A1--A4 of Section~\ref{sec:F}, including A4 Faddeev grouping), the golden ratio is
+uniquely selected, the 600-cell is selected from the ADE
+classification, the closure functional is uniquely characterised
+within its stated class, and the interaction functional follows
+from vertex exclusion in the two-basin partition function. Under
+the additional structural identifications of phase channels with
+pion exchange and of the graph-Laplacian zero mode with photon
+exchange (both inherited from prior papers in the
+programme~\citep{SmartRadius,SmartXXII}), \emph{together with} the disjoint-support hypothesis of Proposition~\ref{prop:pion} and the pion binding-minimum assumption (H4) of Proposition~\ref{thm:factor}, the resulting
+$(6 + \alpha)$ separation factor yields a deuteron charge radius
+in agreement with experiment at $0.02\sigma$ against the CODATA 2018 anchor (Pohl~\emph{et~al.}~muonic-deuterium) and $0.83\sigma$ against the CODATA 2022 adjustment, bringing all six charge radii in the programme within $1\sigma$ against both anchors.
+
+The honest classification throughout separates three strata: the
+structural spine (derived, $\blacktriangleright$); the physical
+identifications that bridge geometry to observables
+($\triangleright$); and the open problems ($\circ$), chief among
+which are deriving the photon coupling directly from the
+inter-basin overlap and constructing a dynamical action on the
+phase bundle under which the six flat coordinates become genuine
+Goldstone excitations. The framework's permeability axiom --- that the vacuum is a self-similarly permeable field --- is the one physical starting point; everything else (H1--H4, A1--A4, the disjoint-support hypothesis, the pion binding-minimum assumption, and the kinematic identification) is a structural or mathematical assumption whose status is catalogued in Section~\ref{sec:chain}.
+
+%==================================================================
+\appendix
+\section{Boundary-Resolvent Derivation of $r_p = 4\,\lbar_p$}\label{app:proton}
+%==================================================================
+
+For completeness and to make the deuteron calculation self-contained,
+we transcribe the derivation of $r_p = 4\,\lbar_p$ from the boundary
+resolvent on the proton support graph $P_3$ (full treatment
+in~\citep{SmartRadius}).
+
+\subsection*{Proton support graph}
+
+The proton support is $S_p = \{2, 3, 4\}$ (three consecutive 600-cell
+shells), inducing the path graph $P_3$ with vertex set $V(P_3) =
+\{2, 3, 4\}$ and edges $E(P_3) = \{(2,3), (3,4)\}$. The graph
+Laplacian is
+\begin{equation}\label{eq:L_P3}
+    L(P_3) \;=\; \begin{pmatrix} 1 & -1 & 0 \\ -1 & 2 & -1 \\ 0 & -1 & 1 \end{pmatrix},
+    \qquad \mathrm{spec}(L) = \{0, 1, 3\}, \qquad \mathrm{Tr}(L) = 4.
+\end{equation}
+The eigenvectors are $\psi_0 = \tfrac{1}{\sqrt 3}(1,1,1)^T$ (zero
+mode), $\psi_1 = \tfrac{1}{\sqrt 2}(1, 0, -1)^T$ (dipole,
+eigenvalue~1), and $\psi_2 = \tfrac{1}{\sqrt 6}(1, -2, 1)^T$
+(quadrupole, eigenvalue~3).
+
+\subsection*{Boundary resolvent}
+
+The electromagnetic probe couples at the outer boundary vertex
+(shell~4), because interior vertices are exponentially shielded by
+closure barriers (see Section~5 of~\citep{SmartRadius}). The
+eigenvector weights at vertex 4 are $|\psi_k(4)|^2 = \{1/3, 1/2,
+1/6\}$ for eigenvalues $\{0, 1, 3\}$. The boundary resolvent is
+\begin{equation}\label{eq:R_bdy}
+    R_{\mathrm{bdy}}(z) \;=\; \sum_{k=0}^{2} \frac{|\psi_k(4)|^2}{1 + \lambda_k z}
+    \;=\; \frac{1/3}{1} \,+\, \frac{1/2}{1+z} \,+\, \frac{1/6}{1+3z}.
+\end{equation}
+
+\subsection*{Charge radius from the form-factor slope}
+
+Identifying $R_{\mathrm{bdy}}(z)$ with the proton electric form factor
+$G_E(Q^2)$ at $z = a^2 Q^2$ (with $a^2 = 2\mathrm{Tr}(L)/|V|\,\lbar_p^2$
+the heat-kernel cumulant coefficient, Paper~IV~\citep{SmartIV}):
+\begin{equation}\label{eq:dR}
+    \frac{dR_{\mathrm{bdy}}}{dz}\bigg|_{z=0} \;=\; -\tfrac{1}{2} \,-\, \tfrac{1}{2} \;=\; -1.
+\end{equation}
+The definition $r_p^2 = -6\,dG_E/dQ^2|_{Q^2 = 0}$ combined with
+$dG_E/dQ^2 = a^2\,dR/dz$ gives
+\begin{equation}\label{eq:rp_derived}
+    r_p^2 \;=\; 6\,a^2 \;=\; 6 \times \frac{2\,\mathrm{Tr}(L)}{|V|}\,\lbar_p^2
+    \;=\; 6 \times \frac{8}{3}\,\lbar_p^2 \;=\; 16\,\lbar_p^2,
+    \qquad r_p \;=\; 4\,\lbar_p.
+\end{equation}
+
+\subsection*{Triple appearance of the factor 4}
+
+The factor $4$ in~\eqref{eq:rp_derived} appears in three related structural characterisations (these are not algebraically independent --- Proposition~\ref{prop:triple} shows items~(1) and~(2) coincide under the assignment rules R1--R5; item~(3) is a heat-kernel reformulation of~(1))~\citep{SmartRadius}:
+\begin{enumerate}
+    \item $\mathrm{Tr}(L(P_3)) = 2\,|E(P_3)| = 4$ (graph invariant).
+    \item $\max(S_p) = 4$ (outermost shell index of the proton support).
+    \item $\sqrt{12 \cdot \mathrm{Tr}(L)/|V|} = \sqrt{12 \cdot 4/3} = 4$ (leading heat-kernel cumulant).
+\end{enumerate}
+
+\begin{proposition}[Structural identity, from~\citep{SmartRadius}]\label{prop:triple}
+For a path graph $P_n$: $\mathrm{Tr}(L) = 2(n-1)$. For a contiguous
+shell support $S$ with $n_{\min} = \min S$ and $|S|$ shells:
+$\max(S) = n_{\min} + |S| - 1$. These are equal iff
+$n_{\min} = |S| - 1$. For the proton support, the assignment rules
+R1--R5 of~\citep{SmartRadius} fix $n_{\min} = 2$ and $|S| = 3$,
+giving $n_{\min} = 2 = |S| - 1$; hence
+$\mathrm{Tr}(L(P_3)) = \max(S_p) = 4$.
+\end{proposition}
+
+The boundary-dominance argument (shell-4 vertex is unshielded; interior
+vertices are exponentially suppressed by closure barriers of height
+$\sim d_1^2/(4\varepsilon^2)$) is verified by the dipole eigenvector
+$\psi_1 = (1, 0, -1)/\sqrt{2}$ placing equal and opposite weight on the
+two boundary vertices and exactly zero on the interior
+(cf.\ Section~4 of~\citep{SmartRadius}).
+
+Numerical evaluation: $\lbar_p = \hbar/(m_p c) = 0.21031$~fm, so
+$r_p = 4 \times 0.21031 = 0.84124$~fm, compared to the CODATA value
+$0.8409 \pm 0.0004$~fm ($0.04\%$, $0.84\sigma$).
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

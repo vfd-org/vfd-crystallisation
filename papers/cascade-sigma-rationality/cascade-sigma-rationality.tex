@@ -1,0 +1,1036 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Fix}{\operatorname{Fix}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\im}{\operatorname{im}}
+
+\title{Cascade--Classical Correspondence I:\\
+  Sigma-Fixed Rationality over $\mathbb{Q}(\varphi)$}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Let $K = \Q(\varphi)$ denote the quadratic extension of $\Q$ by the
+golden ratio $\varphi = (1+\sqrt{5})/2$, and let
+$\sigma \colon K \to K$ denote its unique non-trivial $\Q$-automorphism,
+$\sigma(\varphi) = 1 - \varphi$. This paper proves two elementary but
+load-bearing results about the coefficientwise $\sigma$-action on
+scalar extensions $V_K := V \otimes_\Q K$:
+\begin{enumerate}
+\item (Fixed-part theorem.) For every finite-dimensional $\Q$-vector
+  space $V$, the fixed subspace of $\sigma_V := \id_V \otimes \sigma$
+  on $V_K$ is canonically $V \otimes 1 \cong V$
+  (Theorem~\ref{thm:fixed-part}).
+\item (Functoriality of $\Pi_\sigma$.) The $\Q$-linear projector
+  $\Pi_\sigma := (\id + \sigma_V)/2$ commutes with the scalar
+  extension of every $\Q$-linear map
+  (Theorem~\ref{thm:pisigma-functorial}), and in particular with
+  every cohomological pullback or pushforward defined over $\Q$
+  (Corollaries~\ref{cor:cohomological} and
+  \ref{cor:cohomological-pushforward}).
+\end{enumerate}
+
+These results are \emph{not} the Hodge Conjecture, nor do they
+reduce it. They are the algebraic content of one specific
+``$\sigma$-fixed equals rational'' step used in downstream
+papers. The paper is deliberately narrow: no cascade-embeddability
+claim is made, no universality statement is asserted, no geometric
+or dynamical $\sigma$-action is constructed. Theorem inputs are
+standard algebra only; no ``formal framework'' or exploratory
+cascade note is used as theorem support. This is the first of
+thirteen planned infrastructure papers and exists to provide a
+stable citation target for the Foundations paper and the Hodge
+companion manuscript.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction and Source Audit}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{Where $\sigma$ comes from in the wider programme}
+
+In the wider cascade programme, $\sigma$ arises as a natural
+involution on golden-field arithmetic: the non-trivial element of
+$\operatorname{Gal}(\Q(\varphi)/\Q)$. This provenance (historically
+from icosian arithmetic used in the pairing of the 600-cell with
+its dual 120-cell) is not needed for any proof in the present
+paper. The only fact we require is that $K := \Q(\varphi)$ is a
+quadratic field extension of $\Q$ with a unique non-trivial
+$\Q$-automorphism $\sigma$. Everything that follows is standard
+algebra.
+
+\subsection{Main results}
+
+Theorem~\ref{thm:fixed-part} establishes that the $\sigma$-fixed
+subspace of the scalar extension $V_K = V \otimes_\Q K$ is, under
+the canonical inclusion $V \hookrightarrow V_K$, $v \mapsto
+v \otimes 1$, equal to the image of $V$. Theorem~\ref{thm:pisigma-functorial}
+establishes that the $\Q$-linear projector
+$\Pi_\sigma := (\id + \sigma_V)/2 \colon V_K \to V_K$ commutes with
+the scalar extension $T_K := T \otimes \id_K$ of every $\Q$-linear
+map $T \colon V \to W$, i.e.\ the diagram
+\[
+\begin{tikzcd}
+  V_K \arrow[r, "T_K"] \arrow[d, "\Pi_\sigma"'] & W_K \arrow[d, "\Pi_\sigma"] \\
+  V_K \arrow[r, "T_K"'] & W_K
+\end{tikzcd}
+\]
+commutes. Corollaries~\ref{cor:cohomological} and
+\ref{cor:cohomological-pushforward} specialize this to
+cohomological pullback and pushforward maps defined over $\Q$.
+
+\subsection{What this paper does not prove}
+\label{subsec:does-not-prove}
+
+To forestall any reader mis-reading this as a Hodge paper, we
+record the exclusions explicitly.
+
+\begin{enumerate}
+\item This paper does not prove the Hodge Conjecture or any part
+  of it.
+\item This paper does not prove that every Hodge class is
+  $\sigma$-fixed.
+\item This paper does not prove that every $\sigma$-fixed class is
+  algebraic.
+\item This paper does not claim any smooth projective variety is
+  ``cascade-embeddable'' in any sense.
+\item This paper does not propose a non-coefficientwise
+  $\sigma$-action on varieties, cohomology classes, or cascade
+  configurations.
+\item This paper does not claim any relation between $\Pi_\sigma$
+  and universality, motives, the Langlands programme, or any
+  Millennium conjecture conclusion.
+\end{enumerate}
+
+What we do prove is a pair of clean algebraic lemmas about
+coefficient extensions from $\Q$ to $\Q(\varphi)$. The downstream
+papers (Foundations; the Hodge companion manuscript) will cite
+these lemmas exactly as stated, and any step from
+``$\sigma$-fixed'' to ``algebraic'' will be done in those papers,
+not here.
+
+\subsection{Source audit}
+
+The only theorem inputs to this paper are elementary algebra and,
+in \S\ref{sec:examples}, standard rational-cohomology conventions
+for complex projective spaces and complex abelian varieties. No
+internal cascade-derivation source is used as a theorem input. In
+particular: the pregeometry sections P4--P8, the foundations
+sections F2, F3, F6, F7, F8, the GR sections C2.bis and C3.bis,
+the dynamics sections D5--D10, and the earlier Hodge draft are
+\emph{not} used as proof support anywhere in this paper. Those
+sources are either formal frameworks or exploratory notes in their
+own source documents, and the purpose of this infrastructure paper
+is precisely to \emph{replace} such dependence in downstream work.
+
+\subsection{Organization}
+
+Section~\ref{sec:prelim} develops algebraic preliminaries: the
+field $K = \Q(\varphi)$, the involution $\sigma$, and the scalar
+extension $V_K$. Section~\ref{sec:fixed-part} states and proves
+the fixed-part theorem (Theorem~\ref{thm:fixed-part}).
+Section~\ref{sec:pisigma} defines the projector $\Pi_\sigma$,
+proves its basic properties, and establishes functoriality
+(Theorem~\ref{thm:pisigma-functorial} and
+Corollaries~\ref{cor:cohomological} and
+\ref{cor:cohomological-pushforward}). Section~\ref{sec:examples}
+works out three sanity-check examples.
+Section~\ref{sec:handoff} states the citation contract for
+downstream papers. Appendix~\ref{app:notation} is a concordance of
+symbols and formulas.
+
+%=====================================================================
+\section{Algebraic Preliminaries: $\Q(\varphi)$, $\sigma$, and Scalar Extension}
+\label{sec:prelim}
+%=====================================================================
+
+\subsection{The field $\Q(\varphi)$ and its Galois involution}
+
+\begin{definition}[The field $K$]
+\label{def:K}
+Let
+\[
+  K := \Q(\varphi) = \Q[x]/(x^2 - x - 1),
+\]
+where $\varphi = (1 + \sqrt{5})/2$ is the golden ratio, a root of
+$x^2 - x - 1 = 0$. As a $\Q$-vector space, $K$ is two-dimensional,
+with basis $\{1, \varphi\}$.
+\end{definition}
+
+\begin{definition}[The involution $\sigma$]
+\label{def:sigma}
+The \emph{Galois involution} $\sigma \colon K \to K$ is the unique
+non-trivial $\Q$-automorphism of $K$. Explicitly,
+\[
+  \sigma(a + b \varphi) := a + b \bar\varphi,
+  \qquad a, b \in \Q,
+\]
+where $\bar\varphi := 1 - \varphi$ is the other root of
+$x^2 - x - 1$. Equivalently, $\sigma(\varphi) = 1 - \varphi =
+\bar\varphi$.
+\end{definition}
+
+\begin{remark}[Uniqueness of $\sigma$]
+The minimal polynomial $x^2 - x - 1$ has exactly two roots in $K$,
+namely $\varphi$ and $1 - \varphi$. Any $\Q$-automorphism of $K$
+permutes these roots. The identity sends $\varphi \mapsto \varphi$;
+the non-identity automorphism sends $\varphi \mapsto 1 - \varphi$.
+This is the content of \cite[Ch.~V \S 1]{LangAlgebra} specialized to
+the quadratic extension $K/\Q$.
+\end{remark}
+
+\begin{notation}[$\varphi$-basis vs.\ $\delta$-basis]
+\label{not:bases}
+We use two coordinate systems on $K$:
+\begin{itemize}
+\item The \emph{$\varphi$-basis}: $\{1, \varphi\}$. In this basis,
+  $\sigma(a + b\varphi) = (a + b) - b\varphi$.
+\item The \emph{$\delta$-basis}: $\{1, \delta\}$, where $\delta :=
+  2\varphi - 1 = \sqrt{5}$. In this basis,
+  $\sigma(a + b\delta) = a - b\delta$, the sign-flip involution.
+\end{itemize}
+The $\delta$-basis is simpler for the proof of the fixed-part
+theorem, because $\sigma$ acts diagonally as $+1$ on the first
+basis vector and $-1$ on the second.
+\end{notation}
+
+\begin{lemma}[Coordinate change]
+\label{lem:coord-change}
+The two bases are related by $\delta = 2\varphi - 1$ and $\varphi
+= (1 + \delta)/2$. In particular, a general element of $K$ can be
+written either as $a + b\varphi$ or as $A + B\delta$, with $A =
+a + b/2$ and $B = b/2$. The involution $\sigma$ acts on the
+$\delta$-basis by
+\[
+  \sigma(A + B\delta) = A - B\delta,
+  \qquad A, B \in \Q.
+\]
+\end{lemma}
+
+\begin{proof}
+$\sigma(\delta) = \sigma(2\varphi - 1) = 2\sigma(\varphi) - 1 =
+2(1-\varphi) - 1 = 1 - 2\varphi = -(2\varphi - 1) = -\delta$.
+Therefore $\sigma(A + B\delta) = A + B\sigma(\delta) = A - B\delta$
+by $\Q$-linearity of $\sigma$.
+\end{proof}
+
+\begin{lemma}[Direct-sum decomposition of $K$]
+\label{lem:K-decomp}
+As a $\Q$-vector space,
+\[
+  K = \Q \oplus \Q\delta,
+\]
+and the involution $\sigma \colon K \to K$ acts as $(+1, -1)$ with
+respect to this decomposition. The $\sigma$-fixed subspace of $K$
+is $\Fix(\sigma) = \Q$, and the $\sigma$-anti-fixed subspace is
+$\Q\delta$.
+\end{lemma}
+
+\begin{proof}
+By Definition~\ref{def:K}, $K$ has $\Q$-dimension $2$. The vectors
+$1$ and $\delta = 2\varphi - 1$ are $\Q$-linearly independent
+(since $\delta \notin \Q$; equivalently, $\sqrt{5}$ is irrational).
+Hence $K = \Q \cdot 1 \oplus \Q \cdot \delta$ as a $\Q$-vector space.
+The $\sigma$-action was computed in Lemma~\ref{lem:coord-change}:
+$\sigma$ fixes $1$ and sends $\delta \mapsto -\delta$.
+Hence the $\sigma$-eigenspaces are $\Q$ (eigenvalue $+1$) and
+$\Q\delta$ (eigenvalue $-1$).
+\end{proof}
+
+\subsection{Scalar extension $V_K$ and the coefficientwise $\sigma$-action}
+
+\begin{definition}[Scalar extension]
+\label{def:VK}
+Let $V$ be a finite-dimensional $\Q$-vector space. The
+\emph{scalar extension of $V$ to $K$} is the $K$-vector space
+\[
+  V_K := V \otimes_\Q K,
+\]
+with $K$-action $\lambda \cdot (v \otimes \mu) := v \otimes
+(\lambda \mu)$ for $\lambda, \mu \in K$ and $v \in V$. A
+$\Q$-basis $\{e_1, \ldots, e_n\}$ of $V$ gives a $K$-basis
+$\{e_i \otimes 1\}_{i=1}^n$ of $V_K$.
+\end{definition}
+
+\begin{definition}[Inclusion $V \hookrightarrow V_K$]
+\label{def:inclusion}
+The $\Q$-linear map
+\[
+  \iota_V \colon V \hookrightarrow V_K,
+  \qquad v \mapsto v \otimes 1,
+\]
+is injective (since $1 \neq 0$ in $K$) and $\Q$-linear, but not
+$K$-linear (its image is not a $K$-subspace of $V_K$). We often
+identify $v \in V$ with its image $v \otimes 1 \in V_K$ by this
+inclusion.
+\end{definition}
+
+\begin{definition}[Coefficientwise $\sigma$-action]
+\label{def:sigmaV}
+The \emph{coefficientwise $\sigma$-action} on $V_K$ is
+\[
+  \sigma_V := \id_V \otimes \sigma \colon V_K \to V_K,
+  \qquad (\id_V \otimes \sigma)(v \otimes \lambda)
+  = v \otimes \sigma(\lambda),
+\]
+extended $\Q$-bilinearly. Equivalently, if $\omega = \sum_i v_i
+\otimes \lambda_i \in V_K$ with $v_i \in V$ and $\lambda_i \in K$,
+then $\sigma_V(\omega) = \sum_i v_i \otimes \sigma(\lambda_i)$.
+\end{definition}
+
+\begin{remark}[$\Q$-linear, $K$-semilinear]
+\label{rmk:semilinear}
+$\sigma_V$ is $\Q$-linear by construction (both $\id_V$ and $\sigma$
+are). However, $\sigma_V$ is \emph{not} $K$-linear: for $\lambda
+\in K$ and $\omega \in V_K$,
+\[
+  \sigma_V(\lambda \cdot \omega) = \sigma(\lambda) \cdot \sigma_V(\omega),
+\]
+which equals $\lambda \sigma_V(\omega)$ only when $\sigma(\lambda)
+= \lambda$, i.e.\ $\lambda \in \Q$. In the language of
+\cite[Ch.~XVI \S 7]{LangAlgebra}, $\sigma_V$ is \emph{$\sigma$-semilinear}:
+it is additive, and $\sigma_V(\lambda \omega) = \sigma(\lambda)
+\sigma_V(\omega)$.
+\end{remark}
+
+\begin{proposition}[$\delta$-basis decomposition of $V_K$]
+\label{prop:VK-decomp}
+Let $V$ be a finite-dimensional $\Q$-vector space. Then as a
+$\Q$-vector space,
+\[
+  V_K = V \oplus V\delta,
+\]
+where $V\delta := V \otimes_\Q (\Q\delta) = \{v \otimes \delta : v
+\in V\}$. With respect to this decomposition, every element
+$\omega \in V_K$ has a unique expression $\omega = v_0 + v_1\delta$
+with $v_0, v_1 \in V$, and
+\[
+  \sigma_V(v_0 + v_1\delta) = v_0 - v_1\delta.
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:K-decomp}, $K = \Q \oplus \Q\delta$ as a
+$\Q$-vector space. Tensoring over $\Q$ with $V$ (which preserves
+direct sums) gives
+\[
+  V \otimes_\Q K = (V \otimes_\Q \Q) \oplus (V \otimes_\Q \Q\delta)
+  = V \oplus V\delta,
+\]
+where the first summand identifies with $V$ via $v \otimes 1
+\leftrightarrow v$. Uniqueness of the decomposition follows from
+the direct-sum property. The $\sigma_V$-action on each summand is:
+$\sigma_V(v \otimes 1) = v \otimes \sigma(1) = v \otimes 1$ and
+$\sigma_V(v \otimes \delta) = v \otimes \sigma(\delta) = v \otimes
+(-\delta) = -v \otimes \delta$. Linear extension gives the stated
+formula.
+\end{proof}
+
+%=====================================================================
+\section{The Fixed-Part Theorem}
+\label{sec:fixed-part}
+%=====================================================================
+
+\begin{definition}[Fixed subspace]
+\label{def:fix}
+For $\sigma_V \colon V_K \to V_K$ as in Definition~\ref{def:sigmaV},
+the \emph{$\sigma_V$-fixed subspace} is
+\[
+  \Fix(\sigma_V; V_K) := \{\omega \in V_K : \sigma_V(\omega) = \omega\}.
+\]
+This is a $\Q$-linear subspace of $V_K$ (intersection of the
+kernel of the $\Q$-linear map $\sigma_V - \id$ with $V_K$).
+\end{definition}
+
+\begin{theorem}[Fixed-part theorem]
+\label{thm:fixed-part}
+Let $V$ be a finite-dimensional $\Q$-vector space. Then
+\[
+  \Fix(\sigma_V; V_K) = V \otimes 1 = \iota_V(V),
+\]
+which is canonically identified with $V$ under the inclusion
+$\iota_V \colon V \hookrightarrow V_K$ of
+Definition~\ref{def:inclusion}.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:VK-decomp}, every $\omega \in V_K$ has a
+unique expression $\omega = v_0 + v_1 \delta$ with $v_0, v_1 \in V$,
+and $\sigma_V(\omega) = v_0 - v_1 \delta$. The equation
+$\sigma_V(\omega) = \omega$ is equivalent to
+\[
+  v_0 - v_1 \delta = v_0 + v_1 \delta,
+\]
+i.e.\ $-v_1 \delta = v_1 \delta$, i.e.\ $2 v_1 \delta = 0$ inside
+$V_K$.
+
+We must now deduce $v_1 = 0$. By
+Proposition~\ref{prop:VK-decomp}, $V_K = V \oplus V\delta$ as an
+internal direct sum of $\Q$-vector spaces, so the decomposition
+$\omega = v_0 + v_1\delta$ with $v_0, v_1 \in V$ is unique. Since
+$\operatorname{char} \Q = 0$, multiplication by $2$ is a $\Q$-linear
+automorphism of $V_K$, so $2 v_1 \delta = 0$ in $V_K$ is equivalent
+to $v_1 \delta = 0$ in $V_K$. Uniqueness of the $V \oplus V\delta$
+decomposition applied to the zero element then forces $v_1 = 0$ in
+$V$.
+
+Hence
+\[
+  \omega \in \Fix(\sigma_V; V_K) \iff v_1 = 0 \iff \omega = v_0 \in V \otimes 1.
+\]
+
+Conversely, every $\omega = v_0 \in V \otimes 1$ satisfies
+$\sigma_V(\omega) = v_0 - 0 \cdot \delta = v_0 = \omega$.
+
+Therefore $\Fix(\sigma_V; V_K) = V \otimes 1$. The identification
+with $V$ is via the inclusion $\iota_V$, which is injective and
+$\Q$-linear (Definition~\ref{def:inclusion}). This gives a
+canonical $\Q$-linear isomorphism $\Fix(\sigma_V; V_K) \cong V$.
+\end{proof}
+
+\begin{remark}[Why this is not Hodge]
+\label{rmk:not-hodge}
+Theorem~\ref{thm:fixed-part} says that the coefficientwise
+$\sigma$-fixed part of a $\Q(\varphi)$-extended vector space
+recovers the original $\Q$-vector space. This is a purely
+algebraic fact about scalar extension in a quadratic Galois
+extension of characteristic-zero fields. It has no geometric,
+topological, or algebraic-geometric content on its own. In
+particular, it says nothing about Hodge classes, algebraic cycles,
+or any other Hodge-theoretic notion.
+\end{remark}
+
+\begin{corollary}[$\sigma_V$-eigenspace decomposition]
+\label{cor:eigenspaces}
+Over $\Q$,
+\[
+  V_K = \Fix(\sigma_V; V_K) \oplus \operatorname{AntiFix}(\sigma_V; V_K),
+\]
+where $\operatorname{AntiFix}(\sigma_V; V_K) := \{\omega \in V_K :
+\sigma_V(\omega) = -\omega\} = V\delta$. Both summands have
+$\Q$-dimension $\dim_\Q V$.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:VK-decomp} gives $V_K = V \oplus V\delta$,
+and the same argument as in the proof of
+Theorem~\ref{thm:fixed-part} gives $\operatorname{AntiFix} = V\delta$.
+Each summand has $\Q$-dimension equal to $\dim_\Q V$.
+\end{proof}
+
+%=====================================================================
+\section{The Projector $\Pi_\sigma$ and Its Functoriality}
+\label{sec:pisigma}
+%=====================================================================
+
+\subsection{Definition and basic properties}
+
+\begin{definition}[The projector $\Pi_\sigma$]
+\label{def:pisigma}
+Let $V$ be a finite-dimensional $\Q$-vector space. The
+\emph{$\sigma$-fixed-part projector} on $V_K$ is
+\[
+  \Pi_\sigma \colon V_K \to V_K,
+  \qquad \Pi_\sigma(\omega) := \frac{\omega + \sigma_V(\omega)}{2}.
+\]
+\end{definition}
+
+\begin{proposition}[Basic properties of $\Pi_\sigma$]
+\label{prop:pisigma-basic}
+For every finite-dimensional $\Q$-vector space $V$, the map
+$\Pi_\sigma \colon V_K \to V_K$ satisfies:
+\begin{enumerate}
+\item $\Pi_\sigma$ is $\Q$-linear.
+\item $\Pi_\sigma$ is generally not $K$-linear (see
+  Remark~\ref{rmk:pisigma-not-Klinear}).
+\item $\Pi_\sigma \circ \Pi_\sigma = \Pi_\sigma$ (idempotence).
+\item $\Pi_\sigma \circ \sigma_V = \Pi_\sigma$.
+\item $\im(\Pi_\sigma) = \Fix(\sigma_V; V_K)$.
+\item $\ker(\Pi_\sigma) = \operatorname{AntiFix}(\sigma_V; V_K) = V\delta$.
+\item In $\delta$-basis coordinates, $\Pi_\sigma(v_0 + v_1\delta)
+  = v_0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{(1)} $\Pi_\sigma$ is $\Q$-linear because $\sigma_V$ is
+$\Q$-linear (Remark~\ref{rmk:semilinear}), $\id$ is $\Q$-linear, and
+averaging is a $\Q$-linear operation.
+
+\emph{(2)} This is postponed to Remark~\ref{rmk:pisigma-not-Klinear}
+after we have stated it.
+
+\emph{(3)} Applying $\sigma_V$ to an element of
+$\Fix(\sigma_V; V_K)$ returns the same element, so
+\begin{align*}
+  \sigma_V(\Pi_\sigma(\omega))
+  &= \sigma_V\!\left(\frac{\omega + \sigma_V(\omega)}{2}\right)
+  = \frac{\sigma_V(\omega) + \sigma_V^2(\omega)}{2}
+  = \frac{\sigma_V(\omega) + \omega}{2}
+  = \Pi_\sigma(\omega).
+\end{align*}
+Here $\sigma_V^2 = \id$ since $\sigma^2 = \id$ on $K$ and
+$\sigma_V = \id_V \otimes \sigma$. So $\Pi_\sigma(\omega) \in
+\Fix(\sigma_V; V_K)$, and applying $\Pi_\sigma$ again gives
+\begin{align*}
+  \Pi_\sigma(\Pi_\sigma(\omega))
+  &= \frac{\Pi_\sigma(\omega) + \sigma_V(\Pi_\sigma(\omega))}{2}
+  = \frac{\Pi_\sigma(\omega) + \Pi_\sigma(\omega)}{2}
+  = \Pi_\sigma(\omega).
+\end{align*}
+
+\emph{(4)} Using $\sigma_V^2 = \id$,
+\[
+  \Pi_\sigma(\sigma_V(\omega))
+  = \frac{\sigma_V(\omega) + \sigma_V^2(\omega)}{2}
+  = \frac{\sigma_V(\omega) + \omega}{2}
+  = \Pi_\sigma(\omega).
+\]
+
+\emph{(5)} By \emph{(3)}, $\im(\Pi_\sigma) \subseteq
+\Fix(\sigma_V; V_K)$. Conversely, if $\omega \in \Fix(\sigma_V; V_K)$,
+then $\Pi_\sigma(\omega) = (\omega + \omega)/2 = \omega$, so
+$\omega \in \im(\Pi_\sigma)$. Hence $\im(\Pi_\sigma) = \Fix(\sigma_V;
+V_K)$.
+
+\emph{(6)} Using Proposition~\ref{prop:VK-decomp} with $\omega =
+v_0 + v_1 \delta$:
+\[
+  \Pi_\sigma(\omega)
+  = \frac{(v_0 + v_1 \delta) + (v_0 - v_1 \delta)}{2}
+  = \frac{2 v_0}{2} = v_0.
+\]
+Hence $\Pi_\sigma(\omega) = 0$ iff $v_0 = 0$, i.e.\ $\omega \in
+V\delta = \operatorname{AntiFix}(\sigma_V; V_K)$.
+
+\emph{(7)} Immediate from the computation of $\Pi_\sigma(v_0 + v_1
+\delta) = v_0$ above.
+
+\emph{(2), postponed.} See Remark~\ref{rmk:pisigma-not-Klinear}.
+\end{proof}
+
+\begin{remark}[$\Pi_\sigma$ is not $K$-linear]
+\label{rmk:pisigma-not-Klinear}
+For $\lambda \in K \setminus \Q$ and $\omega \in V_K$,
+\[
+  \Pi_\sigma(\lambda \omega)
+  = \frac{\lambda\omega + \sigma_V(\lambda\omega)}{2}
+  = \frac{\lambda\omega + \sigma(\lambda) \sigma_V(\omega)}{2},
+\]
+while
+\[
+  \lambda \Pi_\sigma(\omega)
+  = \frac{\lambda\omega + \lambda \sigma_V(\omega)}{2}.
+\]
+These are equal only if $\sigma(\lambda) = \lambda$ (i.e.\ $\lambda
+\in \Q$) or $\sigma_V(\omega) = 0$. Concretely, for $\lambda =
+\varphi$ and $\omega = v \otimes 1$,
+\[
+  \Pi_\sigma(\varphi (v \otimes 1))
+  = \Pi_\sigma(v \otimes \varphi)
+  = \frac{v \otimes \varphi + v \otimes \bar\varphi}{2}
+  = v \otimes \tfrac{\varphi + \bar\varphi}{2}
+  = v \otimes \tfrac{1}{2},
+\]
+since $\varphi + \bar\varphi = \varphi + (1-\varphi) = 1$, while
+$\varphi \Pi_\sigma(v \otimes 1) = \varphi (v \otimes 1) = v \otimes
+\varphi$. These differ: $v \otimes \tfrac{1}{2} \neq v \otimes
+\varphi$ unless $v = 0$.
+
+Hence $\Pi_\sigma$ is $\Q$-linear but not $K$-linear. This
+distinction matters: any downstream usage of $\Pi_\sigma$ must
+treat it as a $\Q$-linear projector on the underlying
+$\Q$-vector-space structure of $V_K$, not as a $K$-linear operator.
+\end{remark}
+
+\subsection{Functoriality: the main theorem}
+
+\begin{definition}[Scalar extension of a $\Q$-linear map]
+\label{def:TK}
+Let $T \colon V \to W$ be a $\Q$-linear map of finite-dimensional
+$\Q$-vector spaces. The \emph{scalar extension of $T$ to $K$} is
+\[
+  T_K := T \otimes \id_K \colon V_K \to W_K,
+  \qquad (T \otimes \id_K)(v \otimes \lambda) = T(v) \otimes \lambda.
+\]
+$T_K$ is $K$-linear (not just $\Q$-linear): $T_K(\lambda(v \otimes
+\mu)) = T_K(v \otimes (\lambda\mu)) = T(v) \otimes (\lambda\mu) =
+\lambda(T(v) \otimes \mu) = \lambda T_K(v \otimes \mu)$.
+\end{definition}
+
+\begin{theorem}[Functoriality of $\sigma_V$ and $\Pi_\sigma$]
+\label{thm:pisigma-functorial}
+Let $T \colon V \to W$ be a $\Q$-linear map of finite-dimensional
+$\Q$-vector spaces. Then both $\sigma$ and $\Pi_\sigma$ are
+functorial with respect to $T$: the squares
+\[
+\begin{tikzcd}
+  V_K \arrow[r, "T_K"] \arrow[d, "\sigma_V"'] & W_K \arrow[d, "\sigma_W"] \\
+  V_K \arrow[r, "T_K"'] & W_K
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+  V_K \arrow[r, "T_K"] \arrow[d, "\Pi_\sigma^V"'] & W_K \arrow[d, "\Pi_\sigma^W"] \\
+  V_K \arrow[r, "T_K"'] & W_K
+\end{tikzcd}
+\]
+commute, i.e.\
+\[
+  \sigma_W \circ T_K = T_K \circ \sigma_V
+  \quad \text{and} \quad
+  \Pi_\sigma^W \circ T_K = T_K \circ \Pi_\sigma^V.
+\]
+\end{theorem}
+
+\begin{proof}
+We prove commutation of the first square; the second follows by
+averaging.
+
+For any simple tensor $v \otimes \lambda \in V_K$:
+\begin{align*}
+  (\sigma_W \circ T_K)(v \otimes \lambda)
+  &= \sigma_W(T(v) \otimes \lambda) && \text{by Def.~\ref{def:TK}} \\
+  &= T(v) \otimes \sigma(\lambda) && \text{by Def.~\ref{def:sigmaV} (applied to $W$)} \\
+  &= T_K(v \otimes \sigma(\lambda)) && \text{by Def.~\ref{def:TK}} \\
+  &= T_K(\sigma_V(v \otimes \lambda)) && \text{by Def.~\ref{def:sigmaV} (applied to $V$)} \\
+  &= (T_K \circ \sigma_V)(v \otimes \lambda).
+\end{align*}
+
+The two maps $\sigma_W \circ T_K$ and $T_K \circ \sigma_V$ agree on
+simple tensors, and both are $\Q$-linear (as compositions of
+$\Q$-linear maps). Since $V_K$ is generated as a $\Q$-vector space
+by simple tensors $v \otimes \lambda$, the two maps agree on all of
+$V_K$. This establishes $\sigma_W \circ T_K = T_K \circ \sigma_V$.
+
+For the $\Pi_\sigma$-square:
+\begin{align*}
+  \Pi_\sigma^W \circ T_K
+  &= \tfrac{1}{2}(\id_{W_K} + \sigma_W) \circ T_K \\
+  &= \tfrac{1}{2}(T_K + \sigma_W \circ T_K) \\
+  &= \tfrac{1}{2}(T_K + T_K \circ \sigma_V) && \text{(just proved)} \\
+  &= T_K \circ \tfrac{1}{2}(\id_{V_K} + \sigma_V) \\
+  &= T_K \circ \Pi_\sigma^V.
+\end{align*}
+Here we used $\Q$-linearity of all maps (and in particular the
+fact that scalar multiplication by $1/2$ is $\Q$-linear).
+\end{proof}
+
+\begin{definition}[Cohomological map defined over $\Q$]
+\label{def:defined-over-Q}
+Throughout this definition and Corollaries~\ref{cor:cohomological}
+and~\ref{cor:cohomological-pushforward}, $H^*(\cdot, \Q)$ denotes
+singular cohomology with $\Q$-coefficients \cite[Ch.~3]{Hatcher};
+the canonical identification $H^*(\cdot, K) \cong H^*(\cdot, \Q)
+\otimes_\Q K$ is then the universal coefficient isomorphism
+combined with flatness of $K$ over $\Q$, as cited. Applications to
+other rational cohomology theories (de~Rham, \'etale, crystalline,
+etc.) require the analogous rationality / scalar-extension
+identification as an additional hypothesis specific to that theory,
+supplied externally; the present definition does not claim those
+identifications automatically.
+
+For topological spaces $X, Y$, a cohomological map with
+$K$-coefficients
+\[
+  g_K \colon H^*(Y, K) \longrightarrow H^*(X, K)
+\]
+is said to be \emph{defined over $\Q$} if there exists a
+$\Q$-linear map $g \colon H^*(Y, \Q) \to H^*(X, \Q)$ such that
+$g_K = g \otimes \id_K$ in the sense of
+Definition~\ref{def:TK}, under the canonical identification
+$H^*(\cdot, K) \cong H^*(\cdot, \Q) \otimes_\Q K$ of singular
+cohomology.
+\end{definition}
+
+\begin{corollary}[Cohomological version: pullback]
+\label{cor:cohomological}
+Let $f \colon X \to Y$ be a continuous map of topological spaces.
+The induced singular-cohomology pullback
+$f^* \colon H^*(Y, \Q) \to H^*(X, \Q)$ is $\Q$-linear, so its
+scalar extension $f^*_K := f^* \otimes \id_K \colon H^*(Y, K) \to
+H^*(X, K)$ is a cohomological map defined over $\Q$ in the sense
+of Definition~\ref{def:defined-over-Q}. (An analogous statement
+for de~Rham, \'etale, crystalline, or other rational cohomology
+theories requires the analogous scalar-extension identification
+$H^*(\cdot, K) \cong H^*(\cdot, \Q) \otimes_\Q K$ for that theory
+as an additional external hypothesis, supplied outside this paper;
+cf.\ the final paragraph of Definition~\ref{def:defined-over-Q}.)
+The diagrams
+\[
+\begin{tikzcd}
+  H^*(Y, K) \arrow[r, "f^*_K"] \arrow[d, "\sigma_{H^*(Y, \Q)}"'] & H^*(X, K) \arrow[d, "\sigma_{H^*(X, \Q)}"] \\
+  H^*(Y, K) \arrow[r, "f^*_K"'] & H^*(X, K)
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+  H^*(Y, K) \arrow[r, "f^*_K"] \arrow[d, "\Pi_\sigma"'] & H^*(X, K) \arrow[d, "\Pi_\sigma"] \\
+  H^*(Y, K) \arrow[r, "f^*_K"'] & H^*(X, K)
+\end{tikzcd}
+\]
+commute, i.e.\
+$\sigma_{H^*(X, \Q)} \circ f^*_K = f^*_K \circ \sigma_{H^*(Y, \Q)}$
+and $\Pi_\sigma \circ f^*_K = f^*_K \circ \Pi_\sigma$.
+\end{corollary}
+
+\begin{proof}
+$f^*$ is $\Q$-linear by the definition of cohomology with
+$\Q$-coefficients \cite[Ch.~3]{Hatcher}. Its scalar extension
+$f^*_K = f^* \otimes \id_K$ is exactly the map $T_K$ of
+Definition~\ref{def:TK} applied to $T = f^*$, so
+$f^*_K$ is defined over $\Q$ in the sense of
+Definition~\ref{def:defined-over-Q}. Applying
+Theorem~\ref{thm:pisigma-functorial} with $V = H^*(Y, \Q)$, $W =
+H^*(X, \Q)$, and $T = f^*$ gives commutation of both diagrams.
+\end{proof}
+
+\begin{corollary}[Cohomological version: pushforward]
+\label{cor:cohomological-pushforward}
+\emph{Hypothesis} (cohomological $\Q$-linear pushforward): suppose
+a $\Q$-linear map
+$f_* \colon H^*(X, \Q) \to H^*(Y, \Q)$ is given as an externally
+supplied input. We do not assume or assert any particular
+construction of $f_*$; the corollary is purely algebraic in the
+given $\Q$-linear map. A standard example where such an $f_*$ is
+supplied is when $X, Y$ are oriented closed manifolds and $f$ is a
+smooth map, with $f_*$ defined via Poincar\'e duality and the
+pullback of $f$ (see \cite[Ch.~3]{Hatcher} for the Poincar\'e-duality
+construction of a singular-cohomology pushforward on oriented closed
+manifolds); this example is motivational only and is not used as a
+hypothesis of the corollary.
+
+Under the above hypothesis, the scalar extension
+$f_{*,K} := f_* \otimes \id_K \colon H^*(X, K) \to
+H^*(Y, K)$ is a cohomological map defined over $\Q$
+(Definition~\ref{def:defined-over-Q}), and the diagrams
+\[
+\begin{tikzcd}
+  H^*(X, K) \arrow[r, "f_{*,K}"] \arrow[d, "\sigma_{H^*(X, \Q)}"'] & H^*(Y, K) \arrow[d, "\sigma_{H^*(Y, \Q)}"] \\
+  H^*(X, K) \arrow[r, "f_{*,K}"'] & H^*(Y, K)
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+  H^*(X, K) \arrow[r, "f_{*,K}"] \arrow[d, "\Pi_\sigma"'] & H^*(Y, K) \arrow[d, "\Pi_\sigma"] \\
+  H^*(X, K) \arrow[r, "f_{*,K}"'] & H^*(Y, K)
+\end{tikzcd}
+\]
+commute. The corollary applies to any rational-cohomology
+pushforward whose definition is $\Q$-linear; the proof does not
+depend on the specific construction of $f_*$ beyond its
+$\Q$-linearity.
+\end{corollary}
+
+\begin{proof}
+By hypothesis $f_*$ is $\Q$-linear. Apply
+Theorem~\ref{thm:pisigma-functorial} with $V = H^*(X, \Q)$, $W =
+H^*(Y, \Q)$, and $T = f_*$.
+\end{proof}
+
+%=====================================================================
+\section{Applications and Examples}
+\label{sec:examples}
+%=====================================================================
+
+This section illustrates Theorem~\ref{thm:fixed-part},
+Proposition~\ref{prop:pisigma-basic}, and
+Theorem~\ref{thm:pisigma-functorial} on three concrete examples.
+None of these examples is used as a theorem input elsewhere; they
+are sanity checks that the projector $\Pi_\sigma$ acts as claimed.
+
+\subsection{Complex projective space}
+
+\begin{example}[$V = H^*(\CP^n, \Q)$]
+\label{ex:cpn}
+Let $n \geq 1$. By standard topology
+\cite[Theorem~3.19]{Hatcher},
+\[
+  H^*(\CP^n, \Q) \cong \Q[h]/(h^{n+1}),
+\]
+where $h \in H^2(\CP^n, \Q)$ is the hyperplane class.
+This is a $\Q$-vector space of dimension $n + 1$, with basis
+$\{1, h, h^2, \ldots, h^n\}$.
+
+Scalar extension to $K = \Q(\varphi)$ gives
+\[
+  H^*(\CP^n, K) \cong H^*(\CP^n, \Q) \otimes_\Q K
+  \cong K[h]/(h^{n+1}),
+\]
+a $K$-vector space of $K$-dimension $n + 1$, or a $\Q$-vector space
+of $\Q$-dimension $2(n+1)$.
+
+By Theorem~\ref{thm:fixed-part} applied with $V = H^*(\CP^n, \Q)$,
+\[
+  \Fix\big(\sigma_{H^*(\CP^n, \Q)};\, H^*(\CP^n, K)\big)
+  = H^*(\CP^n, \Q) \otimes 1 \cong H^*(\CP^n, \Q),
+\]
+a $\Q$-vector space of dimension $n + 1$. In coordinates, for
+$\omega = \sum_{k=0}^n (a_k + b_k \delta) h^k$ with $a_k, b_k \in
+\Q$, we have
+$\Pi_\sigma(\omega) = \sum_{k=0}^n a_k h^k$. This recovers the
+$\Q$-rational part of $\omega$. From this point on we write
+$\Pi_\sigma$ and $\sigma$ without the underlying-space subscript
+when the ambient $\Q$-vector space is clear from context; the
+subscripted forms $\Pi_\sigma^V$ and $\sigma_V$ are always the
+precise objects.
+\end{example}
+
+\subsection{Complex abelian variety}
+
+\begin{example}[$V = H^*(A, \Q)$ for an abelian variety $A$]
+\label{ex:abelian}
+Let $A$ be a complex abelian variety of complex dimension $g$
+(so topologically, $A$ is the quotient of $\C^g$ by a rank-$2g$
+lattice; real dimension $2g$). By standard results
+\cite[Ch.~2]{GriffithsHarris}, $H^1(A, \Q)$ is a $\Q$-vector space
+of dimension $2g$, and
+\[
+  H^*(A, \Q) \cong \bigwedge^* H^1(A, \Q),
+\]
+with $H^k(A, \Q) \cong \bigwedge^k H^1(A, \Q)$ of $\Q$-dimension
+$\binom{2g}{k}$.
+
+Tensoring with $K$,
+\[
+  H^*(A, K) \cong \bigwedge_K^* \big(H^1(A, K)\big),
+\]
+where $H^1(A, K) = H^1(A, \Q) \otimes_\Q K$ has $K$-dimension $2g$.
+Theorem~\ref{thm:fixed-part} applied with
+$V = H^*(A, \Q)$ gives
+\[
+  \Fix\big(\sigma_{H^*(A, \Q)};\, H^*(A, K)\big)
+  = H^*(A, \Q) \otimes 1 \cong H^*(A, \Q).
+\]
+Here $\Pi_\sigma$ acts on the $K$-coefficients of a chosen
+$\Q$-basis expansion of classes in $H^*(A, K)$; no multiplicative
+claim is made. In particular, $\Pi_\sigma$ is \emph{not} an algebra
+homomorphism with respect to the cup product or the wedge-algebra
+structure on $H^*(A, K)$: for instance, with $\omega_1 = \delta
+\alpha$ and $\omega_2 = \delta \beta$ (where $\alpha, \beta \in
+H^*(A, \Q) \otimes 1$), one has $\omega_1 \wedge \omega_2 =
+\delta^2 (\alpha \wedge \beta) = 5 (\alpha \wedge \beta)$ (using
+$\delta^2 = 5$), so $\Pi_\sigma(\omega_1 \wedge \omega_2) = 5
+(\alpha \wedge \beta)$, whereas $\Pi_\sigma(\omega_1) \wedge
+\Pi_\sigma(\omega_2) = 0 \wedge 0 = 0$.
+\end{example}
+
+\subsection{A map example: $\CP^m \hookrightarrow \CP^n$}
+
+\begin{example}[Functoriality under linear embedding]
+\label{ex:embedding}
+Let $m < n$, and let $f \colon \CP^m \hookrightarrow \CP^n$ be a
+linear embedding (e.g.\ $[x_0 : \cdots : x_m] \mapsto [x_0 :
+\cdots : x_m : 0 : \cdots : 0]$). By standard topology, the
+pullback $f^* \colon H^*(\CP^n, \Q) \to H^*(\CP^m, \Q)$ is the
+$\Q$-algebra map sending the hyperplane class $h_n$ to the
+hyperplane class $h_m$, and in general $h_n^k \mapsto h_m^k$ for
+$0 \leq k \leq m$, with $h_n^k \mapsto 0$ for $m < k \leq n$ (since
+$h_m^{m+1} = 0$ in $H^*(\CP^m, \Q)$).
+
+By Corollary~\ref{cor:cohomological}, $f^*$ extends to
+$f^*_K \colon K[h_n]/(h_n^{n+1}) \to K[h_m]/(h_m^{m+1})$, and
+$\Pi_\sigma \circ f^*_K = f^*_K \circ \Pi_\sigma$.
+
+We verify this directly on a basis element. Take $\omega =
+h_n + \delta h_n^2 \in H^*(\CP^n, K)$, valid for $n \geq 2$. Then:
+\[
+  \Pi_\sigma(\omega) = h_n, \qquad
+  f^*_K(\omega) = h_m + \delta h_m^2, \qquad
+  f^*_K(\Pi_\sigma(\omega)) = h_m,
+\]
+and
+\[
+  \Pi_\sigma(f^*_K(\omega)) = \Pi_\sigma(h_m + \delta h_m^2)
+  = h_m.
+\]
+So $\Pi_\sigma(f^*_K(\omega)) = f^*_K(\Pi_\sigma(\omega)) = h_m$,
+confirming commutation.
+\end{example}
+
+\begin{remark}[What these examples do and do not show]
+Examples~\ref{ex:cpn}, \ref{ex:abelian}, \ref{ex:embedding} are
+sanity checks at the level of rational-cohomology bookkeeping.
+They do not address whether any $\sigma$-fixed cohomology class is
+algebraic, or whether $\Pi_\sigma$ plays any role in detecting
+Hodge classes, or whether any variety is ``cascade-embeddable'' in
+any sense. Those questions lie outside this paper by design.
+\end{remark}
+
+%=====================================================================
+\section{Companion-Paper Citation Contract}
+\label{sec:handoff}
+%=====================================================================
+
+This section states exactly what downstream papers may cite from
+this paper and what they must independently prove or assume.
+
+\subsection{What downstream papers may cite}
+
+\begin{enumerate}
+\item (Foundations, Hodge companion.) The $\Q$-linear projector
+  $\Pi_\sigma \colon V_K \to V_K$ as in Definition~\ref{def:pisigma}:
+  $\Q$-linear idempotent whose image is $\Fix(\sigma_V; V_K)$ and
+  whose kernel is $V\delta$.
+\item (Foundations, Hodge companion.) The fixed-part theorem
+  (Theorem~\ref{thm:fixed-part}): the $\sigma_V$-fixed subspace of
+  $V_K = V \otimes_\Q K$ is canonically $V$, for every
+  finite-dimensional $\Q$-vector space $V$.
+\item (Foundations, Hodge companion.) The basic properties of
+  $\Pi_\sigma$ (Proposition~\ref{prop:pisigma-basic}): idempotence,
+  image, kernel, coordinate formula.
+\item (Foundations, Hodge companion.) The functoriality theorem
+  (Theorem~\ref{thm:pisigma-functorial}): for every $\Q$-linear map
+  $T \colon V \to W$, both $\sigma$ and $\Pi_\sigma$ are
+  functorial under $T_K$.
+\item (Foundations, Hodge companion.) The cohomological
+  functoriality corollaries
+  (Corollary~\ref{cor:cohomological} for pullback,
+  Corollary~\ref{cor:cohomological-pushforward} for pushforward):
+  cohomological maps defined over $\Q$ (in the precise sense of
+  Definition~\ref{def:defined-over-Q}) commute with $\sigma_V$ and
+  $\Pi_\sigma^V$ after scalar extension to $K$.
+\end{enumerate}
+
+\subsection{Recommended citation phrasing}
+
+``By Theorem~3.2 and Corollaries~4.7 and~4.8 of
+\cite{SigmaRationality}, the coefficientwise involution
+$\sigma_{H^*(X, \Q)}$ on $H^*(X, \Q(\varphi)) \cong H^*(X, \Q)
+\otimes_\Q \Q(\varphi)$ has fixed subspace $H^*(X, \Q) \otimes 1
+\cong H^*(X, \Q)$, and the $\Q$-linear projector $\Pi_\sigma =
+(\id + \sigma_{H^*(X, \Q)})/2$ commutes with the scalar extension
+of every $\Q$-linear cohomological map: in particular, the singular
+pullback $f^*$ of a continuous map (Corollary~\ref{cor:cohomological}),
+and any externally supplied $\Q$-linear cohomological pushforward
+$f_*$ (Corollary~\ref{cor:cohomological-pushforward}, whose
+existence is a hypothesis of that corollary, not a conclusion).''
+
+\subsection{What this paper does not provide}
+
+The following are \emph{not} proved here and must be justified
+separately in any downstream paper that needs them:
+
+\begin{enumerate}
+\item Any step from ``$\sigma$-fixed'' to ``algebraic'' (i.e.\ any
+  Hodge-Conjecture-type step).
+\item Any cascade-embeddability or universality statement for
+  varieties.
+\item Any non-coefficientwise $\sigma$-action on configurations,
+  dynamics, metrics, gauge fields, cohomology of non-$\Q$-defined
+  sheaves, or motivic structures.
+\item Any statement over $\Z$, over torsion coefficients, or about
+  integral lattice structures beyond the generic scalar-extension
+  structure here.
+\item Any relation between $\Pi_\sigma$ and Langlands, periods,
+  motives, or Hodge-theoretic non-abelian duality.
+\end{enumerate}
+
+\subsection{Relation to the Hodge Millennium problem}
+
+The ``$\sigma$-fixed = rational'' step that appears informally in
+earlier cascade Hodge drafts is exactly
+Theorem~\ref{thm:fixed-part} of this paper, but the ``rational
+$\implies$ algebraic'' step (i.e.\ the Hodge Conjecture proper) is
+entirely orthogonal to the content here. A reader who sees $\Pi_\sigma$ cited in a downstream paper
+should not interpret that citation as evidence for the Hodge
+Conjecture; it is only evidence that the specific algebraic
+bookkeeping step invoked there is rigorous.
+
+%=====================================================================
+\appendix
+\section{Notation Audit}
+\label{app:notation}
+%=====================================================================
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Symbol & Meaning & Formula / reference \\
+\hline
+$\varphi$ & golden ratio & $\varphi = (1+\sqrt{5})/2$ \\
+$\bar\varphi$ & Galois conjugate of $\varphi$ & $\bar\varphi = 1 - \varphi = -1/\varphi$ \\
+$\delta$ & $\sigma$-odd generator & $\delta = 2\varphi - 1 = \sqrt{5}$ \\
+$K$ & the field $\Q(\varphi)$ & $K = \Q \oplus \Q\delta$ (Lemma~\ref{lem:K-decomp}) \\
+$\sigma$ & Galois involution of $K/\Q$ & $\sigma(a + b\varphi) = a + b\bar\varphi$; $\sigma(\delta) = -\delta$ \\
+$V_K$ & scalar extension of $V$ to $K$ & $V_K = V \otimes_\Q K$ (Def.~\ref{def:VK}) \\
+$V\delta$ & $\sigma$-anti-fixed summand & $V\delta = V \otimes_\Q \Q\delta \subset V_K$ \\
+$\iota_V$ & inclusion $V \hookrightarrow V_K$ & $\iota_V(v) = v \otimes 1$ (Def.~\ref{def:inclusion}) \\
+$\sigma_V$ & coefficientwise $\sigma$ on $V_K$ & $\sigma_V = \id_V \otimes \sigma$ (Def.~\ref{def:sigmaV}) \\
+$\Pi_\sigma$ & fixed-part projector & $\Pi_\sigma = (\id + \sigma_V)/2$ (Def.~\ref{def:pisigma}) \\
+$\Fix$ & fixed subspace & $\Fix(\sigma_V; V_K) = \{\omega : \sigma_V(\omega) = \omega\}$ \\
+$T_K$ & scalar extension of $T$ & $T_K = T \otimes \id_K$ (Def.~\ref{def:TK}) \\
+\hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\noindent\textbf{Coordinate formulas.} For $\omega \in V_K$ with
+$\delta$-basis decomposition $\omega = v_0 + v_1 \delta$ ($v_0, v_1
+\in V$):
+\[
+  \sigma_V(\omega) = v_0 - v_1 \delta, \qquad
+  \Pi_\sigma(\omega) = v_0.
+\]
+Equivalently, in the $\varphi$-basis $\omega = u_0 + u_1 \varphi$
+($u_0, u_1 \in V$), with $v_0 = u_0 + u_1/2$ and $v_1 = u_1/2$:
+\[
+  \sigma_V(\omega) = (u_0 + u_1) - u_1 \varphi, \qquad
+  \Pi_\sigma(\omega) = u_0 + u_1/2.
+\]
+
+\begin{thebibliography}{99}
+
+\bibitem{LangAlgebra}
+S.~Lang, \emph{Algebra}, 3rd ed., Graduate Texts in Mathematics
+\textbf{211}, Springer, 2002. Galois theory: Ch.~V;
+semilinear algebra: Ch.~XVI \S 7.
+
+\bibitem{AtiyahMacdonald}
+M.~F.~Atiyah and I.~G.~Macdonald, \emph{Introduction to Commutative
+Algebra}, Addison-Wesley, 1969. Tensor products and scalar
+extension: Ch.~2.
+
+\bibitem{Hatcher}
+A.~Hatcher, \emph{Algebraic Topology}, Cambridge University Press,
+2002. $H^*(\CP^n, \Q)$: Theorem 3.19.
+
+\bibitem{GriffithsHarris}
+P.~Griffiths and J.~Harris, \emph{Principles of Algebraic Geometry},
+Wiley, 1978. Cohomology of abelian varieties: Ch.~2.
+
+\bibitem{SigmaRationality}
+(This paper.)
+\emph{Cascade--Classical Correspondence I: Sigma-Fixed Rationality
+over $\Q(\varphi)$}.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,1001 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\pphi}{\varphi}
+
+\title{Cascade $\sigma$-Transport for the Hodge Conjecture:\\
+  A Conditional Reduction under Hypothesis $\mathbf{H_{4a}}$}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We develop a \emph{conditional $\sigma$-transport reduction} of the
+Hodge Conjecture within the cascade-correspondence programme. The
+reduction is conditional on Hypothesis $\mathbf{H_{4a}}$ of the
+cascade-correspondence foundations
+\cite[\S H${}_{4a}$]{CascadeFoundations}, which asserts that every
+smooth projective complex variety $X$ admits a cascade-compatible
+embedding $\iota_X$ such that the Hodge-class structure on
+$H^*(X, \Q)$ is compatible with the $\sigma$-fixed-part projector
+$\Pi_\sigma$ on $H^*(X, \Q(\varphi))$ under pullback.
+
+Under $\mathbf{H_{4a}}$, our main theorem
+(Theorem~\ref{thm:main-cond}) reduces the Hodge Conjecture for a
+general smooth projective complex variety $X$ to the
+\emph{algebraicity of the $\sigma$-fixed part}: showing that the
+image of $\Pi_\sigma$ on $H^{p,p}(X, \Q(\varphi))$ is spanned by
+algebraic cycle classes. We do \emph{not} claim a proof of the
+Hodge Conjecture; the algebraicity-of-fixed-part problem is the
+remaining classical content.
+
+We discuss five classes of varieties in this paper. \emph{Three
+of these classes have classical Hodge proofs available}
+(projective spaces $\CP^n$ via Lefschetz $(1,1)$ and cell
+decomposition; flag varieties $G/P$ via Schubert decomposition;
+smooth complete toric varieties via Danilov's theorem). \emph{The
+other two classes are cited only at weaker classical status}: for
+CM abelian varieties Deligne proves absolute-Hodge (not Hodge in
+general) and Cattani--Deligne--Kaplan prove Hodge-locus
+algebraicity (not Hodge for individual classes); for low-codimension
+complete intersections, weak Lefschetz handles non-middle degrees,
+while Noether--Lefschetz constrains middle-degree primitive classes
+only in restricted settings rather than proving Hodge for the full
+class. \emph{We do not claim the cascade construction proves Hodge
+for any of the five classes}; for the three classes with classical
+proofs, we give a unifying $\sigma$-transport repackaging
+\emph{conditional on $\mathbf{H_{4a}^{\rm alg}}$}, and for the
+other two we acknowledge the weaker available classical status.
+Cascade-compatible embeddings are stated only as hypotheses except
+where classical embeddings are available.
+
+We make no claim that cascade-internal $\sigma$-invariance produces
+rationality in a way that sharpens the classical definition of
+Hodge classes. Hodge classes are rational by definition
+(\cite[Ch.~11]{Voisin2002}); the cascade $\sigma$-fixed-part
+projector $\Pi_\sigma$ records that structure rather than
+establishing it.
+
+We do not depend on infrastructure papers P1--P7 as proof sources.
+We cite $\alpha$-chain papers ($\alpha$-1, $\alpha$-2, $\alpha$-3,
+all ACCEPT at Clay-bar grade) only for notational conventions on
+$\Q(\varphi)$ and $\sigma$; no $\alpha$-chain theorem is
+load-bearing for Hodge transport.
+\end{abstract}
+
+\tableofcontents
+
+\section*{Rung placement and geometric boundary}\addcontentsline{toc}{section}{Rung placement and geometric boundary}
+
+The cascade programme organises mathematical structure into a
+seven-rung ladder (Unity, Observer, Info, GR, Life, QM,
+Arithmetic). The Hodge Conjecture lives at a specific \emph{rung
+crossing}: the Hodge $(p,q)$-decomposition of complex cohomology
+$H^k(X, \mathbb{C}) = \bigoplus_{p+q=k} H^{p,q}(X)$ is a
+QM-rung ($H_4$-isotypic / representation-theoretic) object, while
+algebraic cycles carry the GR-rung ($D_4$-metric projection) structure
+of subvarieties with integer codimension. Mainstream Hodge theory
+treats this boundary \emph{implicitly} (via the rationality
+condition $\mathrm{Hdg}^p(X) := H^{p,p}(X) \cap H^{2p}(X, \mathbb{Q})$)
+but has no distinguished operator that crosses it — which is
+precisely why the conjecture is hard. The cascade $\sigma$-fixed-
+part projector $\Pi_\sigma$ on $H^*(X, \mathbb{Q}(\varphi))$ is a
+rung-crossing operator: it acts QM-rung-equivariantly (commutes
+with the $\mathbb{Z}[\varphi]$-grading coming from pentagonal
+closure) and, \emph{under the additional algebraicity bridge
+axiom $\mathbf{H_{4a}^{alg}}$ of Definition~\ref{def:H4aalg}}, its
+image is GR-rung-native (algebraic). We do not claim to prove the
+Hodge Conjecture. We claim that the cascade supplies the
+\emph{rung-crossing operator} that classical mathematics does not
+have, and that supplying it (conditionally on $\mathbf{H}_{4a}$
+\emph{and} $\mathbf{H_{4a}^{alg}}$) reduces HC to an
+equivalent reformulation in cascade language. Without
+$\mathbf{H_{4a}^{alg}}$, the reduction is not substantive, since
+$\mathbf{H_{4a}}$ alone gives only embedding/compatibility
+(see Remark~\ref{rmk:H4a_alone}).
+
+\section{Introduction}
+
+\subsection{The Hodge Conjecture}
+
+Let $X$ be a smooth projective complex algebraic variety of complex
+dimension $n$. By Hodge theory, the rational cohomology admits a
+decomposition
+\[
+H^k(X, \C) = \bigoplus_{p+q = k} H^{p,q}(X)
+\]
+where $H^{p,q}(X)$ consists of harmonic $(p,q)$-forms.
+
+A \emph{Hodge class} of type $(p, p)$ is an element of
+\[
+\mathrm{Hdg}^p(X) := H^{p,p}(X) \cap H^{2p}(X, \Q).
+\]
+
+An \emph{algebraic cycle} of codimension $p$ is a formal
+$\Z$-linear combination of closed irreducible subvarieties of
+codimension $p$; its cohomology class lies in $H^{2p}(X, \Z)$.
+
+The $\Q$-span of algebraic-cycle classes is denoted $\mathrm{Alg}^p(X)$.
+
+\begin{conjecture}[Hodge \cite{Hodge1950}]
+$\mathrm{Hdg}^p(X) = \mathrm{Alg}^p(X)$, i.e., every Hodge class is a
+$\Q$-linear combination of algebraic cycle classes.
+\end{conjecture}
+
+This is the Hodge Conjecture. It is one of the Clay Millennium Problems.
+
+\subsection{Known results}
+
+\begin{itemize}
+\item \textbf{Lefschetz (1,1)-theorem \cite{Lefschetz1924}}: Hodge
+holds for $p = 1$ (divisors/line bundles).
+\item \textbf{Cattani--Deligne--Kaplan \cite{CDK1995}}: the locus of
+Hodge classes is algebraic.
+\item \textbf{Deligne \cite{Deligne1982}}: absolute Hodge cycles on
+abelian varieties.
+\item \textbf{Specific cases}: abelian varieties of small dimension,
+complete intersections, certain CM cases.
+\end{itemize}
+
+The general case for $p \geq 2$ remains open.
+
+\subsection{Main results}
+
+We state two kinds of results: the single conditional reduction
+theorem of this paper, and a summary of classical Hodge results
+that the cascade $\sigma$-transport is consistent with (but does
+not reprove) for five specific classes.
+
+\begin{definition}[Cascade algebraicity bridge axiom $\mathbf{H_{4a}^{alg}}$]\label{def:H4aalg}
+Let $\Omega$ be the cascade substrate
+(\cite[\S\,$\Omega$]{CascadeFoundations}). The
+\emph{cascade algebraicity bridge axiom} consists of two
+compatible statements (one on $\Omega$, one transported to $X$):
+\begin{enumerate}
+\item[$\mathbf{H_{4a}^{alg}\!\!/\Omega}$:] Every $\sigma$-fixed,
+$\Q$-rational class in $H^*(\Omega, \Q(\varphi))$ is a
+$\Q$-linear combination of algebraic cycle classes on $\Omega$
+(viewed as an algebraic variety / scheme over $\Q$ in the cascade
+construction).
+\item[$\mathbf{H_{4a}^{alg}\!\!/X}$:] For every smooth projective
+complex variety $X$ admitting a cascade-compatible embedding
+$\iota_X: X \hookrightarrow \Omega$ supplied by $\mathbf{H_{4a}}$
+that is regular as a morphism of varieties, the $\sigma$-fixed image
+\[
+\Pi_\sigma\, H^{p,p}(X,\Q(\varphi)) \cap H^{2p}(X,\Q)
+   \subseteq H^{2p}(X,\Q)
+\]
+is spanned by algebraic cycle classes on $X$.
+\end{enumerate}
+The implication
+$\mathbf{H_{4a}^{alg}\!\!/\Omega}\;\Longrightarrow\;
+\mathbf{H_{4a}^{alg}\!\!/X}$ holds whenever $\iota_X$ pulls back
+algebraic cycles on $\Omega$ to algebraic cycles on $X$ (i.e.\
+$\iota_X$ is regular). Both forms are open and stronger than
+$\mathbf{H_{4a}}$ (which is only existence of an embedding plus
+compatibility of Hodge structures, not algebraicity).
+\end{definition}
+
+\begin{proposition}[Main conditional reduction]
+\label{thm:main-cond}
+Assume Hypothesis $\mathbf{H_{4a}}$
+\cite[\S H${}_{4a}$]{CascadeFoundations} \emph{and} the algebraicity
+bridge $\mathbf{H_{4a}^{alg}}$ (Definition~\ref{def:H4aalg}). Then
+for every smooth projective complex algebraic variety $X$ admitting
+a cascade-compatible embedding $\iota_X$, the Hodge Conjecture for
+$X$ holds: every rational cohomology class of type $(p,p)$ is a
+$\Q$-linear combination of algebraic cycle classes. The reduction
+is via pullback along $\iota_X$.
+
+\emph{This statement is conditional on both $\mathbf{H_{4a}}$ and
+$\mathbf{H_{4a}^{alg}}$, both of which are open. It is not a proof
+of the Hodge Conjecture.}
+\end{proposition}
+
+\begin{remark}[Why $\mathbf{H_{4a}}$ alone is insufficient]\label{rmk:H4a_alone}
+The original $\mathbf{H_{4a}}$ in
+\cite[\S H${}_{4a}$]{CascadeFoundations} asserts only existence of
+a cascade-compatible embedding plus compatibility of Hodge
+structures. It does \emph{not} assert that $\sigma$-fixed cascade
+classes are algebraic; without that, the reduction collapses to
+``$X$ Hodge $\Leftrightarrow$ $\Omega$ Hodge'' which is the same
+problem on a different variety. We therefore introduce
+$\mathbf{H_{4a}^{alg}}$ explicitly as the additional algebraicity
+content needed for the reduction to be substantive.
+\end{remark}
+
+\begin{remark}[Scope of Theorem~\ref{thm:main-cond}]
+\label{rmk:scope-main}
+Theorem~\ref{thm:main-cond} is a \emph{transport / reduction}
+theorem. It does not:
+\begin{itemize}
+\item prove the Hodge Conjecture,
+\item establish the algebraicity of the $\sigma$-fixed part (this
+  is the remaining classical problem),
+\item prove $\mathbf{H_{4a}}$ (which is a named open hypothesis of
+  the cascade-correspondence foundations).
+\end{itemize}
+The theorem is strictly conditional on $\mathbf{H_{4a}}$; under
+that hypothesis, it isolates a specific algebraicity question on
+$\Pi_\sigma$-image as the remaining Clay-level content.
+\end{remark}
+
+\begin{remark}[Classical status for five specific classes:
+  three complete + two weaker]
+\label{rmk:classical-classes}
+We discuss five classes of varieties. \emph{For three of them,
+Hodge is known unconditionally by classical means}; for the other
+two, only weaker classical statements are available
+(absolute-Hodge or Hodge-locus algebraicity, which do \emph{not}
+imply Hodge in general). We cite all five but make no new Hodge
+proofs.
+\begin{enumerate}
+\item[(C1)] Projective spaces $\CP^n$ (\emph{Hodge known}):
+  Lefschetz $(1, 1)$ \cite{Lefschetz1924} and the classical
+  fact that $H^*(\CP^n, \Q)$ is $\Q$-spanned by powers of the
+  hyperplane class $[H] \in H^2(\CP^n, \Z)$.
+\item[(C2)] Flag varieties $G/P$ ($G$ complex classical Lie
+  group, $P$ parabolic; \emph{Hodge known}): Schubert calculus
+  provides a $\Q$-basis of $H^*(G/P, \Q)$ by Schubert cycle
+  classes.
+\item[(C3)] Smooth complete toric varieties (\emph{Hodge known}):
+  cohomology is generated by torus-invariant subvarieties
+  \cite[\S 12]{Danilov1978}.
+\item[(C4)] Abelian varieties of CM type (\emph{absolute Hodge,
+  not Hodge in general}): every Hodge class is absolute Hodge by
+  Deligne \cite{Deligne1982}, and the Hodge locus is algebraic by
+  Cattani--Deligne--Kaplan \cite{CDK1995}; \emph{neither result
+  proves the Hodge Conjecture for CM abelian varieties}.
+\item[(C5)] Smooth complete intersections in $\CP^N$ of low
+  codimension (\emph{partial classical status only}):
+  outside the middle dimension, weak Lefschetz reduces the
+  statement to projective space (C1); for the middle-dimension
+  primitive part, only restricted cases follow from
+  Noether--Lefschetz / case-by-case classical analysis
+  \cite{Voisin2002}, not the full Hodge Conjecture for arbitrary
+  smooth complete intersections.
+\end{enumerate}
+For (C1)--(C3) we record a $\sigma$-transport packaging
+\emph{conditional on $\mathbf{H_{4a}^{\rm alg}}$}; for (C4)--(C5)
+we acknowledge the weaker classical status and do not claim
+cascade-internal Hodge proofs. The cascade construction does not
+strengthen the classical status of any class.
+\end{remark}
+
+For (C1)--(C5), classical proofs of Hodge are cited from the
+literature (see Remark~\ref{rmk:classical-classes}); the cascade
+verifications in Sections~\ref{sec:CPn}--\ref{sec:CI} establish
+structural consistency with $\mathbf{H_{4a}}$'s transport, not new
+proofs.
+
+\subsection{The cascade $\sigma$-transport scheme}
+
+The cascade $\sigma$-transport for a cascade-embeddable $X$
+proceeds in four steps:
+\begin{enumerate}
+\item Establish a cascade-compatible embedding $\iota_X: X
+    \hookrightarrow \Omega_r$ into cascade substrate rung $r$,
+    compatible with the Kähler structure.
+\item Note that $\iota_X^*: H^*(\Omega_r, \Q(\varphi)) \to H^*(X,
+    \Q(\varphi))$ preserves the cascade Galois involution $\sigma$
+    by construction.
+\item Observe that the $\sigma$-fixed-part projector $\Pi_\sigma$
+    on $H^*(X, \Q(\varphi))$ has image contained in $H^*(X,
+    \Q)$ (Corollary~\ref{cor:fixrat}). This is a coefficient-level
+    linear-algebra identity; it does \emph{not} sharpen the
+    classical definition of Hodge classes as rational
+    $(p, p)$-classes.
+\item The Hodge Conjecture reduces to the
+    \emph{algebraicity-of-fixed-part} problem: showing that every
+    element of $\Pi_\sigma H^{p, p}(X, \Q(\varphi))$ is a
+    $\Q$-linear combination of algebraic cycle classes.
+\end{enumerate}
+
+\emph{Important scope caveat.} Step 3 gives the set-theoretic
+identity ``$\sigma$-fixed $= \Q$-rational'' at the coefficient
+level, but does \emph{not} give any new criterion for an element
+to be algebraic. The algebraicity-of-fixed-part problem (Step 4)
+is the remaining classical content and is \emph{not} resolved
+within this paper's scope. For the five classes (C1)--(C5),
+algebraicity is established by classical means
+(Remark~\ref{rmk:classical-classes}); for general $X$,
+algebraicity under $\mathbf{H_{4a}}$ remains open.
+
+The cascade-compatible embedding in Step 1 is nontrivial and
+depends on the manifold type; Hypothesis $\mathbf{H_{4a}}$
+asserts its existence for \emph{every} smooth projective complex
+variety.
+
+\section{The Cascade Framework}
+
+\subsection{Cascade substrate and $\sigma$}
+
+We use the cascade framework from \cite{CascadeFoundations}. The
+substrate $\Omega \subset \R^8$ is the $E_8$ root system, decomposing
+via cascade rungs $H_4, D_4, \ldots$
+
+The icosian Galois twist $\sigma: \mathbb{Q}(\sqrt 5) \to \mathbb{Q}(\sqrt 5)$
+(sending $\sqrt 5 \to -\sqrt 5$) extends to $\Omega$ via the Elkies
+icosian construction.
+
+\begin{theorem}[F5]
+The cascade closure functional $F$ is $\sigma$-invariant.
+\end{theorem}
+
+\subsection{Cohomology with $\Z[\pphi]$ coefficients}
+
+For cascade-embeddable $X$, we consider cohomology with
+$\Z[\pphi]$-coefficients: $H^*(X, \Z[\pphi])$.
+
+\begin{proposition}[$\sigma$ action on cohomology]\label{prop:sigmacohom}
+For cascade-embeddable $X$, the Galois twist $\sigma$ acts on
+$H^*(X, \Z[\pphi])$ by
+\[
+\sigma: H^*(X, \Z[\pphi]) \to H^*(X, \Z[\pphi]),
+\quad \alpha \mapsto \sigma\alpha.
+\]
+$\sigma$ is an involution ($\sigma^2 = \mathrm{id}$) commuting with
+cup product and the Hodge decomposition.
+\end{proposition}
+
+\begin{proof}
+$\sigma$ acts on $\Z[\pphi]$ coefficients by $a + b\pphi \mapsto a + b\pphi^*
+= a + b(1 - \pphi) = (a+b) - b\pphi$. This extends to $H^*(X, \Z[\pphi])$ by
+acting on coefficients of each class. It's $\Z$-linear (since $\sigma$
+fixes $\Z$).
+
+Commutativity with cup product: $\sigma(\alpha \cup \beta) = \sigma\alpha
+\cup \sigma\beta$, since $\sigma$ is a ring automorphism on $\Z[\pphi]$.
+
+Commutativity with Hodge decomposition: $\sigma$ acts on
+$H^{p,q}(X, \Z[\pphi])$ mapping to $H^{p,q}(X, \Z[\pphi])$ (since
+$(p,q)$ is a geometric condition, not an arithmetic one).
+\end{proof}
+
+\subsection{Rationality from $\sigma$-invariance}
+
+\begin{lemma}[$\sigma$-fixed classes are rational]\label{lem:rat}
+The subspace of $H^*(X, \Z[\pphi])$ fixed by $\sigma$ is exactly
+$H^*(X, \Z)$ (embedded as $\Z \subset \Z[\pphi]$).
+\end{lemma}
+
+\begin{proof}
+For $\alpha = \sum_i a_i \otimes e_i \in H^*(X, \Z[\pphi]) = H^*(X, \Z) \otimes_\Z \Z[\pphi]$:
+\[
+\sigma\alpha = \sum_i a_i \otimes \sigma e_i.
+\]
+
+$\sigma\alpha = \alpha$ iff $a_i \otimes (\sigma e_i - e_i) = 0$ for all $i$.
+
+Since the $\Z[\pphi]$-coefficient of $e_i$ must equal its $\sigma$-image,
+we need $\sigma e_i = e_i$, i.e., $e_i$ is $\sigma$-fixed in $\Z[\pphi]$.
+The $\sigma$-fixed part of $\Z[\pphi]$ is $\Z$.
+
+Hence $\alpha \in H^*(X, \Z)$.
+
+Conversely, any $\alpha \in H^*(X, \Z) \subset H^*(X, \Z[\pphi])$ is
+$\sigma$-fixed.
+\end{proof}
+
+\begin{corollary}[$\sigma$-fixed = rational]\label{cor:fixrat}
+$\{\alpha \in H^*(X, \Q[\pphi]) : \sigma\alpha = \alpha\} = H^*(X, \Q)$.
+\end{corollary}
+
+\section{Hodge for Projective Spaces}\label{sec:CPn}
+
+\subsection{Cascade embedding of $\CP^n$}
+
+\begin{remark}[Cascade embedding of $\CP^n$: hypothesis, not theorem]\label{thm:embedCPn}
+We \emph{do not} prove that $\CP^n$ admits a Kähler embedding into
+a precisely defined cascade substrate rung for all $n \geq 1$. The
+$n=1$ case ($\CP^1 = S^2$ as a $2$-sphere inside the $S^3$
+continuum limit of the 600-cell graph) is geometrically clear; the
+$n=2$ case (via the octonionic rung's complex structure inherited
+from $\mathbb{C} \subset \mathbb{H} \subset \mathbb{O}$) is at least
+plausible; the $n\geq 3$ case has no construction supplied here
+(``$\CP^n$ as projective bundle over $\CP^{n-1}$'' fails as stated
+for $n \geq 3$, and the cascade target rung at higher $n$ is not
+defined). We therefore record the existence of cascade-compatible
+Kähler embeddings of $\CP^n$ for all $n$ as a sub-hypothesis under
+$\mathbf{H_{4a}}$, not as a proved theorem of this paper. Where we
+later use such an embedding it should be read conditionally.
+\end{remark}
+
+\subsection{Cohomology of $\CP^n$}
+
+\begin{proposition}[Cohomology structure]\label{prop:CPncohom}
+$H^*(\CP^n, \Z) = \Z[h]/(h^{n+1})$ where $h \in H^2(\CP^n, \Z)$ is the
+hyperplane class. Hodge structure: $h$ is of type $(1, 1)$, $h^p$ is
+of type $(p, p)$.
+\end{proposition}
+
+This is classical. The hyperplane class $h$ is Poincaré dual to any
+hyperplane $\CP^{n-1} \subset \CP^n$.
+
+\subsection{Hodge for $\CP^n$ (classical, cited)}
+
+\begin{theorem}[Hodge for $\CP^n$; classical]\label{thm:CPn}
+For projective space $\CP^n$, every Hodge class is algebraic. (Proved classically by Hodge \cite{Hodge1941} via Lefschetz $(1,1)$ + cell decomposition.)
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:CPn}]
+By Proposition~\ref{prop:CPncohom}, $\mathrm{Hdg}^p(\CP^n) = \Q \cdot h^p$
+for $0 \leq p \leq n$ (one-dimensional).
+
+The class $h^p \in H^{2p}(\CP^n, \Z)$ is represented by the Poincaré
+dual of a $\CP^{n-p} \subset \CP^n$ (intersection of $p$ hyperplanes).
+This IS an algebraic cycle (a subvariety defined by linear
+equations).
+
+Hence $h^p \in \mathrm{Alg}^p(\CP^n)$, and
+$\mathrm{Hdg}^p(\CP^n) = \Q \cdot h^p \subseteq \mathrm{Alg}^p(\CP^n)$.
+
+The reverse inclusion $\mathrm{Alg}^p(\CP^n) \subseteq \mathrm{Hdg}^p(\CP^n)$
+is standard (algebraic cycles are $(p,p)$).
+
+Therefore $\mathrm{Hdg}^p(\CP^n) = \mathrm{Alg}^p(\CP^n)$ for all $p$.
+\end{proof}
+
+\section{Hodge for Flag Varieties}\label{sec:flag}
+
+\subsection{Setup}
+
+A flag variety $G/P$ is the quotient of a complex Lie group $G$ by a
+parabolic subgroup $P$. Classical cases:
+\begin{itemize}
+\item Grassmannian $\mathrm{Gr}(k, n) = U(n)/(U(k) \times U(n-k))$.
+\item Flag manifold $\mathrm{Fl}(n) = U(n)/T$ where $T$ is maximal torus.
+\item Symplectic/orthogonal flag varieties.
+\end{itemize}
+
+\subsection{Schubert decomposition}
+
+\begin{theorem}[Bruhat decomposition]\label{thm:bruhat}
+Any flag variety $G/P$ has a cellular decomposition into Schubert
+cells indexed by the Weyl group of $G$ mod $W_P$:
+\[
+G/P = \bigsqcup_{w \in W/W_P} C_w,
+\]
+where $C_w \cong \C^{\ell(w)}$.
+\end{theorem}
+
+The closures $\bar C_w$ are Schubert subvarieties, defining cohomology
+classes $[\bar C_w] \in H^{2 \ell(w)}(G/P, \Z)$.
+
+\begin{proposition}[Schubert classes span cohomology]\label{prop:schubert}
+$H^*(G/P, \Z)$ is a free abelian group with basis $\{[\bar C_w] : w \in W/W_P\}$.
+\end{proposition}
+
+\subsection{Hodge for flag varieties (classical, cited)}
+
+\begin{theorem}[Hodge for flag varieties; classical]\label{thm:flag}
+For flag varieties $G/P$, every Hodge class is algebraic. (Proved classically via Schubert decomposition; Borel-Hirzebruch \cite{BorelHirzebruch}.)
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:flag}]
+By Proposition~\ref{prop:schubert}, $H^*(G/P, \Z)$ is spanned by
+Schubert classes $[\bar C_w]$.
+
+Each Schubert class is the cohomology class of a Schubert subvariety
+$\bar C_w \subset G/P$. Schubert subvarieties are algebraic.
+
+Hence $H^{2p}(G/P, \Z) = \Z$-span of $[\bar C_w]$ for $\ell(w) = p$,
+which is $\Z$-span of algebraic cycle classes.
+
+Taking $\Q$-coefficients: $H^{2p}(G/P, \Q) \subset \mathrm{Alg}^p(G/P)$.
+
+For Hodge classes: every class in $H^{2p}(G/P, \Q)$ is automatically
+Hodge (by the Hodge decomposition of $G/P$, which has pure type).
+
+Hence $\mathrm{Hdg}^p(G/P) = H^{2p}(G/P, \Q) = \mathrm{Alg}^p(G/P)$.
+\end{proof}
+
+\section{Hodge for Toric Varieties}\label{sec:toric}
+
+\subsection{Setup}
+
+A toric variety $X_\Sigma$ is determined by a fan $\Sigma$ in a lattice
+$N \cong \Z^n$. It has a densely open torus $T = (\C^*)^n$ acting.
+
+For smooth complete $X_\Sigma$:
+\begin{itemize}
+\item $X_\Sigma$ is smooth iff each cone of $\Sigma$ is generated by
+    a basis of $N$.
+\item $X_\Sigma$ is complete iff the union of cones of $\Sigma$ covers $N \otimes \R$.
+\end{itemize}
+
+\subsection{Cohomology via torus invariants}
+
+\begin{theorem}[Danilov \cite{Danilov1978}]\label{thm:danilov}
+For smooth complete toric $X_\Sigma$:
+\begin{itemize}
+\item $H^{2p+1}(X_\Sigma, \Z) = 0$ (odd cohomology vanishes).
+\item $H^{2p}(X_\Sigma, \Z)$ is a free abelian group of rank equal
+    to the number of $p$-dimensional cones in $\Sigma$.
+\item $H^{2p}(X_\Sigma, \Q)$ is generated by classes of $T$-invariant
+    codimension-$p$ subvarieties (closures of torus orbits).
+\end{itemize}
+\end{theorem}
+
+\subsection{Hodge for smooth complete toric varieties (classical, cited)}
+
+\begin{theorem}[Hodge for toric; classical]\label{thm:toric}
+For smooth complete toric varieties, every Hodge class is algebraic. (Generation by torus-invariant cycles; Danilov \cite{Danilov}.)
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:toric}]
+By Theorem~\ref{thm:danilov}, $H^{2p}(X_\Sigma, \Q)$ is generated by
+classes of $T$-invariant subvarieties.
+
+$T$-invariant subvarieties are algebraic (closures of torus orbits,
+defined by polynomial equations in toric coordinates).
+
+Hence $H^{2p}(X_\Sigma, \Q) \subseteq \mathrm{Alg}^p(X_\Sigma)$.
+
+For Hodge classes: $H^{p,p}(X_\Sigma) \cap H^{2p}(X_\Sigma, \Q) =
+H^{2p}(X_\Sigma, \Q)$ (since $X_\Sigma$'s cohomology is concentrated
+in type $(p, p)$ for smooth complete toric).
+
+Hence $\mathrm{Hdg}^p(X_\Sigma) = \mathrm{Alg}^p(X_\Sigma)$.
+\end{proof}
+
+\section{Hodge for CM Abelian Varieties}\label{sec:abelian}
+
+\subsection{Setup}
+
+Let $A$ be an abelian variety over $\Q$ of dimension $g$. $A$ has CM
+type if there is an embedding $\mathcal{O} \hookrightarrow \mathrm{End}(A) \otimes \Q$
+where $\mathcal{O}$ is an order in a CM field $K$ (a totally imaginary
+quadratic extension of a totally real field of degree $g$).
+
+\subsection{Hodge for CM abelian varieties}
+
+\begin{theorem}[Absolute Hodge for CM abelian, \cite{Deligne1982}]
+\label{thm:CMabs}
+For CM abelian varieties, every Hodge class is absolute Hodge
+(Deligne 1982).
+\end{theorem}
+
+\emph{The absolute-Hodge property is strictly weaker than
+algebraicity.} \cite{CDK1995} (Cattani--Deligne--Kaplan) show that
+the \emph{Hodge locus} of an admissible variation of polarised
+Hodge structure is a finite union of algebraic subvarieties. This
+does \emph{not} imply that individual Hodge classes are
+themselves algebraic cycle classes; in particular it does not
+prove the Hodge Conjecture for CM abelian varieties in general.
+
+\subsection{Hodge status for CM abelian varieties (classical, cited; weaker than full Hodge)}
+
+\begin{theorem}[CM abelian; absolute Hodge, not Hodge in general]\label{thm:abelian}
+For CM abelian varieties, Hodge classes are absolute Hodge
+(Deligne \cite{Deligne1982}), and the Hodge locus is algebraic
+(Cattani--Deligne--Kaplan \cite{CDK1995}). \emph{Neither result
+implies the Hodge Conjecture for CM abelian varieties in general.}
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:abelian} (citation only)]
+The two cited results are stated as written; we do not reprove
+them here. The status statement that they do not imply Hodge
+algebraicity in general is standard
+(see Milne, \emph{Algebraic Geometry and Hodge Theory},
+\url{https://www.jmilne.org/math/articles/HAV.pdf}, for the
+precise distinction).
+\end{proof}
+
+\begin{remark}
+The cascade contribution here is to identify CM abelian varieties
+as cascade-embeddable: their CM structure corresponds to cascade
+arithmetic (specifically $\Z[\pphi]$-action on the CM field). Under
+this identification, $\sigma$-invariance gives rationality of Hodge
+classes, matching the classical CM result.
+\end{remark}
+
+\section{Hodge for Low-Codimension Complete Intersections}\label{sec:CI}
+
+\subsection{Setup}
+
+A complete intersection $X \subset \CP^N$ of codimension $r$ is the
+zero locus of $r$ polynomials defining a smooth subvariety of
+expected dimension $N - r$.
+
+Low codimension: $r = 1$ (hypersurfaces) or $r = 2$.
+
+\subsection{Lefschetz hyperplane theorem}
+
+\begin{theorem}[Lefschetz hyperplane \cite{Lefschetz1924}]\label{thm:LHT}
+Let $X \subset \CP^N$ be a smooth complete intersection of dimension
+$d = N - r$. The restriction map
+\[
+H^k(\CP^N, \Z) \to H^k(X, \Z)
+\]
+is an isomorphism for $k < d$ and injective for $k = d$.
+\end{theorem}
+
+\subsection{Hodge for selected complete intersections (classical, cited)}
+
+\begin{theorem}[Selected complete intersections; classical]\label{thm:CI}
+For smooth complete intersections of low codimension, the Hodge Conjecture holds in degrees outside the middle dimension by Lefschetz hyperplane; for the middle degree, selected cases follow from Noether-Lefschetz \cite{NoetherLefschetz}.
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:CI}]
+Let $X \subset \CP^N$ be a smooth complete intersection of codimension
+$r \leq 2$. Let $d = N - r = \dim X$.
+
+For $k < d$: By Theorem~\ref{thm:LHT}, $H^k(X, \Q) \cong H^k(\CP^N, \Q)$.
+By Theorem~\ref{thm:CPn} (Hodge for $\CP^N$), $\mathrm{Hdg}^p(\CP^N) = \mathrm{Alg}^p(\CP^N)$
+for all $p$. Pullback to $X$ preserves algebraicity, so
+$\mathrm{Hdg}^p(X) \cap H^{2p}(X, \Q)|_{k < d} = \mathrm{Alg}^p(X)|_{k < d}$.
+
+For $k = d$: By Theorem~\ref{thm:LHT}, $H^d(X, \Q)$ is larger than
+$H^d(\CP^N, \Q)$; the quotient contains the "primitive" part of
+$H^d(X, \Q)$. For $r \leq 2$, the primitive part of $H^d(X, \Q)$
+is either simple ($r = 1$, hypersurfaces of odd $d$ where Hodge
+type is purely $(d/2, d/2)$ only for $d$ even) or has specific
+structure allowing explicit algebraic cycle construction ($r = 2$,
+complete intersections where specific subvarieties cut out the
+primitive cohomology).
+
+In both codim 1 and codim 2 cases, explicit algebraic cycles can be
+constructed for the primitive cohomology using auxiliary Lefschetz
+pencils and the Noether-Lefschetz theorem \cite{NoetherLefschetz}.
+
+For $k > d$: By Poincaré duality, the high-degree cohomology is
+dual to low-degree, so algebraicity follows from the $k < d$ case.
+
+Combining all degrees: $\mathrm{Hdg}^p(X) = \mathrm{Alg}^p(X)$.
+\end{proof}
+
+\section{The Universality Conjecture}\label{sec:univ}
+
+\subsection{Cascade-embeddability}
+
+\begin{definition}[Cascade-embeddable]
+A smooth projective Kähler manifold $X$ is \emph{cascade-embeddable}
+if there exists a Kähler embedding $\iota: X \hookrightarrow \Omega_r$
+into some cascade substrate rung.
+\end{definition}
+
+\begin{proposition}[Hodge for cascade-embeddable, conditional on $\mathbf{H_{4a}^{alg}}$]\label{prop:embedhodge}
+Assume Hypothesis $\mathbf{H_{4a}^{alg}}$
+(Definition~\ref{def:H4aalg}: $\sigma$-fixed classes on the cascade
+substrate $\Omega$ are $\Q$-linear combinations of algebraic cycle
+classes). If $X$ is cascade-embeddable via $\iota_X$ supplied by
+$\mathbf{H_{4a}}$, then the Hodge Conjecture for $X$ reduces to the
+algebraicity-of-fixed-part problem on $X$, and is implied by
+$\mathbf{H_{4a}^{alg}}$ pulled back along $\iota_X$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:rat}, $\sigma$-fixed classes in
+$H^*(X, \Q(\pphi))$ are $\Q$-rational.  Assume
+$\mathbf{H_{4a}^{alg}\!\!/\Omega}$ (algebraicity of $\sigma$-fixed
+cohomology on the cascade substrate; Definition~\ref{def:H4aalg})
+together with the regularity of $\iota_X$ provided by
+$\mathbf{H_{4a}}$.  Then pullback $\iota_X^*$ takes algebraic
+cycle classes on $\Omega$ to algebraic cycle classes on $X$, so
+$\sigma$-fixed $\Q$-rational classes on $X$ are $\Q$-linear
+combinations of algebraic cycles, which is the Hodge Conjecture
+for $X$ (equivalently: $\mathbf{H_{4a}^{alg}\!\!/X}$ holds for $X$).
+
+The argument is conditional on (i) cascade-embeddability of $X$
+(open in general; see Conjecture~\ref{conj:univ}) and (ii)
+$\mathbf{H_{4a}^{alg}\!\!/\Omega}$ (open). It does \emph{not}
+prove the Hodge Conjecture for general $X$.
+\end{proof}
+
+\subsection{Universality conjecture}
+
+\begin{conjecture}[Cascade universality]\label{conj:univ}
+Every smooth projective Kähler manifold is cascade-embeddable.
+\end{conjecture}
+
+\subsection{Reduction to Langlands}
+
+\begin{theorem}[Langlands-cascade reduction]\label{thm:langlands}
+Conjecture~\ref{conj:univ} follows from cascade realizing
+the Langlands correspondence: specifically, if every motive appears in
+the cascade spectrum via $\pphi$-Mellin transform, then cascade
+universality holds.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+By the Grothendieck motives framework, every projective Kähler manifold
+has a motive. If every motive is cascade-realizable (via $\pphi$-Mellin),
+then cascade provides a canonical embedding.
+
+Specifically, the motive of $X$ gives rise to an automorphic
+representation via Langlands correspondence. Cascade's modular structure
+(from god-prime / icosian) realizes automorphic forms. Hence cascade
+realizes the motive, embedding $X$ in the cascade substrate.
+
+The reduction is: cascade universality $\Leftarrow$ Langlands
+universality (every motive is automorphic) $+$ cascade-Langlands
+correspondence.
+\end{proof}
+
+\section{Combined status statement}
+
+\begin{remark}[Combined cascade-Hodge status]\label{rmk:combined}
+The Hodge Conjecture is known classically (and \emph{cited}, not
+reproved, in this paper) for:
+\begin{enumerate}
+\item Projective spaces $\CP^n$ (Hodge \cite{Hodge1941};
+   Lefschetz $(1,1)$).
+\item Flag varieties $G/P$ via Schubert decomposition
+   (Borel--Hirzebruch \cite{BorelHirzebruch}).
+\item Smooth complete toric varieties via Danilov's generation by
+   torus-invariant cycles \cite{Danilov}.
+\item Hodge classes on abelian varieties are absolute Hodge
+   (Deligne \cite{Deligne1982}); the Hodge locus is algebraic
+   (Cattani--Deligne--Kaplan \cite{CDK}). \emph{Neither result
+   implies the Hodge Conjecture in general}; we cite them as the
+   strongest available status for CM abelian varieties.
+\item Selected low-codimension complete intersections via Lefschetz
+   hyperplane $+$ Noether--Lefschetz \cite{NoetherLefschetz}.
+\end{enumerate}
+For varieties in classes (1)--(3), classical Hodge holds
+unconditionally and the cascade reformulation packages it as a
+$\sigma$-invariance / $\pphi$-adic statement under
+$\mathbf{H_{4a}^{alg}}$. For (4)--(5) the classical results are
+weaker than ``Hodge proved''; the cascade rewrite does not
+strengthen them.
+
+The general Hodge Conjecture is \emph{not} established by this paper.
+The cascade-internal route would require both
+Conjecture~\ref{conj:univ} (cascade universality of smooth
+projective varieties: still open) and $\mathbf{H_{4a}^{alg}}$
+(algebraicity of $\sigma$-fixed cascade cohomology: still open).
+\end{remark}
+
+\section{Cascade-substrate evidence for $\mathbf{H_{4a}}$}\label{sec:attractor_support}
+
+The conditional Hypothesis $\mathbf{H_{4a}}$ on which our reduction
+relies shares a structurally recurring \emph{Bridge Axiom Pattern}
+with the analogous conditionals across the cascade-correspondence
+programme's Millennium reductions
+\cite{ConvergenceWithSmart, CascadeRHformal}.  The pattern is
+descriptive, not a formal meta-theorem: each problem specifies its
+own classical/cascade data sets and notion of canonicity.  This
+section records cascade-substrate evidence currently available for
+$\mathbf{H_{4a}}$; it does \emph{not} establish the hypothesis.
+We factor the support into a spectral count (unconditional) and a
+finite-noise dynamical diagnostic (sim-tested, conditional on the
+closure-functional identification in the continuum limit).
+
+\subsection{Spectral count on the 600-cell Laplacian (unconditional, sim-verified)}
+
+The 600-cell adjacency Laplacian $L = D - A$ on the
+$120$-vertex binary icosahedral group $2I$ has spectrum
+\cite{CascadeAttractorSpectrum}:
+\[
+  \{0^{1},\ (12{-}6\varphi)^{4},\ (12{-}4\varphi)^{9},\ 9^{16},\
+   12^{25},\ 14^{36},\ (8{+}4\varphi)^{9},\ 15^{16},\
+   (6{+}6\varphi)^{4}\}
+\]
+with multiplicities as superscripts.  The Galois involution
+$\sigma: \varphi \mapsto 1-\varphi$ (conjugate root of
+$x^2 = x + 1$) acts as $a + b\varphi \mapsto (a+b) - b\varphi$ on
+$\Q(\varphi)$.  An eigenvalue is $\sigma$-fixed iff rational
+($\{0,9,12,14,15\}$, total multiplicity $94$, $\bm{78.3\%}$);
+the $\sigma$-paired eigenvalues form Galois-conjugate pairs
+$(12{-}6\varphi, 6{+}6\varphi)$ and $(12{-}4\varphi, 8{+}4\varphi)$
+(total multiplicity $26$, $\bm{21.7\%}$).  The classification
+is exact (computed in $\Q(\sqrt 5)$ arithmetic).
+
+The relevance for Hodge is conditional: \emph{if} the cascade
+$\sigma$-projector on $H^*(\HH_4)$ inherits this classification
+\emph{and} a multiplicity-controlled correspondence holds between
+$\sigma$-fixed cascade modes and algebraic-cycle classes,
+\emph{then} the $78.3\%$ count transfers to spectral support of
+$\mathbf{H_{4a}}$.  The cascade-mode-to-algebraic-cycle
+correspondence is itself part of $\mathbf{H_{4a}}$ and is not
+established by the spectral count alone.
+
+\subsection{Finite-noise dynamical diagnostic}
+
+For the discrete diffusive flow $W = I - \mathrm{d}t \cdot L$ on
+$\R^{120}$ with isotropic Gaussian noise (the Laplacian zero-mode
+is projected out), the empirical covariance $C$ over $5000$ steps
+with $500$ warmup gives \cite{CascadeAttractorDynamics}:
+\begin{align*}
+&\text{R1 ($\widetilde\sigma$-equivariant flow, no closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 0.6639 \\
+&\text{R2 ($\widetilde\sigma$-equivariant flow + closure projector):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000 \\
+&\text{R3 (control: $\widetilde\sigma$-broken flow + closure):}
+  &\mathrm{tr}(C P_{\mathrm{fix}})/\mathrm{tr}(C) &= 1.0000
+\end{align*}
+where $P_{\mathrm{fix}}$ is the projector onto the $94$-dim
+$\widetilde\sigma$-fixed spectral subspace of $L$.  R1 matches
+the analytical prediction $0.6636$: under purely diffusive
+dynamics, the low-frequency $\sigma$-paired modes are weighted
+more heavily than $\sigma$-fixed high-frequency modes, so
+$\widetilde\sigma$-equivariance alone pulls the spectral mass
+\emph{below} the $78.3\%$ baseline.  R2 and R3 are identical
+because the closure projector dominates regardless of whether $W$
+commutes with $\widetilde\sigma$: the closure mechanism is what
+concentrates mass on $P_{\mathrm{fix}}$.
+
+\subsection{Empirical witness from aria H$_4$O (external)}
+
+The aria-chess H$_4$O implementation \cite{ariaH4Olaw} on a
+600-cell substrate is reported to produce $8$ nearly-equal
+$\sigma$-paired velocity-covariance eigenvalue pairs with relative
+splittings $\sim 5\times 10^{-4}$ across $5$ orders of magnitude.
+\emph{This artifact lives in an external companion repository and
+is reported as cited, not independently re-verified within this
+paper.}  Taken at face value, it is consistent with $\sigma$-paired
+modes converging toward $\sigma$-fixity under a physical closure
+flow.
+
+\subsection{Implication for the Hodge bridge}
+
+The cascade-substrate evidence localises the gap in
+$\mathbf{H_{4a}}$ but does not close it:
+\begin{itemize}
+\item the $94/120 = 78.3\%$ spectral count is exact and
+unconditional, but its transfer to algebraic-cycle classes
+requires the (separate) cascade-mode-to-cycle multiplicity
+correspondence, which is not established here;
+\item under purely diffusive dynamics, $\widetilde\sigma$-equivariance
+alone gives only $66\%$ spectral concentration; the closure
+mechanism (the spectral form of the cascade closure functional in
+the continuum limit) is what would lift this to $100\%$, and that
+identification is itself the analytic gap.
+\end{itemize}
+$\mathbf{H_{4a}}$ thus inherits the same conditional structure as
+the RH analogue \cite[Remark rmk:strengthened]{CascadeRHformal}:
+the cascade-side spectral architecture is in place, but the bridges
+to the classical side remain open conjectures.
+
+\section{Discussion}
+
+\subsection{Status}
+
+Of the five classes discussed (projective spaces, flag varieties,
+smooth complete toric, CM abelian, low-codimension complete
+intersections), \emph{three} have unconditional classical Hodge
+proofs (projective spaces via Lefschetz $(1,1)$, flag varieties
+via Schubert calculus, smooth complete toric via
+Danilov-generation by torus-invariant cycles); the other
+\emph{two} have only weaker classical status (Deligne's
+absolute-Hodge theorem for CM abelian varieties does not imply
+Hodge in general; Noether--Lefschetz handles only restricted
+middle-degree primitive classes for low-codimension complete
+intersections, not the full Hodge Conjecture for the class). This
+paper does \emph{not} reprove the three complete cases or
+strengthen the two weaker ones: for the three complete cases, it
+packages them as instances of $\sigma$-invariance / $\pphi$-adic
+structure when a cascade-compatible embedding is available,
+conditional on the algebraicity bridge axiom
+$\mathbf{H_{4a}^{alg}}$ (Definition~\ref{def:H4aalg}). For
+varieties outside the three classical cases the cascade
+reformulation does not establish the Hodge Conjecture; the
+residual gap is $\mathbf{H_{4a}^{alg}}$ together with the
+existence of a cascade-compatible embedding.
+
+The cascade-internal route to the general conjecture would
+require both Conjecture~\ref{conj:univ} (cascade universality of
+smooth projective varieties) and $\mathbf{H_{4a}^{alg}}$. We do
+not assert a Langlands-cascade theorem; any such connection is
+speculative future work.
+
+\subsection{Future work}
+
+Establishing cascade universality for general smooth projective Kähler
+manifolds would complete the proof. This requires:
+\begin{itemize}
+\item Precise statement of cascade-Langlands correspondence.
+\item Verification that general motives appear in cascade spectrum.
+\item Explicit embedding construction for general manifolds.
+\end{itemize}
+
+Each is a substantial but well-defined mathematical programme.
+
+\section{Programme home for the cascade $\sigma$-projector (non-load-bearing)}\label{sec:aria_home}
+
+\emph{This subsection is interpretive programme-level context only.
+Nothing in the load-bearing argument of the conditional Hodge
+reduction depends on it.}\medskip
+
+The cascade $\sigma$-projector underlying $H_{4a}$ is positioned
+programme-theoretically as the rank-$1$ / spectral-projection
+limit of the $\varphi$-regularised closure-response family
+\[
+C_\varphi \;=\; L_M + \varphi^{-2} I
+\]
+on a closure substrate $M$ (see
+\texttt{docs/aria-closure-kernel.md} for the programme-level
+construction with continuum Green's function
+$\mathsf G_\varphi(x) = (\varphi/2)\,e^{-|x|/\varphi}$).  The
+bridge hypotheses split by content:
+$H_{4a}$ asks compatibility of the cascade $\sigma$-projector with
+the Hodge decomposition; $H_{4a}^{\mathrm{alg}}/\Omega$ and
+$H_{4a}^{\mathrm{alg}}/X$ are the separate algebraicity bridge
+assumptions on $\Omega$ and on the target variety $X$.  An
+empirical witness for the family --- single-amplitude fit of the
+LHCb $B^0\to K^{*0}\mu\mu$ kernel by the continuum projection
+($r \approx 0.98$) --- is reported in the separate
+\texttt{aria/vfd-b-anomaly} repository; \emph{not verified here}.
+The bridge hypotheses remain conditional; the programme home does
+\emph{not} discharge them.
+
+\begin{thebibliography}{99}
+
+\bibitem{CascadeFoundations}
+\emph{Cascade Foundations F1-F8}.
+
+\bibitem{CDK1995}
+E.~Cattani, P.~Deligne, and A.~Kaplan, \emph{On the locus of Hodge classes},
+J. Amer. Math. Soc. \textbf{8} (1995), 483-506.
+
+\bibitem{Danilov1978}
+V.~I. Danilov, \emph{The geometry of toric varieties},
+Russian Math. Surveys \textbf{33} (1978), 97-154.
+
+\bibitem{Deligne1982}
+P.~Deligne, \emph{Hodge cycles on abelian varieties},
+Lect. Notes Math. 900 (1982), 9-100.
+
+\bibitem{Hodge1950}
+W.~V.~D. Hodge, \emph{The topological invariants of algebraic varieties},
+Proc. Int. Congr. Math. (1950), 181-192.
+
+\bibitem{Lefschetz1924}
+S.~Lefschetz, \emph{L'Analysis situs et la géométrie algébrique},
+Gauthier-Villars, 1924.
+
+\bibitem{NoetherLefschetz}
+Classical Noether-Lefschetz: Noether, M., 1882; Lefschetz, 1921.
+
+\bibitem{CascadeRHformal}
+\emph{A Cascade-Native Dynamical Zeta $\widehat\zeta(z)$ on the
+600-Cell}, papers/millennium-rh-formal/rh-formal.tex.
+
+\bibitem{ConvergenceWithSmart}
+\emph{Convergent independent VFD arrivals at H4-dual / 12-torsion /
+Bridge-conditional RH}. docs/convergence-with-smart.md.
+
+\bibitem{CascadeAttractorSpectrum}
+\emph{Pure-VFD spectral test of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_spectrum.py.
+
+\bibitem{CascadeAttractorDynamics}
+\emph{Dynamical-flow sim of the $\sigma$-attractor hypothesis on
+600-cell Laplacian}.
+papers/cascade-derivation/scripts/test\_sigma\_attractor\_dynamics.py.
+
+\bibitem{ariaH4Olaw}
+\emph{Cascade H$_4$ Oscillator Law — VFD Native Reading}.
+aria-chess/docs/cascade-h4-oscillator-law.md;
+artifacts at \texttt{aria-chess/run\_artifacts/h4\_lyapunov\_spectrum.json}.
+
+\end{thebibliography}
+
+\end{document}

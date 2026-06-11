@@ -1,0 +1,173 @@
+% =====================================================================
+\section{The 600-cell response substrate}\label{sec:substrate}
+% =====================================================================
+
+This section constructs the substrate. \S\ref{ssec:vertices}
+gives the vertex set. \S\ref{ssec:graph} gives the graph and its
+computed Laplacian spectrum. \S\ref{ssec:cphi} gives the response
+operator $\Cph$ and the $\Ph^{-2}$ stability clamp.
+\S\ref{ssec:shells} gives the 9-shell decomposition used for source
+projection. \S\ref{ssec:cascade} sketches the seven-rung cascade
+descent referenced by the recurrent layer in~\S\ref{sec:chain}. None
+of these objects depend on neural data.
+
+\subsection{Vertex construction}\label{ssec:vertices}
+
+The 600-cell $\Rsixhundred$ has $120$ vertices in
+$\mathbb{R}^{4}$~\citep{CoxeterRegularPolytopes,Weisstein600Cell}.
+With $\Ph = (1+\sqrt 5)/2$ the canonical vertex set is
+\begin{itemize}\itemsep=1pt
+\item $8$ vertices: all permutations of $(\pm 1, 0, 0, 0)$;
+\item $16$ vertices: all sign combinations of
+  $(\pm 1, \pm 1, \pm 1, \pm 1)/2$;
+\item $96$ vertices: all even permutations of
+  $(\pm \Ph, \pm 1, \pm 1/\Ph, 0)/2$.
+\end{itemize}
+All $120$ vertices lie on the unit $3$-sphere $S^{3}$. The H$_4$
+Coxeter group acts transitively on the vertex set; in particular,
+every vertex has identical local structure. Implementation:
+\texttt{kernel/vfd\_closure\_kernel.py:build\_600cell\_vertices}.
+
+\subsection{Graph and Laplacian spectrum}\label{ssec:graph}
+
+The substrate graph $G_{V_{600}} = (V, E)$ is built by connecting each
+vertex to its nearest neighbours under the Euclidean metric on $S^{3}$.
+H$_4$ acts transitively on the vertex set, forcing uniformity of the
+local structure. We compute the resulting Laplacian spectrum from the
+constructed graph; multiplicities match the expected H$_4$ block
+sizes. The 600-cell construction itself is
+standard~\citep{CoxeterRegularPolytopes,Weisstein600Cell}.
+\paragraph{Graph facts (forced by the construction).}
+The graph $G_{V_{600}}$ has $|V|=120$ vertices, $|E|=720$ edges, and
+every vertex has degree exactly $12$ (H$_4$ transitivity acts on the
+vertex set; the short-edge nearest-neighbour graph inherits this
+uniformity). These facts are standard~\citep{CoxeterRegularPolytopes,Weisstein600Cell}
+and reproduced numerically by
+\texttt{kernel/vfd\_closure\_kernel.py:build\_600cell\_vertices}.
+
+\paragraph{Laplacian spectrum (computed numerically).}
+The unweighted graph Laplacian $\Lop = D - A$ has nine distinct
+eigenvalues with multiplicities summing to $120$:
+\[
+\sigma(\Lop) \;=\;
+\bigl\{0^{1},\;
+       (12\!-\!6\Ph)^{4},\;
+       (12\!-\!4\Ph)^{9},\;
+       9^{16},\;
+       12^{25},\;
+       14^{36},\;
+       (4\Ph + 8)^{9},\;
+       15^{16},\;
+       (6\Ph + 6)^{4}\bigr\},
+\]
+i.e.\ approximately $\{0, 2.292, 5.528, 9, 12, 14, 14.472, 15, 15.708\}$
+with multiplicities $\{1, 4, 9, 16, 25, 36, 9, 16, 4\}$. We computed
+this directly from the constructed Laplacian
+(\texttt{kernel/vfd\_closure\_kernel.py:compute\_graph\_laplacian});
+the spectrum is reproducible at machine precision and the
+multiplicities match the expected H$_4$ block sizes. We do not derive
+the closed-form entries here; the values in $\mathbb{Z}[\Ph]$ are
+reported as observed.
+
+\paragraph{H$_4$ irrep block decomposition.}
+The eigenspaces partition into H$_4$-proper and $\sigma$-twin Coxeter
+exponent classes. For H$_4$ proper the exponents are $\{1, 11, 19, 29\}$;
+for the Galois twin $\sigma(\mathrm{H}_4)$ under the $\sigma$-automorphism
+of $\mathbb{Z}[\Ph]$ the exponents become $\{7, 13, 17, 23\}$. The
+$\sigma$-orbit projector basis
+(\texttt{kernel/sigma\_orbit\_basis.py:\_self\_test}) realises the block
+decomposition with cross-block norm $<10^{-15}$, providing a
+machine-precise structural index used by the recurrent layer in
+\S\ref{sec:chain} (the $K_{7}$-class projector is the default
+phenomenal-binding profile).
+
+\subsection{The shifted-Laplacian response \texorpdfstring{$\Cph$}{C\_phi}}\label{ssec:cphi}
+
+The substrate's linear response to an external source $f \in \mathbb{R}^{120}$
+is the discrete Green's function of the shifted Laplacian:
+\begin{equation}\label{eq:cphi}
+\Cph \;=\; \Lop + \Ph^{-2} I,
+\qquad
+\psi \;=\; \Cph^{-1} f.
+\end{equation}
+The shift $\Ph^{-2} \approx 0.382$ is a design-level stability
+clamp: it makes $\Cph$ strictly positive definite (smallest eigenvalue
+$\Ph^{-2}$, since the trivial Laplacian eigenvalue is $0$), so that the
+inverse is bounded with operator norm $\Ph^{2}\approx 2.618$. This is
+\emph{not} a derived theorem; it is a stability choice. The companion
+kernel document~\citep{SmartAriaClosureKernel2026} discusses the same
+$\Cph$ as the basis for an independent passive-regime witness in
+flavour physics~\citep{SmartBAnomaly2026}, where the same operator
+form (without retuning the shift) describes the
+$B\to K^{*}\mu^{+}\mu^{-}$ angular anomaly across five public datasets.
+This paper imports $\Cph$ from that line; we do not re-derive it.
+
+The response $\psi = \Cph^{-1} f$ is smooth in $f$. By itself it does
+not produce critical-state cascade statistics; the recurrent layer
+in~\S\ref{sec:chain} adds a graph-pinned nonlinearity
+$\mathrm{bounded\_topk}(\psi, k\!=\!12)$ to obtain self-organised-critical
+event distributions. The choice $k\!=\!12$ is the average degree of
+$G_{V_{600}}$ (\S\ref{ssec:graph}), pinned by the substrate, not
+fitted to any dataset.
+
+\paragraph{Disclosure (substrate-witness scope).}
+The $\Ph^{-2}$ floor is a stability shift, not a derived parameter.
+The bounded-top-$K$ nonlinearity uses $k\!=\!12$ pinned to the graph's
+average degree, not a fitted threshold. No other shape parameter
+enters. The condition-dependent self-injection coupling
+$\eta\in\{0, 0.05, 0.20\}$ is the only architectural parameter that
+varies between conditions in~\S\ref{sec:chain}; it is reported
+explicitly per condition.
+
+\subsection{Shell decomposition}\label{ssec:shells}
+
+Under the H$_3$ subgroup, the $120$ vertices partition into $9$
+spherical shells indexed by Euclidean inner product with a chosen pole:
+\[
+\bigl(|S_0|,\ldots,|S_8|\bigr) \;=\; (1, 12, 20, 12, 30, 12, 20, 12, 1).
+\]
+The middle shell $S_{4}$ has $30$ vertices on the equatorial plane
+(the icosidodecahedral ring). When projecting onto a continuum kernel
+in companion preprints~\citep{SmartAriaClosureKernel2026}, the
+shell-mean projection of the equatorial-source response,
+$\kappa(x) = \mathrm{shell\text{-}mean}[\Cph^{-1} f_{\mathrm{equat}}](x)$,
+collapses on the continuum exponential $\frac{\Ph}{2}\,e^{-|x|/\Ph}$.
+This paper does not use that continuum projection; we work with the
+discrete operator throughout.
+
+\subsection{Cascade descent (sketch)}\label{ssec:cascade}
+
+The recurrent layer in~\S\ref{sec:chain} references a cascade
+decomposition $E_{8}\to H_{4}\to H_{3}\to D_{4}\to \mathrm{Cl}(1,3)
+\to S^{7}\to 0$, implemented in
+\texttt{kernel/cascade\_descent.py:descend\_operator\_e8\_to\_h4\_clean}.
+An arbitrary operator on the $E_{8}$ root system descends to the
+4-D H$_4$ subspace through a sequence of orthogonal projections, each
+preserving the Frobenius norm to within $10^{-15}$. The
+$\sigma$-orbit projector basis from
+\texttt{kernel/sigma\_orbit\_basis.py} gives the K-class block
+decomposition at machine precision.
+
+The descent provides numerical stability for the cascade ablations:
+when one ablates a specific K-class contribution (e.g.\ $K_{7}$), the
+remaining operator structure is exactly preserved. We do not claim
+the cascade itself is forced by physics on a pre-substrate level; the
+cascade is a decomposition of operators on $\Rsixhundred$, and the
+choice of $\Rsixhundred$ as the active substrate is post-hoc justified
+by the empirical correspondences in~\S\ref{sec:results}.
+
+\subsection{What the substrate is fixed-by, and what it is not}
+
+\begin{itemize}\itemsep=2pt
+\item Fixed by group theory once $\Rsixhundred$ is chosen: $|V|=120$,
+  uniform degree $12$, Laplacian spectrum, $9$-shell partition, K-class
+  irrep block structure, average degree $k\!=\!12$, $\sigma$-twin pairing.
+\item Fixed by stability choice: the $\Ph^{-2}$ shift in $\Cph$. This
+  is not a derivation; it is a design-level clamp that bounds the
+  response inverse.
+\item Not fixed by this paper: the choice of $\Rsixhundred$ over the
+  $24$-cell or $120$-cell. The choice is post-hoc motivated by the H$_4$
+  cascade structure and the empirical correspondences. A formal
+  ablation against alternative regular 4-polytopes is an open build
+  (\S\ref{sec:limitations}).
+\end{itemize}

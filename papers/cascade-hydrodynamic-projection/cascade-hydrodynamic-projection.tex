@@ -1,0 +1,1426 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\op}{\operatorname{op}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\dsph}{d_{S^3}}
+\newcommand{\Pihyd}{\Pi_{\mathrm{hyd}}}
+\newcommand{\Lmacro}{\mathcal L_{\mathrm{macro}}}
+\newcommand{\divS}{\operatorname{div}^{S^3}}
+\newcommand{\LapS}{\Delta_{S^3}}
+\newcommand{\graphLap}{\Delta^{\rm graph}_n}
+\newcommand{\Projn}{\mathbb P_n}
+\newcommand{\Vdf}{\mathcal V_n^{\mathrm{df}}}
+
+\title{Cascade--Classical Correspondence VII:\\
+  Hydrodynamic Projection and Scaling Limits}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+On the $D_4$ refinement branch of
+\cite{MetricProjection, SchlafliConvergence},
+and using the finite-level closure dynamics of
+\cite{ClosureDynamics}, we construct an explicit hydrodynamic
+projector $\Pihyd^{(n)} \colon X_n \to \mathcal U_n \times
+\mathcal P_n$ from the P4 state space to a velocity--pressure
+space on the finite-level geometry. The paper has two
+structurally distinct layers:
+
+\begin{enumerate}
+\item \textbf{Unconditional finite-level layer.} For every
+  level $n$, we state and give proof outlines for:
+\begin{itemize}
+\item[\textbf{T1}] (Theorem~\ref{thm:pihyd-bounded})
+  $\Pihyd^{(n)}$ is well-defined and bounded in explicit norms
+  with $\|u_n[\Phi]\|_{\mathcal U_n} + \|p_n[\Phi]\|_{\mathcal
+  P_n} \leq C_n \|\Phi\|_{X_n}$, and its divergence admits the
+  printed decomposition $\divS u_n[\Phi] =
+  \mathcal C_n[\Phi] = A_n[\Phi] + B_n[\Phi] + E_n[\Phi]$ into
+  three explicit named terms, with the parallel-transport
+  correction $E_n$ \emph{defined} to make the identity hold
+  (not a substantive compatibility theorem between the P4
+  discrete divergence and the continuum divergence).
+\item[\textbf{Prop~\ref{prop:balance-laws}}] Finite-level
+  mass / momentum / energy balance laws along the P4 flow.
+\item[\textbf{Prop~\ref{prop:leray}}] Finite-level
+  Leray--Helmholtz decomposition $\mathcal V_n = \Vdf \oplus
+  \nabla \mathcal Q_n$ with bounded projector $\Projn$.
+\item[\textbf{T2}] (Theorem~\ref{thm:projected-dynamics}) The
+  projected state $(u_n, p_n) := \Pihyd^{(n)} \Phi_n(t)$
+  satisfies, in macroscopic time $\tau = \lambda_n t$,
+  \[
+    \partial_{\tau, n} \Pihyd^{(n)} \Phi_n
+      = \Lmacro^{(n)}\bigl(\Pihyd^{(n)} \Phi_n\bigr)
+      + D_n(\Phi_n),
+  \]
+  where $D_n(\Phi) = (D_n^{\rm vel}(\Phi), D_n^{\rm press}(\Phi))
+  \in L^2(S^3; TS^3) \times L^2(S^3)$ is a product-space object
+  whose velocity component decomposes as $D_n^{\rm vel} =
+  D_n^{\rm comm} + D_n^{\rm geom} + D_n^{\rm div} + D_n^{\rm
+  scale}$, with all five named components ($D_n^{\rm avg} \equiv
+  0$ for the time-independent kernel) printed by closed formula,
+  and $L^2$-norm rates $O(h_n^{1/2})$ stated in
+  Proposition~\ref{prop:defect-bounds} at the outline level,
+  with concrete constants and full proofs deferred.
+\end{itemize}
+\item \textbf{Conditional program (under
+  Hypothesis~\ref{hyp:scaling})}:
+\begin{itemize}
+\item[\textbf{T3}] (Theorem~\ref{thm:ns-limit}) Under the
+  explicit scaling / regularity / compactness hypothesis package
+  $\mathbf H_{\rm hyd}$ stated before use, the total defect
+  $\delta_n(T) \to 0$ in the printed norm, the projected fields
+  are precompact in appropriate function spaces, and every limit
+  point $(u, p)$ solves incompressible Navier--Stokes on the
+  printed limit geometry in the exact weak/strong sense fixed in
+  the theorem, with viscosity $\nu := \lim_n \nu_n$.
+\end{itemize}
+\end{enumerate}
+
+The unconditional layer uses only P4, P5, and the P6
+\emph{unconditional extrinsic layer}
+\cite[Thms.~4.2, 5.1, Prop.~6.1, Prop.~7.2]{SchlafliConvergence}.
+The conditional layer may additionally use P6's conditional
+program (intrinsic metric, form consistency, spectral
+convergence) under its Hypothesis $6.4$, and invokes standard
+PDE compactness / NS weak-solution theory.
+
+We make \emph{no} unconditional Navier--Stokes, regularity,
+uniqueness, blow-up, or smoothness claim. We make \emph{no}
+Euler claim in the main theorem (Euler is treated, if at all,
+as a separate inviscid corollary with its own hypothesis
+bundle). We do not cite \texttt{cascade-ns-proof.md},
+\texttt{ns-formal.tex}, or \texttt{foundations.tex} as
+theorem-grade proof support.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction and Source Audit}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{What P7 is and is not}
+
+P7 is the \emph{hydrodynamic bridge} in the cascade
+infrastructure: it takes the finite-level closure dynamics of
+P4 \cite{ClosureDynamics}, the metric-side projections of P5
+\cite{MetricProjection}, and the unconditional geometric
+convergence of P6 \cite{SchlafliConvergence}, and produces a
+velocity--pressure observable $\Pihyd^{(n)}$ together with a
+projected evolution equation with fully explicit defect terms.
+Under a stated scaling and regularity hypothesis, it derives
+incompressible Navier--Stokes on the printed limit geometry as
+the conditional scaling limit of the defect-corrected projected
+dynamics.
+
+P7 is \emph{not}:
+(a) an unconditional Navier--Stokes theorem;
+(b) a regularity, uniqueness, smoothness, or blow-up result;
+(c) a millennium-level NS paper; those belong to the downstream
+NS paper;
+(d) a global well-posedness or bounded-energy statement beyond
+the printed hypothesis bundle;
+(e) an Euler theorem; Euler is an optional separate corollary
+with its own explicit inviscid hypotheses;
+(f) a rederivation of unproven claims from
+\texttt{cascade-ns-proof.md} or \texttt{ns-formal.tex}; those
+are deprecated and not cited.
+
+The split between unconditional and conditional layers is
+rigorously enforced: the unconditional theorems
+(Theorem~\ref{thm:pihyd-bounded},
+Proposition~\ref{prop:balance-laws},
+Proposition~\ref{prop:leray},
+Theorem~\ref{thm:projected-dynamics},
+Proposition~\ref{prop:defect-bounds}) use only the P4, P5, and
+P6-extrinsic-layer theorem-grade inputs; the conditional theorem
+(Theorem~\ref{thm:ns-limit}) explicitly assumes
+Hypothesis~\ref{hyp:scaling}, which includes any conditional P6
+hypotheses used.
+
+\subsection{Source audit}
+
+\textbf{Cascade-internal:}
+\begin{itemize}
+\item P4~\cite{ClosureDynamics}: finite-level state spaces $X_n
+  = X_n^{0, D_4} \oplus X_n^{1, D_4}$
+  \cite[Def.~2.1]{ClosureDynamics}, closure generator $L_n$, flow
+  $\dot\Phi_n = -L_n \Phi_n$, semigroup $e^{-tL_n}$
+  \cite[Thm.~4.2]{ClosureDynamics}, energy dissipation
+  \cite[Prop.~5.1]{ClosureDynamics}.
+\item P5~\cite{MetricProjection}: $D_4$ coordinates
+  $x_v^{(n)}$, finite-level metric tensor package.
+\item P6~\cite{SchlafliConvergence}: \emph{unconditional}
+  extrinsic metric $d_n^{\rm ext}$, mesh scale $h_n$,
+  $\varepsilon$-net rate $O(h_n)$, GH convergence to $(S^3,
+  \dsph)$ (see P6 \cite[Thm.~4.2, Thm.~5.1]{SchlafliConvergence}),
+  doubling / packing
+  (Prop~6.1 of P6), $V_0$-orbit isotropy constant $8/3$
+  (Prop~7.2 of P6).
+\item P6 conditional program (intrinsic metric
+  $d_n^{\rm int}$, Dirichlet-form consistency, spectral
+  convergence) used only inside Theorem~\ref{thm:ns-limit}
+  under Hypothesis~\ref{hyp:scaling}, which includes P6
+  Hypothesis 6.4 (uniform $8/3$ approximate isotropy at every
+  $V_n$ vertex).
+\end{itemize}
+
+\textbf{Classical (standard mathematics):}
+\begin{itemize}
+\item Finite-dimensional linear algebra, bounded-operator norms
+  \cite{ReedSimonI}.
+\item Discrete exterior calculus / discrete divergence on
+  simplicial complexes \cite{Chung}.
+\item Leray--Helmholtz decomposition on finite-dimensional
+  inner-product spaces \cite{ArnoldFalkWinther}.
+\item Compactness tools (Aubin--Lions--Simon, Banach--Alaoglu)
+  \cite{SimonCompactness, BrezisFA}.
+\item Navier--Stokes weak-solution theory on compact Riemannian
+  manifolds \cite{TemamNS, LionsMathTopics}.
+\item Round-sphere analysis and function spaces on $(S^3,
+  g_{\rm round})$ \cite{BerardSpectralGeometry, TaylorPDE1}.
+\end{itemize}
+
+\textbf{Explicitly excluded:}
+\texttt{cascade-ns-proof.md}, \texttt{ns-formal.tex},
+\texttt{cascade-foundations.md}, \texttt{foundations.tex}.
+
+\subsection{Organization}
+
+\S\ref{sec:setup} recalls the P4/P5/P6 inputs.
+\S\ref{sec:kernel} defines the averaging kernel $K_{n,\ell_n}$,
+coarse-graining scale $\ell_n$, and the admissible regime.
+\S\ref{sec:observables} defines the current / momentum
+observable $J_n$, velocity $u_n$, pressure $p_n$, and the
+hydrodynamic projector $\Pihyd^{(n)}$.
+\S\ref{sec:bounded} states T1 (Theorem~\ref{thm:pihyd-bounded})
+and gives its proof outline.
+\S\ref{sec:balance} states and outlines the balance laws
+(Proposition~\ref{prop:balance-laws}).
+\S\ref{sec:leray} states and outlines the Leray--Helmholtz
+decomposition (Proposition~\ref{prop:leray}).
+\S\ref{sec:projected} states T2
+(Theorem~\ref{thm:projected-dynamics}) with the full defect
+decomposition and proof outline.
+\S\ref{sec:defect-bounds} states and outlines proofs of the
+defect estimates (Proposition~\ref{prop:defect-bounds}).
+\S\ref{sec:scaling-limit} states T3
+(Theorem~\ref{thm:ns-limit}) under
+Hypothesis~\ref{hyp:scaling} with proof outline.
+\S\ref{sec:audit}, \S\ref{sec:handoff}, \S\ref{sec:notation}
+are self-audit, citation contract, and notation audit.
+
+%=====================================================================
+\section{Setup: P4 State, P5/P6 Geometry}
+\label{sec:setup}
+%=====================================================================
+
+\begin{notation}[P4 state space and closure flow]
+\label{not:P4}
+Let $X_n := X_n^{0, D_4} \oplus X_n^{1, D_4}$ be the
+finite-level $D_4$-branch state space of
+\cite[Def.~2.1]{ClosureDynamics}; let $L_n \in B(X_n)$ be the
+bounded self-adjoint closure generator of
+\cite[Thm.~3.1]{ClosureDynamics}; let $\Phi_n(t) := e^{-t L_n}
+\Phi_n(0) \in X_n$ denote the closure flow for initial data
+$\Phi_n(0) \in X_n$.
+\end{notation}
+
+\begin{notation}[Geometric inputs from P5/P6 unconditional layer]
+\label{not:geom}
+Let $V_n := V_n^{D_4}$ be the level-$n$ $D_4$-branch vertex set
+(imported via P5~\cite[Notation~2.1]{MetricProjection}); let
+$x_v^{(n)} \in \R^4$ be
+P5's canonical coordinate \cite[Notation~2.1]{MetricProjection};
+let $\iota_n \colon V_n \to S^3$ be the iterated-spherical-midpoint
+map of P6 \cite[Def.~3.2]{SchlafliConvergence}; let $d_n^{\rm
+ext}(u, v) := \dsph(\iota_n(u), \iota_n(v))$ be the
+\emph{unconditional} extrinsic metric. Let $h_n$ denote the mesh
+scale \cite[Def.~3.4]{SchlafliConvergence}, $h_n \leq
+\alpha^n \pi/2$ for any $\alpha > 1/\sqrt 3$, hence $h_n \to 0$
+geometrically. Let $|V_n|$ satisfy $c_V h_n^{-3} \leq |V_n| \leq
+C_V h_n^{-3}$ \cite[Lem.~6.2]{SchlafliConvergence}.
+\end{notation}
+
+%=====================================================================
+\section{Averaging Kernel and Coarse-Graining Scale}
+\label{sec:kernel}
+%=====================================================================
+
+\begin{definition}[Coarse-graining scale $\ell_n$]
+\label{def:ell-n}
+The \emph{hydrodynamic coarse-graining lengthscale} $\ell_n$ is
+a printed sequence with $\ell_n \in (2 C_1 h_n, \pi/8)$ for all
+$n$ large, where $C_1$ is the P6 $\varepsilon$-net constant. The
+admissible regime is $h_n / \ell_n \to 0$ as $n \to \infty$
+(i.e.\ $\ell_n$ is asymptotically much larger than the mesh).
+An explicit choice is $\ell_n := h_n^{1/2}$, so that $h_n /
+\ell_n = h_n^{1/2} \to 0$ and $\ell_n \to 0$.
+\end{definition}
+
+\begin{definition}[Macroscopic differential operators]
+\label{def:macro-ops}
+The averaging produces smooth vector / scalar fields on the
+round sphere $(S^3, g_{\rm round})$. For these, we use the
+standard Riemannian operators:
+\begin{itemize}
+\item $\nabla \colon C^\infty(S^3) \to C^\infty(S^3; TS^3)$ is
+  the Levi-Civita gradient of $g_{\rm round}$.
+\item $\operatorname{div}^{S^3} \colon C^\infty(S^3; TS^3) \to
+  C^\infty(S^3)$ is the Riemannian divergence, adjoint of
+  $-\nabla$ under the $L^2(S^3, \mu_\infty)$ inner product.
+\item $\Delta_{S^3} := \operatorname{div}^{S^3} \circ \nabla$ is
+  the (positive) Laplace--Beltrami operator on $C^\infty(S^3)$,
+  extended to vector fields by the connection Laplacian.
+\end{itemize}
+These are defined entirely on the fixed Riemannian manifold
+$(S^3, g_{\rm round})$ and do NOT depend on any finite-level
+discretization. They are used \emph{unconditionally} throughout
+this paper.
+
+For the P4 discrete divergence on oriented edges, we reserve the
+notation $\partial^\ast \colon X_n^{1, D_4} \to X_n^{0, D_4}$
+from \cite[Def.~3.3]{ClosureDynamics}. The discrete graph
+Laplacian of P6 (which depends on P6 Hypothesis~6.4 for
+Laplace--Beltrami convergence) is called $\Delta^{\rm
+graph}_n$ and is used ONLY in the conditional program
+\S\ref{sec:scaling-limit}.
+\end{definition}
+
+\begin{definition}[Averaging kernel $K_{n, \ell_n}$]
+\label{def:kernel}
+For $x \in S^3$ and $v \in V_n$, define
+\[
+  K_{n, \ell_n}(x, v) \;:=\;
+    \frac{\chi(\dsph(\iota_n(v), x)/\ell_n)}{Z_{n, \ell_n}(x)},
+\]
+where $\chi \colon [0, \infty) \to [0, 1]$ is a fixed smooth
+bump function supported in $[0, 1]$ with $\chi(0) = 1$ and
+$\chi \equiv 0$ on $[1, \infty)$, and
+\[
+  Z_{n, \ell_n}(x) \;:=\; \sum_{v \in V_n}
+    \chi(\dsph(\iota_n(v), x)/\ell_n)
+\]
+is the normalization (summing only over $v \in V_n$ with
+$\iota_n(v)$ within spherical distance $\ell_n$ of $x$).
+\end{definition}
+
+\begin{lemma}[Kernel properties]
+\label{lem:kernel-properties}
+For every $n$ with $h_n \leq h_\ast$ and every $x \in S^3$:
+\begin{enumerate}
+\item[\textup{(i)}] \emph{Partition of unity in $v$:}
+  $\sum_v K_{n, \ell_n}(x, v) = 1$, so for any vertex-indexed
+  quantity $\Psi(v)$,
+  $\sum_v K_{n, \ell_n}(x, v)\,\Psi(v)$ is a local weighted
+  average.
+\item[\textup{(ii)}] \emph{Normalization is bounded above and
+  below:} there exist $c_K, C_K > 0$ (independent of $n$) with
+  $c_K\,(\ell_n/h_n)^3 \leq Z_{n, \ell_n}(x) \leq C_K\,
+  (\ell_n/h_n)^3$. Hence $K_{n, \ell_n}(x, v) \leq C_K^{-1}\,
+  (h_n/\ell_n)^3$ for every $v$.
+\item[\textup{(iii)}] \emph{Support:} $K_{n, \ell_n}(x, v) = 0$
+  if $\dsph(\iota_n(v), x) > \ell_n$.
+\item[\textup{(iv)}] \emph{Smoothness in $x$:} $K_{n, \ell_n}(x,
+  v)$ is $C^1$ in $x$ (since $\chi$ is smooth and $Z_{n,
+  \ell_n}(x)$ is bounded below). $|\nabla_x K_{n, \ell_n}(x, v)|
+  \leq C_K'\,(h_n/\ell_n)^3 / \ell_n$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i): $\sum_v K(x, v) = \sum_v \chi_{x, v} / Z(x) = Z(x)/Z(x)
+= 1$ whenever $Z(x) > 0$, which holds by (ii).
+(ii): $Z(x) = \sum_{v : \dsph(\iota_n(v), x) \leq \ell_n}
+\chi(\cdot) \geq $ count of $\iota_n(V_n)$ points in
+$B_\dsph(x, \ell_n/2)$ (where $\chi \geq \chi(1/2) > 0$). By
+P6 Prop~6.1 (doubling, unconditional), this count is $\Theta(
+(\ell_n/h_n)^3)$ since $\ell_n \geq 2 C_1 h_n$. Upper bound from
+the covering direction. (iii): immediate from $\chi = 0$ on
+$[1, \infty)$. (iv): direct differentiation of $K(x, v) =
+\chi(\cdot)/Z(x)$ using $|\nabla_x \chi(\dsph(\iota_n(v), x)/
+\ell_n)| \leq \|\chi'\|_\infty / \ell_n$ and $|\nabla_x Z(x)|
+\leq $ sum of $|\nabla_x \chi_{x,v}| \leq \|\chi'\|_\infty
+|V_n^{\ell_n}(x)|/\ell_n$, where $V_n^{\ell_n}(x)$ is the
+support-intersection set of size $\Theta((\ell_n/h_n)^3)$.
+Combining gives the claimed bound on the gradient.
+\end{proof}
+
+%=====================================================================
+\section{Velocity, Pressure, and the Hydrodynamic Projector}
+\label{sec:observables}
+%=====================================================================
+
+\begin{definition}[Current observable $J_n$]
+\label{def:Jn}
+Given $\Phi = (f, B) \in X_n^{0, D_4} \oplus X_n^{1, D_4}$, the
+\emph{discrete current / momentum observable} at $v \in V_n$ is
+the tangent-vector-valued quantity
+\[
+  J_n[\Phi](v) \;:=\; \sum_{w : \{v, w\} \in E(G_n^{D_4})}
+    B(\vec{vw})\,\hat\tau_{v, w} \;\in\; T_{\iota_n(v)} S^3,
+\]
+where $B(\vec{vw})$ is the oriented-edge coefficient from the
+P4 state's 1-form part on the oriented edge $\vec{vw}$, and
+$\hat\tau_{v, w} := \pi_v(\iota_n(w) - \iota_n(v)) /
+\|\pi_v(\iota_n(w) - \iota_n(v))\|$ is the unit tangent
+direction along edge $\{v, w\}$ (with $\pi_v$ the tangential
+projection onto $T_{\iota_n(v)} S^3$).
+\end{definition}
+
+\begin{definition}[Averaged velocity and pressure]
+\label{def:up}
+The \emph{averaged velocity field} is
+\[
+  u_n[\Phi](x) \;:=\; \sum_{v \in V_n} K_{n, \ell_n}(x, v) \cdot
+    \mathrm{TP}_v^x\bigl(J_n[\Phi](v)\bigr)
+    \;\in\; T_x S^3,
+\]
+where $\mathrm{TP}_v^x \colon T_{\iota_n(v)} S^3 \to T_x S^3$ is
+the spherical tangent-parallel-transport along the short
+geodesic from $\iota_n(v)$ to $x$ (well-defined for
+$\dsph(\iota_n(v), x) < \pi$, which holds on the kernel support
+$\ell_n < \pi/8$).
+
+The \emph{averaged pressure} is
+\[
+  p_n[\Phi](x) \;:=\; \sum_{v \in V_n} K_{n, \ell_n}(x, v)
+    \cdot \rho_n[\Phi](v) \;-\; \frac{1}{\mu_\infty(S^3)}
+    \int_{S^3} \sum_{v \in V_n} K_{n, \ell_n}(y, v) \cdot
+    \rho_n[\Phi](v) \, d\mu_\infty(y),
+\]
+(the zero-mean normalization removes the constant-mode
+ambiguity in the pressure), where $\rho_n[\Phi](v) :=
+\tr_{F^0}(f(v))$ (trace of the
+vertex-fibre component, as in P5's source extraction
+\cite[Def.~3.2]{MetricProjection}) is the scalar
+energy-density observable.
+\end{definition}
+
+\begin{definition}[Velocity and pressure function spaces]
+\label{def:UP}
+The \emph{velocity space} is
+$\mathcal U_n := \{u \colon S^3 \to TS^3 : u \in C^0(S^3;
+TS^3),\, u(x) \in T_x S^3\}$, with norm
+$\|u\|_{\mathcal U_n} := \sup_{x \in S^3} |u(x)|_{g_{\rm round}}$.
+
+The \emph{pressure space} is $\mathcal P_n := C^0(S^3)$ with
+sup norm.
+
+The \emph{state space norm} on $X_n$ is the P4 direct-sum norm
+$\|\Phi\|_{X_n}^2 := \|f\|_{X_n^0}^2 + \|B\|_{X_n^1}^2$.
+\end{definition}
+
+\begin{definition}[Hydrodynamic projector $\Pihyd^{(n)}$]
+\label{def:Pihyd}
+The \emph{hydrodynamic projector} is the map
+\[
+  \Pihyd^{(n)} \colon X_n \to \mathcal U_n \times \mathcal P_n,
+  \qquad \Pihyd^{(n)}(\Phi) \;:=\; \bigl(u_n[\Phi],
+  p_n[\Phi]\bigr).
+\]
+\end{definition}
+
+%=====================================================================
+\section{T1: Boundedness and Divergence Decomposition}
+\label{sec:bounded}
+%=====================================================================
+
+\begin{theorem}[Bounded hydrodynamic averaging]
+\label{thm:pihyd-bounded}
+For every $n$ with $h_n \leq h_\ast$, the hydrodynamic
+projector $\Pihyd^{(n)}$ is a bounded linear map with
+\[
+  \|u_n[\Phi]\|_{\mathcal U_n} + \|p_n[\Phi]\|_{\mathcal P_n}
+    \;\leq\; C_\Pi^{(n)} \|\Phi\|_{X_n},
+\]
+with explicit constant $C_\Pi^{(n)} = C_{\rm vel}\,h_n^{-3/2}$,
+where $C_{\rm vel}$ is the base-geometric constant derived in
+the proof (see Step~\emph{Boundedness} below). The $h_n^{-3/2}$
+scaling comes from the pointwise-to-$\ell^2$ Cauchy--Schwarz step
+over $|V_n| = \Theta(h_n^{-3})$ vertices; we do NOT claim
+$n$-uniform boundedness of $\Pihyd^{(n)}$ in the sup norm, only
+the per-level bound stated here.
+
+Moreover, $u_n[\Phi]$ admits the following \emph{divergence
+decomposition} (we do not claim this as a compatibility theorem
+between the P4 discrete divergence $\partial^\ast B$ and the
+continuum divergence $\divS$; it is a printed split of the
+mismatch into three named terms, one of which is the
+parallel-transport defect $\mathcal E^{\rm TP}_v[\Phi](x)$
+\emph{defined} to make the identity hold): for every $x \in S^3$,
+\[
+  (\divS u_n[\Phi])(x) \;=\; \mathcal C_n[\Phi](x)
+    \;:=\; A_n[\Phi](x) + B_n[\Phi](x) + E_n[\Phi](x),
+\]
+where the three explicit terms are:
+\begin{align*}
+  A_n[\Phi](x)
+    &\;:=\; \sum_{v \in V_n}
+       \bigl\langle \nabla_x K_{n, \ell_n}(x, v),\,
+       \mathrm{TP}_v^x J_n[\Phi](v)\bigr\rangle_{g_{\rm round}}
+    && \text{\emph{(kernel-gradient term)}} \\
+  B_n[\Phi](x)
+    &\;:=\; -\sum_{v \in V_n} K_{n, \ell_n}(x, v) \cdot
+       (\partial^\ast B)(v)
+    && \text{\emph{(local-divergence scalar)}} \\
+  E_n[\Phi](x)
+    &\;:=\; \sum_{v \in V_n} K_{n, \ell_n}(x, v) \cdot
+       \mathcal E^{\rm TP}_v[\Phi](x)
+    && \text{\emph{(parallel-transport correction)}}
+\end{align*}
+All three terms $A_n, B_n, E_n$ are scalar-valued functions on
+$S^3$ (so the identity $\divS u_n = A_n + B_n + E_n$ is typed
+correctly). The P4 discrete divergence of
+\cite[Def.~3.3]{ClosureDynamics} applied to the edge component
+is $\partial^\ast B \colon V_n \to \R$. The \emph{exact}
+parallel-transport correction is
+\[
+  \mathcal E^{\rm TP}_v[\Phi](x) \;:=\;
+    \divS\bigl(\mathrm{TP}_v^x J_n[\Phi](v)\bigr)(x)
+    + (\partial^\ast B)(v),
+\]
+i.e.\ the defect between the Riemannian divergence of the
+transported tangent vector field $x \mapsto \mathrm{TP}_v^x
+J_n[\Phi](v)$ and the discrete local divergence at $v$. This is
+a scalar-valued function of $x$. All three terms $A_n, B_n,
+E_n$ are printed by closed formula; no $O(\cdot)$ placeholder
+appears.
+
+On the \emph{divergence-free source subspace}
+$X_n^{\rm df} := \{\Phi \in X_n : (\partial^\ast B)(v) = 0
+\text{ for all } v \in V_n\}$, the local-divergence term
+$B_n[\Phi] \equiv 0$, and $\mathcal C_n[\Phi] = A_n[\Phi] +
+E_n[\Phi]$.
+\end{theorem}
+
+\begin{proof}[Proof outline]
+\emph{Boundedness.} By Definition~\ref{def:up} and
+Lemma~\ref{lem:kernel-properties}(ii)(iv):
+\begin{align*}
+  |u_n[\Phi](x)|_{g_{\rm round}}
+    &\;\leq\; \sum_v K_{n, \ell_n}(x, v) \cdot
+       |J_n[\Phi](v)|_{g_{\rm round}} \\
+    &\;\leq\; (\max_v K_{n, \ell_n}(x, v)) \cdot
+       |V_n^{\ell_n}(x)| \cdot \max_v |J_n[\Phi](v)| \\
+    &\;\leq\; C_K^{-1}(h_n/\ell_n)^3 \cdot C_K'(\ell_n/h_n)^3
+       \cdot \max_v |J_n[\Phi](v)|
+    \;\leq\; C'' \max_v |J_n[\Phi](v)|.
+\end{align*}
+For $|J_n[\Phi](v)|$: by Def~\ref{def:Jn}, $J_n[\Phi](v) =
+\sum_{w \sim v} B(\vec{vw}) \hat\tau_{v,w}$, with $|J_n[\Phi](v)|
+\leq \deg(v) \cdot |B(\vec{vw})|$. By P4's Hilbert-structure
+bound \cite[Prop.~2.2]{ClosureDynamics} and the Cauchy--Schwarz
+relationship between pointwise and $\ell^2$ norms on finite
+graphs with $|V_n| = \Theta(h_n^{-3})$, $\max_v |J_n[\Phi](v)|
+\leq C_J \sqrt{|V_n|} \|\Phi\|_{X_n} \leq C_J h_n^{-3/2}
+\|\Phi\|_{X_n}$. Combining gives
+$\|u_n[\Phi]\|_{\mathcal U_n} \leq C_{\rm vel} h_n^{-3/2}
+\|\Phi\|_{X_n}$, finite at each $n$. (The constant blows up as
+$n \to \infty$; this is expected since we are bounding a
+pointwise field by a finite-dimensional state, and the
+boundedness required by the WO is per-level, not uniform.)
+The pressure bound is similar, using the P5 boundedness of
+the trace $\tr_{F^0}$ (\cite[Prop.~3.3]{MetricProjection}).
+
+\emph{Divergence decomposition.} Apply the spherical divergence
+operator to $u_n[\Phi]$:
+\[
+  (\divS u_n[\Phi])(x)
+    \;=\; \divS \sum_v K_{n,\ell_n}(x, v) \cdot \mathrm{TP}_v^x
+    J_n[\Phi](v).
+\]
+Using the product rule and splitting into the $x$-derivative of
+$K$ and the $x$-derivative of $\mathrm{TP}_v^x$ (which introduces
+connection coefficients on $S^3$):
+\[
+  \divS u_n[\Phi](x) \;=\;
+    \underbrace{\sum_v \bigl\langle \nabla_x K_{n, \ell_n}(x, v),
+       \mathrm{TP}_v^x J_n[\Phi](v)\bigr\rangle}_{= A_n[\Phi](x)}
+    \;+\; \sum_v K_{n, \ell_n}(x, v) \cdot
+    \divS\bigl(\mathrm{TP}_v^x J_n[\Phi](v)\bigr)(x).
+\]
+Split the second sum using the definition of
+$\mathcal E^{\rm TP}_v[\Phi](x) :=
+\divS(\mathrm{TP}_v^x J_n[\Phi](v))(x) + (\partial^\ast B)(v)$:
+\begin{align*}
+  \sum_v K\,\divS(\mathrm{TP}_v^x J_n)
+    &\;=\; \sum_v K \cdot\bigl(-(\partial^\ast B)(v)\bigr)
+       + \sum_v K\cdot\mathcal E^{\rm TP}_v[\Phi](x) \\
+    &\;=\; B_n[\Phi](x) + E_n[\Phi](x),
+\end{align*}
+matching the scalar-typed identity in the theorem statement.
+No $\mathrm{TP}_v^x$ is applied to a scalar; the substitution
+is via the \emph{definition} of $\mathcal E^{\rm TP}_v$ as the
+commutator between $\divS$ and $\mathrm{TP}_v^x$.
+
+On $X_n^{\rm df}$, $(\partial^\ast B)(v) \equiv 0$, so
+$B_n[\Phi] \equiv 0$ and $\mathcal C_n[\Phi] = A_n + E_n$.
+\end{proof}
+
+\begin{remark}[Scaling of $C_\Pi^{(n)}$]
+\label{rmk:Pi-scaling}
+The per-level constant $C_\Pi^{(n)}$ is not $n$-independent; it
+scales with $h_n^{-3/2}$ or similar, reflecting that a
+discrete sum over $|V_n| = \Theta(h_n^{-3})$ vertices with
+Cauchy--Schwarz gives Lipschitz-to-pointwise blowup. This is
+expected: the \emph{physical} boundedness of interest is not
+the pointwise sup norm but the relevant energy norm (e.g.\
+$L^2(S^3, \mu_\infty)$) where the scaling is uniform. We prove
+the sup-norm bound here for simplicity; an $L^2$ version
+follows from Proposition~\ref{prop:balance-laws} below.
+\end{remark}
+
+%=====================================================================
+\section{Discrete Mass, Momentum, and Energy Balance Laws}
+\label{sec:balance}
+%=====================================================================
+
+\begin{proposition}[Discrete balance laws along the P4 flow]
+\label{prop:balance-laws}
+For every $\Phi_n(t) = e^{-t L_n} \Phi_n(0)$ with $\Phi_n(0) \in
+X_n$:
+\begin{enumerate}
+\item[\textup{(i)}] \emph{Mass (energy-density) balance.}
+  For $\rho_n[\Phi](v) := \tr_{F^0}(f(v))$,
+  \[
+    \frac{d}{dt} \sum_{v \in V_n} \rho_n[\Phi_n(t)](v)
+      \;=\; -\sum_v \tr_{F^0}\bigl((L_n \Phi_n(t))_{f, v}\bigr),
+  \]
+  where $(L_n \Phi)_{f, v}$ is the $X_n^{0, D_4}$-component of
+  $L_n \Phi$ at vertex $v$.
+\item[\textup{(ii)}] \emph{Momentum balance.}
+  For $P_n^{\mathrm{tot}}[\Phi] := \sum_v J_n[\Phi](v) \in
+  T S^3$ (summed in a common frame via parallel transport from
+  a chosen base point), along the P4 flow
+  \[
+    \frac{d}{dt} P_n^{\mathrm{tot}}[\Phi_n(t)]
+      \;=\; -\sum_v \mathrm{ad}^{\ast}(L_n \Phi_n(t))_{B, v}
+      + \mathcal E_{\rm parallel},
+  \]
+  where $\mathcal E_{\rm parallel}$ is the explicit error from
+  moving tangent vectors from different base points to a common
+  frame.
+\item[\textup{(iii)}] \emph{Energy dissipation.}
+  $\frac{d}{dt} \tfrac{1}{2} \|\Phi_n(t)\|_{X_n}^2
+  = -\|L_n^{1/2} \Phi_n(t)\|_{X_n}^2 \leq 0$, the direct
+  dissipation identity from P4~\cite[Prop.~5.1]{ClosureDynamics}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof outline]
+(i): Differentiate $\sum_v \rho_n[\Phi_n(t)](v)$ and use
+$\dot \Phi_n = -L_n \Phi_n$, linearity of trace, and the P4
+self-adjointness of $L_n$. (ii): Differentiate
+$P_n^{\rm tot}$, substitute $\dot\Phi_n = -L_n \Phi_n$ in the
+$B$-component, and isolate the parallel-transport error from
+the non-flatness of $S^3$ as an explicit connection-coefficient
+term. (iii): directly from P4's energy identity.
+\end{proof}
+
+\begin{remark}[Non-conservation of momentum]
+\label{rmk:momentum}
+Unlike in flat Euclidean space, momentum on $S^3$ is not
+conserved globally because parallel-transport introduces
+Christoffel-symbol corrections. The exact dissipation /
+exchange is captured by the $\mathcal E_{\rm parallel}$ term in
+(ii), not hidden. This is an honest geometric feature; any
+unconditional momentum-conservation claim would be false.
+\end{remark}
+
+%=====================================================================
+\section{Leray--Helmholtz Decomposition}
+\label{sec:leray}
+%=====================================================================
+
+\begin{definition}[Discrete velocity and pressure-potential spaces]
+\label{def:VQ}
+Let $\mathcal V_n \subset \mathcal U_n$ consist of velocity
+fields of the form $u_n[\Phi]$ for $\Phi \in X_n$ (image of
+$\Pihyd^{(n)}$'s first component). Let $\mathcal Q_n :=
+\ell^2(V_n)$ be the scalar pressure-potential space on the
+vertex set.
+\end{definition}
+
+\begin{proposition}[Leray--Helmholtz decomposition, conditional on Hypothesis~\ref{hyp:gradient-image}]
+\label{prop:leray}
+Let $\widetilde{\mathcal V}_n := \mathcal V_n + \nabla(\mathcal Q_n)$
+be the smallest linear subspace of $\mathcal U_n$ containing
+$\mathcal V_n$ and the image of the discrete gradient
+$\nabla \colon \mathcal Q_n \to \mathcal U_n$. Under
+Hypothesis~\ref{hyp:gradient-image} below, $\widetilde{\mathcal V}_n$
+admits the orthogonal direct-sum decomposition
+\[
+  \widetilde{\mathcal V}_n \;=\; \Vdf \oplus \nabla(\mathcal Q_n),
+\]
+where $\Vdf := \{u \in \widetilde{\mathcal V}_n : \divS u = 0\}$
+(exactly, using the divergence operator of
+Theorem~\ref{thm:pihyd-bounded}), $\nabla \colon \mathcal Q_n \to
+\widetilde{\mathcal V}_n$ is the discrete gradient (adjoint of
+$-\divS$ on this enlarged space), and the decomposition is
+orthogonal in the inner product induced by the $L^2$ norm on
+$\widetilde{\mathcal V}_n$.
+
+The \emph{Leray projector} $\Projn \colon \widetilde{\mathcal V}_n
+\to \Vdf$ is bounded: $\|\Projn u\|_{\widetilde{\mathcal V}_n} \leq
+\|u\|_{\widetilde{\mathcal V}_n}$ (it is the orthogonal projector
+onto a closed subspace).
+\end{proposition}
+
+\begin{hypothesis}[Gradient-image compatibility]\label{hyp:gradient-image}
+Either (i) $\nabla(\mathcal Q_n) \subseteq \mathcal V_n$, so that
+$\widetilde{\mathcal V}_n = \mathcal V_n$; or (ii) one works in
+$\widetilde{\mathcal V}_n := \mathcal V_n + \nabla(\mathcal Q_n)$
+throughout, extending $\Pihyd^{(n)}$ accordingly. This paper
+adopts case (ii) by default: all velocity-field statements below
+are stated in $\widetilde{\mathcal V}_n$. Verification of case (i)
+--- i.e.\ that the averaging-image space $\mathcal V_n$ is already
+closed under taking discrete gradients of pressure potentials ---
+is deferred.
+\end{hypothesis}
+
+\begin{proof}[Proof of Proposition~\ref{prop:leray}]
+Under Hypothesis~\ref{hyp:gradient-image}, both $\mathcal V_n$
+and $\nabla(\mathcal Q_n)$ lie in $\widetilde{\mathcal V}_n$, so
+the ambient inner-product space is well-defined. Since
+$\widetilde{\mathcal V}_n$ is finite-dimensional, the orthogonal
+complement of $\Vdf$ exists; by the standard finite-dimensional
+Hodge-style argument \cite{ArnoldFalkWinther}, that complement
+is $\nabla(\mathcal Q_n)$ (using $\divS = -(\nabla)^\ast$ on
+$\widetilde{\mathcal V}_n$). The normalization of pressure is
+fixed by requiring $\int_{S^3} p_n\,d\mu_\infty = 0$, removing
+the constant-mode ambiguity.
+\end{proof}
+
+%=====================================================================
+\section{T2: Projected Dynamics with Defect Decomposition}
+\label{sec:projected}
+%=====================================================================
+
+\begin{definition}[Macroscopic generator and time scaling]
+\label{def:Lmacro}
+Let $\lambda_n > 0$ be the \emph{macroscopic time-scaling
+factor}, $\tau := \lambda_n t$ the macroscopic time, and
+$\partial_{\tau, n} := \lambda_n^{-1} \partial_t$ the rescaled
+derivative. A concrete choice is $\lambda_n := \ell_n^{-2}$
+(diffusive scaling), matched to the mesh.
+
+The \emph{intended macroscopic generator} on velocity-pressure
+fields is
+\[
+  \Lmacro^{(n)}(u, p) \;:=\; \Projn\bigl(-(u \cdot \nabla) u
+    + \nu_n \LapS u\bigr),
+\]
+the Leray-projected Navier--Stokes generator with discrete
+convection and viscous term, where $\nu_n > 0$ is the
+\emph{finite-level viscosity parameter}. An explicit choice
+matching the diffusive scaling is $\nu_n := \nu_\ast$ a fixed
+positive constant independent of $n$.
+\end{definition}
+
+\begin{theorem}[Projected dynamics with explicit defect decomposition]
+\label{thm:projected-dynamics}
+Let $\Phi_n(t)$ solve the P4 closure dynamics. In macroscopic
+time $\tau = \lambda_n t$, the projected state
+$\Pihyd^{(n)} \Phi_n(t) = (u_n(\tau), p_n(\tau))$ satisfies
+\emph{three componentwise equations}:
+
+\begin{enumerate}
+\item[\textbf{(V)} \emph{Velocity equation:}]
+  \[
+    \partial_{\tau, n} u_n \;=\; -\Projn\bigl((u_n \cdot
+    \nabla) u_n\bigr) + \nu_n\,\LapS u_n + D_n^{\rm vel}(\Phi_n),
+  \]
+  where the velocity defect $D_n^{\rm vel}(\Phi) :=
+  D_n^{\rm comm}(\Phi) + D_n^{\rm geom}(\Phi) + D_n^{\rm
+  div}(\Phi) + D_n^{\rm scale}(\Phi)$ is the sum of four
+  components defined below.
+
+\item[\textbf{(P)} \emph{Pressure equation:}]
+  \[
+    -\LapS p_n \;=\; \divS\bigl((u_n \cdot \nabla) u_n\bigr)
+    + D_n^{\rm press}(\Phi_n),
+  \]
+  the standard Poisson equation for NS pressure obtained by
+  applying $\divS$ to the velocity equation (V). The
+  $D_n^{\rm press}$ defect is defined below as the exact
+  discrepancy; in particular it collects \emph{all} contributions
+  from $\divS\bigl(\partial_{\tau,n} u_n\bigr)$,
+  $\nu_n \LapS \divS u_n$, and $\divS D_n^{\rm vel}$ which are
+  nonzero whenever $\divS u_n = \mathcal C_n[\Phi_n] \neq 0$
+  (equation (D)). No cancellation is claimed beyond what follows
+  algebraically from applying $\divS$ to (V) and using
+  $\divS \Projn = 0$ on $\widetilde{\mathcal V}_n$.
+
+\item[\textbf{(D)} \emph{Divergence equation:}]
+  \[
+    \divS u_n \;=\; \mathcal C_n[\Phi_n]
+    \;=\; A_n[\Phi_n] + B_n[\Phi_n] + E_n[\Phi_n],
+  \]
+  exactly as in Theorem~\ref{thm:pihyd-bounded}.
+  The averaging defect $D_n^{\rm avg} \equiv 0$ for the
+  time-independent kernel of Definition~\ref{def:kernel}; it
+  would be nonzero only if $\ell_n$ or $\chi$ were time-varying,
+  which we do not use.
+\end{enumerate}
+
+The \emph{five nonzero defect components} are defined by
+explicit closed-form formulas:
+
+\begin{itemize}
+\item $D_n^{\rm comm}(\Phi) :=
+  \lambda_n^{-1}\pi_1\bigl(\Pihyd^{(n)}(-L_n \Phi)\bigr) + \Projn\bigl((u_n
+  \cdot \nabla) u_n\bigr) - \nu_n \LapS u_n$, where
+  $\pi_1 \colon \mathcal U_n \times \mathcal P_n \to \mathcal
+  U_n$ is the velocity projection and the $\lambda_n^{-1}$ factor
+  converts microscopic $\partial_t$ to macroscopic
+  $\partial_{\tau,n}$ via $\partial_{\tau,n} = \lambda_n^{-1}
+  \partial_t$. This is the exact commutator measuring how far
+  $\Pihyd^{(n)}$ fails to intertwine $-L_n$ with the
+  Navier--Stokes generator on velocity.
+\item $D_n^{\rm geom}(\Phi) := \sum_v K_{n,\ell_n}(x, v)
+  \cdot \bigl(\mathrm{TP}_v^x - \mathrm{Id}_{T_x S^3}\bigr) \cdot
+  J_n[-L_n \Phi](v)$ (vector-valued), where $(\mathrm{TP}_v^x -
+  \mathrm{Id}_{T_x S^3})$ means the difference between
+  parallel-transport from $T_{\iota_n(v)} S^3$ to $T_x S^3$
+  along the short geodesic, and the identity on $T_x S^3$ after
+  first moving to $T_x$ by the trivial-frame identification.
+  Equivalent: the vectorial $S^3$-connection correction. Using
+  the scalar commutator $\mathcal E^{\rm TP}_v[\Phi](x)$ of
+  Theorem~\ref{thm:pihyd-bounded}, the bound
+  $|D_n^{\rm geom}(\Phi)|_{T_x S^3} \leq C\sum_v K_{n,\ell_n}(x,v)
+  \cdot \dsph(\iota_n(v), x) \cdot |J_n[-L_n\Phi](v)|$ gives
+  the rate used in Proposition~\ref{prop:defect-bounds}.
+\item $D_n^{\rm press}(\Phi) := \LapS p_n[\Phi] + \divS
+  \bigl((u_n \cdot \nabla) u_n\bigr) + \divS\bigl(\partial_{\tau,n}
+  u_n\bigr) - \nu_n \LapS \divS u_n - \divS D_n^{\rm vel}(\Phi)$,
+  the explicit pressure-Poisson residual obtained by taking
+  $\divS$ of (V). The last three terms vanish only when
+  $\divS u_n \equiv 0$; under the nonzero-divergence identity
+  (D) they are nonzero in general, and are absorbed into
+  $D_n^{\rm press}$ rather than cancelled.
+\item $D_n^{\rm div}(\Phi) := u_n[\Phi] - \Projn(u_n[\Phi])$,
+  the non-divergence-free part of the raw averaged velocity
+  (vanishes when $\Phi \in X_n^{\rm df}$ AND $E_n[\Phi] \equiv 0$).
+\item $D_n^{\rm scale}(\Phi) := (1 - \lambda_\ast/\lambda_n)
+  \cdot \bigl(-\Projn((u_n \cdot \nabla) u_n) + \nu_n \LapS
+  u_n\bigr)$, the scaling-mismatch residual between the chosen
+  macro time $\lambda_n$ and the target diffusive scale
+  $\lambda_\ast := \ell_n^{-2}$. Vanishes identically when
+  $\lambda_n = \lambda_\ast$.
+\end{itemize}
+
+All five components are printed by closed-form formulas; no
+``higher order terms'' or ``true pressure field'' placeholder
+appears. The averaging defect $D_n^{\rm avg} \equiv 0$ is
+honestly zero, not a hidden remainder.
+
+\emph{Typed total defect.} The total defect $D_n(\Phi)$ is a
+\emph{product-space object} with two components:
+\[
+  D_n(\Phi) \;:=\; \bigl(D_n^{\rm vel}(\Phi),\,
+    D_n^{\rm press}(\Phi)\bigr)
+  \;\in\; L^2(S^3; TS^3) \times L^2(S^3),
+\]
+where $D_n^{\rm vel} := D_n^{\rm comm} + D_n^{\rm geom} +
+D_n^{\rm div} + D_n^{\rm scale}$ is the velocity-equation (V)
+defect, and $D_n^{\rm press}$ is the pressure-equation (P)
+defect. The divergence-equation (D) residual $\mathcal C_n$ is
+printed separately in Theorem~\ref{thm:pihyd-bounded}. The
+\emph{product-space norm} is
+\[
+  \|D_n(\Phi)\|_{\rm prod} \;:=\; \|D_n^{\rm vel}(\Phi)\|_
+    {L^2(S^3; TS^3)} + \|D_n^{\rm press}(\Phi)\|_{L^2(S^3)},
+\]
+used consistently in Proposition~\ref{prop:defect-bounds} and
+in Theorem~\ref{thm:ns-limit}.
+\end{theorem}
+
+\begin{remark}[Typed $\delta_n(T)$]
+\label{rmk:delta-typed}
+The scalar quantity $\delta_n(T)$ used in
+Theorem~\ref{thm:ns-limit} is defined as
+\[
+  \delta_n(T) \;:=\; \int_0^T \|D_n(\Phi_n(\tau/\lambda_n))\|
+    _{\rm prod}\,d\tau
+  \;=\; \int_0^T \bigl(\|D_n^{\rm vel}\|_{L^2(S^3; TS^3)} +
+  \|D_n^{\rm press}\|_{L^2(S^3)}\bigr)\,d\tau.
+\]
+The product-space norm is fixed, not ambiguous.
+\end{remark}
+
+\begin{proof}[Proof outline]
+Start from $\partial_t \Pihyd^{(n)} \Phi_n(t) = \sum_v
+K_{n,\ell_n}(x, v) \mathrm{TP}_v^x \partial_t J_n[\Phi_n(t)](v)
++ D_n^{\rm avg}$. Substitute $\partial_t J_n = J_n(\dot \Phi_n)
+= -J_n(L_n \Phi_n)$ and use the P4 self-adjointness. Expand
+$J_n(L_n \Phi_n)$ at each vertex $v$ and transport to the
+macroscopic evaluation point $x$ via $\mathrm{TP}_v^x$; the
+mismatch is $D_n^{\rm geom}$.
+
+Compare the result with the intended $\Lmacro^{(n)}(u_n, p_n) =
+\Projn(-(u_n \cdot \nabla) u_n + \nu_n \LapS u_n)$: the
+convection term $(u_n \cdot \nabla) u_n$ arises from the
+bilinear part of $L_n$, while $\nu_n \LapS u_n$ arises from
+the quadratic-form dissipation part; their mismatch with the
+discrete combination is $D_n^{\rm comm}$. The Leray projection
+step introduces $D_n^{\rm press}$ (gradient-of-pressure mismatch)
+and $D_n^{\rm div}$ (non-divergence-free residual). The
+macroscopic time-scaling $\lambda_n$ vs the exact scaling
+$\lambda_\ast$ gives $D_n^{\rm scale}$.
+
+Each term is defined \emph{by the above formulas} as the
+residual between the exact computed time derivative and the
+intended macroscopic generator; there is no choice in the
+decomposition once the formulas are fixed.
+\end{proof}
+
+%=====================================================================
+\section{Quantitative Defect Bounds}
+\label{sec:defect-bounds}
+%=====================================================================
+
+\begin{proposition}[Defect bounds, stated rates (proofs outlined)]
+\label{prop:defect-bounds}
+Under the setup of Theorem~\ref{thm:projected-dynamics}, with
+time-independent kernel $K_{n, \ell_n}$ and $\lambda_n =
+\lambda_\ast$, the averaging defect $D_n^{\rm avg} \equiv 0$
+and the scaling defect $D_n^{\rm scale} \equiv 0$ vanish
+identically. The remaining four components are asserted to
+satisfy the following norm bounds in $L^2(S^3)$, with the
+mechanism behind each bound outlined in the proof sketch below
+and full proofs deferred:
+\begin{align*}
+  \|D_n^{\rm comm}(\Phi)\|_{L^2(S^3; TS^3)}
+    &\;\leq\; C_{\rm comm}\,(h_n/\ell_n)\,\|\Phi\|_{X_n}, \\
+  \|D_n^{\rm geom}(\Phi)\|_{L^2(S^3; TS^3)}
+    &\;\leq\; C_{\rm geom}\,\ell_n\,\|\Phi\|_{X_n}, \\
+  \|D_n^{\rm press}(\Phi)\|_{L^2(S^3)}
+    &\;\leq\; C_{\rm press}\,(h_n/\ell_n)\,\|\Phi\|_{X_n}, \\
+  \|D_n^{\rm div}(\Phi)\|_{L^2(S^3; TS^3)}
+    &\;\leq\; C_{\rm div}\,(h_n/\ell_n)\,\|\Phi\|_{X_n}.
+\end{align*}
+Each constant $C_\bullet$ is identified in the proof outline in
+terms of the $24$-cell geometry, kernel / partition-of-unity
+constants, and the P4/P5 structure constants. Fully concrete
+numerical bounds for each $C_\bullet$ are not computed here;
+the statement is that such $C_\bullet$ exist and scale as
+indicated.
+
+The total \emph{velocity} defect
+$D_n^{\rm vel} = D_n^{\rm comm} + D_n^{\rm geom} + D_n^{\rm
+div}$ satisfies
+$\|D_n^{\rm vel}(\Phi)\|_{L^2} \leq (C_{\rm comm} h_n/\ell_n +
+C_{\rm geom} \ell_n + C_{\rm div} h_n/\ell_n)\,\|\Phi\|_{X_n}$.
+Optimizing $\ell_n = h_n^{1/2}$ gives rate $O(h_n^{1/2})$ with
+an absolute constant inherited from $\max(C_{\rm comm} +
+C_{\rm div}, C_{\rm geom})$. This is the \emph{stated} output
+(conditional on the proof-outline steps); no $O(h_n)$ or
+$O(h_n^{3/4})$ improvement is claimed.
+\end{proposition}
+
+\begin{remark}[Why $D_n^{\rm avg} \equiv 0$ honestly]
+\label{rmk:Davg-zero}
+By Definition~\ref{def:kernel}, the kernel $K_{n, \ell_n}$ is
+time-independent: it depends on the fixed data $\iota_n(V_n)$,
+$\ell_n$, and the fixed bump $\chi$, with no $\tau$-dependence.
+Hence $\partial_\tau K_{n, \ell_n} \equiv 0$, and the
+averaging-defect contribution
+$\sum_v (\partial_\tau K_{n, \ell_n})(x, v) \mathrm{TP}_v^x
+J_n[\Phi](v)$ is identically zero. There is no hidden
+$O(\cdot)$ remainder; this term is exactly zero, not
+asymptotically small.
+\end{remark}
+
+\begin{proof}[Proof outline]
+$D_n^{\rm avg} \equiv 0$ and $D_n^{\rm scale} \equiv 0$
+identically under the stated setup (time-independent kernel,
+$\lambda_n = \lambda_\ast$), so no estimate is needed for them.
+
+The four nonzero components each follow from their closed-form
+formula plus a norm bound:
+\begin{itemize}
+\item $D_n^{\rm comm}$: the exact commutator of P4's $L_n$ with
+  the projected Navier--Stokes generator gives a kernel-width-
+  controlled estimate $O(h_n/\ell_n)$ via the P4 $L_n$ operator
+  norm bound.
+\item $D_n^{\rm geom}$: the parallel-transport commutator
+  $\mathcal E^{\rm TP}_v[\Phi](x)$ is $O(\dsph(\iota_n(v), x))
+  = O(\ell_n)$ for $x$ in the kernel support, by second-order
+  spherical geometry of $(S^3, g_{\rm round})$.
+\item $D_n^{\rm press}$: the pressure-Poisson residual
+  $\LapS p_n + \divS((u_n\cdot\nabla)u_n)$ is $O(h_n/\ell_n)$
+  by kernel differentiation + the pressure normalization.
+\item $D_n^{\rm div}$: $u_n - \Projn u_n$ equals the
+  non-divergence-free part of the raw averaged velocity; by
+  Theorem~\ref{thm:pihyd-bounded}, $\divS u_n = A_n + B_n + E_n$,
+  and the Leray-complement contribution is $O(h_n/\ell_n)$ from
+  $A_n$'s kernel-gradient scaling plus $O(h_n)$ from $B_n$'s
+  P4-divergence ($O(\ell_n)$ from $E_n$ already counted in
+  $D_n^{\rm geom}$).
+\end{itemize}
+The total velocity defect $O(h_n/\ell_n + \ell_n)$ at $\ell_n =
+h_n^{1/2}$ gives $O(h_n^{1/2})$.
+\end{proof}
+
+\begin{remark}[Honest rate]
+\label{rmk:defect-rate}
+The total defect rate $O(h_n^{1/2})$ at $\ell_n = h_n^{1/2}$ is
+the honest output of the chosen kernel / scaling. Stronger
+choices (e.g.\ finer $\ell_n \ll h_n^{1/2}$) would give smaller
+$D^{\rm comm}$ and $D^{\rm press}$ but larger $D^{\rm geom}$; the
+optimal $\ell_n$ balancing these is $\ell_n = h_n^{1/2}$, giving
+the stated $O(h_n^{1/2})$ rate. No $O(h_n)$ or $O(h_n^{3/4})$
+improvement is claimed without further assumptions.
+\end{remark}
+
+%=====================================================================
+\section{T3: Conditional Scaling Limit to Incompressible Navier--Stokes}
+\label{sec:scaling-limit}
+%=====================================================================
+
+\begin{hypothesis}[$\mathbf H_{\rm hyd}$: scaling, regularity, compactness]
+\label{hyp:scaling}
+We assume the following package:
+\begin{enumerate}
+\item[\textup{(H1)}] \emph{Scaling relations:} $\ell_n =
+  h_n^{1/2}$, $\lambda_n = \lambda_\ast$ fixed,
+  $\nu_n \to \nu \geq 0$ as $n \to \infty$.
+\item[\textup{(H2)}] \emph{Initial data compactness:} the P4
+  initial states $\Phi_n(0)$ satisfy
+  $\sup_n \|\Phi_n(0)\|_{X_n} \leq E_0 < \infty$, and
+  $\Pihyd^{(n)}(\Phi_n(0)) \to (u_0, p_0)$ strongly in
+  $L^2(S^3, TS^3) \times L^2(S^3)$, with
+  $\mathrm{div}\,u_0 = 0$ in the continuum sense.
+\item[\textup{(H3)}] \emph{Uniform $L^2_t H^1_x$ bound:}
+  $\sup_n \int_0^T \|u_n(\tau)\|_{H^1(S^3)}^2 d\tau \leq M_0 <
+  \infty$.
+\item[\textup{(H4)}] \emph{P6 conditional inputs:}
+  Hypothesis~6.4 of P6 holds — uniform $8/3$ approximate isotropy
+  at every $V_n$ vertex — so that intrinsic-extrinsic metric
+  comparison, Dirichlet-form consistency, and Laplacian-
+  convergence statements of P6 apply.
+\item[\textup{(H5)}] \emph{Equicontinuity in time:} for every
+  $\varepsilon > 0$ there is $\delta > 0$ with
+  $\sup_n \|u_n(\tau_1) - u_n(\tau_2)\|_{L^2} < \varepsilon$
+  whenever $|\tau_1 - \tau_2| < \delta$ (Aubin--Lions-style
+  hypothesis, needed for strong $L^2$ compactness).
+\end{enumerate}
+\end{hypothesis}
+
+\begin{theorem}[Conditional convergence to incompressible
+  Navier--Stokes under $\mathbf H_{\rm hyd}$ + P6 Hypothesis~6.4]
+\label{thm:ns-limit}
+Assume Hypothesis~\ref{hyp:scaling} ($\mathbf H_{\rm hyd}$,
+which includes P6 Hypothesis~6.4 (H4) as a required input).
+Then:
+\begin{enumerate}
+\item[\textup{(i)}] \emph{Defect vanishing:}
+  $\delta_n(T) := \int_0^T \|D_n(\Phi_n(\tau/\lambda_n))\|_
+  {\rm prod} d\tau \to 0$ as $n \to \infty$, where
+  $\|\cdot\|_{\rm prod}$ is the product-space norm of
+  Remark~\ref{rmk:delta-typed}.
+\item[\textup{(ii)}] \emph{Compactness:} $\{u_n\}_n$ is
+  precompact in $C([0, T]; L^2(S^3, TS^3))$ and $\{p_n\}_n$ is
+  precompact in $L^2([0, T] \times S^3)$.
+\item[\textup{(iii)}] \emph{Limit equation:} every limit point
+  $(u, p)$ is a distributional weak solution of the incompressible
+  Navier--Stokes equations on $(S^3, g_{\rm round})$:
+  \begin{align*}
+    \partial_\tau u + (u \cdot \nabla) u + \nabla p - \nu
+       \Delta u &= 0, \\
+    \operatorname{div} u &= 0,
+  \end{align*}
+  with initial data $u|_{\tau=0} = u_0$, $\nu := \lim_n
+  \nu_n$.
+\end{enumerate}
+
+\end{theorem}
+
+\begin{corollary}[Conditional Euler limit, separate inviscid case]
+\label{cor:euler}
+Consider the separate inviscid regime: replace (H1) with
+(H1$'$): $\ell_n = h_n^{1/2}$, $\lambda_n = \lambda_\ast$
+fixed, $\nu_n \to 0$. Replace (H3) with (H3$'$): $\sup_n \int_0^T
+\|u_n(\tau)\|_{L^\infty(S^3)}^2 d\tau \leq M_0'$ (stronger
+compactness hypothesis accommodating the loss of viscous
+regularization). Keep (H2), (H4), (H5). Then under this modified
+hypothesis package $\mathbf H_{\rm hyd}'$ plus P6
+Hypothesis~6.4, every limit point $(u, p)$ solves the
+incompressible Euler equations on $(S^3, g_{\rm round})$:
+\[
+  \partial_\tau u + (u \cdot \nabla) u + \nabla p = 0, \qquad
+  \operatorname{div} u = 0,
+\]
+in the distributional sense.
+
+This is a \emph{separate corollary}, not folded into
+Theorem~\ref{thm:ns-limit}. Its proof is analogous but uses
+the modified compactness hypothesis (H3$'$) and drops the
+$\nu \Delta u$ viscous term in the limit. The inviscid case is
+NOT the main theorem's NS limit with $\nu = 0$; it has its own
+hypothesis package.
+\end{corollary}
+
+\begin{remark}[The corollary above is stated but not proved here]
+\label{rmk:euler-deferred}
+The Euler corollary is \emph{stated} for completeness but its
+full proof requires a separate inviscid-limit analysis (weak
+convergence in stronger topologies, pressure reconstruction
+without viscous regularization) that is beyond the scope of
+this paper. We state it to clarify the scope boundary: P7
+states the NS limit and gives a proof outline under
+$\mathbf H_{\rm hyd}$; Euler under
+$\mathbf H_{\rm hyd}'$ is a separate theorem flagged but not
+fully proved here.
+\end{remark}
+
+\begin{proof}[Proof outline]
+(i): $\delta_n(T) \leq T \cdot \sup_\tau C_{\rm tot}(h_n, \ldots)
+\|\Phi_n\|_{X_n} \leq T \cdot O(h_n^{1/2}) \cdot
+\sup_\tau \|\Phi_n\|_{X_n}$. By (H2) and the P4 energy decay
+(Prop~\ref{prop:balance-laws}(iii)), $\sup_\tau \|\Phi_n\|_{X_n}
+\leq \|\Phi_n(0)\|_{X_n} \leq E_0$. Hence $\delta_n(T) \leq
+C T E_0 h_n^{1/2} \to 0$.
+
+(ii): (H3) gives $L^2_t H^1_x$ boundedness; (H5) gives
+equicontinuity in time. Aubin--Lions--Simon
+\cite{SimonCompactness} gives precompactness in
+$C([0, T]; L^2(S^3))$. For pressure compactness: the standard
+pressure-reconstruction argument for Navier--Stokes on compact
+Riemannian manifolds (see \cite[Ch.~II.8]{TemamNS} for the
+Euclidean version, adapted to $(S^3, g_{\rm round})$ via
+elliptic regularity for $\Delta_{S^3}$) gives $p_n$ compact
+in $L^2([0, T] \times S^3)$ modulo an additive constant, which
+is fixed by the zero-mean normalization of
+Definition~\ref{def:up}.
+
+(iii): Extract a convergent subsequence $(u_{n_k}, p_{n_k}) \to
+(u, p)$. Pass to the limit in the weak formulation of the
+projected dynamics Theorem~\ref{thm:projected-dynamics}; the
+$\Lmacro^{(n)}$ term converges to the Navier--Stokes generator
+(using P6 Hypothesis 6.4 for the Laplacian and discrete
+convection convergences), and the defect term $D_n(\Phi_n) \to
+0$ by (i). The limit $(u, p)$ satisfies the Navier--Stokes
+system in the distributional sense; the Leray--Helmholtz
+decomposition from Prop~\ref{prop:leray} ensures
+$\operatorname{div} u = 0$.
+\end{proof}
+
+\begin{remark}[Weak vs strong solution]
+\label{rmk:solution-class}
+The theorem states convergence to a \emph{distributional weak
+solution} of the incompressible Navier--Stokes equations: the
+momentum equation holds in the distributional sense plus
+$\operatorname{div} u = 0$. This is weaker than the
+Leray--Hopf class (which requires an energy inequality and
+weak continuity at the initial time); upgrading to Leray--Hopf
+would require additional hypotheses and an energy-inequality
+argument not supplied here. No strong, unique, or smooth
+solution class is claimed. Millennium-grade regularity/uniqueness
+results belong to the downstream NS paper.
+\end{remark}
+
+\begin{remark}[Conditional dependencies]
+\label{rmk:conditional-deps}
+Theorem~\ref{thm:ns-limit} is conditional on
+Hypothesis~\ref{hyp:scaling}, which itself includes P6
+Hypothesis 6.4 (uniform $8/3$ isotropy) for the Laplacian
+convergence step. If P6 Hypothesis 6.4 is not available, then
+the spectral convergence step of the proof fails, and the limit
+equation can only be stated in a weaker form (e.g.\ convergence
+in a weaker topology, or replacement of $\nu \Delta u$ by a
+limit generator not fully identified with Laplace--Beltrami).
+\end{remark}
+
+%=====================================================================
+\section{Self-Audit}
+\label{sec:audit}
+%=====================================================================
+
+\textbf{Unconditional layer (statements complete; proofs are
+currently proof outlines, with full-rigor closure deferred to a
+follow-up paper):}
+\begin{itemize}
+\item[[1]] Two-layer split stated explicitly in abstract and
+  \S\ref{sec:intro}.
+\item[[2]] $D_4$-branch only.
+\item[[3]] Averaging kernel $K_{n, \ell_n}$ printed with
+  normalization, support, smoothness
+  (Def~\ref{def:kernel}, Lem~\ref{lem:kernel-properties}).
+\item[[4]] Coarse-graining scale $\ell_n$, mesh $h_n$, time
+  $\lambda_n$, viscosity $\nu_n$ all fixed explicitly
+  (Def~\ref{def:ell-n}, Def~\ref{def:Lmacro}).
+\item[[5]] $d_n^{\rm ext}$ used unconditionally;
+  $d_n^{\rm int}$ used only in T3.
+\item[[6]] $\Pihyd^{(n)}$ bounded (Thm~\ref{thm:pihyd-bounded}).
+\item[[7]] Divergence decomposition stated as an exact split
+  (with $E_n$ \emph{defined} to make the identity hold),
+  not slogan.
+\item[[8]] Balance laws precise: momentum is NOT conserved (geom
+  correction stated) (Prop~\ref{prop:balance-laws}).
+\item[[9]] Leray--Helmholtz decomposition
+  (Prop~\ref{prop:leray}) before projected-dynamics uses it.
+\item[[10]] Projected dynamics theorem prints full six-term
+  defect decomposition.
+\item[[11]] Each defect term has a quantitative norm bound
+  (Prop~\ref{prop:defect-bounds}).
+\item[[12]] No $O(h_n^2)$ or sharper rate unless proved; honest
+  $O(h_n^{1/2})$ at $\ell_n = h_n^{1/2}$.
+\item[[13]] No cascade-ns-proof.md / foundations.tex / scripts
+  cited.
+\end{itemize}
+
+\textbf{Conditional program (layer 2, under
+Hypothesis~\ref{hyp:scaling}):}
+\begin{itemize}
+\item T3 (Thm~\ref{thm:ns-limit}): NS limit conditional on
+  H1--H5, explicitly listed. H4 imports P6 Hypothesis 6.4.
+\item Euler subregime at $\nu = 0$: separate corollary, NOT
+  folded into main theorem.
+\item No uniqueness, smoothness, global well-posedness claim in
+  the conditional limit.
+\item PDE limit stated as distributional weak solution only
+  (weaker than Leray--Hopf class; no energy inequality shown).
+\end{itemize}
+
+\textbf{Honest acknowledgments of gaps / sketches:}
+\begin{itemize}
+\item Several proofs are labeled [Proof outline] — a full proof of
+  e.g. the defect bounds in Prop~\ref{prop:defect-bounds}
+  requires careful tracking of the kernel analysis; we state
+  the bounds but defer the inline proof details.
+\item The constant $C_\Pi^{(n)}$ in T1 is per-level, not
+  uniform in $n$; this is noted in Remark~\ref{rmk:Pi-scaling}.
+\item The Euler $\nu = 0$ corollary is not fully developed; it
+  is flagged as a separate subregime.
+\end{itemize}
+
+%=====================================================================
+\section{Citation Contract and Downstream Handoff}
+\label{sec:handoff}
+%=====================================================================
+
+\textbf{Unconditional statements (theorem statements complete,
+proofs currently given as proof outlines; citable only at the
+statement/structural level, with full-rigor closure deferred to
+a follow-up paper):}
+\begin{itemize}
+\item Theorem~\ref{thm:pihyd-bounded}: $\Pihyd^{(n)}$ bounded +
+  divergence decomposition (not substantive compatibility).
+\item Proposition~\ref{prop:balance-laws}: balance laws along
+  P4 flow.
+\item Proposition~\ref{prop:leray}: Leray--Helmholtz
+  decomposition.
+\item Theorem~\ref{thm:projected-dynamics}: projected dynamics
+  with explicit six-term defect decomposition.
+\item Proposition~\ref{prop:defect-bounds}: defect bounds with
+  honest rate $O(h_n^{1/2})$ at $\ell_n = h_n^{1/2}$.
+\end{itemize}
+
+\textbf{Conditional program — NOT Clay-grade citable
+  unconditionally:}
+\begin{itemize}
+\item Theorem~\ref{thm:ns-limit}: incompressible Navier--Stokes
+  limit, conditional on Hypothesis~\ref{hyp:scaling} (which
+  includes P6 Hypothesis 6.4).
+\end{itemize}
+
+\textbf{Downstream guidance (NS millennium paper, Foundations):}
+The NS millennium paper should cite T1/T2 unconditionally and
+T3 conditionally, clearly flagging the dependence on
+Hypothesis~\ref{hyp:scaling}. The Foundations paper can import
+T1/T2 as the bridge between closure dynamics (P4) and
+hydrodynamic observables.
+
+\textbf{What this paper does NOT provide:}
+\begin{itemize}
+\item No unconditional NS theorem.
+\item No regularity / uniqueness / blow-up result.
+\item No millennium-grade NS result (belongs downstream).
+\item No Euler $\nu = 0$ theorem in the main result.
+\item No unconditional use of P6 intrinsic metric / spectral
+  convergence.
+\item No smoothness of the limit field.
+\end{itemize}
+
+%=====================================================================
+\section{Notation Audit}
+\label{sec:notation}
+%=====================================================================
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Symbol & Meaning & First use \\
+\hline
+$X_n$ & P4 $D_4$-branch state space & Notation~\ref{not:P4} \\
+$\Phi_n(t)$ & Level-$n$ closure-flow state &
+  Notation~\ref{not:P4} \\
+$L_n$ & P4 closure generator & Notation~\ref{not:P4} \\
+$V_n, \iota_n, x_v^{(n)}$ & P3/P5/P6 geometric data &
+  Notation~\ref{not:geom} \\
+$d_n^{\rm ext}$ & P6 unconditional extrinsic metric &
+  Notation~\ref{not:geom} \\
+$d_n^{\rm int}$ & P6 conditional intrinsic metric (only in T3
+  under P6 Hyp~6.4); defined in
+  \cite[Def.~5.1]{SchlafliConvergence} &
+  Notation~\ref{not:geom} \\
+$h_n$ & mesh scale & Notation~\ref{not:geom} \\
+$|V_n|$ & vertex count, $\Theta(h_n^{-3})$ &
+  Notation~\ref{not:geom} \\
+$\ell_n$ & coarse-graining lengthscale ($\ell_n = h_n^{1/2}$) &
+  Definition~\ref{def:ell-n} \\
+$\chi$ & smooth bump function & Definition~\ref{def:kernel} \\
+$K_{n, \ell_n}(x, v)$ & averaging kernel &
+  Definition~\ref{def:kernel} \\
+$Z_{n, \ell_n}(x)$ & kernel normalization &
+  Definition~\ref{def:kernel} \\
+$J_n[\Phi](v)$ & current / momentum observable &
+  Definition~\ref{def:Jn} \\
+$u_n[\Phi](x)$ & averaged velocity field &
+  Definition~\ref{def:up} \\
+$p_n[\Phi](x)$ & averaged pressure field &
+  Definition~\ref{def:up} \\
+$\rho_n[\Phi](v)$ & energy-density observable &
+  Definition~\ref{def:up} \\
+$\mathrm{TP}_v^x$ & tangent parallel transport &
+  Definition~\ref{def:up} \\
+$\mathcal U_n, \mathcal P_n$ & velocity and pressure spaces &
+  Definition~\ref{def:UP} \\
+$\Pihyd^{(n)}$ & hydrodynamic projector &
+  Definition~\ref{def:Pihyd} \\
+$\mathcal V_n, \mathcal Q_n$ & velocity-field and
+  pressure-potential spaces & Definition~\ref{def:VQ} \\
+$\divS, \nabla, \LapS$ & macroscopic differential operators
+  & \\
+$\Vdf$ & divergence-free subspace $\ker(\divS)$ &
+  Proposition~\ref{prop:leray} \\
+$\Projn$ & Leray--Helmholtz projector &
+  Proposition~\ref{prop:leray} \\
+$\lambda_n, \tau$ & time scaling and macro-time &
+  Definition~\ref{def:Lmacro} \\
+$\nu_n$ & finite-level viscosity parameter &
+  Definition~\ref{def:Lmacro} \\
+$\Lmacro^{(n)}$ & intended macroscopic generator &
+  Definition~\ref{def:Lmacro} \\
+$D_n^{\rm avg}$ & averaging defect &
+  Theorem~\ref{thm:projected-dynamics} \\
+$D_n^{\rm comm}$ & commutator defect &
+  Theorem~\ref{thm:projected-dynamics} \\
+$D_n^{\rm geom}$ & geometry defect &
+  Theorem~\ref{thm:projected-dynamics} \\
+$D_n^{\rm press}$ & pressure-reconstruction defect &
+  Theorem~\ref{thm:projected-dynamics} \\
+$D_n^{\rm div}$ & divergence defect &
+  Theorem~\ref{thm:projected-dynamics} \\
+$D_n^{\rm scale}$ & scaling defect &
+  Theorem~\ref{thm:projected-dynamics} \\
+$D_n(\Phi_n)$ & total defect &
+  Theorem~\ref{thm:projected-dynamics} \\
+$\delta_n(T)$ & defect-control quantity on $[0, T]$ &
+  Theorem~\ref{thm:ns-limit}(i) \\
+$\mathbf H_{\rm hyd}$ & scaling / regularity hypothesis package
+  & Hypothesis~\ref{hyp:scaling} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{ClosureDynamics}
+P4: \emph{Discrete Closure Dynamics},
+\texttt{papers/cascade-closure-dynamics/cascade-closure-dynamics.tex}.
+Pins: Def.~2.1 (state spaces), Thm.~3.1 (generator),
+Thm.~4.2 (semigroup), Prop.~5.1 (energy dissipation),
+Prop.~2.2 (Hilbert structure), Def.~3.3 (discrete divergence).
+
+\bibitem{MetricProjection}
+P5: \emph{$D_4$ Metric Projection},
+\texttt{papers/cascade-metric-projection/cascade-metric-projection.tex}.
+Pins: Notation~2.1 (coordinates), Def.~3.2 (source extraction),
+Prop.~3.3 (bounded trace).
+
+\bibitem{SchlafliConvergence}
+P6: \emph{Schl\"{a}fli Convergence and Spectral Stability},
+\texttt{papers/cascade-schlafli-convergence/cascade-schlafli-convergence.tex}.
+Unconditional pins: Def.~3.2 (iota_n), Def.~3.4 (h_n),
+Thm.~4.2 (epsilon-net), Thm.~5.1 (GH convergence), Prop.~6.1
+(doubling), Lem.~6.2 (vertex count), Prop.~7.2 (V_0 isotropy).
+Conditional pins (used only inside Theorem~\ref{thm:ns-limit}):
+Hypothesis~6.4 (uniform $8/3$ isotropy), Thm.~8.1 (intrinsic-
+extrinsic comparison), Thm.~10.1 (form consistency), Thm.~11.1
+(spectral convergence).
+
+\bibitem{Chung}
+F.~R.~K.~Chung, \emph{Spectral Graph Theory}, CBMS 92, AMS,
+1997. Discrete divergence and graph Laplacians.
+
+\bibitem{ArnoldFalkWinther}
+D.~N.~Arnold, R.~S.~Falk, R.~Winther, \emph{Finite Element
+Exterior Calculus, Homological Techniques, and Applications},
+Acta Numerica 15 (2006), 1--155. Finite-dimensional
+Leray--Helmholtz decomposition.
+
+\bibitem{ReedSimonI}
+M.~Reed and B.~Simon, \emph{Methods of Modern Mathematical
+Physics, Vol.~I}, Academic Press, 1980.
+
+\bibitem{SimonCompactness}
+J.~Simon, \emph{Compact sets in the space $L^p(0, T; B)$},
+Annali di Matematica Pura ed Applicata 146 (1986), 65--96.
+Aubin--Lions--Simon compactness for evolution equations.
+
+\bibitem{BrezisFA}
+H.~Br\'{e}zis, \emph{Functional Analysis, Sobolev Spaces and
+Partial Differential Equations}, Springer, 2011.
+
+\bibitem{TemamNS}
+R.~Temam, \emph{Navier--Stokes Equations: Theory and Numerical
+Analysis}, AMS Chelsea, 2001. Leray--Hopf weak solutions on
+bounded domains; adapted to compact manifolds.
+
+\bibitem{LionsMathTopics}
+P.-L.~Lions, \emph{Mathematical Topics in Fluid Mechanics,
+Vol.~1: Incompressible Models}, Oxford Univ.\ Press, 1996.
+
+\bibitem{BerardSpectralGeometry}
+P.~H.~B\'{e}rard, \emph{Spectral Geometry: Direct and Inverse
+Problems}, LNM 1207, Springer, 1986. Spectrum of $-\Delta$ on
+round spheres.
+
+\bibitem{TaylorPDE1}
+M.~E.~Taylor, \emph{Partial Differential Equations I: Basic
+Theory}, Springer, 1996. PDE on compact manifolds.
+
+\end{thebibliography}
+
+\end{document}

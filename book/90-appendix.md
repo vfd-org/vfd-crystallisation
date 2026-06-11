@@ -1,0 +1,25 @@
+# Appendix — Check It Yourself
+
+The point of the first column, the checkable one, is that you do not have to take my word for it. This appendix tells you where the calculations live, so that the central claims of the book can be confirmed or refuted by anyone willing to run a short program. None of it requires special equipment, only a computer and the patience to read code that other people wrote.
+
+The claims and where to test them:
+
+**That the crystal's spectrum carries the signature of three-dimensional space** (Chapter 4). The 600-cell is built from its bare list of connections, the operation that governs vibration is applied, and the families of vibration are read off. They come in sizes one, four, nine, sixteen, twenty-five, thirty-six, the perfect squares of a three-dimensional sphere, with the actual frequencies matching the sphere's predicted frequencies to machine precision. This is the load-bearing result of the book, and it is checked in the verification script for the rendering layer, which confirms the square multiplicities, the exact frequency formula, and the recovery of dimension three by an independent counting argument. The figure in Chapter 4 was drawn directly from this computation and can be regenerated from the figure script that accompanies it.
+
+**That the three-sphere hands every point three perpendicular directions** (Chapter 5), and that the canonical frame of directions is orthonormal at every one of the crystal's corners, is confirmed in the same rendering-layer script, which builds the frame at all hundred and twenty corners and checks it.
+
+**That the crystal contains a mirror reversing its own clock, and that the mirror is multiplication by i** (Chapter 7), is checked in the same place: the script finds the clock-reversing elements explicitly and confirms that they conjugate the crystal's tick to its reverse.
+
+**That the cascade is one world at many resolutions** (Chapter 9), with the coarse rungs' vibrations equal to the fine rung's vibrations sampled on the shared corners, and the resolution of each rung fixed by spherical-design theory, is checked in the rung-dimension-ladder script.
+
+**That the unique law of the metric field is Einstein's, and that the substrate supplies its premises** (Chapter 9). The verification suite for the gravity chain re-derives the uniqueness theorem from scratch by a random-sampling scan (one surviving direction out of six, the Fierz--Pauli ratios, mass terms killed, two polarisations), checks the exact conservation laws of the substrate field on the actual 600-cell graph, solves the weak-field equations on a grid and confirms the factor of two and the isotropic spatial warping, traces light rays through the solved metric and recovers the doubled 1919 deflection against a scalar control that gives half, and measures the inertial and gravitating mass of one simulated wavepacket and finds them equal. Thirty-nine checks, each built to be able to fail. The full technical derivation is Paper LIII of the programme, *Einstein's Equations from Substrate Closure*, with the working notes and the honest record of the failed earlier construction preserved alongside it.
+
+**That a single fixed curve, derived from the geometry, gives a consistent account of a real particle-physics anomaly** (Chapter 8) is documented, with full statistical honesty including the tie and the recorded methodological wobble, in the b-anomaly materials of the wider programme.
+
+The scripts referenced above live in the project repository, in its `scripts` and `book/figures` directories, alongside the working notes that derive the mathematics in full technical detail. They ran, they pass, and they are there to be broken by anyone who suspects otherwise. That is the whole point.
+
+# A Note on Sources
+
+The mathematics this book leans on divides into two kinds, and it matters which is which. The first kind is classical and settled, owing nothing to the framework: the five Platonic solids, the six regular four-dimensional shapes and the 600-cell among them, the lattice E8, the quaternions and octonions, the theorems of Hurwitz and Adams on which number systems and which spheres can exist, the spherical harmonics of the various spheres. All of this is standard, can be found in textbooks, and would be true if the framework were wrong. I have used it freely and tried always to flag it as common property rather than the framework's own.
+
+The second kind is the framework's own contribution: the reading of the 600-cell as the substrate of the physical world, the construction of looking and the rendering kernel, the derivation of wave-like time from the inner mirror, the cascade of rungs as resolutions of one arena, the derivation of Einstein's equations from the substrate's indifference to coordinates (resting partly on the classical spin-2 uniqueness and bootstrap theorems, which belong to the first kind), the account of selection by accumulated history. These are set out, with their proofs and their open problems and their honest verification, in the technical documents of the programme, of which this book is the plain-language telling.

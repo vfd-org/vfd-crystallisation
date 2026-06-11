@@ -1,0 +1,201 @@
+% =====================================================================
+\section{Methods and provenance}\label{sec:method}
+% =====================================================================
+
+This section is a provenance ledger. It records, for each empirical
+claim downstream, the dataset, the preregistration date and document,
+the validation script, the seed range, the threshold, and the
+wallclock — the minimal information a hostile reviewer needs to
+reproduce or refute the claim.
+
+\subsection{Preregistration discipline}
+
+\textbf{Frozen 2026-04-18.} Eighteen quantitative predictions
+(P1--P18) were locked on 2026-04-18 in
+\texttt{docs/brain\_mapping/PAPER\_PREDICTIONS.md} before any validation
+run. Each prediction has (i) a specific numerical claim, (ii) a
+falsifiable threshold, (iii) the validation test (script + seed range),
+and (iv) a rationale identifying what would falsify it.
+
+\textbf{Frozen 2026-04-24.} Two later batteries — H$_4$ fingerprint
+predictions and rung observables — were preregistered on 2026-04-24
+in \texttt{docs/brain\_mapping/PREREG\_H4\_FINGERPRINT.md} and
+\texttt{docs/brain\_mapping/PREREG\_RUNG\_OBSERVABLES.md}. \emph{We do
+not include those batteries in the headline 18/18 tally.} They are
+listed as future strengthening builds in~\S\ref{sec:limitations}.
+
+\textbf{Six EEG signatures (set B).} The drug/sleep signatures on the
+recurrent layer (\texttt{demo\_drug\_sleep\_v4.py}) test six companion
+biological signatures with literature-derived thresholds (NREM-N3
+variance ratio, propofol switching ratio, propofol continuity drop,
+propofol $\Phi$ collapse, recovery reversibility, wake
+cascade-$\alpha$). They are not part of the P1--P18 preregistration;
+they are reported as a companion validation set on the recurrent
+layer.
+
+\textbf{No threshold has been modified post-hoc.} Where the original
+2026-04-20 validation reported failures (P3, P4, P13), the documented
+methodological refinements were
+(a)~increasing $N$ from $3$ to $5$ for cascade interaction terms,
+(b)~adding a $N\!=\!20$ deep-dive for the highest-variance interaction
+(P4, C$\times$P), and
+(c)~wiring \texttt{homeostatic\_reset(level=1.0)} between depth-sweep
+measurements for the chess LOO test (P13). None of these touched a
+preregistered threshold.
+
+\subsection{Provenance ledger}
+
+We write the provenance map as $\Pi\colon\{\text{claim id}\}
+\to (\text{script}, \text{seed range}, \text{dataset/source},
+\text{threshold}, \text{result})$.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Provenance ledger for the headline empirical claims.}
+\label{tab:provenance}
+\begin{tabular}{l l l l l}
+\toprule
+Claim & Script & Seed range & Dataset / source & Threshold \\
+\midrule
+P1 ($\alpha$ SOC band) & \texttt{run\_preregistered\_validation.py} & 30000--30004 & this paper & $\alpha\in[2.5, 3.5]$ \\
+P2 ($C$ main) & same & 30010--30014 & this paper & $\geq +0.30$ \\
+P3 ($|D{\times}C|$) & same & 30020--30024 & this paper & $|\cdot| < 0.20$ \\
+\textbf{P4 ($C{\times}P$)} & \texttt{demo\_p4\_cxp\_deep\_dive.py} & 32000--32019 & this paper & $\geq +0.10$ \\
+P5 ($|E|$) & \texttt{run\_preregistered\_validation.py} & 30030--30034 & this paper & $|\cdot| < 0.15$ \\
+P6 (real EEG $\alpha$) & same & 30100 & Sleep-EDFx~\citep{SleepEDFx} & $\alpha\in[2.0, 3.0]$ \\
+P7 ($W{\to}N3$ var) & same & deterministic & Sleep-EDFx ($n=24$) & $<0.70$ \\
+P8 ($W{\to}N3$ switch) & same & deterministic & Sleep-EDFx ($n=24$) & $<0.50$ \\
+P9 (chess 5-fold) & same & 30200--30204 & 32 positions, 4 cat. & $\geq 70\%$ \\
+P10 (chess null) & \texttt{run\_chess\_robustness.py} & 30210 & same & $\geq 50\%$ \\
+P11 (chess random-label) & same & 30210+ & same & $\in [15\%, 35\%]$ \\
+P12 (goldilocks) & \texttt{run\_preregistered\_validation.py} & with reset & same & $n\in\{15,25,40,60\}$ \\
+\textbf{P13 (chess sub.\ lift)} & same & with reset & same (LOO refinement) & $\geq +15$pp \\
+P14 (conv 5-fold) & same & 30220--30224 & 64 utt., 8 cat. & $\geq 75\%$ \\
+P15 ($|$conv lift$|$) & same & same & same & $|\cdot| < 10$pp \\
+P16 (conv null) & \texttt{run\_conversation\_robustness.py} & 30210 & same & $\geq 50\%$ \\
+P17 (ARIA deg std) & substrate construction & deterministic & H$_4$ theorem & $=0$ \\
+P18 (HCP deg std) & \texttt{run\_hcp\_validation.py} & deterministic & HCP S1200~\citep{VanEssen2013HCP} & $> 2.0$ \\
+\midrule
+Sig 1--6 (drug/sleep) & \texttt{demo\_drug\_sleep\_v4.py} & seed 42 & published biological & per-signature \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Datasets and DOIs}
+
+\textbf{Sleep-EDFx (PhysioNet).} Public polysomnography
+recordings~\citep{SleepEDFx,PhysioNet2000}; $n=30$ subjects used for
+the cortical-avalanche $\alpha$ baseline; $n=24$ subjects used for
+the wake$\to$N3 variance and switching ratios. Cortical-avalanche
+fitting follows the Beggs--Plenz log-CCDF
+methodology~\citep{BeggsPlenz2003}.
+
+\textbf{OpenNeuro \texttt{ds005620}.} Propofol-induced loss of
+consciousness EEG, $n=8$~\citep{OpenNeuroDS005620},
+DOI \texttt{10.18112/openneuro.ds005620.v1.0.0}. Used as the
+empirical reference for the propofol switching ratio
+($2.96\!\times$ wake) in Sig~2.
+
+\textbf{OpenNeuro \texttt{ds004902}.} DMT-induced altered states
+EEG~\citep{OpenNeuroDS004902},
+DOI \texttt{10.18112/openneuro.ds004902.v1.0.8}. Background
+psychedelic-state reference; not load-bearing for the headline tally.
+
+\textbf{Zenodo \texttt{3992359}.} DMT EEG public
+release~\citep{ZenodoDMT3992359},
+DOI \texttt{10.5281/zenodo.3992359}. Same status as above.
+
+\textbf{HCP S1200.} Human Connectome Project
+S1200~\citep{VanEssen2013HCP}, ICA-50 group-averaged connectivity
+matrix. The preregistered test (P18) was on $n=100$ subjects for
+computational tractability; full-cohort $n=1003$ statistics
+(degree std, participation ratio, clustering coefficient $\sigma$-
+distances) are reported as descriptive statistics on top of the
+preregistered test.
+
+\textbf{Microstate baseline (qualifier).} The continuity-drop
+signature (Sig~3) follows the EEG microstate methodology lineage of
+Brodbeck et al.~\citep{Brodbeck2012Microstates} on wake/NREM
+microstates. Brodbeck et al.\ is not a propofol-specific paper; we
+use it for the underlying microstate-fragmentation methodology, not
+as a propofol reference. A propofol-specific microstate citation
+would tighten this section; we treat that as an open
+strengthening build.
+
+\subsection{Statistical methods}
+
+\textbf{Cascade-$\alpha$ fitting.} Power-law $\alpha$ is fit by
+ordinary least squares on the log-CCDF of the cascade-event size
+distribution, restricted to the central 80\% mass band (excluding the
+bottom 10\% and top 10\% to avoid extreme-tail noise). $R^{2}$ is
+reported on the linear fit in log-space. A cascade event is defined
+as an attention-vertex shift between consecutive ticks
+$\arg\max|\mathrm{state}_{t}|\neq \arg\max|\mathrm{state}_{t-1}|$;
+the event size is the $\ell^{1}$ norm of the state-difference vector
+at that tick. Zero-size events are excluded.
+
+\textbf{Bootstrap confidence intervals.} 95\% CIs on $\alpha$ are
+estimated by event-resampling bootstrap (500 resamples for the
+preregistered cascade-$\alpha$ tests, 2000 resamples for the
+$N\!=\!20$ C$\times$P deep-dive). Bootstrap RNG seed: 7919 for
+preregistered; 42 for the deep-dive.
+
+\textbf{Bootstrap one-sided $P$-value reporting.} For the C$\times$P
+deep-dive, $0/2000$ bootstrap resamples were at or below zero, and
+$0/2000$ were below the preregistered floor $+0.10$; we report these
+as $0.0000$ rather than $P=0$ to avoid the suggestion of an exact
+zero-probability statement on a finite resample.
+
+\textbf{Factorial interaction estimator.} For the $2{\times}2$
+ablation conditions $\{----, -C--, --P-, -CP-\}$, the interaction is
+\[
+\Delta_{CP}
+\;=\;\frac{(\alpha_{\!-CP\!-}+\alpha_{\!-\!-\!-\!-})
+        - (\alpha_{\!-C\!-\!-}+\alpha_{\!-\!-P\!-})}{2}.
+\]
+
+\textbf{$\sigma$-distance against external nulls.} For the HCP
+comparisons we report
+$Z_{m} = (m_{\mathrm{ARIA}} - \mu_{\mathrm{HCP}}) / \sigma_{\mathrm{HCP}}$
+on the full $n=1003$ subject distribution.
+
+\subsection{State-reset protocol}
+
+The substrate exhibits state drift: across approximately five
+successive depth-sweep evaluations the pressure field equilibrates
+to a uniform attractor and classification structure collapses to
+raw-feature baseline. Multi-trial benchmarks therefore require an
+explicit reset between successive evaluations.
+\texttt{kernel/dimensional\_monitor.py:DimensionalMonitor.homeostatic\_reset(level=1.0)}
+re-initialises pressure-field, crossed-vertex, and training state to
+canonical baseline. With reset between depth measurements, the chess
+LOO lift recovers from $+3.1$pp (without reset, on a state-drifted
+substrate) to $+40.6$pp (with reset, far exceeding the $+15$pp
+preregistered floor). The reset protocol is documented in
+\texttt{docs/brain\_mapping/NON\_EQUILIBRIUM\_FINDING.md}; a more
+generalisable lesson is recorded in \S\ref{sec:limitations}: any
+multi-trial benchmark on a non-stationary substrate must specify
+state-reset protocol.
+
+\subsection{Reproducibility commands}
+
+\begin{itemize}\itemsep=2pt
+\item Substrate self-test:
+  \texttt{python3 -c "from kernel.sigma\_orbit\_basis import \_self\_test; \_self\_test()"}.
+\item Six drug/sleep signatures:
+  \texttt{python3 demo\_drug\_sleep\_v4.py} ($\sim 30$\,s).
+\item C$\times$P synergy $N\!=\!20$ deep-dive:
+  \texttt{python3 demo\_p4\_cxp\_deep\_dive.py} ($\sim 28$\,min).
+\item Eighteen preregistered:
+  \texttt{python3 run\_preregistered\_validation.py}
+  ($\sim 18$\,min).
+\item Whole-paper repro:
+  \texttt{bash reproduce\_paper\_claims.sh}.
+\end{itemize}
+
+All scripts are deterministic given seeds. Reruns at seed $42$ on the
+recurrent layer should reproduce per-condition means in this paper to
+4~decimal places. Bootstrap CIs may differ in the 4th decimal due to
+NumPy version differences in the bootstrap RNG; the qualitative
+verdicts (CI overlaps, $P$-value thresholds) are unaffected.

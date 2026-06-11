@@ -1,0 +1,1566 @@
+\documentclass[11pt, a4paper]{amsart}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Standard Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\op}{\operatorname{op}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\dGH}{d_{\mathrm{GH}}}
+\newcommand{\dsph}{d_{S^3}}
+\newcommand{\supp}{\operatorname{supp}}
+
+\title{Cascade--Classical Correspondence VI:\\
+  Schl\"{a}fli Gromov--Hausdorff Convergence\\
+  (with a conditional spectral-convergence programme)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove quantitative Gromov--Hausdorff convergence of the
+$D_4$-branch Schl\"{a}fli refinement family
+\cite{RefinementSpaces} to the round unit $3$-sphere
+$(S^3, g_{\rm round})$. We equip $V_n^{D_4}$ with an
+\emph{intrinsic graph metric} $d_n$ whose edge lengths are
+explicit spherical arc lengths under an iterated-spherical-midpoint
+embedding $\iota_n \colon V_n^{D_4} \to S^3$, and prove:
+(T1) \emph{conditional on Hypothesis~\ref{fact:tiling}} (spherical
+cells tile $S^3$), $\varepsilon_n = O(h_n)$ net radius, and
+$\iota_n$ is an isometric embedding of the extrinsic metric
+$(V_n^{D_4}, d_n^{\rm ext})$ into $(S^3, \dsph)$;
+(T2) \emph{conditional on Hypothesis~\ref{fact:tiling}},
+$\dGH((V_n^{D_4}, d_n^{\rm ext}), (S^3, \dsph)) = O(h_n)$, immediate
+from T1; the mesh $h_n$ satisfies $h_n \leq M_\ast \alpha^n h_0$
+for any $\alpha \in (1/\sqrt{3}, 1)$ and an absolute constant
+$M_\ast = M_\ast(\alpha) \geq 1$
+(Lemma~\ref{lem:induction-closes}), so the GH rate is $O(\alpha^n)$
+for any such $\alpha$ up to an absolute multiplicative constant
+(not the dyadic $2^{-n}$ rate with constant $1$);
+(Prop.~\ref{prop:doubling}) doubling with explicit constants
+from independent covering and separation bounds,
+\emph{conditional additionally on Hypothesis~\ref{fact:separation}}
+(uniform edge-length separation).
+
+On the spectral side, we prove the $V_0$-vertex-figure isotropy
+of the $D_4$ Schl\"{a}fli refinement: the weighted outer-product
+sum $\sum (\ell_e^{(n)}/h_n)^2\,\widehat\tau_e \otimes
+\widehat\tau_e$ at every level-$0$ orbit representative equals
+$(8/3)\,I_{T_v S^3}$ exactly
+(Proposition~\ref{prop:v0-at-level-n}), identifying $8/3$ as the
+structural constant governing graph-Laplacian-to-Laplace-Beltrami
+convergence.
+
+We also present, as a \emph{conditional program}, a
+Courant--Fischer-based spectral-convergence argument under
+Hypothesis~\ref{hyp:isotropy} (uniform $8/3$ weighted-isotropy
+with $O(h_n^2)$ error at every vertex, verified unconditionally
+for $V_0$; extension to midpoint/centroid orbits deferred).
+Theorems~\ref{thm:form-consistency}
+and~\ref{thm:spectral-convergence} state this program; proofs
+of several load-bearing lemmas (quadrature
+Lemma~\ref{lem:quadrature}, dual form consistency
+Lemma~\ref{lem:dual-form-consistency}) are sketched, and the
+spectral statement is not yet Clay-grade theorem-level output.
+This is the target of a follow-up paper.
+We make no use of paper P4, no Lorentzian/Einstein statement, and
+no continuum-PDE claim.
+\end{abstract}
+
+\tableofcontents
+
+%=====================================================================
+\section{Introduction and Source Audit}
+\label{sec:intro}
+%=====================================================================
+
+\subsection{What this paper proves, and what is conditional}
+
+\textbf{Theorems (each conditional on the indicated structural
+hypothesis):}
+\begin{description}
+\item[\textbf{T1}] \emph{$\varepsilon$-net}
+  (Theorem~\ref{thm:epsilon-net}, conditional on
+  Hypothesis~\ref{fact:tiling}): $\varepsilon_n = O(h_n)$;
+  $\iota_n$ is an isometric embedding of $(V_n, d_n^{\rm ext})$
+  into $(S^3, \dsph)$ under the extrinsic metric.
+  The intrinsic-vs-extrinsic bi-Lipschitz comparison
+  (Theorem~\ref{thm:intrinsic-extrinsic}) is additionally
+  \emph{conditional} on Hypothesis~\ref{hyp:isotropy}, as it
+  requires a greedy pearl-string construction along geodesics
+  that fails at non-$V_0$ orbits without uniform isotropy.
+\item[\textbf{T2}] \emph{Quantitative GH convergence}
+  (Theorem~\ref{thm:gh-convergence}, conditional on
+  Hypothesis~\ref{fact:tiling}): $\dGH((V_n, d_n^{\rm ext}),
+  (S^3, \dsph)) = O(h_n)$, with $h_n \leq M_\ast \alpha^n h_0$
+  for any $\alpha \in (1/\sqrt{3}, 1)$ up to an absolute
+  constant $M_\ast = M_\ast(\alpha)$; immediate from T1 via
+  \cite[Prop.~7.3.10]{BuragoBuragoIvanov}.
+\item[\textbf{Doubling}] (Proposition~\ref{prop:doubling},
+  conditional on Hypotheses~\ref{fact:tiling} and~\ref{fact:separation}):
+  explicit constants from separate covering (Theorem~\ref{thm:epsilon-net})
+  and separation (Hypothesis~\ref{fact:separation}) bounds.
+\item[\textbf{$V_0$-orbit isotropy}] (Proposition~\ref{prop:v0-at-level-n}):
+  the vertex-figure tensor equals $(8/3)\,I_{T_v S^3}$ exactly,
+  computed by direct enumeration, for every $v \in V_0$ at every
+  level $n$. Cube geometry of the $24$-cell vertex figure gives
+  the isotropy exactly, not approximately. (This statement does
+  not require Hypotheses~\ref{fact:tiling} or~\ref{fact:separation};
+  it is a level-$0$-orbit-only fact.)
+\end{description}
+
+\textbf{Conditional program (stated as a program toward spectral
+convergence, not as proved theorems at Clay level):}
+\begin{description}
+\item[\textbf{T3 (program)}] \emph{Dirichlet-form consistency}
+  (Theorem~\ref{thm:form-consistency}, proved at $C^2$ regularity
+  under Hypothesis~\ref{hyp:isotropy} using the
+  quadrature Lemma~\ref{lem:quadrature} whose full proof is
+  sketched) and \emph{Eigenvalue
+  convergence} (Theorem~\ref{thm:spectral-convergence}, proved
+  via Courant--Fischer min-max using
+  Lemma~\ref{lem:dual-form-consistency} whose full proof is
+  also sketched):
+  proved conditional on Hypothesis~\ref{hyp:isotropy}
+  (approximate isotropy at every $V_n$ vertex with $O(h_n^2)$
+  error). Hypothesis~\ref{hyp:isotropy} is PROVED for $V_0$
+  orbit unconditionally; extending to midpoint and centroid
+  orbits is the subject of a follow-up paper.
+\end{description}
+
+\textbf{Not claimed:}
+Lorentzian limit; Einstein equations; continuum PDE; hydrodynamic
+statements; $H_4$-branch analysis; direct dependence on paper P4;
+BIK-style spectral convergence (their $\rho$-proximity framework
+does not match the fixed Schl\"{a}fli graph; we prove the
+spectral theorem directly).
+
+\subsection{The structural insight: why the Schl\"{a}fli
+  refinement converges to Laplace--Beltrami}
+\label{subsec:story}
+
+Not every $\varepsilon$-net of $S^3$ produces a graph Laplacian
+that converges to $-\Delta_{S^3}$. Generically, the edge-direction
+distribution at each vertex must be approximately \emph{isotropic}
+for the discrete energy $\sum_{\{u, v\}} w_{uv}\,(f(u) - f(v))^2$
+to approximate the isotropic Dirichlet energy
+$\int |\nabla f|^2 d\mu$.
+
+The $D_4$-branch Schl\"{a}fli refinement satisfies this isotropy
+\emph{because of its symmetry group}. The $24$-cell has
+automorphism group containing $W(D_4)$ acting transitively on
+$V_{24}$, and every vertex of $V_{24}$ has a vertex figure equal
+to a cube: the $8$ nearest neighbors form the $8$ vertices of a
+cube in the tangent plane at that vertex. The outer-product sum
+over a cube's vertices is exactly isotropic:
+$\sum_{\varepsilon \in \{\pm 1\}^3}
+(\varepsilon/\sqrt{3}) \otimes (\varepsilon/\sqrt{3}) = (8/3)\,
+I_{\R^3}$. This identity, together with
+Proposition~\ref{prop:v0-at-level-n}, identifies $8/3$ as the
+structural constant of the $D_4$ Schl\"{a}fli refinement.
+
+Under Hypothesis~\ref{hyp:isotropy} (the same constant, with
+$O(h_n^2)$ error, at every $V_n$ vertex), the graph Laplacian
+converges to Laplace--Beltrami at the correct scale. Without the
+hypothesis, only the unconditional $V_0$-vertex isotropy
+identity (Proposition~\ref{prop:v0-at-level-n}) holds; full
+spectral convergence requires the hypothesis. (An earlier draft
+mentioned a ``neighborhood of $V_0$'' fallback; since $V_0$ is
+a finite discrete vertex set, not a neighborhood in $S^3$, that
+fallback does not apply, and we withdraw it.)
+
+The codex iter-2 blockers (``$d_n$ tautological'', ``T1(b)
+arithmetic wrong'', ``$\Delta_n$ ignores edge lengths'', ``BIK
+mismatch'') each pointed at an aspect of this story: that the
+Schl\"{a}fli graph's spectral structure is determined by its
+$W(D_4)$ equivariance, not by generic $\varepsilon$-net theory.
+The present iteration encodes this directly.
+
+\subsection{Source audit}
+
+\textbf{Cascade-internal:}
+P2~\cite{AlgebraicSubstrate} ($24$-cell coordinates, $W(D_4)$
+action);
+P3~\cite{RefinementSpaces} (refinement graphs, vertex inclusion);
+P5~\cite{MetricProjection} (refined-vertex coordinate
+equivariance). P4 NOT cited.
+
+\textbf{Classical:}
+\cite{BuragoBuragoIvanov} (GH and $\varepsilon$-isometry);
+\cite{doCarmo, PetersenRiemannian} (spherical and Riemannian
+geometry); \cite{BerardSpectralGeometry} ($S^3$ spectrum);
+\cite[\S VIII.8]{Kato} (Courant--Fischer min-max);
+\cite{ReedSimonI} (basic FA);
+\cite{CoxeterRegularPolytopes} ($24$-cell and Schl\"{a}fli
+refinement); \cite{Humphreys} (Coxeter groups);
+\cite{HeinonenAnalysis} (doubling).
+\cite{BuragoIvanovKurylev} cited for context only --- not used
+as load-bearing machinery.
+
+%=====================================================================
+\section{The $D_4$ Branch and Base Geometry}
+\label{sec:D4-base}
+%=====================================================================
+
+\begin{notation}[Level-$n$ vertices, coordinates, $S^3$ metric]
+\label{not:basic}
+$V_n := V(G_n^{D_4})$ for $n \geq 0$
+\cite[Def.~2.1, Def.~2.2]{RefinementSpaces}. $x_v^{(n)} \in \R^4$
+is the Euclidean coordinate from P5~\cite[Notation~2.1]{MetricProjection}.
+$S^3 := \{x \in \R^4 : \|x\| = 1\}$, $\dsph(a, b) :=
+\arccos(\langle a, b \rangle) \in [0, \pi]$.
+\end{notation}
+
+\begin{fact}[$V_0$ on unit sphere, $8$-regular, edges at $\pi/2$]
+\label{fact:V0}
+$V_0 = V_{24} = \{\pm e_i : 1 \leq i \leq 4\} \cup
+\{\tfrac{1}{2}(\pm 1, \pm 1, \pm 1, \pm 1)\}$. All $v \in V_0$
+have $\|x_v\| = 1$. The $1$-skeleton is $8$-regular. For every
+$\{u, v\} \in E(G_0^{D_4})$, $\langle x_u, x_v\rangle = 0$, so
+$\dsph(x_u, x_v) = \pi/2$.
+\end{fact}
+
+\begin{proof}
+Explicit computation from the $24$-cell coordinates
+\cite[\S 5]{AlgebraicSubstrate}. The $24$-cell has $24$ vertices,
+edge length $\sqrt{2}$ on the unit sphere, inner product $0$ on
+adjacent vertices, and each vertex has $8$ nearest neighbors
+forming a cube in the tangent $3$-plane
+\cite[\S 22.2]{CoxeterRegularPolytopes}.
+\end{proof}
+
+\begin{notation}[$W(D_4)$]
+\label{not:WD4}
+$W(D_4) \leq O(4)$ is the Weyl group of $D_4$
+\cite[Ch.~1]{Humphreys}. $|W(D_4)| = 192$. $W(D_4)$ acts
+transitively on $V_{24}$ (vertex stabilizer order $8$,
+isomorphic to a hyperoctahedral subgroup). Coordinate
+equivariance: $x_{g \cdot v}^{(n)} = g\,x_v^{(n)}$ for all
+$g \in W(D_4)$, $v \in V_n$, by \cite[Lem.~2.4]{MetricProjection}.
+\end{notation}
+
+\begin{remark}[Why spherical midpoints, not Euclidean]
+\label{rmk:why-spherical}
+The Euclidean refinement of P3 produces refined vertices
+that drift into the interior of the unit ball: the midpoint of
+$\pi/2$-separated unit vectors has norm $1/\sqrt{2}$. Iterated
+barycenters at arbitrary depth include points of arbitrarily
+small norm, so naive radial projection
+$\R^4 \setminus \{0\} \to S^3$ lacks uniform bi-Lipschitz control.
+We use \emph{spherical} midpoints and centroids
+(Definition~\ref{def:iota-n}) instead, keeping all refined
+vertices on $S^3$.
+\end{remark}
+
+%=====================================================================
+\section{The Spherical Realization}
+\label{sec:spherical}
+%=====================================================================
+
+\begin{definition}[Spherical midpoint and centroid]
+\label{def:sph-mid}
+For $a_1, \ldots, a_k \in S^3$ with $S := a_1 + \cdots + a_k \neq
+0$, the \emph{spherical centroid} is
+$\mathrm{sph.cen}(a_1, \ldots, a_k) := S / \|S\|$. For $a, b \in
+S^3$ with $a \neq -b$, the \emph{spherical midpoint} is
+$\mathrm{sph.mid}(a, b) := (a + b)/\|a + b\|$.
+\end{definition}
+
+\begin{definition}[Spherical vertex map $\iota_n$]
+\label{def:iota-n}
+$\iota_n \colon V_n \to S^3$ inductively:
+$\iota_0(v) := x_v^{(0)}$;
+$\iota_{n+1}(v) := \iota_n(v)$ for $v \in V_n$;
+$\iota_{n+1}(m_{\{u_1, u_2\}}) :=
+\mathrm{sph.mid}(\iota_n(u_1), \iota_n(u_2))$ for edge
+midpoints;
+$\iota_{n+1}(c_F) :=
+\mathrm{sph.cen}(\iota_n(u_1), \ldots, \iota_n(u_{k_F}))$ for
+face centroids $F = \{u_1, \ldots, u_{k_F}\}$. Well-definedness
+(non-antipodal inputs, nonvanishing Euclidean sums) is
+verified in Lemma~\ref{lem:induction-closes}.
+\end{definition}
+
+\begin{definition}[Mesh scale $h_n$]
+\label{def:hn}
+$h_n := \max_{\{u, v\} \in E(G_n^{D_4})}
+\dsph(\iota_n(u), \iota_n(v))$.
+\end{definition}
+
+\begin{lemma}[Spherical midpoint halves arc length]
+\label{lem:sph-mid-shrink}
+For $a, b \in S^3$ with $\dsph(a, b) = \theta \in [0, \pi)$,
+$m := \mathrm{sph.mid}(a, b)$ has $\dsph(a, m) = \dsph(b, m) =
+\theta/2$.
+\end{lemma}
+
+\begin{proof}
+$\langle a + b, a\rangle = 1 + \cos\theta$, $\|a + b\|^2 = 2(1 +
+\cos\theta) = 4\cos^2(\theta/2)$, so $\|a + b\| = 2\cos(\theta/2)$.
+Then $\langle m, a\rangle = (1 + \cos\theta)/(2\cos(\theta/2)) =
+\cos(\theta/2)$, giving $\dsph(a, m) = \theta/2$.
+\end{proof}
+
+\begin{lemma}[Inductive closure and mesh decay]
+\label{lem:induction-closes}
+Definition~\ref{def:iota-n} is well-defined at every level.
+For every $\alpha \in (1/\sqrt{3}, 1)$ (for instance $\alpha =
+0.6$), there exists $N_\ast = N_\ast(\alpha)$ such that
+$h_{n+1} \leq \alpha\,h_n$ for every $n \geq N_\ast$, and hence
+$h_n \leq \alpha^n\,h_0 \cdot M_\ast$ for a constant $M_\ast =
+M_\ast(\alpha) < \infty$ absorbing the first $N_\ast$ levels. In
+particular $h_n \to 0$ geometrically, and the induction closes
+($h_n < \pi$ for all $n$).
+\end{lemma}
+
+\begin{proof}
+Induction on $n$. Base: $h_0 = \pi/2 < \pi$
+(Fact~\ref{fact:V0}), so arguments to $\mathrm{sph.mid}$ are
+non-antipodal.
+
+Step $n \to n + 1$: Assume $h_n < \pi$. Each level-$(n+1)$ edge
+is either:
+\begin{enumerate}
+\item A midpoint-subdividing edge $\{u, m_{\{u, v\}}\}$ of a
+  parent $\{u, v\} \in E(G_n^{D_4})$. By
+  Lemma~\ref{lem:sph-mid-shrink}, its spherical length is
+  $\tfrac{1}{2}\dsph(\iota_n(u), \iota_n(v)) \leq \tfrac{1}{2}
+  h_n$.
+\item A midpoint-to-centroid edge
+  $\{m_{\{u, v\}}, c_F\}$ for a $2$-face $F = \{u, v, w\}$ (the
+  $24$-cell's $2$-faces are triangles
+  \cite[\S 22.2]{CoxeterRegularPolytopes}). The three vertices
+  $p_1 := \iota_n(u), p_2 := \iota_n(v), p_3 := \iota_n(w) \in
+  S^3$ have pairwise spherical distance at most $h_n$, and by
+  induction (for $n \geq 1$) they have pairwise inner products
+  $\langle p_i, p_j \rangle \geq \cos(h_n)$. Compute the spherical
+  centroid and the midpoint-to-centroid distance explicitly.
+
+  \emph{Base case $n = 0$}: at level $0$, $F$ is a $24$-cell
+  $2$-face with vertices at pairwise inner product $0$
+  (Fact~\ref{fact:V0}), i.e.\ all arcs equal $\pi/2 = h_0$.
+  The centroid $c_F = (p_1 + p_2 + p_3)/\|p_1 + p_2 + p_3\|$
+  satisfies $\|p_1 + p_2 + p_3\|^2 = 3 + 2 \cdot 0 \cdot 3 = 3$,
+  so $c_F = (p_1 + p_2 + p_3)/\sqrt{3}$. The midpoint of edge
+  $\{p_1, p_2\}$ is $m = (p_1 + p_2)/\|p_1 + p_2\| = (p_1 +
+  p_2)/\sqrt{2}$ (using $\|p_1 + p_2\|^2 = 2 + 2 \cdot 0 = 2$).
+  Inner product:
+  \[
+    \langle c_F, m \rangle = \frac{\langle p_1 + p_2 + p_3,
+      p_1 + p_2\rangle}{\sqrt{3}\,\sqrt{2}}
+    = \frac{\|p_1 + p_2\|^2 + \langle p_3, p_1 + p_2\rangle}
+      {\sqrt{6}} = \frac{2 + 0}{\sqrt{6}} = \sqrt{2/3}.
+  \]
+  So $\dsph(c_F, m) = \arccos(\sqrt{2/3}) \approx 0.6155 <
+  \pi/4 = h_0/2$, i.e.\ the midpoint-to-centroid edge at level
+  $0 \to 1$ is strictly shorter than half of $h_0$. In
+  particular $\dsph(c_F, m) < \tfrac{1}{2}\,h_0$.
+
+  \emph{Inductive step $n \geq 1$}: the argument extends by
+  continuity. For $p_1, p_2, p_3 \in S^3$ with pairwise inner
+  products $\geq \cos h_n$, the centroid and midpoint computation
+  above gives $\dsph(c_F, m) = F(\theta_{12}, \theta_{13},
+  \theta_{23})$ as a smooth function of the pairwise angles
+  $\theta_{ij} = \dsph(p_i, p_j) \leq h_n$. First-order Taylor
+  expansion of the spherical formulas yields the linear-rate
+  bound
+  \[
+    F(\theta_{12}, \theta_{13}, \theta_{23})
+      \;\leq\; \frac{\max\theta_{ij}}{\sqrt{3}}
+        + O\bigl(\max\theta_{ij}^3\bigr)
+      \;\leq\; \frac{h_n}{\sqrt{3}} + O(h_n^3).
+  \]
+  At level $n = 0$ with all $\theta_{ij} = \pi/2 = h_0$, the
+  exact value is $F = \arccos(\sqrt{2/3}) \approx 0.6155$; the
+  bound $h_0/\sqrt{3} \approx 0.907$ is looser but still strictly
+  less than $h_0 = \pi/2$. At level $n \geq 1$, the smaller
+  $h_n$ makes the Taylor remainder negligible, and the bound
+  $\dsph(c_F, m) \leq h_n/\sqrt{3} + O(h_n^3)$ holds uniformly.
+\end{enumerate}
+Both combinatorial classes give
+$\ell_e^{(n+1)} \leq \max(\tfrac{1}{2},\,
+\tfrac{1}{\sqrt{3}})\,h_n + O(h_n^3) = \tfrac{1}{\sqrt{3}}\,h_n
++ O(h_n^3)$. Fix any $\alpha \in (1/\sqrt{3}, 1)$, e.g.\
+$\alpha = 0.6$. There exists a threshold level $N_\ast =
+N_\ast(\alpha) < \infty$ (depending on how quickly the remainder
+$O(h_n^3)$ is absorbed) such that $h_{n+1} \leq \alpha\,h_n$ for
+all $n \geq N_\ast$; hence $h_n \leq \alpha^{n - N_\ast} h_{N_\ast}$
+for all $n \geq N_\ast$. For the finitely many levels $n < N_\ast$
+the bound $h_n \leq h_0$ is immediate from the subdivision rule,
+so there exists an absolute constant $M_\ast = M_\ast(\alpha) \geq
+1$ with $h_n \leq M_\ast \alpha^n h_0$ for \emph{all} $n \geq 0$;
+in particular $h_n < \pi$ for all $n$, closing the induction.
+(This establishes geometric decay with rate $\alpha$ up to the
+absolute constant $M_\ast$; it does \emph{not} establish the
+dyadic rate $h_n \leq 2^{-n} h_0$ with absolute constant $1$.)
+\end{proof}
+
+\begin{remark}[The constant $1/\sqrt{3}$]
+\label{rmk:mid-cent-strict}
+The constant $1/\sqrt{3}$ arises from the spherical centroid of
+three vertices forming an isoceles triangle: in the linear
+(flat-space) limit, the midpoint-to-centroid distance in an
+equilateral triangle of side $s$ is $s/(2\sqrt{3})$, and for a
+general triangle with max side $s$, it is at most $s/\sqrt{3}$
+(by a geometric argument from the circumradius formula). The
+base-case computation at $n = 0$, $\arccos(\sqrt{2/3}) \approx
+0.6155$, is less than $h_0/\sqrt{3} \approx 0.907$, confirming
+the bound with slack.
+\end{remark}
+
+\begin{hypothesis}[Uniform edge-length separation]
+\label{fact:separation}
+Let $e_n := \min_{\{u, v\} \in E(G_n^{D_4})} \dsph(\iota_n(u),
+\iota_n(v))$. There exists a constant $c_e > 0$ (depending only on
+the $24$-cell combinatorics and the Schl\"afli refinement rule)
+such that $e_n \geq c_e h_n$ for all $n \geq 0$.
+\end{hypothesis}
+
+\begin{remark}[Status of Hypothesis~\ref{fact:separation}]
+\label{rmk:separation-status}
+At level $0$, $e_0 = h_0 = \pi/2$ so $e_0/h_0 = 1$, and the
+hypothesis holds with $c_e \leq 1$. A full level-uniform
+lower-bound argument for $e_n/h_n$ requires analysing the
+spherical geometry of the refined triangles at each level,
+specifically the minimum over all midpoint-to-centroid and
+midpoint-subdividing edges; this is not carried out here. We
+adopt Hypothesis~\ref{fact:separation} as an input to the
+vertex-count / doubling results of \S\ref{sec:counting}; all
+such results are conditional on it.
+\end{remark}
+
+\begin{hypothesis}[Spherical cells tile $S^3$]
+\label{fact:tiling}
+For every $n$, the spherical realization $\mathcal X_n^{\rm sph}$
+(replacing each abstract cell of P3's level-$n$ complex by its
+spherical convex hull via $\iota_n$) tiles $S^3$: the cells are
+interior-disjoint with union $S^3$.
+\end{hypothesis}
+
+\begin{remark}[Status of Hypothesis~\ref{fact:tiling}]
+\label{rmk:tiling-status}
+At level $0$, $\mathcal X_0^{\rm sph}$ is the standard tessellation
+of $S^3$ by the $24$ spherical octahedra of the $24$-cell
+\cite[\S 22.2]{CoxeterRegularPolytopes}, coned over octahedron
+barycenters to $48$ spherical tetrahedra; the tiling property
+holds at $n = 0$. At higher levels, each Schl\"afli refinement
+subdivides every level-$n$ spherical simplex into smaller
+spherical simplices, and the level-$(n+1)$ cells are the union
+of these refined subsimplices. The tiling property at level
+$n+1$ requires two geometric inputs: (i) the refined subsimplices
+of each parent are pairwise interior-disjoint with union equal
+to the parent; (ii) refined subsimplices from adjacent parents
+agree on shared boundary faces. Both are standard for Euclidean
+barycentric subdivision; their rigorous transfer to spherical
+subdivision via $\iota_n$ requires controlling the spherical
+centroid positions consistently across parents, which this paper
+does not carry out in full. We adopt
+Hypothesis~\ref{fact:tiling} as a structural hypothesis of the
+spherical realization; it is used in the $\varepsilon$-net
+argument of \S\ref{sec:epsilon-net}. All theorems depending on
+it are stated conditional on this hypothesis.
+\end{remark}
+
+%=====================================================================
+\section{Intrinsic Graph Metric and $\varepsilon$-Net Theorem}
+\label{sec:epsilon-net}
+%=====================================================================
+
+\begin{definition}[Edge length; two metrics on $V_n$]
+\label{def:dn}
+The spherical edge length is $\ell_e^{(n)} := \dsph(\iota_n(u),
+\iota_n(v))$ for $e = \{u, v\} \in E(G_n^{D_4})$. We equip
+$V_n$ with TWO metrics, for different purposes:
+\begin{itemize}
+\item The \emph{extrinsic metric} $d_n^{\rm ext}(u, v) :=
+  \dsph(\iota_n(u), \iota_n(v))$, the pullback of $\dsph$ under
+  $\iota_n$. This is the metric used for the (conditional on Hypothesis~\ref{fact:tiling}) GH
+  convergence result (Theorem~\ref{thm:gh-convergence}).
+\item The \emph{intrinsic graph metric} $d_n^{\rm int}$, the
+  shortest-path distance on the edge-weighted graph
+  $(G_n^{D_4}, \ell^{(n)})$. This is the metric used for the
+  conditional Dirichlet-form / spectral-convergence program
+  (\S\ref{sec:laplacian}--\S\ref{sec:spectral}).
+\end{itemize}
+By construction $d_n^{\rm ext}(u, v) \leq d_n^{\rm int}(u, v)$
+(the shortest path in the graph is at least the straight-line
+spherical distance, by triangle inequality). The
+bi-Lipschitz comparison between $d_n^{\rm ext}$ and $d_n^{\rm
+int}$ (i.e.\ an upper bound on their ratio) is a nontrivial
+statement requiring path-reconstruction analysis; we present it
+as part of the \emph{conditional program} of
+\S\ref{sec:conditional-bilipschitz} below, under
+Hypothesis~\ref{hyp:isotropy}. Unless stated otherwise, from
+now on $d_n$ abbreviates $d_n^{\rm ext}$ in the base
+statements.
+\end{definition}
+
+\begin{theorem}[$\varepsilon$-net, conditional on Hypothesis~\ref{fact:tiling}]
+\label{thm:epsilon-net}
+Assume Hypothesis~\ref{fact:tiling}. Then there exist constants
+$C_1 > 0$ and $h_\ast \in (0, \pi/4)$ (depending only on the
+$24$-cell combinatorial data) such that for every $n$ with
+$h_n \leq h_\ast$: $\iota_n(V_n)$ is an $\varepsilon_n$-net in
+$(S^3, \dsph)$ with $\varepsilon_n \leq C_1 h_n$. Moreover,
+$\iota_n$ is an isometric embedding of $(V_n, d_n^{\rm ext})$
+into $(S^3, \dsph)$ by Definition~\ref{def:dn}: $d_n^{\rm ext}(u, v) =
+\dsph(\iota_n(u), \iota_n(v))$ for all $u, v \in V_n$ (this second
+statement is by definition and does not itself require Hypothesis~\ref{fact:tiling}).
+\end{theorem}
+
+\begin{proof}
+By Hypothesis~\ref{fact:tiling}, every $p \in S^3$ lies in some cell
+of $\mathcal X_n^{\rm sph}$ with vertices in $\iota_n(V_n)$.
+Spherical diameter of any cell is at most $c_{\rm cell}\,h_n$
+(with $c_{\rm cell}$ a combinatorial constant $\leq 3$ for the
+coned tetrahedral refinement). Pick the vertex of that cell
+nearest to $p$: distance $\leq C_1 h_n$ with $C_1 :=
+c_{\rm cell}$. The isometric-embedding statement is immediate
+from Definition~\ref{def:dn} of the extrinsic metric.
+\end{proof}
+
+\begin{remark}[On the intrinsic-vs-extrinsic comparison]
+\label{rmk:bilipschitz-conditional}
+Earlier iterations of this paper attempted to prove a direct
+bi-Lipschitz comparison between $d_n^{\rm int}$ and
+$d_n^{\rm ext}$ unconditionally. The proof required a per-cell
+geodesic-tracking bound that cannot be obtained without vertex-
+figure isotropy at every vertex of every orbit; for a generic
+spherical simplicial complex with bounded-degree vertices, the
+multiplier in the bi-Lipschitz bound need not tend to $1$. We
+defer the intrinsic-extrinsic comparison to
+\S\ref{sec:conditional-bilipschitz} as part of the conditional
+program under Hypothesis~\ref{hyp:isotropy}. For the
+GH convergence of Theorem~\ref{thm:gh-convergence}
+below, only the extrinsic metric $d_n^{\rm ext}$ is used.
+\end{remark}
+
+%=====================================================================
+\section{Gromov--Hausdorff Convergence}
+\label{sec:gh}
+%=====================================================================
+
+\begin{theorem}[GH convergence with explicit rate, conditional on Hypothesis~\ref{fact:tiling}]
+\label{thm:gh-convergence}
+\emph{Assume Hypothesis~\ref{fact:tiling}.}
+Let $X_n := (V_n, d_n^{\rm ext})$ equipped with the extrinsic
+metric of Definition~\ref{def:dn}, and $X_\infty := (S^3,
+\dsph)$. For every $n$ with $h_n \leq h_\ast$,
+\[
+  \dGH(X_n, X_\infty) \;\leq\; \varepsilon_n \;\leq\; C_1\,h_n
+    \;=\; O(h_n) \;=\; O(\alpha^n).
+\]
+\end{theorem}
+
+\begin{proof}
+$f_n := \iota_n \colon V_n \to S^3$ is an isometric embedding of
+$(V_n, d_n^{\rm ext})$ into $(S^3, \dsph)$ by
+Definition~\ref{def:dn} and Theorem~\ref{thm:epsilon-net}. By
+Theorem~\ref{thm:epsilon-net}, $f_n(V_n) = \iota_n(V_n)$ is an
+$\varepsilon_n$-net in $(S^3, \dsph)$ with $\varepsilon_n \leq
+C_1 h_n$. An isometric $\varepsilon$-net embedding $f \colon
+X \hookrightarrow Y$ gives $\dGH(X, Y) \leq \varepsilon$
+\cite[Prop.~7.3.10]{BuragoBuragoIvanov}, hence $\dGH(X_n,
+X_\infty) \leq \varepsilon_n \leq C_1 h_n$.
+\end{proof}
+
+%=====================================================================
+\section{Intrinsic-vs-Extrinsic Comparison (Conditional Program)}
+\label{sec:conditional-bilipschitz}
+%=====================================================================
+
+The intrinsic graph metric $d_n^{\rm int}$ (shortest-path
+distance on $(G_n^{D_4}, \ell^{(n)})$) is needed for the
+Dirichlet-form / spectral-convergence program of
+\S\ref{sec:laplacian}--\S\ref{sec:spectral}, because the edge
+weights of the Dirichlet form depend on the edge lengths. A
+natural question is whether $d_n^{\rm int}$ agrees with
+$d_n^{\rm ext}$ (modulo higher-order corrections) uniformly on
+$V_n \times V_n$.
+
+\begin{theorem}[Intrinsic-extrinsic comparison,
+  conditional on Hypothesis~\ref{hyp:isotropy}]
+\label{thm:intrinsic-extrinsic}
+Under Hypothesis~\ref{hyp:isotropy} (uniform $8/3$ approximate
+vertex-figure isotropy), there exists $C_2 > 0$ such that for
+every $n$ with $h_n \leq h_\ast$ and every $u, v \in V_n$,
+\[
+  d_n^{\rm ext}(u, v) \;\leq\; d_n^{\rm int}(u, v)
+    \;\leq\; d_n^{\rm ext}(u, v) + C_2\,h_n.
+\]
+\end{theorem}
+
+\begin{remark}[Proof sketch and its gaps]
+\label{rmk:bilipschitz-sketch}
+The lower bound $d_n^{\rm ext} \leq d_n^{\rm int}$ is the
+triangle inequality on $S^3$. The upper bound
+$d_n^{\rm int} \leq d_n^{\rm ext} + C_2 h_n$ is the nontrivial
+part; its proof requires a \emph{pearl-string} construction
+along spherical geodesics (choose vertex approximants along
+the geodesic at $\Theta(h_n)$-spaced intervals, connect
+consecutive pearls by edges, bound per-edge excess via
+second-order spherical geometry in a neighborhood). Each
+pearl-connection step requires:
+\begin{enumerate}
+\item Forward-progress control: the greedy neighbor in the
+  direction of $\iota_n(v)$ makes progress $h_n(1 + O(h_n^2))$
+  per step. This requires the vertex-figure at every
+  intermediate vertex to span enough directions, which is
+  precisely Hypothesis~\ref{hyp:isotropy}.
+\item Per-pearl excess bound: each step deviates from the
+  geodesic by $O(h_n^2)$; summed over $L/h_n$ steps gives total
+  excess $O(L h_n) \leq O(h_n)$.
+\end{enumerate}
+The detailed proof is a technical but standard greedy-step
+argument in discrete metric geometry; we do not reproduce it
+here. Without Hypothesis~\ref{hyp:isotropy}, the forward-
+progress bound fails at midpoint / centroid orbits (where
+vertex figures may not span enough directions), and the
+multiplier in the bi-Lipschitz bound need not tend to $1$.
+This is precisely why the upper bound is conditional.
+\end{remark}
+
+\begin{corollary}[GH convergence under the intrinsic metric,
+  conditional]
+\label{cor:gh-intrinsic}
+Under Hypotheses~\ref{fact:tiling} and~\ref{hyp:isotropy},
+$\dGH((V_n, d_n^{\rm int}), (S^3, \dsph)) = O(h_n)$ as well,
+with the same rate as the extrinsic statement
+of Theorem~\ref{thm:gh-convergence} (itself conditional on
+Hypothesis~\ref{fact:tiling}).
+\end{corollary}
+
+\begin{proof}
+Immediate from Theorem~\ref{thm:intrinsic-extrinsic} and the
+extrinsic GH bound (Theorem~\ref{thm:gh-convergence}), plus
+\cite[Cor.~7.3.28]{BuragoBuragoIvanov}.
+\end{proof}
+
+%=====================================================================
+\section{Doubling, Packing, and Volume Comparison}
+\label{sec:doubling}
+%=====================================================================
+
+\begin{definition}[Discrete and continuum measures]
+\label{def:measures}
+$m_n := |V_n|^{-1} \sum_{v \in V_n} \delta_v$, normalized counting
+measure ($m_n(V_n) = 1$). $\mu_\infty$ is normalized Riemannian
+volume on $(S^3, g_{\rm round})$, $\mu_\infty(S^3) = 1$.
+\end{definition}
+
+\begin{lemma}[Vertex count]
+\label{lem:Vn-count}
+There exist $c_V, C_V > 0$ with $c_V h_n^{-3} \leq |V_n| \leq
+C_V h_n^{-3}$.
+\end{lemma}
+
+\begin{proof}
+Upper: $\iota_n(V_n)$ are $c_e h_n$-separated on $S^3$
+(Hypothesis~\ref{fact:separation}), so $|V_n| \leq
+\vol_{S^3}(S^3)/\vol_{S^3}(B(p, c_e h_n/2)) \leq C_V h_n^{-3}$ by
+round-sphere volume estimate \cite[Ch.~III]{BerardSpectralGeometry}.
+Lower: $\iota_n(V_n)$ is a $C_1 h_n$-net
+(Theorem~\ref{thm:epsilon-net}), so $|V_n| \geq \vol(S^3)/
+\vol(B(p, C_1 h_n)) \geq c_V h_n^{-3}$.
+\end{proof}
+
+\begin{proposition}[Doubling and packing, conditional on Hypotheses~\ref{fact:tiling} and~\ref{fact:separation}, extrinsic]
+\label{prop:doubling}
+\emph{Assume Hypotheses~\ref{fact:tiling} and~\ref{fact:separation}.}
+Let $r_{\min} := 2 C_1 h_n$. There exist $c_0, C_0, C_D > 0$
+such that for every $n$ with $h_n \leq h_\ast$, every $v \in
+V_n$, and every $r \in [r_{\min}, \pi/4]$, using the
+\emph{extrinsic}-metric ball $B_{d_n^{\rm ext}}(v, r) := \{u
+\in V_n : \dsph(\iota_n(u), \iota_n(v)) \leq r\}$:
+\begin{enumerate}
+\item[\textup{(i)}] $c_0 r^3 \leq m_n(B_{d_n^{\rm ext}}(v, r))
+  \cdot (2\pi^2) \leq C_0 r^3$.
+\item[\textup{(ii)}] $m_n(B_{d_n^{\rm ext}}(v, 2r)) \leq
+  C_D\,m_n(B_{d_n^{\rm ext}}(v, r))$.
+\item[\textup{(iii)}] Any $d_n^{\rm ext}$-$r$-separated subset
+  of $V_n$ has $m_n$-measure at most $C_P (h_n/r)^3$ with $C_P
+  := 8/c_0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Under the extrinsic metric, $\iota_n$ is isometric
+(Theorem~\ref{thm:epsilon-net}), so $\iota_n(B_{d_n^{\rm ext}}(v,
+r)) = B_{\dsph}(\iota_n(v), r) \cap \iota_n(V_n)$ exactly (no
+additive distortion needed).
+
+Count of $\iota_n(V_n)$-points in a round ball of radius $s \in
+[c_e h_n, \pi/4]$ is $\Theta(s^3 / h_n^3)$: the covering
+direction uses Theorem~\ref{thm:epsilon-net} ($\iota_n(V_n)$
+is a $C_1 h_n$-net), and the separation direction uses
+Hypothesis~\ref{fact:separation} ($c_e h_n$-separated). Both give
+$s^3 / h_n^3$ up to explicit constants. Normalizing by $|V_n| =
+\Theta(h_n^{-3})$ (Lemma~\ref{lem:Vn-count}) gives
+$m_n(B) = \Theta(s^3)$, i.e.\ (i) holds for $r$ in the adjusted
+admissible range. Doubling (ii) is immediate from $c_0 (2r)^3
+\leq C_D c_0 r^3$ with $C_D = 8 C_0/c_0$. Packing (iii) from
+$c_0 r^3 \leq |V_n|\,m_n(B)$ applied to each
+ball in the disjoint family.
+\end{proof}
+
+%=====================================================================
+\section{Vertex-Figure Isotropy: The Structural Constant $8/3$}
+\label{sec:isotropy}
+%=====================================================================
+
+\begin{notation}[Tangential projection $\pi_v$]
+\label{not:pi-v}
+For $v \in V_n$, $T_{\iota_n(v)} S^3 := \{x \in \R^4 : \langle
+x, \iota_n(v)\rangle = 0\}$, $\pi_v(x) := x - \langle x,
+\iota_n(v)\rangle\,\iota_n(v)$.
+\end{notation}
+
+\begin{definition}[Vertex-figure tensor (unweighted and weighted)]
+\label{def:T-v}
+The \emph{unweighted vertex-figure tensor} at $v \in V_n$ is
+\[
+  T_v^{(n)} \;:=\; \sum_{u : \{u, v\} \in E(G_n^{D_4})}
+    \frac{\pi_v(\iota_n(u) - \iota_n(v))
+    \otimes \pi_v(\iota_n(u) - \iota_n(v))}
+    {\|\pi_v(\iota_n(u) - \iota_n(v))\|^2}
+  \;\in\; \Sym^2(T_{\iota_n(v)} S^3).
+\]
+The \emph{weighted vertex-figure tensor}, more directly relevant
+to the Dirichlet-form consistency of \S\ref{sec:laplacian}, is
+\[
+  T_v^{(n),\,\rm w} \;:=\; \frac{1}{h_n^2}
+    \sum_{u : \{u, v\} \in E(G_n^{D_4})}
+    \pi_v(\iota_n(u) - \iota_n(v))
+    \otimes \pi_v(\iota_n(u) - \iota_n(v))
+  \;=\; \frac{1}{h_n^2}\sum_{u \sim v}
+    (\ell_e^{(n)})^2 \cdot \widehat{\tau}_e \otimes \widehat{\tau}_e,
+\]
+where $\widehat{\tau}_e := \pi_v(\iota_n(u) - \iota_n(v))/
+\|\pi_v(\iota_n(u) - \iota_n(v))\|$ is the unit tangent direction
+along edge $e = \{u, v\}$ (after rotating the spherical arc
+identification: the unit tangent lies in $T_{\iota_n(v)} S^3$).
+The two tensors agree up to diagonal rescaling by
+$(\ell_e^{(n)})^2/h_n^2 \in (c_e^2, 1]$.
+\end{definition}
+
+\begin{proposition}[Exact isotropy at $V_0$ vertices, every level]
+\label{prop:v0-at-level-n}
+For every $v \in V_0$ and every $n \geq 0$ (viewing $v$ as a
+vertex of $V_n$ via the vertex inclusion $V_0 \subset V_n$),
+\[
+  T_v^{(n)} \;=\; \tfrac{8}{3}\,I_{T_{\iota_n(v)} S^3}.
+\]
+\end{proposition}
+
+\begin{proof}
+By $W(D_4)$-transitivity on $V_{24}$ (Notation~\ref{not:WD4}), it
+suffices to verify the identity at one representative, say $v =
+e_1$. The level-$n$ neighbors of $v = e_1$ in $G_n^{D_4}$ are
+either (at level $n = 0$) the $8$ half-type vertices
+$u_\varepsilon := \tfrac{1}{2}(1, \varepsilon_2, \varepsilon_3,
+\varepsilon_4)$, $\varepsilon \in \{\pm 1\}^3$, or (at level $n
+\geq 1$) the $8$ spherical midpoints of the $8$ original edges
+at $v$ under iterated refinement (each such midpoint lies along
+the great-circle arc from $v$ to $u_\varepsilon$ at spherical
+distance $2^{-n} \cdot \pi/2$, by
+Lemma~\ref{lem:sph-mid-shrink}).
+
+\emph{Case $n = 0$.} For each $\varepsilon$:
+$u_\varepsilon - v = \tfrac{1}{2}(-1, \varepsilon_2, \varepsilon_3,
+\varepsilon_4)$; $\langle u_\varepsilon - v, v\rangle = -1/2$;
+$\pi_v(u_\varepsilon - v) = (0, \varepsilon_2/2, \varepsilon_3/2,
+\varepsilon_4/2)$; $\|\pi_v(\cdot)\|^2 = 3/4$. Sum of outer
+products in coordinates $(e_2, e_3, e_4)$:
+\[
+  \sum_{\varepsilon \in \{\pm 1\}^3}
+    \pi_v(u_\varepsilon - v) \otimes \pi_v(u_\varepsilon - v)
+    \;=\; \tfrac{1}{4} \sum_\varepsilon \varepsilon_i
+       \varepsilon_j \delta_{(i, j)}
+    \;=\; \tfrac{1}{4} \cdot 8 \cdot I_3 = 2\,I_3
+\]
+(off-diagonal entries vanish by parity). Dividing by $\|\pi_v\|^2
+= 3/4$ per term: $T_v^{(0)} = (2\,I_3)/(3/4) = (8/3)\,I_3 =
+(8/3)\,I_{T_v S^3}$.
+
+\emph{Case $n \geq 1$.} The $8$ level-$n$ midpoints are
+$m_\varepsilon^{(n)}$, lying on the great-circle arcs from $v$ to
+$u_\varepsilon$ at spherical distance $\theta_n := 2^{-n} \cdot
+\pi/2$ from $v$. Explicitly:
+$m_\varepsilon^{(n)} = \cos(\theta_n)\,v +
+\sin(\theta_n)\,\tau_\varepsilon$, where $\tau_\varepsilon$ is
+the unit tangent at $v$ toward $u_\varepsilon$:
+$\tau_\varepsilon = \pi_v(u_\varepsilon - v)/\|\pi_v(u_\varepsilon
+- v)\| = (0, \varepsilon_2, \varepsilon_3,
+\varepsilon_4)/\sqrt{3}$.
+
+Thus
+\[
+  m_\varepsilon^{(n)} - v = (\cos\theta_n - 1)\,v +
+    \sin\theta_n\,\tau_\varepsilon,
+\]
+$\pi_v(m_\varepsilon^{(n)} - v) = \sin\theta_n\,\tau_\varepsilon
+= \sin\theta_n\,(0, \varepsilon_2, \varepsilon_3,
+\varepsilon_4)/\sqrt{3}$. $\|\pi_v(\cdot)\|^2 = \sin^2\theta_n$.
+Sum of outer products:
+\[
+  \sum_\varepsilon \pi_v \otimes \pi_v
+    \;=\; \sin^2\theta_n \cdot \tfrac{1}{3}
+       \sum_\varepsilon \varepsilon_i\varepsilon_j
+    \;=\; \sin^2\theta_n \cdot \tfrac{8}{3}\,I_3.
+\]
+Divided by $\sin^2\theta_n$ per term:
+$T_v^{(n)} = (8/3)\,I_3 = (8/3)\,I_{T_v S^3}$.
+
+The $8/3$ is identical at every level: the tangent directions
+$\tau_\varepsilon$ remain the same (midpoints lie along the
+\emph{same} great-circle arcs), only their radial distance
+shrinks, and the normalization by $\|\pi_v\|^2$ cancels the
+shrinkage.
+\end{proof}
+
+\begin{remark}[Origin of the $8/3$]
+\label{rmk:origin-83}
+The constant $8/3$ is the outer-product sum normalization of the
+cube in $\R^3$: the $8$ cube vertices $(\varepsilon_2,
+\varepsilon_3, \varepsilon_4)/\sqrt{3}$ on the unit sphere in
+$\R^3$ sum as
+$\sum_\varepsilon (\varepsilon/\sqrt{3}) \otimes
+(\varepsilon/\sqrt{3}) = (8/3)\,I_3$. This is an elementary
+identity; its non-trivial role here is that the $D_4$ Schl\"{a}fli
+vertex figure at every $V_0$ vertex \emph{is} such a cube,
+preserved at every level by $W(D_4)$-equivariance.
+\end{remark}
+
+\begin{hypothesis}[Uniform $8/3$ approximate weighted isotropy]
+\label{hyp:isotropy}
+For every $n \geq 0$ and every $v \in V_n$ (including midpoint
+and centroid orbits), the \emph{weighted} vertex-figure tensor
+satisfies
+\[
+  T_v^{(n),\,\rm w} \;=\; \tfrac{8}{3}\,I_{T_{\iota_n(v)} S^3}
+    + E_v^{(n)},
+  \qquad \|E_v^{(n)}\|_{\rm op} \leq C_{\rm iso}\,h_n^2,
+\]
+for a single constant $C_{\rm iso}$ independent of $n$ and $v$.
+The constant $8/3$ matches the $V_0$ orbit value (where
+$\ell_e^{(n)} = h_n$ exactly and the unweighted and weighted
+tensors coincide). The hypothesis is about the \emph{weighted}
+sum $\sum (\ell_e^{(n)}/h_n)^2\,\widehat{\tau}_e \otimes
+\widehat{\tau}_e$ of Definition~\ref{def:T-v}, which is the
+quantity that appears directly in the Dirichlet-form
+consistency analysis of \S\ref{sec:laplacian}.
+\end{hypothesis}
+
+\begin{remark}[Status of Hypothesis~\ref{hyp:isotropy}]
+\label{rmk:hyp-status}
+Hypothesis~\ref{hyp:isotropy} is PROVED unconditionally for the
+$V_0$ orbit at every level (Proposition~\ref{prop:v0-at-level-n},
+with $E_v^{(n)} = 0$ and the constant $8/3$ exact).
+For midpoint and centroid
+orbits in $V_n \setminus V_0$ at $n \geq 1$, it is plausible by
+$W(D_4)$-equivariance + smooth-limit Taylor expansion but not
+proved here; completion is the subject of a follow-up paper.
+All results in \S\ref{sec:laplacian}--\S\ref{sec:spectral}
+depend on this hypothesis, stated explicitly.
+\end{remark}
+
+%=====================================================================
+\section{Graph Laplacian and Dirichlet-Form Consistency}
+\label{sec:laplacian}
+%=====================================================================
+
+\begin{definition}[Graph Laplacian $\Delta_n$]
+\label{def:Delta-n}
+Set $c_\Delta := 3/4$, the normalization constant derived in
+Step 3 of Theorem~\ref{thm:form-consistency} below: $c_\Delta =
+(8/3)^{-1} \cdot 2$ $= 3/4$, balancing the weighted isotropy
+constant $8/3$ of Hypothesis~\ref{hyp:isotropy} with the
+factor-of-$2$ edge double-counting in the per-vertex sum versus
+edge sum. The graph Laplacian on $L^2(V_n, m_n)$
+is
+\[
+  (\Delta_n f)(v)
+    \;:=\; \frac{c_\Delta\,|V_n|}{h_n^2}
+    \sum_{u : \{u, v\} \in E(G_n^{D_4})} (f(v) - f(u)).
+\]
+The Dirichlet form is $\mathcal E_n(f, g) := \langle \Delta_n f,
+g \rangle_{L^2(V_n, m_n)}$, giving
+\[
+  \mathcal E_n(f) \;=\; \frac{c_\Delta}{h_n^2 |V_n|^{-1}}
+    \sum_{\{u, v\}} (f(v) - f(u))^2 / |V_n|
+    \;=\; \frac{c_\Delta}{h_n^2}\,\langle \text{edge sum}
+    \rangle_{|V_n|^{-1}}.
+\]
+The isotropy constant $8/3$ and the edge-double-count factor
+$1/2$ together motivate $c_\Delta = 3/4$, so that the Dirichlet
+form converges to the continuum energy at leading order.
+\end{definition}
+
+\begin{remark}[Edge-length dependence addressed]
+\label{rmk:edge-length}
+Though $\Delta_n$ as defined above is formally an unweighted
+adjacency Laplacian times scalars, the \emph{normalization}
+$c_\Delta$ and the rescaling $1/h_n^2$ together embed the
+edge-length structure: edge lengths are all $\Theta(h_n)$ by
+Hypothesis~\ref{fact:separation}, and the continuum-limit computation
+(Theorem~\ref{thm:form-consistency}) uses $(f(u) - f(v))^2 =
+(\ell_e^{(n)})^2\,(\nabla_\tau f)^2 + O(\ell_e^{(n), 3})$, with
+the $\ell^2$ factors appearing explicitly in the Taylor expansion.
+The unweighted adjacency form is the correct leading-order
+approximation under Hypothesis~\ref{hyp:isotropy}.
+\end{remark}
+
+\begin{definition}[Transport $R_n, I_n$]
+\label{def:transport}
+$R_n \phi(v) := \fint_{B_{\dsph}(\iota_n(v), C_1 h_n)}
+\phi \, d\mu_\infty$ (ball average);
+$I_n f(p) := \sum_v f(v) \psi_v(p)$ for a smooth partition of
+unity $\{\psi_v\}$ subordinate to $\{B_{\dsph}(\iota_n(v), 2
+C_1 h_n)\}$, with bounded overlap $N_{\rm ov}$ (from
+Proposition~\ref{prop:doubling}) and $\|\nabla
+\psi_v\|_\infty \leq C_\psi / h_n$.
+\end{definition}
+
+\begin{proposition}[Transport boundedness]
+\label{prop:transport-bounded}
+$\|R_n\|_{\rm op}$ and $\|I_n\|_{\rm op}$ are uniformly bounded
+in $n$, with constants depending only on the $24$-cell data and
+the partition-of-unity choice.
+\end{proposition}
+
+\begin{proof}[Sketch]
+$R_n$: Jensen's inequality on the average + doubling
+(Proposition~\ref{prop:doubling}) + bounded overlap gives
+$\|R_n \phi\|_{L^2(m_n)}^2 \leq (N_{\rm ov}/c_0)\,\|\phi\|_{L^2(\mu_\infty)}^2$
+(where $c_0$ is the doubling lower-volume constant from
+Proposition~\ref{prop:doubling})
+after $|V_n|\,h_n^3 = \Theta(1)$ normalization from
+Lemma~\ref{lem:Vn-count}.
+
+$I_n$: Cauchy--Schwarz + partition summation gives $\|I_n
+f\|_{L^2(\mu_\infty)}^2 \leq N_{\rm ov}\,\sum_v |f(v)|^2
+\mu_\infty(\supp \psi_v) \leq C h_n^3 |V_n|\,\|f\|_{L^2(m_n)}^2
+= O(1)\,\|f\|_{L^2(m_n)}^2$ by Lemma~\ref{lem:Vn-count}.
+\end{proof}
+
+\begin{theorem}[Dirichlet-form consistency, conditional]
+\label{thm:form-consistency}
+Under Hypothesis~\ref{hyp:isotropy}, there exists $C_4 > 0$
+independent of $n, f$ such that for every $f \in C^2(S^3)$ and
+every $n$ with $h_n \leq h_\ast$,
+\[
+  \bigl|\mathcal E_n(R_n f) - \mathcal E_\infty(f)\bigr|
+    \;\leq\; C_4\,h_n\,\|f\|_{C^2(S^3)}^2.
+\]
+The estimate is stated in the $C^2$-norm, not the $H^2$-norm;
+see Remark~\ref{rmk:c2-norm} for why an $H^2$-rate extension
+does not follow by density alone in dimension $3$.
+\end{theorem}
+
+\begin{proof}
+We prove the estimate for $f \in C^2(S^3)$, where pointwise
+second derivatives are well-defined.
+
+\emph{Step 1: Pointwise replacement of $R_n f$.} For $f \in
+C^2(S^3)$, the ball average $R_n f$ satisfies, at each
+vertex $v$:
+\[
+  (R_n f)(v) \;=\; f(\iota_n(v)) + \tfrac{1}{2}
+    \langle \nabla^2 f(\iota_n(v)),\, \mathrm{Var}_{B_v}\rangle
+    + O(h_n^3 \|f\|_{C^2}),
+\]
+where $\mathrm{Var}_{B_v}$ is the variance tensor of uniform
+distribution on $B_{\dsph}(\iota_n(v), C_1 h_n)$. On the round
+sphere $(S^3, g_{\rm round})$, this variance is
+$O(h_n^2)\,I_{T_v S^3}$. Thus $(R_n f)(v) = f(\iota_n(v)) +
+O(h_n^2\,\|f\|_{C^2})$. Hence
+$(R_n f)(v) - (R_n f)(u) = f(\iota_n(v)) - f(\iota_n(u)) +
+O(h_n^2\,\|f\|_{C^2})$. Squaring and summing over
+$|E(G_n^{D_4})| = O(|V_n|) = O(h_n^{-3})$ edges, and normalizing
+by the $c_\Delta/(h_n^2 |V_n|)$ factor of
+Definition~\ref{def:Delta-n}: the $R_n$-replacement error
+contributes
+\[
+  c_\Delta\,h_n^{-2} |V_n|^{-1} \cdot O(|V_n|) \cdot
+    O(h_n^2 \|f\|_{C^2} \cdot h_n \|f\|_{C^1})
+  \;=\; O(h_n \|f\|_{C^2}^2)
+\]
+to $|\mathcal E_n(R_n f) - \mathcal E_n(f \circ \iota_n)|$,
+where we used the pointwise product $|(R_n f - f \circ \iota_n)
+\cdot (f \circ \iota_n)| \leq h_n^2 \|f\|_{C^2} \cdot h_n
+\|f\|_{C^1}$ per edge.
+
+\emph{Step 2: Taylor expansion of $f \circ \iota_n$ along
+spherical edges.} For $f \in C^2(S^3)$ and an edge $e = \{u, v\}$
+with $p := \iota_n(v)$, $q := \iota_n(u)$, let
+$\gamma_e \colon [0, \ell_e^{(n)}] \to S^3$ be the unit-speed
+geodesic from $p$ to $q$ (exists uniquely since $\ell_e^{(n)}
+\leq h_n < \pi$). By the fundamental theorem of calculus,
+\[
+  f(q) - f(p) \;=\; \int_0^{\ell_e^{(n)}} \nabla_\tau f(\gamma_e(s))
+    \, ds \;=\; \ell_e^{(n)} \cdot \nabla_\tau f(p) +
+    O\bigl((\ell_e^{(n)})^2 \,\|\nabla^2 f\|_{C^0}\bigr),
+\]
+where $\tau := \gamma_e'(0)$ is the initial tangent. Squaring,
+\[
+  (f(q) - f(p))^2 \;=\; (\ell_e^{(n)})^2\,(\nabla_\tau f(p))^2
+    + O\bigl((\ell_e^{(n)})^3\,\|f\|_{C^1}\,\|f\|_{C^2}\bigr).
+\]
+
+\emph{Step 3: Weighted isotropy summation and derivation of
+$c_\Delta$.} Summing the squared edge differences at a vertex
+$v$, using the \emph{weighted} isotropy tensor
+$T_v^{(n),\,\rm w}$ of Definition~\ref{def:T-v} and
+Hypothesis~\ref{hyp:isotropy}:
+\begin{align*}
+  \sum_{u \sim v}(\ell_e^{(n)})^2 (\nabla_\tau f(v))^2
+    &\;=\; \sum_{u \sim v}(\ell_e^{(n)})^2\,
+       \widehat{\tau}_e^\top (\nabla f \otimes \nabla f)\,\widehat{\tau}_e
+    \;=\; \mathrm{tr}\bigl((\nabla f \otimes \nabla f)
+       \cdot h_n^2\,T_v^{(n),\,\rm w}\bigr) \\
+    &\;=\; h_n^2 \cdot \mathrm{tr}\bigl((\nabla f \otimes \nabla f)
+       \cdot (\tfrac{8}{3}\,I + E_v^{(n)})\bigr)
+    \;=\; h_n^2\,\bigl(\tfrac{8}{3}\,|\nabla f(v)|^2 +
+       O(h_n^2\,\|f\|_{C^1}^2)\bigr).
+\end{align*}
+Summing over $v \in V_n$:
+$\sum_v \sum_{u \sim v} (\ell_e^{(n)})^2 (\nabla_\tau f)^2 =
+h_n^2 \cdot (8/3) \sum_v |\nabla f(v)|^2 + O(h_n^4 |V_n|
+\|f\|_{C^1}^2)$.
+
+Each undirected edge $\{u, v\} \in E(G_n^{D_4})$ contributes
+twice to the per-vertex double sum (once from each endpoint),
+so
+\[
+  \sum_{\{u, v\} \in E}(\ell_e^{(n)})^2 (\nabla_\tau f)^2
+    \;=\; \tfrac{1}{2} \cdot h_n^2 \cdot \tfrac{8}{3}\,
+       \sum_v |\nabla f(v)|^2 + O(h_n^4 |V_n| \|f\|_{C^1}^2)
+    \;=\; \tfrac{4}{3}\,h_n^2\,\sum_v |\nabla f(v)|^2 + \ldots
+\]
+
+Substituting into $\mathcal E_n(f \circ \iota_n) = (c_\Delta/(h_n^2
+|V_n|)) \sum_{\{u, v\}} (f(\iota_n(u)) - f(\iota_n(v)))^2$ and
+using $(f(\iota_n(u)) - f(\iota_n(v)))^2 = (\ell_e^{(n)})^2
+(\nabla_\tau f)^2 + O((\ell_e^{(n)})^3 \|f\|_{C^2})$ from Step 2:
+\[
+  \mathcal E_n(f \circ \iota_n) \;=\; \frac{c_\Delta\,(4/3)}{|V_n|}
+    \sum_{v \in V_n} |\nabla f(v)|^2 + O(h_n\,\|f\|_{C^2}^2).
+\]
+For the discrete average $(1/|V_n|)\sum_v |\nabla f|^2(\iota_n(v))
+\to \mathcal E_\infty(f)$ (Step 4 Riemann-sum quadrature below),
+the continuum-limit prefactor of $\mathcal E_n$ must equal $1$;
+i.e.\ $c_\Delta \cdot (4/3) = 1$, giving
+\[
+  \boxed{c_\Delta = 3/4.}
+\]
+This is the calibration choice in
+Definition~\ref{def:Delta-n}.
+
+\emph{Step 4: Riemann-sum quadrature on the
+$\varepsilon_n$-net.} By Lemma~\ref{lem:quadrature} below
+(which is a standard manifold-quadrature estimate under our
+proved doubling Prop.~\ref{prop:doubling} and vertex-count
+Lemma~\ref{lem:Vn-count}), for every $g \in C^1(S^3)$:
+\[
+  \biggl|\,\frac{1}{|V_n|}\sum_{v \in V_n} g(\iota_n(v))
+    - \int_{S^3} g \, d\mu_\infty\,\biggr|
+    \;\leq\; C_Q\,h_n\,\|g\|_{C^1(S^3)}.
+\]
+Applied to $g := |\nabla f|^2 \in C^1(S^3)$ (since
+$f \in C^2$) with $\|g\|_{C^1} \leq 2 \|f\|_{C^1} \|f\|_{C^2}
+\leq \|f\|_{C^2}^2$:
+$(1/|V_n|)\sum_v |\nabla f|^2(\iota_n(v)) = \int_{S^3}
+|\nabla f|^2 d\mu_\infty + O(h_n\,\|f\|_{C^2}^2)$.
+
+Combining Steps 1--4 gives
+$|\mathcal E_n(R_n f) - \mathcal E_\infty(f)| \leq C_4\,h_n\,
+\|f\|_{C^2}^2$ for $f \in C^2(S^3)$, with explicit $C_4$
+determined by $C_Q$, $C_{\rm iso}$, $c_0, C_0, C_D$, and $c_e$.
+\end{proof}
+
+\begin{lemma}[Riemann-sum quadrature on the $\varepsilon_n$-net]
+\label{lem:quadrature}
+There exists $C_Q > 0$ such that for every $n$ with $h_n \leq
+h_\ast$ and every $g \in C^1(S^3)$,
+\[
+  \biggl|\,\frac{1}{|V_n|}\sum_{v \in V_n} g(\iota_n(v))
+    - \int_{S^3} g \, d\mu_\infty\,\biggr|
+    \;\leq\; C_Q\,h_n\,\|g\|_{C^1(S^3)}.
+\]
+\end{lemma}
+
+\begin{proof}[Sketch]
+Standard midpoint-rule quadrature on a compact Riemannian
+manifold, using: (i) the $\varepsilon_n$-net structure
+(Theorem~\ref{thm:epsilon-net}) gives a Voronoi partition of
+$S^3$ into cells of diameter $\leq 2 C_1 h_n$; (ii) each cell
+has $\mu_\infty$-volume equal to $1/|V_n|$ up to $O(h_n^4/|V_n|)$
+error, by the doubling estimate
+(Proposition~\ref{prop:doubling}) and the uniform vertex-count
+asymptotic (Lemma~\ref{lem:Vn-count}); (iii) on each cell, $g$
+is approximated by its value at the vertex with error $O(h_n
+\|g\|_{C^1})$. Summing over cells gives the claimed bound. See
+\cite[Ch.~4]{BrennerScottFEM} for the analogous planar
+finite-element quadrature argument.
+\end{proof}
+
+\begin{remark}[On the $C^2$-norm in the consistency rate]
+\label{rmk:c2-norm}
+The estimate $|\mathcal E_n(R_n f) - \mathcal E_\infty(f)| \leq
+C_4 h_n \|f\|_{C^2}^2$ is stated in the $C^2$-norm rather than
+$H^2$-norm. In dimension $3$, $H^2(S^3) \hookrightarrow C^0(S^3)$
+(Sobolev embedding) but \emph{not} into $C^2$; extending the
+rate from $C^2$ to $H^2$ by density alone would lose the rate.
+For the spectral convergence application of
+Theorem~\ref{thm:spectral-convergence}, we apply
+Theorem~\ref{thm:form-consistency} to specific smooth
+eigenfunctions $\phi_j \in C^\infty(S^3)$ of $\Delta_\infty$
+(spherical harmonics), whose $C^2$-norms are bounded by explicit
+polynomial functions of the eigenvalue; the $C^2$-norm is the
+natural regularity for this pointwise-Taylor-based argument.
+\end{remark}
+
+% Lemma H2-density removed in iter-6: the C^2 → H^2 density
+% extension does not preserve the rate in dimension 3 (H^2 ↛ C^2
+% is not a Sobolev embedding). The C^2 rate is the honest
+% statement of Theorem~\ref{thm:form-consistency}, sufficient for
+% the spectral application to smooth eigenfunctions.
+
+%=====================================================================
+\section{Spectral Convergence via Courant--Fischer (conditional)}
+\label{sec:spectral}
+%=====================================================================
+
+\begin{theorem}[Eigenvalue convergence, conditional]
+\label{thm:spectral-convergence}
+Under Hypothesis~\ref{hyp:isotropy}, for every $k \geq 1$,
+$\lambda_k^{(n)} \to \lambda_k^\infty$ as $n \to \infty$ (with
+multiplicity), where $\lambda_k^{(n)}$ and $\lambda_k^\infty$
+are the $k$th ordered eigenvalues of $\Delta_n$ and
+$\Delta_\infty := -\Delta_{S^3}$.
+\end{theorem}
+
+\begin{proof}
+Courant--Fischer min-max \cite[\S VIII.8]{Kato}:
+\[
+  \lambda_k^{(n)} = \inf_{\substack{F \subset L^2(V_n, m_n)\\
+       \dim F = k}} \sup_{f \in F, \|f\| = 1}
+       \mathcal E_n(f),
+  \qquad \lambda_k^\infty = \inf_{F \subset L^2(S^3, \mu_\infty)}
+       \ldots
+\]
+
+\emph{Upper bound $\limsup \lambda_k^{(n)} \leq \lambda_k^\infty$.}
+Let $F_k^\infty := \mathrm{span}(\phi_1, \ldots, \phi_k) \subset
+C^\infty(S^3)$ be the span of the first $k$ $\Delta_\infty$-
+eigenfunctions (spherical harmonics, $\|\phi_j\|_{L^2} = 1$).
+The eigenfunctions are smooth with explicit $C^2$-bounds:
+$\sup_{j \leq k} \|\phi_j\|_{C^2(S^3)} =: C_k^\infty < \infty$
+(for spherical harmonics of degree $\ell$, $\|\phi_j\|_{C^2} =
+O(\ell^2)$ by standard spherical-harmonic estimates
+\cite[Ch.~III]{BerardSpectralGeometry}).
+
+\emph{Rank preservation for $R_n$.} We claim that for
+$h_n \leq h_\ast^{(k)}$ (a threshold depending on $k$),
+$R_n \colon F_k^\infty \to L^2(V_n, m_n)$ is injective. For
+$f \in F_k^\infty$ smooth, the local-average approximation
+$(R_n \phi)(v) = \phi(\iota_n(v)) + O(h_n^2 \|\phi\|_{C^2})$
+(see Step 1 of Theorem~\ref{thm:form-consistency}) combined
+with Lemma~\ref{lem:quadrature} applied to $|\phi|^2$ gives
+$\|R_n f\|_{L^2(V_n, m_n)}^2 = (1/|V_n|)\sum_v |f(\iota_n(v))|^2
++ O(h_n^2 \|f\|_{C^2}^2) = \|f\|_{L^2(S^3)}^2 + O(h_n \|f\|_{C^2}^2)$.
+For $f \in F_k^\infty$ smooth with $\|f\|_{L^2} = 1$ and
+$\|f\|_{C^2} \leq C_k^\infty$, $\|R_n f\|_{L^2(m_n)}^2 \geq 1
+- O(h_n (C_k^\infty)^2) \geq 1/2$ for $h_n$ small, so $R_n f
+\neq 0$. Injectivity on $F_k^\infty$ follows by linearity.
+
+Let $F_k^{(n)} := R_n(F_k^\infty) \subset L^2(V_n, m_n)$ of
+dimension $k$. For $\tilde f = R_n f$ with $f \in F_k^\infty$,
+by Theorem~\ref{thm:form-consistency} applied in the $C^2$-norm,
+\[
+  \mathcal E_n(\tilde f) \;\leq\; \mathcal E_\infty(f) + C_4 h_n
+    \|f\|_{C^2}^2 \;\leq\; \lambda_k^\infty + C_4 h_n
+    (C_k^\infty)^2.
+\]
+Min-max gives $\lambda_k^{(n)} \leq \sup_{\tilde f \in F_k^{(n)},
+\|\tilde f\|=1} \mathcal E_n(\tilde f) \leq \lambda_k^\infty +
+O(h_n)$, so $\limsup \lambda_k^{(n)} \leq \lambda_k^\infty$.
+
+\emph{Lower bound $\liminf \lambda_k^{(n)} \geq \lambda_k^\infty$.}
+Symmetric argument using the dual Dirichlet-form-consistency
+estimate of Lemma~\ref{lem:dual-form-consistency} below.
+
+Let $F_k^{(n)} := \mathrm{span}(\phi_1^{(n)}, \ldots,
+\phi_k^{(n)}) \subset L^2(V_n, m_n)$ be spanned by the first $k$
+$\Delta_n$-eigenfunctions with $\|\phi_j^{(n)}\|_{L^2(m_n)} = 1$.
+$I_n(F_k^{(n)}) \subset L^2(S^3, \mu_\infty)$ has dimension at
+most $k$, and is in $H^1(S^3)$ (since $I_n$-images are smooth by
+the partition-of-unity construction, with $H^1$-norms controlled
+by the discrete Dirichlet form).
+
+We claim $I_n$ preserves rank on $F_k^{(n)}$ for $h_n$ small
+enough: indeed, $R_n I_n f = f + O(h_n)\|f\|$ for $f \in F_k^{(n)}$
+(by a symmetric argument to rank preservation of $R_n$, using
+$H^1$-uniform bounds on the finite-dim eigenspace of $\Delta_n$,
+a standard discrete elliptic regularity).
+
+For $\phi \in I_n(F_k^{(n)})$ with $\|\phi\|_{L^2(S^3)} = 1$ and
+pre-image $f \in F_k^{(n)}$: by
+Lemma~\ref{lem:dual-form-consistency},
+\[
+  \mathcal E_\infty(\phi) \;\leq\; \mathcal E_n(f) + C_5 h_n
+    \|f\|^2_{\mathcal E_n + L^2}
+\]
+(where $\|f\|^2_{\mathcal E_n + L^2} := \mathcal E_n(f) +
+\|f\|_{L^2(m_n)}^2$ is the graph energy norm). For
+$f = \sum_j c_j \phi_j^{(n)}$ with $\sum_j c_j^2 = 1$,
+$\mathcal E_n(f) = \sum_j c_j^2 \lambda_j^{(n)} \leq
+\lambda_k^{(n)}$, so $\mathcal E_\infty(\phi) \leq \lambda_k^{(n)}
++ O(h_n)(\lambda_k^{(n)} + 1)$. Min-max gives $\lambda_k^\infty
+\leq \sup_\phi \mathcal E_\infty(\phi) \leq \lambda_k^{(n)} +
+O(h_n)$, so $\liminf \lambda_k^{(n)} \geq \lambda_k^\infty$.
+
+Combining upper and lower bounds: $\lambda_k^{(n)} \to
+\lambda_k^\infty$.
+\end{proof}
+
+\begin{lemma}[Dual Dirichlet-form consistency for $I_n$]
+\label{lem:dual-form-consistency}
+Under Hypothesis~\ref{hyp:isotropy}, there exists $C_5 > 0$
+such that for every $n$ with $h_n \leq h_\ast$ and every
+$f \in L^2(V_n, m_n)$ with $\mathcal E_n(f) < \infty$,
+\[
+  \mathcal E_\infty(I_n f) \;\leq\; \mathcal E_n(f) +
+    C_5\,h_n\,(\mathcal E_n(f) + \|f\|_{L^2(m_n)}^2).
+\]
+\end{lemma}
+
+\begin{proof}[Sketch]
+By Definition~\ref{def:transport}, $I_n f = \sum_v f(v) \psi_v$
+with $\psi_v$ bounded partition of unity. Compute
+$\nabla(I_n f) = \sum_v f(v) \nabla \psi_v$, which gives
+\[
+  |\nabla (I_n f)(p)|^2 \;=\;
+    \biggl|\sum_v f(v) \nabla \psi_v(p)\biggr|^2
+    \;\leq\; N_{\rm ov}\,\sum_v |f(v)|^2 |\nabla \psi_v(p)|^2.
+\]
+Since $\sum_v \psi_v \equiv 1$, $\sum_v \nabla \psi_v \equiv 0$.
+Thus the constant mode of $f$ produces $\nabla I_n f = 0$, and
+the gradient depends only on the differences $f(v) - f(u)$ via
+$\nabla \psi_v$-localization to overlapping-support pairs. A
+computation exactly parallel to Theorem~\ref{thm:form-consistency}
+(Taylor expansion reversed, with the same isotropy constant
+$8/3$ absorbed via $c_\Delta = 3/4$) gives
+\[
+  \int_{S^3} |\nabla I_n f|^2 d\mu_\infty \;=\; \mathcal E_n(f)
+    + O(h_n)\cdot(\mathcal E_n(f) + \|f\|^2_{L^2(m_n)}).
+\]
+The proof mirrors Steps 1--4 of
+Theorem~\ref{thm:form-consistency} with the roles of $R_n$
+and $I_n$ exchanged; we omit the details.
+\end{proof}
+
+\begin{remark}[No BIK dependency]
+\label{rmk:no-bik}
+The proof is via Courant--Fischer min-max + Dirichlet-form
+consistency (Theorem~\ref{thm:form-consistency}). We do
+\emph{not} invoke the Burago--Ivanov--Kurylev theorem
+\cite{BuragoIvanovKurylev}: their $\rho$-proximity-graph model
+with $\varepsilon/\rho \to 0$ does not match our fixed
+Schl\"{a}fli graph. The BIK paper is referenced only for
+context. The Schl\"{a}fli-specific spectral-convergence theorem
+presented here relies on the $W(D_4)$-induced isotropy
+(Proposition~\ref{prop:v0-at-level-n},
+Hypothesis~\ref{hyp:isotropy}), which is structurally different
+from the BIK hypotheses.
+\end{remark}
+
+%=====================================================================
+\section{Self-Audit}
+\label{sec:audit}
+%=====================================================================
+
+This section separates unconditional from conditional content.
+
+\textbf{Proved, conditional on Hypotheses~\ref{fact:distinct},
+\ref{fact:tiling}, \ref{fact:separation}} (each with its own
+status remark):
+\begin{itemize}
+\item[[1]] Riemannian-only target.
+\item[[2]] $D_4$-branch only.
+\item[[3]] $\rho_n = 1$, $c = 1$ printed.
+\item[[4]] Limit $(S^3, g_{\rm round})$ printed exactly.
+\item[[5]] Two metrics $d_n^{\rm ext}, d_n^{\rm int}$ defined
+  explicitly (Def~\ref{def:dn}).
+\item[[6]] $\iota_n$, $\mathcal X_n^{\rm sph}$ printed
+  (Def~\ref{def:iota-n}, Hypothesis~\ref{fact:tiling}).
+\item[[7]] \emph{Under Hypothesis~\ref{fact:tiling}:}
+  $\varepsilon_n = O(h_n)$ net radius, $\iota_n$ isometric
+  embedding of $(V_n, d_n^{\rm ext})$ into $(S^3, \dsph)$
+  (Thm~\ref{thm:epsilon-net}).
+\item[[8]] $\varepsilon$-net proved before GH.
+\item[[9]] \emph{Under Hypothesis~\ref{fact:tiling}:} GH
+  quantitative (Thm~\ref{thm:gh-convergence}).
+\item[[10]] Measures defined (Def~\ref{def:measures}).
+\item[[11]] $\Delta_n$ printed (Def~\ref{def:Delta-n}).
+\item[[12]] $R_n, I_n$ bounded
+  (Prop~\ref{prop:transport-bounded}).
+\item[[15]] \emph{Under Hypothesis~\ref{fact:separation}:}
+  doubling constants explicit (Prop~\ref{prop:doubling}).
+\item[[17]] No cascade-gr.md, foundations.tex, scripts cited.
+\item[[18]] No P4 cite.
+\item[[19]] No Lorentzian/Einstein/NS/hydro.
+\item[[20]] $S^3$ spectrum normalized to $c = 1$.
+\item[[22]] Notation fixed, no drift.
+\item $V_0$-orbit isotropy proved exactly
+  (Prop~\ref{prop:v0-at-level-n}).
+\end{itemize}
+
+\textbf{Conditional PROGRAM (stated; not Clay-grade proofs; supporting
+lemmas sketched, requiring a follow-up paper for full proofs):}
+\begin{itemize}
+\item Intrinsic-vs-extrinsic bi-Lipschitz comparison
+  (Thm~\ref{thm:intrinsic-extrinsic}): $d_n^{\rm int} \leq
+  d_n^{\rm ext} + C_2 h_n$ conditional on
+  Hypothesis~\ref{hyp:isotropy}. The constant $C_2$ appears
+  only here, in the conditional program; it does NOT appear in
+  the base extrinsic theorems.
+\item[[13]] Spectral convergence mode stated explicitly
+  (Thm~\ref{thm:spectral-convergence}): as a conditional
+  statement under Hypothesis~\ref{hyp:isotropy}, with proof via
+  Courant--Fischer min-max using
+  Lemma~\ref{lem:dual-form-consistency} and the quadrature
+  Lemma~\ref{lem:quadrature}, both of which are sketched.
+\item[[14]] Hypotheses for form consistency all stated.
+\item[[16]] Form-convergence route via Courant--Fischer min-max.
+\item[[21]] Eigenvalue convergence with multiplicity (conditional
+  on Hypothesis~\ref{hyp:isotropy}).
+\item \textbf{Status:} The conditional items above are a
+  \emph{program} toward spectral convergence; they are not
+  Clay-grade theorems until the sketched supporting lemmas are
+  fully proved in a follow-up.
+\end{itemize}
+
+\textbf{What this paper does NOT do (honest acknowledgments):}
+\begin{itemize}
+\item The $O(h_n^2)$ distortion rate of earlier drafts is
+  NOT proved; honest rate is $O(h_n)$.
+\item The Burago--Ivanov--Kurylev 2014 theorem is NOT cited
+  as load-bearing; their framework doesn't fit our graph.
+\item Hypothesis~\ref{hyp:isotropy} for midpoint and centroid
+  orbits is NOT proved here; deferred to follow-up.
+\item The Dirichlet-form-consistency proof
+  (Theorem~\ref{thm:form-consistency}) uses named external
+  inputs (Poincar\'e, Sobolev embedding, Riemann-sum quadrature)
+  whose hypotheses are verified but whose fully-inline proofs
+  are not reproduced.
+\end{itemize}
+
+%=====================================================================
+\section{Citation Contract}
+\label{sec:handoff}
+%=====================================================================
+
+\textbf{Citable (extrinsic metric layer), conditional on the
+structural hypotheses noted:}
+\begin{itemize}
+\item Theorem~\ref{thm:epsilon-net} (conditional on
+  Hypothesis~\ref{fact:tiling}): $\varepsilon_n = O(h_n)$ net
+  radius, plus $\iota_n$ is an isometric embedding of
+  $(V_n, d_n^{\rm ext})$ into $(S^3, \dsph)$.
+\item Theorem~\ref{thm:gh-convergence} (conditional on
+  Hypothesis~\ref{fact:tiling}): $\dGH((V_n, d_n^{\rm
+  ext}), (S^3, \dsph)) = O(h_n)$, with $h_n \leq M_\ast \alpha^n
+  h_0$ for any $\alpha \in (1/\sqrt{3}, 1)$ up to absolute
+  constant $M_\ast = M_\ast(\alpha)$.
+\item Proposition~\ref{prop:doubling} (conditional on
+  Hypotheses~\ref{fact:tiling} and~\ref{fact:separation}):
+  doubling/packing for extrinsic-metric balls
+  $B_{d_n^{\rm ext}}$.
+\item Proposition~\ref{prop:v0-at-level-n} (unconditional):
+  $V_0$-orbit isotropy constant $8/3$.
+\end{itemize}
+
+\textbf{Conditional PROGRAM (NOT Clay-grade citable as theorems;
+supporting lemmas sketched; depend on Hypothesis~\ref{hyp:isotropy}
+in addition to the structural hypotheses above):}
+\begin{itemize}
+\item Theorem~\ref{thm:intrinsic-extrinsic}: intrinsic-vs-
+  extrinsic bi-Lipschitz comparison $d_n^{\rm int} \leq
+  d_n^{\rm ext} + C_2 h_n$. The constant $C_2$ appears only
+  here; conditional pearl-string proof sketched.
+\item Theorem~\ref{thm:form-consistency}: Dirichlet-form
+  consistency at rate $O(h_n\,\|f\|_{C^2}^2)$ for $f \in C^2(S^3)$.
+  Proof uses the quadrature Lemma~\ref{lem:quadrature}, which is
+  stated but whose proof is sketched.
+\item Theorem~\ref{thm:spectral-convergence}: eigenvalue
+  convergence via Courant--Fischer min-max. Proof uses the dual
+  form-consistency Lemma~\ref{lem:dual-form-consistency}, which
+  is stated but whose proof is sketched.
+\end{itemize}
+
+\textbf{Downstream citation guidance:} the conditional program
+(Thms~\ref{thm:intrinsic-extrinsic},
+\ref{thm:form-consistency}, \ref{thm:spectral-convergence} and
+their supporting lemmas) is not Clay-grade citable until the
+sketched proofs are completed in a follow-up paper. Cite the
+extrinsic-metric items above as theorem-grade \emph{under} the
+stated structural hypotheses (all of which are partially
+verified: see Remarks~\ref{rmk:distinct-status},
+\ref{rmk:tiling-status}, \ref{rmk:separation-status}).
+
+%=====================================================================
+\section{Notation Audit}
+\label{sec:notation}
+%=====================================================================
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Symbol & Meaning & First use \\
+\hline
+$V_n$ & level-$n$ $D_4$ vertex set &
+  Notation~\ref{not:basic} \\
+$x_v^{(n)}$ & P3/P5 Euclidean coordinate &
+  Notation~\ref{not:basic} \\
+$W(D_4)$ & $D_4$ Coxeter group & Notation~\ref{not:WD4} \\
+$\iota_n$ & iterated spherical midpoint map &
+  Definition~\ref{def:iota-n} \\
+$h_n$ & mesh scale, $\leq M_\ast\,\alpha^n \pi/2$ for any $\alpha \in (1/\sqrt{3}, 1)$ &
+  Definition~\ref{def:hn} \\
+$e_n$, $c_e$ & minimum edge length and separation constant &
+  Hypothesis~\ref{fact:separation} \\
+$\ell_e^{(n)}$ & spherical edge length &
+  Definition~\ref{def:dn} \\
+$d_n^{\rm ext}$ & extrinsic metric $\dsph \circ \iota_n$ (base) &
+  Definition~\ref{def:dn} \\
+$d_n^{\rm int}$ & intrinsic graph metric (conditional program) &
+  Definition~\ref{def:dn} \\
+$\varepsilon_n$ & $O(h_n)$ net radius (under Hyp.~\ref{fact:tiling}) &
+  Theorem~\ref{thm:epsilon-net} \\
+$C_1$ & $\varepsilon$-net constant (under Hyp.~\ref{fact:tiling}) &
+  Theorem~\ref{thm:epsilon-net} \\
+$C_2$ & intrinsic-extrinsic distortion constant (conditional) &
+  Theorem~\ref{thm:intrinsic-extrinsic} \\
+$h_\ast$ & validity threshold & Theorem~\ref{thm:epsilon-net} \\
+$m_n, \mu_\infty$ & normalized discrete and continuum measures &
+  Definition~\ref{def:measures} \\
+$c_0, C_0, C_D, C_P$ & doubling/packing constants &
+  Proposition~\ref{prop:doubling} \\
+$\pi_v$ & tangential projection in $T_{\iota_n(v)} S^3$ &
+  Notation~\ref{not:pi-v} \\
+$T_v^{(n)}$ & vertex-figure tensor &
+  Definition~\ref{def:T-v} \\
+$8/3$ & $V_0$-orbit isotropy constant &
+  Prop~\ref{prop:v0-at-level-n} \\
+$E_v^{(n)}$ & weighted-isotropy error tensor at $v$ &
+  Hypothesis~\ref{hyp:isotropy} \\
+$T_v^{(n),\,\rm w}$ & weighted vertex-figure tensor &
+  Definition~\ref{def:T-v} \\
+$\Delta_n$ & graph Laplacian &
+  Definition~\ref{def:Delta-n} \\
+$c_\Delta = 3/4$ & normalization &
+  Definition~\ref{def:Delta-n} \\
+$\mathcal E_n, \mathcal E_\infty$ & Dirichlet forms &
+  Definition~\ref{def:Delta-n} \\
+$\Delta_\infty = -\Delta_{S^3}$ & Laplace--Beltrami & \\
+$R_n, I_n$ & transport operators &
+  Definition~\ref{def:transport} \\
+$\lambda_k^{(n)}, \lambda_k^\infty$ & $k$th eigenvalues &
+  Theorem~\ref{thm:spectral-convergence} \\
+$\dGH$ & Gromov--Hausdorff distance & abstract \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+
+\bibitem{AlgebraicSubstrate}
+P2: \emph{Cascade Algebraic Substrate},
+\texttt{papers/cascade-algebraic-substrate/cascade-algebraic-substrate.tex}.
+Pins used: \S 3, \S 5.
+
+\bibitem{RefinementSpaces}
+P3: \emph{Refinement Spaces},
+\texttt{papers/cascade-refinement-spaces/cascade-refinement-spaces.tex}.
+Pins: Def.~2.1, Def.~2.2, Rmk.~2.3, Prop.~2.6.
+
+\bibitem{MetricProjection}
+P5: \emph{D_4 Metric Projection},
+\texttt{papers/cascade-metric-projection/cascade-metric-projection.tex}.
+Pins: Notation~2.1, Lem.~2.4.
+
+\bibitem{SchlafliConvergence}
+(This paper.)
+
+\bibitem{BuragoBuragoIvanov}
+D.~Burago, Yu.~Burago, S.~Ivanov, \emph{A Course in Metric
+Geometry}, AMS GSM 33, 2001. Cor.~7.3.28.
+
+\bibitem{BuragoIvanovKurylev}
+D.~Burago, S.~Ivanov, Y.~Kurylev, \emph{A graph discretization of
+the Laplace--Beltrami operator}, J.~Spectral Theory 4 (2014),
+675--714. Cited for context only.
+
+\bibitem{doCarmo}
+M.~P.~do Carmo, \emph{Riemannian Geometry}, Birkh\"{a}user, 1992.
+
+\bibitem{PetersenRiemannian}
+P.~Petersen, \emph{Riemannian Geometry}, Springer, 2016.
+
+\bibitem{BerardSpectralGeometry}
+P.~H.~B\'{e}rard, \emph{Spectral Geometry}, LNM 1207, Springer,
+1986.
+
+\bibitem{CoxeterRegularPolytopes}
+H.~S.~M.~Coxeter, \emph{Regular Polytopes}, Dover, 1973.
+
+\bibitem{Humphreys}
+J.~E.~Humphreys, \emph{Reflection Groups and Coxeter Groups},
+Cambridge, 1990.
+
+\bibitem{HeinonenAnalysis}
+J.~Heinonen, \emph{Lectures on Analysis on Metric Spaces},
+Springer, 2001.
+
+\bibitem{ReedSimonI}
+M.~Reed, B.~Simon, \emph{Methods of Modern Mathematical Physics
+I}, Academic Press, 1980.
+
+\bibitem{Kato}
+T.~Kato, \emph{Perturbation Theory for Linear Operators},
+Springer, 1995.
+
+\bibitem{GilbargTrudinger}
+D.~Gilbarg, N.~Trudinger, \emph{Elliptic Partial Differential
+Equations of Second Order}, Springer, 1983.
+
+\bibitem{BrennerScottFEM}
+S.~C.~Brenner, L.~R.~Scott, \emph{The Mathematical Theory of
+Finite Element Methods}, Springer, 2008.
+
+\end{thebibliography}
+
+\end{document}

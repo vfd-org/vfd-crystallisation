@@ -1,0 +1,860 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[hidelinks,colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conditional}[theorem]{Conditional Proposition}
+\newtheorem{classical}[theorem]{Classical Theorem}
+\newtheorem{interpretation}[theorem]{Foundational Interpretation}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{\textbf{Toward the Euler Bridge}\\[2pt]
+\large From Closure-Irreducibles to the Classical $\zeta$ Product via $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$\\[2pt]
+\normalsize \emph{Closure-Irreducibles, Paper III of a paired-plus-bridge contribution.}\\[1pt]
+\small Companions: Paper~I (\emph{The Critical Line as Observation Manifold}) and Paper~II (\emph{Classical Primes as Closure-Irreducibles}).\\[1pt]
+\small (Open research note --- pre-peer-review draft)}
+
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent
+\textbf{Scope.} Papers~I and~II~\cite{CriticalLinePaperI,ClosurePrimesPaperII}
+placed classical integer primes within the closure-irreducibility
+typology as level $L_4$, using the classical Dedekind splitting law in
+$\mathbb{Z}[\varphi]$. The present paper asks the natural follow-on
+question: \emph{when one assembles those $L_4$ closure-irreducibles into
+their natural Euler product, does the classical Riemann $\zeta(s)$
+appear?}
+\textbf{Method.} Two ingredients, both classical and unconditional. (i)
+By Paper~II, the closure-irreducibles at $L_4$ are exactly the prime
+ideals of $\mathbb{Z}[\varphi]$. By the standard definition of Dedekind
+$\zeta$, their Euler product is $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$. (ii)
+By classical algebraic number theory (Dedekind, Hecke, textbook for
+over a century), this Dedekind $\zeta$ factors as
+$\zeta_{\mathbb{Q}(\sqrt{5})}(s) = \zeta(s) \cdot L(s, \chi_5)$, where
+$\chi_5$ is the Kronecker symbol mod $5$.
+\textbf{Primary structural result.} The classical Riemann $\zeta(s)$
+appears as the $\sigma$-symmetric Euler factor of the cascade's natural
+$L_4$ $\zeta$. The Dirichlet $L$-function $L(s, \chi_5)$ is the
+$\sigma$-antisymmetric Euler factor, encoding the cascade $\sigma$-pairing
+at the character level.
+\textbf{Status.} The two underlying mathematical statements are
+unconditional and classical. Their interpretation as the Euler bridge from
+cascade $L_4$ closure-irreducibles to classical $\zeta$ is a structural
+reading, conditional on the named hypotheses of Paper~II
+(H-SigmaRestrict, H-UniqueSigma, H-NaturalIrreducibles) plus one new
+named hypothesis H-EulerBridge: that the natural $\zeta$ attached to the
+$L_4$ closure-irreducibles is the Dedekind $\zeta_{\mathbb{Q}(\sqrt{5})}$
+and not some other arithmetic invariant.
+\textbf{What this provides.} An explicit Euler-product placement of
+$\zeta(s)$ within the cascade $L_4$ infrastructure, sim-verified at
+$s = 2, 3, 4$ to ten or more decimal digits, and a structural reading of
+the $\sigma$-symmetric / $\sigma$-antisymmetric decomposition of
+$\zeta_{\mathbb{Q}(\sqrt{5})}(s)$ as the trace of the $L_4$ Galois
+involution.
+\textbf{What this does not provide.} A proof or conditional reduction of
+the classical Riemann Hypothesis; a derivation of $\zeta(s)$ from
+cascade machinery (it is an extracted factor, not a constructed object);
+a bridge from the cascade analytic object
+$\hat{\zeta}(z)$~\cite{rhFormalSmart} to classical $\zeta(s)$ (still
+blocked by the Hecke obstruction~\cite{rhFormalSmart}); a verification
+that $\zeta(s)$ has the same zero locations as $L(s, \chi_5)$ (it does
+not; they have distinct zero sets).
+\textbf{Relation to classical results.} The Dedekind factorisation
+$\zeta_K(s) = \zeta(s) \cdot L(s, \chi)$ for quadratic fields is
+classical and unconditional. The contribution of the present paper is
+its \emph{interpretation} as the Euler bridge from cascade $L_4$ to
+classical $\zeta$, not its derivation.
+\end{abstract}
+
+\bigskip
+
+\noindent\fbox{%
+\parbox{0.96\linewidth}{%
+\textbf{Plain-language hypothesis.}
+
+\smallskip\noindent
+Paper~II showed where the classical primes sit in the cascade
+typology: they are level $L_4$, classified by the
+$\mathbb{Q}(\sqrt{5})$ Galois symmetry $\sqrt{5} \mapsto -\sqrt{5}$
+into split, inert, and ramified primes.
+
+\smallskip\noindent
+The present paper asks the natural next question: \emph{if you take
+those $L_4$ closure-irreducibles and form their Euler product the way
+you form any zeta function, does classical Riemann $\zeta(s)$ appear?}
+
+\smallskip\noindent
+The answer, modulo named structural hypotheses, is \textbf{yes, but as
+a factor, not as the whole thing}:
+\[
+\underbrace{\zeta_{\mathbb{Q}(\sqrt{5})}(s)}_{\text{cascade's natural $L_4$ $\zeta$}}
+\;=\;
+\underbrace{\zeta(s)}_{\text{$\sigma$-symmetric factor}}
+\;\cdot\;
+\underbrace{L(s, \chi_5)}_{\text{$\sigma$-antisymmetric factor}}.
+\]
+This is classical Dedekind factorisation. What is new is the
+\emph{interpretation} that classical $\zeta(s)$ is the
+$\sigma$-symmetric trace inside the cascade's natural $L_4$ $\zeta$,
+and $L(s, \chi_5)$ is the $\sigma$-antisymmetric trace.
+
+\smallskip\noindent
+This is the \emph{Euler bridge}: a structural placement of classical
+$\zeta(s)$ inside the cascade infrastructure. It is \emph{not}:
+\begin{itemize}\itemsep0pt
+  \item A proof or conditional reduction of the Riemann Hypothesis.
+  \item A derivation of $\zeta(s)$ from cascade alone (the factor is
+        extracted, not constructed).
+  \item A bridge from cascade's analytic $\hat{\zeta}(z)$ to classical
+        $\zeta(s)$ --- that bridge is still blocked by the Hecke
+        obstruction.
+\end{itemize}
+}}
+
+\bigskip
+
+\paragraph{Programme map.}
+This paper is the third in the Closure-Irreducibles series. Paper~I
+introduces the five-level typology of closure-irreducibles and the
+critical-line / observation-manifold foundation. Paper~II develops
+$L_4$ via the Dedekind splitting law in $\mathbb{Z}[\varphi]$ and
+establishes the universal $\sigma$-pattern across $L_0$--$L_4$. The
+present paper takes the $L_4$ closure-irreducibles of Paper~II and
+forms their natural Euler product, identifying classical Riemann
+$\zeta(s)$ as one of two factors.
+
+\paragraph{Status taxonomy.}
+\textbf{Theorem} = formal structural claim under stated assumptions.
+\textbf{Classical Theorem} = result imported from classical number theory,
+cited with reference (Dedekind, Hecke, textbook). \textbf{Conditional
+Proposition} = bridge claim depending on a named hypothesis.
+\textbf{Foundational Interpretation} = structural reading of classical
+mathematical content within the closure framework, marked as such.
+
+\paragraph{Non-claims (load-bearing).}
+This paper does \textbf{not} claim that:
+\begin{itemize}\itemsep0pt
+  \item Classical $\zeta(s)$ is derived from cascade machinery (it is extracted as a factor; the construction of the factor depends on classical Dedekind theory).
+  \item The Riemann Hypothesis is proved, addressed at zero-location level, or conditionally reduced (it is not; the bridge concerns Euler-product factorisation, not zero locations).
+  \item Cascade's analytic object $\hat{\zeta}(z)$ equals $\zeta(s)$ (it does not; the Hecke obstruction blocks this~\cite{rhFormalSmart}).
+  \item $\zeta(s)$ and $L(s, \chi_5)$ have the same zero set (they do not; only the GRH for both would place them on the same critical line, and neither is proved).
+  \item The Kronecker symbol $\chi_5$ is a new mathematical object (it is classical, going back to Kronecker; what is new is its interpretation as the cascade's $\sigma$-antisymmetric trace).
+\end{itemize}
+The framework is one of \emph{interpretation through the closure lens},
+not of redefinition or proof.
+
+\section{Introduction: the Euler bridge question}\label{sec:intro}
+
+Paper~I established the closure-irreducibility typology with five
+demonstrated levels $L_0$--$L_4$, and identified the critical line
+$\mathrm{Re}(s) = 1/2$ as the fixed locus of the Mellin involution under
+the observation hypothesis H-Observe. Paper~II developed $L_4$ as the
+classical integer primes, classified by the Galois conjugation
+$\sigma_K : \sqrt{5} \mapsto -\sqrt{5}$ in $\mathbb{Q}(\sqrt{5})$ via the
+classical Dedekind splitting law.
+
+A natural follow-on question, raised but not addressed in either earlier
+paper, is whether the $L_4$ closure-irreducibles \emph{assemble into a
+$\zeta$ function}, and if so, how that $\zeta$ relates to the classical
+Riemann $\zeta(s)$.
+
+The question has a definite answer, drawing on two unconditional inputs:
+
+\begin{enumerate}
+\item By Paper~II, the closure-irreducibles at level $L_4$ are
+      (under H-NaturalIrreducibles) the prime ideals of
+      $\mathbb{Z}[\varphi]$. The natural Euler product over these primes
+      is, by definition, the Dedekind $\zeta$-function of the field
+      $\mathbb{Q}(\sqrt{5})$:
+      \begin{equation}\label{eq:dedekind_def}
+        \zeta_{\mathbb{Q}(\sqrt{5})}(s)
+          = \prod_{\mathfrak{p} \subset \mathbb{Z}[\varphi]}
+              \frac{1}{1 - N(\mathfrak{p})^{-s}},
+      \end{equation}
+      where the product runs over nonzero prime ideals and $N(\mathfrak{p})$
+      is the absolute norm.
+\item By classical algebraic number theory (Dedekind 1871; modern
+      reference Neukirch~\cite{Neukirch1999}, Davenport~\cite{Davenport2000}),
+      the Dedekind $\zeta$ of any quadratic field $\mathbb{Q}(\sqrt{d})$
+      factors as
+      \begin{equation}\label{eq:dedekind_factorisation}
+        \zeta_{\mathbb{Q}(\sqrt{d})}(s)
+          = \zeta(s) \cdot L(s, \chi_d),
+      \end{equation}
+      where $\chi_d$ is the quadratic Dirichlet character associated to
+      the discriminant of the field. For $d = 5$, the discriminant is
+      $5$ and $\chi_5$ is the Kronecker symbol $\left(\tfrac{5}{n}\right)$
+      (equivalently, the Legendre symbol when $n$ is an odd prime
+      $\neq 5$).
+\end{enumerate}
+
+Combining (\ref{eq:dedekind_def}) and (\ref{eq:dedekind_factorisation})
+gives the Euler bridge:
+\begin{equation}\label{eq:euler_bridge}
+  \zeta_{L_4}(s)
+    \;\equiv\;
+    \zeta_{\mathbb{Q}(\sqrt{5})}(s)
+    \;=\;
+    \zeta(s) \cdot L(s, \chi_5).
+\end{equation}
+
+The classical Riemann $\zeta(s)$ appears as one of two Euler factors
+of the cascade's natural $L_4$ $\zeta$. The companion factor
+$L(s, \chi_5)$ is the Dirichlet $L$-function attached to the quadratic
+character $\chi_5$.
+
+This paper develops the structural content of (\ref{eq:euler_bridge}):
+identifies $\zeta(s)$ as the $\sigma$-symmetric Euler factor and
+$L(s, \chi_5)$ as the $\sigma$-antisymmetric Euler factor in the
+cascade $L_4$ Galois decomposition; states explicitly the named
+hypotheses on which the cascade interpretation depends; sim-verifies
+the factorisation numerically at $s = 2, 3, 4$; and demarcates clearly
+what the bridge does and does not provide.
+
+\section{The cascade's natural $L_4$ $\zeta$}\label{sec:l4_zeta}
+
+\subsection{Definition by Euler product over $L_4$ closure-irreducibles}
+
+\begin{definition}[$\zeta_{L_4}$, cascade $L_4$ $\zeta$]\label{def:zeta_L4}
+Let $\mathcal{P}_{L_4}$ denote the closure-irreducibles at level $L_4$
+of the typology of Paper~I~\cite{CriticalLinePaperI}, as developed in
+Paper~II~\cite{ClosurePrimesPaperII}. The \emph{cascade $L_4$
+$\zeta$-function} is the formal Euler product
+\begin{equation}\label{eq:zeta_L4_def}
+  \zeta_{L_4}(s) \;:=\;
+    \prod_{\mathfrak{q} \in \mathcal{P}_{L_4}}
+      \frac{1}{1 - \mathrm{nm}(\mathfrak{q})^{-s}},
+\end{equation}
+where $\mathrm{nm}(\mathfrak{q})$ denotes the closure-norm of
+$\mathfrak{q}$ (Paper~II, \S 3).
+\end{definition}
+
+This definition is purely formal at the level of the cascade. To
+identify $\zeta_{L_4}(s)$ with a concrete analytic object, we must
+identify $\mathcal{P}_{L_4}$ and the closure-norm with a concrete
+classical structure. Paper~II provides exactly this identification.
+
+\subsection{Identification with Dedekind $\zeta_{\mathbb{Q}(\sqrt{5})}$}
+
+\begin{conditional}[$\zeta_{L_4}$ equals Dedekind $\zeta_{\mathbb{Q}(\sqrt{5})}$, under H-NaturalIrreducibles + H-EulerBridge]\label{prop:l4_dedekind}
+\emph{Assume H-NaturalIrreducibles} (Paper~II, \S 5.3): the cascade
+closure-irreducibles at $L_4$ are the prime ideals of
+$\mathbb{Z}[\varphi]$, and the closure-norm is the absolute norm
+$N : \mathfrak{p} \mapsto |\mathbb{Z}[\varphi]/\mathfrak{p}|$.
+
+\emph{Assume H-EulerBridge}: the natural $\zeta$-function attached to
+the $L_4$ closure-irreducibles is their formal Euler product
+(\ref{eq:zeta_L4_def}), and not some other arithmetic invariant (e.g.\
+a twisted, weighted, or geometric $\zeta$).
+
+\smallskip Then
+\begin{equation}
+  \zeta_{L_4}(s) \;=\; \zeta_{\mathbb{Q}(\sqrt{5})}(s)
+\end{equation}
+in the sense of formal Euler products, with convergence for
+$\mathrm{Re}(s) > 1$ and meromorphic continuation given by the
+classical theory of Dedekind $\zeta$-functions
+\cite{Neukirch1999,Marcus1977}.
+\end{conditional}
+
+\begin{proof}[Proof sketch]
+Under H-NaturalIrreducibles, $\mathcal{P}_{L_4}$ is the set of prime
+ideals of $\mathbb{Z}[\varphi]$, and the closure-norm coincides with the
+absolute norm. Under H-EulerBridge, $\zeta_{L_4}(s)$ is the formal
+Euler product (\ref{eq:zeta_L4_def}). The right-hand side of
+(\ref{eq:zeta_L4_def}) is then literally the defining Euler product of
+$\zeta_{\mathbb{Q}(\sqrt{5})}(s)$ (compare equation
+(\ref{eq:dedekind_def})). The remaining content --- absolute convergence
+for $\mathrm{Re}(s) > 1$, meromorphic continuation, functional equation
+--- is classical Dedekind theory.
+\end{proof}
+
+\begin{remark}
+The named hypothesis H-EulerBridge is a discipline hypothesis, not a
+mathematical leap: it says only that the cascade's natural $\zeta$ at
+$L_4$ is the Euler product over $L_4$ closure-irreducibles, rather than
+some twist, weighting, or alternative construction. It is the
+counterpart, at the $\zeta$-function level, of the more familiar
+identification ``the natural $\zeta$ of a number field is its Dedekind
+$\zeta$.'' We name it explicitly so that any future alternative cascade
+$\zeta$ (for instance, a weighted Euler product reflecting closure-flow
+multiplicities) can be addressed without ambiguity about which one the
+present bridge concerns.
+\end{remark}
+
+\subsection{Status of $\zeta_{L_4}$ vs.\ $\hat{\zeta}$}
+
+It is important to keep $\zeta_{L_4}(s)$ distinct from the cascade
+analytic object $\hat{\zeta}(z)$ studied in \emph{rh-formal}
+\cite{rhFormalSmart}. These are two different analytic functions:
+
+\begin{itemize}
+\item $\zeta_{L_4}(s)$ is an Euler product over the $L_4$
+      closure-irreducibles (this paper). Under
+      Conditional~Proposition~\ref{prop:l4_dedekind}, it equals
+      $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$.
+\item $\hat{\zeta}(z)$ is the pentagonal-clock Mellin object with
+      $K$-poles at $K \in \{0, 20, 52, 72\}$ with multiplicities
+      $\{1, 1, 5, 5\}$ (\emph{rh-formal} Theorem $M1$).
+\end{itemize}
+
+These objects are structurally related (both arise from the cascade
+$\sigma$-paired class infrastructure) but they are not the same
+analytic function. In particular, the Hecke obstruction
+(\emph{rh-formal} Theorem $M3$) shows that the multiplicities
+$\{1,1,5,5\}$ of $\hat{\zeta}(z)$ do not match classical Hecke
+multiplicities and so $\hat{\zeta}(z)$ cannot equal $\zeta(s)$ as
+analytic objects. This obstruction does \emph{not} affect the present
+bridge, because the present bridge concerns $\zeta_{L_4}(s)$, not
+$\hat{\zeta}(z)$.
+
+\section{Classical Dedekind factorisation for quadratic fields}\label{sec:dedekind_fact}
+
+We now import the second ingredient of the bridge: the classical
+factorisation of Dedekind $\zeta$ for a quadratic field.
+
+\begin{classical}[Dedekind factorisation for quadratic fields, Dedekind 1871]\label{thm:dedekind_factorisation}
+Let $K = \mathbb{Q}(\sqrt{d})$ with $d$ a squarefree integer, and let
+$D_K$ denote the discriminant of $K$ (so $D_K = d$ if $d \equiv 1
+\pmod 4$ and $D_K = 4d$ otherwise). Let $\chi_{D_K}$ denote the
+Kronecker symbol $\left(\tfrac{D_K}{\cdot}\right)$, which is the unique
+real primitive Dirichlet character of conductor $|D_K|$. Then
+\begin{equation}
+  \zeta_K(s) \;=\; \zeta(s) \cdot L(s, \chi_{D_K})
+\end{equation}
+as analytic functions on $\mathrm{Re}(s) > 1$, extending to a
+meromorphic identity on $\mathbb{C}$ via the classical functional
+equations of both factors.
+\end{classical}
+
+\begin{proof}[Reference]
+This is textbook material; see Neukirch~\cite[Ch.~VII, \S5]{Neukirch1999},
+Marcus~\cite[Ch.~7]{Marcus1977}, or
+Davenport~\cite[Ch.~5]{Davenport2000}. The factorisation is a special
+case of the general decomposition of $\zeta_K$ into Hecke $L$-functions
+indexed by characters of $\mathrm{Gal}(K/\mathbb{Q})$; for $K$ quadratic,
+$\mathrm{Gal}(K/\mathbb{Q}) = \{1, \sigma_K\}$ and the two characters are
+the trivial character (yielding $\zeta(s)$) and the sign character
+(yielding $L(s, \chi_{D_K})$).
+\end{proof}
+
+\subsection{Specialisation to $K = \mathbb{Q}(\sqrt{5})$}
+
+For $d = 5$: $5 \equiv 1 \pmod 4$, hence $D_K = 5$ and $\chi_5$ is the
+Kronecker symbol modulo $5$. Explicitly,
+\[
+  \chi_5(n) \;=\; \left(\tfrac{n}{5}\right)
+  \;=\;
+  \begin{cases}
+    +1 & \text{if } n \equiv \pm 1 \pmod{5},\\
+    -1 & \text{if } n \equiv \pm 2 \pmod{5},\\
+    \phantom{+}0 & \text{if } n \equiv 0 \pmod{5}.
+  \end{cases}
+\]
+The Dirichlet $L$-function is then
+\[
+  L(s, \chi_5) \;=\; \sum_{n=1}^{\infty} \frac{\chi_5(n)}{n^s}
+    \;=\; \prod_{p \neq 5} \frac{1}{1 - \chi_5(p) p^{-s}}.
+\]
+Applying Classical Theorem~\ref{thm:dedekind_factorisation} at $d = 5$
+gives
+\begin{equation}\label{eq:factorisation_q5}
+  \zeta_{\mathbb{Q}(\sqrt{5})}(s) \;=\; \zeta(s) \cdot L(s, \chi_5).
+\end{equation}
+
+\subsection{Note on the trivial character interpretation}
+
+The factor $\zeta(s)$ in (\ref{eq:factorisation_q5}) is exactly the
+classical Riemann $\zeta$-function. It is the Dirichlet $L$-function
+attached to the trivial character $\chi_0$ in this decomposition:
+$L(s, \chi_0) = \zeta(s)$. This is the standard interpretation and the
+starting point of all classical work connecting $\zeta_K$ to $\zeta$;
+we mention it explicitly because the cascade interpretation of the next
+section makes use of it.
+
+\section{The Euler bridge: $\zeta(s)$ as the $\sigma$-symmetric factor}\label{sec:euler_bridge}
+
+We can now combine the cascade identification of \S\ref{sec:l4_zeta}
+with the classical factorisation of \S\ref{sec:dedekind_fact} to state
+the Euler bridge.
+
+\subsection{Main bridge theorem}
+
+\begin{conditional}[Euler bridge: $\zeta(s)$ inside cascade $L_4$, under H-NaturalIrreducibles + H-EulerBridge]\label{thm:euler_bridge}
+Under the named hypotheses H-NaturalIrreducibles (Paper~II, \S 5.3) and
+H-EulerBridge (Conditional Proposition~\ref{prop:l4_dedekind}), the
+cascade $L_4$ $\zeta$-function factors as
+\begin{equation}\label{eq:bridge_main}
+  \zeta_{L_4}(s) \;=\; \zeta(s) \cdot L(s, \chi_5),
+\end{equation}
+where $\zeta(s)$ is the classical Riemann $\zeta$-function and
+$L(s, \chi_5)$ is the Dirichlet $L$-function attached to the
+Kronecker symbol $\chi_5$ modulo $5$. The classical Riemann $\zeta(s)$
+therefore appears as one of two Euler factors of the cascade $L_4$
+$\zeta$.
+\end{conditional}
+
+\begin{proof}
+Combine Conditional Proposition~\ref{prop:l4_dedekind}
+($\zeta_{L_4}(s) = \zeta_{\mathbb{Q}(\sqrt{5})}(s)$) with Classical
+Theorem~\ref{thm:dedekind_factorisation} at $d = 5$
+($\zeta_{\mathbb{Q}(\sqrt{5})}(s) = \zeta(s) \cdot L(s, \chi_5)$).
+\end{proof}
+
+\subsection{The $\sigma$-symmetric / $\sigma$-antisymmetric decomposition}
+
+The cascade interpretation of the two factors on the right-hand side
+of (\ref{eq:bridge_main}) is as follows. The Galois group
+$\mathrm{Gal}(\mathbb{Q}(\sqrt{5})/\mathbb{Q}) = \{1, \sigma_K\}$ acts
+on Dirichlet characters of $\mathbb{Z}[\varphi]$ via $\sigma_K$. There
+are exactly two characters of this group: the trivial character
+(invariant under $\sigma_K$, the \emph{$\sigma$-symmetric} character)
+and the sign character (sent to its negation under $\sigma_K$, the
+\emph{$\sigma$-antisymmetric} character).
+
+In the Hecke decomposition of $\zeta_K(s)$,
+\begin{equation}\label{eq:hecke_decomp}
+  \zeta_K(s) \;=\; \prod_{\chi \in \widehat{\mathrm{Gal}(K/\mathbb{Q})}}
+    L(s, \chi),
+\end{equation}
+each character contributes one $L$-factor. The trivial character
+contributes $\zeta(s)$ and the sign character contributes
+$L(s, \chi_5)$.
+
+\begin{interpretation}[$\zeta(s)$ as $\sigma$-symmetric trace, $L(s, \chi_5)$ as $\sigma$-antisymmetric trace]\label{interp:sigma_decomp}
+Under the cascade interpretation, the Hecke decomposition
+(\ref{eq:hecke_decomp}) for $K = \mathbb{Q}(\sqrt{5})$ is read as the
+$\sigma$-symmetric / $\sigma$-antisymmetric splitting of the cascade
+$L_4$ $\zeta$ under the cascade involution $\sigma_K$ (identified with
+the Galois conjugation via H-SigmaRestrict, Paper~II, \S 3.2). The
+classical Riemann $\zeta(s)$ is the $\sigma$-symmetric trace; the
+Dirichlet $L$-function $L(s, \chi_5)$ is the $\sigma$-antisymmetric
+trace.
+
+\smallskip\noindent
+This is a foundational interpretation, not a new mathematical theorem.
+The Hecke decomposition itself is classical (Hecke 1920s, textbook).
+What the cascade interpretation adds is the structural reading of
+``trivial character'' as ``$\sigma$-symmetric'' and ``sign character''
+as ``$\sigma$-antisymmetric,'' consistent with the identifications
+H-SigmaRestrict and H-UniqueSigma of Paper~II.
+\end{interpretation}
+
+\subsection{Compatibility with the $L_4$ splitting classes}
+
+The Euler-product reading of (\ref{eq:bridge_main}) is consistent with
+the $L_4$ classification of Paper~II at the level of local Euler
+factors. For a rational prime $p$, the local Euler factor on the
+left-hand side of (\ref{eq:bridge_main}) depends on the splitting
+behaviour of $p$ in $\mathbb{Z}[\varphi]$:
+
+\begin{itemize}
+\item \textbf{Split} ($p \equiv 1, 4 \pmod 5$, $\sigma$-paired):
+      $p = \mathfrak{p}_1 \mathfrak{p}_2$ with two prime ideals
+      $\mathfrak{p}_1, \mathfrak{p}_2$ of norm $p$. The local factor is
+      $(1 - p^{-s})^{-2}$.
+\item \textbf{Inert} ($p \equiv 2, 3 \pmod 5$, $\sigma$-fixed):
+      $p\mathbb{Z}[\varphi]$ remains prime, with norm $p^2$. The local
+      factor is $(1 - p^{-2s})^{-1}$.
+\item \textbf{Ramified} ($p = 5$, ramified anchor):
+      $5\mathbb{Z}[\varphi] = \mathfrak{p}^2$ with $\mathfrak{p}$ of
+      norm $5$. The local factor is $(1 - 5^{-s})^{-1}$.
+\end{itemize}
+
+On the right-hand side, the $p$-th local factors of $\zeta(s)$ and
+$L(s, \chi_5)$ multiply to give the same local factor in each case:
+\begin{itemize}
+\item \textbf{Split}: $(1 - p^{-s})^{-1} \cdot (1 - p^{-s})^{-1}
+      = (1 - p^{-s})^{-2}$, using $\chi_5(p) = +1$.
+\item \textbf{Inert}: $(1 - p^{-s})^{-1} \cdot (1 + p^{-s})^{-1}
+      = (1 - p^{-2s})^{-1}$, using $\chi_5(p) = -1$.
+\item \textbf{Ramified}: $(1 - 5^{-s})^{-1} \cdot 1
+      = (1 - 5^{-s})^{-1}$, using $\chi_5(5) = 0$.
+\end{itemize}
+
+The compatibility at the local-factor level is the local-global content
+of the bridge: each $L_4$ $\sigma$-class contributes the matching
+local Euler factor on both sides.
+
+\section{The named hypotheses and what they buy}\label{sec:hypotheses}
+
+The bridge claim (\ref{eq:bridge_main}) rests on three named hypotheses,
+two imported from Paper~II and one new to the present paper. We state
+each explicitly and identify the cost of its failure.
+
+\subsection{H-NaturalIrreducibles (imported from Paper~II)}
+
+\textbf{Statement.} The cascade closure-irreducibles at $L_4$ are the
+prime ideals of $\mathbb{Z}[\varphi]$ (not, for instance, the rational
+primes paired with their splitting data, or some other arithmetic
+object).
+
+\textbf{Cost of failure.} If $L_4$ closure-irreducibles are not exactly
+$\mathbb{Z}[\varphi]$-primes, the cascade $L_4$ $\zeta$ is not the
+Dedekind $\zeta_{\mathbb{Q}(\sqrt{5})}$, and the bridge would need to
+re-target a different classical $\zeta$ (if any).
+
+\subsection{H-EulerBridge (new to this paper)}
+
+\textbf{Statement.} The natural $\zeta$-function attached to the $L_4$
+closure-irreducibles is the formal Euler product (\ref{eq:zeta_L4_def})
+with closure-norm = absolute norm, not a twisted, weighted, or
+geometric variant.
+
+\textbf{Cost of failure.} If the natural $L_4$ $\zeta$ is a weighted
+Euler product (for instance, with closure-flow multiplicities at each
+prime), the bridge would still produce an Euler product but it would
+not equal the Dedekind $\zeta_{\mathbb{Q}(\sqrt{5})}$, and the
+factorisation into $\zeta(s) \cdot L(s, \chi_5)$ would not directly
+apply. A weighted bridge could still be analysed, but the present paper
+treats only the unweighted case.
+
+\subsection{H-SigmaRestrict (imported from Paper~II)}
+
+\textbf{Statement.} The cascade spectral involution $\tau_{\mathrm{spec}}$,
+restricted to coefficients in $\mathbb{Q}(\sqrt{5})$, induces the
+Galois conjugation $\sigma_K : \sqrt{5} \mapsto -\sqrt{5}$.
+
+\textbf{Cost of failure.} The Hecke decomposition
+(\ref{eq:hecke_decomp}) is classical regardless of cascade
+interpretation. If H-SigmaRestrict fails, the structural reading of
+$\zeta(s)$ as ``$\sigma$-symmetric trace'' (Interpretation~\ref{interp:sigma_decomp})
+becomes an unmotivated relabeling rather than a structural
+identification. The mathematical content of
+Conditional~Proposition~\ref{thm:euler_bridge} is unaffected, but the
+\emph{cascade interpretation} of the bridge as the
+$\sigma$-symmetric / $\sigma$-antisymmetric decomposition collapses to
+the classical (uninterpreted) Hecke decomposition.
+
+\subsection{Summary table}
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\toprule
+\textbf{Hypothesis} & \textbf{Source} & \textbf{Buys} \\
+\midrule
+H-NaturalIrreducibles & Paper II \S 5.3 & $\mathcal{P}_{L_4} = \mathrm{Spec}(\mathbb{Z}[\varphi])$ primes \\
+H-EulerBridge & This paper \S 2.2 & $\zeta_{L_4}(s) = \zeta_{\mathbb{Q}(\sqrt{5})}(s)$ \\
+H-SigmaRestrict & Paper II \S 3.2 & $\sigma$-symmetric / antisymmetric reading \\
+\bottomrule
+\end{tabular}
+\caption{Named hypotheses behind the Euler bridge (\ref{eq:bridge_main})
+and the structural content each one buys. The factorisation
+$\zeta_K(s) = \zeta(s) \cdot L(s, \chi_5)$ is unconditional classical
+mathematics.}\label{tab:hypotheses}
+\end{table}
+
+\section{Numerical verification}\label{sec:numerics}
+
+The factorisation (\ref{eq:bridge_main}) is verified numerically by
+the script \texttt{repro/verify\_euler\_bridge.py} accompanying this
+paper. The script computes both sides of (\ref{eq:bridge_main}) by
+independent Euler products and compares them to high precision.
+
+\subsection{Method}
+
+For each test value $s \in \{2, 3, 4\}$:
+\begin{enumerate}
+\item Compute $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$ via the
+      $\mathbb{Z}[\varphi]$ Euler product (\ref{eq:dedekind_def}),
+      using the $L_4$ classification of Paper~II to enumerate prime
+      ideals up to a chosen norm cutoff $N \le N_{\max}$.
+\item Independently compute $\zeta(s)$ via the rational Euler product
+      $\prod_{p \le P_{\max}} (1 - p^{-s})^{-1}$ for the same value of
+      $s$.
+\item Independently compute $L(s, \chi_5)$ via the $\chi_5$-twisted
+      rational Euler product
+      $\prod_{p \le P_{\max}, p \neq 5} (1 - \chi_5(p) p^{-s})^{-1}$.
+\item Compare $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$ against
+      $\zeta(s) \cdot L(s, \chi_5)$.
+\end{enumerate}
+
+\subsection{Expected outcome}
+
+For each $s > 1$, the three Euler products converge absolutely and
+their values are related by (\ref{eq:bridge_main}). At
+$P_{\max} = 10^5$, $N_{\max} = 10^5$, agreement to ten or more decimal
+digits is expected and is the threshold built into the sim script.
+
+\subsection{Outcome (sim-verified)}
+
+The script confirms agreement to the expected precision at all three
+test values $s \in \{2, 3, 4\}$, as recorded in
+\texttt{repro/output/euler\_bridge\_verification.json}. Detailed
+numerics are deferred to \S\ref{sec:reproduction}.
+
+\section{What this bridge does and does not provide}\label{sec:scope}
+
+\subsection{What it does provide}
+
+\begin{itemize}
+\item An explicit Euler-product placement of classical $\zeta(s)$
+      within the cascade $L_4$ infrastructure
+      (Conditional~Proposition~\ref{thm:euler_bridge}).
+\item A structural reading of the Dedekind factorisation
+      $\zeta_K = \zeta \cdot L(s, \chi_5)$ as the
+      $\sigma$-symmetric / $\sigma$-antisymmetric decomposition of the
+      cascade $L_4$ $\zeta$
+      (Interpretation~\ref{interp:sigma_decomp}).
+\item Numerical verification of the factorisation at
+      $s = 2, 3, 4$ to ten or more decimal digits
+      (\S\ref{sec:numerics}, \S\ref{sec:reproduction}).
+\item Local-factor compatibility with the $L_4$ split / inert /
+      ramified classification of Paper~II at every rational prime $p$
+      (\S\ref{sec:euler_bridge}).
+\end{itemize}
+
+\subsection{What it does not provide}
+
+\begin{itemize}
+\item \textbf{Not a proof of the Riemann Hypothesis.} The factorisation
+      (\ref{eq:bridge_main}) is about Euler products, not about zero
+      locations. It is consistent with $\zeta(s)$ having any zero
+      distribution whatsoever in the critical strip. Knowing that
+      $\zeta(s)$ is one factor of $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$
+      does not in itself locate the zeros of either.
+\item \textbf{Not a conditional reduction of RH to GRH for $\chi_5$.}
+      Such a reduction would require a structural statement constraining
+      $\zeta(s)$ zeros from $L(s, \chi_5)$ zeros, or vice versa, beyond
+      what the trivial implication ``zeros of the product = zeros of one
+      factor or the other'' provides. The cascade interpretation does
+      not provide such a constraint.
+\item \textbf{Not a derivation of $\zeta(s)$ from cascade machinery.}
+      The factor $\zeta(s)$ is extracted from $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$
+      via classical Dedekind factorisation. The cascade does not
+      \emph{construct} $\zeta(s)$; it identifies $\zeta(s)$ as the
+      $\sigma$-symmetric factor of an Euler product that includes
+      classical $\zeta$ as one component.
+\item \textbf{Not a bridge from $\hat{\zeta}(z)$ to $\zeta(s)$.} The
+      pentagonal-clock $\hat{\zeta}(z)$ of \emph{rh-formal} remains a
+      distinct analytic object, with multiplicities $\{1,1,5,5\}$ at its
+      $K$-poles that do not match Hecke multiplicities
+      \cite{rhFormalSmart}. The Hecke obstruction blocks the
+      $\hat{\zeta} \leftrightarrow \zeta$ identification, and the
+      present bridge does not engage with that obstruction.
+\item \textbf{Not a claim about the zero set of $L(s, \chi_5)$.} The
+      generalised Riemann Hypothesis for $L(s, \chi_5)$ remains open.
+      The cascade interpretation of $L(s, \chi_5)$ as the
+      $\sigma$-antisymmetric trace does not address GRH.
+\end{itemize}
+
+\subsection{The Hecke obstruction does not block the present bridge}
+
+\begin{remark}[Why $M3$ does not apply]\label{rem:m3}
+The Hecke obstruction of \emph{rh-formal} $M3$~\cite{rhFormalSmart} is
+the statement that the pentagonal-clock multiplicities $\{1,1,5,5\}$ of
+$\hat{\zeta}(z)$ at $K \in \{0, 20, 52, 72\}$ do not match the Hecke
+multiplicity structure of any classical $L$-function, so $\hat{\zeta}$
+cannot be identified with $\zeta$ (or with any classical $L$-function)
+as an analytic object. The present bridge does not assert any such
+identification. The cascade $L_4$ $\zeta$ defined here is
+$\zeta_{\mathbb{Q}(\sqrt{5})}$, which has a perfectly classical Hecke
+multiplicity structure. The Hecke obstruction applies to
+$\hat{\zeta}(z)$ (which sits at the cascade level $L_3$ of the
+typology, the pentagonal-clock generating function) and not to
+$\zeta_{L_4}(s)$ (which is the present paper's object). The two are
+related as separate cascade analytic objects living at adjacent levels
+of the typology; the bridge is between $\zeta_{L_4}$ and classical
+$\zeta$, not between $\hat{\zeta}$ and classical $\zeta$.
+\end{remark}
+
+\section{Relation to existing structural approaches}\label{sec:relation}
+
+\subsection{Beyond endoscopy (Langlands)}
+
+Langlands's beyond-endoscopy programme~\cite{LanglandsBeyond} proposes
+to study the spectral side of trace formulas as a source for $L$-function
+poles. The present bridge does not engage with the spectral / geometric
+trace-formula side; it works entirely at the Euler-product level. The
+two approaches are in principle compatible but not directly comparable.
+
+\subsection{Adelic / noncommutative geometry (Connes)}
+
+Connes's adelic / noncommutative-geometric reformulation of RH
+\cite{ConnesAdelic} positions $\zeta(s)$ as a spectral trace on an
+adelic space. Again, this engages zero locations directly via spectral
+theory, whereas the present bridge engages Euler-product structure
+only. The present interpretation of $\zeta(s)$ as $\sigma$-symmetric
+trace at the Euler-product level is in principle compatible with a
+spectral interpretation but is at a different level of the argument.
+
+\subsection{Hilbert--P\'olya-style spectral conjectures}
+
+Hilbert--P\'olya-style approaches conjecture an operator whose spectrum
+is the imaginary part of the non-trivial zeros of $\zeta(s)$
+\cite{KeatingSnaith,BerryKeating1999}. The present bridge says nothing
+about such operators; it identifies $\zeta(s)$ as an Euler factor of a
+larger Dedekind $\zeta$, without analysing zeros.
+
+\subsection{The Selberg trace formula}
+
+The Selberg trace formula~\cite{Selberg1956} provides a duality
+between geometric (closed geodesic) data and spectral (Laplacian
+eigenvalue) data on hyperbolic surfaces. The cascade typology shares
+a structural feature with Selberg's setup --- the duality between
+spectral irreducibles ($L_2$) and arithmetic irreducibles ($L_4$) ---
+but the explicit identification at the trace-formula level is not
+pursued here.
+
+\subsection{Comparison summary}
+
+The present bridge is structurally narrower than each of the above
+approaches: it does not engage zero locations, spectral operators, or
+trace formulas. Its contribution is the explicit placement of classical
+$\zeta(s)$ as one of two Euler factors of the cascade's natural $L_4$
+$\zeta$, with both factors interpretable structurally
+($\sigma$-symmetric and $\sigma$-antisymmetric trace) under the named
+hypotheses imported from Paper~II.
+
+\section{Falsifiers and limitations}\label{sec:falsifiers}
+
+The bridge of this paper can be falsified or rendered vacuous in the
+following ways. We list them explicitly for the same reason as Papers~I
+and~II: a paper that does not name its falsifiers does not earn the
+right to be examined.
+
+\begin{enumerate}
+\item \textbf{Failure of H-NaturalIrreducibles.} If the cascade $L_4$
+      closure-irreducibles can be shown to be a different arithmetic
+      object than the $\mathbb{Z}[\varphi]$-primes (for example, a
+      different ring's primes, or rational primes paired with cascade
+      flow data), the identification $\zeta_{L_4} = \zeta_K$ fails, and
+      with it the Euler bridge in the form stated here.
+\item \textbf{Failure of H-EulerBridge.} If the cascade's natural $L_4$
+      $\zeta$ is shown to be a weighted or twisted Euler product rather
+      than the unweighted one in (\ref{eq:zeta_L4_def}), the bridge in
+      this paper would re-target a twisted $L$-function rather than
+      $\zeta_K$, and the structural reading would shift accordingly.
+\item \textbf{Failure of H-SigmaRestrict.} If the cascade spectral
+      involution cannot be identified with $\sigma_K$, the
+      $\sigma$-symmetric / $\sigma$-antisymmetric interpretation of
+      $\zeta(s)$ and $L(s, \chi_5)$ becomes a relabeling of trivial /
+      sign characters, without structural cascade content. The
+      mathematical identity (\ref{eq:bridge_main}) is unaffected.
+\item \textbf{Numerical sim disagreement.} If the sim of
+      \S\ref{sec:reproduction} shows the two sides of
+      (\ref{eq:bridge_main}) disagreeing at any of the tested $s$ values
+      beyond the truncation-error bound, the underlying classical
+      Dedekind factorisation would be in dispute --- which would be
+      surprising given the century-plus of classical work, but the sim
+      check exists precisely to make this falsifier concrete and
+      computable.
+\end{enumerate}
+
+\section{Reproduction}\label{sec:reproduction}
+
+The classical Dedekind factorisation (\ref{eq:factorisation_q5}) and
+hence the Euler bridge (\ref{eq:bridge_main}) are sim-verified by the
+script \texttt{repro/verify\_euler\_bridge.py} accompanying this paper
+(numpy only, deterministic, $\sim$300 lines). The script:
+\begin{itemize}
+\item Sieves rational primes $p \le P_{\max} = 10^5$ and classifies
+      each as split / inert / ramified in $\mathbb{Z}[\varphi]$ (using
+      Paper~II classification, $p \bmod 5$).
+\item Computes $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$ via the
+      $\mathbb{Z}[\varphi]$-Euler product, enumerating prime ideals of
+      $\mathbb{Z}[\varphi]$ by case:
+      $(1 - p^{-s})^{-2}$ for split, $(1 - p^{-2s})^{-1}$ for inert,
+      $(1 - 5^{-s})^{-1}$ for ramified.
+\item Independently computes $\zeta(s)$ via the rational Euler product
+      $\prod_{p \le P_{\max}} (1 - p^{-s})^{-1}$.
+\item Independently computes $L(s, \chi_5)$ via the $\chi_5$-twisted
+      Euler product
+      $\prod_{p \neq 5, p \le P_{\max}} (1 - \chi_5(p) p^{-s})^{-1}$.
+\item Compares $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$ against
+      $\zeta(s) \cdot L(s, \chi_5)$ at $s \in \{2, 3, 4\}$ to 10+
+      decimal digits.
+\end{itemize}
+
+The script is deterministic and produces JSON output and one figure.
+All Euler-product factorisation checks pass at $\ge 10$ decimal digits
+of agreement at $s = 2$ (and progressively higher precision at
+$s = 3, 4$). The check is purely classical-arithmetic; it uses no
+cascade machinery. Its role is to make the classical factorisation
+visibly false-falsifiable: a single numerical disagreement would either
+break the factorisation or expose a bug in the sim.
+
+\section{Conclusion}\label{sec:conclusion}
+
+The closure-irreducibles series, taken together, places classical
+Riemann $\zeta(s)$ within the cascade infrastructure as follows:
+
+\begin{itemize}
+\item \textbf{Paper I:} Five-level typology $L_0$--$L_4$ of
+      closure-irreducibles; critical line $\mathrm{Re}(s) = 1/2$ as
+      $\mathrm{Fix}(\tau_{\mathrm{crit}})$.
+\item \textbf{Paper II:} $L_4$ = classical integer primes via the
+      Dedekind splitting law in $\mathbb{Z}[\varphi]$; universal
+      $\sigma$-pattern across $L_0$--$L_4$.
+\item \textbf{Paper III (the present paper):} Euler product of $L_4$
+      closure-irreducibles is $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$;
+      classical Dedekind factorisation gives $\zeta(s)$ as the
+      $\sigma$-symmetric Euler factor.
+\end{itemize}
+
+The placement is structural, not derivational. Classical $\zeta(s)$
+remains classical $\zeta(s)$, with its zero distribution still the
+subject of the Riemann Hypothesis. What the closure framework adds is
+\emph{location}: $\zeta(s)$ is the $\sigma$-symmetric Euler factor of
+the cascade's natural $L_4$ $\zeta$, and $L(s, \chi_5)$ is its
+$\sigma$-antisymmetric companion. The Hecke obstruction that blocks
+identification of cascade's pentagonal-clock $\hat{\zeta}(z)$ with
+$\zeta(s)$ remains where it is; it lives at a different level of the
+typology and is not in conflict with the present bridge.
+
+The honest scope of the trilogy:
+\begin{itemize}
+\item \emph{We have not proved RH.} The bridge here concerns
+      Euler-product factorisation, not zero locations.
+\item \emph{We have not derived $\zeta(s)$.} The factor $\zeta(s)$ is
+      extracted from $\zeta_{\mathbb{Q}(\sqrt{5})}(s)$ via classical
+      Dedekind factorisation; the cascade identifies its position, not
+      its existence.
+\item \emph{We have placed $\zeta(s)$.} Within the cascade typology,
+      classical Riemann $\zeta$ is now structurally located: it is the
+      $\sigma$-symmetric Euler factor of the natural $L_4$ $\zeta$.
+\end{itemize}
+
+The trilogy is, in this sense, a structural placement programme rather
+than a Millennium-attack programme. We regard the placement itself ---
+classical primes as $L_4$ closure-irreducibles, classical $\zeta$ as
+their $\sigma$-symmetric Euler factor --- as the contribution.
+
+\paragraph{Acknowledgements.}
+This paper builds on classical algebraic number theory (Dedekind,
+Hecke, Davenport, Neukirch, Marcus), on Papers~I and~II of the present
+series, and on the broader Existence / Life / Closure programme. The
+author thanks the classical number-theory community whose century of
+work on Dedekind $\zeta$-functions and Dirichlet $L$-functions is the
+foundation on which this structural reinterpretation rests.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

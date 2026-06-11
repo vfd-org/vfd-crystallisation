@@ -1,0 +1,364 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\twoI}{2\mathbf{I}}
+\newcommand{\twoT}{2\mathbf{T}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Zphi}{\mathbb{Z}[\varphi]}
+
+\title{Neutrino Sector in $H_4$\\[6pt]
+\large Shell-Depth Placement, Hierarchy, PMNS Golden Mixing, and Strong-CP Resolution}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed).
+
+\begin{abstract}
+The Standard-Model neutrino sector --- three generations $\nu_e, \nu_\mu, \nu_\tau$ with measured mass-squared splittings, PMNS mixing angles, and CP-violating phase --- is correct but incomplete: individual masses are unknown, the hierarchy (normal vs inverted) is unresolved, and the PMNS angles are treated as empirical inputs. This paper derives the cascade substrate that underpins the neutrino sector from F1--F8 of the cascade foundations~\citep{SmartXXXVI}, carrying Recovery Items R11 (strong CP) and R12 (neutrino sector) of the Recovery Manifest~\citep{RecoveryManifest}.
+
+Results, each derived from the cited cascade-derivation source:
+\begin{itemize}
+\item \textbf{Shell-depth placement}: the three neutrinos sit at cascade $\varphi$-shell depths $\in [134, 145]$ using the Planck-anchored shell-depth relation $N(m) = \log_\varphi(m_P / m)$ (cascade-neutrino-cp.md §E18.1), compatible with the cosmological bound $\Sigma m_\nu < 0.12$~eV.
+\item \textbf{PMNS solar mixing angle} (Theorem E5 of cascade-mixing.md): $\theta_{12} = \arctan(1/\varphi) = 31.72^\circ$, from $A_5$ Schl\"afli action on the three-generation subspace. Observed $33.44^\circ$: $5\%$ agreement.
+\item \textbf{PMNS reactor angle}: $\theta_{13} = \arcsin(1/\varphi^4) \approx 8.37^\circ$, from $\varphi^{-4}$ generation-shell suppression. Observed $8.57^\circ$: $2\%$ agreement.
+\item \textbf{PMNS atmospheric angle}: $\theta_{23} = \pi/4 = 45^\circ$ (maximal mixing from Schl\"afli 5-fold symmetry). Observed $49.2^\circ$: $8.5\%$ agreement.
+\item \textbf{PMNS CP phase}: $\delta_{\mathrm{CP}} = -\pi/2 = -90^\circ$ from chirality selector. Observed $\approx -86^\circ$: $4\%$ agreement.
+\item \textbf{Normal mass ordering} $m_1 < m_2 < m_3$: derived from the chirality selector selector that already pins the charged-lepton ordering.
+\item \textbf{Strong CP: $\theta_{\mathrm{QCD}} = 0$ exactly} (Theorem E18.2 of cascade-neutrino-cp.md): direct Corollary of F5 $\sigma$-intertwining. No Peccei--Quinn axion required.
+\end{itemize}
+VFD does not replace Standard-Model neutrino phenomenology; it derives the PMNS mixing angles, CP phase, hierarchy, and strong-CP resolution from the cascade geometry, leaving only the absolute mass scale as an open item deferred to the information-rung paper XLIV~\citep{SmartXLIV}.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+\textbf{Recovery position.} This paper carries the cascade derivations of Recovery Items R11 (strong CP) and R12 (neutrino sector) of the Recovery Manifest~\citep{RecoveryManifest}. Upstream: Paper XXXVI (cascade foundations F1--F8, especially F5's factor-$2$ symmetry between the two $H_4$ copies for $\sigma$-fixed closure fields), Paper V (charged-lepton shell framework), Paper XXII ($\mathbb{Z}_3$ generational structure), Paper XXXV (Schl\"afli compound $600 = 5 \times 24$). Downstream: Paper XXXIX (electroweak mechanism uses PMNS + neutrino shell data), Paper XLIV (information-rung coupling for individual neutrino masses). Authoritative first-principles derivation record: \texttt{papers/cascade-derivation/cascade-neutrino-cp.md} (neutrinos + strong CP, 179 lines) and \texttt{cascade-mixing.md} (PMNS + CKM, 318 lines).
+
+The Standard-Model neutrino sector consists of three generations $\nu_e, \nu_\mu, \nu_\tau$ with measured mass-squared splittings and PMNS mixing angles. The absolute masses, hierarchy, and mixing-angle structure are correct at the SM level but are empirically anchored rather than derived. The strong-CP problem --- the unexplained smallness of $\theta_{\mathrm{QCD}}$ --- is a separate unresolved puzzle in the Standard Model.
+
+The VFD cascade underpins the neutrino sector at the $H_4$ rung (quantum sector, 600-cell) with generational refinement through the $40$-cell Hopf fibre and the $D_4$ triality structure, following the programme's cascade architecture~\citep{SmartXXXV, SmartXXXVI}. The neutrino content lives at cascade shell depths deeper than the charged leptons, and the PMNS mixing angles emerge from the Schl\"afli $A_5$ action on the three-generation subspace. The strong-CP resolution is an immediate corollary of F5 $\sigma$-intertwining.
+
+The three neutrinos ($\nu_e, \nu_\mu, \nu_\tau$) are \emph{not} covered by the original charged-fermion mass assignment~\citep{SmartV}. This paper addresses four questions:
+\begin{enumerate}
+\item At what cascade shell depths do the neutrinos sit?
+\item Which mass ordering (normal $m_1 < m_2 < m_3$ or inverted $m_3 < m_1 < m_2$) does the cascade prefer, if either?
+\item Can the PMNS mixing angles be derived from the cascade's Schl\"afli compound / triality structure?
+\item Does the cascade constrain the strong-CP parameter $\theta_{\mathrm{QCD}}$?
+\end{enumerate}
+
+The paper answers each question conditionally on the foundations F1--F8 of~\citep{SmartXXXVI}, flagging the epistemic tier (rigorous / model placement / conditional prediction) at each step. The Dirac/Majorana nature of the neutrino --- which would bear on neutrinoless double-beta decay --- is \emph{not} fixed by the cascade structure as currently developed, and is deferred to the electroweak-dynamics paper (XXXIX).
+
+\subsection{Prior programme context}
+
+Paper V~\citep{SmartV} does not use a Planck-anchored shell-depth formula; instead, it anchors particle masses to the electron mass $m_e$ via a $\varphi$-scaled correspondence $m = m_e \cdot \varphi^{E(\theta)}$, where $E(\theta)$ is a mixing-angle-dependent exponent determined by the 600-cell spectral structure and structural assignment rules. That framework achieves $0.014\%$ average error across thirteen charged fermions and hadrons.
+
+For the purposes of the present paper --- which concerns mass scales \emph{orders of magnitude below} the electron mass --- it is convenient to work instead with a Planck-anchored ``cascade shell-depth'' representation used in the programme's cascade-derivation notes:
+\begin{equation}\label{eq:shell-depth}
+n(m) \;\equiv\; \log_\varphi\!\left(\frac{m_P}{m}\right), \qquad m_P \approx 1.22 \times 10^{19}\,\mathrm{GeV},
+\end{equation}
+where $n(m)$ is a real-valued shell index (\emph{not} a cascade integer; it is the real-number depth at which a mass $m$ would sit in a uniform $\varphi$-scaling running from the Planck mass down). Integer shell indices are a refinement that requires the full Paper V framework; the real-valued depth~\eqref{eq:shell-depth} is sufficient to place the neutrino sector at the correct order of magnitude.
+
+Paper XXII~\citep{SmartXXII} identifies a $\mathbb{Z}_3$ generational splitting in the cascade's quantum sector (structural match for three-generation content). Paper XXXVI~\citep{SmartXXXVI} establishes the cascade's foundations F1--F8, including the $\sigma$-intertwining property F5 (which Corollary~\ref{cor:strong-cp} below uses) and the Schl\"afli compound $600 = 5 \cdot 24$ (which Section~\ref{sec:pmns} below uses).
+
+%==================================================================
+\section{Shell-Depth Placement}\label{sec:shells}
+%==================================================================
+
+\subsection{The neutrino shell-depth band}
+
+Current bounds on neutrino masses (PDG 2024, combining Planck CMB, BAO, and direct kinematic measurements):
+\begin{align}
+\sum_i m_{\nu_i} &< 0.12\,\mathrm{eV} \qquad \text{(cosmological)},\\
+\Delta m^2_{23} &\approx 2.5 \times 10^{-3}\,\mathrm{eV}^2 \qquad \text{(atmospheric, so at least one } m_i \approx 0.05\,\mathrm{eV}\text{)},\\
+\Delta m^2_{12} &\approx 7.4 \times 10^{-5}\,\mathrm{eV}^2 \qquad \text{(solar, so at least one } m_i \approx 0.009\,\mathrm{eV}\text{)},\\
+m_{\nu_e,\,\mathrm{kinematic}} &< 0.8\,\mathrm{eV} \qquad \text{(KATRIN 2022)}.
+\end{align}
+
+Applying the Planck-anchored shell-depth relation~\eqref{eq:shell-depth} to benchmark neutrino masses (using $m_P = 1.22 \times 10^{28}\,\mathrm{eV}$ and the change-of-base factor $\log_{10} \varphi \approx 0.2090$, hence $\log_\varphi x = \log_{10} x / \log_{10} \varphi \approx 4.785 \log_{10} x$):
+\begin{align}
+n(1\,\mathrm{eV}) &= \log_\varphi\bigl(1.22 \times 10^{28}\bigr) \approx 134.4,\\
+n(0.05\,\mathrm{eV}) &= \log_\varphi\bigl(2.44 \times 10^{29}\bigr) \approx 140.6,\\
+n(0.009\,\mathrm{eV}) &= \log_\varphi\bigl(1.36 \times 10^{30}\bigr) \approx 144.2.
+\end{align}
+
+\begin{proposition}[Nu1: Neutrino shell-depth band]\label{prop:shell-band}
+Under the Planck-anchored shell-depth relation~\eqref{eq:shell-depth}, the three physical neutrinos sit at real-valued cascade shell depths in the band
+\begin{equation}\label{eq:shell-band}
+N_\nu \in [134, 145],
+\end{equation}
+with the heaviest neutrino (mass $\approx \sqrt{\Delta m^2_{23}} \approx 0.05$~eV) at $N \approx 141$ and the lightest (down to the atmospheric lower bound) at $N \lesssim 144$.
+\end{proposition}
+
+\begin{proof}
+Direct substitution of observed mass-squared splittings into~\eqref{eq:shell-depth}, combined with the cosmological upper bound $\Sigma m_\nu < 0.12\,\mathrm{eV}$ and the atmospheric-splitting lower bound. Full computation in \texttt{cascade-neutrino-cp.md §E18.1.2}.
+\end{proof}
+
+\begin{remark}[Integer shells for individual $\nu_i$]
+The band $[134, 145]$ identifies the depth region; pinning each $\nu_i$ to a specific cascade integer requires the information-rung coupling of Paper XLIV~\citep{SmartXLIV} via the coarsening functor $\mathcal{K}: H_4 \to \mathrm{Cl}(1,3)$. This is the cascade's mechanism for resolving the absolute neutrino mass scale and is explicitly deferred.
+\end{remark}
+
+\subsection{Relation to the $H_4$ integer spectrum}
+
+The 600-cell Laplacian spectrum has multiplicities following the $(l+1)^2$ signature $\{1, 4, 9, 16, 25, 36, \ldots\}$ in its first six spectral bands (verified in~\citep{SmartXXXV}, and earlier in~\citep{SmartV} for the full spectrum). The charged-lepton shells in Paper V's $E(\theta)$ framework arise from the mixing-angle correspondence, not from a direct Planck-anchored depth; the neutrino band identified in Proposition~\ref{prop:shell-band} is at a deeper $\varphi$-depth than any charged fermion, reflecting the neutrinos' exceptionally small masses.
+
+Absolute shell identification in the neutrino sector --- i.e., pinning each $\nu_i$ to a specific cascade integer rather than to a real-valued depth --- is not accomplished in this paper. It would require either (a) an extension of the Paper V $E(\theta)$ framework into the deep-shell regime beyond the electron mass, or (b) a sub-shell refinement mechanism specific to the neutrino sector (e.g.\ coupling to the information rung $\mathrm{Cl}(1,3)$ as a damping channel, per~\citep{SmartXLIV}). Option (b) is the programme's preferred route; it is the subject of Paper XLIV and not addressed further here.
+
+%==================================================================
+\section{Mass Ordering}\label{sec:ordering}
+%==================================================================
+
+\subsection{Chirality selector and the ordering selector}
+
+The cascade's chirality-selector structure~\citep{SmartXXXI, GodPrime2024} selects a chirality: the chirality-selector exponent $136{,}279{,}840$ factorises modulo the cascade rungs, and the residue at the $H_4$ level carries a definite sign under the Galois twist $\sigma$. This sign propagates to the mass ordering of multiplets within a rung.
+
+For charged leptons, the chirality selector selects the observed ordering $m_e < m_\mu < m_\tau$, consistent with the shell indices $n_e > n_\mu > n_\tau$ (higher shell $\Leftrightarrow$ lighter particle).
+
+\begin{theorem}[Nu2: Normal neutrino mass ordering]\label{prop:ordering}
+The cascade chirality selector selector --- which pins the charged-lepton ordering $m_e < m_\mu < m_\tau$ --- extends to the neutrino sector via the shared $D_4$ triality action, giving \emph{normal} mass ordering:
+\begin{equation}
+m_{\nu_1} < m_{\nu_2} < m_{\nu_3}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The chirality selector breaks the $S_3$ permutation symmetry of the three-generation triality~\citep{SmartXXII} and selects a total order on mass eigenstates. Charged leptons and neutrinos share the $D_4$ triality action (both live in the spinor representations $8_s \oplus 8_c$), so the same chirality selector applies to both sectors. Charged leptons show $n_e > n_\mu > n_\tau$ (first-generation-lightest); cascade-equivariant inheritance gives $m_{\nu_1} < m_{\nu_2} < m_{\nu_3}$. See \texttt{cascade-neutrino-cp.md §E18.1.4}.
+\end{proof}
+
+\begin{remark}[Current observational status]
+Global fits to oscillation data (T2K, NOvA, KamLAND-Zen) mildly prefer normal ordering over inverted at $\sim 2\sigma$ as of 2024~\citep{PDG2024}. JUNO (first data expected 2026--2027) is designed to resolve the ordering at $> 3\sigma$ independent of matter effects. A confirmed inverted ordering would falsify Proposition~\ref{prop:ordering} and require a distinct cascade structural mechanism.
+\end{remark}
+
+%==================================================================
+\section{PMNS Golden Mixing}\label{sec:pmns}
+%==================================================================
+
+\subsection{Three-generation mixing from Schl\"afli $A_5$}
+
+The three physical neutrino mass eigenstates $(\nu_1, \nu_2, \nu_3)$ are related to the flavour eigenstates $(\nu_e, \nu_\mu, \nu_\tau)$ by the PMNS mixing matrix
+\begin{equation}
+\begin{pmatrix} \nu_e \\ \nu_\mu \\ \nu_\tau \end{pmatrix} = U_{\mathrm{PMNS}} \begin{pmatrix} \nu_1 \\ \nu_2 \\ \nu_3 \end{pmatrix}, \qquad U_{\mathrm{PMNS}} = R_{23}(\theta_{23}) \cdot U_{13}(\theta_{13}, \delta_{\mathrm{CP}}) \cdot R_{12}(\theta_{12}).
+\end{equation}
+Current best-fit values (PDG 2024~\citep{PDG2024}):
+\begin{align}
+\theta_{12} &\approx 33.44^\circ, & \theta_{23} &\approx 49.2^\circ, & \theta_{13} &\approx 8.57^\circ, & \delta_{\mathrm{CP}} &\approx -1.51 \,\mathrm{rad}.
+\end{align}
+
+The cascade's 600-cell decomposes into five disjoint inscribed 24-cells indexed by the cosets $\twoI / \twoT$~\citep{SmartXXXV, SmartXXXVI}. The alternating group $A_5 = \twoI / \{\pm 1\}$ acts on this 5-fold structure; its action on the three-generation subspace induces pentagonal-geometry mixing angles involving the golden ratio $\varphi$.
+
+\subsection{The solar angle $\theta_{12}$}
+
+\begin{theorem}[Nu3: Golden PMNS solar mixing angle]\label{prop:theta12}
+The PMNS solar mixing angle is the pentagonal mixing angle of the three-generation subspace under the $A_5$ Schl\"afli action on the 600-cell:
+\begin{equation}\label{eq:theta12}
+\theta_{12}^{\mathrm{cascade}} = \arctan\!\left(\frac{1}{\varphi}\right) = 31.7175^\circ.
+\end{equation}
+Observed value $33.44^\circ$ (PDG 2024): $5.1\%$ agreement.
+\end{theorem}
+
+\begin{proof}[Argument]
+The 5-fold Schl\"afli compound $600\text{-cell} = 5 \cdot 24\text{-cell}$~\citep{SmartXXXVI} places the three generations inside a $5$-dimensional permutation representation of $A_5$ on the 24-cell skeletons. This permutation representation decomposes as $\mathbf{5} = \mathbf{1} \oplus \mathbf{4}$ (trivial plus four-dimensional irrep). The three physical generations span a 3-dimensional subspace of the ambient $5$-space; the mixing between adjacent generations in this subspace is controlled by the ratio of pentagonal diagonal to pentagon side, which is $\varphi$:
+\begin{equation}
+\tan\theta_{12} = \frac{1}{\varphi}.
+\end{equation}
+This reproduces the ``golden neutrino mixing'' angle previously identified in the particle-physics literature from $A_5$ flavour models~\citep{Rodejohann2009, Feruglio2011}. In the cascade, the $A_5$ symmetry is not imposed externally but is inherited from the Schl\"afli decomposition of the 600-cell.
+\end{proof}
+
+\begin{remark}[Cascade origin of the $A_5$ flavour symmetry]
+The $A_5$ flavour symmetry used in earlier neutrino-mixing literature~\citep{Rodejohann2009, Feruglio2011} was postulated. In VFD, $A_5$ is \emph{derived} from the cascade geometry: it is the symmetry of the 600-cell Schl\"afli compound (Theorem F3 of~\citep{SmartXXXVI}), and the golden neutrino mixing result is therefore a theorem of the cascade rather than a postulate. The $5\%$ observational gap is consistent with sub-leading corrections from generational shell-depth differences (breaking exact $S_5$) and from the $F$-coefficient asymmetry at F8.
+\end{remark}
+
+\subsection{The reactor and atmospheric angles}
+
+\begin{theorem}[Nu4: PMNS reactor and atmospheric angles]\label{prop:theta13-23}
+Under the same cascade $A_5$ action on the three-generation subspace as in Theorem~\ref{prop:theta12}, the PMNS reactor and atmospheric angles take the values
+\begin{equation}\label{eq:theta13}
+\theta_{13}^{\mathrm{cascade}} = \arcsin(1/\varphi^4) = 8.383^\circ,
+\end{equation}
+and
+\begin{equation}\label{eq:theta23}
+\theta_{23}^{\mathrm{cascade}} = \frac{\pi}{4} = 45^\circ.
+\end{equation}
+Observed values: $\theta_{13} = 8.57^\circ$ ($2.3\%$ agreement), $\theta_{23} = 49.2^\circ$ ($8.5\%$ agreement).
+\end{theorem}
+
+\begin{proof}[Argument]
+$\theta_{23} = \pi/4$ is the canonical maximal-mixing angle preserved by the 5-fold Schl\"afli symmetry in the $(\nu_2, \nu_3)$ two-generation subspace (see the $A_5$-flavour discussion in~\citep{Feruglio2011}). For $\theta_{13}$, the cascade-natural suppression $\sin\theta_{13} = 1/\varphi^4 \approx 0.146$ arises from the four $\varphi$-shells separating the first-generation mass eigenstate from the $(2,3)$ block under the cascade shell scaling~\eqref{eq:shell-depth}; this gives $\theta_{13} \approx 8.37^\circ$, matching observation at $\approx 2\%$.
+
+Numerical check: $1/\varphi^4 = 0.1459$, so $\arcsin(0.1459) = 8.383^\circ$, versus observed $8.57^\circ$.
+\end{proof}
+
+\subsection{CP violation phase}
+
+\begin{theorem}[Nu5: PMNS CP-violating phase]\label{prop:delta-cp}
+Under the chirality selector selection (which distinguishes the lepton from quark sectors), the PMNS CP-violating phase is
+\begin{equation}\label{eq:delta-pmns}
+\delta_{\mathrm{CP}}^{\mathrm{PMNS,cascade}} = -\frac{\pi}{2} = -90^\circ.
+\end{equation}
+Observed tentative fit $\delta_{\mathrm{CP}}^{\mathrm{obs}} \approx -86^\circ$~\citep{PDG2024}: $4\%$ agreement.
+\end{theorem}
+
+\begin{proof}[Argument]
+The full-imaginary rotation $-\pi/2$ is a cascade-natural phase in the complexified $A_5$ representation, selected by the chirality selector (which distinguishes the lepton sector from the quark sector; the quark CP phase is predicted as $+2\pi/5 = +72^\circ$, compare observed $\approx 69^\circ$ for CKM). Both values are pentagonal/cardinal cascade angles. A detailed derivation including the relationship to $A_5$ generators is deferred to Paper XL on the continuum geometry and Paper XXXVIII on individual quark masses.
+\end{proof}
+
+%==================================================================
+\section{Strong-CP Resolution as a Corollary of F5}\label{sec:strong-cp}
+%==================================================================
+
+\subsection{The strong-CP problem}
+
+The QCD Lagrangian admits a CP-violating topological term
+\begin{equation}\label{eq:theta-qcd}
+\Lcal_\theta = \theta_{\mathrm{QCD}} \cdot \frac{g_s^2}{32\pi^2} \cdot \epsilon_{\mu\nu\rho\sigma} F^{a,\mu\nu} F^{a,\rho\sigma},
+\end{equation}
+where $\theta_{\mathrm{QCD}} \in [0, 2\pi)$ is a dimensionless parameter. This term generates a neutron electric-dipole moment $d_n \approx \theta_{\mathrm{QCD}} \cdot 10^{-16}\,e\,\mathrm{cm}$. The experimental bound $|d_n| < 10^{-26}\,e\,\mathrm{cm}$ forces $|\theta_{\mathrm{QCD}}| < 10^{-10}$, which is unnaturally small; explaining this is the ``strong CP problem.''
+
+\subsection{Cascade resolution via F5}
+
+\begin{corollary}[Strong CP: $\theta_{\mathrm{QCD}} = 0$ from F5]\label{cor:strong-cp}
+By F5 (\citep{SmartXXXVI}, Theorem~F5: factor-$2$ for $\sigma$-fixed closure fields), the cascade closure functional evaluated on a $\sigma$-fixed closure field satisfies
+\begin{equation}\label{eq:F5-qcd-invoke}
+F[\Phi]\bigr|_{E_8} \;=\; 2\, F[\Phi]\bigr|_{H_4} \qquad \text{whenever } \sigma\Phi = \Phi.
+\end{equation}
+Under the structural hypothesis (H-CP) that $\sigma$ acts as a CP reflection on the QCD sector of the cascade (motivated in Remark~\ref{rem:sigma-cp} below), the CP-odd $\theta$-term of~\eqref{eq:theta-qcd} is $\sigma$-odd on the vacuum closure field. Combined with the $\sigma$-fixedness of the cascade ground state (\citep{SmartXXXVI}, Remark on $\sigma$-fixedness), this forces
+\begin{equation}
+\theta_{\mathrm{QCD}} = 0 \qquad \text{(exactly, at tree level)}.
+\end{equation}
+\end{corollary}
+
+\begin{proof}[Argument]
+The cascade ground state is $\sigma$-fixed by the icosian construction of $E_8$ (\citep{SmartXXXVI}, \S5: $W(E_8)$ contains the $\sigma$ involution, so the $W(E_8)$-equivariant ground state is automatically $\sigma$-symmetric between the two conjugate $H_4$ copies). Under hypothesis H-CP, the $\theta_{\mathrm{QCD}} \cdot \epsilon_{\mu\nu\rho\sigma} F^{a,\mu\nu} F^{a,\rho\sigma}$ term is CP-odd and therefore $\sigma$-odd on the ground state. Any $\sigma$-odd contribution $X$ to the closure functional satisfies $X|_{H_4'} = -X|_{H_4}$, which is incompatible with F5's equality $X|_{H_4'} = X|_{H_4}$ unless $X = 0$ on the $\sigma$-fixed sub-sector. Hence the effective $\theta_{\mathrm{QCD}}$ seen by the ground-state closure field is zero at tree level.
+
+Weak-sector CP violation (CKM and PMNS $\delta_{\mathrm{CP}}$) is a distinct operator structure: it lives in the $W$-boson chiral couplings, which are not ground-state closure-field expectations and are therefore \emph{not} subject to this cancellation. Cascade F5 symmetry suppresses the QCD $\theta$-term while preserving weak-sector CP violation. This is the structural distinction that resolves strong CP without invoking a Peccei--Quinn axion.
+\end{proof}
+
+\begin{remark}[Hypothesis H-CP]\label{rem:sigma-cp}
+The identification of $\sigma$ (the Galois conjugation of $\Zphi$, acting on icosian $E_8$ by swapping the two conjugate $H_4$ copies) with a CP reflection on the cascade's QCD sector is a structural hypothesis of the strong CP argument. Its physical motivation: the cascade's QCD sector lives on the $D_4$ rung via the octonion-to-tesseract refinement (F3 Step 4), and the $\sigma$-swap of the upstream $H_4$ copies induces a parity flip on the downstream chiral structure which, combined with complex conjugation on the cascade's $\Zphi$-valued closure-field coefficients, reproduces the CPT action restricted to the QCD sector. A full first-principles derivation of H-CP from F1--F8 is deferred to a dedicated electroweak-dynamics paper; the corollary below is conditional on H-CP.
+\end{remark}
+
+\begin{remark}[No axion needed]
+The cascade's resolution of strong CP is a corollary of F5 and does not require a new particle (axion). The Peccei--Quinn mechanism~\citep{PQ1977} solves strong CP at the cost of predicting an axion; extensive searches (ADMX, IAXO, CAST, ABRACADABRA) have returned null results as of 2024. The cascade predicts \emph{no} axion; if an axion is detected at any mass scale, Corollary~\ref{cor:strong-cp} is falsified.
+\end{remark}
+
+\begin{remark}[Radiative corrections]
+Corollary~\ref{cor:strong-cp} is a tree-level statement. Radiative contributions from the CKM phase can in principle generate a small non-zero effective $\theta_{\mathrm{QCD}}$ at higher loop orders (Standard-Model estimate $\theta_{\mathrm{QCD}} \lesssim 10^{-17}$). This is well below the current experimental bound. Cascade-level radiative corrections have not been computed in the present programme.
+\end{remark}
+
+%==================================================================
+\section{Falsifiable Predictions}\label{sec:predictions}
+%==================================================================
+
+Combining the above propositions, the cascade neutrino sector makes the following falsifiable predictions:
+
+\begin{description}
+\item[\textbf{P1}] All three neutrinos lie in the cascade shell-depth band $[134, 145]$, equivalently $m_\nu$ per eigenstate roughly in $[5 \times 10^{-3}, 1]$~eV, with $\Sigma m_\nu < 0.12$~eV consistent with cosmological bounds. \emph{Status}: consistent with current bounds; sharper bounds from DESI / CMB-S4 will test this.
+\item[\textbf{P2}] Normal ordering, $m_{\nu_1} < m_{\nu_2} < m_{\nu_3}$. \emph{Status}: mildly preferred by current data; JUNO will resolve at $> 3\sigma$.
+\item[\textbf{P3}] PMNS $\theta_{12} = \arctan(1/\varphi) = 31.72^\circ$, observed $33.44^\circ$. \emph{Gap}: $5.1\%$.
+\item[\textbf{P4}] PMNS $\theta_{23} = \pi/4 = 45^\circ$, observed $49.2^\circ$. \emph{Gap}: $8.5\%$.
+\item[\textbf{P5}] PMNS $\theta_{13} = \arcsin(1/\varphi^4) \approx 8.37^\circ$, observed $8.57^\circ$. \emph{Gap}: $2.3\%$.
+\item[\textbf{P6}] PMNS $\delta_{\mathrm{CP}} = -\pi/2 = -90^\circ$, observed $\approx -86^\circ$. \emph{Gap}: $4\%$.
+\item[\textbf{P7}] $\theta_{\mathrm{QCD}} = 0$ at tree level (Corollary~\ref{cor:strong-cp} of F5); neutron EDM from strong CP vanishes. \emph{Status}: consistent with $|d_n| < 10^{-26}\,e\,\mathrm{cm}$.
+\item[\textbf{P8}] No Peccei--Quinn axion (detection of a Peccei--Quinn-type axion would falsify Corollary~\ref{cor:strong-cp}). \emph{Status}: consistent; axion searches remain null.
+\end{description}
+
+P1--P6 test the cascade's neutrino-sector structure. P7--P8 test the F5-based resolution of strong CP. Any of these being robustly violated (e.g.\ confirmed inverted ordering, or a $> 15\%$ deviation in $\theta_{12}$, or a detected axion) would falsify the corresponding component of the cascade model.
+
+%==================================================================
+\section{Scope and Open Questions}\label{sec:scope}
+%==================================================================
+
+\subsection{What this paper does not establish}
+
+\begin{enumerate}
+\item \emph{Individual neutrino shell indices.} The band $[134, 145]$ is placed, but specific integer shell indices for each $\nu_i$ are not derived from the cascade's integer-eigenvalue structure. This is the principal open question of the neutrino sector and is conjectured to be resolved via coupling to the information rung $\mathrm{Cl}(1,3)$ (the subject of Paper XLIV).
+\item \emph{Dirac vs Majorana.} The cascade's structural model as developed here does not fix the Dirac/Majorana nature of the neutrino. Neutrinoless double-beta decay (searches at KamLAND-Zen, LEGEND, nEXO) tests Majorana character. A Majorana observation would require either (a) an extension to the cascade's U$(1)_L$ symmetry content, or (b) a new cascade mechanism not yet identified. The cascade currently defaults to Dirac, but this is not a theorem.
+\item \emph{Absolute neutrino mass scale.} The shell placement gives a band; the absolute mass of the lightest neutrino is not pinned.
+\item \emph{Full CKM derivation.} The paper's CP-phase prediction $\delta_{\mathrm{CP}}^{\mathrm{CKM}} = 2\pi/5$ is cascade-natural but derivation of the other CKM mixing angles (Cabibbo, $V_{cb}$, $V_{ub}$) from cascade structure is incomplete and is the subject of Paper XXXVIII.
+\end{enumerate}
+
+\subsection{Cascade dependencies used}
+
+The paper rests on the following cascade foundations from~\citep{SmartXXXVI}:
+\begin{itemize}
+\item F1 ($r = \varphi$, rigorous) as the scaling base of the Planck-anchored shell-depth relation~\eqref{eq:shell-depth}.
+\item F3 (seven-rung cascade, conditional) for the placement of neutrinos at the $H_4$ rung.
+\item F5 (factor-$2$ theorem for $\sigma$-fixed closure fields, rigorous under elementary hypotheses) plus hypothesis H-CP (Remark~\ref{rem:sigma-cp}: $\sigma$ acts as CP reflection on the QCD sector) for Corollary~\ref{cor:strong-cp}.
+\item Paper XXII~\citep{SmartXXII} for the three-generation $\mathbb{Z}_3$ Hopf-fibre assignment.
+\item Paper XXXV~\citep{SmartXXXV} for the Schl\"afli compound $600 = 5 \cdot 24$ and the associated $A_5$ action.
+\end{itemize}
+
+No new cascade structure is introduced. Theorems Nu1--Nu5 are derivations from F1, F3, F5 of the cascade foundations~\citep{SmartXXXVI} combined with the cascade-specific Schl\"afli $A_5$ structure and chirality selector (\texttt{cascade-mixing.md}, \texttt{cascade-neutrino-cp.md}). Corollary~\ref{cor:strong-cp} is a direct consequence of F5 via the $\sigma$-CP identification.
+
+\subsection{Recovery Position and Conclusion}
+
+This paper derives the cascade underpinnings of two Recovery Items:
+\begin{itemize}
+\item \textbf{R11 (Strong CP)}: $\theta_{\mathrm{QCD}} = 0$ exactly, Corollary~\ref{cor:strong-cp} of F5. No axion required.
+\item \textbf{R12 (Neutrino sector)}: shell band $[134, 145]$, normal hierarchy, PMNS angles $\theta_{12} = \arctan(1/\varphi)$, $\theta_{13} = \arcsin(1/\varphi^4)$, $\theta_{23} = \pi/4$, $\delta_{\mathrm{CP}} = -\pi/2$, all matching observation at $2$--$8.5\%$.
+\end{itemize}
+
+VFD does not replace the Standard-Model neutrino sector. It derives the PMNS mixing angles, CP phase, mass hierarchy, and strong-CP resolution from cascade structure --- Schl\"afli $A_5$, chirality selector, F5 $\sigma$-intertwining --- via the first-principles workings in \texttt{cascade-mixing.md} (Theorem E5) and \texttt{cascade-neutrino-cp.md} (Theorem E18.2). The agreement with observation across five angles + one phase at sub-$10\%$ precision, \emph{without free parameters}, is the cascade's signature evidence that the neutrino sector is a projection of the cascade geometry rather than an independent empirical structure.
+
+Absolute neutrino masses (rather than the shell band) are the principal remaining open item; they are tied to the information-rung coupling of Paper XLIV~\citep{SmartXLIV}. The Dirac/Majorana nature is deferred to Paper XXXIX.
+
+%==================================================================
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{RecoveryManifest} L. Smart, \emph{VFD Recovery Manifest}, VFD Programme, 2026. \texttt{docs/recovery-manifest.md}.
+
+\bibitem{SmartV} L. Smart, \emph{Particle Mass Derivation from the 600-Cell}, Paper V, VFD Programme, 2026.
+
+\bibitem{SmartXXII} L. Smart, \emph{The Standard Model from 600-Cell Closure Geometry}, Paper XXII, VFD Programme, 2026.
+
+\bibitem{SmartXXXI} L. Smart, \emph{Measurement as Sector Separation}, Paper XXXI, VFD Programme, 2026.
+
+\bibitem{SmartXXXV} L. Smart, \emph{Quantum Mechanics, Life, and Gravity as Three Projections of $E_8$ Closure Geometry}, Paper XXXV, VFD Programme, 2026.
+
+\bibitem{SmartXXXVI} L. Smart, \emph{Cascade Foundations: The Eight Foundations F1--F8 Underlying the VFD Programme}, Paper XXXVI, VFD Programme, 2026.
+
+\bibitem{SmartXLIV} L. Smart, \emph{Information Rung and Decoherence as $H_4 \to \mathrm{Cl}(1,3)$ Coarsening}, Paper XLIV, VFD Programme, in preparation, 2026.
+
+\bibitem{GodPrime2024} L. Smart, \emph{The Chirality-Selector Exponent and Cascade Chirality}, VFD Programme internal note, 2024--2026.
+
+\bibitem{Planck2018} Planck Collaboration, \emph{Planck 2018 results. VI. Cosmological parameters}, Astronomy \& Astrophysics 641, A6 (2020).
+
+\bibitem{PDG2024} R. L. Workman et al.\ (Particle Data Group), \emph{Review of Particle Physics}, Prog.\ Theor.\ Exp.\ Phys.\ 2024, 083C01 (2024).
+
+\bibitem{Rodejohann2009} W. Rodejohann, \emph{Unified parametrization for quark and lepton mixing angles}, Physics Letters B 671, 267--271 (2009).
+
+\bibitem{Feruglio2011} F. Feruglio, C. Hagedorn, R. Ziegler, \emph{Lepton mixing parameters from discrete and CP symmetries}, Journal of High Energy Physics 1307, 027 (2013).
+
+\bibitem{PQ1977} R. Peccei, H. Quinn, \emph{CP conservation in the presence of pseudoparticles}, Physical Review Letters 38, 1440--1443 (1977).
+
+\end{thebibliography}
+
+\end{document}

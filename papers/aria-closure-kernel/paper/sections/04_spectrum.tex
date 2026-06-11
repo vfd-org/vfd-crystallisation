@@ -1,0 +1,99 @@
+% =====================================================================
+\section{The Laplacian spectrum}\label{sec:spectrum}
+% =====================================================================
+
+The unweighted graph Laplacian $\Lop = D - A$ on $\Rsixhundred$
+numerically resolves into nine distinct eigenvalue classes whose
+values match the closed-form $\mathbb{Z}[\Ph]$ list given in
+Table~\ref{tab:spectrum} to machine precision; multiplicities sum
+to $|V| = 120$. The spectrum is computed numerically by
+\texttt{repro/verify\_kernel.py:laplacian\_spectrum} (a single
+$120\times 120$ symmetric eigendecomposition, deterministic at
+machine precision); the closed-form identification is made by
+algebraic recognition of the displayed values, not by an exact
+arithmetic derivation in this paper.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Computed Laplacian spectrum of $\Lop$ on $\Rsixhundred$.
+Closed-form values in $\mathbb{Z}[\Ph]$ alongside the numerical
+values returned by \texttt{repro/verify\_kernel.py}; multiplicities
+sum to $120$.}
+\label{tab:spectrum}
+\begin{tabular}{c c c}
+\toprule
+Closed-form eigenvalue & Numerical value & Multiplicity \\
+\midrule
+$0$            & machine zero ($\sim 10^{-15}$)         & $1$ \\
+$12 - 6\Ph$    & $2.2918$  & $4$ \\
+$12 - 4\Ph$    & $5.5279$  & $9$ \\
+$9$            & $9.0000$  & $16$ \\
+$12$           & $12.0000$ & $25$ \\
+$14$           & $14.0000$ & $36$ \\
+$4\Ph + 8$     & $14.4721$ & $9$ \\
+$15$           & $15.0000$ & $16$ \\
+$6\Ph + 6$     & $15.7082$ & $4$ \\
+\midrule
+\multicolumn{2}{r}{\textbf{Total multiplicity:}} & $\mathbf{120}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Closed-form check.} Using $\Ph = (1+\sqrt{5})/2$:
+\begin{align*}
+12 - 6\Ph &= 12 - 3(1+\sqrt{5}) = 9 - 3\sqrt{5} \approx 2.2918, \\
+12 - 4\Ph &= 12 - 2(1+\sqrt{5}) = 10 - 2\sqrt{5} \approx 5.5279, \\
+4\Ph + 8 &= 2(1+\sqrt{5}) + 8 = 10 + 2\sqrt{5} \approx 14.4721, \\
+6\Ph + 6 &= 3(1+\sqrt{5}) + 6 = 9 + 3\sqrt{5} \approx 15.7082.
+\end{align*}
+The eigenvalue pairs $\{12 - 6\Ph,\ 6\Ph+6\}$ (both with multiplicity
+$4$) and $\{12 - 4\Ph,\ 4\Ph+8\}$ (both with multiplicity $9$)
+are conjugate under the Galois automorphism
+$\sigma\colon \sqrt{5} \mapsto -\sqrt{5}$ on $\mathbb{Z}[\Ph]$. The
+fixed-point eigenvalues $\{0, 9, 12, 14, 15\}$ are rational and
+have multiplicities $\{1, 16, 25, 36, 16\}$ (sum $94$); the
+$\sigma$-paired eigenvalues have total multiplicity $4+4+9+9 = 26$.
+
+\paragraph{$\sigma$-fix vs $\sigma$-paired multiplicity split.}
+$94/120 = 78.3\%$ of the spectrum is $\sigma$-fixed (rational); the
+remaining $26/120 = 21.7\%$ is $\sigma$-paired. We report this
+structural fact about the spectrum and do not use it in any claim
+made by this paper.
+
+\subsection{Operator-norm bound on $\Cph$}\label{ssec:opnorm_check}
+
+The smallest eigenvalue of $\Cph = \Lop + \Ph^{-2} I$ is
+\[
+\lambda_{\min}(\Cph) \;=\; 0 + \Ph^{-2} \;=\; \Ph^{-2}
+\;\approx\; 0.381966,
+\]
+and the operator-norm bound is
+\[
+\|\Cph^{-1}\| \;=\; 1/\Ph^{-2} \;=\; \Ph^{2} \;\approx\; 2.618034.
+\]
+\texttt{repro/verify\_kernel.py:operator\_norm\_check} reports
+$\|\Cph^{-1}\| = 2.618034$ (numerical) vs $\Ph^{2} = 2.618034$
+(predicted) — match to six decimal places. The largest eigenvalue
+of $\Cph$ is
+$\lambda_{\max}(\Lop) + \Ph^{-2} = (6\Ph + 6) + \Ph^{-2}
+= 9 + 3\sqrt{5} + (2 - \Ph) \approx 16.0902$.
+
+\subsection{H$_4$ irrep block decomposition (imported context)}
+\label{ssec:irrep}
+
+The eigenspaces of $\Lop$ partition into H$_4$-proper and
+$\sigma$-twin Coxeter exponent classes. For H$_4$ proper the
+exponents are $\{1, 11, 19, 29\}$; under the
+$\sigma$-automorphism of $\mathbb{Z}[\Ph]$ the exponents become
+$\{7, 13, 17, 23\}$. The $\sigma$-orbit projector basis used in the
+aria-chess companion's recurrent
+layer~\citep{SmartAriaChess2026} realises this block decomposition
+at machine precision and provides a spectrally clean
+H$_4$-equivariant basis there.
+
+This subsection is imported context from the aria-chess companion;
+the irrep block decomposition is \emph{not} verified by
+\texttt{repro/verify\_kernel.py} of this paper and is not used as
+a load-bearing fact for any operator-witness claim made here. We
+include the labelling for orientation only.

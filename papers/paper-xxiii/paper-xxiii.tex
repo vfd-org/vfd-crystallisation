@@ -40,7 +40,7 @@ Paper~XXII established that the $E_8$ root system contains two conjugate copies 
 
 A relative rotation parameter $\theta$ is introduced as a geometric degree of freedom, not a time coordinate. As $\theta$ varies, pairs of vertices from the two 600-cell copies enter and leave geometric alignment. An event is defined as a vertex pair that becomes admissible for at least one value of $\theta$, and each event is assigned a birth angle: the first value of $\theta$ at which the pair becomes admissible.
 
-The set of events carries a natural strict partial order given by birth-angle comparison. This ordering is proved to be irreflexive, transitive, and non-total. It is not assumed as a background temporal structure; it is derived from the phase-overlap structure of the dual 600-cell geometry. The paper interprets this order as an emergent temporal structure: temporal succession arises from the ordering of admissible configurations rather than from an external clock. A no-canonical-global-clock theorem shows that no unique real-valued total ordering is determined solely by the event structure. A worked example on two pentagons demonstrates the construction explicitly.
+Once a reference phase origin $\theta = 0$ is fixed, birth-angle comparison defines a strict order relation on events that is irreflexive and transitive; its non-totality is demonstrated explicitly only in the pentagon toy model of Section~\ref{sec:example}, while in the 600-cell model non-totality is flagged as a separate combinatorial question not settled here. The relation is gauge-dependent in a mild sense: a shift of the reference phase origin leaves the event set fixed (events are static vertex pairs) and cyclically shifts the birth-angle labels assigned to them, so the order is intrinsic to \emph{the geometry together with a chosen phase basepoint}, not to the geometry alone. Conditional on the pentagon-model non-totality and assuming analogous incomparable layers in the 600-cell model, a no-canonical-global-clock statement shows that no unique real-valued total ordering extending $\prec$ can be picked out by its order type alone. A worked example on two pentagons demonstrates the construction explicitly.
 
 The paper does not derive general relativity. It establishes a first step: a causal-type event order derived from discrete closure geometry without assuming spacetime.
 \end{abstract}
@@ -49,7 +49,7 @@ The paper does not derive general relativity. It establishes a first step: a cau
 \section{Introduction}\label{sec:intro}
 %==================================================================
 
-Paper~XXII~\citep{SmartXXII} showed that the $E_8$ root system contains two conjugate copies of the 600-cell (the double cover, 240 roots $\to$ 120 vertex pairs). Papers~IX--X~\citep{SmartIX, SmartX} established that continuous geometry and a gravitational analogue can emerge from the constraint manifold structure. The present paper takes the next step: deriving a causal event structure --- and with it, emergent time --- from the phase-overlap geometry of the dual 600-cell system.
+Paper~XXII~\citep{SmartXXII} showed that the $E_8$ root system contains two conjugate copies of the 600-cell (the double cover, 240 roots $\to$ 120 vertex pairs). Papers~IX--X~\citep{SmartIX, SmartX} sketched formal pathways by which continuous geometry and a gravitational analogue might be approached from the constraint manifold, but do not derive full general relativity or a Lorentzian spacetime. The present paper takes a modest next step in the same direction: deriving a causal-type event structure --- and a corresponding emergent ordering interpretable as temporal --- from the phase-overlap geometry of the dual 600-cell system, \emph{once a reference phase origin for the relative rotation parameter $\theta$ has been chosen}.
 
 \subsection*{Core claim}
 
@@ -57,7 +57,7 @@ Time is not assumed as a parameter. An emergent temporal structure arises as the
 
 \subsection*{Scope}
 
-This paper constructs the event structure and proves its ordering properties. It does not derive the Einstein field equations, define a metric, or construct full general relativity. Those are subsequent targets (Papers~XXIV--XXV). The goal here is to show that temporal ordering can arise from geometry alone.
+This paper constructs the event structure and proves its ordering properties. It does not derive the Einstein field equations, define a metric, or construct full general relativity. Those are subsequent targets: Paper~XXIV addresses observer frames; Paper~XXV addresses metric emergence; Paper~XXVI addresses curvature; Paper~XXVII addresses discrete graph-Poisson field-equation analogues (not Einstein's equations in the ordinary GR sense). The goal here is to show that, once a reference phase origin has been fixed, a temporal-order-like structure arises from the dual-600-cell geometry.
 
 %==================================================================
 \section{The Dual 600-Cell System}\label{sec:dual}
@@ -77,13 +77,13 @@ The graph Laplacian is $L = 12\,I - A$ where $A$ is the adjacency matrix (degree
 The dual 600-cell system consists of:
 \begin{itemize}
     \item $H_1 = H$ (the reference copy),
-    \item $H_2(\theta) = R_\theta\, H$ where $R_\theta \in SO(4)$ is a rotation parameterised by $\theta$,
+    \item $H_2(\theta) = R_{\theta_0 + \theta}\, H$ where $R_\phi \in SO(4)$ is a fixed one-parameter family of rotations (see remark below) and $\theta_0$ is a fixed generic offset chosen so that at $\theta = 0$ the two copies are in general position (no two vertices $v_i \in H_1$ and $w_j \in H_2(0)$ satisfy $\|v_i - w_j(0)\| = \delta$),
 \end{itemize}
-with $\theta$ a geometric parameter, not a time coordinate.
+with $\theta \in \mathbb{R}$ treated as a lifted real phase parameter, not a time coordinate. Cyclic identification $\theta \sim \theta + 2\pi$ (or whatever the natural period of $R_\phi$ is) is imposed only at the end of any argument that does not depend on the cyclic structure.
 \end{definition}
 
 \begin{remark}
-The rotation $R_\theta$ acts on $\mathbb{R}^4$ and moves the vertices of $H_2$ on $S^3$. The parameter $\theta$ may be taken along any one-parameter subgroup of $SO(4)$; for definiteness, we use a left-isoclinic rotation $R_\theta(x) = q(\theta) \cdot x$ where $q(\theta) = (\cos\theta/2, \sin\theta/2, 0, 0)$ is a unit quaternion. The qualitative construction below requires only such a one-parameter family of relative configurations. Symmetry-related choices yield equivalent formulations; more general choices may alter quantitative details without changing the overall framework.
+The rotation $R_\phi$ acts on $\mathbb{R}^4$ and moves the vertices of $H_2$ on $S^3$. The parameter $\phi$ may be taken along any one-parameter subgroup of $SO(4)$; for definiteness, we use a left-isoclinic rotation $R_\phi(x) = q(\phi) \cdot x$ where $q(\phi) = (\cos\phi/2, \sin\phi/2, 0, 0)$ is a unit quaternion. The generic-position choice of $\theta_0$ excludes measure-zero alignments at the basepoint; this avoids the edge case in which an admissibility interval straddles the phase origin. The qualitative construction below requires only such a one-parameter family of relative configurations and a generic basepoint.
 \end{remark}
 
 %==================================================================
@@ -133,15 +133,17 @@ An \emph{event} is a pair $(v_i, w_j)$ such that there exists at least one $\the
 \end{definition}
 
 \begin{definition}[Birth angle]\label{def:birth}
-For an event $e = (v_i, w_j)$, define its \emph{birth angle}
+Fix the dual system and reference phase basepoint $\theta_0$ as in Definition~\ref{def:dual}. For an event $e = (v_i, w_j)$, define its \emph{birth angle}
 \begin{equation}\label{eq:birth}
-    \theta_b(e) = \inf\{\theta \in [0,2\pi) : \Acal(v_i, w_j, \theta) = 1\}.
+    \theta_b(e) = \inf\{\theta \geq 0 : \Acal(v_i, w_j, \theta) = 1\},
 \end{equation}
+where the infimum is taken over the lifted real parameter $\theta \geq 0$ measured from the basepoint. Because the admissibility set $\{\theta : \Acal(v_i, w_j, \theta) = 1\}$ is a finite union of open intervals (strict inequality in Definition~\ref{def:overlap}) and the generic basepoint choice in Definition~\ref{def:dual} places $\theta = 0$ outside all admissibility intervals, the infimum $\theta_b(e)$ is well-defined and equals the left boundary of the first admissibility interval after the basepoint. Events are then understood to be admissible for $\theta$ slightly exceeding $\theta_b(e)$.
 \end{definition}
 
 \begin{remark}
-The birth angle is the first geometric configuration at which a given vertex pair becomes admissible. Events are static geometric objects, each equipped with an intrinsic emergence parameter $\theta_b$.
+Birth angles depend on the chosen reference phase origin: a shift $\theta \mapsto \theta + \Delta$ of the basepoint leaves the event set (the set of vertex pairs that are ever admissible) unchanged, and cyclically shifts every birth-angle label by $-\Delta$ modulo $2\pi$. Events are therefore static geometric objects, but their emergence parameter $\theta_b$ is intrinsic only relative to a chosen phase basepoint.
 \end{remark}
+
 
 Let
 \[
@@ -168,20 +170,16 @@ The parameter $\theta$ is not interpreted as time. The ordering is defined entir
 
 \subsection{Properties}
 
-\begin{proposition}[Strict partial order]\label{prop:partial}
-The relation $\prec$ on $\Ecal$ is a strict partial order: it is irreflexive, transitive, and non-total.
+\begin{proposition}[Strict order; non-totality demonstrated in the pentagon model]\label{prop:partial}
+Once a reference phase origin has been fixed, the relation $\prec$ on $\Ecal$ is a strict order: it is irreflexive and transitive. It is non-total \emph{provided} some pair of distinct events shares the same birth angle. Such coincidences occur in the two-pentagon toy model of Section~\ref{sec:example}; whether they occur in the full 600-cell model is a separate combinatorial question that this paper does not settle.
 \end{proposition}
 
 \begin{proof}
 \textbf{Irreflexivity:} For any $e$, $\theta_b(e) < \theta_b(e)$ is false, so $\neg(e \prec e)$.
 
-\textbf{Transitivity:} If $e_1 \prec e_2$ and $e_2 \prec e_3$, then
-\[
-\theta_b(e_1) < \theta_b(e_2) < \theta_b(e_3),
-\]
-hence $\theta_b(e_1) < \theta_b(e_3)$ and therefore $e_1 \prec e_3$.
+\textbf{Transitivity:} If $e_1 \prec e_2$ and $e_2 \prec e_3$, then $\theta_b(e_1) < \theta_b(e_2) < \theta_b(e_3)$, hence $\theta_b(e_1) < \theta_b(e_3)$ and therefore $e_1 \prec e_3$.
 
-\textbf{Non-totality:} If $\theta_b(e_1) = \theta_b(e_2)$, then neither $e_1 \prec e_2$ nor $e_2 \prec e_1$ holds. Such events are incomparable. The pentagon example (Section~\ref{sec:example}) exhibits multiple events sharing the same birth angle.
+\textbf{Conditional non-totality:} If $\theta_b(e_1) = \theta_b(e_2)$ for distinct events $e_1, e_2$, then neither $e_1 \prec e_2$ nor $e_2 \prec e_1$ holds, so the pair is incomparable. The pentagon example (Section~\ref{sec:example}) exhibits such coincidences explicitly. In the 600-cell model the existence of same-birth-angle pairs is a symmetry-driven expectation but not established here.
 \end{proof}
 
 \subsection{Interpretation}
@@ -190,7 +188,7 @@ hence $\theta_b(e_1) < \theta_b(e_3)$ and therefore $e_1 \prec e_3$.
 \textit{The partial order $\prec$ on $\Ecal$ defines an emergent temporal structure.}
 \end{quote}
 
-Temporal succession arises from the ordering of admissible configurations. The ordering is not imposed externally; it is determined by the geometry of phase-overlap.
+Temporal succession arises from the ordering of admissible configurations. The ordering is not imposed externally; it is determined by the phase-overlap geometry together with a chosen phase origin.
 
 \begin{remark}
 The parameter $\theta$ is not interpreted as physical time. It is a coordinate on the space of relative configurations of the dual 600-cell system. The temporal structure arises not from $\theta$ itself, but from the order type induced by the emergence of admissible configurations. In particular, only the ordering of birth angles is used; no metric or duration is derived from $\theta$.
@@ -204,17 +202,27 @@ An event represents the minimal admissible interaction channel between the two p
 \section{No Canonical Global Clock}\label{sec:noclock}
 %==================================================================
 
-\begin{theorem}[No canonical global clock]\label{thm:noclock}
-There is no unique function $t: \Ecal \to \mathbb{R}$ determined solely by $(\Ecal, \prec)$ such that
-\[
-e_1 \prec e_2 \Rightarrow t(e_1) < t(e_2)
-\]
-and which totally orders all events.
+\begin{theorem}[Linear extensions not unique in the presence of incomparable events]\label{thm:noclock}
+Suppose $(\Ecal, \prec)$ contains at least one pair $e_1, e_2$ of incomparable events. Then there exist at least two distinct linear extensions $\leq_1, \leq_2$ of $\prec$, with $e_1 <_1 e_2$ and $e_2 <_2 e_1$. In particular, any order-preserving map $t : \Ecal \to \mathbb{R}$ totally ordering $\Ecal$ is one of an entire family of such maps, none of which is singled out by $(\Ecal, \prec)$ alone.
 \end{theorem}
 
 \begin{proof}
-Since $(\Ecal,\prec)$ is a non-total partial order, there exist incomparable events $e_1, e_2$ with neither $e_1 \prec e_2$ nor $e_2 \prec e_1$. Any total ordering extending $\prec$ must arbitrarily assign $t(e_1) < t(e_2)$ or $t(e_2) < t(e_1)$. Different choices yield distinct extensions. Hence no unique such function exists.
+Let $e_1, e_2 \in \Ecal$ be incomparable under $\prec$. For each $i \in \{1, 2\}$, let $R_i$ denote the binary relation
+\[
+  R_1 = \prec \cup \{(e_1, e_2)\}, \qquad R_2 = \prec \cup \{(e_2, e_1)\},
+\]
+and let $\prec_i$ denote the transitive closure of $R_i$ on $\Ecal$.
+
+\emph{Claim:} each $\prec_i$ is a strict partial order (irreflexive and transitive).
+
+Transitivity is automatic for any transitive closure. For irreflexivity, consider $\prec_1$. Suppose for contradiction that $x \prec_1 x$ for some $x$. Then there is a chain $x = z_0, z_1, \ldots, z_n = x$ in which each consecutive step $(z_j, z_{j+1})$ is either in $\prec$ or equal to $(e_1, e_2)$. If no step uses $(e_1, e_2)$, then all steps are in the strict partial order $\prec$, contradicting irreflexivity of $\prec$. If at least one step uses $(e_1, e_2)$, consider any chain from $e_2$ back to $e_1$ within this cyclic sequence: each segment between consecutive uses of $(e_1, e_2)$ is a $\prec$-chain (after taking transitive closure of $\prec$, which equals $\prec$), so we obtain $e_2 \prec e_1$, contradicting the incomparability of $e_1$ and $e_2$ under $\prec$. Hence $\prec_1$ is irreflexive. The argument for $\prec_2$ is symmetric.
+
+By Szpilrajn's extension theorem~\citep{Szpilrajn1930}, each strict partial order $\prec_i$ on $\Ecal$ extends to a total order $\leq_i$ on $\Ecal$ that also refines $\prec$. By construction $e_1 <_1 e_2$ and $e_2 <_2 e_1$, so $\leq_1 \neq \leq_2$. Any strictly-monotone real-valued map $t_i : (\Ecal, \leq_i) \to \mathbb{R}$ then satisfies $t_1(e_1) < t_1(e_2)$ but $t_2(e_2) < t_2(e_1)$; neither is determined uniquely by $(\Ecal, \prec)$.
 \end{proof}
+
+\begin{remark}
+This theorem is informational, not metaphysical. It does not say that physical time fails to exist; it says that the discrete order type alone does not single out a preferred linear extension. A physical clock function would require additional structure (e.g.\ a choice of observer worldline or a quantitative alignment-magnitude function on events), not supplied by $(\Ecal, \prec)$ itself.
+\end{remark}
 
 \begin{remark}
 A total ordering consistent with $\prec$ (a linear extension) may be chosen, but it is not uniquely determined by the event structure. This reflects the absence of a preferred global temporal parameter.
@@ -250,27 +258,28 @@ This provides a combinatorial precursor to observer-dependent simultaneity: all 
 \begin{example}[Two pentagons on $S^1$]\label{ex:pentagon}
 Consider the 2D analogue: two regular pentagons on the unit circle $S^1$.
 
-\textbf{Setup.} Pentagon $P_1$ has vertices at angles $\alpha_k = 2\pi k/5$ for $k = 0, \ldots, 4$. Pentagon $P_2(\theta)$ has vertices at $\beta_l(\theta) = 2\pi l/5 + \theta$.
+\textbf{Setup.} Pentagon $P_1$ has vertices at angles $\alpha_k = 2\pi k/5$ for $k = 0, \ldots, 4$. Pentagon $P_2(\theta)$ has vertices at $\beta_l(\theta) = 2\pi l/5 + \theta_0 + \theta$, where $\theta_0 = \pi/5$ places $P_2(0)$ midway between adjacent $P_1$-vertices. This makes the minimum $P_1$--$P_2(0)$ distance exactly $\pi/5 > \delta$, so $\theta = 0$ lies strictly outside every admissibility interval (no pair is admissible at the basepoint).
 
-\textbf{Overlap.} For threshold $\delta = \pi/20$ (much smaller than the vertex spacing $2\pi/5$), the overlap $\Omega(\alpha_k, \beta_l, \theta) = 1$ iff $|\alpha_k - \beta_l(\theta)| < \delta$ (mod $2\pi$).
+\textbf{Overlap.} For threshold $\delta = \pi/20$ (much smaller than the vertex spacing $2\pi/5$), the overlap $\Omega(\alpha_k, \beta_l, \theta) = 1$ iff $|\alpha_k - \beta_l(\theta)| < \delta$ (mod $2\pi$), equivalently $|2\pi(k-l)/5 - \theta_0 - \theta| < \delta$ (mod $2\pi$).
 
 \textbf{Admissibility.} All overlapping pairs are admissible in this simplified model (no closure constraint beyond proximity).
 
-\textbf{Events.} As $\theta$ increases from 0 to $2\pi/5$, the alignment pattern evolves:
+\textbf{Events.} Pair $(k, l)$ is admissible precisely on the open interval $\theta \in \bigl(2\pi(k-l)/5 - \pi/5 - \delta, \; 2\pi(k-l)/5 - \pi/5 + \delta\bigr)$ (mod $2\pi$). As $\theta$ increases from $0$:
 \begin{itemize}
-    \item Events born at $\theta = 0$: $\{(k,k) : k = 0,\ldots,4\}$, each with birth angle $\theta_b(k,k) = 0$. These are \textit{simultaneous}: 5 mutually incomparable events.
-    \item $\theta \in (0, 2\pi/5 - \delta)$: No new pairs become aligned. No new events born.
-    \item Events born at $\theta = 2\pi/5$: $\{(k, k{-}1) : k = 0,\ldots,4\}$, each with birth angle $\theta_b(k,k{-}1) = 2\pi/5$. Again 5 simultaneous events.
+    \item First pairs to become admissible are those with $k - l = 1$: the pair $(k, k{-}1)$ is admissible on $\theta \in (\pi/5 - \delta, \; \pi/5 + \delta)$. All five such pairs $\{(k, k{-}1) : k = 0, \ldots, 4\}$ share admissibility interval and common birth angle $\theta_b = \pi/5 - \delta$. This first layer consists of 5 mutually incomparable simultaneous events.
+    \item For $\theta \in (\pi/5 + \delta, \;3\pi/5 - \delta)$, no pair is admissible.
+    \item Second layer: pairs with $k - l = 2$, i.e.\ $\{(k, k{-}2) : k = 0, \ldots, 4\}$, each admissible on $\theta \in (3\pi/5 - \delta, \;3\pi/5 + \delta)$ with common birth angle $\theta_b = 3\pi/5 - \delta$.
+    \item Further layers at $\theta \approx \pi, 7\pi/5, 9\pi/5$ corresponding to offsets $k - l = 3, 4, 0 \pmod 5$ respectively, each a 5-event layer.
 \end{itemize}
 
-\textbf{Ordering.} The 5 events born at $\theta_b = 0$ all precede the 5 events born at $\theta_b = 2\pi/5$ (since $0 < 2\pi/5$). Within each group of 5, no ordering exists (all share the same birth angle). The partial order has two ``layers'':
+\textbf{Ordering.} Layers are totally ordered by their birth angles. Within each layer of 5, no $\prec$-ordering exists (all share the same birth angle). The order on the first two layers is:
 \[
-    \{(0,0), (1,1), (2,2), (3,3), (4,4)\} \;\prec\; \{(0,4), (1,0), (2,1), (3,2), (4,3)\}
+    \{(k, k{-}1) : k = 0,\ldots,4\} \;\prec\; \{(k, k{-}2) : k = 0,\ldots,4\} \;\prec\; \cdots
 \]
 
-\textbf{No global clock.} At $\theta = 0$, the 5 events are incomparable, so any total ordering of them is an observer choice. There are $5! = 120$ distinct observers at this layer alone.
+\textbf{No order-type-unique clock.} The 5 events in any one layer are pairwise incomparable, so Theorem~\ref{thm:noclock} applies: any total ordering refining $\prec$ within a layer is an arbitrary choice. Enumerating permutations gives $5! = 120$ distinct linear extensions restricted to each layer.
 
-\textbf{Analogy to the 600-cell.} The pentagon has 5 vertices and $\varphi$-geometry (diagonal/side $= \varphi$). The 600-cell is the 4D generalisation with 120 vertices. The event structure scales accordingly: at each discrete alignment angle, up to 120 simultaneous events occur, and the partial ordering between alignment angles gives the emergent temporal structure.
+\textbf{Analogy to the 600-cell (heuristic).} The pentagon has 5 vertices and $\varphi$-geometry (diagonal/side $= \varphi$). The 600-cell is the 4D generalisation with 120 vertices. The pentagon suggests, but does not establish, that analogous same-birth-angle layers may occur in the 600-cell model at symmetry-driven alignment angles; the precise multiplicities are not computed here.
 \end{example}
 
 %==================================================================
@@ -298,7 +307,7 @@ Observer & Linear extension of $\prec$ & Choice of compatible ordering \\
 \end{tabular}
 \end{table}
 
-\textbf{Key distinction:} In the VFD framework, the event set and its ordering are \textit{derived} from the constraint geometry. In causal set theory, they are postulated as fundamental. The VFD approach provides a geometric origin for the causal structure that causal set theory takes as given.
+\textbf{Key distinction:} In the VFD framework, the event set and its ordering are \emph{proposed} as derived from the constraint geometry (together with a chosen phase basepoint). In causal set theory, they are postulated as fundamental. The VFD approach proposes a geometric source for an event order that causal set theory takes as primitive.
 
 %==================================================================
 \section{Discussion}\label{sec:discussion}
@@ -310,8 +319,8 @@ Observer & Linear extension of $\prec$ & Choice of compatible ordering \\
     \item The dual 600-cell system with phase rotation is explicitly defined (Definitions~\ref{def:H}--\ref{def:dual}).
     \item Overlap and admissibility are explicitly constructed (Definitions~\ref{def:overlap}--\ref{def:admissible}).
     \item Events are defined as admissible overlap configurations (Definition~\ref{def:event}).
-    \item The ordering relation $\prec$ is proved to be a strict partial order (Proposition~\ref{prop:partial}).
-    \item The no-global-clock theorem is proved (Theorem~\ref{thm:noclock}).
+    \item The ordering relation $\prec$ is proved to be a strict order; non-totality is proved explicitly in the pentagon toy model and flagged as conditional in the 600-cell case (Proposition~\ref{prop:partial}).
+    \item A no-order-type-unique-global-clock theorem, conditional on the existence of incomparable events, is proved (Theorem~\ref{thm:noclock}).
     \item Observers are defined as linear extensions, with multiplicity proved (Proposition~\ref{prop:observers}).
     \item A worked example demonstrates all constructions explicitly.
 \end{itemize}
@@ -320,7 +329,7 @@ Observer & Linear extension of $\prec$ & Choice of compatible ordering \\
 
 \begin{itemize}
     \item No metric is derived. The partial order gives temporal ordering but not durations.
-    \item No Einstein equations. The curvature-gravity connection of Papers~IX--X is not upgraded to field equations.
+    \item No Einstein equations. The formal pathways and structural analogies of Papers~IX--X are not upgraded here to field equations; that target is Paper~XXVII.
     \item No Lorentz invariance. The event structure has discrete symmetry ($H_4$), not continuous Lorentz symmetry.
     \item No spatial geometry. The present paper addresses only temporal ordering; spatial structure requires further work.
 \end{itemize}
@@ -341,11 +350,11 @@ This completes the connection:
 \section{Conclusion}\label{sec:conclusion}
 %==================================================================
 
-Time is not assumed in the VFD closure framework. An emergent temporal structure is realised as the birth-angle ordering of admissible overlap configurations between two phase-rotated copies of the 600-cell constraint geometry. The ordering is irreflexive, transitive, and non-total (proved). No canonical global clock is determined by the event structure (proved). Different observers correspond to different linear extensions of the partial order, agreeing on ordered events but potentially disagreeing on simultaneous ones.
+Time is not assumed in the VFD closure framework. An emergent temporal structure is realised as the birth-angle ordering of admissible overlap configurations between two phase-rotated copies of the 600-cell constraint geometry, once a reference phase origin has been chosen. The ordering is irreflexive and transitive (proved); non-totality is proved explicitly in the pentagon toy model and extends to the 600-cell model whenever the generic basepoint still leaves same-birth-angle pairs (an expectation supported by the pentagon analogue but not a theorem of this paper). Conditional on incomparable events, Szpilrajn's extension theorem gives multiple distinct linear extensions, and no one of them is determined by the event structure alone. Different observers correspond to different linear extensions of the partial order, agreeing on ordered events but potentially disagreeing on simultaneous ones.
 
-This is the first step toward gravity within the VFD programme. The next steps --- metric structure (Paper~XXIV) and field equations (Paper~XXV) --- will build on this event structure. The present paper establishes only the temporal ordering, not the full spacetime geometry.
+This is the first step toward gravity within the VFD programme. The subsequent steps --- observer frames (Paper~XXIV), metric emergence (Paper~XXV), curvature (Paper~XXVI), and a discrete graph-Poisson field-equation analogue (Paper~XXVII) --- build on this event structure. The present paper establishes only the order-type-level temporal structure, not the full spacetime geometry.
 
-No external time variable, spacetime manifold, or metric is assumed. The temporal structure arises entirely from the ordering of admissible configurations within the dual 600-cell geometry. This establishes a minimal geometric origin for causal ordering. Subsequent work will address the emergence of metric structure and dynamical laws on top of this event framework.
+No external time variable, spacetime manifold, or metric is assumed. The temporal-order-like structure arises from the ordering of admissible configurations within the dual 600-cell geometry together with a chosen phase basepoint. This defines a basepoint-dependent strict event order from the overlap construction; non-totality in the full 600-cell model remains open beyond the pentagon analogue. Subsequent work will address the emergence of metric structure and dynamical laws on top of this event framework.
 
 %==================================================================
 \bibliographystyle{plainnat}
