@@ -1,7 +1,8 @@
-"""Row 10 — Zero statistics (GUE): this row IS the wall.
+"""Row 10 — Zero statistics (GUE): the central wall, measured directly.
 
-Every conjectural row above has the same layer-2 factor: correlations of
-zeros. This row measures those correlations directly on ~2,400 zeta zeros
+The global object behind rows 1, 2 and 8 — zeta's own zero statistics, the
+prototype for the parallel Dirichlet and symmetric-power walls of the other
+rows. This row measures those correlations directly on ~2,000 zeta zeros
 (computed by PARI/GP, out/_zeta_zeros.gp -> out/zeta_zeros.txt) and checks
 them against the random-matrix (GUE) prediction:
 
@@ -24,7 +25,8 @@ Our own 33 icosian-L zeros are far too few for spacing statistics; they are
 reported descriptively, not gated — honesty over decoration.
 
 Layer 2: there is no deeper layer. Proving these correlation laws (or even RH
-itself, which they refine) is the single wall every other row points at.
+itself, which they refine) is the prototype of the walls the other rows
+point at.
 """
 import os
 
@@ -84,8 +86,9 @@ def run(s=None):  # sieve unused
         10, "zero statistics — the wall itself (GUE / pair correlation)",
         "Montgomery (1973) THEOREM for restricted test functions; full GUE "
         "law conjectural (Odlyzko numerics)",
-        "none deeper: these correlations ARE the open global factor of every "
-        "conjectural row above (1, 2, 3, 8) and of RH itself",
+        "none deeper: zeta's zero correlations are the open global object "
+        "behind rows 1, 2 and 8, and the prototype for the parallel "
+        "Dirichlet/symmetric-power walls of rows 3, 5 and 7",
         {"n_zeros": int(t.size), "height": float(t[-1]),
          "spacing_mean": round(mean, 4), "spacing_var": round(var, 4),
          "gue_var": round(float(GUE_VAR), 4),

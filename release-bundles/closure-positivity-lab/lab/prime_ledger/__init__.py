@@ -1,8 +1,11 @@
-"""Prime Phenomena Ledger (WO-VFD-PRIME-LEDGER-001), Phase A.
+"""Prime Phenomena Ledger (WO-VFD-PRIME-LEDGER-001).
 
-Every row factors a prime-distribution phenomenon as
+Nine of the ten rows factor a prime-distribution phenomenon as
   (local: all-finite-places closure product — decidable, verified here)
-  x (global: zero-correlation interference — the wall, stated, never claimed).
+  x (global: a zero-distribution statement for an explicit L-function —
+     open, stated, never claimed).
+The tenth row (Mersenne, row 9) is included precisely because the
+factorisation fails there: it marks the instrument's boundary.
 
 Layer-1 results are classical (Hardy-Littlewood 1923, Dirichlet 1837,
 Chebotarev 1926): this module verifies and organises; it discovers nothing

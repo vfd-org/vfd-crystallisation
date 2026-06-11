@@ -2,8 +2,9 @@
 
 Layer 1 (theorem, verified): the normalized eigenvalue angles of the icosian
 cuspidal form (= curve 31.1-a1/Q(sqrt5), non-CM Hilbert modular) equidistribute
-under the Sato-Tate measure (2/pi) sin^2(theta). THEOREM: Barnet-Lamb-Geraghty-
-Harris-Taylor. We test the geometric Brandt eigenvalues a_q from
+under the Sato-Tate measure (2/pi) sin^2(theta). THEOREM: Barnet-Lamb-Gee-
+Geraghty (The Sato-Tate conjecture for Hilbert modular forms, JAMS 2011).
+We test the geometric Brandt eigenvalues a_q from
 out/a_q_extended.json (the same 664-ideal dataset behind provenance_664.json),
 dropping the Steinberg prime at the level (norm 31), leaving 663 angles.
 
@@ -12,9 +13,9 @@ fluctuation sigma ~ c/sqrt(n); gates are set at 3 sigma BEFORE looking at the
 data, so a pass is a calibrated agreement, not a tuned one.
 
 Layer 2 (the wall): the RATE of equidistribution (effective Sato-Tate, the
-discrepancy decay) is governed by symmetric-power L-functions — the
-sqrt-cancellation regime is the GRH signature. The limit law is proven; the
-rate is the open, RH-adjacent content. Not claimed.
+discrepancy decay) is tied to the analytic behaviour of symmetric-power
+L-functions — the sqrt-cancellation regime is the GRH signature. The limit
+law is proven; the rate is the open, RH-adjacent content. Not claimed.
 """
 import json
 import os
@@ -67,9 +68,10 @@ def run(s=None):  # signature kept uniform; the sieve is unused here
     gate = "all four moments within 3 sigma of Sato-Tate; Ramanujan bound exact"
     return core.row_result(
         7, "Sato-Tate for the icosian cuspidal L (our object)",
-        "THEOREM: Barnet-Lamb-Geraghty-Harris-Taylor (non-CM Hilbert modular)",
-        "the RATE (effective ST / discrepancy decay) = symmetric-power "
-        "L-functions; sqrt-cancellation is the GRH-regime signature — open",
+        "THEOREM: Barnet-Lamb-Gee-Geraghty (Sato-Tate for Hilbert modular forms)",
+        "the RATE (effective ST / discrepancy decay), tied to the analytic "
+        "behaviour of symmetric-power L-functions; sqrt-cancellation is the "
+        "GRH-regime signature — open",
         {"n_angles": n, "dropped": "norm-31 Steinberg prime",
          "moments": {k: round(v, 4) for k, (v, _, _) in checks.items()},
          "st_targets": {"m1": 0.0, "m2": ST_M2, "m3": 0.0, "m4": ST_M4},

@@ -40,9 +40,10 @@ def main():
         "work_order": "WO-VFD-PRIME-LEDGER-001",
         "phase": "complete (A+B+C)",
         "x": core.DEFAULT_X,
-        "thesis": ("every prime-distribution phenomenon factors as "
-                   "(all-finite-places closure product, decidable) x "
-                   "(zero-correlation interference, the single open wall)"),
+        "thesis": ("nine of the ten phenomena factor as (all-finite-places "
+                   "closure product, decidable) x (a zero-distribution "
+                   "statement for an explicit L-function, open); the tenth "
+                   "(Mersenne, row 9) marks where the factorisation fails"),
         "scope": ("layer-1 results are classical (verified, not discovered); "
                   "layer-2 is open in every conjectural row; nothing here "
                   "proves RH, GRH, or any infinitude conjecture"),

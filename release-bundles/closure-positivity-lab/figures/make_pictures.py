@@ -98,8 +98,8 @@ def prime_spectrum(s, kmax=60.0, dk=0.01, xmax=1_000_000):
     P = core.primes_from(s[:xmax]).astype(np.float64)
     lg = np.log(P)
     # Riesz taper (1 - log p / log X): a sharp cutoff Gibbs-rings and smears
-    # the peaks (5/15 aligned); the smooth taper resolves them (13/15, the
-    # rest being close zero-pairs merged at this resolution).
+    # the peaks (5 of 13 in-range zeros aligned); the smooth taper resolves
+    # every zero in the plotted range (13/13).
     w = lg / np.sqrt(P) * (1.0 - lg / np.log(xmax))
     ks = np.arange(0.0, kmax + dk / 2, dk)
     F = np.empty(ks.size)
@@ -129,14 +129,16 @@ def fig_prime_diffraction(s):
     fig.tight_layout()
     fig.savefig(os.path.join(OUT, "fig_prime_diffraction.png"), dpi=160)
     plt.close(fig)
-    # internal validation: do spectrum maxima align with the zeros?
+    # internal validation: every zero in the plotted range must own a peak
+    in_range = zeros[zeros <= ks[-1] - 0.5]
     hits = 0
-    for z in zeros[:15]:
+    for z in in_range:
         i = np.argmin(np.abs(ks - z))
         lo, hi = max(0, i - 50), i + 50
         peak_k = ks[lo + np.argmax(F[lo:hi])]
         hits += abs(peak_k - z) < 0.15
-    print("fig_prime_diffraction.png  (peak alignment: %d/15 zeros within 0.15)" % hits)
+    print("fig_prime_diffraction.png  (peak alignment: %d/%d in-range zeros within 0.15)"
+          % (hits, in_range.size))
     return hits
 
 

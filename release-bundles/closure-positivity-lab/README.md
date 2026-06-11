@@ -45,9 +45,11 @@ The 664/664 provenance and all headline JSON artifacts ship in `out/`.
 
 ## The prime phenomena ledger (complete: 10 rows)
 
-A second experiment on the same instrument: every named prime-distribution
-phenomenon, factored as *(all-finite-places closure product — decidable,
-verified)* × *(zero-correlation interference — the single open wall)*.
+A second experiment on the same instrument: nine of ten named
+prime-distribution phenomena factored as *(all-finite-places closure product
+— decidable, verified)* × *(a zero-distribution statement for an explicit
+L-function — open)*; the tenth (Mersenne) is included precisely to mark
+where the factorisation fails.
 Layer-1 results are classical (Hardy–Littlewood 1923, Dirichlet 1837,
 Chebotarev); this module verifies and organises, it does not discover. No
 infinitude conjecture, RH, or GRH is claimed — the wall row is stated, not crossed.
@@ -59,10 +61,11 @@ python3 -m lab.prime_ledger     # 10 rows, ~11s, writes out/prime_ledger.json
 Two papers:
 - **`papers/prime-phenomena-ledger.pdf`** — "The Prime Field Through One
   Instrument": the verification ledger (what passes, at what gates).
-- **`papers/how-the-primes-work.pdf`** — "How the Primes Work, in Five
+- **`papers/how-the-primes-work.pdf`** — "Prime Patterns in Five Computed
   Pictures": the companion that explains *why* — wheels → one law → the
-  prime/zero duality → Dyson's quasicrystal question → the wall. All five
-  figures computed by `figures/make_pictures.py`, none drawn.
+  prime/zero duality → Dyson's quasicrystal proposal → the open questions,
+  each located in the zeros of an explicit L-function. All five figures
+  computed by `figures/make_pictures.py`, none drawn.
 
 Interactive (**`explorables/index.html`** is the guided tour):
 - `explorables/residue-wheels.html` — pick ANY pattern of primes; the wheels
