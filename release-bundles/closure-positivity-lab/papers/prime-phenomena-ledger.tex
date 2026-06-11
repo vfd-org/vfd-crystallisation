@@ -1,0 +1,267 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\newcommand{\KK}{\mathbb{Q}(\sqrt5)}
+\newcommand{\RH}{\mathrm{RH}}
+\newtheorem{prop}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{scope}{Scope}
+
+\title{The Prime Field Through One Instrument:\\
+a Ten-Row Phenomena Ledger}
+\author{VFD Programme\thanks{Code, gates, and machine-readable artifacts:
+\texttt{github.com/vfd-org/closure-positivity-lab},
+\texttt{lab/prime\_ledger/}, \texttt{out/prime\_ledger.json}.
+Work order WO-VFD-PRIME-LEDGER-001.}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}\noindent
+We run ten named prime-distribution phenomena through one computational
+instrument --- the explicit formula read as prime waves, together with
+per-place admissibility counting --- and publish the results as a ledger.
+The organising observation is a factorisation: every phenomenon tested splits
+into a \emph{local layer} (an all-finite-places product: decidable, classical,
+verified here numerically) and a \emph{global layer} (controlled, via the
+explicit formula, by correlations among zeros of $L$-functions --- open in
+every conjectural case, and open in the \emph{same way}). Headline
+verifications: the twin-prime count below $5\times10^7$ matches the
+Hardy--Littlewood all-places integral to $0.003\%$; eight Polignac gap ratios
+match their local products to $\le 0.25\%$ (gap $210\to 3.1994$ vs $16/5$);
+two hundred Goldbach counts match per-$N$ predictions to $0.65\%$ mean; the
+first Chebyshev lead change reproduces Leech's $x=26{,}861$ exactly; the
+maximal gap below $5\times10^7$ reproduces the record $(220,\,47{,}326{,}693)$;
+and three theorem-grade anchor rows (Dirichlet, Chebotarev in $\KK$,
+Sato--Tate for the icosian cuspidal $L$-function) calibrate the instrument
+against proven mathematics, the last doubling as an audit of our own geometric
+Brandt eigenvalues ($663$ angles, all moments within pre-set $3\sigma$ gates).
+\textbf{Layer-1 results are classical --- verified, not discovered. Nothing
+here proves RH, any GRH, or any infinitude conjecture.} The ledger's sole
+novel claim is organisational: one local motif, one instrument, one wall.
+\end{abstract}
+
+\section{The thesis, and what is not claimed}
+
+Fix the convention of \cite{Flagship,Diffraction}: a ``closure'' condition at
+a finite place $p$ is a congruence-admissibility condition, and the
+\emph{local product} of a pattern is the product over all finite places of its
+admissible-density ratios. The ledger tests one statement:
+
+\begin{quote}
+\textbf{Factorisation thesis.} Every prime-distribution phenomenon below
+factors as (i) a local layer: an all-finite-places product, decidable and
+exactly computable, which fixes \emph{whether} the pattern occurs and at
+\emph{what density}; and (ii) a global layer: a statement about correlations
+among zeros of the relevant $L$-functions, reached through the explicit
+formula, which fixes \emph{infinitude and error terms} and is open in every
+conjectural row.
+\end{quote}
+
+\begin{scope}
+The local results verified here are classical --- Hardy--Littlewood
+\cite{HL1923}, Dirichlet, Chebotarev, Barnet-Lamb--Geraghty--Harris--Taylor
+\cite{BLGHT} --- and the ledger claims no priority over any of them. The
+global statements (twin-prime and Polignac infinitude, binary Goldbach,
+Cram\'er's conjecture, full GUE, RH itself) remain open and are not claimed,
+individually or in aggregate. The contribution is the uniform decomposition,
+the pre-registered gates, and the single reproducible artifact.
+\end{scope}
+
+Three design rules make the ledger an instrument rather than an
+advertisement. \emph{Gates are set before the data are inspected} (for
+statistical rows, at $3\sigma$ under the null; for deterministic rows, on
+exact literature constants). \emph{Anchor rows} --- phenomena that are
+theorems --- run alongside conjectural rows on the same code path; the
+instrument must reproduce proven mathematics exactly or stand indicted.
+\emph{Every row carries a falsifier}, stored in the machine-readable artifact.
+
+\section{The rows}
+
+All computations: sieve to $X=5\times10^7$, native Python/NumPy;
+$\zeta$-zeros to height $2500$ by PARI/GP; total runtime $\sim$11\,s.
+One command: \texttt{python3 -m lab.prime\_ledger}.
+
+\subsection{Multiplicative patterns (rows 1--3)}
+
+\textbf{Row 1, twin primes.} The pattern $\{0,2\}$ is admissible at every
+finite place; the local product is $2C_2$ with
+$C_2=\prod_{p>2}\bigl(1-(p-1)^{-2}\bigr)$, and Hardy--Littlewood's
+conjecture B predicts $\pi_2(x)\sim 2C_2\int_2^x dt/\log^2 t$. Verified:
+$239{,}101$ twins counted below $5\times10^7$ against $239{,}107$ predicted
+(ratio $0.99997$), with the approach visible across checkpoints
+($1.0038 \to 1.0017 \to 0.99997$). \emph{Wall:} infinitude $\leftrightarrow$
+pair correlation of zeros \cite{Goldston}; unconditional frontier: bounded
+gaps $\le 246$ \cite{Maynard}.
+
+\textbf{Row 2, Polignac gaps.} The local product predicts \emph{relative}
+abundances: pairs at even gap $h$ occur
+$\prod_{p\mid h,\,p>2}\frac{p-1}{p-2}$ times as often as twins. Verified at
+eight gaps to $\le0.25\%$: gap $6\to1.9950$ (predicted $2$), gap
+$10\to1.3318$ ($4/3$), gap $30\to2.6633$ ($8/3$), gap $210\to3.1994$
+($16/5$). \emph{Wall:} same as row 1, for every fixed $h$.
+
+\textbf{Row 3, Goldbach.} The same machinery in additive form: ordered
+representations $N=p+q$ track
+$2C_2\prod_{p\mid N,\,p>2}\frac{p-1}{p-2}\int_2^{N-2}\frac{dt}{\log t\,\log(N-t)}$,
+a \emph{per-$N$} prediction. Verified on $200$ consecutive even $N$ near
+$10^6$: mean deviation $0.65\%$, maximum $2.2\%$; the $3\mid N$ doubling is
+conspicuous ($N=10^6{+}2$: $16{,}400$ representations vs $\sim$$8{,}300$--$10{,}800$
+for its neighbours). \emph{Wall:} positivity for every even $N$ (binary
+Goldbach) open; ternary case is a theorem \cite{Helfgott}.
+
+\subsection{Equidistribution anchors (rows 4, 6, 7)}
+
+\textbf{Row 4, primes in arithmetic progressions (theorem).} Admissible
+classes mod $q$ are exactly the residues coprime to $q$ --- the closure
+condition at the places dividing $q$. Verified: equidistribution deviation
+$<0.04\%$ across $q\in\{4,5,12\}$; inadmissible classes exactly empty.
+\emph{Wall:} the error term --- square-root cancellation is GRH for Dirichlet
+$L$-functions.
+
+\textbf{Row 6, splitting in $\KK$ (theorem; the programme's base field).}
+$p$ splits iff $p\equiv\pm1\pmod 5$. Verified: split fraction $0.49993$;
+and one \emph{exact} closure fact --- a twin pair $(p,p+2)$ with
+$p\equiv3\pmod5$ forces $5\mid p+2$, so exactly one such pair exists,
+$(3,5)$; the sieve finds exactly one. The Brandt prime ideals of
+\cite{Diffraction} lie over precisely these split/inert primes.
+\emph{Wall:} error term $=$ zeros of $\zeta_{\KK}$.
+
+\textbf{Row 7, Sato--Tate for the icosian cuspidal $L$ (theorem
+\cite{BLGHT}; self-audit).} The normalized Brandt eigenvalue angles of the
+non-CM Hilbert modular form behind \cite{Diffraction} must equidistribute
+under $(2/\pi)\sin^2\theta$. Tested on the $663$ good-prime angles (the
+norm-$31$ Steinberg prime dropped; $31$ splits, and only the level ideal is
+removed): moments $(0.0005,\,0.2515,\,-0.0000,\,0.1265)$ against
+$(0,\,\tfrac14,\,0,\,\tfrac18)$, all inside pre-set $3\sigma$ gates;
+Kolmogorov--Smirnov distance $0.034$ ($5\%$ critical value
+$1.36/\sqrt{663}=0.053$). Because Sato--Tate is a \emph{theorem} for this
+object, the row audits our geometric eigenvalues, not the conjecture: a
+persistent deviation would indict the Brandt data. \emph{Wall:} the
+\emph{rate} (effective Sato--Tate) $=$ symmetric-power $L$-functions;
+$\sqrt{\phantom{n}}$-cancellation is the GRH-regime signature.
+
+\subsection{Interference rows (rows 5, 10)}
+
+\textbf{Row 5, Chebyshev bias.} In explicit-formula terms the bias is
+interference: the prime-\emph{square} wave loads one residue class,
+displacing counts by $\sim\sqrt x/\log x$ --- an asymmetric fringe on the
+same instrument as the prime-wave reconstruction of \cite{Diffraction}.
+Verified: first mod-$4$ lead change at exactly $x=26{,}861$ \cite{Leech};
+lead fraction $99.93\%$ of primes below $5\times10^7$; mod-$3$ bias never
+reverses below the sieve bound (first reversal known near $6\times10^{11}$).
+\emph{Wall:} the logarithmic density $0.9959\ldots$ of the lead set is a
+theorem only under GRH $+$ linear independence \cite{RubinsteinSarnak};
+unconditionally, even existence of the density is open.
+
+\textbf{Row 10, zero statistics --- the wall itself.} The global factor of
+every conjectural row is measured directly on $1{,}983$ $\zeta$-zeros to
+height $2500$: unfolded spacing mean $1.0011$; level repulsion
+$P(s<0.2)=0.0025$ where Poisson statistics would give $0.181$ --- a
+$70\times$ suppression, the decisive qualitative GUE signature at this
+height; spacing variance $0.1502$ and pair-correlation deviation $0.094$
+from $1-\mathrm{sinc}^2$, both inside the documented finite-height
+correction scale $1/\log(T/2\pi)\approx0.167$ \cite{Berry,Odlyzko}.
+Montgomery's theorem \cite{Montgomery} covers restricted test functions
+only; the full GUE law is conjectural. This row has no deeper layer:
+proving these correlations --- or RH, which they refine --- \emph{is} the
+wall every other row points at.
+
+\subsection{Extremes and the boundary (rows 8, 9)}
+
+\textbf{Row 8, Cram\'er gaps.} Theorem-grade part verified: mean gap equals
+$\log x$ to $\le0.12\%$ in three windows; deterministic part: the maximal
+gap below $5\times10^7$ is exactly $220$, after $47{,}326{,}693$, reproducing
+the record tables; Cram\'er ratio $220/\log^2(47{,}326{,}693)=0.704$. The
+pure exponential model's tail is reported \emph{with} its known defect:
+$P(u>2)=0.113$ vs the model's $0.135$ --- the Hardy--Littlewood correlations
+of rows 1--2 are exactly the corrections the random model misses, a
+cross-row consistency check. \emph{Wall:} Cram\'er's $O(\log^2 p)$ open;
+RH gives only $O(\sqrt p\,\log p)$; unconditional
+$\ll x^{0.525}$ \cite{BHP}.
+
+\textbf{Row 9, Mersenne primes --- the honest boundary.} Shape-constrained
+primes have \emph{no $L$-function handle}: the instrument does not apply,
+and the ledger says so rather than stretching. What survives is rigid local
+structure (every factor $q$ of $2^p-1$ obeys $q\equiv1\bmod 2p$ and
+$q\equiv\pm1\bmod 8$ --- verified on the actual smallest factors) and a
+count heuristic (Lenstra--Pomerance--Wagstaff
+$\approx(e^\gamma/\log2)\log y$: predicts $20.8\pm4.6$ below $y=3300$;
+observed $18$) that is \emph{not} a singular-series consequence.
+Deterministic anchor: a from-scratch Lucas--Lehmer sweep reproduces the
+literature's eighteen exponents exactly. \emph{Wall, doubly open:}
+infinitude of Mersenne primes \emph{and} of Mersenne composites.
+
+\section{The ledger}
+
+\begin{center}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+row & phenomenon & local layer verified & global wall (open unless noted) \\
+\midrule
+1 & twin primes & $0.003\%$ vs HL integral & pair corr.\ of zeros \\
+2 & Polignac gaps & $8$ ratios $\le0.25\%$ & same, each fixed $h$ \\
+3 & Goldbach & $200$ $N$, mean $0.65\%$ & minor arcs / Dirichlet zeros \\
+4 & primes in APs & $<0.04\%$; exact emptiness & error term $=$ GRH
+(\emph{law: theorem}) \\
+5 & Chebyshev bias & Leech's $26{,}861$ exact & density needs GRH$+$LI \\
+6 & splitting in $\KK$ & $0.49993$; $(3,5)$ unique & error $=\zeta_\KK$ zeros
+(\emph{law: theorem}) \\
+7 & Sato--Tate (our $L$) & $663$ angles, $3\sigma$ & rate $=$ sym-power $L$s
+(\emph{law: theorem}) \\
+8 & Cram\'er gaps & mean exact; record $(220)$ & $O(\log^2p)$ vs
+$O(\sqrt p\log p)$ \\
+9 & Mersenne & factors exact; LL $18/18$ & beyond the instrument \\
+10 & zero statistics & GUE at height scale & this row \emph{is} the wall \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Three rows are theorems (4, 6, 7): they are the calibration. One row (9) is
+the deliberate boundary marker. The remaining six share a single open global
+object. That sharing --- checkable row by row, falsifiable row by row --- is
+the ledger's entire claim.
+
+\paragraph{Falsifier for the thesis itself.} A prime-distribution phenomenon
+whose local layer cannot be written as an all-finite-places product, or whose
+global layer does not reduce to zero-correlations through the explicit
+formula, breaks the factorisation thesis; by the ledger's rules it would be
+published as a counterexample row, not omitted.
+
+\begin{thebibliography}{99}\small
+\bibitem{HL1923} G.~H. Hardy, J.~E. Littlewood,
+\emph{Some problems of `Partitio Numerorum' III}, Acta Math.\ 44 (1923).
+\bibitem{Maynard} J.~Maynard, \emph{Small gaps between primes},
+Ann.\ of Math.\ 181 (2015); D.H.J. Polymath, variants.
+\bibitem{Helfgott} H.~Helfgott, \emph{The ternary Goldbach conjecture is
+true}, arXiv:1312.7748 (2013).
+\bibitem{Leech} J.~Leech, \emph{Note on the distribution of prime numbers},
+J.~London Math.\ Soc.\ 32 (1957).
+\bibitem{RubinsteinSarnak} M.~Rubinstein, P.~Sarnak,
+\emph{Chebyshev's bias}, Experiment.\ Math.\ 3 (1994).
+\bibitem{BLGHT} T.~Barnet-Lamb, D.~Geraghty, M.~Harris, R.~Taylor,
+\emph{A family of Calabi--Yau varieties and potential automorphy II},
+Publ.\ RIMS 47 (2011).
+\bibitem{Montgomery} H.~Montgomery, \emph{The pair correlation of zeros of
+the zeta function}, Proc.\ Sympos.\ Pure Math.\ 24 (1973).
+\bibitem{Odlyzko} A.~Odlyzko, \emph{The $10^{20}$-th zero of the Riemann
+zeta function and 175 million of its neighbors} (1992).
+\bibitem{Berry} M.~Berry, \emph{Semiclassical formula for the number
+variance of the Riemann zeros}, Nonlinearity 1 (1988).
+\bibitem{Goldston} D.~Goldston, \emph{On the pair correlation conjecture
+for zeros of the Riemann zeta-function}, J.~reine angew.\ Math.\ 385 (1988).
+\bibitem{BHP} R.~Baker, G.~Harman, J.~Pintz, \emph{The difference between
+consecutive primes II}, Proc.\ London Math.\ Soc.\ 83 (2001).
+\bibitem{Flagship} VFD Programme, \emph{Total positivity as the closure
+law}, companion note, this repository.
+\bibitem{Diffraction} VFD Programme, \emph{Closure diffraction and the
+icosian $L$-function}, this repository (2026).
+\end{thebibliography}
+
+\end{document}

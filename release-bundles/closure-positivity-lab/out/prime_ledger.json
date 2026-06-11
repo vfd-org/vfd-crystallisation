@@ -1,6 +1,6 @@
 {
   "work_order": "WO-VFD-PRIME-LEDGER-001",
-  "phase": "A+B",
+  "phase": "complete (A+B+C)",
   "x": 50000000,
   "thesis": "every prime-distribution phenomenon factors as (all-finite-places closure product, decidable) x (zero-correlation interference, the single open wall)",
   "scope": "layer-1 results are classical (verified, not discovered); layer-2 is open in every conjectural row; nothing here proves RH, GRH, or any infinitude conjecture",
@@ -329,7 +329,167 @@
       "gate": "all four moments within 3 sigma of Sato-Tate; Ramanujan bound exact",
       "verdict": "PASS",
       "falsifier": "Recompute the Brandt eigenvalues to a higher norm bound: ST is a theorem for this object, so a persistent moment deviation means the GEOMETRIC eigenvalues are wrong \u2014 this row audits our own data."
+    },
+    {
+      "row": 8,
+      "phenomenon": "prime gaps at large (Cramer)",
+      "layer1_classical_source": "mean gap = log x is PNT (THEOREM); maximal-gap record from Nicely/Young-Potler tables; Cramer model is heuristic",
+      "layer2_wall": "Cramer's max-gap = O(log^2 p) open; RH gives only O(sqrt(p) log p); unconditional: gaps << x^0.525 (Baker-Harman-Pintz)",
+      "computed": {
+        "x": 50000000,
+        "windows": [
+          {
+            "window": [
+              500000,
+              1000000
+            ],
+            "mean_gap": 13.528,
+            "log_midpoint": 13.528,
+            "deviation": 0.0,
+            "tail_P(u>2)": 0.1133,
+            "exp_model_says": 0.1353
+          },
+          {
+            "window": [
+              5000000,
+              10000000
+            ],
+            "mean_gap": 15.819,
+            "log_midpoint": 15.83,
+            "deviation": 0.0007,
+            "tail_P(u>2)": 0.1111,
+            "exp_model_says": 0.1353
+          },
+          {
+            "window": [
+              25000000,
+              50000000
+            ],
+            "mean_gap": 17.419,
+            "log_midpoint": 17.44,
+            "deviation": 0.0012,
+            "tail_P(u>2)": 0.1166,
+            "exp_model_says": 0.1353
+          }
+        ],
+        "max_gap": 220,
+        "after_prime": 47326693,
+        "cramer_ratio": 0.704,
+        "note": "tail shape reported not gated: HL correlations (rows 1-2) are the known corrections to the pure exponential model"
+      },
+      "gate": "mean gap within 3% of log(midpoint) in every window; largest gap below 5e7 is exactly 220 after 47,326,693",
+      "verdict": "PASS",
+      "falsifier": "Re-sieve: a different maximal gap below 5e7, or mean gaps drifting from log x, kills the row."
+    },
+    {
+      "row": 9,
+      "phenomenon": "Mersenne primes (boundary row: beyond the instrument)",
+      "layer1_classical_source": "factor congruences: THEOREM (Fermat/Euler); count: Lenstra-Pomerance-Wagstaff HEURISTIC only",
+      "layer2_wall": "no L-function handle exists - the explicit-formula instrument does not apply; infinitude of Mersenne primes AND of Mersenne composites both open",
+      "computed": {
+        "y": 3300,
+        "exponents_found": [
+          2,
+          3,
+          5,
+          7,
+          13,
+          17,
+          19,
+          31,
+          61,
+          89,
+          107,
+          127,
+          521,
+          607,
+          1279,
+          2203,
+          2281,
+          3217
+        ],
+        "n_found": 18,
+        "lpw_predicted": 20.82,
+        "poisson_sigma": 4.56,
+        "factor_checks": [
+          {
+            "p": 11,
+            "smallest_factor": 23,
+            "q_mod_2p": 1,
+            "q_mod_8": 7,
+            "theorem_holds": true
+          },
+          {
+            "p": 23,
+            "smallest_factor": 47,
+            "q_mod_2p": 1,
+            "q_mod_8": 7,
+            "theorem_holds": true
+          },
+          {
+            "p": 29,
+            "smallest_factor": 233,
+            "q_mod_2p": 1,
+            "q_mod_8": 1,
+            "theorem_holds": true
+          },
+          {
+            "p": 37,
+            "smallest_factor": 223,
+            "q_mod_2p": 1,
+            "q_mod_8": 7,
+            "theorem_holds": true
+          },
+          {
+            "p": 43,
+            "smallest_factor": 431,
+            "q_mod_2p": 1,
+            "q_mod_8": 7,
+            "theorem_holds": true
+          },
+          {
+            "p": 47,
+            "smallest_factor": 2351,
+            "q_mod_2p": 1,
+            "q_mod_8": 7,
+            "theorem_holds": true
+          },
+          {
+            "p": 53,
+            "smallest_factor": 6361,
+            "q_mod_2p": 1,
+            "q_mod_8": 1,
+            "theorem_holds": true
+          }
+        ],
+        "boundary_row": true
+      },
+      "gate": "Lucas-Lehmer reproduces the literature exponent list exactly; every located factor obeys q=1 (mod 2p) and q=+-1 (mod 8); count within 3 sigma of Lenstra-Pomerance-Wagstaff",
+      "verdict": "PASS",
+      "falsifier": "Find a Mersenne prime the Lucas-Lehmer sweep missed (or vice versa), or a factor of 2^p - 1 violating the congruences. The LPW count is falsified only asymptotically - that is exactly why this row is labelled a heuristic boundary, not an instrument result."
+    },
+    {
+      "row": 10,
+      "phenomenon": "zero statistics \u2014 the wall itself (GUE / pair correlation)",
+      "layer1_classical_source": "Montgomery (1973) THEOREM for restricted test functions; full GUE law conjectural (Odlyzko numerics)",
+      "layer2_wall": "none deeper: these correlations ARE the open global factor of every conjectural row above (1, 2, 3, 8) and of RH itself",
+      "computed": {
+        "n_zeros": 1983,
+        "height": 2499.8620428212553,
+        "spacing_mean": 1.0011,
+        "spacing_var": 0.1502,
+        "gue_var": 0.1781,
+        "repulsion_P(s<0.2)": 0.0025,
+        "poisson_would_give": 0.1813,
+        "pair_corr_max_dev": 0.0944,
+        "finite_height_correction_scale": 0.1671,
+        "height_note": "asymptotic-GUE precision needs zeros at far greater heights (Odlyzko); at T=2500 deviations of this scale are the documented finite-height corrections",
+        "icosian_L_note": "our 33 zeros are too few for spacing statistics; not gated (n=33)"
+      },
+      "gate": "spacing mean within 1% of 1; repulsion P(s<0.2) < 0.03 (Poisson gives 0.18 - the decisive qualitative test); variance and pair correlation within the finite-height correction scale 1/log(T/2pi) of GUE (~0.17 relative at T=2500)",
+      "verdict": "PASS",
+      "falsifier": "Compute more zeros (raise the height in out/_zeta_zeros.gp): spacing variance drifting from GUE, vanishing repulsion, or pair correlation departing from 1 - sinc^2 kills the row."
     }
   ],
-  "runtime_seconds": 2.2
+  "runtime_seconds": 10.6
 }

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Chebyshev race — a diffraction asymmetry in the primes</title>
+<script src="race_data.js"></script>
+<style>
+  :root { --ink:#1a1f2b; --soft:#5b6472; --line:#e3e6eb; --accent:#0b6e4f;
+          --warm:#b54708; --bg:#fbfbf9; }
+  * { box-sizing:border-box; }
+  body { font:17px/1.6 Georgia,serif; color:var(--ink); background:var(--bg); margin:0; }
+  main { max-width:860px; margin:0 auto; padding:40px 20px 80px; }
+  h1 { font-size:1.55em; line-height:1.25; margin:0 0 .3em; }
+  .sub { color:var(--soft); margin-bottom:1.6em; }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:10px;
+           padding:20px 24px; margin:1.2em 0; }
+  canvas { width:100%; display:block; }
+  .stat { display:flex; gap:14px; flex-wrap:wrap; margin-top:.4em; }
+  .stat div { flex:1 1 150px; border:1px solid var(--line); border-radius:8px;
+              padding:10px 14px; }
+  .stat b { display:block; font-size:1.4em; font-family:ui-monospace,Menlo,monospace; }
+  .stat span { color:var(--soft); font-size:.8em; }
+  footer { margin-top:2.2em; color:var(--soft); font-size:.85em;
+           border-top:1px solid var(--line); padding-top:1em; }
+  a { color:var(--accent); }
+  h2 { font-size:1.05em; color:var(--soft); text-transform:uppercase;
+       letter-spacing:.04em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Primes ≡ 3 (mod 4) stay ahead of primes ≡ 1 (mod 4) —
+      99.93% of the way to fifty million.</h1>
+  <p class="sub">Chebyshev noticed it in 1853. The lead D(x) = π(x; 4,3) −
+  π(x; 4,1) is plotted below from a real sieve. In explicit-formula language
+  the cause is interference: the wave of prime <em>squares</em> loads the
+  residue-1 side only, displacing the race by about √x / log x — an
+  asymmetric fringe.</p>
+
+  <div class="panel">
+    <h2>The full race (log x, primes to 5×10⁷)</h2>
+    <canvas id="main" width="1600" height="500"></canvas>
+    <div class="stat">
+      <div><b>26,861</b><span>first x where the 1-class ever leads (Leech 1957) — find it in the zoom below</span></div>
+      <div><b>99.93%</b><span>fraction of primes at which the 3-class leads</span></div>
+      <div><b id="dend">—</b><span>the lead D(x) at 5×10⁷</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Zoom: the famous first crossing</h2>
+    <canvas id="zoom" width="1600" height="400"></canvas>
+    <p style="color:var(--soft);font-size:.85em;margin:.6em 0 0">
+    Around x = 26,861 the lead dips below zero for the first time — for a
+    handful of primes — then recovers for hundreds of thousands more.</p>
+  </div>
+
+  <footer>
+    Real data: every point is the exact value of D at a prime, computed by
+    <code>explorables/make_data.py</code> from the same sieve as ledger row 5
+    (<a href="https://github.com/vfd-org/closure-positivity-lab">closure-positivity-lab</a>,
+    <code>out/prime_ledger.json</code>). What is proven: the bias exists and
+    its first reversal is at 26,861. What is open: even that the lead-set has
+    a density is unproven without GRH + linear independence (Rubinstein–Sarnak
+    1994 give 0.9959 under those hypotheses). No claim beyond the computation
+    is made here.
+  </footer>
+</main>
+<script>
+const S = RACE_DATA.series, Z = RACE_DATA.zoom;
+document.getElementById('dend').textContent = S[S.length-1][1];
+
+function axis(ctx, W, H, L, B) {
+  ctx.strokeStyle = '#e3e6eb'; ctx.font = '20px Georgia'; ctx.fillStyle = '#5b6472';
+}
+
+function drawMain() {
+  const c = document.getElementById('main'), ctx = c.getContext('2d');
+  const W = c.width, H = c.height, L = 70, B = 46;
+  ctx.clearRect(0, 0, W, H);
+  const lx = S.map(p => Math.log10(p[0]));
+  const x0 = lx[0], x1 = lx[lx.length-1];
+  const dmax = Math.max(...S.map(p => p[1])) * 1.15, dmin = -12;
+  const X = v => L + (W-L-20) * (v - x0) / (x1 - x0);
+  const Y = v => H - B - (H-B-20) * (v - dmin) / (dmax - dmin);
+  axis(ctx, W, H, L, B);
+  for (let d = 0; d <= dmax; d += 50) {
+    ctx.strokeStyle = d === 0 ? '#9aa3af' : '#eef0f3';
+    ctx.beginPath(); ctx.moveTo(L, Y(d)); ctx.lineTo(W-20, Y(d)); ctx.stroke();
+    ctx.fillText(d, 18, Y(d)+7);
+  }
+  [1e2,1e3,1e4,1e5,1e6,1e7].forEach(x => {
+    ctx.fillText('10^' + Math.round(Math.log10(x)), X(Math.log10(x))-20, H-16);
+  });
+  ctx.strokeStyle = '#b54708'; ctx.lineWidth = 2.5; ctx.beginPath();
+  S.forEach((p, i) => { const px = X(Math.log10(p[0])), py = Y(p[1]);
+    i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+  ctx.stroke();
+  const cx = X(Math.log10(26861));
+  ctx.strokeStyle = '#0b6e4f'; ctx.setLineDash([6,5]); ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(cx, 20); ctx.lineTo(cx, H-B); ctx.stroke();
+  ctx.setLineDash([]); ctx.fillStyle = '#0b6e4f';
+  ctx.fillText('26,861', cx-30, 36);
+}
+
+function drawZoom() {
+  const c = document.getElementById('zoom'), ctx = c.getContext('2d');
+  const W = c.width, H = c.height, L = 70, B = 46;
+  ctx.clearRect(0, 0, W, H);
+  const xs = Z.map(p => p[0]), ds = Z.map(p => p[1]);
+  const x0 = xs[0], x1 = xs[xs.length-1];
+  const dmin = Math.min(...ds)-2, dmax = Math.max(...ds)+2;
+  const X = v => L + (W-L-20) * (v - x0) / (x1 - x0);
+  const Y = v => H - B - (H-B-20) * (v - dmin) / (dmax - dmin);
+  axis(ctx, W, H, L, B);
+  for (let d = Math.ceil(dmin/5)*5; d <= dmax; d += 5) {
+    ctx.strokeStyle = d === 0 ? '#9aa3af' : '#eef0f3';
+    ctx.beginPath(); ctx.moveTo(L, Y(d)); ctx.lineTo(W-20, Y(d)); ctx.stroke();
+    ctx.fillText(d, 24, Y(d)+7);
+  }
+  [26000, 26500, 27000, 27500, 28000].forEach(x => {
+    if (x >= x0 && x <= x1) ctx.fillText(x.toLocaleString(), X(x)-36, H-16);
+  });
+  ctx.strokeStyle = '#b54708'; ctx.lineWidth = 2; ctx.beginPath();
+  Z.forEach((p, i) => { const px = X(p[0]), py = Y(p[1]);
+    i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(11,110,79,.12)';
+  Z.forEach(p => { if (p[1] < 0)
+    ctx.fillRect(X(p[0])-2, Y(0), 4, Y(p[1])-Y(0)); });
+}
+drawMain(); drawZoom();
+</script>
+</body>
+</html>
