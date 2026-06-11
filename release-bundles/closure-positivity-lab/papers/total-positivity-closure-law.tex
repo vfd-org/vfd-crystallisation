@@ -1,0 +1,277 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{status}[theorem]{Status}
+
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\II}{\mathcal{I}}
+\newcommand{\KK}{K}
+\newcommand{\RH}{\mathrm{RH}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\stcdf}{F_{\mathrm{ST}}}
+
+\title{Total Positivity as the Closure Law:\\
+a finite laboratory and a geometric localization of $\RH(L)$}
+\author{Lee Smart\\ \small Institute of Vibrational Field Dynamics}
+\date{June 2026 --- working note, v0.1\\
+\small Companion to \emph{The Icosian Closure Object and a Geometric Equivalent of the
+Riemann Hypothesis}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+The closure programme asserts a four-fold identity: existence $\Leftrightarrow$ closure
+(fixed point) $\Leftrightarrow$ final coalgebra $\Leftrightarrow$ positivity of an
+invariant form. Three links are established elsewhere; the fourth ---
+\emph{when does closure force positivity?} --- is the open one, and the Riemann-type
+question is an instance of it. We build a finite, gate-first laboratory of closure
+objects on which both sides are exactly decidable and verify, on all $18$ of $18$
+gated objects across two real quadratic fields, seven root lattices, and two
+closure-operator schemes, the law: \emph{an operator self-adjoint under its invariant
+trace form is positive under that form if and only if it is totally positive (positive
+at every place)}. Finitely this is the spectral theorem; its value is the organising
+principle and the localization it yields: the icosian cuspidal $L$-function is the
+programme's unique object whose ``every place'' is infinite, and its total positivity
+\emph{is} $\RH(L)$ --- GRH for one cuspidal $L$-function, not the classical Riemann
+Hypothesis. We then identify the forcing mechanism quantitatively: per-prime
+(Ramanujan) bounds provably cannot force the Weil form positive, and the qualitative
+Sato--Tate limit law is a known theorem for this class of form, so the open,
+RH-adjacent content is the \emph{rate} of equidistribution (the discrepancy $D_n$).
+We calibrate the weight-$2$ Weil machinery against an elliptic-curve $L$-function
+(explicit formula closes to residual $<10^{-5}$), find the icosian Weil margin
+positive on every tested function, and record the first discrepancy datum
+$\sqrt{n}\,D_n \approx 0.73$ at $n=32$. No proof of $\RH$ or any GRH is claimed;
+the contribution is a law, a localization, a mechanism, and calibrated instruments.
+\end{abstract}
+
+\section{The missing link}\label{sec:link}
+
+The programme's spine identifies four statements
+\[
+\text{existence} \;\Longleftrightarrow\; \text{closure fixed point}
+\;\Longleftrightarrow\; \text{final coalgebra}
+\;\Longleftrightarrow\; \text{positivity of an invariant form},
+\]
+of which the first three equivalences are established in the existence-as-closure and
+capstone-coalgebra papers. The fourth link is not: the trace-form work showed that the
+\emph{right} invariant form is necessary (it is what renders the structure operator
+self-adjoint, hence real-spectrum) but \textbf{not sufficient} for positivity. This
+note attacks the missing sufficient ingredient on the only terrain where it is exactly
+decidable: finite closure objects.
+
+\begin{status}
+Everything in \S\ref{sec:lab}--\S\ref{sec:law} is \emph{verified} (exact finite
+computation, code in \texttt{lab/}). \S\ref{sec:local} is \emph{verified
+localization} resting on the flagship's proved equivalence. \S\ref{sec:mech} mixes
+\emph{proved} (non-separability, insufficiency of per-prime bounds),
+\emph{recalled} (Sato--Tate as theorem), and \emph{measured} (discrepancy).
+Nothing here proves $\RH$ or any GRH.
+\end{status}
+
+\section{The laboratory}\label{sec:lab}
+
+\begin{definition}[closure object, gate]\label{def:obj}
+A \emph{finite closure object} is a pair $(B,T)$ of real matrices on a
+finite-dimensional space: $B$ symmetric (the candidate invariant form) and $T$ the
+structure operator (a closure operator, multiplication operator, or Gram matrix),
+together with the closure-fixed-point status of the underlying object. We say the
+\emph{right form is present} if $BT = (BT)^{\!\top}$ ($T$ is $B$-self-adjoint);
+$T$ is \emph{$B$-positive} if moreover $x \mapsto x^{\top} (BT)\, x$ is positive
+definite; and $T$ is \emph{totally positive} if every eigenvalue of $T$ (its values
+at all places / all conjugates) is strictly positive. The \emph{gate}: no object may
+receive a positivity verdict unless the right form is present --- a wrong or fitted
+form is rejected, not scored.
+\end{definition}
+
+The registry spans: multiplication operators $x \mapsto \alpha x$ on
+$\OO_{\KK}$ for $\KK = \mathbb{Q}(\sqrt5)$ under the trace form
+$B = \big(\begin{smallmatrix}2&1\\1&3\end{smallmatrix}\big)$ and for
+$\KK = \mathbb{Q}(\sqrt2)$ under $B = \mathrm{diag}(2,4)$ (so the law is not
+golden-ratio-specific); the root-lattice Gram matrices $E_8, E_7, E_6, D_4, A_4,
+A_3, A_2$; the closure operators $C_\varphi = L + \varphi^{-2} I$ built from the
+actual $600$-cell ($120$ vertices, neighbours at inner product $\varphi/2$) and
+$24$-cell adjacency; two non-positive self-adjoint controls (an indefinite Lorentzian
+Gram and the singular affine $\tilde A_1$); one wrong-form decoy (multiplication by
+$\varphi$ in the $\{1,\sqrt5\}$ basis paired with $B = I$, whose true invariant form
+is $\mathrm{diag}(2,10)$); and the icosian boundary row of \S\ref{sec:local}.
+
+\section{The law}\label{sec:law}
+
+\begin{theorem}[finite closure-positivity law; verified $18/18$]\label{thm:law}
+On every gated, finitely-decidable object in the registry,
+\[
+T \text{ is } B\text{-positive} \iff T \text{ is totally positive,}
+\]
+and among the structural features tested (positive-definiteness of $B$ itself,
+reality of the spectrum, total positivity) \emph{only} total positivity is an exact
+discriminator ($18/18$; the others reach $12/18$). The gate rejects the wrong-form
+decoy. \end{theorem}
+
+\begin{proof}[Proof (and honest deflation)]
+For $B$-self-adjoint $T$ this is the spectral theorem: $T$ is diagonalisable with
+real spectrum in a $B$-orthogonal basis, and the form $x^{\top}(BT)x$ is positive
+definite iff every eigenvalue is positive; the eigenvalues of a multiplication
+operator $x \mapsto \alpha x$ on $\OO_\KK$ are precisely the conjugates of $\alpha$,
+so ``spectrum positive'' \emph{is} ``totally positive.'' The computation verifies the
+implementation, not a new theorem.
+\end{proof}
+
+\begin{remark}[what the law is for]\label{rem:value}
+The content is the \emph{organising principle}: every positivity in the programme ---
+Weil positivity for $L$-functions, the closure-operator positivity of $C_\varphi$,
+the $E_8$ trace-form closure, the stability of the H4O attractor dynamics --- is one
+statement, \emph{positivity at all places}, with self-adjointness under the right
+invariant form as the shared precondition. Finite objects are decidable because all
+their places are visible. That sets up the localization.
+\end{remark}
+
+\section{The localization}\label{sec:local}
+
+Recall from the flagship (and the triad bundle) the icosian closure object: the
+maximal icosian order $\II$ over $\KK=\mathbb{Q}(\sqrt5)$ on the $600$-cell, with
+exact theta identity $L(\Theta_\II,s) = \zeta_\KK(s)\,\zeta_\KK(s-1)$ and, on its
+cuspidal face, the Brandt eigenvalues $a_\mathfrak{q}$ at level
+$\mathfrak{p}_{31}$ feeding the Weil quadratic form $Q_A$ with the proved equivalence
+$Q_A \ge 0 \iff \RH(L)$ --- GRH for this one cuspidal $L$, not classical $\RH$.
+
+\begin{proposition}[the unique infinite row]\label{prop:row}
+In the laboratory's terms the icosian cuspidal $L$ is a closure object that passes
+every finite check (self-adjoint Brandt faces, Ramanujan bounds, finite positivity,
+and the calibrated Weil margins of \S\ref{sec:inst}), while its $B$-positivity in
+the sense of Theorem~\ref{thm:law} requires positivity \emph{at all places at once}
+--- an infinite condition. Total positivity of this object \emph{is} $\RH(L)$.
+\end{proposition}
+
+This is the localization: $\RH(L)$ is not an isolated mystery but \textbf{the unique
+infinite instance of a law verified exactly on every finitely-decidable closure
+object}. The finite/infinite boundary is the entire remaining difficulty.
+
+\section{The mechanism}\label{sec:mech}
+
+Three results pin down \emph{what would force} the open positivity.
+
+\subsection{Non-separability (proved)}
+The Li coefficients \cite{Li97,BL99} give finite certificates
+($\RH(L) \iff \lambda_n \ge 0\ \forall n$), but the literal per-prime decomposition of
+$\lambda_n$ diverges term by term (for $\zeta$: $\sum_p (\log p)^n/p$); each
+$\lambda_n$ is finite only after archimedean--prime cancellation. There is no
+separable per-prime positivity to verify --- consistent with the programme's earlier
+negative results on separable envelopes. The convergent per-prime object is the Weil
+form \cite{Weil52} $W(g) = \mathrm{ARCH}(g) - \sum_{\mathfrak q}
+\mathrm{PRIME}_{\mathfrak q}(g)$.
+
+\subsection{Per-prime bounds cannot force positivity (proved)}
+Every geometric eigenvalue satisfies Ramanujan,
+$|a_{\mathfrak q}| \le 2\sqrt{N\mathfrak q}$ (verified on all rows; Ramanujan for
+this class of form is a theorem via \cite{Blasius}). But bounding each
+$\mathrm{PRIME}_{\mathfrak q}$ cannot bound their \emph{sum} below
+$\mathrm{ARCH}$: if it could, Ramanujan would imply $\RH(L)$, which it does not.
+Positivity is a statement about the \emph{ensemble}, not the terms.
+
+\subsection{The ensemble property, split honestly in two}
+Write $x_{\mathfrak q} = a_{\mathfrak q} / 2\sqrt{N\mathfrak q} = \cos\theta_{\mathfrak q}$.
+
+\emph{(i) The limit law is known.} Qualitative Sato--Tate equidistribution of
+$\{\theta_{\mathfrak q}\}$ under $\tfrac{2}{\pi}\sin^2\theta$ is a theorem for non-CM
+Hilbert modular forms \cite{BLGHT}. It therefore forces \emph{nothing} about
+$\RH(L)$: the limit holds and $\RH(L)$ remains open.
+
+\emph{(ii) The rate is the open content.} What relates to $\RH$-type statements is
+\emph{quantitative} equidistribution --- the discrepancy
+$D_n = \sup_x |F_n(x) - \stcdf(x)|$ and its decay, governed by the analytic behaviour
+of the symmetric-power $L$-functions (effective Sato--Tate, cf.~\cite{MurtySinha});
+square-root cancellation $D_n = O(n^{-1/2+\varepsilon})$ is the GRH-regime signature.
+
+\begin{conjecture}[geometric forcing, stated as the programme's frontier]
+\label{conj:force}
+The closure geometry of $\II$ forces the square-root-cancellation rate of
+equidistribution of its Brandt spectrum; equivalently, the geometry forces the
+positivity of $Q_A$. \emph{(Open. This is a restatement of the analytic frontier in
+geometric terms, not a new route around it; by \S\ref{sec:local} its conclusion is
+$\RH(L)$.)}
+\end{conjecture}
+
+\section{Instruments and first data}\label{sec:inst}
+
+\textbf{Calibration.} The weight-$2$ Weil machinery was calibrated against the
+conductor-$11$ elliptic-curve $L$ (degree $2$, weight $2$, no pole; zeros and $a_p$
+from PARI \cite{PARI}): with archimedean shifts $\{\tfrac12,\tfrac32\}$ per place and
+the universal prime-side factor $2$, the explicit formula closes to
+$\max|\text{residual}| < 10^{-5}$ across all tested widths. (The calibration caught
+and fixed two normalization errors that a $\zeta$-only check structurally cannot see;
+a wrong convention cannot survive this gate.)
+
+\textbf{Icosian Weil margins (evidence, not proof).} With the calibrated convention
+(degree $4$, conductor $775$, shifts $\{\tfrac12,\tfrac12,\tfrac32,\tfrac32\}$),
+$W(g) = \mathrm{ARCH}(g) - \sum \mathrm{PRIME}_{\mathfrak q}(g) > 0$ on every tested
+Gaussian $g$:
+\begin{center}
+\begin{tabular}{lcccccc}
+\toprule
+$\sigma$ & 1.5 & 2.0 & 2.5 & 3.0 & 3.5 & 4.0\\
+\midrule
+margin $W$ & $+0.13$ & $+0.60$ & $+1.38$ & $+2.34$ & $+3.44$ & $+4.65$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The archimedean term drives positivity; the prime sum is a Ramanujan-bounded ripple.
+
+\textbf{Li certificates.} The $\lambda_n$ engine (zeros $\to$ partial Li sums)
+self-tests on $\zeta$: $200$ zeros give $\lambda_1,\dots,\lambda_6 > 0$ tracking the
+known values \cite{Keiper92,Li97}. It ingests the icosian $L$'s own zeros as the
+extended Brandt computation delivers them.
+
+\textbf{First discrepancy datum.} At $n=32$ prime ideals: moments
+$\mathbb{E}[x^2]=0.226$ (ST: $0.25$), $\mathbb{E}[x^4]=0.103$ (ST: $0.125$);
+discrepancy $D_{32}=0.128$, i.e.\ $\sqrt{n}\,D_n = 0.73$ --- an $O(1)$ constant,
+consistent with (far from probative of) the square-root-cancellation regime. The
+extended run populates this curve; $\sqrt{n}\,D_n$ bounded as $n$ grows is the
+measurable shadow of Conjecture~\ref{conj:force}.
+
+\section{What is not claimed}\label{sec:not}
+
+No proof of the Riemann Hypothesis or any GRH. No claim that
+Conjecture~\ref{conj:force} is easier than $\RH(L)$ --- by construction it is
+equivalent in conclusion. No claim that the finite law (Theorem~\ref{thm:law}) is
+new mathematics --- finitely it is the spectral theorem; the contribution is the
+organising principle, the localization (Proposition~\ref{prop:row}), the honest
+two-level mechanism (\S\ref{sec:mech}), and externally calibrated instruments with
+first data (\S\ref{sec:inst}). The physical and cosmological faces of the programme
+are not load-bearing here and $\RH$ claims never rest on them.
+
+\begin{thebibliography}{9}\small
+\bibitem{Weil52} A.~Weil, \emph{Sur les ``formules explicites'' de la th\'eorie des
+nombres premiers}, Comm.\ S\'em.\ Math.\ Univ.\ Lund (1952), 252--265.
+\bibitem{Li97} X.-J.~Li, \emph{The positivity of a sequence of numbers and the
+Riemann hypothesis}, J.~Number Theory \textbf{65} (1997), 325--333.
+\bibitem{BL99} E.~Bombieri and J.~Lagarias, \emph{Complements to Li's criterion for
+the Riemann hypothesis}, J.~Number Theory \textbf{77} (1999), 274--287.
+\bibitem{Keiper92} J.~Keiper, \emph{Power series expansions of Riemann's $\xi$
+function}, Math.\ Comp.\ \textbf{58} (1992), 765--773.
+\bibitem{BLGHT} T.~Barnet-Lamb, D.~Geraghty, M.~Harris, R.~Taylor, \emph{A family of
+Calabi--Yau varieties and potential automorphy II}, Publ.\ RIMS \textbf{47} (2011),
+29--98.
+\bibitem{Blasius} D.~Blasius, \emph{Hilbert modular forms and the Ramanujan
+conjecture}, in: Noncommutative Geometry and Number Theory, Vieweg (2006), 35--56.
+\bibitem{MurtySinha} M.~R.~Murty and K.~Sinha, \emph{Effective equidistribution of
+eigenvalues of Hecke operators}, J.~Number Theory \textbf{129} (2009), 681--714.
+\bibitem{PARI} The PARI~Group, \emph{PARI/GP}, Univ.\ Bordeaux,
+\url{https://pari.math.u-bordeaux.fr/}.
+\bibitem{Flagship} L.~Smart, \emph{The Icosian Closure Object and a Geometric
+Equivalent of the Riemann Hypothesis}, working draft (2026),
+\url{https://github.com/vfd-org/icosian-rh-geometric}.
+\end{thebibliography}
+
+\end{document}
