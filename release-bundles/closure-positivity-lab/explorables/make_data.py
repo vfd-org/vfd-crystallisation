@@ -44,6 +44,25 @@ def race_data(s):
     return {"x": len(s), "series": series, "zoom": zoom, "first_crossing": 26861}
 
 
+def crystal_data(s):
+    """Riesz-tapered prime spectrum (k in [5, 60]) + independently computed
+    zeta zeros, for the crystal-diffraction explorable."""
+    xmax = 1_000_000
+    P = core.primes_from(s[:xmax]).astype(np.float64)
+    lg = np.log(P)
+    w = lg / np.sqrt(P) * (1.0 - lg / np.log(xmax))
+    ks = np.arange(5.0, 60.001, 0.02)
+    F = np.empty(ks.size)
+    for i in range(0, ks.size, 400):
+        kc = ks[i:i + 400]
+        F[i:i + 400] = np.abs((w[None, :] *
+                               np.exp(1j * np.outer(kc, lg))).sum(axis=1))
+    zeros = np.loadtxt(os.path.join(ROOT, "out", "zeta_zeros.txt"))
+    return {"k0": 5.0, "dk": 0.02, "F": [round(float(v), 3) for v in F],
+            "zeros": [round(float(z), 4) for z in zeros[zeros <= 60]],
+            "source": "primes < 1e6, Riesz taper; zeros from out/zeta_zeros.txt (PARI)"}
+
+
 def main():
     print("sieving to %d ..." % core.DEFAULT_X)
     s = core.sieve()
@@ -53,6 +72,9 @@ def main():
     with open(os.path.join(OUT, "race_data.js"), "w") as fh:
         fh.write("const RACE_DATA = %s;\n" % json.dumps(race_data(s)))
     print("wrote race_data.js")
+    with open(os.path.join(OUT, "crystal_data.js"), "w") as fh:
+        fh.write("const CRYSTAL_DATA = %s;\n" % json.dumps(crystal_data(s)))
+    print("wrote crystal_data.js")
 
 
 if __name__ == "__main__":

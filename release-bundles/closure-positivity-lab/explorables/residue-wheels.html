@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The wheels — where prime densities come from</title>
+<style>
+  :root { --ink:#1a1f2b; --soft:#5b6472; --line:#e3e6eb; --accent:#0b6e4f;
+          --warm:#b54708; --bg:#fbfbf9; --dead:#d9d9d9; --alive:#9fd6b9; }
+  * { box-sizing:border-box; }
+  body { font:17px/1.6 Georgia,serif; color:var(--ink); background:var(--bg); margin:0; }
+  main { max-width:880px; margin:0 auto; padding:40px 20px 80px; }
+  h1 { font-size:1.5em; line-height:1.25; margin:0 0 .3em; }
+  .sub { color:var(--soft); margin-bottom:1.4em; }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:10px;
+           padding:18px 22px; margin:1.1em 0; }
+  .presets button { font:15px Georgia,serif; margin:0 6px 6px 0; padding:7px 14px;
+           border:1px solid var(--line); border-radius:18px; background:#fff;
+           cursor:pointer; }
+  .presets button:hover { border-color:var(--accent); }
+  input[type=text] { font:16px ui-monospace,Menlo,monospace; padding:8px 12px;
+           border:1px solid var(--line); border-radius:8px; width:220px; }
+  #go { font:16px Georgia,serif; padding:8px 18px; border-radius:8px;
+        border:none; background:var(--accent); color:#fff; cursor:pointer; }
+  .wheels { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  .wheels canvas { width:200px; height:225px; }
+  .factors { font-family:ui-monospace,Menlo,monospace; font-size:.95em;
+             overflow-x:auto; white-space:nowrap; padding:4px 0; }
+  .vs { display:flex; gap:14px; flex-wrap:wrap; }
+  .vs div { flex:1 1 150px; border:1px solid var(--line); border-radius:8px;
+            padding:10px 14px; }
+  .vs b { display:block; font-size:1.45em; font-family:ui-monospace,Menlo,monospace; }
+  .vs span { color:var(--soft); font-size:.8em; }
+  .pred b { color:var(--accent); } .meas b { color:var(--warm); }
+  #verdict { font-size:1.05em; margin-top:.8em; }
+  footer { margin-top:2.2em; color:var(--soft); font-size:.85em;
+           border-top:1px solid var(--line); padding-top:1em; }
+  a { color:var(--accent); }
+  .note { color:var(--soft); font-size:.88em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Pick any pattern of primes. The wheels will tell you how often it
+      occurs — then a live sieve will check.</h1>
+  <p class="sub">A pattern (n, n+2) lives or dies cell-by-cell on each
+  prime's wheel. Count the surviving cells, divide by what independence
+  would give, multiply across all wheels: that single product is the
+  Hardy–Littlewood prediction. Below, it is computed for <em>your</em>
+  pattern and verified against a sieve to 20,000,000 running in this page.</p>
+
+  <div class="panel">
+    <div class="presets">
+      <button data-o="0,2">twins (0,2)</button>
+      <button data-o="0,6">gap 6</button>
+      <button data-o="0,2,6">triplet (0,2,6)</button>
+      <button data-o="0,2,4">the impossible (0,2,4)</button>
+      <button data-o="0,2,6,8">quadruplet (0,2,6,8)</button>
+      <button data-o="0,4,6,10,12,16">sextuplet</button>
+    </div>
+    offsets: <input type="text" id="offsets" value="0,2">
+    <button id="go">run</button>
+    <span class="note" id="status">sieving to 2×10⁷ …</span>
+  </div>
+
+  <div class="panel">
+    <div class="wheels" id="wheels"></div>
+    <div class="factors" id="factors"></div>
+  </div>
+
+  <div class="panel">
+    <div class="vs">
+      <div><b id="sing">—</b><span>the wheel product (singular series), all places</span></div>
+      <div class="pred"><b id="pred">—</b><span>predicted occurrences below 2×10⁷</span></div>
+      <div class="meas"><b id="meas">—</b><span>counted by the sieve, live</span></div>
+      <div><b id="ratio">—</b><span>counted / predicted</span></div>
+    </div>
+    <div id="verdict"></div>
+  </div>
+
+  <footer>
+    Everything on this page is computed in your browser: the sieve, the wheel
+    survivals, the convergent product over all primes, the density integral,
+    and the count. Nothing is fitted and nothing is pre-recorded. The law is
+    classical (Hardy–Littlewood 1923, verified — not discovered — here); whether
+    any admissible pattern occurs <em>infinitely</em> often is open for every
+    single one, and no claim about that is made. Part of the prime phenomena
+    ledger: <a href="https://github.com/vfd-org/closure-positivity-lab">closure-positivity-lab</a>.
+  </footer>
+</main>
+<script>
+const X = 20_000_000;
+let S = null, PRIMES_5E4 = [];
+
+function buildSieve() {
+  S = new Uint8Array(X); S.fill(1); S[0] = S[1] = 0;
+  for (let i = 2; i * i < X; i++) if (S[i]) for (let j = i*i; j < X; j += i) S[j] = 0;
+  for (let p = 2; p < 50_000; p++) if (S[p]) PRIMES_5E4.push(p);
+  document.getElementById('status').textContent =
+    'sieve ready (' + X.toLocaleString() + ').';
+}
+
+function parseOffsets() {
+  const xs = document.getElementById('offsets').value
+    .split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n) && n >= 0);
+  return [...new Set(xs)].sort((a, b) => a - b);
+}
+
+function survivors(p, offs) {
+  const dead = new Set(offs.map(o => ((p - o % p) % p)));
+  return { dead, alive: p - dead.size };
+}
+
+function singularSeries(offs) {
+  const k = offs.length; let s = 1.0;
+  for (const p of PRIMES_5E4) {
+    const w = new Set(offs.map(o => o % p)).size;
+    if (w === p) return 0;
+    s *= (1 - w / p) / Math.pow(1 - 1 / p, k);
+  }
+  return s;
+}
+
+function densityIntegral(k) {
+  // integral_100^X dt / (ln t)^k, via t = e^u (smooth integrand e^u/u^k).
+  // Lower limit 100, not 2: the prediction is asymptotic, so any fixed lower
+  // limit is equivalent — but for k >= 4 the conventional limit 2 injects
+  // spurious mass near t ~ 2 where no k-tuple even fits (at k = 6 it is over
+  // half the integral at this X), wrecking small-count comparisons.
+  const u0 = Math.log(100), u1 = Math.log(X);
+  const n = 40000, h = (u1 - u0) / n; let acc = 0;
+  const f = u => Math.exp(u) / Math.pow(u, k);
+  for (let i = 0; i <= n; i++) {
+    const w = (i === 0 || i === n) ? 1 : (i % 2 ? 4 : 2);
+    acc += w * f(u0 + i * h);
+  }
+  return acc * h / 3;
+}
+
+function countPattern(offs) {
+  const M = offs[offs.length - 1]; let c = 0;
+  outer: for (let n = 2; n < X - M; n++) {
+    if (!S[n + offs[0]]) continue;
+    for (let i = 1; i < offs.length; i++) if (!S[n + offs[i]]) continue outer;
+    c++;
+  }
+  return c;
+}
+
+function drawWheel(p, offs) {
+  const cv = document.createElement('canvas');
+  cv.width = 400; cv.height = 450;
+  const ctx = cv.getContext('2d');
+  const { dead } = survivors(p, offs);
+  const cx = 200, cy = 230, R = 150, r = 55;
+  for (let i = 0; i < p; i++) {
+    const a0 = -Math.PI/2 + (i - 0.46) * 2*Math.PI/p;
+    const a1 = -Math.PI/2 + (i + 0.46) * 2*Math.PI/p;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, a0, a1); ctx.arc(cx, cy, r, a1, a0, true);
+    ctx.closePath();
+    ctx.fillStyle = dead.has(i) ? '#d9d9d9' : '#9fd6b9';
+    ctx.fill();
+    const am = -Math.PI/2 + i * 2*Math.PI/p, rr = (R + r) / 2;
+    ctx.fillStyle = '#1a1f2b';
+    ctx.font = (p > 13 ? '22px' : '30px') + ' Georgia';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    if (p <= 23) ctx.fillText(i, cx + rr*Math.cos(am), cy + rr*Math.sin(am));
+  }
+  const { alive } = survivors(p, offs);
+  ctx.fillStyle = '#5b6472'; ctx.font = '26px Georgia'; ctx.textAlign = 'center';
+  ctx.fillText('mod ' + p + ':  ' + alive + ' of ' + p + ' survive', cx, 32);
+  return cv;
+}
+
+function run() {
+  const offs = parseOffsets();
+  if (!offs.length) return;
+  const k = offs.length;
+  const wheelsBox = document.getElementById('wheels');
+  wheelsBox.innerHTML = '';
+  for (const p of [3, 5, 7]) wheelsBox.appendChild(drawWheel(p, offs));
+
+  let ftxt = [];
+  for (const p of PRIMES_5E4.slice(0, 9)) {
+    const { alive } = survivors(p, offs);
+    const f = (1 - new Set(offs.map(o => o % p)).size / p) / Math.pow(1 - 1/p, k);
+    ftxt.push('mod ' + p + ': ' + alive + '/' + p + ' → ×' + f.toFixed(3));
+  }
+  document.getElementById('factors').textContent =
+    ftxt.join('   ') + '   … (product continues over every prime)';
+
+  const sing = singularSeries(offs);
+  const pred = sing * densityIntegral(k);
+  const meas = countPattern(offs);
+  document.getElementById('sing').textContent = sing.toFixed(4);
+  document.getElementById('pred').textContent = Math.round(pred).toLocaleString();
+  document.getElementById('meas').textContent = meas.toLocaleString();
+  const v = document.getElementById('verdict');
+  if (sing === 0) {
+    document.getElementById('ratio').textContent = '—';
+    v.innerHTML = 'Some wheel kills <em>every</em> cell: the product is zero, so only ' +
+      'finitely many occurrences can exist — the sieve found <b>' + meas +
+      '</b> (a pattern can squeeze through only where the dead cell is the wheel’s own prime).';
+  } else {
+    document.getElementById('ratio').textContent = (meas / pred).toFixed(4);
+    v.innerHTML = 'The wheels predicted <b>' + Math.round(pred).toLocaleString() +
+      '</b>; the sieve found <b>' + meas.toLocaleString() +
+      '</b> — agreement to <b>' + (100 * Math.abs(meas/pred - 1)).toFixed(2) +
+      '%</b>, from counting cells alone.';
+  }
+}
+
+document.querySelectorAll('.presets button').forEach(b =>
+  b.addEventListener('click', () => {
+    document.getElementById('offsets').value = b.dataset.o; run();
+  }));
+document.getElementById('go').addEventListener('click', run);
+
+setTimeout(() => { buildSieve(); run(); }, 50);
+</script>
+</body>
+</html>

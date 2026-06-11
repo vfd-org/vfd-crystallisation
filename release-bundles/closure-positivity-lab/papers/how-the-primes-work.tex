@@ -1,0 +1,259 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.15in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\graphicspath{{../figures/}}
+
+\newcommand{\fig}[3]{\begin{figure}[ht]\centering
+\includegraphics[width=#2\textwidth]{#1}\caption{#3}\end{figure}}
+
+\title{How the Primes Work, in Five Pictures}
+\author{VFD Programme\thanks{Companion to \emph{The Prime Field Through One
+Instrument} (the verification ledger) in this repository:
+\texttt{github.com/vfd-org/closure-positivity-lab}. That paper verifies;
+this one explains. Every figure here is computed, not drawn --- the
+generating script is \texttt{figures/make\_pictures.py}, and two of the
+pictures are interactive at \texttt{explorables/}.}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}\noindent
+The ledger paper in this repository reports that ten prime-distribution
+phenomena pass numerical gates; it does not explain \emph{why}. This
+companion supplies the why, at the level where the why is actually known:
+in five pictures. (1)~Patterns of primes live or die cell-by-cell on each
+prime's \emph{wheel}, and the surviving fractions multiply into every
+density law Hardy and Littlewood wrote down. (2)~That one multiplication
+predicts twin counts to $0.003\%$, the doubled abundance of gap-6 pairs,
+and Goldbach counts per~$N$. (3)~Read through the explicit formula, the
+primes are a sum of waves whose spectrum peaks exactly at the zeros of the
+zeta function --- we plot this, and the peaks land on independently
+computed zeros. (4)~A one-dimensional golden-ratio quasicrystal shows the
+same signature --- sharp spectrum, no period --- which is precisely Dyson's
+reason for suggesting that the Riemann Hypothesis is secretly a statement
+about quasicrystals; this is where the question becomes geometric.
+(5)~Everything open in the subject is one wall: the correlations of those
+zeros. All mathematics here is classical and attributed; the pictures and
+their code are ours. Nothing below proves, or claims to prove, any open
+conjecture.
+\end{abstract}
+
+\section{The wheels: where the densities come from}
+
+Look at the whole number line through a wheel with three cells --- the
+residues $0,1,2$ modulo $3$. Every integer lands on one cell; primes
+(other than $3$ itself) only ever land on cells $1$ and $2$, because cell
+$0$ means ``divisible by $3$.''
+
+Now place a \emph{pattern} on the wheel instead of a single number: the
+twin pattern $(n,\,n{+}2)$. If $n$ is on cell $0$, the pattern dies ($n$
+is divisible by 3). If $n$ is on cell $1$, then $n+2$ is on cell $0$:
+dead again. Only $n$ on cell $2$ survives. \textbf{One cell of three.}
+
+Compare with what independence would give: two unrelated numbers each
+avoid cell $0$ with probability $2/3$, so independent survival would be
+$(2/3)^2 = 4/9$. The twin pattern's actual survival is $1/3 = 3/9$. The
+wheel taxes twins by a factor
+\[
+\frac{1/3}{(2/3)^2} \;=\; \frac{3}{4}
+\;=\;\frac{p(p-2)}{(p-1)^2}\Big|_{p=3},
+\]
+and the same computation on every prime wheel $p>2$ gives the factor
+$p(p-2)/(p-1)^2$: the pattern occupies two cells, so it dies on two of
+$p$, surviving $p-2$, against an independence baseline of $((p-1)/p)^2$.
+Multiply over all odd wheels:
+\[
+\prod_{p>2}\frac{p(p-2)}{(p-1)^2}
+\;=\;\prod_{p>2}\Bigl(1-\frac{1}{(p-1)^2}\Bigr)
+\;=\;C_2\;=\;0.6601618\ldots
+\]
+This is the twin-prime constant of Hardy and Littlewood \cite{HL1923},
+and now you know what it \emph{is}: the total tax the wheels charge the
+twin pattern, relative to independence. The predicted count below $x$ is
+$2C_2\int_2^x dt/\log^2 t$, and the sieve agrees to $0.003\%$ at
+$x=5\times10^7$ (ledger row~1).
+
+\fig{fig_wheels.png}{0.82}{The mod-3 and mod-5 wheels. Green cells:
+starting positions where the pattern avoids every forbidden cell. Twins
+survive 1 cell of 3 (top left); the gap-6 pattern survives 2 of 3 (top
+right) --- that single picture is the whole reason gap-6 pairs are twice
+as common as twins. Bottom right: $(n,n{+}2,n{+}4)$ kills every cell mod
+3, so only one such triple exists in all of mathematics --- $(3,5,7)$,
+where the dead cell is the prime 3 itself.}
+
+Two more readings of the same picture. \textbf{Why gap 6 doubles:} the
+pattern $(n,\,n{+}6)$ doesn't move on the wheel of 3 (adding 6 is adding
+0), so it dies only on cell $0$: two cells of three survive ---
+\emph{twice} the twin survival, and no other wheel distinguishes the two
+patterns. Hence gap-6 pairs are exactly twice as abundant; the sieve says
+$1.9950$. \textbf{Why $(n,n{+}2,n{+}4)$ is impossible:} on the wheel of
+3 the three offsets cover all three cells, so every starting position
+dies. The only escape is the pattern that \emph{includes} 3 itself:
+$(3,5,7)$, once, never again. The ledger checks the analogous exact fact
+on the wheel of 5: the only twin pair $(p,p{+}2)$ with $p\equiv3\pmod 5$
+is $(3,5)$, because cell 3 forces $5\mid p+2$.
+
+In the programme's language each wheel is a \emph{closure condition at the
+place $p$}: a finite cyclic screen that a pattern either clears or does
+not. The density of any pattern is its product of survival ratios over
+all screens --- an \emph{all-finite-places product}, the same shape as the
+total-positivity law studied elsewhere in this repository. That parallel
+is structural, not decorative: in both cases the decidable content lives
+place-by-place, and the open content lives in how infinitely many places
+conspire.
+
+\section{One multiplication, every pattern}
+
+The wheel computation generalises mechanically: for a pattern of $k$
+offsets, count surviving cells $w(p)$ on each wheel, divide by the
+independence baseline, multiply. The result (the \emph{singular series})
+predicts, with \emph{no further input}:
+
+\begin{itemize}
+\item the relative abundance of every even gap (figure below: 105 gaps,
+  predictions as dots, sieve counts as bars --- worst disagreement
+  $0.25\%$);
+\item Goldbach counts per individual $N$ --- the wheels of the primes
+  \emph{dividing} $N$ relax their conditions, so $N$ divisible by 3 has
+  about twice the representations of its neighbours (verified: 200
+  consecutive even $N$ near $10^6$, mean deviation $0.65\%$);
+\item the twin count itself, to $0.003\%$.
+\end{itemize}
+
+\fig{fig_gap_bullseyes.png}{0.95}{All even gaps to 210: measured abundance
+(bars) against the wheel product (dots). The spikes are gaps divisible by
+3, 15, 105\ldots\ --- more surviving cells, more pairs. Interactive
+version: \texttt{explorables/gap-slider.html}.}
+
+What the wheels do \emph{not} give is infinitude: they say twin pairs
+keep their density \emph{if anything like statistical regularity holds},
+but cannot rule out the counts simply stopping. That question changes
+character entirely, and needs the second half of the story.
+
+\section{The duality: primes are waves, zeros are the spectrum}
+
+Riemann's explicit formula is an exact identity, and it has a physical
+reading. Place every prime $p$ on a logarithmic line and let it broadcast
+a wave of frequency $\log p$ (with weight $\log p/\sqrt p$, and its powers
+chiming in quietly). Sum the waves and take the spectrum --- the same
+operation a crystallographer performs when she shines X-rays through a
+crystal and reads the diffraction pattern.
+
+\fig{fig_prime_diffraction.png}{0.95}{The spectrum of the prime waves
+(orange), computed from the primes below $10^6$ with a smooth taper, and
+\emph{nothing else}; dashed lines are the first zeta zeros, computed
+independently in PARI/GP from the zeta function. The peaks land on the
+zeros: 13 of the first 15 align within $0.15$ (the misses are close
+zero-pairs merged at this resolution).}
+
+The picture says what the explicit formula says: \textbf{the zeros of
+$\zeta$ are the spectrum of the primes}. The identity runs both ways ---
+zeros reconstruct prime counts, primes reconstruct zeros (the companion
+paper's prime-wave reconstruction of the critical line is this same
+duality run in reverse for our icosian $L$-function). Every question the
+wheels cannot answer is a question about this spectrum: the \emph{error}
+in the prime count is a sum over zeros; the Chebyshev bias is an
+interference effect (the prime-\emph{square} wave loads one residue
+class); twin-prime infinitude is governed by correlations \emph{between}
+zeros. The wheels are the local physics; the spectrum is the global
+physics; the explicit formula is the exchange rate.
+
+\section{The crystal question: where it becomes geometry}
+
+A crystal produces sharp diffraction peaks because it is periodic. In
+1982 Shechtman saw sharp peaks with a symmetry no period allows; the
+resolution is the \emph{quasicrystal}, and its one-dimensional archetype
+is the Fibonacci chain --- two tile lengths in ratio $\varphi$ (the golden
+ratio), arranged by the substitution $A\to AB$, $B\to A$, never
+repeating.
+
+\fig{fig_fibonacci.png}{0.95}{Computed diffraction of 3{,}000 points.
+Top: the Fibonacci $\varphi$-chain --- razor-sharp peaks, no period.
+Bottom: the same number of points placed at random --- featureless. Sharp
+spectrum without periodicity is possible, and golden-ratio geometry is
+its canonical home.}
+
+Now hold figure~3 next to figure~4's top panel. The primes (suitably
+weighted, on the log line) also show a sharp spectrum without any period
+--- \emph{provided the peaks all sit where we plotted them}, namely on
+one vertical line in the complex plane. That proviso is the Riemann
+Hypothesis. This observation is due to Dyson \cite{Dyson}, who proposed
+classifying one-dimensional quasicrystals as a route to RH: if the primes'
+spectrum is genuinely point-like, the primes are (in this precise sense)
+a quasicrystal, and quasicrystals might be classifiable.
+
+We state plainly what this is and is not. It is the one place where the
+deepest open question about primes becomes a question of geometry --- the
+geometry of aperiodic order, whose golden-ratio examples (Fibonacci
+chains, Penrose tilings, the icosians of this repository) are the native
+objects of our wider programme. It is \emph{not} a result: nobody has the
+classification, we do not claim it, and the honest status of every
+approach we have tested is recorded in the companion papers --- including
+the negative results.
+
+\section{The wall, and the map}
+
+Assemble the picture. Everything decidable about prime patterns we have
+met lives \emph{locally}: wheels, survival counts, one multiplication ---
+verified across ten phenomena in the ledger at the $0.003\%$--$0.25\%$
+level, with three theorem-grade anchor rows calibrating the instrument.
+Everything open lives \emph{globally}, and it is one object, not many:
+the fine structure of the zero spectrum. Twin primes, Polignac, Goldbach,
+Cram\'er's gap bound, the unconditional Chebyshev density --- each is a
+different question about the same correlations (ledger row~10 measures
+them directly: spacing statistics of $1{,}983$ computed zeros match the
+random-matrix law within the documented finite-height corrections, with
+level repulsion suppressed $70\times$ relative to Poisson).
+
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & the local layer (wheels) & the global layer (spectrum) \\
+\midrule
+what it fixes & whether a pattern occurs; its density & infinitude;
+error terms; extremes \\
+status & decidable, computed, verified & open in every conjectural case \\
+the ``how'' & counting cells on finite screens & unknown; best picture:
+diffraction \\
+where geometry enters & each place is a finite cyclic screen &
+Dyson's quasicrystal question \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+That is the full picture of the primes as honestly as we can paint it:
+a local mechanism that is completely understood and astonishingly
+accurate, a global mechanism that is one open question wearing many
+costumes, an exact dictionary between them, and a geometric reading of
+the open half that remains a question. The ledger paper carries the
+gates, artifacts and falsifiers behind every number quoted here; the
+explorables let you drive the two halves yourself.
+
+\begin{thebibliography}{9}\small
+\bibitem{HL1923} G.~H. Hardy, J.~E. Littlewood, \emph{Some problems of
+`Partitio Numerorum' III: on the expression of a number as a sum of
+primes}, Acta Math.\ 44 (1923) 1--70.
+\bibitem{Dyson} F.~Dyson, \emph{Birds and frogs}, Notices Amer.\ Math.\
+Soc.\ 56 (2009) 212--223 (the quasicrystal proposal, p.~220).
+\bibitem{BaakeGrimm} M.~Baake, U.~Grimm, \emph{Aperiodic Order, Vol.~1},
+Cambridge Univ.\ Press (2013).
+\bibitem{Montgomery} H.~Montgomery, \emph{The pair correlation of zeros
+of the zeta function}, Proc.\ Sympos.\ Pure Math.\ 24 (1973) 181--193.
+\bibitem{Odlyzko} A.~Odlyzko, \emph{On the distribution of spacings
+between zeros of the zeta function}, Math.\ Comp.\ 48 (1987) 273--308.
+\bibitem{RubinsteinSarnak} M.~Rubinstein, P.~Sarnak, \emph{Chebyshev's
+bias}, Experiment.\ Math.\ 3 (1994) 173--197.
+\bibitem{Maynard} J.~Maynard, \emph{Small gaps between primes}, Ann.\ of
+Math.\ 181 (2015) 383--413.
+\bibitem{Ledger} VFD Programme, \emph{The Prime Field Through One
+Instrument: a ten-row phenomena ledger}, this repository (2026).
+\bibitem{Diffraction} VFD Programme, \emph{Closure diffraction and the
+icosian $L$-function}, this repository (2026).
+\end{thebibliography}
+
+\end{document}
