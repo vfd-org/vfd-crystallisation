@@ -1,6 +1,6 @@
 {
   "work_order": "WO-VFD-PRIME-LEDGER-001",
-  "phase": "A",
+  "phase": "A+B",
   "x": 50000000,
   "thesis": "every prime-distribution phenomenon factors as (all-finite-places closure product, decidable) x (zero-correlation interference, the single open wall)",
   "scope": "layer-1 results are classical (verified, not discovered); layer-2 is open in every conjectural row; nothing here proves RH, GRH, or any infinitude conjecture",
@@ -110,6 +110,98 @@
       "falsifier": "Find an even gap whose abundance ratio is NOT the product of (p-1)/(p-2) over odd primes dividing it."
     },
     {
+      "row": 3,
+      "phenomenon": "Goldbach representation counts",
+      "layer1_classical_source": "Hardy-Littlewood (1923) conjecture A; ternary case THEOREM (Helfgott 2013)",
+      "layer2_wall": "binary Goldbach (R(N) > 0 for all even N) open; minor arcs = zeros of Dirichlet L-functions",
+      "computed": {
+        "band": [
+          1000000,
+          1000398
+        ],
+        "n_tested": 200,
+        "mean_abs_deviation": 0.0065,
+        "max_abs_deviation": 0.0222,
+        "samples": [
+          {
+            "N": 1000000,
+            "counted": 10804,
+            "predicted": 10840.5,
+            "ratio": 0.9966
+          },
+          {
+            "N": 1000002,
+            "counted": 16400,
+            "predicted": 16260.8,
+            "ratio": 1.0086
+          },
+          {
+            "N": 1000004,
+            "counted": 8320,
+            "predicted": 8385.1,
+            "ratio": 0.9922
+          },
+          {
+            "N": 1000006,
+            "counted": 9742,
+            "predicted": 9756.6,
+            "ratio": 0.9985
+          },
+          {
+            "N": 1000008,
+            "counted": 18760,
+            "predicted": 18813.1,
+            "ratio": 0.9972
+          },
+          {
+            "N": 1000010,
+            "counted": 11902,
+            "predicted": 12046.4,
+            "ratio": 0.988
+          },
+          {
+            "N": 1000014,
+            "counted": 16266,
+            "predicted": 16261.0,
+            "ratio": 1.0003
+          },
+          {
+            "N": 1000020,
+            "counted": 25968,
+            "predicted": 26028.5,
+            "ratio": 0.9977
+          },
+          {
+            "N": 1000026,
+            "counted": 16240,
+            "predicted": 16263.7,
+            "ratio": 0.9985
+          },
+          {
+            "N": 1000032,
+            "counted": 18070,
+            "predicted": 18087.0,
+            "ratio": 0.9991
+          },
+          {
+            "N": 1000038,
+            "counted": 17738,
+            "predicted": 17740.9,
+            "ratio": 0.9998
+          },
+          {
+            "N": 1000044,
+            "counted": 16200,
+            "predicted": 16261.9,
+            "ratio": 0.9962
+          }
+        ]
+      },
+      "gate": "mean |ratio-1| < 2% and max < 6% over 200 consecutive even N near 1e6",
+      "verdict": "PASS",
+      "falsifier": "Pick any even N in range: count representations and compare to the local product x integral; a structural miss (not sqrt-N noise) kills the row. The 3|N doubling is the sharpest sub-test."
+    },
+    {
       "row": 4,
       "phenomenon": "primes in arithmetic progressions",
       "layer1_classical_source": "THEOREM: Dirichlet (1837); PNT in APs (de la Vallee Poussin)",
@@ -156,6 +248,39 @@
       "falsifier": "Find a prime > q in a residue class not coprime to q, or persistent skew between admissible classes (beyond Chebyshev-bias scale, row 5)."
     },
     {
+      "row": 5,
+      "phenomenon": "Chebyshev bias (primes prefer non-residue classes)",
+      "layer1_classical_source": "Chebyshev (1853); first crossing Leech (1957); density Rubinstein-Sarnak (1994) under GRH+LI",
+      "layer2_wall": "unconditional existence of the lead-set density is open; the bias coefficient is explicit-formula interference from the prime-square wave",
+      "computed": {
+        "x": 50000000,
+        "mod4_first_lead_change": 26861,
+        "mod4_lead_fraction_of_primes": 0.99926,
+        "mod3_first_lead_change": null,
+        "mod3_lead_fraction_of_primes": 1.0,
+        "checkpoints": [
+          {
+            "x": 1000000,
+            "D_mod4": 147,
+            "coeff_vs_sqrtx_over_logx": 2.031
+          },
+          {
+            "x": 10000000,
+            "D_mod4": 218,
+            "coeff_vs_sqrtx_over_logx": 1.111
+          },
+          {
+            "x": 49999999,
+            "D_mod4": 229,
+            "coeff_vs_sqrtx_over_logx": 0.574
+          }
+        ]
+      },
+      "gate": "first mod-4 lead change at exactly 26,861; mod-3 bias never reverses below sieve bound; mod-4 lead fraction > 95%",
+      "verdict": "PASS",
+      "falsifier": "Re-sieve and find the first mod-4 crossing somewhere other than 26,861, or a mod-3 reversal below the bound, or the bias decaying faster than sqrt(x)/log x."
+    },
+    {
       "row": 6,
       "phenomenon": "splitting of primes in Q(sqrt 5) (the programme's base field)",
       "layer1_classical_source": "THEOREM: quadratic reciprocity / Chebotarev density",
@@ -171,7 +296,40 @@
       "gate": "split fraction within 1% of 1/2; exactly one twin pair with p = 3 mod 5 (namely (3,5))",
       "verdict": "PASS",
       "falsifier": "Find a prime p = +-2 mod 5 that splits (or +-1 that does not), or a second twin pair with p = 3 mod 5."
+    },
+    {
+      "row": 7,
+      "phenomenon": "Sato-Tate for the icosian cuspidal L (our object)",
+      "layer1_classical_source": "THEOREM: Barnet-Lamb-Geraghty-Harris-Taylor (non-CM Hilbert modular)",
+      "layer2_wall": "the RATE (effective ST / discrepancy decay) = symmetric-power L-functions; sqrt-cancellation is the GRH-regime signature \u2014 open",
+      "computed": {
+        "n_angles": 663,
+        "dropped": "norm-31 Steinberg prime",
+        "moments": {
+          "m1": 0.0005,
+          "m2": 0.2515,
+          "m3": -0.0,
+          "m4": 0.1265
+        },
+        "st_targets": {
+          "m1": 0.0,
+          "m2": 0.25,
+          "m3": 0.0,
+          "m4": 0.125
+        },
+        "three_sigma": {
+          "m1": 0.0583,
+          "m2": 0.0291,
+          "m3": 0.0326,
+          "m4": 0.023
+        },
+        "ks_distance": 0.0339,
+        "ramanujan_exact": true
+      },
+      "gate": "all four moments within 3 sigma of Sato-Tate; Ramanujan bound exact",
+      "verdict": "PASS",
+      "falsifier": "Recompute the Brandt eigenvalues to a higher norm bound: ST is a theorem for this object, so a persistent moment deviation means the GEOMETRIC eigenvalues are wrong \u2014 this row audits our own data."
     }
   ],
-  "runtime_seconds": 2.0
+  "runtime_seconds": 2.2
 }

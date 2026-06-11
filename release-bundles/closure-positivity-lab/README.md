@@ -43,7 +43,7 @@ gp -q out/_curve_zeros.gp     # recompute the L-function zeros (needs PARI/GP)
 
 The 664/664 provenance and all headline JSON artifacts ship in `out/`.
 
-## The prime phenomena ledger (Phase A)
+## The prime phenomena ledger (Phases A+B)
 
 A second experiment on the same instrument: every named prime-distribution
 phenomenon, factored as *(all-finite-places closure product — decidable,
@@ -53,21 +53,26 @@ Chebotarev); this module verifies and organises, it does not discover. No
 infinitude conjecture, RH, or GRH is claimed — the wall row is stated, not crossed.
 
 ```bash
-python3 -m lab.prime_ledger     # 4 rows, ~2s, writes out/prime_ledger.json
+python3 -m lab.prime_ledger     # 7 rows, ~3s, writes out/prime_ledger.json
 ```
 
-Phase A results (sieve to 5×10⁷):
+Results (sieve to 5×10⁷):
 
 | row | phenomenon | local-law check | verdict |
 |---|---|---|---|
 | 1 | twin primes | 239,101 counted vs 239,107 Hardy–Littlewood (ratio 0.99997) | PASS |
 | 2 | all even gaps (Polignac) | gap-6 = 2× twins (1.9950), gap-10 = 4/3 (1.3318), gap-210 = 16/5 (3.1994) — every ratio within 0.25% of its local product | PASS |
+| 3 | Goldbach counts | 200 consecutive even N near 10⁶: mean deviation 0.65% from the per-N local product × HL integral (the 3∣N doubling included), max 2.2% | PASS |
 | 4 | primes in APs (**theorem anchor**) | equidistribution deviation < 0.04% across mod 4/5/12; inadmissible classes exactly empty | PASS |
+| 5 | Chebyshev bias | first mod-4 lead change at exactly x = 26,861 (Leech 1957); lead fraction 99.93%; mod-3 bias never reverses below 5×10⁷ | PASS |
 | 6 | splitting in Q(√5) (**our base field**) | split fraction 0.49993 vs 1/2; exactly one twin pair with p ≡ 3 (mod 5) — the place-5 closure condition acting exactly | PASS |
+| 7 | Sato–Tate for **our cuspidal L** (**theorem anchor**) | 663 Brandt angles (Steinberg prime dropped): moments (0.0005, 0.2515, −0.0000, 0.1265) vs ST (0, ¼, 0, ⅛), all within pre-set 3σ gates; KS 0.034 | PASS |
 
-Rows 4 and 6 are theorem-grade calibration anchors: the instrument must
-reproduce proven mathematics exactly or it is broken. Falsifiers per row live
-in `out/prime_ledger.json`.
+Rows 4, 6 and 7 are theorem-grade calibration anchors: the instrument must
+reproduce proven mathematics exactly or it is broken. Row 7 doubles as an
+audit of our own geometric eigenvalues — Sato–Tate is a theorem here, so a
+persistent deviation would indict the Brandt data, not the conjecture.
+Falsifiers per row live in `out/prime_ledger.json`.
 
 ---
 

@@ -12,11 +12,13 @@ import sys
 import time
 
 from . import core
-from . import row01_twin_primes, row02_polignac_gaps
-from . import row04_dirichlet_aps, row06_qsqrt5_splitting
+from . import row01_twin_primes, row02_polignac_gaps, row03_goldbach
+from . import row04_dirichlet_aps, row05_chebyshev_bias
+from . import row06_qsqrt5_splitting, row07_sato_tate
 
-ROWS = (row01_twin_primes, row02_polignac_gaps,
-        row04_dirichlet_aps, row06_qsqrt5_splitting)
+ROWS = (row01_twin_primes, row02_polignac_gaps, row03_goldbach,
+        row04_dirichlet_aps, row05_chebyshev_bias,
+        row06_qsqrt5_splitting, row07_sato_tate)
 
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "out",
                    "prime_ledger.json")
@@ -34,7 +36,7 @@ def main():
 
     doc = {
         "work_order": "WO-VFD-PRIME-LEDGER-001",
-        "phase": "A",
+        "phase": "A+B",
         "x": core.DEFAULT_X,
         "thesis": ("every prime-distribution phenomenon factors as "
                    "(all-finite-places closure product, decidable) x "
