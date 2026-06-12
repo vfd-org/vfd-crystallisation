@@ -1,6 +1,6 @@
 # WO-SHELL-OFFSET-001: The Shell-Integer Rule and the Offset Dynamics
 
-**Date:** 2026-06-12
+**Date:** 2026-06-12 (Phase C added same day)
 **Status:** First structured attack executed. **The rule was not derived — and the attack establishes, at proof grade, *why the easy routes cannot work*, what any future rule must look like, one excluded dressing form, and one recorded lead.** Every conclusion, including each null, is machine-checked: `scripts/explore_shell_rule.py` (8/8 PASS).
 **Discipline:** golden-ratio expressions can "fit" any spectrum (the W5 trap). This work order therefore enumerates structure-derived hypothesis classes only, fixes criteria before judging, accounts for look-elsewhere, and publishes the negatives as constraints.
 
@@ -41,6 +41,23 @@ The two routes that could still produce the rule:
 
 What is now impossible to do honestly: announce a shell rule from polynomial/static-feature classes (SR1–SR2 are proofs), or an offset law fitted to one sector (SR7's out-of-sample failure is the cautionary record).
 
+## 4b. Phase C: the sieve hypothesis (intermediate geometry / prime resonances)
+
+A genuinely different class, proposed from the 5×24 Schläfli structure: the geometry generates a **set of allowed levels** (a sieve), and particles occupy allowed levels. A sieve is not a function of quantum numbers, so the curvature obstruction of SR1 **does not apply to it** — the class is live. Tested (`scripts/explore_geometric_ladder.py`, 3/3 PASS, exact hypergeometric null model, Bonferroni over 8 sieves, density bound 18/27):
+
+| Sieve (provenance) | hits | density | corrected p |
+|---|---|---|---|
+| multiples of 8 (Observer rung) | 3/9 | 3/27 | 0.23 |
+| multiples of 6 (D₄ Coxeter) | 3/9 | 4/27 | 0.75 |
+| 24a + 5b, small coeffs (the 5×24 coset idea) | 2/9 | 7/27 | 1.00 |
+| H4 degrees 30a+20b+12c+2d | 6/9 | 13/27 | 1.00 |
+| 96 ± E8 exponents | 2/9 | 8/27 | 1.00 |
+| primes + prime powers | 2/9 | 7/27 | 1.00 |
+| split-prime resonances (p, 2p; p ≡ ±1 mod 5) | 1/9 | 3/27 | 1.00 |
+| pentagonal classes (0, ±1 mod 5) | 5/9 | 16/27 | 0.76 |
+
+**Verdict: NULL across all eight admissible generators** — none beats chance after correction. **The open door, quantified (GL3):** a *derived* level set capturing all nine observed shells clears the pre-registered bar iff its span-density is ≤ 9/27 ≈ one-third. That is the precise target for any future intermediate-geometry construction (finer Schläfli strata, new prime-resonance levels from the pentagonal-clock instrument): derive the set first, from geometry, with no sight of the shell table — then score it once.
+
 ## 5. Verification
 
-`scripts/explore_shell_rule.py` — 8/8 PASS; each PASS reproduces a recorded conclusion including each null. Companion to `docs/sm-closeability-audit.md` §2 and `scripts/sm_ledger.py`.
+`scripts/explore_shell_rule.py` — 8/8 PASS; `scripts/explore_geometric_ladder.py` — 3/3 PASS (Phase C); each PASS reproduces a recorded conclusion including each null. Companion to `docs/sm-closeability-audit.md` §2 and `scripts/sm_ledger.py`.
