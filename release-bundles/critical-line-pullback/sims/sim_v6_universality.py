@@ -1,10 +1,11 @@
-"""Sim v6: H-attr universality theorem + counter-example.
+"""Sim v6: H-attr conditional suppression lemma + counter-example.
 
 Sim v5 showed that four natural closure-flow dynamics on V_600 all
 suppress the tau-paired (26-dim) component. The question:
 
-  Is H-attr universal across closure-flow dynamics, or specific to
-  the dynamics tested?
+  Is the suppression seen in sim v5 specific to the dynamics tested,
+  or does it follow from a checkable condition on the attractor?
+  (One lemma direction + one counter-example; no universality claim.)
 
 The answer is structural: any flow whose unique attractor is the
 smallest-C_phi eigenspace V_min = ker(C_phi - phi^-2 I) suppresses
@@ -16,7 +17,7 @@ This sim:
 
   (1) Verifies V_min subset tau-fixed (explicit check).
 
-  (2) Demonstrates the structural theorem by constructing a
+  (2) Exhibits the counter-example direction by constructing a
       PATHOLOGICAL dynamics that attracts to a tau-PAIRED block
       eigenspace. Specifically:
 
@@ -29,15 +30,15 @@ This sim:
 
       Result: tau-paired component is AMPLIFIED, not suppressed.
 
-  (3) States the universality theorem: NATURAL closure-flow
-      dynamics (i.e. ones whose attractor is V_min) suppress
-      tau-paired; PATHOLOGICAL dynamics do not. The condition for
+  (3) States the conditional suppression lemma: closure-flow
+      dynamics whose attractor is V_min suppress tau-paired; the
+      constructed pathological dynamics does not. The condition for
       H-attr is therefore that the dynamics attracts to V_min.
 
-This is the cleanest possible structural closure of H-attr
-universality: it identifies the precise condition under which the
-suppression holds and constructs an explicit counter-example
-when the condition fails.
+This gives a conditional lemma, not a universality theorem: it
+identifies a sufficient condition under which the suppression
+holds and constructs an explicit counter-example when the
+condition fails.
 """
 from __future__ import annotations
 
@@ -139,7 +140,7 @@ def build_projectors(A1, target_eigs, tol=1e-6):
 def main():
     findings = []
     print("=" * 70)
-    print("SIM v6: H-attr universality + counter-example")
+    print("SIM v6: H-attr conditional suppression lemma + counter-example")
     print("=" * 70)
 
     print("\n[1] Building V_600, A_1, C_phi...")
@@ -180,8 +181,8 @@ def main():
     findings.append("  (= 0 means V_min subset tau-fixed)")
     findings.append("")
 
-    # ----- Universality theorem statement
-    findings.append("STRUCTURAL THEOREM (H-attr universality):")
+    # ----- Conditional suppression lemma statement
+    findings.append("CONDITIONAL SUPPRESSION LEMMA (not a universality theorem):")
     findings.append("  Let X: R^120 -> R^120 be any closure-flow dynamics")
     findings.append("  whose unique attractor is V_min = ker(C_phi - phi^-2 I).")
     findings.append("  Then for any initial v with <v, P_tau_fixed v> > 0,")
@@ -190,7 +191,7 @@ def main():
     findings.append("  Proof: V_min subset P_tau_fixed (verified above),")
     findings.append("  and X^t v -> V_min by hypothesis.")
     findings.append("")
-    findings.append("This is universal across NATURAL dynamics (those")
+    findings.append("This holds for dynamics whose attractor is V_min (those")
     findings.append("attracting to V_min). The next test exhibits a")
     findings.append("PATHOLOGICAL dynamics whose attractor is NOT V_min,")
     findings.append("and verifies it does NOT suppress tau-paired.")
@@ -288,7 +289,7 @@ def main():
         nat_records[name] = np.array(rec)
 
     # ----- Plot comparison
-    print("\n[5] Plotting universality + counter-example comparison...")
+    print("\n[5] Plotting lemma + counter-example comparison...")
     fig, ax = plt.subplots(figsize=(13, 7))
     # Natural dynamics
     for name, color in [("A", "tab:gray"), ("B", "tab:green"),
@@ -307,7 +308,7 @@ def main():
     ax.axhline(26.0 / 94.0, color="black", linestyle="--",
                linewidth=0.8, label="random baseline = 26/94")
     ax.set_title(
-        "H-attr universality: natural dynamics suppress tau-paired;\n"
+        "H-attr conditional lemma: V_min-attracting dynamics suppress tau-paired;\n"
         "pathological dynamics (attractor in tau-paired block) amplifies"
     )
     ax.set_xlabel("iteration")

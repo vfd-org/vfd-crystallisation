@@ -76,7 +76,7 @@ GAMMAS = np.array([
     88.809111207634465, 92.491899270558484,
 ])
 
-# Rational A_1 eigvals -> tau-fixed (94-dim)
+# Rational A_1 eigvals -> sigma-fixed side of the bookkeeping split (94)
 RATIONAL_A1 = [12.0, 3.0, 0.0, -2.0, -3.0]
 
 

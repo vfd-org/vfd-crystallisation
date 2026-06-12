@@ -1,129 +1,97 @@
-# RH as Witness Resonance
+# A Conditional Substrate Localisation of the Hilbert–Pólya Problem
 
-**A substrate-side equivalence of the Riemann Hypothesis: RH holds
-if and only if the witness invariant W = V_min on V₆₀₀ admits a
-substrate-localised spectral generator T_W whose excited spectrum
-equals {γ_n}.**
+**If a self-adjoint operator with the stated substrate constraints exists on
+an infinite-dimensional lift of V₆₀₀'s τ-fixed block, whose positive
+eigenvalues are in multiplicity-respecting bijection with ζ's
+upper-half-plane non-trivial zeros, then RH follows — by the classical
+Hilbert–Pólya argument. Whether RH conversely guarantees an
+operator meeting the substrate constraints is open; that converse is the
+localisation target, not a result.**
 
-This is the final synthesis paper of the V₆₀₀ closure programme.
-It reformulates the Riemann Hypothesis as a structural existence
-claim on the substrate.
+> **Version note.** v1 of this paper ("RH as Witness Resonance") claimed a
+> three-way *equivalence* between RH and "substrate spectral completeness".
+> Adversarial review (2026-06-12) found that one direction assumed its own
+> conclusion, a second clause was definitional, and the finite 94-dimensional
+> block cannot carry the infinite spectrum the statement requires. v2
+> withdraws the equivalence and restates the content honestly as a
+> *conditional localisation*: a constraint list plus the one classical
+> implication. The constraint list — ground state at V_min, commutation with
+> closure-flow and with the Hecke action of the Hilbert modular lift — is
+> the paper's contribution.
 
-## The thesis in one paragraph
+## The statement in one paragraph
 
-The substrate framework has established:
-- a Witness Invariant Theorem (V_min is the unique closure-flow
-  attractor on V₆₀₀);
-- a triadic closure equation W = Φ × G × O subject to C → 0 (with
-  unique solution W = V_min);
-- an embedding of the Riemann critical line into V₆₀₀'s τ-fixed
-  94-block via L_sub = ζ_K·ζ_K(s−1)·C_2.
+The substrate framework (siblings below) established the witness invariant
+W = V_min as the closure-flow attractor and an embedding of the critical
+line into V₆₀₀'s τ-fixed block. This paper defines a **substrate lift**
+(a separable infinite-dimensional Hilbert space anchored to the τ-fixed
+block, carrying extensions of the closure-flow and Hecke actions) and a
+**substrate-localised generator** on it, and proves the one classical
+direction: such a generator whose positive eigenvalues are in
+multiplicity-respecting bijection with the upper-half-plane non-trivial
+zeros (ρ = 1/2 + i·t; the conjugate lower half follows by symmetry) would
+imply RH (self-adjointness forces real spectrum; no novelty is claimed for
+the deduction). Everything else —
+the existence of a lift, the existence of the generator, the converse —
+is stated as the open target it is. Without the substrate constraints the
+converse is trivial (a diagonal operator does it), so the entire content of
+the localisation lies in the constraints.
 
-The remaining open question is: which specific operator T_W on the
-τ-fixed block has eigenvalues equal to {γ_n}? This paper proves
-that **the existence of T_W is equivalent to RH** (and similarly
-for GRH on χ_5 via the τ-paired block).
+## What is and is not established
 
-## What the theorem proves
+**Established:** the constraint list (the substrate-localised generator
+definition); the classical implication (the paper's Proposition); an
+analogous conjectural target for L(s, χ₅) on the τ-paired block.
 
-**Witness Resonance Theorem (Theorem 2 of the paper).**
-Let T_W be a spectral generator of the witness invariant W = V_min,
-i.e., a self-adjoint operator on the τ-fixed block V_+ with V_min
-as ground state, commuting with closure-flow and Hecke operators.
-Let R(T_W) be its excited spectrum.
+**Not established:** RH; GRH for χ₅; the existence of a substrate lift or of
+the generator on any lift; the converse of the implication (v1's claimed
+equivalence — withdrawn); any new computation.
 
-The following are equivalent:
+## Provenance note
 
-1. **Substrate spectral completeness:** R(T_W) = {γ_n}
-2. **Riemann Hypothesis:** all non-trivial ζ-zeros have Re = 1/2
-3. **Spectral completeness functional:** the closure equation
-   W = Φ × G × O subject to C → 0 is spectrally complete
-
-The proof sketches show (a) ⇔ (b) ⇔ (c) via the substrate
-critical-line embedding + the Hilbert–Pólya programme localised
-to V₆₀₀'s τ-fixed block.
-
-## What this means
-
-RH is no longer an analytic-only statement. It is the substrate's
-**witness spectral completeness condition**: whether the witness
-invariant admits a substrate-localised spectral generator with the
-specific spectrum required by the L-function pull-back.
-
-**The substrate framework has localised the open problem.** It has
-not resolved it. Closing RH requires either:
-
-- **Bottom-up:** explicitly construct T_W from substrate-intrinsic
-  data (closure-flow + cuspidal Hilbert modular forms + 2I-
-  equivariance). This is the substrate-localised Hilbert–Pólya
-  construction problem.
-- **Top-down:** prove that any Hilbert–Pólya operator on the
-  relevant Hilbert modular form space must localise onto V_min's
-  span. This would be a structural rigidity argument.
-
-Either path closes RH. Neither is closed in this paper.
-
-## What this is and is not
-
-### Is
-
-- A precise structural reformulation of RH as a substrate
-  existence claim.
-- A non-mystical framework: every clause is finite-dim algebra +
-  spectral theory on V₆₀₀.
-- A localisation of the Hilbert–Pólya programme to a specific
-  finite-dimensional setting.
-
-### Is not
-
-- A proof of RH.
-- A proof of GRH for L(s, χ_5).
-- A construction of T_W from substrate data.
-- A claim that the substrate is mathematically prior to ζ(s);
-  rather, the substrate **models** ζ's L-function-pull-back
-  structure.
+This bundle contains **no simulations and no new computations**. All
+structural counts used (120 vertices, the 94+13+13 Galois split, dim
+V_min = 1) are imported from the cited sibling artifacts:
+[critical-line-pullback](../critical-line-pullback/) (computational
+findings with sims) and the
+[the-24-600-spectral-bridge](https://github.com/vfd-org/the-24-600-spectral-bridge)
+programme. This paper is a specification document over those results.
 
 ## Bundle contents
 
 ```
 rh-witness-resonance/
   paper/
-    rh-witness-resonance.tex    ← the synthesis paper
+    rh-witness-resonance.tex    ← the localisation paper (v2)
     rh-witness-resonance.pdf
     references.bib
   README.md (this file)
   CHANGELOG.md
   LICENSE
-  .gitignore
 ```
 
 ## Position in the programme
 
-This paper completes the V₆₀₀ closure programme's RH-direction
-work:
-
 ```
 icosian-triad-v600        →  substrate, C_φ, L-function identity
-closure-picture           →  programme-wide interpretive synthesis
-critical-line-pullback    →  8 findings on critical-line embedding
-translation-engine-v2     →  operational engine validating claims
+critical-line-pullback    →  computational findings on the critical-line embedding
 observer-attractor-theorem→  Witness Invariant Theorem (W = V_min)
-rh-witness-resonance      →  THIS PAPER: RH as substrate completeness
-                             (final reframe)
+rh-witness-resonance      →  THIS PAPER: conditional Hilbert–Pólya
+                             localisation target (specification)
 ```
 
-The arc: substrate → interpretation → empirical findings → engine →
-witness identification → RH equivalence.
+The current canonical prime/RH surface of the programme is
+[closure-positivity-lab](https://github.com/vfd-org/closure-positivity-lab)
+(the realization, the L-function provenance, the positivity wall, the prime
+phenomena ledger); this paper is upstream interpretive material relative to
+that repo and is held to the same scope discipline.
 
 ## Status
 
-Pre-peer-review open research preprint. Not independently
-validated. **No claim of RH settlement** is made anywhere in this
-document.
-
-The reframe is a structural contribution: it gives RH a precise
-finite-dimensional algebraic equivalent on V₆₀₀. The analytical
-content of RH (whether T_W exists) is unchanged.
+Pre-peer-review open research preprint, v2.0.0-rc1 (reframed after
+adversarial review). Not independently validated. **No claim of RH or GRH
+settlement is made anywhere in this document, and no equivalence with RH is
+asserted.**
 
 ## Licence
 

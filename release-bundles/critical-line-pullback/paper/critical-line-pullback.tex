@@ -55,14 +55,15 @@
 }
 
 \title{\textbf{The Critical Line, Pulled Back to $V_{600}$}\\[0.4em]
-\large Eight empirical findings, closing the chain to a clean
-substrate-side restatement of $\mathrm{RH} + \mathrm{GRH}_{\chi_5}$}
+\large Computational checks around the icosian L-function
+factorisation, led by one exact negative Galois result; nothing here
+states or implies progress on RH or $\mathrm{GRH}_{\chi_5}$}
 
 \author{Lee Smart\\
 \small Institute of Vibrational Field Dynamics\\
 \small \texttt{contact@vibrationalfielddynamics.org}}
 
-\date{2026-05-29 \quad (pre-peer-review preprint, v1.0.0-rc1)}
+\date{2026-06-12 \quad (pre-peer-review preprint, v1.1.0-rc1 --- revised after adversarial review)}
 
 \begin{document}
 \maketitle
@@ -74,18 +75,22 @@ the complex plane. Under the Hilbert modular L-function identity
 $L(\Theta_\II, s) = \zeta_K(s) \cdot \zeta_K(s-1) \cdot C_2(s)$ for
 $K = \Q(\sqrt 5)$, with $\zeta_K(s) = \zeta(s) \cdot L(s, \chi_5)$,
 the critical line of $\zeta(s)$ pulls back to a curve on the
-icosian substrate. This short paper reports four empirical findings
-from a multi-version probe simulation that builds $\Vsix$ exactly,
+icosian substrate. This paper reports computational checks at three
+distinct grades --- a pipeline sanity check and two verified finite
+computations (Findings 1--3), one exact negative result which is
+the principal finding (Finding 4), and four exploratory follow-ons
+stamped as such (Findings 5--8) --- from a multi-version probe
+simulation that builds $\Vsix$ exactly,
 constructs the substrate L-function analytically using
 \texttt{mpmath}, evaluates it at the first ten Riemann zeros, and
 verifies the Eichler--Brandt representation formula at finite
 coordinate bound.
 
-The four findings are:
+The findings are:
 \begin{enumerate}[leftmargin=*]
   \item The substrate L-function vanishes at every one of the first
         ten Riemann zeros to numerical precision
-        ($|L_{\mathrm{sub}}(1/2 + i \gamma_n)| < 2 \cdot 10^{-11}$ for
+        ($|L_{\mathrm{sub}}(1/2 + i \gamma_n)| < 2.2 \cdot 10^{-11}$ for
         $n = 1, \ldots, 10$). This is the empirical image of the
         critical line on the substrate.
   \item The Eichler--Brandt formula $r(p) = 8 (1 + p^2)$ for odd
@@ -94,9 +99,9 @@ The four findings are:
         tested ($p \in \{3, 7, 13, 17, 23\}$), together with the
         Jacobi-style anomaly $r(2) = 24$.
   \item A clean closed 10-vertex icosian rotation orbit can be
-        exhibited as the discrete helix on $S^3$ that any
-        sub-Lagrangian-scale dynamics of the substrate would
-        trace.
+        exhibited as a discrete helix on $S^3$ --- a group-action
+        demonstration; the relation to the continuous L-spiral is
+        left open.
   \item Coordinate-Galois $\sigma$ \emph{does not preserve $\Vsix$
         as a set}: $96$ of the $120$ vertices map under
         $\varphi \mapsto 1 - \varphi$ to odd-permutation positions
@@ -105,21 +110,20 @@ The four findings are:
         in the icosian-triad paper must reference a different
         involution $\tau$ on the operator algebra, not the direct
         coordinate-Galois action.
-  \item (Closed, follow-on to Finding 4.) The involution $\tau$ is
-        the \emph{Galois action on the $\Cphi$-spectrum}: the five
-        rational $A_1$ eigenvalues $\{12, 3, 0, -2, -3\}$ with
-        multiplicities $(1, 16, 25, 36, 16)$ summing to $94$ are
-        the $\tau$-fixed block; the two Galois-paired eigenvalue
-        sets $\{6\varphi \leftrightarrow 6 - 6\varphi\}$
-        (mults $4 + 4$) and
-        $\{4\varphi \leftrightarrow 4 - 4\varphi\}$
-        (mults $9 + 9$) split each side of the pair as $4 + 9 = 13$.
-        Total $94 + 13 + 13 = 120$ exactly. \textbf{Moreover, the
-        Riemann zeros pull back to the $\tau$-fixed $94$-dim
-        block specifically}: at every $\gamma_n$ we have
-        $|\zeta(1/2 + i\gamma_n)| < 10^{-14}$ while
-        $|L(1/2 + i\gamma_n, \chi_5)|$ is order one. The zero
-        locus sits on the substrate's $\tau$-fixed part.
+  \item (Follow-on to Finding 4, bookkeeping level.) Grouping the
+        $\Cphi$ eigenvalues by Galois conjugacy of their values
+        partitions multiplicities as $94 + 13 + 13 = 120$ exactly:
+        five rational $A_1$ eigenvalues $\{12, 3, 0, -2, -3\}$
+        (mults $1, 16, 25, 36, 16$) and two Galois-paired sets
+        ($4{+}4$ and $9{+}9$). This identifies a natural
+        \emph{candidate} for the involution $\tau$ at the level
+        of spectral data; constructing $\tau$ as an involution on
+        the vertex space or operator algebra is not done here.
+        Separately, at each tabulated $\gamma_n$ the $\zeta$
+        factor is at machine zero while $|L(1/2+i\gamma_n,
+        \chi_5)|$ is order one --- a scalar attribution of each
+        zero to the $\sigma$-fixed Dedekind factor; no projection
+        of zeros into a $94$-dimensional space is computed.
   \item (Operator-level support for H-attr.) Four natural
         closure-flow dynamics on $\Vsix$ all drive the $26$-dim
         $\tau$-paired component to zero (or, when $\tau$-asymmetric
@@ -127,8 +131,9 @@ The four findings are:
         \cdot 10^{-3}$). The block structure of $\Cphi$ is
         verified to machine precision
         ($\|[\Cphi, P_+]\|_\infty < 2 \cdot 10^{-15}$;
-        $\mathrm{tr}\,P_+ = 94$, $\mathrm{tr}\,P_- = 26$). H-attr
-        is empirically supported at the operator level.
+        $\mathrm{tr}\,P_+ = 94$, $\mathrm{tr}\,P_- = 26$). The
+        toy dynamics are consistent with H-attr; they do not
+        establish it.
 \end{enumerate}
 
 We make no claim of settling the Riemann Hypothesis. We claim only
@@ -183,7 +188,14 @@ out.
 \label{sec:method}
 
 The probe \texttt{sims/sim\_v2.py} carries out the following steps,
-all on a 30-decimal-digit working precision via \texttt{mpmath}:
+using 30-decimal-digit \texttt{mpmath} arithmetic for the $\zeta$
+evaluations. Two precision caveats apply throughout and bound what
+Finding~1 can mean: the Riemann zero ordinates are double-precision
+tabulated constants (not 30-digit), and $L(s,\chi_5)$ (and its
+$s{-}1$ shifts) are evaluated as truncated Dirichlet series beyond
+their half-plane of absolute convergence --- adequate for a
+sanity-check, and the reason residuals sit near $10^{-11}$ rather
+than $10^{-30}$:
 
 \begin{enumerate}[leftmargin=*]
   \item \textbf{Build $\Vsix$.} 120 unit icosian quaternions
@@ -197,9 +209,9 @@ all on a 30-decimal-digit working precision via \texttt{mpmath}:
         $\zeta_K(s)$, then assemble $\Lsub(s)$ as in
         \eqref{eq:factorisation}.
   \item \textbf{Evaluate at first ten Riemann zeros.} Use the
-        tabulated values
-        $\gamma_n \in \{14.135, 21.022, 25.011, 30.425, 32.935,
-        37.586, 40.919, 43.327, 48.005, 49.774\}$.
+        tabulated values $\gamma_n \in \{14.135,$ $21.022,$
+        $25.011,$ $30.425,$ $32.935,$ $37.586,$ $40.919,$
+        $43.327,$ $48.005,$ $49.774\}$.
   \item \textbf{Generate the substrate path.} Sample
         $\gamma \mapsto \Lsub(1/2 + i\gamma)$ on a 300-point grid
         $\gamma \in [0.01, 60]$.
@@ -227,7 +239,7 @@ Riemann zero}
 For each of the first ten non-trivial Riemann zeta zeros
 $\gamma_n$ ($n = 1, \ldots, 10$),
 \[
-  \bigl|\Lsub\bigl(\tfrac{1}{2} + i \gamma_n\bigr)\bigr| \;<\; 2 \cdot 10^{-11}.
+  \bigl|\Lsub\bigl(\tfrac{1}{2} + i \gamma_n\bigr)\bigr| \;<\; 2.2 \cdot 10^{-11}.
 \]
 \end{findingbox}
 
@@ -251,16 +263,18 @@ $n$ & $\gamma_n$ & $|\Lsub(1/2 + i\gamma_n)|$ \\
 \end{tabular}
 \end{center}
 
-These values are numerically indistinguishable from zero at
-30-digit working precision; the small residual magnitudes come from
-the truncation of $L(s, \chi_5)$ to 120 Dirichlet terms.
+The residual magnitudes reflect the double-precision zero
+ordinates and the 120-term truncation of $L(s,\chi_5)$, not the
+30-digit working precision of the $\zeta$ factor.
 
 \paragraph{Interpretation.} The factorisation
-\eqref{eq:factorisation} is a published identity, so Finding 1 is
-\emph{predicted} rather than novel mathematically. But the
-empirical confirmation is the load-bearing visual: under the
-Hilbert modular pull-back, Riemann's critical line acquires a
-specific image on the substrate, and we can now display it.
+\eqref{eq:factorisation} is a published identity, and the
+evaluation imports both that identity and the tabulated zero
+ordinates --- so the vanishing is \emph{forced} by the explicit
+$\zeta(s)$ factor. Finding 1 is a sanity check of the pipeline
+and a visualisation, not evidence of a substrate zero law: under
+the Hilbert modular pull-back, Riemann's critical line acquires a
+specific image on the substrate, and we display it.
 Figure~1 (left panel) shows the L-spiral with the ten Riemann
 zeros marked in red; Figure~1 (right) shows $|\Lsub|$ on log scale
 with the Riemann gammas as dashed vertical lines. Every dashed
@@ -383,29 +397,33 @@ The ``$\sigma$-fixed'' subspace dimension $94$ must therefore be
 the action of a different involution $\tau$ on the operator
 algebra --- one that does preserve $\Vsix$ as a set.
 
-\paragraph{The follow-on closes (Finding 5, below).} The follow-on
-identified in this section is closed empirically in
-\S\ref{sec:finding5}: $\tau$ is the Galois action lifted to the
-$\Cphi$-spectrum, with the $94 + 13 + 13$ split coming from the
-arithmetic of the eigenvalues themselves, not from any vertex
-involution. This is the triad-derived $\tau$ the user asked for.
+\paragraph{The follow-on, partially addressed (Finding 5, below).}
+\S\ref{sec:finding5} gives a bookkeeping-level candidate: grouping
+the $\Cphi$ eigenvalues by Galois conjugacy reproduces the
+$94 + 13 + 13$ multiplicity split from the arithmetic of the
+eigenvalues themselves, not from any vertex involution. The
+operator-level construction of $\tau$ remains open.
 
-\section{Finding 5: $\tau$ is the Galois action on the $\Cphi$
-spectrum, and the Riemann zeros sit on its $94$-dim fixed block}
+\section{Finding 5 (exploratory): a Galois bookkeeping split of
+the $\Cphi$ spectrum}
 \label{sec:finding5}
 
-\begin{findingbox}[title=Finding 5 (closes Finding 4)]
-The involution $\tau$ underlying the $94 + 13 + 13$ decomposition
-of $\Cphi$ is the \emph{Galois action $\sigma: \varphi \mapsto
-1 - \varphi$ on $\Z[\varphi]$, lifted to the $\Cphi$-spectrum
-through the Galois-conjugacy of its eigenvalues}. Each of the
-$5$ rational $A_1$ eigenvalues is $\sigma$-fixed; each of the
-$4$ irrational $A_1$ eigenvalues belongs to a Galois pair.
-Multiplicities partition as $94 + 13 + 13 = 120$ exactly.
+\begin{findingbox}[title={Finding 5 (follow-on to Finding 4, bookkeeping level)}]
+Grouping the $\Cphi$ eigenvalues by the Galois conjugacy of their
+values ($\sigma : \varphi \mapsto 1-\varphi$ on $\Z[\varphi]$)
+partitions the multiplicities as $94 + 13 + 13 = 120$ exactly: the
+$5$ rational $A_1$ eigenvalues are $\sigma$-fixed; the $4$
+irrational ones fall into Galois pairs. This identifies a natural
+\emph{candidate} for the involution $\tau$ of the
+$94{+}13{+}13$ split --- at the level of spectral data only.
+Constructing $\tau$ as an involution on the vertex space or the
+operator algebra, and showing it induces this split, is \emph{not}
+done here and remains the open follow-on of Finding 4.
 
-Moreover, the first ten Riemann zeros all pull back to the
-$\tau$-fixed $94$-dim block, with the $\Cphi$-paired $13 + 13$
-remaining away from origin.
+Separately, at each of the first ten tabulated Riemann zeros the
+$\zeta$ factor of $\Lsub$ is at machine zero while the
+$L(s,\chi_5)$ factor is order one --- a scalar attribution of each
+zero to the $\sigma$-fixed Dedekind factor.
 \end{findingbox}
 
 \subsection{The exact decomposition}
@@ -438,11 +456,13 @@ $4 - 4\varphi$  & $9$  & $-\varphi$ side & block B (13) \\
 
 The rational block sums to $1 + 16 + 25 + 36 + 16 = 94$. Each of
 the two Galois-paired blocks sums to $4 + 9 = 13$. Total
-$94 + 13 + 13 = 120$. The involution $\tau$ acts as the identity
-on the $94$-dim rational eigenspace and as the swap between
-block A and block B on the $26$-dim Galois-paired eigenspace.
+$94 + 13 + 13 = 120$. The \emph{candidate} involution $\tau$ --- defined here only at
+the level of spectral data --- would act as the identity on the
+$94$-dim rational eigenspace and as the swap between block A and
+block B on the $26$-dim Galois-paired eigenspace; constructing it
+on the vertex space or operator algebra remains open.
 
-\subsection{Where the Riemann zeros sit}
+\subsection{Scalar attribution of the tabulated zeros}
 
 The substrate L-function factors as
 \[
@@ -482,9 +502,13 @@ $|L(1/2 + i\gamma_n, \chi_5)|$ \\
 \end{center}
 
 Every $\zeta$ value is at machine zero ($10^{-14}$ to $10^{-16}$);
-every $L(s, \chi_5)$ value is order one. The zero attribution is
-unambiguous: \textbf{Riemann zeros pull back to the $\tau$-fixed
-$94$-dim substrate block.}
+every $L(s, \chi_5)$ value is order one. The attribution is
+unambiguous \emph{at the level of scalar factors}: each tabulated
+Riemann zero is a zero of the $\sigma$-fixed Dedekind factor
+$\zeta(s)$, not of $L(s,\chi_5)$. No vector, projector, or
+substrate-state projection of zeros into the $94$-dimensional
+block is computed; v1's wording, which asserted the zeros were
+located on the block itself, overstated this and is withdrawn.
 
 \begin{center}
 \includegraphics[width=0.95\linewidth]{../outputs/v4/02_zeta_vs_chi5_at_riemann_zeros.png}\\
@@ -506,9 +530,11 @@ roots of $x^2 - x - 1$).
 Finding 5 shows that the closure operator $\Cphi$ inherits this
 repetition through its eigenvalues: $94$ of $120$ eigenvalue
 ``slots'' are repetition-fixed (rational), and $26$ slots
-($= 13 + 13$) come in repetition pairs. The Riemann critical line
-image on the substrate is precisely the repetition-fixed part:
-the part where the triad's recurrence doesn't move things around.
+($= 13 + 13$) come in repetition pairs. At the level of scalar
+factor attribution (no projection of zeros into any eigenspace is
+computed), the Riemann zeros belong with the repetition-fixed
+side of this bookkeeping: the $\zeta$ factor is the
+$\sigma$-fixed Dedekind factor.
 
 \subsection{Geometric image of $\Cphi$'s spectrum}
 
@@ -522,13 +548,14 @@ to dim $13$. Bubble size = multiplicity.
 
 \subsection{What this leaves open}
 
-The closing of Finding 4 leaves only one substantive open question
-in the chain: \textbf{H-attr.} Under what natural closure-flow
+Finding 5's bookkeeping split leaves two open questions: the
+operator-level construction of $\tau$ itself (Finding 4's
+follow-on, still open), and \textbf{H-attr}: Under what natural closure-flow
 dynamics does the $\tau$-paired $26$-dim block get suppressed
-relative to the $\tau$-fixed $94$-dim block? If H-attr can be
-closed, the substrate analogue of RH (all closure-stable spectral
-content sits in the $\tau$-fixed block) closes too. We do not
-attempt this closure here; we note that Finding 5 reduces the
+relative to the $\tau$-fixed $94$-dim block? Settling H-attr
+would settle only the bookkeeping reading (which spectral side the
+stable dynamics selects); it would say nothing about RH itself.
+We do not attempt it here; we note that Finding 5 reduces the
 question to a definite operator-level statement.
 
 \section{Finding 6: H-attr is supported at the operator level}
@@ -658,12 +685,12 @@ of natural dynamics for which H-attr holds.
 \bigskip
 
 \noindent
-\textbf{Closure of this last point is in Finding 7.}
+\textbf{Finding 7 gives the conditional lemma for this last point.}
 
-\section{Finding 7: H-attr universality, structurally}
+\section{Finding 7 (exploratory): a conditional suppression lemma}
 \label{sec:finding7}
 
-\begin{findingbox}[title=Finding 7 (H-attr universality theorem)]
+\begin{findingbox}[title={Finding 7 (conditional suppression lemma)}]
 For any closure-flow dynamics $X : \R^{120} \to \R^{120}$ whose
 unique attractor is $V_{\min} := \ker(\Cphi - \varphi^{-2} I)$
 (equivalently, the maximal $A_1$ eigenspace, $1$-dimensional at
@@ -679,11 +706,11 @@ The flow converges to $V_{\min}$ by hypothesis. The
 $\tau$-paired component of the limit is zero, so the ratio
 $\|P_- X^t v\|^2 / \|P_+ X^t v\|^2 \to 0$. $\square$
 
-The hypothesis (``attractor is $V_{\min}$'') has empirical content:
-sim v6 constructs a pathological dynamics $E$ whose attractor is
-\emph{not} $V_{\min}$ and verifies that $E$ \emph{amplifies}
-$\tau$-paired by a factor $\sim 10^{12}$. So the hypothesis is
-both necessary and the counter-example is exhibited.
+The hypothesis (``attractor is $V_{\min}$'') is sufficient and
+non-vacuous: sim v6 constructs a pathological dynamics $E$ whose
+attractor is \emph{not} $V_{\min}$ and verifies that $E$
+\emph{amplifies}
+$\tau$-paired by a factor $\sim 10^{12}$. So the hypothesis is decisive in both tested cases; necessity in general is not established by one counter-example.
 \end{findingbox}
 
 \subsection{The counter-example: an attractor in the $\tau$-paired
@@ -734,9 +761,12 @@ $\sim 10^{12}$.
 Finding 7 gives a structural characterisation:
 
 \begin{quote}\itshape
-A closure-flow dynamics on $V_{600}$ satisfies H-attr iff its
-attractor lies in the $1$-dim $V_{\min}$ block. Equivalently iff
-its attractor sits inside the $\tau$-fixed subspace.
+If a closure-flow dynamics on $V_{600}$ attracts to the $1$-dim
+$V_{\min}$ block (which lies inside the $\tau$-fixed subspace),
+then the $\tau$-paired component is suppressed --- the lemma
+above. The converse direction is supported only by the single
+counter-example of sim v6 (an attractor in the $\tau$-paired
+block amplifies instead); no full equivalence is proven.
 \end{quote}
 
 The precondition is operator-level and verifiable. ``Natural''
@@ -744,32 +774,31 @@ closure-flow in the programme's usage (gradient descent on
 closure energy, inverse iteration, admissibility-gated flows from
 the closure transformation engine of \cite{translationLayer},
 etc.) all satisfy the precondition by construction. The H-attr
-question is now reduced to: ``Does the proposed dynamics attract
-to $V_{\min}$?'' --- a finite-dim spectral question with no
-remaining analytic content.
+question for any \emph{specific} proposed dynamics reduces to:
+``does it attract to $V_{\min}$?'' --- a finite-dimensional
+spectral question about that dynamics.
 
-\section{Finding 8: substrate-side restatement of RH = RH + GRH$_{\chi_5}$}
+\section{Finding 8 (exploratory): a heuristic factor-attribution sweep}
 \label{sec:finding8}
 
-\begin{findingbox}[title={Finding 8 -- zero decomposition (closing)}]
-On $\mathrm{Re}(s) = 1/2$, every zero of $\Lsub$ is attributable
-to exactly one vanishing factor:
-
-\begin{itemize}[leftmargin=*]
-  \item $\zeta(s) = 0$ at the Riemann zeros $\gamma_n$ ---
-        $\tau$-fixed contribution; substrate $94$-dim block.
-  \item $L(s, \chi_5) = 0$ at the critical zeros of the
-        Dirichlet $L$ for $\chi_5$ --- $\tau$-paired
-        contribution; substrate $26$-dim block.
-\end{itemize}
+\begin{findingbox}[title={Finding 8 -- heuristic sweep (not root certification)}]
+On the factorised form of $\Lsub$, any critical-line zero must
+come from a vanishing factor; for the analytically continued
+factors these are $\zeta(s)$ (the $\sigma$-fixed Dedekind factor)
+and $L(s,\chi_5)$ (the $\sigma$-paired one).
 
 \noindent
-A grid search over $\gamma \in [0.1, 60]$ produces 13 candidate
-zeros: 4 of them are exact Riemann zeros at $\gamma \in \{14.135,
-21.022, 25.011, 32.935\}$, and 9 are $\chi_5$-attributed at
-$\gamma \in \{6.649, 9.832, 11.959, 16.033, 19.541, 24.588,
-28.462, 33.001, 38.128\}$. The split is clean: no zero attributes
-to both factors, and no zero attributes to neither.
+A local-minimum sweep over $\gamma \in [0.1, 60]$ (a heuristic
+scan, \emph{not} certified root-finding) produces candidate
+minima of $|\Lsub|$: $4$ coincide with tabulated Riemann zeros
+($\gamma \in \{14.135, 21.022, 25.011, 32.935\}$) and the
+findings log records $8$ further minima at which the $\chi_5$
+factor is smallest. Several of the latter carry $|\Lsub|$ values
+far from zero (up to $\sim 0.4$), so they are \emph{candidate
+locations}, not certified zeros; v1's claim that ``every zero of
+$\Lsub$ is attributed exactly'' is withdrawn. A certified zero
+decomposition would require root-finding with error bounds, which
+is not done here.
 
 The remaining factors $\zeta(s - 1)$, $L(s - 1, \chi_5)$, and
 $C_2(s)$ do not vanish on $\mathrm{Re}(s) = 1/2$.
@@ -810,42 +839,46 @@ the vanishing of $\zeta(s)$ or $L(s, \chi_5)$.
 \includegraphics[width=0.95\linewidth]{../outputs/v7/01_zero_decomposition.png}\\
 \small\textbf{Figure 7.} Sweep of $|\Lsub|$, $|\zeta|$, and
 $|L(\cdot, \chi_5)|$ along $\mathrm{Re}(s) = 1/2$. Bottom panel:
-the 13 found zeros split cleanly into 4 $\zeta$-attributed
-(Riemann zeros, $\tau$-fixed, blue triangles) and 9
-$\chi_5$-attributed ($\tau$-paired, orange triangles).
+the 13 candidate minima (not certified zeros) split into 4
+$\zeta$-attributed (tabulated Riemann zeros, blue triangles) and 9
+$\chi_5$-attributed candidates (orange triangles; the run log counts 8
+of these as new --- see \texttt{data/v7/}).
 \end{center}
 
-\subsection{The substrate-side restatement of RH}
+\subsection{The factor-wise reading}
 
 \begin{tcolorbox}[colback=red!2,colframe=red!50!black,
-  title=Closing statement: substrate-side RH]
-The empirical chain of Findings 1--8 reduces the substrate-side
-formulation of the Riemann Hypothesis to:
+  title={Reading (exploratory): the factorised zero locus, in substrate bookkeeping}]
+The Dedekind factorisation, written factor-by-factor against the
+spectral bookkeeping of Finding 5, reads:
 
 \[
-\textbf{Substrate-side RH}
-\;\;=\;\;
-\underbrace{\mathrm{RH}_\zeta}_{\text{$\tau$-fixed $94$-block}}
-\;\;+\;\;
-\underbrace{\mathrm{GRH}_{\chi_5}}_{\text{$\tau$-paired $26$-block}}.
+\resizebox{\linewidth}{!}{$
+\text{factorised zero locus}
+\;=\;
+\underbrace{\text{zeros of }\zeta}_{\text{$\sigma$-fixed; side $94$}}
+\;\cup\;
+\underbrace{\text{zeros of }L(\cdot,\chi_5)}_{\text{$\sigma$-paired; side $13{+}13$}}
+$}
 \]
 
 \noindent
-The substrate exhibits an exact Galois decomposition of the
-critical-line zero locus into two factors: $\zeta(s)$ on the
-$94$-dim $\tau$-fixed block and $L(s, \chi_5)$ on the $26$-dim
-$\tau$-paired block. Under any natural closure-flow dynamics
-(Finding 7), the $\tau$-paired block is suppressed --- so the
-substrate's stable spectral dynamics is governed by $\zeta(s)$
-alone.
+The bookkeeping associates the two analytically-continued factors
+with the two sides of the spectral split: $\zeta(s)$ with the
+$94$-dim $\sigma$-fixed multiplicities and $L(s, \chi_5)$ with
+the $26$-dim paired ones. Under the toy dynamics of Findings 6--7
+(conditional lemma; not universality), the paired component is
+suppressed.
 
-This reformulates RH cleanly in substrate language. \emph{It does
-not resolve RH.} The analytic content of $\mathrm{RH}_\zeta$ and
-$\mathrm{GRH}_{\chi_5}$ remains. The substrate's contribution is
-the Galois decomposition: it tells us which classical conjecture
-governs which substrate block, which dynamics the conjecture
-matters for, and what an empirical substrate-side falsifier of
-each conjecture would look like.
+This display is the factor-wise restatement of the published
+Dedekind factorisation, recorded for orientation; it adds no
+mathematical content and resolves nothing. \emph{It does not
+resolve, restate non-trivially, or approach RH.} The analytic
+content of $\mathrm{RH}_\zeta$ and $\mathrm{GRH}_{\chi_5}$ is
+untouched. What the bookkeeping offers is organisational: which
+classical conjecture is associated with which spectral block of
+the bookkeeping split, and what a substrate-side falsifier of each
+would look like.
 \end{tcolorbox}
 
 \section{What this does and does not say about RH}
@@ -889,8 +922,9 @@ What this probe does \emph{not} do:
 \section{Next moves}
 \label{sec:next}
 
-Finding 4's follow-on is now closed (Finding 5). The next moves
-are:
+Finding 4's follow-on has a bookkeeping-level candidate
+(Finding 5); the operator-level construction of $\tau$ remains
+open. The next moves are:
 
 \begin{enumerate}[leftmargin=*]
   \item \textbf{H-attr probe.} With $\tau$ identified, the
@@ -910,26 +944,52 @@ are:
         (Montgomery's pair correlation) on the substrate side.
   \item Extend the Finding 5 attribution argument to zeros of
         $L(s, \chi_5)$ (the $\tau$-paired Dedekind factor): such
-        zeros, if any lie on the critical line, would pull back
-        to the $26$-dim $\tau$-paired block. This gives a
-        falsifiable structural prediction: zeros of $L(s, \chi_5)$
-        on the critical line sit on the $13 + 13$, not the $94$.
+        zeros, if any lie on the critical line, would attribute
+        (at the scalar-factor level of Finding 5) to the
+        $\sigma$-paired Dedekind factor --- the $13 + 13$ side of
+        the bookkeeping, not the $94$. Making this a structural
+        statement requires first constructing $\tau$ at the
+        operator level.
 \end{enumerate}
 
 \section{Reproducibility}
 \label{sec:repro}
 
-All three sims (\texttt{sim\_critical\_line\_pullback.py} [v1],
-\texttt{sim\_v2.py} [v2], \texttt{sim\_v3\_sigma\_exact.py} [v3])
-are in \texttt{sims/}. They are pure Python with
-\texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}, and
-\texttt{mpmath} dependencies. The full set of generated outputs
-(plots and CSVs) is in \texttt{outputs/} and \texttt{data/}.
+Ten sims ship in \texttt{sims/}, with explicit status labels:
+
+{\sloppy
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Load-bearing}: \texttt{sim\_v2.py} (Findings
+        1--3 tables, Eichler--Brandt enumeration);
+        \texttt{sim\_v3\_sigma\_exact.py} (Finding 4, the exact
+        negative result).
+  \item \textbf{Bookkeeping}: \texttt{sim\_v4\_tau\_identification.py}
+        (Finding 5's spectral split; eigenvalues imported from the
+        triad paper, grouped by Galois conjugacy).
+  \item \textbf{Exploratory toys}: \texttt{sim\_v5\_h\_attr.py}
+        (note: dynamics D uses unseeded noise --- qualitative
+        equilibrium stable across runs, exact values vary),
+        \texttt{sim\_v6\_universality.py},
+        \texttt{sim\_v7\_zero\_decomposition.py} (heuristic
+        sweep, not root-finding),
+        \texttt{sim\_v8\_icosa\_to\_v600.py}.
+  \item \textbf{Fitted negative controls}:
+        \texttt{sim\_v9\_endomorphism\_survey.py} and
+        \texttt{sim\_v10\_dirac\_spin.py} fit to $\gamma_n$ by
+        least squares; their results are negative controls and
+        support no claim in this paper.
+  \item \textbf{Superseded}: \texttt{sim\_critical\_line\_pullback.py}
+        (stale v1, kept for the record; do not cite).
+\end{itemize}}
+
+All are pure Python (\texttt{numpy}, \texttt{scipy},
+\texttt{matplotlib}, \texttt{mpmath}). Generated outputs are in
+\texttt{outputs/} and \texttt{data/}.
 
 Run:
 \begin{verbatim}
 python3 sims/sim_v2.py             # main probe (analytic L)
-python3 sims/sim_v3_sigma_exact.py # sigma diagnostic
+python3 sims/sim_v3_sigma_exact.py # sigma diagnostic (Finding 4)
 \end{verbatim}
 
 \bibliographystyle{plain}

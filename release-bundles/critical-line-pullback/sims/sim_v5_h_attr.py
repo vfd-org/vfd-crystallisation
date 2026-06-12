@@ -1,8 +1,8 @@
 """Sim v5: H-attr probe.
 
-With tau identified (sim v4) as the Galois action on the C_phi
-spectrum giving a 94 + 13 + 13 split, the substrate analogue of
-RH ('closure-stable spectral content sits in the tau-fixed block')
+With a bookkeeping-level candidate for tau (sim v4: Galois grouping of
+the C_phi spectrum giving a 94 + 13 + 13 split), the bookkeeping
+reading ('which spectral side does stable dynamics select?')
 reduces to a definite operator-level question:
 
     Under natural closure-flow dynamics, is the 26-dim tau-paired

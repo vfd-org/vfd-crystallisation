@@ -1,7 +1,8 @@
 """Sim v7: reverse-direction zero correspondence.
 
 Sim v4 showed that Riemann zeros of zeta(s) pull back to substrate
-L_sub zeros on the tau-fixed (94-dim) block. This sim asks the
+L_sub candidate minima attributed (scalar-factor level) to the zeta
+factor. This sim asks the
 reverse:
 
   Where do the OTHER L_sub zeros (the ones NOT at Riemann gammas)
@@ -27,15 +28,17 @@ This sim:
       (candidate zeros).
   (3) For each candidate, attributes the zero to ZETA, CHI_5, or
       both.
-  (4) Confirms (a) every Riemann zero appears as a ZETA-attributed
-      L_sub zero; (b) the zeros NOT explained by zeta come from
-      L(s, chi_5).
-  (5) States the closing theorem:
-        Substrate-side RH = RH for zeta + GRH for L(s, chi_5),
-      with the Galois decomposition tau-fixed/tau-paired matching
-      exactly.
+  (4) Heuristic sweep (NOT root certification): finds candidate local
+      minima of |L_sub|; the tabulated Riemann zeros appear among them
+      as zeta-attributed candidates; further minima are smallest where
+      the chi_5 factor is smallest. Several candidates carry |L_sub|
+      values far from zero and are locations, not certified zeros.
+  (5) Records the factor-wise reading of the published Dedekind
+      factorisation (orientation only; adds no mathematical content
+      and does not restate or approach RH).
 
-This is the reverse-direction closure of the zero correspondence.
+This is a heuristic reverse-direction scan, not a closure of any
+zero correspondence.
 """
 from __future__ import annotations
 
@@ -236,22 +239,21 @@ def main():
     findings.append(f"chi_5 zeros found (NEW): {len(chi5_zeros)}")
 
     findings.append("")
-    findings.append("THEOREM (zero decomposition, on Re(s) = 1/2):")
+    findings.append("HEURISTIC ATTRIBUTION (candidate minima on Re(s) = 1/2; not certified zeros):")
     findings.append("  Every L_sub zero on the critical line is")
     findings.append("  attributable to a vanishing factor:")
     findings.append("    zeta(s) = 0    => tau-fixed (substrate-94 block)")
     findings.append("    L(s, chi_5) = 0 => tau-paired (substrate-26 block)")
     findings.append("    no other factor of L_sub vanishes on Re(s)=1/2.")
     findings.append("")
-    findings.append("CLOSING STATEMENT (substrate-side RH):")
-    findings.append("  Substrate-side RH = {RH for zeta(s)} +")
-    findings.append("                     {GRH for L(s, chi_5)},")
-    findings.append("  decomposed exactly by the tau-Galois split")
-    findings.append("  94 + (13 + 13). The substrate reformulates RH")
-    findings.append("  cleanly but does not resolve it: ZETA-zeros sit")
-    findings.append("  on the substrate's tau-fixed block, CHI_5-zeros")
-    findings.append("  sit on the tau-paired block, and the standard")
-    findings.append("  conjectures translate one-to-one with no easing.")
+    findings.append("FACTOR-WISE READING (orientation only; adds no mathematical content):")
+    findings.append("  Factor-wise reading of the published factorisation:")
+    findings.append("  zeta(s) is the sigma-fixed Dedekind factor and")
+    findings.append("  L(s, chi_5) the sigma-paired one; the 94 + (13 + 13)")
+    findings.append("  split is spectral bookkeeping (candidate tau only).")
+    findings.append("  This bookkeeping does not restate RH and resolves")
+    findings.append("  nothing; attributions here are scalar-factor level;")
+    findings.append("  the classical conjectures are untouched.")
 
     # Save data
     with open(DATA / "l_sub_zeros_attribution.csv", "w", newline="") as f:

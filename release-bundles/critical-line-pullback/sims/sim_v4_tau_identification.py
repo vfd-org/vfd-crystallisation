@@ -1,4 +1,10 @@
-"""Sim v4: tau identification + Riemann zero sits on tau-fixed.
+"""Sim v4: Galois bookkeeping split of the C_phi spectrum (candidate tau).
+
+STATUS NOTE (v1.1, 2026-06-12): this sim groups IMPORTED eigenvalues by
+Galois conjugacy — a bookkeeping split identifying a CANDIDATE for tau at
+the level of spectral data. It does not construct tau on the vertex space
+or operator algebra, and it computes scalar factor values at tabulated
+zeros, not any projection of zeros into an eigenspace.
 
 The icosian-triad paper cites a '94 + 13 + 13' decomposition of
 C_phi on V_600 by some involution tau.  Coordinate-Galois sigma
@@ -417,7 +423,7 @@ def main():
     ax.set_title(
         "Riemann zero attribution: which factor of zeta_K vanishes?\n"
         "Blue (zeta) towers above orange (L(s, chi_5)) at every Riemann zero\n"
-        "=> the zero locus sits on the sigma-fixed (94-dim) substrate"
+        "=> scalar attribution: each tabulated zero kills the sigma-fixed Dedekind factor (no projection computed)"
     )
     ax.legend()
     plt.tight_layout()

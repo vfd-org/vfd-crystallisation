@@ -1,7 +1,22 @@
 # The Critical Line, Pulled Back to V₆₀₀
 
-**Four empirical findings on the substrate image of ζ(s)'s
-non-trivial zeros**
+**Computational checks on the substrate image of ζ(s)'s non-trivial
+zeros — a pipeline sanity check, two verified finite computations, one
+exact negative result (the principal finding), and four exploratory
+follow-ons stamped as such**
+
+> **v1.1 revision note (2026-06-12).** Adversarial review found v1's
+> framing too strong in specific places, now fixed in the paper:
+> Finding 1 is a *sanity check* (the vanishing is forced by the
+> explicit ζ factor — the evaluation imports both the published
+> factorisation and the tabulated zero ordinates); Finding 5 is a
+> *bookkeeping-level* Galois split of the spectrum, not a constructed
+> involution, and the v1 wording locating the zeros on the 94-dim block is withdrawn
+> (only scalar factor attribution is computed); Finding 7 is a
+> *conditional suppression lemma*, not a universality theorem;
+> Finding 8 is a *heuristic sweep*, not certified root-finding, and
+> "every zero attributed exactly" is withdrawn. Sims v9/v10 are
+> least-squares-fitted and serve only as negative controls.
 
 This bundle is the geometry-first probe answering the question:
 
@@ -10,14 +25,14 @@ This bundle is the geometry-first probe answering the question:
 > it sit on the substrate? Is it a helix, as the original geometric
 > intuition suggested?"
 
-## The four findings
+## The findings (status-stamped)
 
-1. **Substrate L vanishes at every Riemann zero.** Evaluating
-   L_sub(s) = ζ_K(s)·ζ_K(s−1)·C_2(s) at the first 10 Riemann
-   zeros gives values |L_sub| < 2·10⁻¹¹. The substrate image of
-   the critical line is literally the set of complex values where
-   the L-spiral passes through zero, and every one of the first
-   ten Riemann zeros lands cleanly on the spiral.
+1. **Sanity check: substrate L vanishes at the tabulated Riemann
+   zeros.** Evaluating L_sub(s) = ζ_K(s)·ζ_K(s−1)·C_2(s) at the
+   first 10 tabulated zeros gives |L_sub| < 2.2·10⁻¹¹ — *as forced by
+   the explicit ζ(s) factor of the published factorisation*. This
+   verifies the pipeline and displays the substrate image of the
+   critical line; it is not evidence of a substrate zero law.
 
 2. **Eichler–Brandt holds exactly at K=4.** For every odd inert
    prime p ≤ 23, the icosian representation count r(p) matches
@@ -27,11 +42,13 @@ This bundle is the geometry-first probe answering the question:
    closed 10-vertex helical orbit on S³, stereographically
    projected to R³.
 
-4. **Coordinate-Galois σ does NOT preserve V₆₀₀.** 96 of 120
-   vertices map under φ → 1−φ to odd-permutation positions outside
-   V₆₀₀. The "94 + 13 + 13" σ-decomposition from the icosian-
-   triad paper must come from a different involution τ. The
-   open follow-on is pinned down precisely.
+4. **Principal finding (exact, negative): coordinate-Galois σ does
+   NOT preserve V₆₀₀.** 96 of 120 vertices map under φ → 1−φ to
+   positions outside V₆₀₀. The "94 + 13 + 13" σ-decomposition from
+   the icosian-triad paper must come from a different involution τ.
+   Finding 5 (exploratory) gives a bookkeeping-level candidate by
+   grouping the C_φ eigenvalues by Galois conjugacy; constructing τ
+   on the vertex space or operator algebra remains open.
 
 ## What is in this bundle
 
@@ -108,8 +125,9 @@ corresponding to off-critical ζ zeros) is not provided here.
 
 ## Status
 
-Pre-peer-review open research preprint, v1.0.0-rc1, 2026-05-29.
-Not independently validated.
+Pre-peer-review open research preprint, v1.1.0-rc1, 2026-06-12
+(revised after adversarial review; see CHANGELOG). Not independently
+validated.
 
 ## Open follow-on (pinned down)
 
@@ -130,8 +148,9 @@ Hecke operator T_p. Resolving this is the next probe.
 - `release-bundles/translation-layer` — the polytope-overlap-as-
   grammar paper (this probe is one Layer-3 translation row).
 - `release-bundles/evidence-ledger` — the audit framework
-  (Finding 1 is Class A theorem-grade; Finding 2 is Class A
-  empirical verification; Finding 4 is a Class B open).
+  (Finding 1 is a pipeline sanity check of a published identity;
+  Finding 2 is Class A empirical verification; Finding 4 is the
+  principal exact negative result, with its follow-on a Class B open).
 
 ## Licence
 

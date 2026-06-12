@@ -59,3 +59,29 @@ findings on the substrate image of ζ(s)'s non-trivial zeros.*
 - Finding 4 is honest: it surfaces a mismatch between
   expectations and direct computation, and pins it down to a
   precise open question.
+
+## [1.1.0-rc1] — 2026-06-12
+
+Revision after adversarial review. No computation changed; framing was
+corrected where it outran the computations:
+
+- Subtitle no longer claims a "substrate-side restatement of RH + GRH":
+  the closing display is the factor-wise statement of the published
+  Dedekind factorisation, recorded for orientation only.
+- Finding 1 restated as a pipeline sanity check (the vanishing is forced
+  by the explicit ζ factor; ordinates are double-precision constants and
+  the χ₅ series is truncated — precision text corrected accordingly).
+- Finding 5 demoted to a bookkeeping-level Galois split of the spectrum;
+  the v1 wording locating the zeros on the 94-dim block withdrawn (scalar attribution only).
+- Finding 7 retitled "conditional suppression lemma"; the unproven "iff"
+  replaced by the proven direction + the single counter-example.
+- Finding 8 restated as a heuristic local-minimum sweep; "every zero
+  attributed exactly" withdrawn (several candidates have |L_sub| far from
+  zero); the 9-vs-8 count discrepancy documented (9 attributed candidates in the CSV, 8 counted as new by the run log).
+- Threshold corrected: the v1 bound "|L_sub| < 2e-11" was contradicted by
+  the data (row 10 of the CSV is 2.09e-11); all statements now read
+  "< 2.2e-11".
+- Reproducibility section now lists all ten sims with status labels
+  (load-bearing / bookkeeping / exploratory / fitted negative controls /
+  superseded); a leaked session phrase removed from the Finding-4
+  follow-on paragraph.

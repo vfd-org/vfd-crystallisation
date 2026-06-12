@@ -11,8 +11,9 @@ Improvements over v1:
       with zeta_K(s) = zeta(s) * L(s, chi_5) for K = Q(sqrt 5) and
       C_2(s) = 1 - 2 * 2^-s + 2^(2-2s).  This is the *substrate*
       L-function as a closed-form analytic object, not a truncated
-      partial sum.  Its zeros sit exactly at the Riemann zeros
-      gamma_n (for the zeta factor) and at L(s, chi_5) zeros.
+      partial sum.  By the factorisation, it vanishes wherever the
+      zeta factor vanishes (the Riemann zeros gamma_n) and wherever
+      L(s, chi_5) vanishes.
 
   (C) sigma-eigenspace verification of the closure operator
             C_phi = (12 + phi^-2) I - A_1

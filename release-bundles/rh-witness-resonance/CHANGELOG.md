@@ -1,8 +1,10 @@
 # Changelog
 
-## [1.0.0-rc1] — 2026-05-29
+## [1.0.0-rc1] — 2026-05-29 — **SUPERSEDED / WITHDRAWN (see 2.0.0-rc1 below)**
 
-Initial public release.
+Initial public release. The equivalence claims described in this entry
+were withdrawn in v2 after adversarial review; this entry is retained as
+a historical record only.
 
 ### Paper
 
@@ -42,3 +44,35 @@ content; whether it holds is the open question, equivalent to RH.
   substrate critical-line embedding.
 - Explicit "what remains open" section names three concrete open
   questions.
+
+## [2.0.0-rc1] — 2026-06-12
+
+Reframe after adversarial review. **The v1 equivalence claim is withdrawn.**
+
+### What review found (and v2 fixes)
+
+- The (b) ⇒ (a) direction of the v1 "theorem" assumed its own conclusion
+  ("we assume here that under RH, the substrate-localised construction can
+  be carried out"). Withdrawn; v2 keeps only the classical direction
+  (operator ⇒ RH) as a Proposition, with no novelty claimed for it.
+- Clause (c) was definitional, not an equivalence. Now stated as
+  terminology only.
+- The τ-fixed block is 94-dimensional; a finite space cannot carry the
+  infinite spectrum {γ_n}. v2 defines a substrate lift (infinite-dimensional,
+  anchored to the block) and is explicit that no lift is constructed.
+- "Witness resonance" / "resonance depth set" vocabulary removed
+  ("resonance depth set" = the positive spectrum; now called that).
+- Title changed to "A Conditional Substrate Localisation of the
+  Hilbert–Pólya Problem". Theorem renamed; GRH(χ₅) proposition demoted to a
+  conjectural target; corollaries demoted to conditional remarks.
+- README/CHANGELOG overclaims removed; provenance note added (this bundle
+  contains no simulations; all structural counts are imported from cited
+  sibling artifacts). Empty sims/ directory removed.
+
+### What v2 contributes
+
+A specification: the substrate constraint list (ground state at V_min,
+closure-flow and Hecke commutation on a lift) localising where a
+Hilbert–Pólya operator for ζ would have to live, plus the one classical
+implication. A constraint list and a target — not an equivalence, not a
+reformulation of RH.
