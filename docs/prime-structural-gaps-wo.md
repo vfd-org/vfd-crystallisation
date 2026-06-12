@@ -91,6 +91,22 @@ the entire remaining content (sharper than the current statement).
 | 5 the family | D compute | extend multilevel dimensions + eigensystems past norm 100; inert and composite levels (Eichler orders); cross-check vs LMFDB HMF tables. Scripts mostly exist; outputs feed the realization as new data tables. |
 | 6 open halves | O + one D | GUE and Dyson's classification stay open. The derivable piece: **D13′ — the uniform peak asymptotic of the Riesz-tapered spectrum** (smoothed explicit formula; peak height/width laws in X and k). Genuine analysis but self-contained; would move D13 from "gap" to "derived". |
 
+## C′. Status (2026-06-12, same day)
+
+- **M1 → CLOSED as D17** (derived: the split is necessarily spectral for
+  A₁-compatible maps; semilinear realisation canonical; reviewed GO).
+- **M3 → CLOSED as D18** (the completeness lemma |a|≤√p, |b|≤2√p/√5;
+  "plausibly" deleted; r(3)=80 complete at K=2).
+- **M4 → CLOSED as D16** (the full spectrum from the characters of 2I;
+  94+13+13 derived; explains why exactly two paired families).
+- **M2 → D19** (identification bucketed defined-with-source, Voight GTM
+  288; the self-contained icosian exposition remains the open expository
+  item).
+- **M5 → D20 (consistency level)** (N(25) main term 32.53 vs 33 observed;
+  interval certification still open, named).
+- All five landed in papers/prime-derivations.pdf Part IV with checks
+  (suite now 22/22); hostile-reviewed → GO.
+
 ## C. Priority order (effort × narrative value)
 
 1. **M3** (a lemma — hours) and **M4** (a section — a day): pure wins,

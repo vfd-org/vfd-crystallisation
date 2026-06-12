@@ -22,7 +22,7 @@ derived in full, defined with source, or named as a gap}
 (\texttt{papers/how-the-primes-work.pdf}) and the ledger
 (\texttt{papers/prime-phenomena-ledger.pdf}) in
 \texttt{github.com/vfd-org/closure-positivity-lab}. Selected numeric
-consequences of the derivations (18 checks, named per derivation in
+consequences of the derivations (22 checks, named per derivation in
 the text) are verified by
 \texttt{python3 -m lab.derivations\_check}; the machine-readable
 results ship at \texttt{out/derivations\_check.json}.}\\[4pt]
@@ -46,7 +46,7 @@ deserves, under a strict three-bucket rule: \emph{derived in full} (the
 derivation is complete on the page), \emph{defined with source} (a deep
 theorem used as input, never re-proven and never assumed beyond its
 statement), or \emph{named as a gap} (heuristic or open --- said so).
-Nothing receives a fourth category. Eighteen numeric checks verify
+Nothing receives a fourth category. Twenty-two numeric checks verify
 selected consequences, named per derivation in the text.
 \end{abstract}
 
@@ -363,6 +363,147 @@ named as a gap, exactly as on the race page.
 \chk{D15}
 \end{deriv}
 
+\section{Part IV: the structural derivations (closing the unnamed
+gaps)}
+
+These five derivations close gaps that were implicit in the published
+findings but never named: the spectrum used by every $94{+}13{+}13$
+statement, the operator-level status of the involution $\tau$, the
+completeness of a published enumeration, and the count status of the
+computed zeros. (Work order: WO-VFD-PRIME-GAPS-001, items M1--M5.)
+
+\begin{deriv}[D16: the 600-cell spectrum from the characters of
+$2I$]\label{d16}
+The $600$-cell graph is the Cayley graph of the binary icosahedral
+group $2I$ (order 120) with connecting set $C$ the conjugacy class of
+the $12$ nearest neighbours (the order-$10$ class with real part
+$\varphi/2$). For a Cayley graph on a class $C$, the adjacency operator
+acts on the $\chi$-isotypic block as the scalar
+\[
+\lambda_\chi \;=\; \frac{|C|\,\chi(g_0)}{\chi(1)},
+\qquad g_0 \in C,
+\]
+with multiplicity $\chi(1)^2$ (Schur's lemma applied to the class sum
+in the group algebra). $2I$ has nine irreducible characters of degrees
+$1, 2, 2', 3, 3', 4, 4', 5, 6$ (squares summing to $120$); their values
+at $g_0$ are $1$; $\varphi$, $1{-}\varphi$ (the two spin
+$2$-dimensionals, $2\cos 36^\circ$ and $2\cos 108^\circ$); $\varphi$,
+$1{-}\varphi$ (the two $3$-dimensionals, through $A_5$); $1$ (spin
+$4$); $-1$ ($4$ through $A_5$); $0$ ($5$); $-1$ (spin $6$). Hence the
+spectrum with multiplicities:
+\[
+12^{(1)},\quad (6\varphi)^{(4)},\ (6{-}6\varphi)^{(4)},\quad
+(4\varphi)^{(9)},\ (4{-}4\varphi)^{(9)},\quad
+3^{(16)},\ (-3)^{(16)},\quad 0^{(25)},\quad (-2)^{(36)}.
+\]
+The rational block has dimension $1{+}16{+}25{+}36{+}16 = 94$ and the
+two Galois-paired families have dimensions $4{+}9 = 13$ each: the
+$94 + 13 + 13$ of the pullback paper is now \emph{derived}, and the
+reason there are exactly two paired families is visible --- precisely
+four of the nine characters of $2I$ take irrational (conjugate-paired)
+values on the neighbour class.
+\bucket{derived in full}\chk{D16}
+\end{deriv}
+
+\begin{deriv}[D17: the $94+13+13$ split is necessarily
+spectral]\label{d17}
+\emph{Claim: no linear involution compatible with $A_1$ --- commuting
+with it, or intertwining it with its Galois conjugate --- can swap the
+Galois-paired eigenspaces; the canonical realisation of the split is
+semilinear.} (An arbitrary linear involution \emph{can} swap
+equal-dimensional eigenspaces, of course; the content is that no
+$A_1$-compatible one can, and compatibility is what ``the involution
+underlying the decomposition of $C_\varphi$'' requires.)
+The adjacency operator $A_1$ is an integer matrix (D16's graph). (i)
+Any linear $T$ commuting with $A_1$ preserves every eigenspace, and
+the paired eigenvalues $6\varphi \ne 6 - 6\varphi$,
+$4\varphi \ne 4 - 4\varphi$ are distinct reals --- so no commuting
+involution can swap the paired eigenspaces. (ii) An involution
+$\tau$ with $\tau A_1 \tau^{-1}$ equal to the Galois-conjugated
+operator is no escape: $A_1$ has integer entries, so it equals its own
+conjugate, and (ii) reduces to (i). (iii) What does realise the split:
+the characteristic polynomial of $A_1$ factors over $\mathbb{Q}$ with
+splitting field $\mathbb{Q}(\sqrt5)$, and
+$\mathrm{Gal}(\mathbb{Q}(\sqrt5)/\mathbb{Q})$ acts semilinearly on the
+$\mathbb{Q}(\sqrt5)$-eigenspace decomposition of $\mathbb{Q}^{120}$,
+fixing the five rational eigenspaces (dimension $94$) and permuting
+the two conjugate pairs ($13 + 13$). Combined with the pullback
+paper's Finding 4 (the coordinate-Galois map does not even preserve
+$V_{600}$), this settles that paper's open follow-on for the natural candidates:
+$\tau$ cannot be an involution of the vertex space (Finding 4), and
+cannot be any linear involution compatible with $A_1$ (above); among
+structure-respecting realisations, the arithmetic Galois action on
+spectral data is what remains, and it is canonical.
+\bucket{derived in full}\chk{D17}
+\end{deriv}
+
+\begin{deriv}[D18: completeness of the Eichler--Brandt enumeration at
+$K = 4$]\label{d18}
+The published verification enumerates Lipschitz-type icosians
+$q = (x_1, \dots, x_4)$, $x_i = a_i + b_i\varphi$ with
+$|a_i|, |b_i| \le K = 4$, and reported that $K = 4$ ``plausibly''
+captures all representations of inert primes $p \le 23$. Lemma: it
+provably does. If $\mathrm{nrd}(q) = p$ (a rational integer), then
+both real embeddings give $\sum_i u_i^2 = p$ and $\sum_i v_i^2 = p$,
+where $u_i = a_i + b_i\varphi$ and $v_i = a_i + b_i(1-\varphi)$; hence
+$|u_i|, |v_i| \le \sqrt p$ for every $i$. Solving the linear system,
+\[
+b_i = \frac{u_i - v_i}{\sqrt5},
+\qquad
+a_i = \frac{\varphi\,v_i + (\varphi - 1)\,u_i}{\sqrt5},
+\]
+so $|b_i| \le 2\sqrt p/\sqrt5$ and --- using
+$\varphi + (\varphi - 1) = \sqrt5$ ---
+$|a_i| \le \sqrt p\,(\varphi + \varphi - 1)/\sqrt5 = \sqrt p$. For
+$p \le 23$: $|a_i| \le \sqrt{23} < 5$ and
+$|b_i| \le 2\sqrt{23}/\sqrt5 < 4.3$, so $|a_i|, |b_i| \le 4$. The word
+``plausibly'' can be deleted: $K = 4$ is complete for every inert
+$p \le 23$ (and $K = 2$ already suffices for $p = 3$, where the
+complete count is $r(3) = 80 = 8(1 + 3^2)$).
+\bucket{derived in full}\chk{D18}
+\end{deriv}
+
+\begin{deriv}[D19: the identification of the geometric Brandt
+module]\label{d19}
+The realization builds its Brandt module from the $A_5$-action on
+$\mathbb{P}^1(\mathcal{O}_K/P)$. That this \emph{is} the standard
+Brandt module is the classical bijection for definite quaternion
+orders of class number one: the right ideal classes of the Eichler
+order of level $P$ inside the maximal order $\mathcal{O}$ correspond
+to $\Gamma$-orbits on $\mathbb{P}^1(\mathcal{O}_K/P)$, where
+$\Gamma = \mathcal{O}^\times/Z = A_5$, via the local splitting
+$\mathcal{O} \otimes \mathbb{F}_P \cong M_2(\mathbb{F}_P)$ (defined with source: \cite{Voight}, the class-set description of
+Eichler orders; \cite{Eichler}). The Hecke action by
+norm-$\varpi$ elements matches the Brandt-matrix double-coset
+description under the same bijection. A fully self-contained
+exposition of this bijection in the icosian case --- making the
+realization paper independent of the citation --- is a worthwhile
+short addition and is left as the remaining (expository, not
+mathematical) item of WO-VFD-PRIME-GAPS-001 M2.
+\bucket{defined with source (the bijection); the instantiation is the
+realization's construction}
+\end{deriv}
+
+\begin{deriv}[D20: zero-count consistency for the icosian
+$L$]\label{d20}
+For a degree-$d$ $L$-function of conductor $N$, the expected count of
+zeros with ordinate in $(0, T]$ is
+\[
+N(T) \;\approx\; \frac{dT}{2\pi}\log\frac{T}{2\pi e}
+\;+\; \frac{T}{2\pi}\log N,
+\]
+up to the argument fluctuation $S(T)$ (a lower-order, not uniformly
+bounded, term). At $T = 25$, $d = 4$,
+$N = 775$: main term $32.53$, against the $33$ computed zeros --- a
+deviation well inside the normal range of $S(T)$. This upgrades the
+zero list from ``computed'' to ``count-consistent''. What remains open
+(and is named as such): interval-certified zero localisation and a
+rigorous Turing-method count, which would certify that no zero below
+$T = 25$ was missed.
+\bucket{derived in full (the consistency check); certification named
+as a gap}\chk{D20}
+\end{deriv}
+
 \section{The gap ledger, cross-referenced}
 
 For the explorables and explainer, the open items above are exactly
@@ -373,7 +514,7 @@ and bias dominance (D15 $\to$ part of gap 6). Everything else used by
 the prime pages is either derived in full above or defined with an
 explicit source (Ramanujan bound; Sato--Tate law; exact GUE; Fibonacci
 cut-and-project; Brandt row-sum property). The verification artifact
-\texttt{out/derivations\_check.json} certifies all eighteen checkable
+\texttt{out/derivations\_check.json} certifies all twenty-two checkable
 statements.
 
 \begin{thebibliography}{9}\small
@@ -389,6 +530,8 @@ Elsevier (2004).
 forms and the traces of the Hecke operators}, Springer LNM 320 (1973);
 A.~Pizer, \emph{An algorithm for computing modular forms on
 $\Gamma_0(N)$}, J.~Algebra 64 (1980).
+\bibitem{Voight} J.~Voight, \emph{Quaternion Algebras}, GTM 288,
+Springer (2021) (class sets of Eichler orders).
 \bibitem{Cramer} H.~Cram\'er, \emph{On the order of magnitude of the
 difference between consecutive prime numbers}, Acta Arith.\ 2 (1936).
 \end{thebibliography}

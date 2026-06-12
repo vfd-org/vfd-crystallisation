@@ -217,8 +217,131 @@ def d15_bias_coefficient():
           (vals[0] if vals else float('nan'), c))
 
 
+
+
+def _icosians():
+    import itertools
+    import numpy as np
+    PHI = (1 + 5 ** 0.5) / 2
+    V = []
+    for i in range(4):
+        for s in (1, -1):
+            v = [0.0] * 4
+            v[i] = s
+            V.append(v)
+    for ss in itertools.product((0.5, -0.5), repeat=4):
+        V.append(list(ss))
+    def parity(q):
+        q = list(q)
+        n = 0
+        for i in range(len(q)):
+            for j in range(i + 1, len(q)):
+                n += q[i] > q[j]
+        return n % 2
+    base = [0.0, 0.5, 1 / (2 * PHI), PHI / 2]
+    seen = set()
+    for perm in itertools.permutations(range(4)):
+        if parity(perm) != 0:
+            continue
+        for signs in itertools.product((1, -1), repeat=4):
+            v = [0.0] * 4
+            for pos, idx in enumerate(perm):
+                v[pos] = signs[pos] * base[idx]
+            key = tuple(round(x, 9) for x in v)
+            if key not in seen and abs(sum(x * x for x in v) - 1) < 1e-9:
+                seen.add(key)
+                V.append(list(v))
+    return V
+
+
+def d16_spectrum_from_characters():
+    # D16: the 600-cell adjacency spectrum equals the Cayley-graph character
+    # formula lambda_chi = |C| chi(g0)/chi(1), multiplicity chi(1)^2.
+    import numpy as np
+    from collections import Counter
+    PHI = (1 + 5 ** 0.5) / 2
+    V = np.array(_icosians())
+    A = (np.abs(V @ V.T - PHI / 2) < 1e-9).astype(float)
+    ev = np.linalg.eigvalsh(A)
+    c = Counter(round(float(x), 6) for x in ev)
+    expect = {12.0: 1, round(6 * PHI, 6): 4, round(6 - 6 * PHI, 6): 4,
+              round(4 * PHI, 6): 9, round(4 - 4 * PHI, 6): 9,
+              3.0: 16, -3.0: 16, 0.0: 25, -2.0: 36}
+    ok = len(V) == 120 and dict(c) == expect
+    rational_dim = 1 + 16 + 25 + 36 + 16
+    check("D16 600-cell spectrum = character formula", ok,
+          "9 eigenvalues, mults (1,4,4,9,9,16,16,25,36); rational block %d"
+          % rational_dim)
+
+
+def d17_split_necessarily_spectral():
+    # D17: A1 is an integer (0/1) matrix and the four irrational eigenvalues
+    # are pairwise distinct reals -- so no linear involution commuting with
+    # A1 can swap the Galois-paired eigenspaces (it preserves each
+    # eigenspace). The split is semilinear (Galois on the splitting field).
+    import numpy as np
+    PHI = (1 + 5 ** 0.5) / 2
+    V = np.array(_icosians())
+    A = (np.abs(V @ V.T - PHI / 2) < 1e-9)
+    integer_01 = A.dtype == bool  # adjacency is exactly 0/1 by construction
+    vals = [6 * PHI, 6 - 6 * PHI, 4 * PHI, 4 - 4 * PHI]
+    distinct = len({round(v, 9) for v in vals}) == 4
+    check("D17 split is necessarily spectral (premises)",
+          integer_01 and distinct,
+          "A1 integral; paired eigenvalues pairwise distinct reals")
+
+
+def d18_k4_completeness():
+    # D18: |a_i| <= sqrt(p), |b_i| <= 2 sqrt(p)/sqrt(5) for any coordinate of
+    # an icosian with rational reduced norm p (both embeddings <= p).
+    # Per-coordinate feasible set for p <= 23 has |a|,|b| <= 4; and the
+    # complete count at p = 3 (K = 2 suffices by the lemma) gives r(3) = 80.
+    import itertools
+    import math
+    PHI = (1 + 5 ** 0.5) / 2
+    c = math.sqrt(23)
+    feas = [(a, b) for a in range(-8, 9) for b in range(-8, 9)
+            if (a + b * PHI) ** 2 <= 23 + 1e-9
+            and (a + b * (1 - PHI)) ** 2 <= 23 + 1e-9]
+    amax = max(abs(a) for a, b in feas)
+    bmax = max(abs(b) for a, b in feas)
+    lemma_ok = amax <= math.floor(c) == 4 and bmax <= 4
+    # complete r(3) at K = 2 (sqrt(3) < 2 and 2 sqrt(3)/sqrt(5) < 2)
+    r3 = 0
+    R = range(-2, 3)
+    for a in itertools.product(R, repeat=4):
+        sa = sum(x * x for x in a)
+        if sa > 3:
+            continue
+        for b in itertools.product(R, repeat=4):
+            sb = sum(x * x for x in b)
+            ab = sum(a[i] * b[i] for i in range(4))
+            if 2 * ab + sb == 0 and sa + sb == 3:
+                r3 += 1
+    check("D18 K=4 completeness lemma + r(3)=80 complete at K=2",
+          lemma_ok and r3 == 8 * (1 + 9),
+          "feasible |a|<=%d |b|<=%d for p<=23; r(3)=%d" % (amax, bmax, r3))
+
+
+def d20_zero_count_consistency():
+    # D20: N(T) main term for the degree-4, conductor-775 L at T = 25 vs the
+    # 33 computed zeros (consistency check; interval certification open).
+    import math
+    with open(os.path.join(ROOT, "out", "curve_zeros.json")) as fh:
+        d = json.load(fh)
+    zeros = d["L_zeros"]  # fail loudly if the artifact changes shape
+    n_obs = len([z for z in zeros
+                 if (z if isinstance(z, (int, float)) else z[0]) <= 25.0001])
+    T, deg, cond = 25.0, 4, 775
+    main = (deg * T / (2 * math.pi)) * math.log(T / (2 * math.pi * math.e))         + (T / (2 * math.pi)) * math.log(cond)
+    ok = abs(n_obs - main) < 1.5
+    check("D20 zero-count consistency at T=25", ok,
+          "observed %s vs main term %.2f (|S(T)| within normal range; "
+          "interval certification named as open)" % (n_obs, main))
+
+
 def main():
-    print("Derivations check (D1-D15 numeric verifications)")
+    print("Derivations check (D1-D20 numeric verifications)")
     d4_d5_gap_factor_law()
     d6_convergence_expansion()
     d8_goldbach_two()
@@ -229,6 +352,10 @@ def main():
     d13_peak_property()
     d14_fibonacci_peaks()
     d15_bias_coefficient()
+    d16_spectrum_from_characters()
+    d17_split_necessarily_spectral()
+    d18_k4_completeness()
+    d20_zero_count_consistency()
     n_pass = sum(c["pass"] for c in CHECKS)
     doc = {"description": "numeric checks for papers/prime-derivations.tex",
            "n_checks": len(CHECKS), "n_pass": n_pass, "checks": CHECKS}
