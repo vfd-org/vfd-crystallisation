@@ -1,1 +1,1 @@
-# VFD — Vacuum Field Dynamics
+# VFD — Vibrational Field Dynamics

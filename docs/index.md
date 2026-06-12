@@ -1,6 +1,6 @@
 # VFD Explorer
 
-**One command reproduces every numerical claim in the Vacuum Field Dynamics
+**One command reproduces every numerical claim in the Vibrational Field Dynamics
 framework.**
 
 ```bash
