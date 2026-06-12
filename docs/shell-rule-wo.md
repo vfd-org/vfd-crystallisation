@@ -41,6 +41,15 @@ The two routes that could still produce the rule:
 
 What is now impossible to do honestly: announce a shell rule from polynomial/static-feature classes (SR1–SR2 are proofs), or an offset law fitted to one sector (SR7's out-of-sample failure is the cautionary record).
 
+## 4a. The deviation decomposition (what the "missing layer" actually is)
+
+The large deviations of the majority are not one mystery; they decompose into four parts, three of them already named, one newly excluded:
+
+1. **NOT finer geometric rungs (SR9, new null).** Sub-rung positions are chance-like against half-shell and quarter-shell grids (p = 0.32, 0.40): the framework did not "forget" intermediate rungs. The missing layer is not more geometry of the same kind.
+2. **The electroweak mixing accounts for the W (SR10, bookkeeping).** The W–Z shell split (0.262) is exactly log_φ(1/cos θ_W) — standard EW physics (m_W = m_Z cos θ_W). The W therefore carries no independent placement information: the EW sector reduces to **one placement (Z, −2.3%) + one already-named open (the mixing angle / independent hypercharge) + the Higgs**.
+3. **Scheme and binding artifacts (SR6).** The worst deviations sit exactly where the comparison number is not a physical mass: MS-bar light quarks, and the proton (in standard physics ~99% QCD binding energy, not quark mass). These are partly not the free ladder's to explain; the pole-mass/hadron reformulation is the recorded fix.
+4. **The genuine interaction layer.** What remains — the lepton-sector offsets (≤0.135 shells) and the residual quark structure — is the framework's analogue of self-energy dressing, blocked behind the coupling sector. This is the real "missing layer", and it is named, not mysterious.
+
 ## 4b. Phase C: the sieve hypothesis (intermediate geometry / prime resonances)
 
 A genuinely different class, proposed from the 5×24 Schläfli structure: the geometry generates a **set of allowed levels** (a sieve), and particles occupy allowed levels. A sieve is not a function of quantum numbers, so the curvature obstruction of SR1 **does not apply to it** — the class is live. Tested (`scripts/explore_geometric_ladder.py`, 3/3 PASS, exact hypergeometric null model, Bonferroni over 8 sieves, density bound 18/27):
@@ -60,4 +69,4 @@ A genuinely different class, proposed from the 5×24 Schläfli structure: the ge
 
 ## 5. Verification
 
-`scripts/explore_shell_rule.py` — 8/8 PASS; `scripts/explore_geometric_ladder.py` — 3/3 PASS (Phase C); each PASS reproduces a recorded conclusion including each null. Companion to `docs/sm-closeability-audit.md` §2 and `scripts/sm_ledger.py`.
+`scripts/explore_shell_rule.py` — 10/10 PASS; `scripts/explore_geometric_ladder.py` — 3/3 PASS (Phase C); each PASS reproduces a recorded conclusion including each null. Companion to `docs/sm-closeability-audit.md` §2 and `scripts/sm_ledger.py`.

@@ -218,6 +218,50 @@ def sr8_lepton_log_null():
           "in shell: delta = c Q^2 ln(m_P/m) is EXCLUDED", not mono)
 
 
+def sr9_finer_rungs_null():
+    print("SR9: is the missing layer just finer rungs? (null)")
+    PHI = (1 + 5 ** 0.5) / 2
+    LNP = np.log(PHI)
+    MP = 0.1056583755 * PHI ** 96
+    masses = {"e": 5.1099895e-4, "mu": 0.1056583755, "tau": 1.77686,
+              "u": 2.16e-3, "d": 4.67e-3, "s": 0.0934, "c": 1.273,
+              "b": 4.18, "t": 172.76, "p": 0.93827209, "W": 80.377,
+              "Z": 91.1876, "H": 125.25}
+    Nr = np.array([np.log(MP / v) / LNP for v in masses.values()])
+    ok = True
+    dets = []
+    for grid in (1.0, 0.5, 0.25):
+        d = np.abs(Nr / grid - np.round(Nr / grid)) * grid
+        obs = float(np.mean(d))
+        null = np.array([np.mean(np.minimum(u := rng.uniform(0, grid, 13),
+                                            grid - u)) for _ in range(4000)])
+        pv = float(np.mean(null <= obs))
+        dets.append(f"grid {grid}: obs {obs:.3f} vs chance "
+                    f"{float(np.mean(null)):.3f}, p {pv:.2f}")
+        ok = ok and pv > 0.05
+    check("SR9 sub-rung positions are chance-like at integer, half- and "
+          "quarter-shell grids: the missing layer is NOT finer geometric "
+          "rungs", ok, "; ".join(dets))
+
+
+def sr10_ew_decomposition():
+    print("SR10: the W deviation = Z placement + the Weinberg angle")
+    PHI = (1 + 5 ** 0.5) / 2
+    LNP = np.log(PHI)
+    dN = np.log(91.1876 / 80.377) / LNP        # W-Z shell split
+    pred = -np.log(80.377 / 91.1876) / LNP     # log_phi(1/cos theta_W)
+    # an identity, recorded as BOOKKEEPING: m_W = m_Z cos(theta_W) is
+    # standard EW physics, so the W carries no independent placement
+    # information - its deviation reduces to Z's rung plus the already-
+    # named open item (the mixing angle / independent hypercharge).
+    sin2 = 1 - (80.377 / 91.1876) ** 2
+    check("SR10 (bookkeeping identity) W-Z shell split 0.262 = "
+          "log_phi(1/cos theta_W); the EW sector has ONE placement (Z) "
+          "+ one named open (the mixing) + Higgs",
+          abs(dN - pred) < 1e-12 and abs(sin2 - 0.2231) < 5e-4,
+          f"split {dN:.3f}; sin^2(theta_W) = {sin2:.4f} (PDG on-shell 0.2233)")
+
+
 def main():
     print("=" * 70)
     print("WO-SHELL-OFFSET-001 — shell-integer rule + offset dynamics attack")
@@ -231,6 +275,8 @@ def main():
     sr6_sector_magnitudes()
     sr7_signed_regression_null()
     sr8_lepton_log_null()
+    sr9_finer_rungs_null()
+    sr10_ew_decomposition()
     print("=" * 70)
     print(f"SUMMARY: {len(PASS)} PASS, {len(FAIL)} FAIL")
     for name in FAIL:
