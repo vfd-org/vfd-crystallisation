@@ -108,3 +108,74 @@ the entire remaining content (sharper than the current statement).
 Rule unchanged: each result lands as a derivation with a numeric check in
 `lab/derivations_check.py`, hostile-review loop before push, site
 references by D/M-number.
+
+## D. The missing structures for gaps 1, 2 and 6 (what would let us dig)
+
+These three are Type O. "Digging in" means building the structure each one
+is missing — and naming the barrier that the structure must overcome.
+
+### Gap 1 (infinitude): the missing structure is OFF-DIAGONAL control
+The wheels control single-pattern densities. Infinitude requires control
+of prime PAIR correlations — by the explicit formula, equivalently control
+of ZERO pair correlations. The precise missing object is Montgomery's form
+factor **F(α) for α ≥ 1** (proven only for α < 1); Goldston's equivalences
+make this exact: averaged twin-type asymptotics ⟺ F-behaviour beyond the
+proven range. The named barrier is the **parity problem** of sieve theory:
+linear sieve information cannot distinguish integers with an even vs odd
+number of prime factors, which is exactly why Maynard-type machinery
+proves "some gap ≤ 246 recurs" but cannot fix WHICH gap. Breaking it needs
+bilinear/Type-II information for the pattern — the one ingredient nobody
+has.
+**Diggable now:** (i) build the pair-correlation instrument — compute
+F(α, T) from our 1,983 zeros and display Montgomery's wedge (the
+instrument for the wall's second floor; ledger row 10 is its first
+floor); (ii) a Goldston-equivalence dashboard (which F-statement buys
+which prime-pair statement); (iii) exhibit the parity barrier concretely
+(Selberg's ±λ(n) example fooling a linear sieve) — make the barrier
+itself a derived, visualised object on the site.
+
+### Gap 2 (the wall): the missing structure is a COHOMOLOGICAL HOME
+Why the wall sits exactly where it does, structurally: the definite
+icosian order's geometric object is ZERO-dimensional (a finite class set).
+Dimension 0 has no H¹, no intersection pairing, no Frobenius-on-cohomology
+— so the definite side can only ever produce coefficients, never zeros.
+The function-field proof of RH (Weil) runs through exactly the structures
+we lack: a cohomology carrying the eigenform, an intersection pairing, and
+a positivity statement (Hodge index). For number fields at large this is
+the Connes/Deninger programme (open). For OUR L-function specifically, the
+missing structure has a name: the **Jacquet–Langlands partner** — the
+indefinite quaternion algebra over Q(√5) (ramified at p₃₁ and one
+infinite place) whose Shimura CURVE has an H¹ that carries the same
+eigenform, and where arithmetic intersection theory (heights, Arakelov)
+actually lives.
+**Diggable now:** (i) state and source the JL transfer for our form;
+assemble the Shimura-curve data (level, genus, CM points) — the wall-side
+geometry made concrete; (ii) the near-term certified moves already in
+§B: M5 certification → certified Li coefficients λ₁…λ_m; (iii) write the
+"why the wall is exactly here" remark (dim-0 has no H¹) as a derivable
+addition — it upgrades the wall page from location to *explanation*.
+
+### Gap 6 (open halves): one shared object + one classification
+**6a (GUE beyond Montgomery's range)** is the SAME missing object as
+gap 1: F(α) for α ≥ 1. One structure, two famous costumes — worth saying
+on the site.
+**6b (Dyson's classification)**: the missing structure is a
+classification of Fourier quasicrystals BEYOND the cut-and-project class
+— and recent mathematics locates the frontier precisely: Lev–Olevskii
+showed the rigid class (positive, uniformly discrete support and
+spectrum) is essentially lattice combinations, and Kurasov–Sarnak
+constructed genuinely new one-dimensional Fourier quasicrystals from
+stable (Lee–Yang) polynomials. Derivable proposition (D21 candidate):
+the zeta zeros have average gap 2π/log T → 0 and the prime-power
+frequencies log p^m accumulate, so under RH the zero quasicrystal has
+NON-uniformly-discrete support and spectrum — it provably lies OUTSIDE
+the lattice and cut-and-project classes (including our Fibonacci chain).
+So the site's crystal page can sharpen honestly: Fibonacci is the charted
+territory; the zeros, even under RH, live in the wider Kurasov–Sarnak
+wilderness; the missing structure is the classification of that
+wilderness, and the modern question is whether the zero measure is a
+limit of Lee–Yang-type constructions.
+**Diggable now:** write D21 (the outside-the-charted-class proposition,
+elementary from zero-density + log-prime accumulation); add the taxonomy
+(lattice / model set / stable-polynomial FQ / zeros' conjectural
+position) to the crystal page with sources.
