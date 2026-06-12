@@ -322,9 +322,15 @@ def t4_light_bending():
     bins = np.linspace(0.005, rmax, nb + 1)
     rc = 0.5 * (bins[:-1] + bins[1:])
     prof = np.zeros(nb)
+    valid = []
     for ib in range(nb):
         m = (r >= bins[ib]) & (r < bins[ib + 1])
-        prof[ib] = h[0, 0][m].mean()
+        if m.any():
+            prof[ib] = h[0, 0][m].mean()
+            valid.append(ib)
+        else:
+            prof[ib] = np.nan
+    rc, prof = rc[valid], prof[valid]
     # subtract the periodic zero-point: fit A/r + B on a clean shell
     fitm = (rc > 0.10) & (rc < 0.22)
     Amat = np.vstack([1.0 / rc[fitm], np.ones(fitm.sum())]).T
