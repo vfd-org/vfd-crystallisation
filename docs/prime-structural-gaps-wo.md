@@ -195,3 +195,32 @@ limit of Lee–Yang-type constructions.
 elementary from zero-density + log-prime accumulation); add the taxonomy
 (lattice / model set / stable-polynomial FQ / zeros' conjectural
 position) to the crystal page with sources.
+
+## E. Gap-1 VFD-native probe run (2026-06-12) — results and isolation
+
+Five probes, gate-first (NULL = explained by the wheel layer), sieve to
+5×10⁷, run at `release-bundles/fractal-tiling-theorem/gap1_probes/`:
+
+| probe | channel | result |
+|---|---|---|
+| P1 | φ-place: twins by Q(√5) splitting class (S,I)/(I,S)/(S,S) | **NULL** — exact thirds, worst dev 0.99σ |
+| P2 | cuspidal: corr(x_p, x_{p+2}) of Hecke eigenvalues across twin pairs | **NULL** — −0.18 over 44 pairs vs 0.45 threshold (small-n caveat; extending needs frontier-run norms > 4999) |
+| P3 | pentagonal clock transitions 1→3 / 7→9 / 9→1 | **NULL** — same partition as P1 (mod 5 determines mod 10 for odd p), 0.99σ |
+| P4 | 600-cell clock resonance: twin indicator mod 120, Fourier | **NULL — decisive**: 12 wheel classes at 1.08σ; max non-wheel Fourier energy **0.18× noise** |
+| P5 | isolation: circle-method mass decomposition | D(x)/√x bounded in [−0.08, +0.07] across five checkpoints (√-cancellation regime); wheel share of mod-q structure = **1.0000** at q = 6, 30, 210 |
+
+**The isolation, stated as a result:** every periodic / finite-place
+VFD-native structure tested (φ-place, clock, substrate-clock mod 120,
+finite cuspidal class data) carries *exactly* the wheel information and
+nothing more — necessarily so, because periodic structure mod q IS wheel
+structure by construction. The entire infinitude content of gap 1 sits in
+a bounded fluctuation we have now measured (|D(x)|/√x < 0.08 to 5×10⁷),
+and reaching it requires an **aperiodic, pair-coupled, spectral-side
+mechanism** — the zeros' side. The one VFD-native channel NOT excluded by
+these probes is the spectrum itself, which is exactly where the lab's
+diffraction instruments live. Conclusion: the next native object to build
+is the **pair-correlation instrument F(α, T) from our computed zeros**
+(WO §D gap-1 diggable (i)) — the probes eliminate everything else.
+
+This is a route_c-grade honest negative with a constructive endpoint: the
+periodic channels are now *measured* dead ends, not assumed ones.
