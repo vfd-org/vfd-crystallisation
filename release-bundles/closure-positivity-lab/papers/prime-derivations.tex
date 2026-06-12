@@ -1,0 +1,396 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\newtheorem{deriv}{Derivation}
+\theoremstyle{remark}
+\newtheorem*{scope}{Scope}
+\newcommand{\Nm}{\mathrm{N}}
+\newcommand{\bucket}[1]{\par\smallskip\noindent\textit{Status: #1.}}
+\newcommand{\chk}[1]{\par\noindent\textit{Verified numerically:
+\texttt{#1} in \texttt{out/derivations\_check.json}.}}
+
+\title{Derivations for the Prime Pages:\\
+\large every formula used by the explainer and the explorables ---
+derived in full, defined with source, or named as a gap}
+\author{%
+  Lee Smart\thanks{Companion to the explorables
+(\texttt{explorables/}), the five-pictures explainer
+(\texttt{papers/how-the-primes-work.pdf}) and the ledger
+(\texttt{papers/prime-phenomena-ledger.pdf}) in
+\texttt{github.com/vfd-org/closure-positivity-lab}. Selected numeric
+consequences of the derivations (18 checks, named per derivation in
+the text) are verified by
+\texttt{python3 -m lab.derivations\_check}; the machine-readable
+results ship at \texttt{out/derivations\_check.json}.}\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{2026-06-12}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}\noindent
+The prime pages of this repository use a small set of formulas: wheel
+survival counts, the singular-series factors, the Hardy--Littlewood
+count, Sato--Tate moments and their gate variances, the Poisson and GUE
+baselines, the Brandt trace-extraction identities, the Eichler mass, the
+tapered prime spectrum, the Fibonacci-chain peak module, and the
+Chebyshev bias mechanism. This note derives each one at the level it
+deserves, under a strict three-bucket rule: \emph{derived in full} (the
+derivation is complete on the page), \emph{defined with source} (a deep
+theorem used as input, never re-proven and never assumed beyond its
+statement), or \emph{named as a gap} (heuristic or open --- said so).
+Nothing receives a fourth category. Eighteen numeric checks verify
+selected consequences, named per derivation in the text.
+\end{abstract}
+
+\begin{scope}
+All mathematics here is classical; the derivations are expositions of
+known material, organised for the explorables, and we claim no priority
+for any of them. Heuristic steps are labelled at the point of use.
+Nothing in this note proves or claims progress on any open conjecture.
+\end{scope}
+
+\section{Part I: the wheels and the singular series}
+
+\begin{deriv}[D1: wheel survival count]\label{d1}
+Fix a pattern of $k$ distinct integer offsets
+$H = \{h_1, \dots, h_k\}$ and a prime $p$. A residue $r \bmod p$
+\emph{survives} the wheel of $p$ if $r + h_i \not\equiv 0 \pmod p$ for
+every $i$. The forbidden residues are exactly
+$\{-h_i \bmod p\}$, of which there are $w(p) := \#\{h_i \bmod p\}$
+distinct values (offsets congruent mod $p$ forbid the same cell). Hence
+exactly $p - w(p)$ residues survive, and the survival fraction is
+$1 - w(p)/p$. If $w(p) = p$ the pattern is \emph{inadmissible}: every
+cell dies, and only finitely many occurrences can exist (each must
+include the prime $p$ itself, as in $(n, n{+}2, n{+}4)$ at $p = 3$,
+realised once by $(3,5,7)$).
+\bucket{derived in full}
+\end{deriv}
+
+\begin{deriv}[D2: the independence baseline]\label{d2}
+The comparison model treats the $k$ shifted values as unrelated
+integers. An integer avoids $0 \bmod p$ in $p-1$ of $p$ residues, so
+$k$ independent integers all avoid it with probability
+$\left((p-1)/p\right)^k$. This is a \emph{model}, not a theorem about
+primes; it is the denominator against which the wheels' joint behaviour
+is measured.
+\bucket{derived in full (as a definition of the baseline)}
+\end{deriv}
+
+\begin{deriv}[D3: the per-wheel factor]\label{d3}
+The wheel of $p$ corrects the independence baseline by
+\[
+\delta_p(H) \;=\; \frac{1 - w(p)/p}{(1 - 1/p)^k},
+\]
+the ratio of the actual joint survival fraction (D1) to the independent
+one (D2). For all $p$ exceeding every pairwise difference $|h_i - h_j|$
+the offsets are distinct mod $p$, so $w(p) = k$.
+\bucket{derived in full}
+\end{deriv}
+
+\begin{deriv}[D4: the gap-ratio law]\label{d4}
+Specialise to pairs, $H = \{0, g\}$ with $g$ even, and an odd prime
+$p$. If $p \nmid g$ then $w(p) = 2$ and
+$\delta_p = (1 - 2/p)(1 - 1/p)^{-2} = p(p-2)/(p-1)^2$ --- the twin
+factor. If $p \mid g$ then $0 \equiv g$, so $w(p) = 1$ and
+$\delta_p = (1 - 1/p)(1-1/p)^{-2} = p/(p-1)$. The enhancement of a gap
+$g$ over the twin gap, per odd prime $p \mid g$, is therefore
+\[
+\frac{p/(p-1)}{\,p(p-2)/(p-1)^2\,} \;=\; \frac{p-1}{p-2},
+\qquad\text{so}\qquad
+w(g) \;=\; \prod_{\substack{p \mid g \\ p \text{ odd}}} \frac{p-1}{p-2}.
+\]
+Hence $w(6) = 2$ (from $p{=}3$), $w(10) = 4/3$ (from $p{=}5$), and
+$w(210) = 2 \cdot \tfrac43 \cdot \tfrac65 = \tfrac{16}{5}$ (from
+$3, 5, 7$). These are the gap-slider's predictions, and the sieve
+measures $1.9950$, $1.3318$, $3.1994$ at $5\times10^7$ (ledger row 2).
+\bucket{derived in full}\chk{D4}
+\end{deriv}
+
+\begin{deriv}[D5: the two forms of the twin constant]\label{d5}
+$\dfrac{p(p-2)}{(p-1)^2} = \dfrac{(p-1)^2 - 1}{(p-1)^2}
+= 1 - \dfrac{1}{(p-1)^2}$, so
+\[
+C_2 \;=\; \prod_{p > 2} \frac{p(p-2)}{(p-1)^2}
+      \;=\; \prod_{p > 2} \Bigl(1 - \frac{1}{(p-1)^2}\Bigr)
+      \;=\; 0.6601618158\ldots
+\]
+The first form is the wheel product (D4); the second is the standard
+Hardy--Littlewood form. They are the same number by one line of algebra.
+\bucket{derived in full}\chk{D5}
+\end{deriv}
+
+\begin{deriv}[D6: convergence of the singular series]\label{d6}
+For $p$ beyond the offsets' span, $w(p) = k$ and
+\[
+\log \delta_p = \log\Bigl(1 - \frac{k}{p}\Bigr)
+              - k \log\Bigl(1 - \frac{1}{p}\Bigr)
+= -\frac{k(k-1)}{2p^2} + \frac{k - k^3}{3p^3} + O(p^{-4}),
+\]
+by expanding both logarithms (the $1/p$ terms cancel exactly --- this
+cancellation is the reason the product converges). Since
+$\sum_p p^{-2} < \infty$, the product
+$\mathfrak{S}(H) = \prod_p \delta_p(H)$ converges absolutely for every
+admissible pattern. For twins ($k = 2$) the second-order coefficient is
+$-1$, matching $1 - 1/(p-1)^2 = 1 - p^{-2} + O(p^{-3})$.
+\bucket{derived in full}\chk{D6, both expansion coefficients}
+\end{deriv}
+
+\begin{deriv}[D7: the Hardy--Littlewood count, and the lower
+limit]\label{d7}
+\emph{Heuristic step, labelled as such.} In the Cram\'er model an
+integer near $t$ is prime with probability $1/\log t$; $k$ independent
+such events give $1/\log^k t$; the wheels correct the independence
+assumption place-by-place, multiplying by $\mathfrak{S}(H)$ (D3, D6).
+Summing over starting points,
+\[
+\#\{n \le x : n + h_i \text{ all prime}\}
+\;\approx\;
+\mathfrak{S}(H) \int_2^x \frac{dt}{\log^k t}.
+\]
+This \emph{is} the Hardy--Littlewood $k$-tuple conjecture: the wheels
+prove admissibility and the constant; the asymptotic itself is open for
+every $k \ge 2$ (gap 1 of the mathematics page). Two facts about the
+integral that the explorables rely on: (i) any fixed lower limit
+$A \ge 2$ changes the integral by the constant
+$\int_2^A dt/\log^k t$, so all choices are asymptotically equivalent;
+(ii) at finite $x$ and large $k$ that constant is \emph{not} small
+relative to the total (at $k = 6$, $x = 2\times10^7$ the $[2, 100]$
+portion is over half), which is why the wheel-lab integrates from
+$100$ and says so on the page.
+\bucket{heuristic, named as such; the asymptotic is the open
+conjecture}
+\end{deriv}
+
+\begin{deriv}[D8: the Goldbach factor and the leading 2]\label{d8}
+Representations $N = a + (N - a)$ with both parts prime. At an odd
+prime $p \nmid N$: $a$ must avoid $\{0, N \bmod p\}$, two distinct
+cells, giving the twin factor $p(p-2)/(p-1)^2$. At an odd $p \mid N$:
+the two forbidden cells coincide, giving $p/(p-1)$ --- the same
+per-prime enhancement $(p-1)/(p-2)$ as in D4. At $p = 2$ with $N$
+even: $a$ must be odd, survival $1/2$, against baseline
+$(1/2)^2 = 1/4$ --- a factor of exactly $2$. Collecting:
+\[
+R(N) \;\approx\; 2\,C_2 \prod_{\substack{p \mid N\\ p \text{ odd}}}
+\frac{p-1}{p-2} \int_2^{N-2} \frac{dt}{\log t\,\log(N-t)},
+\]
+with the same heuristic status as D7. The leading $2$ in $2C_2$ ---
+in the twin count as well --- is the $p = 2$ wheel: even patterns
+survive the parity wheel twice as often as independence predicts.
+\bucket{derived in full (the factor structure; the count itself has D7's heuristic status)}
+\chk{D8}
+\end{deriv}
+
+\section{Part II: the instrument's gates}
+
+\begin{deriv}[D9: Sato--Tate moments and the gate variances]\label{d9}
+For the measure $d\mu = \frac{2}{\pi}\sin^2\theta\,d\theta$ on
+$[0, \pi]$ and $x = \cos\theta$: using
+$\cos^{2m}\theta\,\sin^2\theta = \cos^{2m}\theta - \cos^{2m+2}\theta$
+and $\int_0^\pi \cos^{2j}\theta\,d\theta = \pi\binom{2j}{j}4^{-j}$,
+\[
+I_{2m} := \int x^{2m}\,d\mu
+= 2\left[\binom{2m}{m}4^{-m} - \binom{2m+2}{m+1}4^{-(m+1)}\right]
+= \frac{\binom{2m}{m}}{(m+1)\,4^m}
+= \frac{\mathrm{Cat}(m)}{4^m},
+\]
+since $\binom{2m+2}{m+1}/\binom{2m}{m} = 2(2m+1)/(m+1)$ makes the
+bracket collapse to $\binom{2m}{m}4^{-m}/(2(m+1))$. So
+$I_2 = \tfrac14$, $I_4 = \tfrac18$, $I_6 = \tfrac{5}{64}$,
+$I_8 = \tfrac{14}{256}$; odd moments vanish by the symmetry
+$\theta \mapsto \pi - \theta$. The ledger's $3\sigma$ gates use the
+null variances of the empirical moments over $n$ angles:
+$\mathrm{Var}(\overline{x^j}) = (I_{2j} - I_j^2)/n$, i.e.
+\[
+\sigma(m_1) = \tfrac{1}{2\sqrt n},\quad
+\sigma(m_2) = \tfrac{1}{4\sqrt n},\quad
+\sigma(m_3) = \sqrt{\tfrac{5}{64 n}},\quad
+\sigma(m_4) = \sqrt{\tfrac{10}{256 n}},
+\]
+which are exactly the constants used by
+\texttt{row07\_sato\_tate.py}.
+\bucket{derived in full}\chk{D9 (six checks)}
+\end{deriv}
+
+\begin{deriv}[D10: the Poisson and GUE baselines]\label{d10}
+Poisson (uncorrelated) unit-mean spacings are exponential:
+$P(s < 0.2) = 1 - e^{-0.2} = 0.18127\ldots$, the ``$0.18$'' of ledger
+row 10. The GUE Wigner surmise is
+$p(s) = \frac{32}{\pi^2}s^2 e^{-4s^2/\pi}$; with $a = 4/\pi$ and the
+Gaussian moments $\int_0^\infty s^3 e^{-as^2} ds = \frac{1}{2a^2}$,
+$\int_0^\infty s^4 e^{-as^2} ds = \frac{3}{8}\sqrt{\pi}\,a^{-5/2}$:
+\[
+\mathbb{E}[s] = \frac{32}{\pi^2}\cdot\frac{\pi^2}{32} = 1,
+\qquad
+\mathbb{E}[s^2] = \frac{32}{\pi^2}\cdot\frac{3\sqrt{\pi}}{8}
+\Bigl(\frac{\pi}{4}\Bigr)^{5/2} = \frac{3\pi}{8},
+\]
+so the surmise variance is $3\pi/8 - 1 = 0.17810\ldots$ --- the
+``$0.178$'' gate. The surmise itself is an approximation to the exact
+GUE spacing law (defined with source: Mehta); the ledger gates against
+the surmise with the documented finite-height allowance.
+\bucket{derived in full (from the stated surmise density)}
+\chk{D10 (three checks)}
+\end{deriv}
+
+\begin{deriv}[D11: Eisenstein eigenvalue and trace extraction]\label{d11}
+The Brandt matrix $B(P)$ at a good prime $P$ has constant row sums
+$\Nm(P) + 1 = \#\mathbb{P}^1(\mathcal{O}_K/P)$ (each ideal class
+receives all $\Nm(P)+1$ subideals of norm $\Nm(P)$, weighted), so the
+all-ones vector is an eigenvector with eigenvalue $\Nm(P)+1$: the
+Eisenstein class. With Brandt dimension $h = 2$ the remaining
+eigenvalue is read off the trace,
+$a_P = \operatorname{tr} B(P) - (\Nm(P) + 1)$. With $h = 3$ and a
+genus-2 cuspidal block whose eigenvalues are a Galois pair
+$\alpha, \sigma(\alpha) \in \mathbb{Z}[\varphi]$:
+\[
+\operatorname{Tr}(\alpha) = \operatorname{tr} B - (\Nm(P)+1),
+\qquad
+\mathrm{N}(\alpha) = \frac{\det B}{\Nm(P)+1},
+\]
+since trace and determinant collect eigenvalues additively and
+multiplicatively. The test for real multiplication: $\alpha$ generates
+$\mathbb{Q}(\sqrt{\Delta})$ with
+$\Delta = \operatorname{Tr}^2 - 4\mathrm{N}$, so
+$\alpha \in \mathbb{Z}[\varphi] \setminus \mathbb{Z}$ iff
+$\Delta = 5 \times (\text{square}) > 0$. These are the identities
+used throughout \texttt{realization/route\_b/}.
+\bucket{derived in full (given the standard Brandt row-sum property,
+defined with source: Eichler/Pizer)}\chk{D11}
+\end{deriv}
+
+\begin{deriv}[D12: the Eichler mass by orbit--stabiliser]\label{d12}
+$A_5$ (order 60) acts on $\mathbb{P}^1(\mathbb{F}_q)$ ($q+1$ points);
+the ideal classes are the orbits. The mass is
+\[
+\sum_{\text{orbits}} \frac{1}{|\mathrm{Stab}|}
+= \sum_{\text{orbits}} \frac{|\text{orbit}|}{60}
+= \frac{q+1}{60},
+\]
+by orbit--stabiliser and the fact that the orbits partition the
+$q + 1$ points. At $q = 31$: orbit sizes $(12, 20)$, stabilisers
+$(5, 3)$, mass $\tfrac15 + \tfrac13 = \tfrac{8}{15} = \tfrac{32}{60}$.
+The identity $\sum 1/|\mathrm{Stab}| = (q+1)/60$ holds for any $q$
+by the same two lines; the orbit sizes quoted are the computed ones at
+$q = 31$. The mass check in the realization is this identity --- a
+structural sanity gate, automatic once the orbit count is right.
+\bucket{derived in full}\chk{D12}
+\end{deriv}
+
+\section{Part III: the spectra}
+
+\begin{deriv}[D13: why the tapered prime sum peaks at the
+zeros]\label{d13}
+The crystal page plots
+$F_X(k) = \bigl|\sum_{p \le X} \tfrac{\log p}{\sqrt p}
+\bigl(1 - \tfrac{\log p}{\log X}\bigr) p^{ik}\bigr|$. The mechanism:
+$F_X$ is (up to prime-power corrections) a Riesz-smoothed partial sum
+of the Dirichlet series of $-\zeta'/\zeta$ at $s = \tfrac12 - ik$,
+whose analytic continuation has a simple pole at every non-trivial
+zero; at $s = \tfrac12 - ik$ with $k > 0$ the nearby pole is the
+conjugate zero $\tfrac12 - i\gamma$, so by the conjugation symmetry
+of the zeros the peaks appear at $k = |\gamma|$, i.e.\ at the
+ordinates. Smoothing converts each nearby pole into a finite peak of
+width $\sim 1/\log X$, and the
+taper suppresses the Gibbs ringing that a sharp cutoff produces. We
+do not derive the full asymptotic here (gap: making the peak shape
+and height uniform in $k$ and $X$ is genuine analytic work we have
+not done); what we assert is the checkable consequence, and we check
+it: every zero in the plotted range owns a local peak, at two
+independent prime cutoffs ($X = 10^6$ in the shipped figure, $13/13$;
+$X = 2\times10^5$ re-verified independently in the check suite,
+$13/13$), with the sharp-cutoff control failing ($5/13$) exactly as
+the Gibbs explanation predicts.
+\bucket{named as a gap (the uniform peak asymptotic); the mechanism
+above is heuristic and its checkable consequence is verified}\chk{D13}
+\end{deriv}
+
+\begin{deriv}[D14: the Fibonacci-chain peak module]\label{d14}
+The chain is built by the substitution $A \to AB$, $B \to A$ with tile
+lengths $\varphi$ and $1$. That its diffraction is pure point with
+Bragg peaks on a rank-2 module is the standard cut-and-project theory
+of the Fibonacci quasicrystal (defined with source: Baake--Grimm,
+\emph{Aperiodic Order} I). The checkable consequence: the strongest
+peaks of the computed spectrum lie at
+$k = \tfrac{2\pi}{\bar\ell}(m + n\varphi)$ for small integers $m, n$,
+where $\bar\ell$ is the mean tile length. The check suite locates the
+eight strongest peaks of the shipped 3{,}000-tile spectrum and finds
+every one within $0.02$ of that module.
+\bucket{defined with source (the consequence checked numerically)}
+\chk{D14}
+\end{deriv}
+
+\begin{deriv}[D15: the Chebyshev bias mechanism]\label{d15}
+Let $\chi$ be the non-trivial character mod 4 and
+$\psi(x, \chi) = \sum_{n \le x} \Lambda(n)\chi(n)$,
+$\theta(x, \chi) = \sum_{p \le x} (\log p)\chi(p)$. Splitting
+$\psi$ over prime powers: the square terms contribute
+$\sum_{p^2 \le x} (\log p)\chi(p^2) = \sum_{p \le \sqrt x} \log p
+\cdot \chi(p)^2 = \theta(\sqrt x) \sim \sqrt x$, since
+$\chi(p)^2 = 1$ for every odd $p$ --- \emph{all prime squares land in
+the residue class} $1 \bmod 4$. Cubes and higher contribute
+$O(x^{1/3}\log x)$. Hence
+\[
+\theta(x, \chi) \;=\; \psi(x, \chi) \;-\; \sqrt{x}\,(1 + o(1)),
+\]
+and since $L(s, \chi)$ has no pole, $\psi(x,\chi)$ is purely a sum of
+zero oscillations. Partial summation then gives
+\[
+\pi(x; 4, 3) - \pi(x; 4, 1)
+\;=\; \underbrace{\frac{\sqrt x}{\log x}\,(1 + o(1))}_{\text{the
+square-term contribution}} \;+\;
+(\text{oscillations from the zeros of } L(s,\chi)),
+\]
+where the labelled term is the contribution of the prime squares ---
+not a dominance asymptotic, since the oscillation term is of the same
+order.
+This derives the \emph{mechanism} and the scale: the bias coefficient
+$D(x)\log x/\sqrt x$ is $O(1)$ (measured: $2.03$, $1.11$, $0.57$ at
+$10^6$, $10^7$, $5\times10^7$ --- order one and fluctuating, as the
+oscillation term predicts). What it does \emph{not} derive is
+dominance: the oscillations are of the same order as the main term, so
+``the 3-class leads almost always'' requires the logarithmic-density
+analysis of Rubinstein--Sarnak under GRH + linear independence ---
+named as a gap, exactly as on the race page.
+\bucket{derived in full (the square-term mechanism; dominance is the named gap)}
+\chk{D15}
+\end{deriv}
+
+\section{The gap ledger, cross-referenced}
+
+For the explorables and explainer, the open items above are exactly
+three of the mathematics page's six named gaps: the heuristic status of
+the Hardy--Littlewood asymptotic (D7, D8 $\to$ gap 1), the uniform
+asymptotics of the tapered spectrum's peaks (D13 $\to$ part of gap 6),
+and bias dominance (D15 $\to$ part of gap 6). Everything else used by
+the prime pages is either derived in full above or defined with an
+explicit source (Ramanujan bound; Sato--Tate law; exact GUE; Fibonacci
+cut-and-project; Brandt row-sum property). The verification artifact
+\texttt{out/derivations\_check.json} certifies all eighteen checkable
+statements.
+
+\begin{thebibliography}{9}\small
+\bibitem{HL1923} G.~H. Hardy, J.~E. Littlewood, \emph{Some problems of
+`Partitio Numerorum' III}, Acta Math.\ 44 (1923).
+\bibitem{BaakeGrimm} M.~Baake, U.~Grimm, \emph{Aperiodic Order,
+Vol.~1}, Cambridge Univ.\ Press (2013).
+\bibitem{Mehta} M.~L. Mehta, \emph{Random Matrices}, 3rd ed.,
+Elsevier (2004).
+\bibitem{RubinsteinSarnak} M.~Rubinstein, P.~Sarnak,
+\emph{Chebyshev's bias}, Experiment.\ Math.\ 3 (1994).
+\bibitem{Eichler} M.~Eichler, \emph{The basis problem for modular
+forms and the traces of the Hecke operators}, Springer LNM 320 (1973);
+A.~Pizer, \emph{An algorithm for computing modular forms on
+$\Gamma_0(N)$}, J.~Algebra 64 (1980).
+\bibitem{Cramer} H.~Cram\'er, \emph{On the order of magnitude of the
+difference between consecutive prime numbers}, Acta Arith.\ 2 (1936).
+\end{thebibliography}
+
+\end{document}

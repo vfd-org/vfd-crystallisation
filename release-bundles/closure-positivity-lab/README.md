@@ -67,6 +67,16 @@ Two papers:
   each located in the zeros of an explicit L-function. All five figures
   computed by `figures/make_pictures.py`, none drawn.
 
+**`papers/prime-derivations.pdf`** — "Derivations for the Prime Pages":
+every formula used by the explainer and the explorables, under a strict
+three-bucket rule (derived in full / defined with source / named as a gap —
+no fourth category). D1–D15: wheels, singular series, Hardy–Littlewood
+heuristic status, Sato–Tate moments + the ledger's 3σ gate variances,
+Poisson/GUE baselines, Brandt trace extraction, Eichler mass, the tapered
+spectrum's peak mechanism, the Fibonacci peak module, and the Chebyshev
+bias mechanism. Eighteen numeric checks:
+`python3 -m lab.derivations_check` → `out/derivations_check.json`.
+
 Interactive (**`explorables/index.html`** is the guided tour):
 - `explorables/residue-wheels.html` — pick ANY pattern of primes; the wheels
   predict its abundance and a live in-browser sieve to 2×10⁷ verifies it.
