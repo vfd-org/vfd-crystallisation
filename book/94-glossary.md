@@ -2,7 +2,7 @@
 
 A plain-language guide to the handful of technical words this book could not avoid. Nothing here is a full definition a mathematician would sign off on; each entry is meant to give you enough to read the chapter it appears in without reaching for a textbook.
 
-**600-cell.** The four-dimensional crystal this book turns on. It is the four-dimensional cousin of the icosahedron, built from six hundred little pyramids, with a hundred and twenty corners, every one identical. The most symmetric shape four dimensions allow.
+**600-cell.** The four-dimensional crystal this book turns on. It is the four-dimensional cousin of the icosahedron, built from six hundred little pyramids, with a hundred and twenty corners, every one identical. It has the largest symmetry group of any regular figure in four dimensions, and it is singled out precisely: its hundred and twenty corners are the binary icosahedral group, a set of rotations stood up in the space they act on.
 
 **Associativity.** The rule, so familiar you never name it, that says it makes no difference how you bracket a string of multiplications: three times four times five is the same whether you do the threes or the fives first. Ordinary numbers and the quaternions obey it. The octonions do not, which is part of what makes them strange.
 
@@ -18,7 +18,7 @@ A plain-language guide to the handful of technical words this book could not avo
 
 **Division-algebra tower.** The short ladder of number systems in which you can always divide: the ordinary numbers, the complex numbers, the quaternions, the octonions, and then no more. A theorem of Hurwitz says the ladder stops at four rungs, which is why only certain arenas can exist.
 
-**E8.** The most symmetric structure of its kind in any dimension where such things are fully understood, living in eight dimensions, with two hundred and forty nearest neighbours around every point. The crystal sits inside it. The pinnacle of the whole story.
+**E8.** The largest of the five exceptional Lie symmetries, living in eight dimensions, with two hundred and forty nearest neighbours around every point, and a lattice that is the densest sphere packing eight dimensions allow. The crystal sits inside it. The top of the cascade.
 
 **Effective level.** The level at which a law is true because of what is going on underneath, the way the laws of sound are true because of atoms without mentioning them. A result "derived at the effective level" is real physics with a deeper layer still to be made fully rigorous.
 

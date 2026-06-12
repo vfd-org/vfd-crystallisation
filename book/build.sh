@@ -15,7 +15,7 @@ BACK="90-appendix.md 93-ledger.md 94-glossary.md 95-references.md 91-about.md 92
 # --- PDF: cover page + title + copyright + dedication + manual TOC, no pandoc title/toc ---
 pandoc \
   00-frontmatter.md 00a-copyright.md 00b-dedication.md 00c-toc.md \
-  00-preface.md $CH $BACK \
+  00-preface.md 00d-how-to-read.md $CH $BACK \
   --top-level-division=chapter --include-in-header=header.tex --lua-filter=box-filter.lua --resource-path=.:figures \
   -V documentclass=report -V fontsize=11pt -V lang=en-GB \
   -V geometry:paperwidth=6in -V geometry:paperheight=9in \
@@ -27,14 +27,14 @@ echo "built ${TITLE}.pdf"
 
 # --- EPUB: cover image via metadata, prose matter (latex commands auto-dropped) ---
 pandoc metadata.yaml \
-  00a-copyright.md 00b-dedication.md 00-preface.md $CH $BACK \
+  00a-copyright.md 00b-dedication.md 00-preface.md 00d-how-to-read.md $CH $BACK \
   --toc --toc-depth=1 --epub-cover-image=figures/cover.png --css=book.css \
   --lua-filter=box-filter.lua --resource-path=.:figures -o "${TITLE}.epub"
 echo "built ${TITLE}.epub"
 
 # --- HTML ---
 pandoc metadata.yaml \
-  00a-copyright.md 00b-dedication.md 00-preface.md $CH $BACK \
+  00a-copyright.md 00b-dedication.md 00-preface.md 00d-how-to-read.md $CH $BACK \
   --toc --toc-depth=1 --standalone --css=book.css \
   --lua-filter=box-filter.lua --resource-path=.:figures --metadata title="The Crystal and the Clock" -o "${TITLE}.html"
 echo "built ${TITLE}.html"

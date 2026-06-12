@@ -21,3 +21,35 @@ These are the technical documents this book retells, with their full derivations
 The gravity chain, the derivation of Einstein's equations from the substrate, is Paper LIII, *Einstein's Equations from Substrate Closure*, with the remaining continuum-geometry programme in Paper XL. The cascade of rungs and the mass ladder are in the cascade papers, including the muon-to-Newton's-constant result of Paper LII. The cosmology side, the dark-energy fraction and the expansion rate, is the *Hypersphere Cosmology* release. The reading of the 600-cell as the substrate, the construction of looking, the rendering kernel, and the derivation of wave-like time are set out in the rendering-layer and rung-dimension-ladder notes.
 
 All of these live together in the book's public companion repository, <https://github.com/vfd-org/crystal-and-clock-companion>: the six papers, the verification suites, the verification manifest, the claim-status ledger that the Honest Ledger at the back of this book is drawn from, and the unedited referee reports. Every checkable claim in the book has code behind it there, reproducible from a single command, `bash run_all_verifications.sh`. It is the place to start if your instinct, like mine, is to trust a result only once you have watched it run.
+
+## A compact bibliography
+
+For readers who want the references in proper form. The first list is the classical mathematics the book leans on, none of it the framework's own; the second is the framework's own technical record.
+
+*Classical mathematics (independent of this framework).*
+
+- Euclid, *Elements*, Book XIII — the five regular solids. c. 300 BCE.
+- L. Schläfli, *Theorie der vielfachen Kontinuität*, 1852 — the regular four-polytopes.
+- H. S. M. Coxeter, *Regular Polytopes*, 3rd ed., Dover, 1973.
+- W. R. Hamilton, "On a new species of imaginary quantities connected with a theory of quaternions," *Proceedings of the Royal Irish Academy* 2 (1844).
+- A. Hurwitz, "Über die Komposition der quadratischen Formen," 1898 — the 1, 2, 4, 8 theorem.
+- J. F. Adams, "On the non-existence of elements of Hopf invariant one," *Annals of Mathematics* 72 (1960) — which spheres are parallelizable.
+- J. C. Baez, "The Octonions," *Bulletin of the American Mathematical Society* 39 (2002), 145–205.
+- J. H. Conway and D. A. Smith, *On Quaternions and Octonions*, A K Peters, 2003.
+- M. Kac, "Can One Hear the Shape of a Drum?," *American Mathematical Monthly* 73 (1966), 1–23.
+- H. Weyl, "Über die asymptotische Verteilung der Eigenwerte," 1911 — Weyl's law.
+- P. Delsarte, J. M. Goethals, J. J. Seidel, "Spherical codes and designs," *Geometriae Dedicata* 6 (1977), 363–388.
+- J. McKay, "Graphs, singularities, and finite groups," *Proceedings of Symposia in Pure Mathematics* 37 (1980), 183–186.
+- M. Fierz and W. Pauli, "On relativistic wave equations for particles of arbitrary spin," *Proceedings of the Royal Society A* 173 (1939), 211–232.
+- S. Deser, "Self-interaction and gauge invariance," *General Relativity and Gravitation* 1 (1970), 9–18.
+- R. M. Wald, "Spin-two fields and general covariance," *Physical Review D* 33 (1986), 3613–3625.
+
+*The framework's own papers* (all in the companion repository, with code and referee reports).
+
+- Paper LIV, *The Forced Crystal* — Chapters 3–4.
+- Paper LV, *The Rendering Layer* — Chapters 4–7, 9, 11.
+- Paper LIII, *Einstein's Equations from Substrate Closure* — Chapter 10.
+- Paper LVI, *Gauge Inventory from the Arenas* — Chapter 10.
+- Paper LVII, *Residual Closure* — Chapters 10, 13.
+- Paper XL, *The Continuum Programme* (the named open problems) — Chapter 13.
+- The verification manifest and the claim-status ledger underwrite the Appendix and the Honest Ledger.

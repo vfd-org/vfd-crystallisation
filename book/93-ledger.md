@@ -11,6 +11,8 @@ The grades, strongest first, mean exactly this:
 - **Tie** — a fixed prediction laid against real data, which the data cannot yet prefer or reject.
 - **Open** — named honestly, not derived.
 
+**What a grade of Theorem covers, and what it does not.** This matters enough to state once and plainly. A grade of *Theorem* means the statement is proven about the crystal, the mathematical object, and checked by machine. It does not, on its own, mean the corresponding fact about the *physical world* is proven, because reading the crystal's properties as facts about reality rests in addition on the book's one central bet: that the crystal is the substrate the world is built from. That bet is not graded here. It is the interpretation the whole book exists to argue for, not a thing I can prove. So when the table says "time runs in waves, Theorem," it means this: it is proven that the crystal's own dynamics are wave-like. That this *is* the time you live in is the identification, the bet, not the theorem. Hold the two apart for every row below, and the grades will not mislead you.
+
 ## The geometry, the spine of the book
 
 | What is claimed | Grade | Where it lands | Chapter |
@@ -21,8 +23,8 @@ The grades, strongest first, mean exactly this:
 | Three dimensions read off the spectrum, with no dimension put in | Theorem | the perfect squares, to machine precision | 4 |
 | The bare table of connections rebuilds the sphere, every angle, and the golden ratio | Theorem | sphere to 15 decimals | 4 |
 | Every point gets three perpendicular directions for free | Theorem | exact | 5 |
-| Looking is one forced operation, the crystal's own response | Theorem | unique under four mild demands | 6 |
-| Time runs in waves, forced by the crystal's inner mirror | Theorem | exact | 7 |
+| The rendering operation is unique (the crystal's own response), given four stated demands | Theorem | unique under K1–K4 | 6 |
+| The crystal's dynamics are second-order, wave-like not diffusive, forced by its inner mirror | Theorem | exact | 7 |
 | Only the three- and seven-dimensional arenas can be rendered; the tower stops | Theorem | exact | 11 |
 | Coarse rungs are the fine rung sampled: one world, many resolutions | Theorem | exact | 9 |
 
@@ -30,21 +32,21 @@ The grades, strongest first, mean exactly this:
 
 | What is claimed | Grade | Where it lands | Chapter |
 |---|---|---|---|
-| Newton's inverse-square law from the coarse rung's response | Theorem | discrete fit within a third of a percent | 10 |
-| Einstein's weak-field law is the only one the deformation field can obey | Theorem | factor of two and all | 10 |
+| Newton's law, $\Phi=-GM/r$ exactly in the continuum, from the coarse rung's response | Theorem | exact 1/r (boundary Green's function); discrete witness $R^2=0.997$ | 10 |
+| The deformation field's only possible weak-field law is Fierz–Pauli (Einstein's) | Theorem (given grid-indifference) | factor of two and all | 10 |
 | Light bends by twice the Newtonian amount | Derived | ratio 2.0000, the 1919 result | 10 |
 | The full nonlinear Einstein equations, by self-coupling | Derived | re-derived in-house; one uniqueness theorem still cited | 10 |
 | Inertial mass equals gravitating mass, because they are one field | Derived | agree to two parts in ten thousand | 10 |
 | The quantum wave equation from the same field's slow envelope | Derived | small, controlled error | 10 |
-| Maxwell's electromagnetism, forced the same way one rung down | Theorem | exact | 10 |
-| The Standard Model's three symmetry groups, of the right sizes and no others | Theorem (structure only) | the wiring is open | 10 |
+| The same uniqueness forces the electromagnetic field equations one rung down | Theorem (given grid-indifference) | null space exact | 10 |
+| Three symmetry groups of the sizes the Standard Model uses, from the two number systems | Theorem (algebra only) | dims 14/8/3/1; the physical wiring is open | 10 |
 
 ## The measured numbers
 
 | What is claimed | Grade | Where it lands | Chapter |
 |---|---|---|---|
 | The proton's radius is four times a length it already defines | Witnessed | within 0.04% | 8 |
-| The B-meson anomaly: one fixed-shape curve, right sign five times | Tie | statistically undecided, wobble recorded | 8 |
+| The $b\to s\mu\mu$ angular anomaly (the $C_9$ anomaly, not $R_K$): one fixed-shape curve, right sign five times | Tie | statistically undecided, wobble recorded | 8 |
 | Newton's constant from the muon's rung on the mass ladder | Conditional | within two parts in ten thousand | 8 |
 | The dark-energy fraction and the expansion rate, from the cosmology side | Witnessed | within a fraction of a percent of Planck | 10 |
 
@@ -58,4 +60,4 @@ The grades, strongest first, mean exactly this:
 | A single universal law of how a world gets selected | deep | 12, 13 |
 | Why a rendered scene should be *felt* from the inside | deepest, explicitly unclaimed | 6, 13 |
 
-Read the table as a whole and the shape of the thing is plain. The geometry is theorem. The laws at coarse grain are derived, with one rigor debt. The measured numbers are a mix of genuine hits and one honest tie. And the open problems are named, not hidden. That is the honest state of the programme, and it is the state I would ask you to judge.
+Read the table as a whole and the shape of the thing is plain. The geometry is theorem-grade about the crystal. The laws at coarse grain are derived, with one rigor debt and the substrate identification standing behind them. The measured numbers are a mix of genuine hits, one conditional anchor, and one honest tie. And the open problems are named, not hidden. That is the honest state of the programme, and it is the state I would ask you to judge.
