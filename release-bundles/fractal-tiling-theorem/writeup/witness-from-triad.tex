@@ -1,0 +1,173 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{result}[theorem]{Computed Result}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\zetaK}{\zeta_{K}}
+\newcommand{\Icos}{\mathcal{I}}
+\newcommand{\fq}{\mathfrak{q}}
+
+\title{The Weil Witness from the Icosian Triad:\\ the Gap, Localized}
+\author{(VFD programme --- working draft)}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The companion papers establish the icosian object exactly: the maximal icosian order
+$\Icos$ on the $600$-cell over $K=\Q(\sqrt5)$, its triad $(\Icos, C_\varphi, N_H)$ with
+Galois symmetry $\sigma$, and its Eisenstein theta $L$-function
+$L(\Theta_\Icos,s)=\zetaK(s)\zetaK(s-1)$. Here we show that the same object also supplies
+the prime-side ingredient of a Weil positivity witness $W(h)$, parameter-free, and we
+locate precisely the single step it does not close. The prime residual is assembled
+entirely from the geometric eigenvalues of the self-adjoint icosian Brandt operator at
+level $\mathfrak p_{31}=(5\varphi-2)$ (the object's \emph{cuspidal} face), with no fitting
+and no zero-data; the archimedean term is the cuspidal $L$-function's completion (gamma
+factor and conductor), fixed by its functional equation. The implementation is validated
+on $\zeta$ (where the zeros are known) and gives $W(h)\ge 0$ on the finite Gaussian test
+family tried. \textbf{We make no claim about the Riemann Hypothesis.} Crucially: the
+witness lives on the \emph{cuspidal} face, so its positivity quantifier is GRH for that
+level-$31$ $L$-function, \emph{not} classical RH (classical $\zeta$ sits in the separate
+Eisenstein face). The verified tests are moreover archimedean-dominated, so they are
+consistent with, but not a sharp test of, that quantifier. The result is a
+\emph{localization}, not a reduction of classical RH.
+\end{abstract}
+
+\section{The two arithmetic faces of one object}
+The icosian order $\Icos$ carries two distinct arithmetic objects, and keeping them
+separate is the whole point of this note.
+
+\paragraph{Eisenstein face (theta).} The theta series of $\Icos$ has
+$L(\Theta_\Icos,s)=\zetaK(s)\zetaK(s-1)$ exactly \cite{IcosianTriad}; via
+$\zetaK=\zeta\cdot L(s,\chi_5)$ the Riemann $\zeta$ appears as one of its four factors.
+This face \emph{contains} classical $\zeta$. Its parameters are $a_q=N(q)+1$, which
+violate the Ramanujan bound $|a_q|\le 2\sqrt{N(q)}$, so it is \emph{not admissible as the
+unitary cuspidal Satake input} used in the witness below. (It still has an explicit
+formula of its own; we make no use of one here.)
+
+\paragraph{Cuspidal face (Brandt).} The same order carries a self-adjoint Brandt/Hecke
+operator $B(\fq)$ at level $\mathfrak p_{31}=(5\varphi-2)$, whose eigenvalues $a_\fq$ are
+read directly from the icosian Brandt matrices---no point-counting, no fitting---and were
+independently checked out-of-sample to equal the corresponding point counts
+\cite{BrandtCuspidal}. The computed $a_\fq$ obey the Ramanujan bound in the tested range;
+global Ramanujan for the associated form follows from its Hilbert-modular /
+Jacquet--Langlands identification, not from the finite Brandt matrices alone. This
+cuspidal face is where the witness lives.
+
+\section{The Weil witness, and that its prime side is built from the object}
+Fix the cuspidal level-$31$ $L$-function of the previous paragraph, with completed form
+$\Lambda(s)=L_\infty(s)L(s)$ ($L_\infty$ its gamma factor, conductor $775$). For a test
+function $h$ even and of \emph{positive type} (the Fourier transform $\widehat h\ge0$),
+Weil's explicit formula reads, schematically,
+\[
+   W(h)\;=\;\underbrace{\mathrm{ARCH}(h)}_{\text{from }L_\infty,\ \text{conductor}}
+   \;-\;\underbrace{\mathrm{PRIME}(h)}_{\text{from the }a_\fq}
+   \;=\;\sum_{\gamma} h(\gamma),
+\]
+the sum over the nontrivial zeros $\rho=\tfrac12+i\gamma$ of $L(s)$ \cite{Weil}. The
+witness $W$ is unconditional; Weil's criterion is the theorem
+\[
+   \text{GRH for this cuspidal } L \;\Longleftrightarrow\; W(h)\ge 0
+   \quad\text{for every } h \text{ of positive type.}
+\]
+
+\begin{proposition}[the prime side is parameter-free from the object]\label{prop:witness}
+In the computation \cite{BrandtCuspidal}, $\mathrm{PRIME}(h)$ is assembled entirely from
+the geometric Brandt eigenvalues $a_\fq$ of $\Icos$'s cuspidal face, over the cached
+prime ideals $N(\fq)\le 150$; the archimedean term $\mathrm{ARCH}(h)$ is the cuspidal
+$L$-function's completion (gamma type and conductor $775$), fixed by its functional
+equation. No constant is fitted, and no zero-data of the target enters the construction.
+\end{proposition}
+
+So the \emph{prime side} of the witness is derived from the icosian triad---it is not
+placed beside it. The archimedean side is the automorphic completion of the chosen
+cuspidal form, not itself read off the geometry; we state this division of inputs
+explicitly rather than claiming the whole witness is geometric.
+
+\section{What is computed, and the control}
+The construction (\texttt{weil\_wall.py}, sourcing \texttt{geometric\_aP.py}) was run as
+follows. All tests are Gaussian, $h(r)=e^{-r^2/2\sigma_h^2}$ with $\sigma_h\in\{3,4,5,6\}$.
+
+\begin{result}[validation on $\zeta$]\label{res:gate}
+Run on the Riemann $\zeta$, where the zeros are known, the same implementation reproduces
+$\sum_\gamma h(\gamma)$ to relative error $\sim10^{-2}$ down to $10^{-6}$ across
+$\sigma_h=3,\dots,6$. This validates the normalizations and pole/gamma bookkeeping; no
+constants are fitted. (The $\zeta$ run uses $\zeta$'s own prime term, pole, and gamma
+factor; it shares the framework, not the data.)
+\end{result}
+
+\begin{result}[positivity on the tested family]\label{res:pos}
+For the cuspidal level-$31$ $L$-function, $W(h)\ge 0$ on every test in the family
+($\sigma_h=3,4,5,6$; $W=+1.4047,+3.6961,+6.3931,+9.4125$).
+\end{result}
+
+\begin{result}[control]\label{res:ctrl}
+Feeding the \emph{Eisenstein} bookkeeping $a_q=N(q)+1$ (the theta-face parameters) into
+the same residual yields $32$ Ramanujan violations: these coefficients are not the
+admissible cuspidal Satake input the residual requires. The control thus has teeth---the
+witness is not satisfied by arbitrary input---without implying the Eisenstein face is
+disqualified from all explicit-formula positivity.
+\end{result}
+
+\section{The gap, named precisely}
+Two statements fix the honest scope.
+
+\begin{remark}[the quantifier is GRH for the cuspidal $L$, not classical RH]
+$W(h)\ge 0$ for \emph{all} $h$ of positive type is, by Weil's criterion, GRH for this
+cuspidal level-$31$ $L$-function---\emph{not} classical RH. Classical $\zeta$ lives in the
+Eisenstein face (\S1), which is not the witness face. The verified positivity is on a
+finite Gaussian family; the universal quantifier is the wall and is GRH-equivalent, not
+closable without the (out-of-reach) operator/positivity proof.
+\end{remark}
+
+\begin{remark}[the tests are archimedean-dominated]
+Against our own result: in the tested family the prime residual is tiny relative to the
+archimedean term (ratio $\sim10^{-4}$ down to $10^{-16}$ as $\sigma_h$ grows), and the
+prime term is truncated to the cached range $N(\fq)\le150$ with no tail bound. Hence
+$W(h)\ge0$ here is \emph{consistent with} GRH for this $L$-function but is \emph{not a
+sharp test} of the positivity quantifier; we supply no sharp test family.
+\end{remark}
+
+\section{Conclusion}
+The icosian triad is exact at the object level, and it supplies---parameter-free, from
+its cuspidal Brandt face---the prime side of a Weil positivity witness $W(h)$ for a
+specific cuspidal level-$31$ $L$-function, with the archimedean side taken from that
+form's completion. The implementation is validated on $\zeta$ and gives $W(h)\ge0$ on
+every test in a finite Gaussian family. The step not closed is the universal positivity
+quantifier, which is \textbf{GRH for that cuspidal $L$-function}; and even the verified
+positivity sits in an archimedean-dominated, finitely-truncated regime that is not a
+sharp test of it.
+
+The localization is therefore \emph{not} a reduction of classical RH. After choosing the
+cuspidal Brandt face, the remaining wall is GRH for that one $L$-function---one named
+inequality on one parameter-free prime residual. Classical $\zeta$ remains in the
+separate Eisenstein face, which is not positivity-valid for this residual. We make no
+claim about the Riemann Hypothesis. One object, two arithmetic faces---Eisenstein (theta,
+containing $\zeta$) and cuspidal (Brandt, carrying the witness)---and the wall is the
+positivity quantifier on the second.
+
+\begin{thebibliography}{9}
+\bibitem{IcosianTriad} VFD programme, \emph{The Icosian Triad on $V_{600}$}
+  (\texttt{icosian-triad-v600} release, v1.1): $L(\Theta_\Icos,s)=\zetaK(s)\zetaK(s-1)$
+  exactly, verified in the maximal order; states it does not address RH/GRH.
+\bibitem{BrandtCuspidal} VFD programme, route-B icosian Brandt computation
+  (\texttt{icosian\_brandt\_cuspidal\_geometry/route\_b}, \texttt{weil\_wall.py},
+  \texttt{geometric\_aP.py}): geometric Hecke eigenvalues $a_\fq$ of the self-adjoint
+  icosian Brandt operator at level $\mathfrak p_{31}$, cache $N(\fq)\le150$,
+  out-of-sample checked against point counts; the witness run uses conductor $775$ and is
+  archimedean-dominated.
+\bibitem{Weil} A.~Weil, \emph{Sur les ``formules explicites'' de la th\'eorie des
+  nombres premiers}.
+\end{thebibliography}
+
+\end{document}

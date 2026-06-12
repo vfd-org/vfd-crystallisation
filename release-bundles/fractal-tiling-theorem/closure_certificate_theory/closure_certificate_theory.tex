@@ -1,0 +1,327 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem,xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black]{hyperref}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\PROVEN}{\textcolor{green!45!black}{\textsf{[PROVEN]}}}
+\newcommand{\DIAG}{\textcolor{blue!55!black}{\textsf{[DIAGNOSTIC]}}}
+\newcommand{\CONJ}{\textcolor{orange!75!black}{\textsf{[CONJECTURAL]}}}
+\newcommand{\OPEN}{\textcolor{red!65!black}{\textsf{[OPEN]}}}
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\trp}{^{\!\T}}
+\DeclareMathOperator{\spr}{\rho}
+
+\title{\textbf{Invariant Closure Principle:\\ Positive Forms, Boundary Leakage, and Closure Certificates}}
+\author{VFD Programme --- technical note (WO-VFD-CLOSURE-CERTIFICATE-THEORY-001)}
+\date{2026-06-01}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We isolate the formal object that was missing from the cross-domain closure
+diagnostic: the \emph{closure certificate}. Many hard problems share a common shape
+---a finite generative rule, indefinite repetition, and possible escape at a boundary
+at infinity. We formalise a generated system $(X,T)$ relative to a positive form $B$
+and a boundary completion $\partial X$, classify its behaviour into closure modes, and
+define a closure certificate as a \emph{finitely checkable} object proving that boundary
+leakage is controlled under the repetition limit. We give complete proofs that, for
+linear systems, the three principal modes admit \emph{exact} certificate criteria
+(dissipative $\Leftrightarrow$ a Lyapunov form, isometric $\Leftrightarrow$ an invariant
+inner product, self-adjoint $\Leftrightarrow$ symmetrizability), thereby recovering the
+discrete Lyapunov stability theorem and the detailed-balance self-adjointness of
+reversible Markov chains as instances. We then prove a self-contained number-theoretic
+proposition: the only positive-integer $1$-cycle of the $3n{+}1$ shortcut map is the
+trivial one (recovering Steiner 1977 via the certificate route). Finally we map four
+open problems (Collatz, Riemann, Navier--Stokes, Yang--Mills) to the \emph{exact missing
+certificate} each requires. Every claim is graded
+\PROVEN/\DIAG/\CONJ/\OPEN. \textbf{We do not prove, partially prove, or reduce any open
+problem}; the contribution is a precise vocabulary and a catalogue separating solved
+certificates from missing ones.
+\end{abstract}
+
+\section{Generated systems, boundaries, positive forms}
+
+\begin{definition}[Generated system]\label{def:gs}
+A \emph{generated system} is a pair $G=(X,T)$ where $X$ is a state space and
+$T\colon X\to X$ a transformation. Its orbits are the sequences $(T^n x)_{n\ge 0}$.
+For the linear theory we take $X=\mathbb R^d$ and $T\in\mathbb R^{d\times d}$;
+for the arithmetic theory $X$ is a set of integers and $T$ a piecewise-affine map.
+\end{definition}
+
+\begin{definition}[Boundary completion]\label{def:bdy}
+A \emph{boundary completion} is $\overline X = X\cup\partial X$, where $\partial X$
+collects the limiting behaviours that repetition can approach: divergence to infinity,
+a singularity, a non-returning limit, or an unresolved accumulation point. ``Closure''
+is a statement about whether orbits stay controlled relative to $\partial X$ as
+$n\to\infty$.
+\end{definition}
+
+\begin{definition}[Positive form]\label{def:form}
+A \emph{positive form} on $\mathbb R^d$ is a symmetric matrix $B=B\trp\succ 0$. It
+supplies the inner product $\langle x,y\rangle_B = x\trp B y$ used to measure size,
+energy, phase, probability, trace, or coherence. (Semidefinite forms $B\succeq 0$ are
+admitted where stated.)
+\end{definition}
+
+\begin{definition}[Closure modes]\label{def:modes}
+For a linear $G=(\mathbb R^d,T)$ and a positive form $B$, define
+\[
+\begin{aligned}
+\textsf{SELF\_ADJOINT (reflective):}&\quad BT = T\trp B,\\
+\textsf{ISOMETRIC (phase):}&\quad T\trp B T = B,\\
+\textsf{DISSIPATIVE (monotone):}&\quad T\trp B T \preceq B,\\
+\textsf{CRITICAL:}&\quad T\trp B T - B \ \text{has unresolved sign on } \partial X,\\
+\textsf{ESCAPING:}&\quad \text{no } B\succ 0 \text{ controls } \{T^n\}.
+\end{aligned}
+\]
+\end{definition}
+
+\begin{definition}[Boundary leakage and capacity]\label{def:leak}
+The \emph{boundary leakage} of $(X,T)$ relative to $B$ is the largest growth the form
+fails to suppress in one step,
+\[
+L_B(T) \;=\; \lambda_{\max}\!\big(T\trp B T - B\big),
+\]
+and the \emph{closure capacity} is $Q_B(T) = -L_B(T)$ (containment minus leakage).
+Thus $Q_B\ge 0 \Leftrightarrow T\trp BT\preceq B$ (dissipative/isometric); $Q_B<0$
+signals escape in the $B$-norm.
+\end{definition}
+
+\begin{definition}[Closure certificate]\label{def:cert}
+A \emph{closure certificate} for $G=(X,T)$ is a finitely specified, finitely checkable
+object $\mathcal C$ that proves $L_B(T)\le 0$ (equivalently $Q_B\ge 0$), or an exact
+equality/inequality among $\{BT,T\trp B,T\trp BT,B\}$, \emph{under the relevant
+repetition limit}. The defining feature is that $\mathcal C$ is finite while the
+statement it certifies (``all orbits stay controlled as $n\to\infty$'') is infinitary.
+A \emph{control} is a companion system known to lack closure; a certificate scheme is
+accepted only if it rejects the controls.
+\end{definition}
+
+\begin{remark}
+The whole programme reduces to one question: \emph{which domains admit a finite
+certificate, and what is it?} The hardness of an open problem is precisely the absence
+of a known finite certificate for its (provably correct) closure mode.
+\end{remark}
+
+\section{Certificate criteria for linear systems (proved)}
+
+\begin{lemma}[Dissipative certificate $=$ Lyapunov form]\label{lem:diss}
+\PROVEN\ Let $T\in\mathbb R^{d\times d}$. There exists $B\succ0$ with
+$T\trp BT - B \prec 0$ (a strict dissipative certificate) \emph{if and only if}
+$\spr(T)<1$. In that case $B=\sum_{k\ge0}(T\trp)^kT^k$ converges, is positive definite,
+and satisfies $T\trp BT-B=-I$.
+\end{lemma}
+\begin{proof}
+($\Leftarrow$) If $\spr(T)<1$ then $\|T^k\|\le Cr^k$ for some $r<1$, so
+$B=\sum_{k\ge0}(T\trp)^kT^k$ converges. $B$ is symmetric and
+$x\trp Bx=\sum_{k\ge0}\|T^kx\|^2\ge\|x\|^2>0$ for $x\neq0$, hence $B\succ0$.
+Re-indexing, $T\trp BT=\sum_{k\ge0}(T\trp)^{k+1}T^{k+1}=B-I$, so
+$T\trp BT-B=-I\prec0$.
+\par
+($\Rightarrow$) Suppose $B\succ0$ and $T\trp BT-B=-Q$ with $Q\succ0$. Extend $B$
+Hermitianly. Let $Tv=\lambda v$, $v\neq0$ (complex). Then
+$v^*T\trp BTv=|\lambda|^2 v^*Bv$ and also $=v^*Bv-v^*Qv$, so
+$(1-|\lambda|^2)\,v^*Bv=v^*Qv>0$. Since $v^*Bv>0$, we get $|\lambda|<1$; as $\lambda$
+was arbitrary, $\spr(T)<1$.
+\end{proof}
+
+\begin{remark}
+Lemma~\ref{lem:diss} \emph{is} the discrete-time Lyapunov stability theorem. The
+certificate is the finite matrix $B$ (an $O(d^2)$ object) and the finite check
+$T\trp BT-B\prec0$; it certifies the infinitary statement $T^n\to0$.
+\end{remark}
+
+\begin{lemma}[Isometric certificate $=$ invariant inner product]\label{lem:iso}
+\PROVEN\ For $T\in\mathbb R^{d\times d}$ the following are equivalent: (i) there exists
+$B\succ0$ with $T\trp BT=B$; (ii) $\{T^n\}_{n\ge0}$ is bounded and $T$ is invertible.
+When $T$ has finite order $m$ ($T^m=I$), $B=\tfrac1m\sum_{k=0}^{m-1}(T\trp)^kT^k$ is an
+exact certificate; in general a Ces\`aro limit of these averages is.
+\end{lemma}
+\begin{proof}
+(i)$\Rightarrow$(ii): $T\trp BT=B$ means $T$ preserves $\langle\cdot,\cdot\rangle_B$, so
+$\|T^nx\|_B=\|x\|_B$ for all $n$; equivalence of norms gives $\{T^n\}$ bounded, and an
+isometry of a finite-dimensional inner-product space is invertible.
+(ii)$\Rightarrow$(i): boundedness gives $M=\sup_n\|T^n\|<\infty$. The averages
+$B_N=\tfrac1N\sum_{k=0}^{N-1}(T\trp)^kT^k$ are symmetric PSD with $\|B_N\|\le M^2$, so a
+subsequence converges to some $B\succeq0$. Telescoping,
+$\|T\trp B_NT-B_N\|=\tfrac1N\|(T\trp)^NT^N-I\|\le (M^2+1)/N\to0$, hence $T\trp BT=B$.
+Finally $\|x\|^2=\|T^{-k}T^kx\|^2\le M^2\|T^kx\|^2$ gives $x\trp B_Nx\ge\|x\|^2/M^2$, so
+$B\succeq M^{-2}I\succ0$. For $T^m=I$ the average is stationary and exact.
+\end{proof}
+
+\begin{lemma}[Self-adjoint certificate $=$ symmetrizability]\label{lem:sa}
+\PROVEN\ There exists $B\succ0$ with $BT=T\trp B$ \emph{if and only if} $T$ is
+diagonalizable with real spectrum (i.e.\ $T$ is symmetrizable).
+\end{lemma}
+\begin{proof}
+($\Leftarrow$) Write $T=SDS^{-1}$ with $D$ real diagonal. Put $B=(S^{-1})\trp S^{-1}\succ0$.
+Then $BT=(S^{-1})\trp S^{-1}SDS^{-1}=(S^{-1})\trp D S^{-1}$, which is symmetric since $D$
+is; hence $BT=(BT)\trp=T\trp B$.
+($\Rightarrow$) Given $B\succ0$ with $BT=T\trp B$, set $M=B^{1/2}TB^{-1/2}$. Then
+$M\trp=B^{-1/2}T\trp B^{1/2}=B^{-1/2}(BTB^{-1})B^{1/2}=B^{1/2}TB^{-1/2}=M$, so $M$ is
+symmetric: it has real spectrum and is orthogonally diagonalizable. As $T=B^{-1/2}MB^{1/2}$
+is similar to $M$, $T$ is diagonalizable with the same (real) spectrum.
+\end{proof}
+
+\begin{corollary}[Reversible Markov chains carry a self-adjoint certificate]\label{cor:markov}
+\PROVEN\ Let $P$ be an irreducible stochastic matrix with stationary measure $\pi>0$
+satisfying detailed balance $\pi_iP_{ij}=\pi_jP_{ji}$. Then $B=\operatorname{diag}(\pi)$
+is a self-adjoint certificate ($BP=P\trp B$); equivalently $P$ is self-adjoint on
+$\ell^2(\pi)$ and has real spectrum. On the mean-zero subspace $\mathbf1^\perp$, ergodicity
+gives $\spr(P|_{\mathbf 1^\perp})<1$, so $\operatorname{diag}(\pi)$ is \emph{also} a
+dissipative certificate there (Lemma~\ref{lem:diss}): the chain closes onto $\pi$.
+\end{corollary}
+\begin{proof}
+$BP=P\trp B$ is exactly detailed balance written in matrix form; $B\succ0$ since
+$\pi>0$. Lemma~\ref{lem:sa} gives real spectrum. Irreducibility/aperiodicity place all
+non-Perron eigenvalues strictly inside the unit disc, so the restriction to
+$\mathbf 1^\perp$ is a strict contraction and Lemma~\ref{lem:diss} applies.
+\end{proof}
+
+\begin{remark}[The three modes are genuinely distinct certificates]
+A rotation by $2\pi/k$ admits an isometric certificate (Lemma~\ref{lem:iso}) but
+\emph{no} self-adjoint one (its spectrum is off the real axis), confirming the
+hypothesis correction from the prior work order: phase closure is isometric, not
+self-adjoint. A defective matrix with $\spr=1$ (a Jordan block) admits \emph{none} of
+the three: it is the linear archetype of \textsf{CRITICAL}.
+\end{remark}
+
+\section{An arithmetic certificate, proved}
+
+We now leave the linear setting for a finite Diophantine certificate.
+
+\begin{definition}[$q$-shortcut map]
+For odd $q\ge3$ let $T_q(n)=(qn+1)/2^{a(n)}$ on odd $n\ge1$, where
+$a(n)=v_2(qn+1)$ is the $2$-adic valuation. A \emph{$k$-cycle} is a tuple of odd
+$n_1,\dots,n_k$ with $T_q(n_i)=n_{i+1}$, indices mod $k$, valuations $a_1,\dots,a_k$,
+total $A=\sum a_i$.
+\end{definition}
+
+\begin{lemma}[Cycle equation $=$ a finite closure certificate]\label{lem:cyc}
+\PROVEN\ A $k$-cycle of $T_q$ with valuations $a_1,\dots,a_k$ exists only if, writing
+$s_0=0$, $s_j=a_1+\cdots+a_j$, $A=s_k$,
+\[
+n_1\big(2^{A}-q^{k}\big)\;=\;\sum_{i=1}^{k} q^{\,k-i}\,2^{\,s_{i-1}}\;>\;0,
+\qquad\text{hence}\qquad 2^{A}>q^{k}.
+\]
+\end{lemma}
+\begin{proof}
+From $2^{a_i}n_{i+1}=qn_i+1$, induction gives
+$n_{j+1}=\big(q^{j}n_1+\sum_{i=1}^{j}q^{\,j-i}2^{\,s_{i-1}}\big)/2^{\,s_j}$.
+Setting $n_{k+1}=n_1$ and multiplying by $2^{A}$ yields
+$n_1 2^{A}=q^{k}n_1+\sum_{i=1}^{k}q^{\,k-i}2^{\,s_{i-1}}$, i.e.\ the displayed identity.
+The right side is a sum of positive terms, and $n_1>0$, so $2^A-q^k>0$.
+\end{proof}
+
+\begin{proposition}[Only the trivial $1$-cycle for $3n{+}1$]\label{prop:onecycle}
+\PROVEN\ The unique positive-integer $1$-cycle of $T_3$ is $n=1$ (the cycle
+$1\mapsto1$). Consequently $3n{+}1$ has no nontrivial fixed cycle of length one.
+\end{proposition}
+\begin{proof}
+For $k=1$, Lemma~\ref{lem:cyc} gives $n_1(2^{a}-3)=1$ with $a=a_1\ge1$. Thus $2^a-3$ is
+a positive divisor of $1$, forcing $2^a-3=1$, i.e.\ $2^a=4$, $a=2$, and $n_1=1$. The
+orbit is $T_3(1)=(3\cdot1+1)/2^2=1$. No other positive integer solves the equation.
+\end{proof}
+
+\begin{remark}
+Proposition~\ref{prop:onecycle} recovers Steiner's 1977 ``no nontrivial circuit''
+result for the simplest class, here as a one-line consequence of the closure
+certificate of Lemma~\ref{lem:cyc}. The certificate is finite (one Diophantine
+equation); it eliminates an \emph{infinite} family of would-be cycles.
+\end{remark}
+
+\begin{corollary}[No small nontrivial cycles, verified]\label{cor:small}
+\DIAG\ An exhaustive check of Lemma~\ref{lem:cyc} over all valuation compositions with
+$k\le6$, $1\le a_i\le4$, $2^A>3^k$ (script \texttt{examples/}) yields no positive
+\emph{odd} integer $n_1$ generating a consistent cycle other than $n=1$. This is a
+finite verified statement, not a proof for all $k$ (cf.\ Simons--de~Weger for the known
+unconditional bounds).
+\end{corollary}
+
+\section{Certificate catalogue and open-problem mapping}
+
+\begin{center}\small
+\begin{tabular}{@{}lllc@{}}
+\hline
+\textbf{Domain} & \textbf{Closure mode} & \textbf{Certificate} & \textbf{Status}\\
+\hline
+Finite cycles / permutations & isometric & invariant inner product (Lem.~\ref{lem:iso}) & \PROVEN\\
+Contractions / stable linear & dissipative & Lyapunov form (Lem.~\ref{lem:diss}) & \PROVEN\\
+Reversible Markov chains & self-adjoint & $\operatorname{diag}(\pi)$ (Cor.~\ref{cor:markov}) & \PROVEN\\
+Ergodic Markov chains & dissipative on $\mathbf1^\perp$ & spectral gap & \PROVEN\\
+Poincar\'e (3-manifolds) & dissipative & Perelman $\mathcal W$-entropy monotonicity & \PROVEN (Perelman)\\
+$3n{+}1$ one-cycles & --- & cycle equation (Prop.~\ref{prop:onecycle}) & \PROVEN\\
+\hline
+Collatz (full) & dissipative/mixed & no admissible infinite non-closing braid & \OPEN\\
+Riemann Hypothesis & self-adjoint/positive & Weil positivity of the explicit form & \OPEN\\
+Navier--Stokes (3D) & dissipative/critical & coercive high-frequency norm control & \OPEN\\
+Yang--Mills mass gap & positive $+$ gap & reflection positivity $+$ spectral floor & \OPEN\\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent The open rows share one structure: the closure \emph{mode} is known and
+correct, but the \emph{certificate} is either infinite-dimensional or not finitely
+reducible by any known means.
+
+\begin{itemize}[leftmargin=1.4em]
+\item \textbf{Collatz.} \OPEN\ Mode \textsf{DISSIPATIVE-on-average} (mean drift
+$\overline Q=2\ln2-\ln3>0$, \DIAG). Missing certificate: a finite obstruction excluding
+\emph{every} infinite trajectory with persistently non-positive cumulative capacity.
+The cycle certificate (Lem.~\ref{lem:cyc}) handles \emph{periodic} escape; the
+\emph{aperiodic} unbounded braid is uncertified.
+\item \textbf{Riemann.} \OPEN\ Mode \textsf{positive form}: RH $\Leftrightarrow$ the
+Weil explicit-formula quadratic form is positive semidefinite. The finite truncations
+are PSD with a near-null mode (\DIAG); no finite basis certifies the limit. This is the
+Connes--Consani arithmetic-site programme. (The positivity form is even insensitive to
+prime \emph{shuffling}, which is detected separately by the explicit-formula balance ---
+underlining that the missing object is a positivity \emph{certificate}, not a
+correlation.)
+\item \textbf{Navier--Stokes.} \OPEN\ Mode \textsf{dissipative vs.\ critical}: a
+dyadic-shell caricature reproduces the viscosity-driven capacity trend (\DIAG), but in
+3D the controlled energy norm is \emph{supercritical}, so $L_B$ has unresolved sign ---
+the \textsf{CRITICAL} archetype. Missing certificate: a coercive norm that dominates the
+nonlinear transfer uniformly.
+\item \textbf{Yang--Mills.} \OPEN\ Osterwalder--Schrader reflection positivity \emph{is}
+a positive-form certificate; the open content is constructing the continuum measure and
+a strictly positive spectral floor (the gap).
+\end{itemize}
+
+\section{Non-overclaim boundary}
+
+\begin{enumerate}[leftmargin=1.6em]
+\item This note proves the linear certificate criteria
+(Lemmas~\ref{lem:diss}--\ref{lem:sa}), the Markov corollary, the cycle equation, and the
+$1$-cycle proposition. \PROVEN.
+\item It \textbf{does not} prove, partially prove, or reduce Collatz, RH, Navier--Stokes,
+or Yang--Mills. For each it states the correct closure mode and the \emph{exact missing
+certificate}; supplying that certificate is the open problem itself.
+\item ``Closure mode'' is a classification; a solution requires \emph{constructing} the
+domain-native certificate, which for the open rows is not finitely available by any
+method known to us.
+\item The cross-domain language is an organising and search tool. Where a diagnostic
+trend (e.g.\ Collatz drift, NS capacity) is reported, it is graded \DIAG\ and is not a
+certificate.
+\item No claim is made about physics, consciousness, $E_8$ as ``the universe'', or a
+``theory of everything''. The objects here are matrices, measures, and integers.
+\end{enumerate}
+
+\section*{One-sentence statement}
+\noindent Many hard problems are not about infinity itself but about whether a finite
+generative rule admits a finite certificate---a Lyapunov form, an invariant inner
+product, a symmetrizer, a Diophantine obstruction, or a positivity proof---that controls
+its behaviour at the boundary of indefinite repetition; this note formalises that object
+and separates the certificates we have from the ones we lack.
+
+\end{document}

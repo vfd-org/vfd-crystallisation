@@ -47,9 +47,11 @@ the norm-31 elliptic curve / Hilbert newform over `K = Q(sqrt 5)`.
 > cuspidal arithmetic coefficients arise from the nontrivial geometric
 > correspondence structure of an icosian Eichler order.
 >
-> A pass would not prove RH. It would show that the RH-bearing arithmetic
-> object is encoded by the geometry. The remaining RH wall would still be
-> positivity / self-adjointness / trace-form control.
+> A pass does not prove RH or any GRH. It shows that the cuspidal Hecke
+> eigenvalues — known arithmetic, due to Dembele — are reproduced by the
+> geometry with no fitted parameters. The analytic questions (Weil/Li
+> positivity for the assembled L-functions) are untouched; see the paper's
+> Scope section.
 
 ## Result
 
@@ -63,7 +65,7 @@ out of sample, with **zero fitted parameters**:
 |------|-------------------------|-------|
 | dimension | Brandt-module dim `h = 2` from the `A_5 = I^1/{±1}` action on `P^1(F_31)` | `= 2`, Eichler mass `8/15` exact |
 | Eisenstein | eigenform `(1,1)`, eigenvalue `N(P)+1` | exact, every prime |
-| **cuspidal** | eigenform `(3,-5)` (the **same** vector for every prime — a genuine simultaneous Hecke eigenform), eigenvalue `a_P = trace B(P) − (N(P)+1)` | **= point-counted `a_P`**, 24/24 primes (11 in-sample, 13 out-of-sample) |
+| **cuspidal** | eigenform `(3,-5)` (the **same** vector for every prime — a genuine simultaneous Hecke eigenform), eigenvalue `a_P = trace B(P) − (N(P)+1)` | **= point-counted `a_P`**, all 44 good prime ideals of norm <= 200, per-ideal after fixing the single global Galois convention (`data/level31_per_ideal.json`); original 24-bucket protocol in `results.json` |
 
 The Brandt matrices `B(P)` are self-adjoint in the natural orbit-size measure
 `mu = (20,12)`, and `(3,-5)` is orthogonal to the Eisenstein line `(1,1)` under
@@ -92,10 +94,12 @@ primes above `p`.
 
 ## What this does NOT do
 
-It does **not** prove the Riemann Hypothesis. It shows the RH-bearing arithmetic
-object (the cuspidal newform / its `a_P`) is **encoded by** the icosian
-geometry. RH still requires the separate positivity / self-adjointness /
-trace-form (Weil–Connes) step, which is untouched here.
+It does **not** prove the Riemann Hypothesis or any GRH, and it contains no
+new number theory: the arithmetic targets are Dembele's known examples. What
+it shows is that the cuspidal newform's eigenvalue system is **reproduced by**
+the icosian geometry, parameter-free and out-of-sample. The analytic
+positivity questions for the assembled L-functions are untouched here (see
+the paper's Scope section and the lab's companion papers).
 
 ## Layout
 
@@ -108,8 +112,13 @@ route_b/
   brandt_matrices.py      Phase 5/6 Brandt matrices B(P), cuspidal eigenform
   hecke_compare.py        Phase 7  out-of-sample, no-fit comparison + verdict
   no_fit_guard.py         Phase 8  static anti-fitting / anti-leak guard
-  brandt_level31.py       orchestrator -> results.json
-tests/                    five acceptance tests (all pass)
+  brandt_level.py         the engine at an arbitrary split prime level
+  level31_full_ideals.py  all 44 ideals per-ideal -> data/level31_per_ideal.json
+  multilevel_dimensions.py dimension sequence -> data/dimension_sequence.json
+  second_form_level41.py  level 41 -> data/level41_results.json
+  genus2_form_level61.py  level 61 genus-2 -> data/level61_results.json
+  brandt_level31.py       original orchestrator -> results.json
+tests/                    23 gate tests (all pass)
 data/target_a_p.json      generated brute-force target
 results.json              machine-readable verdict
 WORK_ORDER_RESULT.md      full report + boundary statement

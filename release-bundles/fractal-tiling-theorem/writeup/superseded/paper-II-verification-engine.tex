@@ -1,0 +1,132 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{result}[theorem]{Certified Result}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\zetaK}{\zeta_{K}}
+
+\title{A Verification-Gated Engine for Geometry$\to$Arithmetic\\ Correspondences,
+and the $(O2)$ Negative}
+\author{(VFD programme --- working draft)}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We describe a reproducible, gate-first engine for testing proposed correspondences
+between geometric objects and arithmetic $L$-functions, and we use it to settle one
+specific question in the negative. A proposed correspondence (``expression'') is
+accepted only if it passes an eight-check verification gate---chief among them a
+\emph{provenance} check that rejects any map fitted to its target, and a battery of
+spectral discriminators (zero positions, density, nearest-neighbour spacing, number
+variance) that separate one $L$-function from another. Applied to the VFD programme,
+the engine \emph{certifies} that the icosian substrate realizes $\zetaK$ (and
+$L(\chi_5)$, $\zeta(s)\zeta(s-1)$), and \emph{rejects}, on five independent grounds,
+the stronger claim that it realizes the Riemann $\zeta$ itself. We call this the
+$(O2)$ negative. The engine issues verification certificates only and makes no
+claim about the Riemann Hypothesis.
+\end{abstract}
+
+\section{Motivation: the hardcoding trap}
+Claims of the form ``geometric object $X$ realizes arithmetic object $Y$'' are easy
+to make and easy to fake: one may fit a map from $X$'s data to $Y$'s known invariants
+and then ``recover'' $Y$. Such a map encodes nothing---it is circular. A prior
+internal audit of this programme (the ``$W5$'' audit) caught exactly such a fitted
+substrate$\to$eigenvalue map. The purpose of the present engine is to make the
+verification, rather than the proposal, the primary and reproducible step: a
+correspondence is a \emph{result} only if it survives an explicit gate that a fitted
+or overclaimed map cannot.
+
+\section{The engine}
+An \emph{expression} is a tuple $(\,\text{geometry},\ \text{claim},\
+\text{predict},\ \text{meta},\ \text{provenance}\,)$, where \texttt{predict} is a
+parameter-free procedure that produces the on-line zeros of the claimed $L$-function
+\emph{without taking the target as input}. The gate evaluates eight checks:
+\begin{enumerate}\itemsep1pt
+\item \textbf{no-hardcoding}: the target is not an input to \texttt{predict};
+\item \textbf{provenance}: no constant is fitted or tuned to the target;
+\item \textbf{fingerprint}: nearest-neighbour spacing (fraction of gaps $<0.3$),
+which separates a single $L$-function ($\approx 0$, GUE repulsion) from a
+superposition;
+\item \textbf{pointwise}: agreement of the first $k$ zeros;
+\item \textbf{degree} and \textbf{pole}: structural metadata match;
+\item \textbf{density}: zeros-per-unit-height (Weyl rate);
+\item \textbf{rigidity}: number variance $\Sigma^2(L)$.
+\end{enumerate}
+An expression is \textbf{verified} iff it passes all applicable checks; a
+certificate (a hashed record of every check and its evidence) is emitted either way.
+A proposer interface (``ARIA'') may suggest expressions; it never certifies---the
+gate does. The engine is deliberately a \emph{certifier}, not a search: most honest
+outputs are negatives.
+
+\section{The certified atlas}
+Running the engine across the programme's correspondences yields:
+\begin{result}\label{res:pos}
+The following are \textbf{verified} (all eight checks): the icosian/$V_{600}$
+substrate $\leftrightarrow \zetaK(s)\zetaK(s-1)$; the $24$-cell
+$\leftrightarrow \zeta(s)\zeta(s-1)$; the $\varphi$-shell $\leftrightarrow L(\chi_5)$.
+\end{result}
+\begin{result}[the $(O2)$ negative]\label{res:o2}
+The proposed correspondence ``substrate $\leftrightarrow \zeta$'' is \textbf{rejected}
+on five independent checks: fingerprint ($0.077$ vs.\ $0.0$), pointwise (first-zero
+displacement $\approx 22$), density, rigidity, and degree ($4$ vs.\ $1$). The
+substrate realizes $\zetaK=\zeta\cdot L(\chi_5)$, which \emph{contains} $\zeta$ as a
+factor but does not \emph{isolate} it.
+\end{result}
+\begin{result}[$(O2)$, independent second route]\label{res:o2b}
+The negative is confirmed by a route disjoint from the spacing discriminators: a
+direct \emph{count} of on-line zeros. Since $\zetaK=\zeta\cdot L(\chi_5)$, the
+substrate's $L$-function carries, on the critical line, the union of the zeros of
+$\zeta$ and of $L(\chi_5)$; its on-line zero density therefore strictly exceeds that
+of $\zeta$ (empirically a factor $\approx 3$--$4.7$ up to height $50$, tending to $2$
+asymptotically as each factor contributes $\sim\tfrac1{2\pi}\log\tfrac{T}{2\pi}$).
+A spectrum strictly denser than $\zeta$'s is not $\zeta$'s.
+\end{result}
+The two routes---spacing/fingerprint (Result~\ref{res:o2}) and counting/density
+(Result~\ref{res:o2b})---are independent and agree.
+
+Two controls confirm the gate's discrimination:
+\begin{result}[fitted-map control]
+A map declared as least-squares fitted to the zeros is rejected on \emph{provenance}
+alone, regardless of how well its output matches---reproducing the $W5$ catch
+mechanically.
+\end{result}
+\begin{result}[class-vs-individual control]
+A generic GUE operator (random Hermitian, no arithmetic) \emph{passes} fingerprint
+and rigidity (it has the right universality class) but \emph{fails} pointwise and
+density (it is not the right individual). Thus GUE-class membership is certified to
+be insufficient to be $\zeta$.
+\end{result}
+
+\begin{center}\small
+\begin{tabular}{llp{4.6cm}}
+\hline
+expression & verdict & failing checks (cert id)\\
+\hline
+$24$-cell $\to \zeta(s)\zeta(s-1)$ & \textsc{verified} & --- \quad(\texttt{2c9f2a5a})\\
+icosian $\to \zetaK$ & \textsc{verified} & --- \quad(\texttt{0ae81ff8})\\
+$\varphi$-shell $\to L(\chi_5)$ & \textsc{verified} & --- \quad(\texttt{080d0d3c})\\
+substrate $\to \zeta$ (bridge) & \textsc{rejected} & fingerprint, pointwise, density, rigidity, degree \quad(\texttt{f5c303f3})\\
+fitted map $\to \zeta$ & \textsc{rejected} & provenance \quad(\texttt{50a16461})\\
+generic GUE $\to \zeta$ & \textsc{rejected} & pointwise, density, rigidity \quad(\texttt{051fff64})\\
+\hline
+\end{tabular}
+\end{center}
+\noindent The certified atlas (hashes abbreviated). Each \textsc{rejected} entry
+fails for a reason intrinsic to the discriminator named, not by adjudication.
+
+\section{Reproducibility and scope}
+All certificates are content-hashed and emitted to a machine-readable atlas; the
+engine, gate, and scripts accompany this note. We claim only what the certificates
+state: which correspondences pass the gate and which do not. In particular,
+Result~\ref{res:o2} is a statement that a specific \emph{construction} fails to
+realize $\zeta$; it is \textbf{not} a statement about the zeros of $\zeta$, and
+implies nothing about the Riemann Hypothesis. No proof certificate is defined or
+issued.
+
+\end{document}

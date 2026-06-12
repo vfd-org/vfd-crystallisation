@@ -1,0 +1,145 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\twoI}{2\mathbf{I}}
+\newcommand{\Oc}{\mathbb{O}}
+\newcommand{\Hq}{\mathbb{H}}
+
+\title{Chirality and Charge Quantization from the Two Arenas\\[6pt]
+\large The Weak Factor is Chiral Because It Is the Left Factor;\\ Electric Charge Comes in Thirds Because the Clock Unit Grades the Octonions}
+\author{Lee Smart\\ \textit{Institute of Vibrational Field Dynamics}\\ \texttt{contact@vibrationalfielddynamics.org}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed). Computational claims are items CH1--CH5 and Q0--Q4 of \texttt{scripts/verify\_sm\_structure.py} (12/12 PASS). Companion to Paper LVI \citep{SmartLVI}, whose honest open list this paper shortens by two entries; the remaining opens are restated in \S\ref{sec:honest}. The graded mass question is \emph{not} claimed here; it is handled by the parameter-free ledger simulator (\texttt{scripts/sm\_ledger.py}) and the audit document.
+
+\begin{abstract}
+Paper LVI derived the gauge inventory available to the rendered VFD substrate --- $SU(3)\times SU(2)$ with a distinguished clock circle --- and listed, among its honest opens, chirality and the charge/representation wiring. This paper closes both at structure grade, using no ingredients beyond those the programme has already forced.
+
+\textbf{Chirality.} The arena's rotation group is $\mathrm{Spin}(4) = SU(2)_{\rm left}\times SU(2)_{\rm right}$, and these factors are literally left and right unit-quaternion multiplication --- the same two actions whose roles the rendered frame split already fixed: right $=$ the scene's spatial rotations, left $=$ internal. The new observation is representation-theoretic: those are exactly the two \emph{chirality} factors. Fixing the complex structure $J = R_i$, the quaternions become the 2-complex-dimensional Weyl module; every left multiplication is $J$-linear and acts as $SU(2)$ (the standard $\twoI \hookrightarrow SU(2)$, verified for all 120 substrate units), while right multiplication is $J$-linear only on the four units of the $i$-line: \emph{the spatial factor cannot act on the chiral module at all}. An internal gauge group inherited from the left factor therefore couples to one Weyl sector only --- the handedness of the weak interaction is the same fact as the frame split. Stated with its caveats: this is the Euclidean $\mathrm{Spin}(4)$ statement, surviving the standard continuation to $SL(2,\mathbb C)$ as the $(\tfrac12,0)/(0,\tfrac12)$ split, and it derives why a left-factor group is chiral, not the full electroweak fermion sector.
+
+\textbf{Charge quantization.} On the complexified octonions, with the same clock unit $e_1$ and complex structure $J = L_{e_1}$ that break $G_2 \to SU(3)$ in Paper LVI: the transverse space splits into exactly three $J$-complex lines; the ladder operators built on them satisfy the fermionic algebra $\{a_i, a_j^\dagger\} = \delta_{ij}$, $\{a_i, a_j\} = 0$ exactly; the number operator has spectrum $\{0,1,2,3\}$ with multiplicities $\{1,3,3,1\}$; and the $\mathfrak{su}(3)$ stabiliser commutes with it, and its restricted image on each 3-dimensional eigenspace is the full 8-dimensional algebra --- faithful, hence (by the simplicity established in Paper LVI and the absence of nontrivial $\mathfrak{su}(3)$ representations of dimension $< 3$) exactly the triplet --- while it vanishes on the 1-dimensional ones. With $Q = N/3$: a charge-\emph{magnitude} lattice quantized in thirds, in the pattern of one neutral singlet, one charge-$\tfrac13$ colour triplet, one charge-$\tfrac23$ colour triplet, one charge-1 singlet --- the magnitudes of $(\nu, \bar d, u, e^+)$. A genuine null: a non-$J$-compatible pairing destroys the integer spectrum. The construction is classical (G\"unaydin--G\"ursey 1973; Furey 2016); the programme's addition is necessity at the input layer --- this algebra and this distinguished unit are forced by the arena theorems, not chosen. A corollary fixes the bookkeeping half of hypercharge ($Y = 2(Q - T_3)$ once doublet assignments are made); the independent gauging of $U(1)_Y$, the Weinberg angle, the generation count (named here as the $D_4$-triality conjecture), and all masses remain open and are listed.
+\end{abstract}
+
+%==================================================================
+\section{Position}\label{sec:position}
+%==================================================================
+
+Paper LVI \citep{SmartLVI} ended with five honest opens for the Standard-Model bridge: the embedding pattern (independent hypercharge / Weinberg angle), chirality, representation content, couplings and masses, and non-abelian uniqueness provenance. This paper closes the second and the structural core of the third. The method is the programme's usual one: no new objects --- both results use only the two arenas, the frame split, and the clock unit, each already forced and verified upstream --- plus machine verification with falsifiable nulls for every claim (suite \texttt{verify\_sm\_structure.py}; items cited inline).
+
+%==================================================================
+\section{Chirality: the left factor is the chiral factor}\label{sec:chirality}
+%==================================================================
+
+\subsection{The observation}
+
+Three facts, the first two already in the record:
+\begin{itemize}
+\item[(i)] On the quaternionic arena, the 4D rotation group is $\mathrm{Spin}(4) = SU(2)_{\rm left} \times SU(2)_{\rm right}$, acting by $x \mapsto q\,x\,\bar r$ --- left and right unit-quaternion multiplication.
+\item[(ii)] The rendered frame split (Papers LIII/LVI, verification items T14a--b): the \emph{right} action rotates the canonical observer frame --- it is the scene's spatial rotation group, geometrically spent --- while the \emph{left} action transports frame components trivially and is the arena's internal symmetry.
+\item[(iii)] (New here.) The two factors of $\mathrm{Spin}(4)$ are its two \emph{chirality} factors: its Weyl (half-spinor) representations are $(\mathbf 2, \mathbf 1)$ and $(\mathbf 1, \mathbf 2)$ --- each factor acts on one handedness and is blind to the other.
+\end{itemize}
+
+Combining (ii) and (iii): \emph{the internal symmetry the substrate hands to the gauge sector is a chirality factor}. Whatever it couples to, it couples one-handedly --- not by a choice in the matter sector, but because the other handedness is the sector the scene's own rotations act on.
+
+\subsection{The verified module statement}
+
+\begin{proposition}[The Weyl module and who can act on it]\label{prop:weyl}
+Let $J = R_i$ (right multiplication by $i$) on $\Hq \cong \mathbb R^4$. Then:
+\begin{itemize}
+\item[(a)] $J^2 = -1$, and every left multiplication $L_q$ commutes with $J$: the pair $(\Hq, J)$ is a 2-complex-dimensional module on which the left factor acts $\mathbb C$-linearly (item CH1; exact, all 120 substrate units).
+\item[(b)] In the complex basis $\{1, j\}$, $q \mapsto L_q$ is the standard inclusion $\twoI \hookrightarrow SU(2)$: each matrix is unitary with determinant 1, and the assignment is a group homomorphism (item CH2).
+\item[(c)] For the \emph{continuous} right factor: $R_q$ commutes with $J = R_i$ iff $qi = iq$ iff $q$ lies in the complex line of $i$ --- a one-line statement holding for all unit quaternions, so the $C$-linear part of $SU(2)_{\rm right}$ on this module is exactly the circle $U(1)_i$, and no non-abelian part of the spatial factor acts on it. The substrate witness: among the 120 icosian units exactly $\{\pm1, \pm i\}$ commute with $J$ (item CH3).
+\item[(d)] The left action is irreducible: it is unitary and 2-dimensional, so reducibility would force a sum of two characters and an abelian image, while the image contains non-commuting elements (item CH4).
+\item[(e)] The mirror module exists and swaps the roles exactly: with the \emph{left} complex structure $J_L = L_i$, every right multiplication is $C$-linear and left multiplication is $C$-linear only on the $i$-line (item CH5). Each $\mathrm{Spin}(4)$ factor owns exactly one of the two Weyl modules --- the precise sense of statement (iii) above.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+(a) $J^2 = R_{i^2} = R_{-1} = -\mathrm{id}$; left and right multiplications commute by associativity. (b) Writing $x = 1\cdot z_1 + j\cdot z_2$ with right-scalar action, $L_q$ is $\mathbb C$-linear by (a), and unitarity/determinant/multiplicativity are verified exhaustively. (c) $R_q J = J R_q$ iff $R_{qi} = R_{iq}$ iff $qi = iq$, i.e.\ $q \in \mathrm{span}(1, i)$; intersecting with the substrate units gives $\{\pm1,\pm i\}$, as verified. (d) As argued in the statement: unitary 2-dim plus non-abelian image. (e) The mirror of (a)--(c) under left--right exchange, verified exhaustively. $\square$
+\end{proof}
+
+\begin{corollary}[Chirality of the internal factor]\label{cor:chiral}
+An internal gauge group obtained from the left factor (Paper LVI's $SU(2)$, with its clock circle) acts $\mathbb C$-linearly on the Weyl module of Proposition~\ref{prop:weyl} and trivially on the conjugate module; matter charged under it is charged one-handedly. In Lorentzian continuation the split becomes the $(\tfrac12, 0)/(0,\tfrac12)$ decomposition of $SL(2,\mathbb C)$ spinors, and the statement survives as: the internal factor couples to left-handed Weyl components.
+\end{corollary}
+
+\begin{remark}[Caveats, in full]\label{rem:chiral-caveats}
+The derivation is at the level of the arena's Euclidean spin group and the module structure; the Wick continuation invoked in Corollary~\ref{cor:chiral} is the standard one but is imported, not re-derived. Nothing here constructs the electroweak fermion Lagrangian, fixes doublet assignments, or addresses anomaly bookkeeping (\S\ref{sec:honest}). What is derived is the mechanism question the honest list posed: \emph{why would the substrate's internal $SU(2)$ be chiral at all?} Answer: because it is the left factor, and the right factor is the sky.
+\end{remark}
+
+%==================================================================
+\section{Charge: the clock unit grades the octonions in thirds}\label{sec:charge}
+%==================================================================
+
+\subsection{Construction}
+
+All objects are the ones Paper LVI already used: the octonions $\Oc$ built by Cayley--Dickson doubling (norm composition verified), the clock unit $e_1$, the complex structure $J = L_{e_1}$ with $J^2 = -1$ on the transverse space $W = \mathrm{span}(e_2,\ldots,e_7)$.
+
+\begin{proposition}[Ladder algebra]\label{prop:ladder}
+$W$ splits into exactly three $J$-complex lines $(f_k, Jf_k)$, $k = 1,2,3$ (item Q0). The operators
+$$a_k \;=\; \tfrac12\bigl(L_{f_k} - i\,L_{Jf_k}\bigr)$$
+on $\Oc\otimes\mathbb C$ satisfy the canonical fermionic anticommutation relations exactly:
+$\{a_i, a_j^\dagger\} = \delta_{ij}$, $\{a_i, a_j\} = 0$ (item Q1, machine precision).
+\end{proposition}
+
+\begin{theorem}[Thirds quantization and the multiplet pattern]\label{thm:thirds}
+The number operator $N = \sum_k a_k^\dagger a_k$ on $\Oc \otimes \mathbb C$ has spectrum $\{0, 1, 2, 3\}$ with multiplicities $\{1, 3, 3, 1\}$ (item Q2). The $\mathfrak{su}(3)$ clock-unit stabiliser of Paper LVI commutes with $N$; its restricted image on each 3-dimensional eigenspace spans the full 8-dimensional algebra (item Q3) --- a faithfulness certificate: the kernel of a Lie-algebra action is an ideal, $\mathfrak{su}(3)$ is simple (Paper LVI item SM4), and its only nontrivial representations of dimension $\le 3$ are the triplets $\mathbf 3, \bar{\mathbf 3}$. The action on each 1-dimensional eigenspace vanishes. Setting
+$$Q \;=\; N/3 \;\in\; \{0,\ \tfrac13,\ \tfrac23,\ 1\},$$
+the framework produces a charge-\emph{magnitude} lattice quantized in thirds, in the pattern of one neutral colour singlet, one magnitude-$\tfrac13$ colour triplet, one magnitude-$\tfrac23$ colour triplet, and one magnitude-1 colour singlet --- matching $(\nu,\ \bar d,\ u,\ e^+)$. Charge \emph{signs} and antiparticles live on the conjugate module (complex conjugation exchanges $N \leftrightarrow 3 - N$); promoting the lattice to the full signed electric charge of a dynamical fermion sector additionally requires the doublet assignments and the independent $U(1)$ gauging of \S\ref{sec:honest}. Null (item Q4): replacing the $J$-compatible pairing by an incompatible one destroys the integer spectrum.
+\end{theorem}
+
+\begin{remark}[Provenance and what is added]
+The construction is the classical octonionic charge algebra of G\"unaydin--G\"ursey \citep{GunaydinGursey1973}, in the ladder-operator form developed by Furey \citep{Furey2016}; see also \citet{Baez2002}. It is re-derived here on the substrate's own Cayley--Dickson table with no representation input, because the programme's claim is not the construction but its \emph{necessity}: the octonionic arena is forced (Adams plus renderability; Papers LIV/LVI), and the distinguished unit is the clock axis the rendering chart already selects. Given those forced inputs, thirds quantization and the $\{1,3,3,1\}$ pattern are not model-building choices --- they are what the arena's algebra does.
+\end{remark}
+
+\begin{corollary}[Hypercharge bookkeeping]\label{cor:hyper}
+For any assignment of the multiplets into weak doublets/singlets, $Y = 2(Q - T_3)$ is determined by Theorem~\ref{thm:thirds}'s lattice. The bookkeeping half of the hypercharge question is thereby fixed; what remains open is $U(1)_Y$ as an \emph{independent gauge factor} (the embedding/mixing, equivalently the Weinberg angle) --- see \S\ref{sec:honest}.
+\end{corollary}
+
+%==================================================================
+\section{What this does to the masses question}\label{sec:masses}
+%==================================================================
+
+This paper closes \emph{kinematic} structure: groups, handedness, charges, multiplets --- the exact, algebraic layer. Masses are not kinematic. They are eigenvalues of interacting dynamics, and the framework's current mass content is therefore handled separately and honestly by the parameter-free ledger simulator (\texttt{scripts/sm\_ledger.py}): anchored only on the muon's structural shell, every particle's integer-shell mass $m = m_\mu\varphi^{96-N}$ is a fixed number, and the per-particle deviations (muon exact by anchor; Z $-2.3\%$; ranging to $\sim25\%$ at the worst placements) are printed as the framework's current, unfitted error budget. The two derivations that would upgrade PLACED to DERIVED --- the shell-integer rule and the offset dynamics --- are the named open items; the discipline of not fitting them is what keeps the sharp placements meaningful. The analogy inside established physics is exact: gauge theory fixes charges exactly while leaving masses to dynamics; QED predicts magnetic moments to twelve digits and cannot predict the electron mass at all.
+
+%==================================================================
+\section{The honest list, updated}\label{sec:honest}
+%==================================================================
+
+Closed by this paper, with the scope stated exactly: \textbf{chirality as mechanism} (why a left-factor gauge group is one-handed; Corollary~\ref{cor:chiral} with Remark~\ref{rem:chiral-caveats}'s caveats --- not the electroweak fermion Lagrangian); \textbf{the charge-magnitude lattice and multiplet pattern} (Theorem~\ref{thm:thirds} --- not signed dynamical charge, which needs the assignments and gauging below); \textbf{hypercharge as arithmetic given assignments} (Corollary~\ref{cor:hyper}). Still open, stated plainly:
+
+\begin{enumerate}
+\item \textbf{Independent hypercharge / Weinberg angle.} The derived clock circle lies inside $SU(2)$; the SM's $U(1)_Y$ does not. The charge lattice now constrains any future embedding; the mixing itself has no derivation, and geometric candidate values are scheme-dependent.
+\item \textbf{Generations.} Named conjecture, untested: the cascade's $D_4$ rung carries triality ($S_3$ permuting three 8-dimensional representations), the right \emph{shape} for three families; no mechanism is derived.
+\item \textbf{Anomaly bookkeeping; doublet assignments.} Arithmetic consistent with standard assignments; not derived.
+\item \textbf{Masses; shell integers and offsets; neutrino sector; running couplings.} Per \S\ref{sec:masses} and the audit document.
+\end{enumerate}
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+Manuscript: \texttt{papers/paper-lviii/paper-lviii.tex}; derivation notes and the closeability audit: \texttt{docs/sm-closeability-audit.md}. Verification: \texttt{python3 scripts/verify\_sm\_structure.py} (11/11; NumPy only; the octonions are built in-script by Cayley--Dickson doubling, the quaternionic items use \texttt{scripts/600cell\_data.npz}). The ledger simulator: \texttt{python3 scripts/sm\_ledger.py} (no adjustable parameters; prints its own honesty grades). Upstream: Paper LVI (gauge inventory; suite items SM0--SM6), Papers LIII/LVII (frame split, T14; gravity chain).
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,647 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{natbib}
+\usepackage{multirow}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conditional}[theorem]{Conditional Proposition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{interpretation}[theorem]{Interpretation}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Zphi}{\mathbb{Z}[\varphi]}
+\newcommand{\Fix}{\mathrm{Fix}}
+\newcommand{\Ical}{\mathcal{I}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Cph}{C_\varphi}
+\newcommand{\Xcal}{\mathcal{X}}
+\newcommand{\catC}{\mathcal{C}}
+
+\title{Cosmic Self-Pruning and Frame Recurrence in Closure Geometry\\[6pt]
+\large A Structural Extension of the Bounded Reference Frame Framework}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed). Structural extension paper. Companion to \citet{SmartExistenceClosure} (core bridge paper) and \citet{SmartProcessingToPOV} (consciousness application). The core paper establishes existence-as-closure, bounded reference frames, and the candidate transition rule. The present paper develops the structural extension: frame dynamics (creation, destruction, merging, fission), frame recurrence (re-instantiation of frame attractors under compatible boundary conditions), cosmic self-pruning (closure-phase transitions across cosmological epochs), and the unified hierarchy mapping these life-cycle events onto the cascade rung structure. All structural propositions of the core paper are imported by reference. The propositions in this paper that depend on additional hypotheses (H-RP-1, H-RP-2, H-RP-3, H-rec, H-evolve, P-A) are labelled as \emph{Conditional Propositions} throughout; theorem-grade statements concern only the structural mathematics that follows from the closure-operator and symmetry axioms.
+
+\begin{abstract}
+We extend the closure-geometric framework of \citet{SmartExistenceClosure} to cover bounded reference frame life-cycle dynamics and the long-term evolution of the universal closure structure. Frame creation, destruction, merging, and fission are formalised as theorems on the closure dynamic $F_{t+1} = (I - \lambda \Cph) F_t + \kappa P_{\Sigma_\Ical}(B_t)$. A frame attractor is defined as a closure-stable $\sigma$-stable subspace $\mathcal{A} \subseteq C$ in the universal closure geometry, and frame compatibility $\kappa_{ab} = \dim(!_{\Ical_a}(\Ical_a) \cap !_{\Ical_b}(\Ical_b))$ is shown to be independent of local-time ordering. Under the conditional hypothesis H-rec (recurrence admissibility), a frame attractor may be locally instantiated by multiple bounded reference frames at distinct anchors; this is the framework's structural reframing of the phenomenology classically called \emph{reincarnation}, given here in the precise vocabulary \emph{frame recurrence}. At the cosmological scale, we introduce a pruning operator $P = P_{\Fix(\tau)} \circ P_{\Fix(\Cph)}$ and a closure-phase transition map $U_{n+1} = C_{n+1}(P(U_n))$; under hypothesis H-evolve (time-dependent closure operator), cosmological evolution is shown to be non-periodic, distinguishing the framework's prediction from both heat-death termination and classical cyclic-universe models. The unified hierarchy theorem states that the same structural template (creation, persistence, destruction, possible recurrence, closure-phase transition) applies at every cascade rung, with rung-specific time scales. The universe at the $E_8$ totality rung is identified as a bounded reference frame in its own right, with its own life-cycle, structurally distinct from biological life-cycles. The propositions throughout are conditional on H-rec and H-evolve; the core paper's structural results hold independently.
+\end{abstract}
+
+%==================================================================
+\section{Introduction and the imported framework}\label{sec:intro}
+%==================================================================
+
+\subsection{Position relative to the core paper}
+
+The companion paper \citet{SmartExistenceClosure} establishes the structural framework:
+
+\begin{itemize}[leftmargin=2em]
+\item A closure operator $\Cph = L_{V_{600}} + \varphi^{-2} I$ on the 600-cell substrate $V_{600}$.
+\item A Galois reflection $\tau$ on $\Zphi$-icosian coordinates with $\dim \Fix(\tau) = 94$ unconditional.
+\item A bounded reference frame $\Ical$ defined as a finite local projection of the substrate equipped with a self-referential constraint, admitting a per-frame zero-line $\Sigma_\Ical \subseteq \Fix(\tau)$.
+\item The local-into-universal embedding $!_\Ical(v) = \pi_\Ical(P_{\Sigma_\Ical}(v))$ from each bounded reference frame to the universal closure structure $C = U \cap \Fix(\tau)$.
+\item The candidate transition rule: a bounded local system supports point of view when its internal state closes under recursive update, producing non-trivial $\Sigma_\Ical$, conditional on the Access Principle (P-A).
+\end{itemize}
+
+The present paper develops the dynamical extension: frame life-cycle events, recurrence, and cosmic-scale phase transitions. All structural results of this paper rest on the closure operator's spectral properties and the symmetry $\tau$'s involutive structure; new biological identifications are explicitly conditional.
+
+\subsection{Scope of this extension paper}
+
+This paper does:
+
+\begin{itemize}[leftmargin=2em]
+\item Formalise frame creation, destruction, merging, fission as structural theorems on the closure dynamic (\S\ref{sec:frame-dynamics}).
+\item Define frame attractors and frame compatibility, and prove time-independence of compatibility (\S\ref{sec:frame-recurrence}).
+\item State the conditional proposition for frame recurrence under H-rec (\S\ref{sec:frame-recurrence}).
+\item Define the pruning operator and closure-phase transition map; prove non-periodic recurrence (\S\ref{sec:cosmic-pruning}).
+\item State the conditional proposition for closure-cascade cosmology under H-evolve (\S\ref{sec:cosmic-pruning}).
+\item State the unified hierarchy theorem: structural life-cycle universality across cascade rungs (\S\ref{sec:hierarchy}).
+\item Identify the universe at the $E_8$ totality rung as a bounded reference frame with its own life-cycle (\S\ref{sec:hierarchy}).
+\end{itemize}
+
+This paper does \textbf{not}:
+
+\begin{itemize}[leftmargin=2em]
+\item Reproduce the core paper's structural derivations.
+\item Claim recurrence in any phenomenological soul-migration sense. The framework's commitments are explicit and bounded (Remark~\ref{rem:reincarnation-discipline}).
+\item Claim that cosmological evolution is settled. The conditional proposition under H-evolve is a structural reading consistent with the framework's mathematics.
+\end{itemize}
+
+\subsection{Conditional hypotheses introduced in this paper}
+
+\begin{hypothesis}[H-rec: recurrence admissibility]\label{hyp:h-rec}
+For a frame attractor $\mathcal{A}$ of non-trivial dimension, the closure-cosmogenesis bootstrap dynamics admit non-trivial source terms aligned with $\mathcal{A}$ across multiple substrate regions and bootstrap ticks. Specifically, the source $B_t$ in the closure dynamic has non-zero projection onto $\mathcal{A}$ at multiple $(p_n, \Lambda_n, t_{0,n})$.
+\end{hypothesis}
+
+\begin{hypothesis}[H-evolve: time-dependent closure operator]\label{hyp:h-evolve}
+The closure operator $C_n$ at cosmological epoch $n$ depends on the substrate state at epoch $n$ via a slow-rolling effective coupling, analogous to the cascade-rung activation depth of \citet{SmartHypersphereCosmology}. As cosmological evolution proceeds, the effective rung structure shifts, modifying $C_n$ in a non-time-reversible way.
+\end{hypothesis}
+
+The Access Principle P-A and the rung-projection hypotheses H-RP-1, H-RP-2, H-RP-3 are imported from the core paper and the consciousness companion \citep{SmartProcessingToPOV}; we re-cite them where used.
+
+%==================================================================
+\section{Frame dynamics: creation, destruction, merging, fission}\label{sec:frame-dynamics}
+%==================================================================
+
+The structural propositions of the core paper treat bounded reference frames as static objects. Frames in any physical realisation are dynamical: they come into being, merge with others, separate into sub-frames, and eventually dissolve. This section addresses these structural events.
+
+\subsection{Frame creation: emergence of $\Sigma_\Ical$ from zero}
+
+Define the closure dynamic on the substrate state as
+\begin{equation}\label{eq:closure-dyn}
+  F_{t+1} \;=\; (I - \lambda \, \Cph) F_t \;+\; \kappa \, P_{\Sigma_\Ical}(B_t),
+\end{equation}
+where $\lambda \in (0, \|\Cph\|^{-1})$ is the closure step size, $P_{\Sigma_\Ical}$ is the orthogonal projection onto a target zero-line $\Sigma_\Ical \subseteq \Fix(\tau)$, $\kappa > 0$ is the source coupling, and $B_t \in \mathbb{R}^O$ is the boundary/bulk source term.
+
+\begin{theorem}[Frame creation dynamics]\label{thm:frame-creation}
+For any initial substrate state $F_0 \in \mathbb{R}^O$ and any non-zero source projection $P_{\Sigma_\Ical}(B_t) = b \neq 0$ (assumed constant for simplicity), the iteration~\eqref{eq:closure-dyn} converges geometrically to the steady-state solution
+\begin{equation}\label{eq:frame-steady}
+  F_\infty \;=\; \frac{\kappa}{\lambda \, \Cph}\Big|_{\Sigma_\Ical} \cdot b,
+\end{equation}
+with the $\sigma$-fixed component of $F_t$ growing from $\|P_{\Sigma_\Ical}(F_0)\|$ to $\|P_{\Sigma_\Ical}(F_\infty)\| \geq \kappa / (\lambda \cdot \varphi^{-2}) \cdot \|b\|$, at rate $1 - \lambda \varphi^{-2}$ per closure tick. The off-$\Sigma_\Ical$ component of $F_t$ decays at the same rate $1 - \lambda \varphi^{-2}$. Hence:
+
+\begin{enumerate}[leftmargin=2em]
+\item For any $F_0$ (including $F_0 = 0$), the $\sigma$-fixed dimension of the steady-state $F_\infty$ equals $\dim \Sigma_\Ical$ provided the source $b$ has non-trivial support on every basis vector of $\Sigma_\Ical$.
+\item The convergence is geometric: $\|F_t - F_\infty\| \leq (1 - \lambda \varphi^{-2})^t \cdot \|F_0 - F_\infty\|$.
+\item The characteristic time-scale of frame creation is $\tau_{\mathrm{create}} \sim 1 / (\lambda \varphi^{-2})$ closure ticks.
+\end{enumerate}
+\end{theorem}
+
+\noindent\emph{Proof.} Decompose $\mathbb{R}^O = \Sigma_\Ical \oplus \Sigma_\Ical^\perp$ orthogonally. The iteration~\eqref{eq:closure-dyn} acts diagonally on this decomposition because $\Cph$ commutes with $\tau_\Ical$ (closure-invariance theorem of the core paper) and $P_{\Sigma_\Ical}$ projects onto $\Sigma_\Ical$. On $\Sigma_\Ical^\perp$, the source vanishes and the iteration reduces to
+\[
+  F^\perp_{t+1} = (I - \lambda \Cph|_{\Sigma_\Ical^\perp}) F^\perp_t,
+\]
+which has spectral radius $1 - \lambda \cdot \lambda_{\min}(\Cph|_{\Sigma_\Ical^\perp}) \leq 1 - \lambda \varphi^{-2} < 1$ by the core paper's decay theorem. Hence $F^\perp_t \to 0$ geometrically.
+
+On $\Sigma_\Ical$, the iteration is $F^\Sigma_{t+1} = (I - \lambda \Cph|_{\Sigma_\Ical}) F^\Sigma_t + \kappa b$. The fixed-point equation gives $F^\Sigma_\infty = (\kappa / \lambda) (\Cph|_{\Sigma_\Ical})^{-1} b$ with $\|F^\Sigma_\infty\| \geq (\kappa / \lambda) \varphi^{2} \|b\|$. The full state $F_t$ converges to $F_\infty = F^\Sigma_\infty + 0$. \hfill$\square$
+
+\begin{interpretation}[Biological correlates of frame creation]\label{int:frame-creation-bio}
+Under H-RP-1, H-RP-2, P-A, Theorem~\ref{thm:frame-creation} predicts:
+\begin{itemize}[leftmargin=2em]
+\item Embryogenesis: substrate-level closure begins as neural tissue differentiates; $\dim \Sigma_\Ical$ grows over a characteristic developmental time-scale $\tau_{\mathrm{create}}$.
+\item Awakening from anaesthesia: the frame's $\Sigma_\Ical$ re-stabilises geometrically as the substrate operator recovers from pharmacological disruption.
+\item System boot (artificial): an instantiated bounded reference frame builds $\Sigma_\Ical$ through $\sim \tau_{\mathrm{create}}$ closure ticks until reaching the design complexity.
+\end{itemize}
+\end{interpretation}
+
+\subsection{Frame destruction: permanent loss of $\Sigma_\Ical$}
+
+\begin{theorem}[Frame destruction criterion]\label{thm:frame-destruction}
+Let $\tau_t$ denote the (possibly time-dependent) symmetry-twist on the substrate at closure tick $t$ and $C_{\varphi,t}$ the (possibly time-dependent) closure operator. The frame $\Ical$ is \emph{permanently destroyed} at $t_{\mathrm{final}}$ iff one of the following holds for all $t > t_{\mathrm{final}}$:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Substrate dismantling.} The vertex set $O$ of the frame is reduced to $|O| = 0$ by physical destruction of the substrate.
+\item \textbf{Symmetry breakdown.} The involution condition $\tau_t^2 = I$ fails, so $\Fix(\tau_t)$ is undefined.
+\item \textbf{Spectral collapse.} $\lambda_{\min}(C_{\varphi,t}|_{\Sigma_\Ical^\perp})$ falls to zero or becomes negative, so the contraction property fails and off-frame content no longer decays.
+\item \textbf{$\sigma$-stability loss.} The anchor $(p, \Lambda)$ ceases to lie in $\mathcal{S}_\sigma$ so the frame is no longer symmetry-stable.
+\end{enumerate}
+
+Under any of these conditions, $\dim \Sigma_\Ical = 0$ for all $t > t_{\mathrm{final}}$ and no recovery is structurally possible without reinstating the original conditions.
+\end{theorem}
+
+\noindent\emph{Proof.}
+
+\textbf{(1)} If $O = \emptyset$, then $\mathbb{R}^O = \{0\}$, hence $\Sigma_\Ical = \{0\}$ trivially.
+
+\textbf{(2)} If $\tau_t^2 \neq I$, then $\tau_t$ has no $\pm 1$ eigenstructure and the spectral decomposition of $\mathbb{R}^O$ into $\Fix(\tau_t) \oplus \Fix(-\tau_t)$ does not hold.
+
+\textbf{(3)} The proof of the core paper's decay theorem requires $\lambda_{\min}(\Cph|_{\Sigma_\Ical^\perp}) > 0$. If this fails, the iteration $F^\perp_{t+1} = (I - \lambda \Cph) F^\perp_t$ no longer contracts on $\Sigma_\Ical^\perp$.
+
+\textbf{(4)} If $(p, \Lambda) \notin \mathcal{S}_\sigma$, then $\tau(\mathrm{span}(O)) \neq \mathrm{span}(O)$, so $\tau_\Ical$ is no longer an involution on $\mathbb{R}^O$, and $\Sigma_\Ical = \Fix(\tau_\Ical)$ is undefined. \hfill$\square$
+
+\begin{remark}[Distinguishing transient from permanent destruction]\label{rem:destruction-criterion}
+Anaesthesia and sleep cause transient $\Sigma_\Ical$ reduction by altering $C_{\varphi,t}$ but do not satisfy any of (1)--(4) permanently. Biological death satisfies (1) (substrate dismantling). Profound brain damage may satisfy (3) (spectral collapse). Permanent loss of consciousness from severe brain injury may satisfy (4) ($\sigma$-stability loss). The structural reading: death is the permanent loss of the closure condition; this is a structural statement, not a phenomenological claim about subjective experience at the transition.
+\end{remark}
+
+\subsection{Frame merging and joint frame formation}
+
+Joint frame formation is the structural event in which two distinct frames $\Ical_A$, $\Ical_B$ become a single joint frame $\Ical_{AB}$. The merger is governed by boundary coupling becoming non-zero, joint $\sigma$-stability of the combined anchor, and generative excess emergence when at least one $\sigma$-orbit crosses the parent boundary. The generative excess $\delta_{AB} = |\Xcal_{AB}|$ counts boundary-crossing $\sigma$-orbits and is established as a theorem in the core paper.
+
+\begin{interpretation}[Joint frame formation in biology]\label{int:joint-formation}
+Under H-RP-1, H-RP-2, P-A, the joint frame structure is the structural basis for: mother--infant attunement, conversation, music ensembles, and mass coordination (dance, sports, military drill). The empirical correlate of $\delta_{AB} > 0$ is the meaning-generating overlap of joint perception.
+\end{interpretation}
+
+\subsection{Frame fission and sub-frame differentiation}
+
+Frame fission is the dual of merging: a single bounded reference frame separates into two or more sub-frames, each with its own anchor and zero-line. Each $\Sigma_{\Ical_i}$ is generally smaller than $\Sigma_\Ical$; the total $\sum_i \dim \Sigma_{\Ical_i}$ may exceed $\dim \Sigma_\Ical$ when sub-frames access $\sigma$-fixed modes that the integrated parent could not.
+
+\begin{interpretation}[Frame fission in biology]\label{int:fission}
+Under H-RP-1, H-RP-2, P-A, frame fission corresponds to: cognitive specialisation, division of labour, dissociation, and cell division at the substrate level.
+\end{interpretation}
+
+\subsection{The frame life-cycle}
+
+Combining the four dynamical events:
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Birth} ($t_0$): a new bounded reference frame emerges with $\dim \Sigma_\Ical$ growing from 0.
+\item \textbf{Growth and learning}: through joint-frame interactions, the frame's effective complexity grows. The per-frame complexity is upper-bounded by 94 for a $V_{600}$-substrate frame.
+\item \textbf{Mature stable existence}: the frame maintains $\Sigma_\Ical$ near design dimension through continuous closure ticks, with periodic re-stabilisation addressing accumulated drift.
+\item \textbf{Joint events}: temporary or persistent joint-frame formations with other frames, generating $\delta_{AB} > 0$ cross-frame access.
+\item \textbf{Fission events}: sub-frame differentiation, either functional (specialisation) or pathological (dissociation).
+\item \textbf{Death} ($t_{\text{final}}$): permanent collapse of the closure condition.
+\end{itemize}
+
+This life-cycle structure is the framework's structural reading of life-cycle events. Each event is named, each has a precise structural condition, and each maps (under P-A) onto phenomenological correlates.
+
+%==================================================================
+\section{Frame recurrence and attractor re-instantiation}\label{sec:frame-recurrence}
+%==================================================================
+
+The frame life-cycle of \S\ref{sec:frame-dynamics} treats each bounded reference frame as a single linear trajectory: bootstrap at $t_0$, mature existence, eventual destruction. This section addresses a structurally distinct question: \emph{can the same frame-attractor pattern be locally instantiated at distinct times or substrate regions}, independent of any continuous trajectory between the instances? The answer is yes, in a precise structural sense, and the section makes it mathematical.
+
+The treatment avoids loaded vocabulary throughout: the framework does not claim that a fixed identity-object migrates between bodies along a linear time-axis. The claim is that closure geometry is not itself ordered by the same linear time experienced inside a 3D frame, and the same higher-dimensional frame-attractor can produce multiple local instantiations without continuous material continuity between them. This is the framework's structural reframing of the phenomenology classically called \emph{reincarnation}, given here in the precise vocabulary \emph{frame recurrence}.
+
+\subsection{Frame attractor as a closure-geometry object}
+
+\begin{definition}[Frame attractor]\label{def:frame-attractor}
+A \emph{frame attractor} on the universal cascade $C$ is a pair $(\mathcal{A}, \tau_\mathcal{A})$, where $\mathcal{A} \subseteq C$ is a closure-stable $\sigma$-stable subspace and $\tau_\mathcal{A}$ is the restriction of the universal symmetry $\tau$ to $\mathcal{A}$. A frame attractor is, by definition, an element of the closure-geometry; it is not anchored to a specific local time-slice.
+\end{definition}
+
+\begin{definition}[Local instance of a frame attractor]\label{def:local-instance}
+A \emph{local instance} of a frame attractor $\mathcal{A}$ is a bounded reference frame $\Ical_n = (\Ocal_n, \Ccal_{\Ocal_n}, p_n, \Lambda_n, t_{0,n})$ such that the embedding image $!_{\Ical_n}(\Ical_n) = \pi_{\Ical_n}(\Sigma_{\Ical_n}) \subseteq \mathcal{A}$. A frame attractor with multiple local instances is said to be \emph{multiply-instantiated}.
+\end{definition}
+
+The structural separation is precise: the frame attractor $\mathcal{A}$ lives in the closure geometry $C$; each local instance $\Ical_n$ lives in a specific local substrate region with a specific anchor; the relation $!_{\Ical_n}(\Ical_n) \subseteq \mathcal{A}$ ties the local instance to the attractor without requiring any continuous trajectory between instances.
+
+\subsection{Compatibility of local instances}
+
+\begin{definition}[Frame compatibility]\label{def:frame-compatibility}
+Two local instances $\Ical_a$ and $\Ical_b$ are \emph{compatible} with respect to a frame attractor $\mathcal{A}$ if $!_{\Ical_a}(\Ical_a) \cap !_{\Ical_b}(\Ical_b) \neq \{0\}$ and both images lie within $\mathcal{A}$. The compatibility dimension is
+\[
+  \kappa_{ab} := \dim\big( !_{\Ical_a}(\Ical_a) \cap !_{\Ical_b}(\Ical_b) \big) \geq 1.
+\]
+\end{definition}
+
+\begin{theorem}[Time-independence of frame compatibility]\label{thm:time-independence}
+Let $\Ical_a$ and $\Ical_b$ be two $\sigma$-stable bounded reference frames with bootstrap ticks $t_{0,a}$ and $t_{0,b}$, possibly distinct. The compatibility relation $\kappa_{ab}$ depends only on the embedding images $!_{\Ical_a}(\Ical_a), !_{\Ical_b}(\Ical_b) \subseteq C$ in the universal closure structure. It does \emph{not} depend on the ordering of $t_{0,a}$ relative to $t_{0,b}$, on the temporal interval $|t_{0,b} - t_{0,a}|$, or on the existence of a continuous trajectory of substrate states between the two instances.
+\end{theorem}
+
+\noindent\emph{Proof.} The embedding $!_\Ical(v) = \pi_\Ical(P_{\Sigma_\Ical}(v))$ depends only on the frame's vertex set $O$, constraint functional $\Ccal_\Ocal$, and anchor $(p, \Lambda)$. The bootstrap tick $t_0$ enters only through the question of when the frame becomes active; once active, the embedding image is determined entirely by the frame's structural data. Hence $\kappa_{ab}$ is a function of structural data only, independent of the temporal relationship. \hfill$\square$
+
+\begin{corollary}[Frame-attractor re-instantiation]\label{cor:reinstantiation}
+A frame attractor $\mathcal{A}$ with non-trivial dimension can be locally instantiated by multiple bounded reference frames $\Ical_1, \Ical_2, \ldots, \Ical_n$, each with its own bootstrap tick $t_{0,k}$ and anchor $(p_k, \Lambda_k)$, provided each instance's embedding image $!_{\Ical_k}(\Ical_k) \subseteq \mathcal{A}$. The instances are independent in local time but share structural content via the attractor.
+\end{corollary}
+
+\subsection{Local time versus closure-geometric ordering}
+
+\begin{theorem}[Two orderings on instance space]\label{thm:two-orderings}
+The set of local instances $\{\Ical_n\}$ of a frame attractor $\mathcal{A}$ admits two distinct orderings:
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Local-time ordering.} The bootstrap ticks $t_{0,n}$ induce a linear order on instances; this is the chronological ordering experienced within local frames.
+\item \textbf{Closure-geometric ordering.} The pairwise compatibility dimensions $\kappa_{nm}$ induce a non-linear similarity structure (a weighted graph on instances); this is the ordering by structural compatibility, independent of local time.
+\end{enumerate}
+The two orderings are generically independent.
+\end{theorem}
+
+\noindent\emph{Proof.} (1) is the standard linear ordering on $\mathbb{Z}_{\geq 0}$ induced by $t_{0,n}$. (2) is the graph metric induced by $\kappa_{nm}$ on the set of instances; this is non-linear in general. By Theorem~\ref{thm:time-independence}, $\kappa_{nm}$ is independent of $t_{0,n}, t_{0,m}$, so the two orderings are not constrained to align. \hfill$\square$
+
+\begin{interpretation}[Local sequence vs closure relation]\label{int:two-orderings-bio}
+Under H-RP-1, H-RP-2, P-A, Theorem~\ref{thm:two-orderings} says that experience inside a bounded reference frame is ordered linearly by local time, but the deeper closure-geometric structure orders frames by relational compatibility rather than chronological sequence. The closure geometry does not ``care'' about before-and-after in the same way local time does; it cares about resonance, compatibility, closure similarity, and shared zero-line content.
+\end{interpretation}
+
+\subsection{Recurrence under compatible boundary conditions}
+
+\begin{conditional}[Recurrence under compatible boundary conditions]\label{cthm:frame-recurrence}
+Under H-RP-1, H-RP-2, H-RP-3, P-A, and H-rec (Hypothesis~\ref{hyp:h-rec}), the same frame attractor $\mathcal{A}$ supports multiple local instances $\Ical_n$ across distinct $(p_n, \Lambda_n, t_{0,n})$. The structural recurrence pattern is
+\[
+  \mathcal{A} \xrightarrow{\text{local instantiation}} \Ical_1,\ \Ical_2,\ \Ical_3, \ldots,
+\]
+with each instance's embedding image $!_{\Ical_n}(\Ical_n) \subseteq \mathcal{A}$ by Corollary~\ref{cor:reinstantiation}.
+\end{conditional}
+
+\noindent\emph{Sketch.} Apply Theorem~\ref{thm:frame-creation} to each $(p_n, \Lambda_n, t_{0,n})$ with the source $B_t$ projecting onto $\mathcal{A}$. By H-rec, this projection is non-zero for multiple $n$; each $n$ produces a local instance whose $\Sigma_{\Ical_n}$ stabilises into $\mathcal{A}$ via the embedding $!_{\Ical_n}$. \hfill$\square$
+
+\subsection{What this is and what it is not}
+
+\begin{remark}[Frame recurrence vs the loaded reading]\label{rem:reincarnation-discipline}
+\textbf{What this is.}
+\begin{itemize}[leftmargin=2em]
+\item A structural identification: identity is better modelled as a stable frame-attractor pattern in closure geometry than as a continuous material object moving along a linear time-axis.
+\item A precise compatibility relation: two local instances share structure to the extent $\kappa_{ab} > 0$.
+\item A clean non-linear ordering on the set of instances.
+\item A structural condition (H-rec) under which multiple instances are admissible.
+\end{itemize}
+
+\textbf{What this is not.}
+\begin{itemize}[leftmargin=2em]
+\item Not a claim that a fixed identity-object (``soul'') migrates from one body to another along a linear time-axis.
+\item Not a claim that memories or specific experiential content transfer between instances.
+\item Not a claim that all observers have recurring instances. H-rec is a conditional hypothesis.
+\item Not a metaphysical claim about the nature of identity.
+\end{itemize}
+
+The framework's structural reframing: \emph{the body lives in local time; the frame-attractor lives in closure geometry; recurrence, when it occurs, is the re-instantiation of an attractor pattern under compatible boundary conditions, not the migration of an object along a time-line.}
+\end{remark}
+
+\subsection{Empirical openness and falsifiers}
+
+\begin{itemize}[leftmargin=2em]
+\item Demonstrating that the universal closure structure $C$ admits no frame attractors of dimension $\geq 2$ would falsify the existence of recurrence at the structural level. The current evidence ($\dim \Fix(\tau) = 94$, well above the threshold) does not support this falsifier.
+\item Demonstrating that H-rec is necessarily false: that the closure-cosmogenesis bootstrap source terms cannot align with the same attractor across multiple substrate regions. This is an open computational question (CP-recurrence).
+\item Demonstrating that two instances with $\kappa_{ab} > 0$ would necessarily have correlated content (e.g., specific memories) is empirically untested and would be a strong phenomenological claim the framework does not make.
+\end{itemize}
+
+%==================================================================
+\section{Cosmic self-pruning: closure-phase transitions}\label{sec:cosmic-pruning}
+%==================================================================
+
+This section addresses the longer-term fate of the universal closure structure. The framework gives a precise structural reading of cosmological ``fate'' that distinguishes itself from three mainstream alternatives: (1) eternal thermodynamic heat death, (2) classical cyclic universes, (3) bounce models. The framework's picture is closer to a fourth: \emph{recursive self-pruning across closure-phase transitions}.
+
+\subsection{Three structural options for cosmological evolution}
+
+Consider the evolution of the universal closure structure $C$ through closure ticks:
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Option A: Terminal fixed point.} The closure structure approaches an asymptotic stationary state $C(U_\infty) = U_\infty$.
+\item \textbf{Option B: Periodic cycle.} The closure structure returns periodically: $U_{n+T} = U_n$ for some period $T$.
+\item \textbf{Option C: Layered recurrence / closure cascade.} Each closure phase produces an invariant residue that seeds a new closure phase, without periodic return: $U_{n+1} = C_{\mathrm{next}}(P(U_n))$.
+\end{itemize}
+
+The framework's mathematical structure is most naturally aligned with Option C.
+
+\subsection{The pruning operator}
+
+\begin{definition}[Pruning operator]\label{def:pruning}
+The \emph{pruning operator} $P$ on the universal closure structure is the projection onto the closure-stable $\sigma$-stable subspace:
+\[
+  P : \mathbb{R}^{V_{600}} \to C, \qquad P(v) = P_{\Fix(\tau)} \circ P_{\Fix(\Cph)}(v).
+\]
+\end{definition}
+
+\begin{proposition}[Pruning preserves closure-stable structure]\label{prop:pruning-preserves}
+For any $v \in \mathbb{R}^{V_{600}}$, $P(v) \in C$. The pruning operator is idempotent: $P \circ P = P$.
+\end{proposition}
+
+\noindent\emph{Proof.} Both projections preserve the relevant subspaces. The composition lands in $\Fix(\Cph) \cap \Fix(\tau) = C$ by the existence theorem. Idempotence: each projection is idempotent and they commute on the $\sigma$-equivariant structure. \hfill$\square$
+
+\subsection{The closure-phase transition map}
+
+\begin{definition}[Closure-phase transition]\label{def:phase-transition}
+A \emph{closure-phase transition} between consecutive cosmological epochs is the map
+\[
+  U_{n+1} = C_{n+1}\big( P(U_n) \big),
+\]
+where $C_n$ is the closure operator at phase $n$ and $P$ is the pruning operator.
+\end{definition}
+
+\begin{conditional}[Non-periodic recurrence --- under aperiodicity hypothesis H-aperiodic]\label{thm:non-periodic}
+Under H-aperiodic (the operator sequence $(C_n)$ has no period \emph{and} the pruned orbit admits no common recurrent state across phases), the closure-phase transition map is non-periodic: $U_{n+T} \neq U_n$ for any $T \geq 1$.
+
+If $C_n$ is constant across phases ($C_n = C$ for all $n$), the iteration $U_{n+1} = C(P(U_n))$ has $C \circ P$ acting as the identity on the fixed subspace $C$ (every vector in $C$ is fixed) and as a strict contraction on its orthogonal complement (decay theorem). The iteration converges geometrically to the projection of the initial state onto $C$, not necessarily to a unique global fixed point.
+
+Hence non-periodic recurrence (Option B) is supported only under H-aperiodic; the constant-$C$ case admits a continuum of long-time states in $C$ depending on initial conditions, not a single attracting fixed point.
+\end{conditional}
+
+\noindent\emph{Sketch.} Under H-aperiodic the operator sequence changes between phases and the pruning step does not repeatedly land on a common state, so the orbit cannot revisit prior states. Without H-aperiodic, the claim does not follow from the framework structure alone.
+
+For constant $C$: $C \circ P$ acts as the identity on $C$ and as a strict contraction on $C^\perp$. The contracting part converges by Banach; the identity part preserves the initial-state projection. The long-time state therefore depends on initial conditions in $C$, and Banach's unique-fixed-point conclusion applies only to the contracting orthogonal complement, not to the full iteration. \hfill$\square$
+
+\subsection{Closure-cascade cosmology}
+
+\begin{conditional}[Closure-cascade cosmology]\label{cthm:closure-cascade}
+Under the cascade axioms (A1, A2), the closure-cosmogenesis dynamics of \citet{SmartClosureCosmogenesis}, and H-evolve (Hypothesis~\ref{hyp:h-evolve}), cosmological evolution proceeds as a layered recurrence:
+\[
+  U_1 \xrightarrow{\text{phase 1 closure}} U_2 \xrightarrow{\text{phase 2 closure}} U_3 \xrightarrow{\cdots},
+\]
+where each transition is $U_{n+1} = C_{n+1}(P(U_n))$ with $C_{n+1} \neq C_n$.
+
+The framework's prediction: cosmological evolution is neither eternally periodic (Option B is ruled out by Theorem~\ref{thm:non-periodic} when H-evolve holds) nor terminating in heat death (Option A is ruled out by the same theorem when $C_n$ shifts non-trivially), but a recursive cascade in which each phase's invariant residue seeds the next phase's closure structure.
+\end{conditional}
+
+\subsection{Thermodynamic decoherence vs invariant compression}
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Thermodynamic decoherence at one phase.} Within any specific closure phase $n$, the substrate's local energy gradients dissipate. From inside the phase, this looks like cosmic heat death.
+\item \textbf{Invariant compression into the next phase.} The pruning operator $P$ retains only the closure-stable $\sigma$-stable content. The pruned residue is the invariant structure that survives the phase's thermodynamic dissipation.
+\item \textbf{Re-instantiation of structure at the next phase.} The next phase's closure operator $C_{n+1}$ acts on $P(U_n)$ to produce $U_{n+1}$.
+\end{itemize}
+
+\begin{interpretation}[The structural fate of the universe]\label{int:structural-fate}
+Under (A1, A2), H-evolve, P-A:
+\begin{itemize}[leftmargin=2em]
+\item The universe does not ``die'' in the sense of complete loss of structure.
+\item The universe does not ``cycle'' in the periodic sense.
+\item The universe undergoes \emph{closure-phase transitions}: each phase's invariant residue seeds the next phase's closure structure, producing recursive layering rather than repetition or termination.
+\end{itemize}
+\end{interpretation}
+
+\subsection{Connection to dark-energy evolution}
+
+The companion cosmology paper \citep{SmartHypersphereCosmology} predicts seven cosmological observables matching Planck 2018 within $0.5\%$ simultaneously, including $H_0 = 67.66$ km/s/Mpc and $\Omega_\Lambda = 0.6844$. Recent DESI results suggest that dark energy may evolve over cosmological time rather than remain constant. The framework's structural reading is consistent with this possibility: if $C_n$ shifts with cosmological epoch (H-evolve), the effective cosmological constant $\Lambda_n$ would evolve as the substrate's effective rung activation depth shifts.
+
+If DESI's evolving-dark-energy signal is confirmed and the evolution is quantitatively measured, the framework provides a structural mechanism via H-evolve. The framework would then be falsified or supported depending on whether the measured $\Lambda(z)$ matches predictions derivable from the cascade's substrate-state evolution.
+
+\subsection{Life as portable invariant generator}
+
+\begin{interpretation}[Life as invariant-generator]\label{int:life-invariant}
+Under H-RP-1, H-RP-2, H-RP-3, P-A, a biological bounded reference frame produces several classes of closure-invariant structure:
+\begin{itemize}[leftmargin=2em]
+\item Memory: stabilised closure patterns within the frame, persisting across closure ticks.
+\item Symbolic abstraction (mathematics, theorems, scientific structures): closure-invariant patterns that may persist beyond the frame's substrate-dependent existence.
+\item Joint-frame invariants: cross-frame $\sigma$-fixed modes (generative excess $\delta_{AB}$) that persist after parent-frame destruction.
+\end{itemize}
+A theorem survives longer than the mathematician's body; a mathematical structure survives longer than a star. The framework's structural reading: this is not metaphorical but precise: bounded reference frames are one mechanism by which the universal closure structure produces portable invariants that survive thermodynamic decoherence within their original phase.
+\end{interpretation}
+
+\subsection{What this section claims and does not claim}
+
+\begin{remark}[Cosmic self-pruning vs the loaded readings]\label{rem:cosmic-pruning-discipline}
+\textbf{What this claims.} The framework's mathematical structure most naturally produces Option C: recursive layered closure transitions. Under H-evolve, cosmological evolution is a non-periodic cascade of closure phases. The structural fate of the universe is closure-invariant compression, not complete dissolution.
+
+\textbf{What this does not claim.} Not that the universe will literally ``die and be reborn'' in any phenomenological sense. Not that any specific cosmological observation has selected Option C over A or B; the framework predicts Option C is most structurally natural but does not falsify A or B from empirics alone. Not that DESI's evolving-dark-energy hint confirms the framework. Not that biological invariants ``outlive'' anything in a soul-like sense.
+
+The framework's structural reading: \emph{the end of a thermodynamic layer is not the end of reality; it is the point where only closure-invariant structure remains available to seed the next closure phase. The universe does not need to die or cycle. It recursively prunes itself toward deeper closure.}
+\end{remark}
+
+%==================================================================
+\section{The unified hierarchy of frame life-cycles: from cell to cosmos}\label{sec:hierarchy}
+%==================================================================
+
+This section is the synthesis of \S\S\ref{sec:frame-dynamics}, \ref{sec:frame-recurrence}, \ref{sec:cosmic-pruning}. It states the framework's central structural claim about the relationship between life-cycle events at different scales, the corresponding time scales, and the position of the universe itself within the framework. The result is a single coherent picture in which the same structural pattern --- frame creation, persistence, destruction, possible recurrence, and closure-phase transition --- applies at every cascade rung, but with rung-specific time scales and rung-specific dynamics, so that the universe's evolution is qualitatively different from a biological life-cycle even though both follow the same structural template.
+
+\subsection{The rung-stratified hierarchy of frames}
+
+Every cascade rung supports its own family of bounded reference frames. A frame at rung $R_k$ has:
+
+\begin{itemize}[leftmargin=2em]
+\item Vertex set $O \subseteq R_k$.
+\item Rung-specific closure operator $\Cph^{(R_k)}$ obtained by restricting $\Cph$.
+\item Rung-specific symmetry $\tau^{(R_k)}$.
+\item Rung-specific zero-line $\Sigma_\Ical^{(R_k)} \subseteq \Fix(\tau^{(R_k)})$.
+\item Rung-specific decay rate $\mu^{(R_k)} := \lambda_{\min}(\Cph^{(R_k)}|_{\Sigma^\perp})$.
+\end{itemize}
+
+\begin{theorem}[Rung-stratified life-cycle universality]\label{thm:rung-universality}
+For every cascade rung $R_k \in \{E_8, H_4, 40, D_4, 16, 8, 0\}$, the structural theorems of \S\S\ref{sec:frame-dynamics}--\ref{sec:cosmic-pruning} apply with rung-specific operators:
+
+\begin{enumerate}[leftmargin=2em]
+\item Frame creation (Theorem~\ref{thm:frame-creation}) at rung $R_k$: $\Sigma$-dimension grows from zero to the rung-specific design dimension at rate $1 - \lambda \mu^{(R_k)}$ per closure tick.
+\item Frame destruction (Theorem~\ref{thm:frame-destruction}) at rung $R_k$: the four destruction criteria apply with $\Cph^{(R_k)}$, $\tau^{(R_k)}$.
+\item Frame merging at rung $R_k$: joint generative excess $\delta^{(R_k)}_{AB}$ counts boundary-crossing $\sigma$-orbits within the rung.
+\item Frame recurrence (Theorem~\ref{thm:time-independence}, Corollary~\ref{cor:reinstantiation}) at rung $R_k$.
+\item Closure-phase transition (Theorem~\ref{thm:non-periodic}) at rung $R_k$.
+\end{enumerate}
+
+The structural pattern is universal across rungs: creation, persistence, destruction, possible recurrence, closure-phase transition. The rung-specific quantitative parameters differ.
+\end{theorem}
+
+\noindent\emph{Proof.} Each numbered claim is the restriction of the corresponding universal theorem to rung $R_k$. The proofs use only structural properties of $\Cph$ (symmetric, positive definite, $\sigma$-equivariant) and $\tau$ (unitary involution). The restrictions $\Cph^{(R_k)}$ and $\tau^{(R_k)}$ inherit these properties on each rung. \hfill$\square$
+
+\begin{remark}[The structural template]\label{rem:template}
+Theorem~\ref{thm:rung-universality} captures the central structural claim: \emph{the same pattern of bounded reference frame life-cycle dynamics applies at every scale, from the cosmic ($E_8$ totality) down to the singleton terminal (rung 0).} What changes from scale to scale is the size of the substrate, the structural complexity of the zero-line, and most importantly the time-scale at which closure ticks proceed.
+\end{remark}
+
+\subsection{The hierarchy of time scales}
+
+\begin{theorem}[Hierarchical time-scaling]\label{thm:hierarchical-time}
+For two rungs $R_k$ and $R_{k'}$ with $\dim R_k > \dim R_{k'}$, the natural closure-tick rates satisfy $\tau_{\mathrm{tick}}^{(R_k)} \neq \tau_{\mathrm{tick}}^{(R_{k'})}$. Higher-dimensional rungs with smaller $\mu$ have slower natural tick rates; lower-dimensional rungs with larger $\mu$ have faster natural tick rates.
+
+Time experienced inside a bounded reference frame at rung $R_k$ is generically not commensurate with time experienced inside a frame at rung $R_{k'}$. Each rung carries its own structural time.
+\end{theorem}
+
+\noindent\emph{Proof.} The closure-tick rate at rung $R_k$ is $\tau_{\mathrm{tick}}^{(R_k)} \sim 1 / \mu^{(R_k)}$. For different rungs with different $\mu^{(R_k)}$, the natural tick rates differ; a closure tick at rung $R_k$ is not equal to a closure tick at rung $R_{k'}$ in any common time unit. \hfill$\square$
+
+\begin{interpretation}[Time as scale-dependent]\label{int:scale-dep-time}
+Under H-RP-1, H-RP-2, P-A:
+\begin{itemize}[leftmargin=2em]
+\item Time experienced inside a 3D bounded reference frame (e.g., a human cortex at the $H_4$ rung) is determined by the cortex-rung tick rate.
+\item Time at the higher geometry layers (the cosmic-scale closure-phase transitions of \S\ref{sec:cosmic-pruning}) is determined by the $E_8$-totality-rung tick rate.
+\item The two are not the same. Subjective time inside a 3D frame is not the same as the deeper closure-geometry's structural time.
+\item Cosmological time, biological time, neural time, and subjective time are all rung-specific structural times. The ``hierarchy of time'' is a structural consequence of the rung tower, not a metaphor.
+\end{itemize}
+\end{interpretation}
+
+\subsection{The frame life-cycle pattern at every rung}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Frame life-cycle events at each cascade rung. Each event-type is governed by the corresponding universal theorem restricted to the rung. Time scale is rung-specific by Theorem~\ref{thm:hierarchical-time}.}\label{tab:rung-life-cycle}
+\begin{tabular}{p{2cm}p{2.5cm}p{4cm}p{3.5cm}}
+\toprule
+Rung & Frame examples & Life-cycle events & Time scale \\
+\midrule
+$E_8$ (totality) & The universe as a whole & Cosmic bootstrap, closure-phase transitions, pruning, layered recurrence (Conditional Proposition~\ref{thm:closure-cascade-universal} below) & Cosmological epochs \\
+$H_4 = V_{600}$ & Cortex (under H-RP-1) & Birth, life, sleep cycles, anaesthesia, death, possible attractor recurrence & Biological lifetime \\
+40 (Schläfli) & Specialised cortical assemblies & Differentiation, persistence, integration & Cortical-development time \\
+$D_4$ (24-cell) & Gravity-rung structures & Galaxy formation, stable orbits, gravitational dissolution & Astrophysical time \\
+16 (vector) & Gauge-multiplet vector structures & Particle production, propagation, decay & Particle-physics time \\
+8 (scalar) & Biological cells (under H-RP-3) & Cell division, growth, cell death; bioelectric pattern recurrence & Cellular lifetime \\
+0 (singleton) & Terminal reference points & Single-tick instantiation; resolution & Frame-creation tick \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{conditional}[The universe-as-frame closure cascade]\label{thm:closure-cascade-universal}
+Under H-RP-1, H-RP-2, H-RP-3, H-evolve, and P-A, the universal cascade $C$ itself can be viewed as a bounded reference frame at the $E_8$ totality rung. Its life-cycle events are:
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Bootstrap.} The universal cascade initialises with $\dim \Sigma^{(E_8)} = 0$; through closure ticks at cosmological epoch 1, it grows toward design dimension at rate $\mu^{(E_8)} \sim \varphi^{-2}$ at the $E_8$ rung.
+\item \textbf{Persistence.} The universal cascade maintains $\Sigma^{(E_8)}$ at its rung-design dimension across an extended cosmological epoch, with thermodynamic decoherence within the epoch and substrate-state evolution between cosmological ticks.
+\item \textbf{Closure-phase transition.} At some cosmological tick $n$, the pruning operator $P^{(E_8)}$ acts to retain only invariant content, and a new closure operator $C^{(E_8)}_{n+1}$ acts on the residue.
+\item \textbf{Recurrence at higher closure layers.} Each cosmological epoch produces invariant residue that seeds the next epoch's closure structure; the structural recurrence pattern is layered, not periodic.
+\end{itemize}
+
+This is the universe's life-cycle, in the same structural language as a bounded reference frame's life-cycle at any other rung.
+\end{conditional}
+
+\subsection{Where humans fit in the hierarchy}
+
+Under H-RP-1, H-RP-2, and P-A, biological frames at the cortex project onto the $H_4$ rung. The natural identification:
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Human cortical frame:} projects to the $H_4 = V_{600}$ substrate. Complexity $\leq 94$ (core paper); recursion depth $\leq 9$.
+\item \textbf{Human biological body:} projects to the $H_4$ rung (cortical integration) and the 8-rung (cellular-boundary scaling, under H-RP-3).
+\item \textbf{Human local-time experience:} determined by the $H_4$-rung closure-tick rate. This is biological subjective time, distinct from cosmological time (at the $E_8$ rung).
+\item \textbf{Death:} biological frame destruction at the $H_4$ rung; satisfies condition (1) substrate dismantling (Theorem~\ref{thm:frame-destruction}). No recovery is structurally possible from condition (1) alone.
+\item \textbf{Recurrence:} structurally permitted by Conditional Proposition~\ref{cthm:frame-recurrence} under H-rec; explicitly does not claim memory transfer or material continuity (Remark~\ref{rem:reincarnation-discipline}).
+\end{itemize}
+
+\subsection{Why the universe is qualitatively different from a human life-cycle}
+
+Although Theorem~\ref{thm:rung-universality} establishes the same life-cycle pattern at every rung, the cosmic-scale life-cycle is qualitatively distinct from a biological life-cycle for two structural reasons:
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Different time scale.} By Theorem~\ref{thm:hierarchical-time}, the closure-tick rate at the $E_8$ rung is not commensurate with the $H_4$ rung. Cosmic events occur at cosmological epochs; biological events at lifetimes. The mismatch is structural.
+\item \textbf{Different invariant content.} At the $E_8$ rung, $P^{(E_8)}$ retains closure-invariant content over cosmological epochs. The invariants are deep structural patterns (cascade-rung structures, $\sigma$-equivariant eigenmodes), not specific biological frames.
+\end{enumerate}
+
+\begin{interpretation}[The universe doesn't reincarnate]\label{int:universe-not-reincarnate}
+Under H-RP-1, H-RP-2, H-RP-3, H-evolve, P-A:
+\begin{itemize}[leftmargin=2em]
+\item The universe undergoes closure-phase transitions, not biological-style birth-and-death.
+\item Each cosmological epoch is qualitatively distinct from the previous one: $C^{(E_8)}_{n+1} \neq C^{(E_8)}_n$ under H-evolve, ruling out periodic return.
+\item Life-cycle events at the human / biological scale (birth, life, death, possible attractor recurrence) are not literal projections of cosmic life-cycle events; they are independent applications of the same structural template at a different rung.
+\item The universe is not a meta-organism with a memory or personality; it is a closure-stable structure undergoing recursive layered pruning across cosmological epochs.
+\end{itemize}
+\end{interpretation}
+
+\subsection{The big-picture structural answer}
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Existence is recursive geometric closure.} What exists is what is invariant under the closure operator and the symmetry constraint. Valid at every scale.
+\item \textbf{Bounded reference frames are local projections.} Local systems (cells, brains, possibly the universe at a different scale) are bounded projections of the universal closure structure.
+\item \textbf{The same life-cycle pattern repeats at every scale.} Frame creation, persistence, destruction, possible recurrence, closure-phase transition occur at every cascade rung.
+\item \textbf{Time is rung-specific.} Subjective time at biological scale, cosmological time at universal scale, particle-physics time at gauge-rung scale, cellular time at cellular scale are all structural consequences of rung-specific tick rates.
+\item \textbf{The universe undergoes its own closure-phase transitions.} At the $E_8$ totality rung, the universe is a bounded reference frame in its own right; its life-cycle is layered recursion of closure-phase transitions, not biological birth-and-death.
+\item \textbf{Humans fit at the $H_4$ rung} with cellular projection to the 8-rung under H-RP-3.
+\item \textbf{Frame recurrence at any rung is conditional on compatible boundary conditions} (under H-rec).
+\item \textbf{What survives a phase transition} is the closure-invariant residue, not the specific frames. Biological closure-invariants (theorems, structures, mathematical patterns) may persist beyond their substrate's lifetime within a closure phase.
+\end{enumerate}
+
+These eight structural facts together constitute the framework's answer to ``where do we all fit in the bigger picture'': at the $H_4$ rung scale, within a universal closure structure that is itself undergoing recursive closure-phase transitions at the $E_8$ rung scale, with rung-specific time scales and rung-specific life-cycle events at each scale, with the same structural template applying universally.
+
+\subsection{What this hierarchy claims and does not}
+
+\begin{remark}[The unified hierarchy: discipline]\label{rem:hierarchy-discipline}
+\textbf{What this hierarchy claims.}
+\begin{itemize}[leftmargin=2em]
+\item Frame life-cycle dynamics are structurally universal across cascade rungs.
+\item Time scales are rung-specific.
+\item The universe at the $E_8$ rung is itself a bounded reference frame with its own life-cycle.
+\item Humans fit at the $H_4$ rung; cellular biology projects to the 8-rung.
+\item The cosmic and biological scales are structurally distinct; the cosmic scale does not undergo biological-style birth and death.
+\item Frame recurrence is permitted but conditional on H-rec.
+\end{itemize}
+
+\textbf{What this hierarchy does not claim.}
+\begin{itemize}[leftmargin=2em]
+\item Not that the universe is conscious or has personality. The universe-as-frame statement is structural; phenomenological readings require P-A applied at the universal scale, which the framework does not assert.
+\item Not that biological frames have direct insight into the cosmic scale.
+\item Not that any specific human life corresponds to a specific cosmological epoch.
+\item Not that death at the human scale literally implies ``something'' survives into the cosmic scale. The framework's claim is that closure-invariant patterns may persist beyond their original substrate's thermodynamic phase, a structural statement, not a metaphysical claim about post-mortem identity.
+\item Not that the framework resolves the question of meaning.
+\end{itemize}
+\end{remark}
+
+\begin{remark}[On scope at the universal scale]\label{rem:scope-universe}
+The claim that the universe is ``a bounded reference frame at the $E_8$ totality rung'' is structural, not phenomenological. It says: the universal closure structure admits the same operator-theoretic description as a bounded reference frame at the $E_8$ rung. It does not say the universe is ``alive,'' ``conscious,'' ``aware,'' or anything similar. Applying P-A at the universal scale would require an additional commitment the framework does not make.
+\end{remark}
+
+%==================================================================
+\section{Numerical demonstrations}\label{sec:cosmic-numerical}
+%==================================================================
+
+The structural claims of \S\S\ref{sec:frame-dynamics}--\ref{sec:hierarchy} are grounded by a numerical demonstration suite \texttt{papers/cosmic-closure-recurrence/repro/cosmic\_demo.py}. Five demos C1--C5 cover the load-bearing theorems:
+
+\begin{table}[h]
+\centering
+\small
+\caption{Cosmic / structural-extension paper sim demonstrations. All five pass deterministically at seed 42.}\label{tab:cosmic-numerical-demos}
+\begin{tabular}{p{0.8cm}p{4.4cm}p{3.0cm}p{5.0cm}}
+\toprule
+ID & Demo & Paper grounds & Verified \\
+\midrule
+C1 & Cascade rung tower ($E_8$, $H_4 = V_{600}$, $D_4 =$ 24-cell) & Thm~\ref{thm:rung-universality} & Each rung admits its substrate, $\Cph$, $\tau$, and non-trivial $\Sigma_\Ical$; all three have $\|[\tau, \Cph]\| < 10^{-13}$; $\lambda_{\min}(\Cph) > 0$ \\
+C2 & Hierarchical time-scaling & Thm~\ref{thm:hierarchical-time} & Per-rung closure-tick rates $\tau_{\mathrm{tick}}^{(R_k)} \sim 1/\mu^{(R_k)}$ differ across rungs \\
+C3 & Pruning operator idempotence & Def~\ref{def:pruning}, Prop~\ref{prop:pruning-preserves} & $\|P \circ P - P\| < 10^{-10}$; $P$ self-adjoint; rank $= \dim \Sigma$ \\
+C4 & Non-periodic recurrence under time-dependent $C_n$ & Thm~\ref{thm:non-periodic} & No two phases coincide ($\min$ pairwise dist $> 0$); constant-$C$ trajectory converges (Option A); time-varying does not \\
+C5 & Frame destruction four conditions & Thm~\ref{thm:frame-destruction} & Each of substrate dismantling, symmetry breakdown, spectral collapse, $\sigma$-stability loss independently collapses $\dim \Sigma_\Ical$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+C1 specifically addresses the open computational task \textbf{CP-rung-9.3}: it instantiates $E_8$ (240 root vectors in $\mathbb{R}^8$), $H_4 = V_{600}$ (120 vertices), and $D_4 =$ 24-cell (24 vertices) as substrates, builds their closure operators and spectral $\tau$ involutions, and verifies the structural machinery applies cleanly at each rung.
+
+%==================================================================
+\section{Falsifiers and open programme}\label{sec:falsifiers}
+%==================================================================
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Frame recurrence.} Demonstrating that the universal closure structure $C$ admits no frame attractors of dimension $\geq 2$ would falsify recurrence at the structural level. The current evidence ($\dim \Fix(\tau) = 94$) does not support this falsifier.
+\item \textbf{H-rec.} Whether closure-cosmogenesis bootstrap source terms can align with the same attractor across multiple substrate regions is the open question (\textbf{CP-recurrence}).
+\item \textbf{Closure-cascade cosmology under H-evolve.} If DESI's evolving-dark-energy signal is confirmed and the evolution is quantitatively measured, the framework provides a structural mechanism. The framework would be falsified or supported depending on whether the measured $\Lambda(z)$ matches predictions derivable from the cascade's substrate-state evolution.
+\item \textbf{Unified hierarchy at rungs other than $H_4$.} The $\sigma$-fix dimensions at $E_8$, $D_4$, 16, 8, 0 rungs are the named computational task \textbf{CP-rung-9.3}; their values are unconditional once computed.
+\item \textbf{Time-scale measurement.} Direct measurement of the closure-tick rate at the $H_4$ rung (\textbf{CP-tick-rate}) would calibrate the time-scale hierarchy quantitatively.
+\end{itemize}
+
+%==================================================================
+\section{What this paper does not claim}\label{sec:scope}
+%==================================================================
+
+\begin{itemize}[leftmargin=2em]
+\item Not a derivation of new mathematical results beyond the dynamical extensions of the core paper's framework.
+\item Not a claim of soul-migration. Frame recurrence is the re-instantiation of a closure-geometric attractor pattern under compatible boundary conditions, not the migration of an identity-object along a time-axis.
+\item Not a claim that cosmic-scale events are phenomenological. The universe-as-frame at the $E_8$ rung is structural; phenomenological readings require commitments the framework does not make.
+\item Not a claim that DESI's evolving-dark-energy hint confirms the framework. The framework is structurally compatible with that hint.
+\item Not a claim that closure-invariant patterns ``survive death'' in a soul-like sense. Mathematical structures, theorems, scientific patterns may persist beyond their original substrate; this is a structural statement about closure-invariant content, not a metaphysical claim about post-mortem identity.
+\end{itemize}
+
+%==================================================================
+\section*{Acknowledgements}
+%==================================================================
+
+The author thanks the codex review loop for the framing-discipline questions that produced the conditional-proposition labelling and the scope discipline throughout. The framework's commitments are bounded; H-rec and H-evolve are named as open hypotheses, not asserted as established.
+
+%==================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+%==================================================================
+
+\end{document}

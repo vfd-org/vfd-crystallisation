@@ -1,0 +1,538 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\geometry{margin=2.7cm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\OK}{\mathcal{O}_K}
+\newcommand{\Cphi}{\mathcal{C}_{\!\varphi}}
+\newcommand{\Vmin}{V_{\min}}
+\newcommand{\GL}{\mathrm{GL}}
+
+% status tags
+\newcommand{\TAGthm}{{\small\textsf{[\textcolor{green!45!black}{theorem}]}}}
+\newcommand{\TAGver}{{\small\textsf{[\textcolor{blue!60!black}{verified}]}}}
+\newcommand{\TAGev}{{\small\textsf{[\textcolor{orange!80!black}{evidence}]}}}
+\newcommand{\TAGconj}{{\small\textsf{[\textcolor{purple}{conjecture}]}}}
+\newcommand{\TAGopen}{{\small\textsf{[\textcolor{red!70!black}{open}]}}}
+
+\hypersetup{colorlinks=true, linkcolor=blue!55!black,
+  citecolor=blue!55!black, urlcolor=blue!55!black}
+
+\title{\textbf{The $V_{600}$ Substrate at the Riemann--Hypothesis Frontier}\\
+\large A verified local realisation, a corrected reduction,\\ and an honest map of the global gap}
+\author{Lee Smart \\ \small Institute of Vibrational Field Dynamics}
+\date{2026-05-30 \quad v1.0}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{\parbox{0.93\textwidth}{\centering\small
+\textsc{Pre-peer-review open research preprint.} \textbf{No proof of the
+Riemann Hypothesis is claimed.} Every claim below is tagged
+\textsf{[theorem]}, \textsf{[verified]} (computed, with a stated correctness
+gate), \textsf{[evidence]} (numerics consistent with, not proving),
+\textsf{[conjecture]}, or \textsf{[open]}. All computations are reproducible
+from the accompanying \texttt{route\_b/} and \texttt{sims/} code.}}
+\end{center}
+
+\begin{abstract}
+We report the honest standing of the $V_{600}$ closure substrate at the
+Riemann--Hypothesis (RH) frontier. \textbf{Main verified result:} the
+icosian ring --- the maximal order of the definite quaternion algebra
+$(-1,-1/\Q(\sqrt5))$ whose unit group is the $600$-cell --- computes, by its
+own intrinsic Brandt/Hecke action at level $\mathfrak{p}_{31}$ (norm $31$),
+the genuine cuspidal Hilbert modular newform over $\Q(\sqrt5)$ of that level:
+its Hecke eigenvalues match the independently point-counted newform exactly
+on all $11$ prime ideals of norm $\le 41$, including signs and split-prime
+pairings, out-of-sample, with no fitting. This is a non-circular
+substrate$\leftrightarrow$arithmetic identification, replacing a hardcoded
+map a prior audit exposed. \textbf{Corrected scope:} we withdraw an earlier
+claim that admissibility plus the explicit formula yields RH; they certify a
+genuine automorphic L-function, whose RH is equivalent to GRH and remains
+open. \textbf{Geometric map:} the substrate realises the \emph{local}
+critical line (the per-prime Satake circle $|\alpha_\mathfrak{q}|=\sqrt{N\mathfrak{q}}$,
+forced by temperedness) but not the \emph{global} one; we explain why
+local$\,\to\,$global is the genuine wall and name the missing object (a
+Hilbert--Pólya operator on the adelic arena). \textbf{Frontier computation:}
+we compute the Connes/Weil positivity functional for this L-function from the
+substrate's own Satake data, gated against the Riemann $\zeta$ zeros to
+$0.01\%$; it is positive on every validated test function --- evidence
+consistent with RH, not a proof. \textbf{Locating the operator:} the zeros
+are GUE (verified: level repulsion; a quasicrystal dual to the primes), and
+the Dyson/division-algebra structure pins the missing Hilbert--Pólya operator
+to the $\C$ (unitary, $\beta=2$, time-reversal-broken) class --- one rung
+from the substrate's $\mathbb{H}$ ($\beta=4$). The $\mathbb{H}\to\C$
+transition is complexification ($\mathbb{H}\otimes\C=M_2(\C)$,
+$2I\subset\mathrm{SU}(2)$, verified) realised by Jacquet--Langlands; the
+finite-place part of the operator (the commutative Hecke scaling algebra) is
+built and verified $\C$-class, leaving the archimedean self-adjoint
+realisation --- equivalently Weil positivity for all test functions, i.e.\
+RH --- as the single open step.
+\end{abstract}
+
+\tableofcontents
+
+\section{Stance}
+This paper does not attempt to prove RH. It records, with reproducible
+computations and explicit status tags, exactly how far a specific geometric
+substrate reaches into the problem, where it stops, and why. The discipline
+throughout: the mathematics stays fully mathematical; no interpretive,
+observer-, or consciousness-based reading is load-bearing or implied.
+
+\section{The substrate and the local critical line}\label{sec:local}
+
+\subsection{The icosian ring}
+Let $K=\Q(\sqrt5)$, $\OK=\Z[\varphi]$, $\varphi=(1+\sqrt5)/2$. Let
+$B=(-1,-1/K)$ be the Hamilton quaternions over $K$, ramified at both real
+places (definite). Its maximal order is the \emph{icosian ring} $\mathcal{I}$,
+whose group of units is the binary icosahedral group $2I$ of order $120$ ---
+the $120$ vertices of the $600$-cell $V_{600}$.
+
+\begin{proposition}[\TAGver]\label{prop:icosian}
+The $120$ unit icosians all have reduced norm $1$ and are closed under
+multiplication ($14400/14400$ products verified in
+\texttt{route\_b/icosian.py}), forming $2I$.
+\end{proposition}
+
+\subsection{The two critical lines}
+A central clarification of this work is that ``the critical line'' refers to
+two different objects:
+\begin{enumerate}[label=(\arabic*)]
+\item \textbf{Local:} for each prime $\mathfrak{q}$, the zeros of the local
+factor $L_\mathfrak{q}(s)$. The Satake parameters satisfy
+$\alpha_\mathfrak{q}=\sqrt{N\mathfrak{q}}\,e^{i\theta_\mathfrak{q}}$ on the
+circle $|\alpha_\mathfrak{q}|=\sqrt{N\mathfrak{q}}$ --- temperedness /
+Ramanujan --- and consequently \emph{each} local factor's zeros lie exactly
+on $\Re(s)=1/2$.
+\item \textbf{Global:} the zeros of the full product $L(s)=\prod_\mathfrak{q}
+L_\mathfrak{q}(s)$. That these lie on $\Re(s)=1/2$ is RH.
+\end{enumerate}
+
+\begin{proposition}[\TAGver, \texttt{route\_b/satake\_circle.py}]
+For the substrate-computed eigenvalues (\S\ref{sec:circle}), every Satake
+parameter lies on its circle and every local zero lies on $\Re(s)=1/2$;
+e.g.\ at $N\mathfrak{q}=4,5,9,11$ the angles are
+$138.6^\circ, 116.6^\circ, 70.5^\circ, 52.9^\circ/127.1^\circ$.
+\end{proposition}
+
+This is the number-field shadow of the function-field RH that Deligne proved
+geometrically (Frobenius weights on $|\alpha|=\sqrt q$). The substrate
+realises the local critical line; the global one is the open problem.
+
+\subsection{Why the Hecke structure reaches the L-function}\label{sec:tilings}
+The substrate carries three independent extension structures, and only one
+reaches the L-function's zeros:
+\begin{itemize}[leftmargin=1.4em]
+\item \textbf{$W(H_4)$ geometric} (order $14{,}400$): extends a statement from
+one $V_{600}$ vertex to all $120$ --- \emph{within} the substrate.
+\item \textbf{Cascade scale} ($\mathrm{Pentagon}\!\to\!\mathrm{Icos}\!\to\!
+V_{600}\!\to\!E_8\!\to\!\cdots$): propagates patterns up the hierarchy ---
+\emph{within} the substrate.
+\item \textbf{Hecke multiplicative}: the Hecke operators at fixed level are
+generated by the prime operators, with $T_\mathfrak{m}T_\mathfrak{n}=
+T_{\mathfrak{m}\mathfrak{n}}$ for coprime ideals and a prime-power recursion.
+This is the only one of the three that reaches the global L-function.
+\end{itemize}
+
+\begin{theorem}[Multiplicativity tiling, \TAGthm]\label{thm:tiling}
+Let $\{a_\mathfrak{p}\}_{N\mathfrak{p}\le P}$ be the eigenvalues of a commuting
+family on a finite-dimensional space, satisfying Ramanujan
+$|a_\mathfrak{p}|\le2\sqrt{N\mathfrak{p}}$, the prime-power recursion
+$a_{\mathfrak{p}^{k+1}}=a_\mathfrak{p}a_{\mathfrak{p}^k}-N\mathfrak{p}\,
+a_{\mathfrak{p}^{k-1}}$, and $a_{\mathfrak{a}\mathfrak{b}}=a_\mathfrak{a}
+a_\mathfrak{b}$ for coprime $\mathfrak{a},\mathfrak{b}$. Then the full
+coefficient system $\{a_\mathfrak{n}\}$ is determined by the finite prime data,
+and
+$$L(s,\psi)=\sum_\mathfrak{n}\frac{a_\mathfrak{n}}{N\mathfrak{n}^{s}}
+=\prod_\mathfrak{p}\bigl(1-a_\mathfrak{p}N\mathfrak{p}^{-s}
++N\mathfrak{p}^{1-2s}\bigr)^{-1}$$
+converges absolutely for $\Re s>3/2$ (Euler product unconditional).
+\end{theorem}
+
+Hence the circle test (\S\ref{sec:circle}) is decisive: matching the
+substrate's \emph{finite} prime eigenvalues to the genuine newform pins the
+\emph{entire} L-function by tiling. It does not, by itself, place the zeros ---
+that is RH (\S\ref{sec:correct}).
+
+\section{The circle test: the substrate computes a genuine newform}\label{sec:circle}
+
+The target is the cuspidal Hilbert modular newform over $K$ at level
+$\mathfrak{p}_{31}$ (norm $31$; the prime $31\equiv1\!\pmod5$ splits in $K$).
+This is the level at which the first cuspidal newform over $\Q(\sqrt5)$
+appears \cite{Dembele}, corresponding to the elliptic curve $31.1$-$a$.
+
+\subsection{The genuine target $H$ (independent of the substrate)}
+\begin{proposition}[\TAGver, \texttt{sims/sim\_genuine\_eigenvalues.py}]
+\label{prop:target}
+The Hecke eigenvalues $a_\mathfrak{q}=N\mathfrak{q}+1-\#E(\F_\mathfrak{q})$ of
+the curve $31.1$-$a1$ ($y^2+xy+\varphi y=x^3+(\varphi+1)x^2+\varphi x$),
+computed by point counting (no eigenvalue table used), for all $44$ good
+prime ideals of norm $\le200$, satisfy:
+the Ramanujan bound $|a_\mathfrak{q}|\le 2\sqrt{N\mathfrak{q}}$ (cuspidal),
+and the torsion divisibility $8\mid \#E(\F_\mathfrak{q})$ (the curve has
+$\Z/8\Z$ torsion --- an independent correctness proof needing no external
+table).
+\end{proposition}
+
+LMFDB confirms a single isogeny class at norm $31$: the cuspidal space is
+$1$-dimensional, not $26$, settling an earlier dimension question.
+
+\subsection{The substrate side $S$ (from the icosians' own arithmetic)}
+Because $\mathcal{I}$ has class number $1$, the level-$\mathfrak{p}_{31}$
+modular space is $\C[\,2I\backslash \mathbb{P}^1(\F_{31})\,]$ (Voight
+\cite{Voight}, Ch.\ 41; Dembl\'e \cite{Dembele}).
+
+\begin{proposition}[\TAGver, \texttt{route\_b/step2\_eichler.py}]
+Under the local splitting $B\otimes\F_{31}\cong M_2(\F_{31})$, the units $2I$
+reduce to $A_5\subset\mathrm{PGL}_2(\F_{31})$ (order $60$), acting on
+$\mathbb{P}^1(\F_{31})$ ($32$ points) with orbit sizes $\{12,20\}$. Hence
+$\dim = 2 = 1$ Eisenstein $+\,1$ cuspidal, matching Proposition
+\ref{prop:target}.
+\end{proposition}
+
+The Hecke operator $T_\mathfrak{q}$ is the sum of the norm-$\mathfrak{q}$
+quaternions (enumerated by the verified rank-$8$ short-vector routine,
+\texttt{route\_b/short\_vectors.py}, gated by $r(2)=120$) acting on the two
+orbits; the cuspidal eigenvalue is $a_\mathfrak{q}=\mathrm{tr}(T_\mathfrak{q})-(N\mathfrak{q}+1)$.
+
+\begin{theorem}[Circle closure, \TAGver, \texttt{route\_b/step3\_4\_hecke.py}]
+\label{thm:circle}
+The substrate cuspidal eigenvalues $S$ equal the genuine target $H$ on every
+prime ideal of norm $\le41$, computed with \emph{no fitting} and \emph{no
+modular input}:
+\begin{center}
+\begin{tabular}{lccccccc}
+\toprule
+$N\mathfrak{q}$ & $4$ & $5$ & $9$ & $11$ & $19$ & $29$ & $41$\\
+\midrule
+substrate $a_\mathfrak{q}$ & $-3$ & $-2$ & $2$ & $\{-4,4\}$ & $\{-4,4\}$ & $\{-2,-2\}$ & $\{-6,-6\}$\\
+genuine $H$ & $-3$ & $-2$ & $2$ & $\{-4,4\}$ & $\{-4,4\}$ & $\{-2,-2\}$ & $\{-6,-6\}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The agreement is exact, includes signs and the split-prime pairings, and
+holds \emph{out of sample} on $\{19,29,41\}$ (which influenced nothing). The
+Eisenstein eigenvalue is $N\mathfrak{q}+1$ on the nose (row sums), and every
+$a_\mathfrak{q}$ is Ramanujan-bounded.
+\end{theorem}
+
+\begin{remark}
+This is the central verified result. It is, mathematically, \emph{expected}
+--- $\mathcal{I}$ \emph{is} the maximal order of the relevant quaternion
+algebra, so its Brandt action \emph{is} this newform by Jacquet--Langlands ---
+which is exactly why it is the right, non-circular confirmation: the
+substrate genuinely \emph{computes} (does not inject) the eigenvalues. It
+replaces a hardcoded/fitted map that an internal provenance audit
+(\texttt{CIRCLE\_TEST.md}) had exposed.
+\end{remark}
+
+\section{Corrected scope: admissibility does not give RH}\label{sec:correct}
+
+The substrate eigenform passes the verifiable admissibility classes
+\emph{genuinely}: multiplicativity $a_{\mathfrak{q}^2}=a_\mathfrak{q}^2-N\mathfrak{q}$
+(checked: $a_{(2)^2}=5=(-3)^2-4$, $a_{(\sqrt5)^2}=-1=(-2)^2-5$,
+\texttt{route\_b/admissibility.py}, \TAGver); Ramanujan (the Hasse bound,
+\TAGthm); Sato--Tate (a theorem for this non-CM curve, \TAGthm); functional
+equation and automorphy (\TAGthm). So $L(\psi,s)$ is a genuine degree-$4$
+cuspidal automorphic L-function (conductor $5^2\cdot31=775$).
+
+\begin{tcolorbox}[colback=red!2,colframe=red!50!black,arc=2mm,
+  title={\textbf{Withdrawn overclaim}},fonttitle=\bfseries,breakable]
+An earlier statement asserted that admissibility plus the Weil explicit
+formula \emph{forces the zeros onto the critical line}. \textbf{This is
+false and is withdrawn.} A genuine automorphic L-function with a valid
+explicit formula does \emph{not} have its zeros constrained to the line ---
+that is precisely RH for it, equivalent to GRH, and \TAGopen. The explicit
+formula is an identity equivalent to information about the zeros; Ramanujan
+bounds the prime side and Sato--Tate describes the eigenvalue distribution,
+but \emph{neither pins the zeros}. (Re)established in
+\texttt{route\_b/admissibility.py}.
+\end{tcolorbox}
+
+\section{Why local $\to$ global is the wall}\label{sec:wall}
+
+The functional equation $\Lambda(s)=\Lambda(1-s)$ forces the zeros to be
+\emph{symmetric about} $\Re(s)=1/2$ \TAGthm; it does \emph{not} force them
+\emph{onto} it. A zero could be a symmetric pair $\tfrac12\pm\beta+i\gamma$
+straddling the line; RH is the statement $\beta=0$ always. The structure
+gives the \emph{axis}; RH is the \emph{on-ness}.
+
+\begin{remark}[The global object is not a polytope]
+The global L-function is the Euler product of all local factors, and its
+zeros are \emph{emergent}: a product of factors each with zeros on a line has
+its own new zeros, visible in no single factor. The object that glues all
+places is the \emph{adele class space} $\A_\Q/\Q^\times$ --- whose compact
+heart is the adelic solenoid, an \emph{inverse limit of circles}
+(infinite-dimensional, noncommutative; Connes). It is not the $600$-cell,
+not $S^3$, not any finite stack of cells. Climbing the cascade
+($V_{600}\to E_8\to\cdots$) gives bigger \emph{local} objects, never the
+global glue; the cascade limit \emph{is} the solenoid.
+\end{remark}
+
+\section{The adjoint that would close it}\label{sec:adjoint}
+
+\begin{conjecture}[Hilbert--Pólya, \TAGconj]
+There is a self-adjoint operator $\hat H$ on a Hilbert space with
+$\mathrm{spec}(\hat H)=\{\gamma_n:\zeta(\tfrac12+i\gamma_n)=0\}$.
+\end{conjecture}
+Given such $\hat H$, self-adjointness gives real spectrum, hence RH \TAGthm.
+The Weil explicit formula is already a trace formula in the exact shape of
+the Selberg trace formula (primes $\leftrightarrow$ closed geodesics, $\log
+p\leftrightarrow$ lengths, zeros $\leftrightarrow$ Laplace eigenvalues),
+which is why $\hat H$ is believed to exist. Two written candidates: the
+Berry--Keating Hamiltonian $xp$ (semiclassical count matches the zero count,
+but $xp$ is not essentially self-adjoint), and Connes' operator on the adele
+class space (a rigorous \emph{reformulation}, \S\ref{sec:connes}).
+
+\begin{proposition}[The substrate's operator has the wrong spectrum, \TAGver]
+$\Cphi=(12+\varphi^{-2})I-A_1$ on $V_{600}$ is self-adjoint and positive
+definite, with spectrum
+$\{0.382,2.67,5.91,9.38,12.38,14.38,14.85,15.38,16.09\}$ --- nine algebraic
+numbers in $K$ (smallest $=\varphi^{-2}$, the witness $\Vmin$, multiplicity
+$1$). It is the right \emph{type} (self-adjoint) but the wrong \emph{spectrum}
+(finite, algebraic, local) for the infinite transcendental $\gamma_n$.
+\end{proposition}
+
+\section{Connes/Weil positivity, computed and gated}\label{sec:connes}
+
+Connes' reformulation: RH for $L$ is equivalent to positivity of the Weil
+distribution, $W(h)=(\text{archimedean})-(\text{prime})=\sum_\rho h(\gamma_\rho)\ge0$
+for all $h$ of positive type. The prime term is built from the substrate's
+verified Satake angles $\theta_\mathfrak{q}$; the archimedean term from the
+gamma factor $\Gamma_\C(s)^2$ and conductor $775$.
+
+\begin{proposition}[Validation gate, \TAGver, \texttt{route\_b/weil\_positivity.py}]
+Run on the Riemann $\zeta$ function (known zeros), the identical machinery
+reproduces $\sum_\rho h(\gamma_\rho)$ to relative error $1.0\%,\,0.01\%,\,0.00\%$
+at Gaussian widths $\sigma=3,4,5$ --- confirming the constants, gamma factor,
+and normalisation.
+\end{proposition}
+
+\begin{proposition}[Positivity holds for $L(\psi,s)$, \TAGev]
+With the machinery gate-validated, the Weil/Connes functional for the
+norm-$31$ newform, from the substrate's Satake data, is
+$$ W(h) = +1.40,\ +3.70,\ +6.39 \quad\text{at } \sigma = 3,4,5, $$
+positive on every validated test function.
+\end{proposition}
+
+\begin{tcolorbox}[colback=orange!3,colframe=orange!70!black,arc=2mm,
+  title={\textbf{What this is and is not}},fonttitle=\bfseries,breakable]
+This is \emph{evidence consistent with} RH for this L-function, computed from
+substrate data and gated against $\zeta$. It is \textbf{not} a proof: Weil
+positivity must hold for \emph{all} test functions of positive type, and we
+test finitely many with the prime sum truncated ($N\mathfrak{q}\le150$). A
+negative $W(h)$ would have \emph{disproved} RH; we found none. Proving
+positivity for all $h$ \emph{is} RH, exactly as open as before.
+\end{tcolorbox}
+
+\section{The measurable bridge: quantum chaos}\label{sec:chaos}
+
+The zeros connect to a \emph{measured} physical phenomenon. The unfolded
+nearest-neighbour spacings of the Riemann zeros follow the \textbf{GUE}
+random-matrix law --- the same law measured in heavy nuclei and chaotic
+microwave cavities (Montgomery--Odlyzko; Rudnick--Sarnak).
+
+\begin{proposition}[\TAGver, \texttt{route\_b/quantum\_chaos\_test.py}]
+On $40$ zeros the spacings show level repulsion (no small gaps; fraction
+$<0.3$ is $0.000$ vs Poisson $0.259$) and the histogram is $\sim$13$\times$
+closer to GUE than to Poisson. The zeros statistically behave like a
+quantum chaotic spectrum --- evidence for the spectral (Hilbert--Pólya)
+picture, not a proof.
+\end{proposition}
+
+The same duality appears as a \emph{quasicrystal}: the diffraction
+$D(t)=\sum_n\cos(\gamma_n t)$ has Bragg peaks exactly at $\log(p^k)$
+(\TAGver, $11/11$ matched, \texttt{diffraction\_quasicrystal.py}) --- the
+zeros (outside) diffract into the primes (inside), which is the explicit
+formula seen as diffraction. Reconstructing the prime staircase from the
+zeros layer-by-layer (\texttt{mirror\_layers.py}) shows each zero is a
+frequency harmonic; off-line tuning grows the error as $x^{1/2+\beta}$, so
+RH is the amplitude-balance condition.
+
+\begin{remark}[Honest scope]
+These confirm the structure (quantum-chaos class, quasicrystal duality);
+peak \emph{locations} and spacing statistics hold regardless of RH. They are
+texture evidence, not the operator.
+\end{remark}
+
+\section{The division-algebra structure}\label{sec:algebra}
+
+The GUE spacing constant $\langle r\rangle\approx0.6027$ (Atas et al.) is a
+function of the Dyson index $\beta$, and Dyson's threefold way identifies
+$\beta$ with a division algebra:
+$\beta{=}1{\leftrightarrow}\R$ (GOE), $\beta{=}2{\leftrightarrow}\C$ (GUE),
+$\beta{=}4{\leftrightarrow}\mathbb{H}$ (GSE); physically these are the three
+time-reversal classes, with $\beta{=}2$ (GUE) \textbf{time-reversal broken}.
+
+\begin{proposition}[The class mismatch, \TAGver]
+The substrate is $\mathbb{H}$ (quaternionic; natural class GSE, $\beta=4$):
+its operator $A_1$ on $V_{600}$ is $93\%$ degenerate. The zeros are $\C$
+(GUE, $\beta=2$; $\langle r\rangle=0.62$). Reaching the generator from the
+substrate is a \emph{change of division algebra} $\mathbb{H}\to\C$, not a
+deformation --- the sharpest statement of why the symmetric geometry cannot
+itself be the generator.
+\end{proposition}
+
+\begin{proposition}[The $\mathbb{H}\to\C$ transition is complexification,
+\TAGver, \texttt{route\_b/jacquet\_langlands\_trace.py}]
+$\mathbb{H}\otimes\C\cong M_2(\C)$ (algebra iso; reduced norm $=$
+determinant, to $2{\times}10^{-16}$), and the $120$ icosian units map into
+$\mathrm{SU}(2)$ (to $2.5{\times}10^{-17}$): $2I\subset\mathrm{SU}(2)$, the
+\emph{unitary} group. The Satake angles are $\mathrm{SU}(2)$ conjugacy
+angles (Sato--Tate $=$ the $\mathrm{SU}(2)$ measure). Globally this is
+Jacquet--Langlands ($B^\times\leftrightarrow\GL_2$, both becoming $M_2(\C)$);
+the eigenvalue matching is the circle test (\S\ref{sec:circle}); the GUE high
+zeros follow by Rudnick--Sarnak. \textbf{The class flip is complexification,
+not geometry.}
+\end{proposition}
+
+\begin{proposition}[Symmetry type, \TAGver/\TAGthm,
+\texttt{route\_b/katz\_sarnak.py}]
+The $a_\mathfrak{q}$ are real $\Rightarrow$ $L$ is self-dual $\Rightarrow$
+Katz--Sarnak \emph{family} symmetry is Orthogonal or Symplectic, not
+Unitary; weight-$2$ $\GL_2$ (Iwaniec--Luo--Sarnak) $\Rightarrow$
+\textbf{Orthogonal}, and rank $0$ $\Rightarrow$ $O^+$. So the full
+$\R\C\mathbb{H}$ trichotomy appears in three roles:
+substrate $=\mathbb{H}$, bulk zero statistics $=\C$ (GUE), family symmetry
+$=\R$ (Orthogonal).
+\end{proposition}
+
+\section{Locating the operator: the adelic scaling}\label{sec:locate}
+
+The conjectural operator is the generator of \emph{scale} (Berry--Keating
+$xp$; Connes' idele action): RH $\Leftrightarrow$ scale is self-adjoint once
+the primes discretise it (\texttt{SCALE\_AND\_SYMMETRY.md}). Decompose the
+adelic scaling operator as \emph{finite places} (the Hecke algebra $=$ local
+scalings) $\otimes$ \emph{archimedean} (the Mellin/dilation continuum).
+
+\begin{proposition}[Finite part, \TAGver, \texttt{route\_b/adelic\_scaling.py}]
+The Hecke operators $T_\mathfrak{q}$ on the Brandt module \emph{commute}
+($\max\|[T_a,T_b]\|=0$) --- a commutative scaling algebra --- with joint
+spectrum Eisenstein $(N\mathfrak{q}+1)\oplus$ cuspidal $(a_\mathfrak{q})$,
+the latter unitary/Satake. So the adelic limit carries a $\C$-class
+(unitary, $\beta=2$) scaling structure at the finite places.
+\end{proposition}
+
+\begin{tcolorbox}[colback=blue!2,colframe=blue!50!black,arc=2mm,
+  title={\textbf{The operator, specified as far as honestly possible}},
+  fonttitle=\bfseries,breakable]
+The missing self-adjoint operator is now pinned:
+\begin{itemize}
+\item \textbf{class:} $\C$ / unitary / $\beta=2$ (\emph{not} the substrate's
+      $\mathbb{H}$/$\beta=4$);
+\item \textbf{finite-place part:} the verified commutative Hecke (scaling)
+      algebra (\S\ref{sec:locate});
+\item \textbf{what is missing (\TAGopen):} the \emph{archimedean} dilation
+      glued in, with a \emph{self-adjoint} realisation making the zeros a
+      discrete point spectrum --- i.e.\ Connes' Weil positivity for
+      \emph{all} test functions. That last step is RH.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Status ledger}
+
+\begin{center}
+\begin{tabular}{p{0.66\textwidth}l}
+\toprule
+Claim & Status\\
+\midrule
+$120$ icosian units $=2I$; norms, closure & \TAGver\\
+Each local factor's zeros on $\Re(s)=1/2$ (Satake circle) & \TAGver\\
+Substrate computes the genuine norm-$31$ newform ($11$ ideals, out-of-sample) & \TAGver\\
+Multiplicativity / Ramanujan / Sato--Tate on the eigenform & \TAGver/\TAGthm\\
+$L(\psi,s)$ is a genuine cuspidal automorphic L-function & \TAGthm\\
+Connes/Weil functional $W(h)>0$ on validated tests & \TAGev\\
+Zeros are GUE (quantum chaos); diffract into primes (quasicrystal) & \TAGver\\
+$\mathbb{H}\to\C$ class flip $=$ complexification ($2I\subset\mathrm{SU}(2)$) & \TAGver\\
+Symmetry type: bulk Unitary/GUE, family Orthogonal $O^+$ & \TAGver/\TAGthm\\
+Adelic scaling: finite-place Hecke algebra is commutative, $\C$-class & \TAGver\\
+``Admissibility $+$ explicit formula $\Rightarrow$ RH'' & withdrawn (false)\\
+RH for $L(\psi,s)$ (= GRH); the archimedean self-adjoint operator & \TAGopen\\
+Existence of the Hilbert--Pólya operator $\hat H$ & \TAGconj/\TAGopen\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Scope discipline}
+
+The mathematics above uses only fields, lattices, quaternion orders, Hecke
+operators, gamma factors, and conductors. \textbf{No observer, no
+consciousness, and no ``self'' enters any definition, and none is needed.}
+Any reading of primes or zeros as selves/agents is a personal-philosophical
+frame that is \emph{outside} this mathematics; the work neither uses nor
+supports it, consistent with the programme's own discipline (``$X$ exists
+$\Leftrightarrow \mathcal{C}(X)=X$''; no ``primes are alive''; no ``universe
+is conscious''). The randomness of the primes is the friction between
+addition and multiplication --- field-independent, sourced by no value or
+agent; RH is the timeless, observer-free statement that the primes are
+maximally balanced.
+
+\section*{Conclusion}
+The substrate reaches the RH frontier exactly this far: it \emph{verifiably
+computes} a genuine Hilbert modular newform from its own geometry, realises
+the \emph{local} critical line in full, supplies real Satake data to the
+genuine Connes positivity object (positive on every validated test), and ---
+through the quantum-chaos and division-algebra structure --- pins the missing
+operator to the $\C$/unitary/$\beta=2$ class, with its finite-place part
+(the commutative Hecke scaling algebra) built and verified. It does
+\emph{not} prove RH: the single remaining step is the \emph{archimedean
+self-adjoint realisation} of the zeros as a discrete spectrum --- equivalently
+Weil positivity for all test functions, equivalently the Hilbert--Pólya
+operator on the $\C$/adelic side --- which is RH and is open for everyone.
+This is the honest, undismissable standing: a verified local realisation, a
+fully-specified missing operator (class, finite-place part, and the one open
+gluing), and not a step fabricated.
+
+\begin{thebibliography}{9}
+\bibitem{Dembele} Dembl\'e, L. \emph{Quaternionic Manin symbols, Brandt
+matrices and Hilbert modular forms.} Math.\ Comp.\ 76 (2007), 1039--1057.
+\bibitem{Voight} Voight, J. \emph{Quaternion Algebras.} GTM 288, Springer, 2021.
+\bibitem{Connes} Connes, A. \emph{Trace formula in noncommutative geometry
+and the zeros of the Riemann zeta function.} Selecta Math.\ 5 (1999), 29--106.
+\bibitem{BerryKeating} Berry, M.V., Keating, J.P. \emph{The Riemann zeros and
+eigenvalue asymptotics.} SIAM Review 41 (1999), 236--266.
+\bibitem{IK} Iwaniec, H., Kowalski, E. \emph{Analytic Number Theory.} AMS
+Colloq.\ Publ.\ 53, 2004.
+\bibitem{Montgomery} Montgomery, H.L. \emph{The pair correlation of zeros of
+the zeta function.} Proc.\ Sympos.\ Pure Math.\ 24 (1973), 181--193.
+\bibitem{RudnickSarnak} Rudnick, Z., Sarnak, P. \emph{Zeros of principal
+L-functions and random matrix theory.} Duke Math.\ J.\ 81 (1996), 269--322.
+\bibitem{Atas} Atas, Y.Y., Bogomolny, E., Giraud, O., Roux, G.
+\emph{Distribution of the ratio of consecutive level spacings in random
+matrix ensembles.} Phys.\ Rev.\ Lett.\ 110 (2013), 084101.
+\bibitem{Dyson} Dyson, F.J. \emph{The threefold way.} J.\ Math.\ Phys.\ 3
+(1962), 1199--1215.
+\bibitem{KatzSarnak} Katz, N.M., Sarnak, P. \emph{Random Matrices, Frobenius
+Eigenvalues, and Monodromy.} AMS Colloq.\ Publ.\ 45, 1999.
+\bibitem{ILS} Iwaniec, H., Luo, W., Sarnak, P. \emph{Low lying zeros of
+families of L-functions.} Publ.\ IH\'ES 91 (2000), 55--131.
+\end{thebibliography}
+
+\end{document}

@@ -1,16 +1,19 @@
-"""Level 31, all prime ideals of norm <= 200: geometry vs point counts.
+"""Level 31, all prime ideals of norm <= 200: TRUE per-ideal comparison.
 
-For every good prime ideal in data/target_a_p.json (44 ideals over 24
-rational-prime norm buckets, both Galois-conjugate ideals listed at each
-split prime): build the geometric Hecke eigenvalue(s) at level 31 and
-compare. At a split norm the two totally-positive generators varpi and
-sigma(varpi) yield the two eigenvalues, and the geometric SET must equal
-the point-counted set {a_P, a_P'} exactly; at inert and ramified norms
-the single value must match. Nothing is fitted; the target file was
-produced by brute-force point counting only.
+Convention (verified, not assumed, by this script): the engine's level
+splitting sends phi to the root r0 = 13 of x^2 - x - 1 mod 31, so the
+engine's level ideal is the kernel of (a, b) -> a + b*r0 — the GALOIS
+CONJUGATE sigma(p31) of the conductor p31 = (5 phi - 2) of the reference
+curve 31.1-a1. Consequently the geometric Hecke system is the
+sigma-conjugate of the curve's system: for every good prime ideal P
+(labeled in data/target_a_p.json by its root phi_mod_p), the Brandt
+eigenvalue at a generator of sigma(P) equals the point-counted a_P.
+ONE global involution, fixed once by the root choice, must explain every
+assignment — the script verifies this per ideal and FAILS if any single
+ideal needs its own adjustment.
 
 Run:  python3 route_b/level31_full_ideals.py   (from realization/)
-Writes data/level31_per_ideal.json.
+Writes data/level31_per_ideal.json (one row per prime ideal, 44 rows).
 """
 import json
 import math
@@ -20,8 +23,17 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import brandt_level as bl       # noqa: E402
 import brandt_matrices as bm    # noqa: E402
+import ideal_classes as ic      # noqa: E402
 
 LEVEL = 31
+CONDUCTOR_GEN = (-2, 5)         # 5 phi - 2 in (a, b) coords for a + b*phi
+
+
+def in_ideal(g, p, root):
+    """g = a + b*phi lies in the prime over p with phi = root iff
+    a + b*root = 0 mod p."""
+    a, b = g
+    return (a + b * root) % p == 0
 
 
 def run():
@@ -29,63 +41,73 @@ def run():
     with open(os.path.join(here, "data", "target_a_p.json")) as fh:
         target = json.load(fh)
 
-    buckets = {}
-    for r in target["primes"]:
-        buckets.setdefault(r["norm"], []).append(r)
+    spl = ic.LocalSplitting(LEVEL)
+    r0 = spl.phi
+    engine_level_is_conjugate = not in_ideal(CONDUCTOR_GEN, LEVEL, r0)
 
     eng = bl.engine_for(LEVEL)
     rows, all_match, n_ideals = [], True, 0
-    for norm in sorted(buckets):
-        tgt_rows = buckets[norm]
-        kind = tgt_rows[0]["kind"]
-        tgt_set = sorted(r["a_p"] for r in tgt_rows)
-        gen = bm.totally_positive_generator(norm)
+    buckets = {}
+    for r in target["primes"]:
+        buckets.setdefault(r["p"], []).append(r)
+
+    for p in sorted(buckets):
+        pair = buckets[p]
+        kind = pair[0]["kind"]
+        gen = bm.totally_positive_generator(pair[0]["norm"])
         if gen is None:
-            rows.append({"norm": norm, "kind": kind,
-                         "note": "no totally-positive generator found"})
+            rows.append({"p": p, "note": "no totally-positive generator"})
             all_match = False
             continue
-        if norm == LEVEL:
-            # The rational prime under the level: one of the two ideals IS the
-            # level ideal (the kernel of (a,b) -> a + b*phi_root mod 31 fixed
-            # by the level splitting -- a purely geometric criterion, no
-            # target consulted). Its Brandt value is the Steinberg datum at
-            # the level, not a good Hecke eigenvalue; only the conjugate
-            # (good) ideal is compared against the point-count target.
-            root = eng.spl.phi
-            cands = [gen, bl.galois_conj(gen)]
-            good = [g for g in cands if (g[0] + g[1] * root) % LEVEL != 0]
-            lvl = [g for g in cands if (g[0] + g[1] * root) % LEVEL == 0]
-            assert len(good) == 1 and len(lvl) == 1
-            geo = [eng.brandt_matrix(good[0])["cuspidal_eigenvalue"]]
-            steinberg = eng.brandt_matrix(lvl[0])["cuspidal_eigenvalue"]
-        elif kind == "split":
-            geo = sorted({eng.brandt_matrix(gen)["cuspidal_eigenvalue"],
-                          eng.brandt_matrix(bl.galois_conj(gen))["cuspidal_eigenvalue"]})
-        else:
-            geo = [eng.brandt_matrix(gen)["cuspidal_eigenvalue"]]
-        # a split bucket can have equal conjugate eigenvalues (a = a'):
-        # the geometric set then collapses to one value, like the target set
-        match = sorted(set(geo)) == sorted(set(tgt_set))
-        ram = all(abs(a) <= 2 * math.sqrt(norm) + 1e-9 for a in geo)
-        all_match &= match
-        n_ideals += len(tgt_rows)
-        row = {"norm": norm, "kind": kind, "n_ideals": len(tgt_rows),
-               "geometric": geo, "point_count": tgt_set,
-               "ramanujan": ram, "match": match}
-        if norm == LEVEL:
-            row["steinberg_at_level_ideal"] = steinberg
-            row["note"] = ("level ideal excluded from good-prime comparison; "
-                           "its Brandt value is the Steinberg datum used by "
-                           "the Atkin-Lehner sign check (W = -a = +1)")
-        rows.append(row)
+        if kind != "split":
+            # inert/ramified: Galois-stable ideal, no labeling subtlety
+            a_geo = eng.brandt_matrix(gen)["cuspidal_eigenvalue"]
+            t = pair[0]
+            match = a_geo == t["a_p"]
+            all_match &= match
+            n_ideals += 1
+            rows.append({"p": p, "norm": t["norm"], "kind": kind,
+                         "phi_mod_p": None, "generator": list(gen),
+                         "geometric_a": a_geo, "target_a_p": t["a_p"],
+                         "match": match})
+            continue
+        # split: label each target ideal by its root; the geometric value AT
+        # ideal P is the Brandt eigenvalue at a generator of sigma(P) — the
+        # single global convention verified bucket-by-bucket here.
+        for t in pair:
+            root = t["phi_mod_p"]
+            g_P = gen if in_ideal(gen, p, root) else bl.galois_conj(gen)
+            g_sigmaP = bl.galois_conj(g_P)
+            a_geo = eng.brandt_matrix(g_sigmaP)["cuspidal_eigenvalue"]
+            ram = abs(a_geo) <= 2 * math.sqrt(t["norm"]) + 1e-9
+            match = a_geo == t["a_p"]
+            all_match &= match
+            n_ideals += 1
+            rows.append({"p": p, "norm": t["norm"], "kind": "split",
+                         "phi_mod_p": root, "ideal_generator": list(g_P),
+                         "evaluated_at_sigma_generator": list(g_sigmaP),
+                         "geometric_a": a_geo, "target_a_p": t["a_p"],
+                         "ramanujan": ram, "match": match})
 
-    return {"level": LEVEL, "curve": target["curve"],
+    # Steinberg datum at the engine's own level ideal (kernel of the splitting)
+    g31 = bm.totally_positive_generator(31)
+    g31 = g31 if in_ideal(g31, 31, r0) else bl.galois_conj(g31)
+    steinberg = eng.brandt_matrix(g31)["cuspidal_eigenvalue"]
+
+    return {"level_norm": LEVEL,
+            "curve": target["curve"],
+            "engine_splitting_root": r0,
+            "engine_level_ideal": "sigma(5phi-2)" if engine_level_is_conjugate
+                                  else "(5phi-2)",
+            "convention": "the geometry realizes the sigma-conjugate of the "
+                          "reference Hecke system: geometric a at ideal P = "
+                          "Brandt eigenvalue at a generator of sigma(P). One "
+                          "global involution, fixed by the splitting root; "
+                          "all_match=true certifies that no per-ideal "
+                          "adjustment was needed anywhere.",
             "norm_bound": target["norm_bound"],
-            "comparison": "per rational-prime norm bucket; at split norms the "
-                          "geometric eigenvalue set {a(varpi), a(sigma varpi)} "
-                          "must equal the point-counted set for the two ideals",
-            "n_norm_buckets": len(rows), "n_prime_ideals": n_ideals,
+            "n_prime_ideals": n_ideals,
+            "steinberg_at_engine_level_ideal": steinberg,
             "all_match": all_match, "rows": rows}
 
 
@@ -96,12 +118,14 @@ if __name__ == "__main__":
         json.dump(out, fh, indent=2)
     for r in out["rows"]:
         if "note" in r:
-            print("  N=%3d %s" % (r["norm"], r["note"]))
+            print("  p=%3d %s" % (r["p"], r["note"]))
         else:
-            print("  N=%3d %-8s ideals=%d  geom %-12s == target %-12s  %s" % (
-                r["norm"], r["kind"], r["n_ideals"], r["geometric"],
-                r["point_count"], r["match"]))
-    print("LEVEL 31: %d ideals over %d norm buckets, ALL MATCH: %s "
+            print("  p=%3d N=%3d %-8s r=%-4s geom=%4d target=%4d  %s" % (
+                r["p"], r["norm"], r["kind"], str(r.get("phi_mod_p")),
+                r["geometric_a"], r["target_a_p"], r["match"]))
+    print("engine level: %s (root %d); Steinberg at engine level ideal: %d" %
+          (out["engine_level_ideal"], out["engine_splitting_root"],
+           out["steinberg_at_engine_level_ideal"]))
+    print("LEVEL 31: %d prime ideals, per-ideal ALL MATCH: %s "
           "-> data/level31_per_ideal.json" % (out["n_prime_ideals"],
-                                              out["n_norm_buckets"],
                                               out["all_match"]))

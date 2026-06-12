@@ -53,9 +53,6 @@
 \newtcolorbox{opengapbox}[1][]{
   colback=red!2, colframe=red!50!black,
   fonttitle=\bfseries, title={Open / not claimed}, #1}
-\newtcolorbox{interpretbox}[1][]{
-  colback=blue!2, colframe=blue!40!black,
-  fonttitle=\bfseries, title={Interpretation (non-load-bearing)}, #1}
 \newtcolorbox{scopebox}[1][]{
   colback=gray!4, colframe=gray!55!black,
   fonttitle=\bfseries, title={Scope}, #1}
@@ -163,12 +160,13 @@ operators.
 $\fp_{31}$ the geometry gives a $2$-dimensional Brandt module, Eichler
 mass $8/15$, a $1$-dimensional cuspidal eigenform, and Hecke
 eigenvalues matching the point-counted curve $31.1\text{-}a1$ at all
-$44$ good prime ideals of norm ${\le}200$ (over $25$ rational-prime
-norm buckets): at each split norm the two totally positive generators
-resolve the \emph{complete} eigenvalue pair $\{a_\fq,a_{\fq'}\}$, not
-merely one representative, and the Brandt value at the level ideal
-itself recovers the Steinberg datum $a_{\fp_{31}}=-1$ used by the
-Atkin--Lehner check.
+$44$ good prime ideals of norm ${\le}200$, \emph{individually}: the
+splitting choice $\varphi\mapsto13$ places the engine's level at
+$\sigma(\fp_{31})$, so the geometric system is the Galois conjugate of
+the curve's; after fixing that single global involution once, every
+labeled ideal matches with no per-prime freedom, and the Brandt value
+at the engine's own level ideal recovers the Steinberg datum $-1$ used
+by the Atkin--Lehner check.
 \item \textbf{A family, by dimension (\S\ref{sec:dims}).} The geometric
 orbit count reproduces the entire prime-level cuspidal-dimension
 sequence over $K$ for norm ${<}100$: $7/7$ agreement with
@@ -286,13 +284,21 @@ eigenvector is $(3,-5)$.
 Independently of the geometry we form the target by brute-force point
 counting of the elliptic curve $31.1\text{-}a1/K$,
 $[a_1,\dots,a_6]=[1,\varphi+1,\varphi,\varphi,0]$, setting
-$a_\fq=\Nm(\fq)+1-\#E(\OK/\fq)$. No $L$-function table is read. The
-Brandt eigenvalues from \eqref{eq:brandt} agree with $a_\fq$ at all
-$44$ good prime ideals of norm $\le200$, both Galois-conjugate ideals
-resolved individually at every split norm
-(\texttt{data/level31\_per\_ideal.json}); the level ideal itself is
-excluded from the good-prime comparison, and its Brandt value $-1$ is
-exactly the Steinberg datum consumed by the Atkin--Lehner sign check
+$a_\fq=\Nm(\fq)+1-\#E(\OK/\fq)$. No $L$-function table is read.
+
+A labeling convention must be fixed before a \emph{per-ideal} claim can
+even be stated. Our level splitting sends $\varphi\mapsto13\pmod{31}$,
+whose kernel is $\sigma(\fp_{31})$ --- the Galois conjugate of the
+curve's conductor $\fp_{31}=(5\varphi-2)$ --- so the geometric Hecke
+system is the $\sigma$-conjugate of the curve's: the Brandt eigenvalue
+at a generator of $\sigma(\fq)$ equals $a_\fq$. With that single global
+involution fixed once, the Brandt eigenvalues agree with $a_\fq$ at all
+$44$ good prime ideals of norm $\le200$ \emph{individually} --- each
+labeled ideal checked on its own, with no per-prime freedom anywhere
+(\texttt{data/level31\_per\_ideal.json}; the verification script fails
+if any single ideal needs its own adjustment). The engine's level ideal
+is excluded from the good-prime comparison, and its Brandt value $-1$
+is exactly the Steinberg datum consumed by the Atkin--Lehner sign check
 below.
 
 \begin{verifiedbox}
@@ -475,10 +481,10 @@ $G$-orthonormal eigenbasis.
 \end{definition}
 
 \noindent
-(This is the self-adjoint, ``lossless'' end of a broader closure
-taxonomy --- dissipative $T^\top GT\prec G$, isometric $T^\top GT=G$ ---
-which we do not need here: the Brandt operators are not contractions,
-having Eisenstein eigenvalue $\Nm(\fq)+1>1$.)
+(One can place this within the usual operator taxonomy --- dissipative
+$T^\top GT\prec G$, isometric $T^\top GT=G$ --- which we do not need
+here: the Brandt operators are not contractions, having Eisenstein
+eigenvalue $\Nm(\fq)+1>1$.)
 
 \begin{proposition}\label{prop:selfadj}
 For every $\fq\nmid\fp$ the Brandt operator $\Brandt(\fq)$ admits the
@@ -579,13 +585,13 @@ icosian order reproduces a \emph{family} of Hilbert modular forms over
 $\Q(\sqrt5)$: a non-obvious dimension sequence ($7/7$), the full Hecke
 systems of two rational eigenforms (out-of-sample, no fit), and the
 irrational eigenvalues of the genus-$2$ form at level $61$. We have
-framed the self-adjoint Hecke operators in a closure/resonance
-certificate algebra and used it to state exactly what separates this
-verified, finite, coefficient-side structure from the Riemann
-Hypothesis: the global analytic positivity, the lossless self-adjoint
-engine, which we characterize and do not construct. The value of the
-work is a clean, reproducible realization of known arithmetic from
-polytope geometry, and an honest account of the gap that remains.
+recorded the self-adjointness of the Hecke operators as an exactly
+checkable certificate, and used it to state exactly what separates this
+verified, finite, coefficient-side structure from GRH-type questions:
+the global analytic positivity of the assembled $L$-functions, which a
+finite coefficient computation cannot supply. The value of the work is
+a clean, reproducible realization of known arithmetic from polytope
+geometry, and an honest account of the gap that remains.
 
 \bibliographystyle{plain}
 \bibliography{references}

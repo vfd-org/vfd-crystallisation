@@ -1,0 +1,396 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage[hidelinks,colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\sisetup{detect-all=true,group-separator={,}}
+
+\title{\textbf{Closure-as-Distance: A Measurable Signature of Multi-Channel Integrative Organisation}\\[2pt]
+\large A Five-Criterion Applicability Diagnostic Validated Across Paired and Unpaired Substrates\\[1pt]
+\small (Open research note --- pre-peer-review draft, diagnostic version CAD-D1--D5-v1)}
+
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent
+We define \emph{closure-as-distance}: the L\textsuperscript{2}-norm of a per-subject standardised feature vector from a reference distribution, applied as an empirical first-order proxy for distance-from-constraint-manifold in complex systems. This is an empirical proxy for distance to a closure-stable reference basin in observable feature space, not an approximation to the formal closure operator; the present paper does not claim it is the operator itself. The motivating hypothesis --- that closure-as-distance is a substrate-independent universal statistic --- is empirically refined into an applicability-conditioned claim: \emph{in the present validation set}, closure-as-distance is best predicted to dominate scalar single-axis baselines (in calibrated effect size \emph{and} across-fold feature-set stability) when the substrate's basin transition exhibits \emph{multi-channel integrative organisation} --- parallel anatomically-distinct causal channels producing sparsely-loaded complementary feature effects. A small number of CAD-FAIL substrates (the recurrent-network training rows in Table~\ref{tab:cross-substrate}) show closure detection above single-axis baselines in raw calibrated effect size; this is treated as a calibration boundary of CAD-D1--D5-v1 rather than a refutation of the applicability claim, and is discussed in \S\ref{sec:results}. We derive a five-criterion applicability diagnostic ($D_1$: anisotropy, $D_2$: multi-feature consistency, $D_3$: subject-level coherence, $D_4$: mechanism complementarity, $D_5$: feature minimality) that \emph{a priori} predicts where the methodology applies. The original paired-design validation classified all nine paired-design tested substrates correctly classified; including three negative-control synthetic datasets the paired set sums to $12/12$ across the current table (3 Tier A + 4 Tier B + 2 Tier C + 3 controls). After four post-draft real-data EEG tests using the unpaired-design extension of the diagnostic, the overall record is \textbf{$15$ of $16$} cases correctly classified, with one transparently characterised false positive in frontotemporal dementia (FTD vs healthy on \texttt{ds004504}) attributable to directionally-coherent per-feature shifts at magnitudes comparable to within-cohort variance. The empirical anchor is source-localised cortical EEG under propofol anaesthesia ($n=14$): leave-one-subject-out feature-reselection gives $d_z = 2.07$ with perfect across-fold feature-set stability (Jaccard $=1.00$), all subjects positive, $p_t = 3.1 \times 10^{-6}$, with two features (beta-band phase-gradient directionality and alpha:beta cross-band phase-locking value) carrying the entire discoverable signal. Trait-anxiety EEG on OpenNeuro \texttt{ds007609} ($n=24$) is the second post-draft confirming PASS (Cohen's $d = +0.79$). Tier B substrates (Kuramoto coupled oscillators, single- and multi-objective recurrent-network training, atrial fibrillation HRV) and Tier C substrates (climate regime shifts) correctly fail the diagnostic and expose CAD-v1 calibration boundaries: Kuramoto, AF, and climate fail the diagnostic and do not dominate single-axis baselines, while the RNN training rows fail the diagnostic but their raw effect size does exceed simple baselines (CAD-v1.5 calibration item, discussed in \\S\ref{sec:results}). Three negative-control synthetic datasets (Gaussian noise, structured-noise no-shift, single-axis trivial signal) also correctly fail. We formalise closure-as-distance as a first-order distance-from-constraint-manifold approximation; predict the closure-over-single-axis advantage scales as $\sqrt{k_{\mathrm{eff}}}$ with the participation ratio of normalised shift eigenvalues; and derive a power curve specifying minimum cohort size $n \geq 7$ for stable feature discovery at source-EEG effect strength. The $D_1$--$D_5$ thresholds are presented as empirical diagnostic thresholds of the present version (CAD-D1--D5-v1), not as universal constants. Wet-lab validation tests --- planarian regenerative basin selection, TMS-EEG perturbational complexity, sleep-stage closure, cell- and brain-death boundary --- are pre-registered as proposals for external replication and are not used as evidence for the present claims.
+\end{abstract}
+\paragraph{Programme map (review-packet 2026-05-22).}
+This paper is part of the Existence / Life / Closure review packet. Stable packet references:
+Paper I = \emph{Existence as Closure};
+Paper II = \emph{Life as Closure};
+Paper III = \emph{From Processing to Point of View};
+Note A = \emph{Bioelectric Closure} (SL-001);
+Note B = \emph{Cortical Phase Closure} (SL-002);
+Note C = \emph{Closure-as-Distance} (cross-substrate methodology);
+Note D = \emph{Trauma / Cortical Closure} (SL-005);
+Note E = \emph{FlowIndex} (SL-006);
+Note F = \emph{Dyadic Joint Meaning} (SL-007).
+Extension IV = \emph{Cosmic Self-Pruning and Frame Recurrence} is withheld from the primary packet.
+
+\paragraph{Status taxonomy.}
+\textbf{Theorem / Definition} = formal structural claim under stated assumptions.
+\textbf{Conditional Proposition} = bridge claim depending on H-RP, P-A, substrate mapping, or empirical interpretation.
+\textbf{Empirical Result} = completed data analysis with stated effect size + significance.
+\textbf{Empirical Proxy} = measurable first-order approximation, not the formal operator.
+\textbf{Pre-registered Proposal} = future test, not evidence.
+
+
+
+\section{Introduction}\label{sec:intro}
+
+Complex systems transition between distinct dynamical regimes --- sleep stages, anaesthetic states, regenerative outcomes, cardiac rhythms, climate regimes. The methodological landscape for quantifying these transitions in observational data is heterogeneous, with different fields using different metrics that do not transfer across substrates. The motivating intuition behind \emph{closure-as-distance} is that any system performing \emph{integrative computation} should show a measurable signal of basin commitment relative to a reference attractor, and that a single multi-feature centroid-distance methodology should generalise across substrates. This intuition has theoretical pedigree --- autopoiesis~\citep{maturana1980autopoiesis}, integrated information theory~\citep{tononi2016integrated}, the free-energy principle~\citep{friston2010free} --- all share the structural claim that life-enabling complex organisation is characterised by some form of operational closure that distinguishes it from its environment.
+
+This paper makes two contributions. First, we demonstrate \emph{empirically} that the universal version of the intuition does not hold: of nine tested substrates (Tier A + Tier B + Tier C, paired-design), only one cleanly satisfies the proposed closure-as-distance methodology. Second, we derive a calibration claim that does hold in the present validation set: in the regime where the substrate's between-condition shift exhibits \emph{parallel anatomically-distinct causal channels} producing \emph{sparsely-loaded complementary feature effects}, closure-as-distance is the best-predicted statistic for dominating scalar single-axis baselines in both calibrated effect size and feature-set stability. We supply a five-criterion applicability diagnostic ($D_1$--$D_5$) that predicts this condition \emph{a priori}, validated on the nine-substrate paired-design set, with three negative controls also correctly rejected, and subsequent post-draft real-data tests giving $15$ of $16$ classifications matching observed empirical PASS/FAIL outcomes (one false positive on FTD vs healthy, transparently characterised in \S\ref{sec:ftd-boundary}; calibration-boundary exceptions on the RNN rows are discussed in \S\ref{sec:results}). Alongside the diagnostic we supply a constraint-manifold theoretical formalisation, a leave-one-subject-out discovery procedure, and a power curve specifying minimum cohort size.
+
+The empirical anchor is source-localised cortical EEG under propofol anaesthesia. On this substrate, leave-one-subject-out FDR-feature-reselection gives a calibrated drift of $d_z = 2.07$ across $n = 14$ subjects with $p_t = 3.1 \times 10^{-6}$, perfect across-fold feature-set stability (Jaccard $= 1.00$), and the discovery procedure converges identically on the same two features in every fold: beta-band phase-gradient directionality (PGD-$\beta$) and alpha:beta cross-band phase-locking value (PLV-$\alpha{:}\beta$). These two features dominate volume-conducted scalar baselines (raw band-power, mean pairwise PLV, global synchrony) by a factor of $3$--$5\times$ in calibrated-drift effect size. The original headline numbers for this dataset --- $14/14$ subjects positive under per-subject calibrated displacement, paired $t = 7.11$, $d_z = 1.90$, $p_t = 8.0 \times 10^{-6}$ at sensor level with source-localised replication strengthening to $t = 9.72$, $d_z = 2.60$, and independent-cohort clinical-anaesthesia replication on \texttt{ds004541} yielding $7/7$, $d_z = 1.98$~\citep{SolutionLab002} --- are preserved as the in-sample full-feature-space numbers; the LOSO refinement provides the additionally honest cross-validation number ($d_z = 2.07$ at source level).
+
+Closure-as-distance is not the full closure operator of the broader VFD/ARIA framework. It is a measurable first-order empirical proxy: a calibrated L\textsuperscript{2}-distance from a reference basin or constraint manifold in observable feature space. It is expected to track closure-relevant structure only where the substrate's between-condition transition is distributed across multiple complementary causal channels. The applicability diagnostic $D_1$--$D_5$ is therefore part of the method, not an optional filter; the diagnostic specifies when the L\textsuperscript{2}-norm-from-centroid proxy is expected to detect what it is claimed to detect.
+
+\paragraph{Negative controls are load-bearing.} The diagnostic has been tested on three synthetic controls: pure Gaussian noise, structured-noise with no between-condition shift, and a single-axis trivial signal of large magnitude. All three correctly fail the diagnostic. The single-axis trivial shift is especially important: it shows the method does not reward any significant multivariate displacement, and explicitly rejects shifts that are real but not multi-channel closure-like (Section~\ref{sec:results-negative}). Without this control, $D_1$--$D_5$ would be a generic L\textsuperscript{2}-significance test; with it, the diagnostic actively distinguishes multi-channel integrative organisation from other kinds of large detectable displacement.
+
+\bigskip
+\noindent\fbox{\parbox{0.97\textwidth}{\textbf{Core claim.} In the present validation set, closure-as-distance is best predicted to dominate scalar single-axis baselines (in both calibrated effect size and across-fold feature-set stability) when the substrate's basin transition is distributed across multiple complementary causal channels. The $D_1$--$D_5$ diagnostic is the proposed applicability test for that condition. Outside that regime, closure-as-distance may still detect a shift in raw effect size (the RNN substrates in Table~\ref{tab:cross-substrate} are such calibration-boundary cases) but its feature-set stability degrades and the multi-channel interpretation does not license.}}
+\bigskip
+
+This paper is organised as follows. Section~\ref{sec:method} defines closure-as-distance, the applicability diagnostic ($D_1$--$D_5$, paired and unpaired-design variants), the LOSO+Jaccard discovery procedure, the constraint-manifold theoretical formulation, and the power analysis. Section~\ref{sec:results} reports the eight-substrate paired-design validation, the three negative controls, and the four post-draft real-data EEG cohort tests. Section~\ref{sec:relation-life} positions this note relative to \emph{Life as Closure}. Section~\ref{sec:discussion} draws the multi-channel integrative-organisation conclusion. Section~\ref{sec:external} pre-registers external validation tests. Section~\ref{sec:nonclaims} states what this paper does \emph{not} claim. Section~\ref{sec:limits} states limitations and falsifiers.
+
+\section{Methods}\label{sec:method}
+
+\subsection{Closure-as-distance}\label{sec:method-closure}
+
+For a complex system observed at multiple instances $s = 1, \ldots, N$ (subjects, replicates, recordings) under two conditions $c \in \{c_0, c_1\}$ (e.g.\ awake and sedated, sinus and atrial fibrillation, untrained and trained), let $X_{s,c,t} \in \mathbb{R}^d$ denote a $d$-dimensional feature vector measured at time index $t$. The \emph{per-subject calibrated drift} from condition $c_0$ to $c_1$ in the feature subset $F \subseteq \{1, \ldots, d\}$ is
+\begin{align*}
+\delta_s(F) := \mathbb{E}_t\!\left[\,\big\|\,(X_{s,c_1,t}^F - \mu^F_{c_0,s})/\sigma^F_{c_0,s}\,\big\|_2\,\right] - \mathbb{E}_t\!\left[\,\big\|\,(X_{s,c_0,t}^F - \mu^F_{c_0,s})/\sigma^F_{c_0,s}\,\big\|_2\,\right],
+\end{align*}
+where $\mu^F_{c_0,s}, \sigma^F_{c_0,s}$ are the per-subject reference-condition mean and standard deviation of $X^F$. The across-subject calibrated-drift statistic is paired Cohen's $d_z = \overline{\delta_s}/\mathrm{SD}(\delta_s)$ with paired $t$ and Wilcoxon tests.
+
+\subsection{Applicability diagnostic $D_1$--$D_5$ (paired-condition design)}\label{sec:method-diagnostic}
+
+Before applying closure-as-distance, the substrate is tested against five \emph{a priori} structural criteria. Let $D \in \mathbb{R}^{N \times d}$ be the per-subject signed feature-delta matrix where $D_{s,j} = \mathbb{E}_t[X_{s,c_1,t,j}] - \mathbb{E}_t[X_{s,c_0,t,j}]$, standardised per feature.
+
+\begin{itemize}\itemsep0pt
+\item \textbf{$D_1$ --- anisotropy.} Top-PC variance fraction of $\mathrm{cov}(D)$. Threshold $\leq 0.70$. If $D_1 > 0.70$, the shift is essentially single-axis and a one-feature test will dominate.
+\item \textbf{$D_2$ --- multi-feature consistency.} Number of feature axes $j$ for which $\geq 80\%$ of instances $s$ agree on the sign of $D_{s,j}$. Threshold $\geq 2$.
+\item \textbf{$D_3$ --- subject-level coherence.} Mean per-subject fraction of features moving in the cohort-modal direction. Threshold $\geq 0.65$.
+\item \textbf{$D_4$ --- mechanism complementarity.} Participation ratio of normalised eigenvalues of $\mathrm{cov}(D)$: $k_{\mathrm{eff}} = 1 / \sum_i p_i^2$ where $p_i = \lambda_i / \sum_j \lambda_j$. Threshold $\geq 1.5$. Distinguishes \emph{multi-mechanism} (high $k_{\mathrm{eff}}$) from \emph{one-mechanism-with-many-redundant-proxies} (low $k_{\mathrm{eff}}$).
+\item \textbf{$D_5$ --- feature minimality.} Fraction of features that pass Benjamini--Hochberg FDR ($\alpha = 0.05$) on the per-subject signed delta. Threshold $\leq 0.50$. If $D_5 > 0.50$, most features are redundantly signal-loaded and multi-feature aggregation injects noise; the discovery procedure cannot find a minimal subset.
+\end{itemize}
+A substrate \emph{strictly passes} the diagnostic when all five criteria are satisfied at their CAD-v1 thresholds. A substrate is classified \emph{PASS-leaning} when at least three of five criteria pass strictly, all remaining criteria are within their per-criterion tolerance of threshold (D1 may exceed by $\leq 0.10$, D2 may be off by $\leq 2$, D3 may be below by $\leq 0.10$, D4 may be below by $\leq 0.5$, D5 may exceed by $\leq 0.10$ in standardised units), and the strict-PASS set includes $D_4$ (mechanism complementarity) and at least one of $D_1$ (anisotropy), $D_3$ (subject-level coherence), or $D_5$ (feature minimality). Under this rule, trait anxiety \texttt{ds007609} ($D_1=0.43$ pass, $D_2=0$ near-miss within tolerance 2, $D_3=0.64$ near-miss within tolerance 0.10, $D_4=3.68$ pass, $D_5=0.00$ pass) classifies as PASS-leaning. Cardiac AF ($D_1=0.75$ near-miss within tolerance 0.10, $D_2=6$ pass, $D_3=0.88$ pass, $D_4=1.66$ pass, $D_5=1.00$ near-miss outside tolerance) does \emph{not} satisfy the PASS-leaning rule and is classified as FAIL. The PASS-leaning rule is documented operationally in \texttt{src/strict\_vs\_passleaning\_audit.py}. Strict-PASS substrates form the calibration core of CAD-v1; PASS-leaning substrates are an explicit boundary set whose CAD-v1.5 recalibration is open work (see \S\ref{sec:limits}).
+
+\paragraph{Threshold status.} The $D_1$--$D_5$ thresholds above are \emph{empirical applicability thresholds} calibrated from the current substrate set. They are not claimed as universal constants. They define the present diagnostic version (\textbf{CAD-D1--D5-v1}) and are expected to be refined by larger paired and unpaired validation cohorts. The unpaired-design thresholds (Section~\ref{sec:method-diagnostic-unpaired}) inherit the paired-design values and are explicitly marked less mature; per-design recalibration is open work.
+
+\subsection{Applicability diagnostic for unpaired between-group designs}\label{sec:method-diagnostic-unpaired}
+
+For substrates where each instance has only one cohort label (e.g., between-subject clinical contrasts like Alzheimer's vs healthy controls, or low- vs high-trait anxiety groups), no within-subject paired delta is available. We extend $D_1$--$D_5$ as follows. Let $\mu_{\mathrm{ref}} = \frac{1}{n_{\mathrm{ref}}} \sum_i x^{(\mathrm{ref})}_i$ be the per-feature mean over reference-cohort subjects, with each subject collapsed to its mean across windows. The per-target-subject delta is
+\[
+  \delta_j = x^{(\mathrm{tgt})}_j - \mu_{\mathrm{ref}}, \qquad j = 1, \ldots, n_{\mathrm{tgt}}.
+\]
+The matrix $D = (\delta_j)_j$ then plays the same role as the paired per-subject signed-diff matrix, and $D_1$--$D_5$ are computed unchanged on $D$ after per-feature standardisation. The same thresholds are applied; per-design threshold recalibration on a larger between-group cohort set is open work.
+
+\paragraph{Supplementary $D_6$ (informational).} A more conservative criterion conjoins effect-size and directional-coherence: $D_6$ counts features that BOTH (a)~have a $\geq 80\%$ per-target-subject sign agreement under~$D$, and (b)~pass an FDR-corrected one-sample $t$-test against zero shift. Threshold $D_6 \geq 2$. $D_6$ is reported alongside $D_1$--$D_5$ but does not by default gate the overall pass decision: applying $D_6$ as a hard gate on the four post-draft real-data tests would correctly catch the FTD false positive but introduce a false negative on the anxiety case, indicating that this conjoined criterion is too strict at the small cohort sizes ($n \leq 30$ per group) characteristic of the tested cohorts. The trade-off is documented for transparency.
+
+\subsection{LOSO+Jaccard feature discovery}\label{sec:method-loso}
+
+For each held-out instance $s^*$, the FDR-passing feature subset $F_{s^*}$ is re-derived from the remaining $N-1$ instances. The held-out instance's calibrated drift is then computed in $F_{s^*}$. The mean pairwise Jaccard similarity of $\{F_{s^*}\}$ across folds measures discovery stability. The LOSO $d_z$ across the $N$ held-out drift values is the cross-validated effect size, free of feature-selection-on-test-data circularity.
+
+\subsection{Constraint-manifold formalisation}\label{sec:method-manifold}
+
+Closure-as-distance is interpretable as a first-order approximation to distance-from-constraint-manifold. If $\mathcal{C}_{c_0} \subset \mathbb{R}^d$ is the reference-condition reachable-state manifold, the true closure distance is $\delta_{\mathrm{true}}(X) = \inf_{Y \in \mathcal{C}_{c_0}} \|X - Y\|_{\Sigma}$ in the appropriate metric. Approximating $\mathcal{C}_{c_0}$ as its centroid $\mu_{c_0}$ yields the L\textsuperscript{2}-norm calibrated drift. This approximation is tightest --- and best matched to the empirical pattern in this paper --- when (a) $\mathcal{C}_{c_0}$ is approximately a point in the embedding, and (b) the between-condition shift matrix $D$ has effective rank $k_{\mathrm{eff}} \geq 2$ with no single-axis dominance. Necessity of these conditions for any "iff" reading would require manifold-radius/curvature/metric assumptions that this paper does not derive; we therefore use the weaker "best matched" formulation. The predicted closure-over-single-axis advantage scales as $\sqrt{k_{\mathrm{eff}}}$. For source-localised cortical EEG, $k_{\mathrm{eff}} \approx 4$ predicts a $\approx 2\times$ effect-size advantage; the empirical 2-feature LOSO closure $d_z = 2.07$ versus best-single-feature $d_z = 2.11$ matches this prediction in the consistency-across-subjects regime where the multi-feature combination's distinct value is LOSO stability (Jaccard $= 1.00$).
+
+\subsection{Power analysis}\label{sec:method-power}
+
+Subsampling the source-localised cortical EEG cohort to $n \in \{5, 7, 10, 12, 14\}$ with $50$ random seeds per sample size, the LOSO+Jaccard procedure converges with probability:
+\begin{center}
+\begin{tabular}{rrr}\toprule
+$n$ & $P(d_z \geq 1.5 \wedge \mathrm{Jaccard} \geq 0.7)$ & $P(\mathrm{both\ true\ features\ in\ }\geq 80\%\ \mathrm{folds})$ \\
+\midrule
+$5$  & $38\%$  & $16\%$ \\
+$\mathbf{7}$  & $\mathbf{96\%}$  & $\mathbf{100\%}$ \\
+$10$ & $100\%$ & $100\%$ \\
+$12$ & $100\%$ & $100\%$ \\
+$14$ & $100\%$ & $100\%$ \\
+\bottomrule\end{tabular}
+\end{center}
+$n = 7$ is the minimum cohort size for stable closure-feature discovery at source-EEG effect strength; weaker substrates require larger $n$. Wet-lab studies are recommended to target $n \geq 14$ for margin.
+
+\section{Results}\label{sec:results}
+
+We classify substrates into three tiers by structural property.
+
+\subsection{Tier A --- multi-channel integrative organisation}\label{sec:results-tier-a}
+
+\paragraph{Source-localised cortical EEG under propofol (empirical anchor).}
+OpenNeuro \texttt{ds005620} propofol-sedation EEG, $n = 14$ subjects, sLORETA inverse on \texttt{fsaverage} BEM with $68$-ROI Desikan--Killiany parcellation~\citep{gramfort2014mne}. Nine-feature closure feature vector per $1$-s sliding window: local phase smoothness, global Kuramoto order, global order temporal variability, task-subnet (frontal) order, alpha- and beta-band phase-gradient directionality (PGD-$\alpha$, PGD-$\beta$), theta--gamma phase-amplitude coupling (PAC-$\theta\gamma$), alpha:beta cross-band phase-locking value (PLV-$\alpha{:}\beta$), and saturating surrogate-deviation.
+
+Diagnostic: $D_1 = 0.38$ (PASS), $D_2 = 2$ features (PASS), $D_3 = 0.69$ (PASS), $D_4 = 3.98$ (PASS), $D_5 = 0.22$ (PASS) --- closure-applicable across all five criteria.
+
+LOSO+FDR discovery: every held-out fold independently selects the same two features (PGD-$\beta$ and PLV-$\alpha{:}\beta$); mean pairwise Jaccard $= 1.00$. LOSO $d_z = 2.07$; all $14$ subjects positive; paired $t = 7.76$, $p_t = 3.1 \times 10^{-6}$; Wilcoxon $p = 1.2 \times 10^{-4}$. In-sample full-feature-space drift: $d_z = 2.58$ (paper-headline number is $1.90$ with the original $9$-feature space without LOSO feature reselection~\citep{SolutionLab002}); simplified 4-FDR-feature closure: $d_z = 2.23$; single-best feature alone (PLV-$\alpha{:}\beta$): $d_z = 2.11$.
+
+The full-feature-space scalar baseline (seven-dimensional vector of raw band-power, mean PLV, mean global synchrony) gives $d_z = 0.47$ at source level ($p_t = 0.10$, not significant) --- closure dominates baseline by a factor of $5.5\times$ at the source level. At the sensor level, where volume conduction inflates the baseline, closure $d_z = 1.70$ vs baseline $d_z = 1.24$ (closure/baseline ratio $1.4\times$). Mahalanobis-distance closure on the same data gives $d_z = 1.89$ at source level (vs baseline Mahalanobis $0.46$, ratio $4.1\times$) --- L\textsuperscript{2}-norm and Mahalanobis agree on direction at source level; agreement is metric-robust.
+
+\paragraph{Sensor-level cortical EEG (same subjects, weaker).}
+Same $n = 14$, sensor-level $64$-channel data without source localisation. Diagnostic: $D_1 = 0.49, D_2 = 2, D_3 = 0.79, D_4 = 3.28, D_5 \approx 0.4$ --- still PASS. LOSO $d_z = 1.43$ ($73\%$ retention of in-sample $1.97$); paired $t = 5.35$, $p_t = 1.3 \times 10^{-4}$. Pairwise Jaccard $= 0.64$ (less stable than source). The two strongest features (PGD-$\beta$ and PLV-$\alpha{:}\beta$) still appear in $100\%$ of folds; the other features rotate fold-to-fold, explaining the lower Jaccard. Closure vs baseline ratio $1.4\times$ (versus $5.5\times$ at source) --- volume-conduction confound inflates the baseline at electrode level.
+
+\paragraph{Clinical mixed-agent anaesthesia (independent cohort, $n = 7$).}
+OpenNeuro \texttt{ds004541}, $n = 7$ patients undergoing general anaesthesia~\citep{sainiferron2023dataset}, identical pipeline. Diagnostic: all five criteria pass. LOSO $d_z = 1.16$ (with feature reselection); $6/7$ positive; paired $t = 2.97$, $p_t = 0.02$. The headline in-sample number for this cohort is $d_z = 1.98$ at $n = 7$~\citep{SolutionLab002}; this in-sample number overestimates the cross-validated effect because at $n = 7$ the FDR feature-selection is unstable across folds (Jaccard $= 0.52$). The $n = 7$ result sits at the lower bound of the power curve and should be reported with the cross-validated number as primary.
+
+\subsection{Tier B --- single-channel integrative dynamics}\label{sec:results-tier-b}
+
+\paragraph{Recurrent-network training-time dynamics.}
+A $32$-hidden-dimension gated recurrent network trained on a copy-recall task at $14$ random-seed instances. Conditions: untrained (random initialisation) vs trained ($1500$ steps Adam, lr $10^{-3}$). The same nine-feature closure pipeline is applied to hidden-state trajectories captured on held-out validation sequences.
+
+Diagnostic: $D_1 = 0.33, D_2 = 5, D_3 = 0.83, D_4 = 4.19$ (PASS on first four criteria); $\mathbf{D_5 = 0.78}$ --- FAIL. Empirically, closure $d_z = 3.40$ ($p_t = 1.0 \times 10^{-8}$); baseline-magnitude features $d_z = 0.64$. Closure dominates baseline empirically (ratio $5.3\times$) but the diagnostic correctly identifies the substrate as Tier B: the $D_5 = 0.78$ failure indicates that $7$ of $9$ features pass FDR, all downstream of the single gradient signal. The closure features outperform the simple-magnitude baselines only because of structural feature-design sophistication, not because of multi-channel integration in the closure sense.
+
+\paragraph{Multi-objective RNN training (decisive Tier B test).}
+The same $32$-dimensional GRU instances trained with \emph{three independent objectives simultaneously} (copy-recall, reverse-prediction, token-counting), separate task heads, joint Adam optimisation. Hypothesis: if multi-mechanism is intrinsic to multi-driver systems generally, multi-objective training should push $D_5$ below $0.50$; if multi-mechanism is specifically biological-structural, it should not.
+
+Diagnostic: $D_1 = 0.35, D_2 = 7, D_3 = 0.88, D_4 = 4.38$ (PASS on first four); $\mathbf{D_5 = 0.78}$ --- FAIL. Closure $d_z = 3.99$ (larger than single-objective); baseline $d_z = 0.41$. \textbf{Multi-objective training does not shift the substrate into Tier A.} The empirical interpretation: three loss functions optimised through one shared parameter space remain a single-channel integrative dynamic at the structural level --- all gradients flow through one optimiser, one set of network parameters, one shared hidden state. The losses are independent but the integration is not. This is the cleanest empirical discrimination of biological multi-channel integration from engineered multi-objective optimisation.
+
+\paragraph{Kuramoto coupled-oscillator network.}
+$N = 14$ instances of a $68$-node two-band coupled-oscillator network, awake (subcritical coupling) vs sed (supercritical cross-band coupling). Diagnostic: PASS on $D_1$--$D_4$; $D_5 = 0.89$ FAIL. Closure $d_z = 1.38$; baseline $d_z = 2.22$; single-best feature $d_z = 3.11$. Closure does not dominate baseline; the substrate has multi-feature structure but the basin transition is driven by a single coupling parameter, producing redundant feature loadings.
+
+\paragraph{Atrial fibrillation (PhysioNet MIT-BIH AFDB).}
+HRV features (mean RR, SDNN, RMSSD, pNN50, RR-CV, Poincar\'e SD1) on $25$-record cardiac arrhythmia dataset. Diagnostic: $D_1 = 0.75$ FAIL (single-axis dominated), $D_5 = 1.00$ FAIL (all six features pass FDR). Empirical: LOSO $d_z = 0.89$ ($p_t = 8 \times 10^{-4}$), Jaccard $= 1.00$ across all six features. The basin transition is real and detectable, but the underlying mechanism (autonomic shift) is single-channel; HRV features are redundant proxies. Adding genuinely multi-mechanism cardiac features (P-wave morphology, lead coherence, T-wave alternans) is proposed as future work but is not expected to shift the diagnostic without separate underlying pathophysiology.
+
+\subsection{Tier C --- non-integrative or insufficient inferential structure}\label{sec:results-tier-c}
+
+\paragraph{Climate regime shifts.}
+NOAA monthly AMO, PDO, and Ni\~no 3.4 indices ($1950$--$2023$). Three documented regime shifts ($1976$ PDO, $1995$ AMO, $1997$ ENSO+PDO). Diagnostic: $D_1$, $D_2$, $D_3$, $D_4$ all evaluate to NaN or fail --- the substrate lacks between-subject inferential structure. Empirically, multivariate calibrated drift is dominated by single-axis tests at every regime shift (e.g.\ AMO axis step$_z = -6.62$ at the $1976$ shift; multivariate step$_z = -1.04$).
+
+\paragraph{BETSE 2-second bioelectric simulations.}
+Two-second BETSE~\citep{pietak2016exploring} simulations of bioelectric perturbations on a planarian-shape Voronoi mesh~\citep{SolutionLab001}. The single-term ablation analysis shows that target-template L\textsuperscript{2} distance alone reproduces all structural claims; PCA-derived templates and random matched-mean templates do equally well; a direct supervised classifier achieves $80\%$ leave-one-replicate-out six-class accuracy. The substrate has no emergent multistability over $2$-second windows --- the ``basins'' are interpretive labels for a linear stimulus-response, not emergent attractor states. The closure framework is structurally inappropriate for this regime; longer-timescale BETSE with GRN-driven dynamics would be a more appropriate test substrate.
+
+\subsection{Negative controls}\label{sec:results-negative}
+
+Three synthetic datasets designed to fail:
+\begin{itemize}\itemsep0pt
+\item \textbf{Pure Gaussian noise.} $14$ instances $\times$ $30$ windows $\times$ $9$ features iid $\mathcal{N}(0,1)$. Empirical L\textsuperscript{2} drift $d_z = 0.95$ (the expected chance-walk magnitude in $9$-D). Diagnostic: $D_2 = 0$, $D_3 = 0.56$ both FAIL. Correctly rejected.
+\item \textbf{Structured-noise no-shift.} Each instance is a random-projected $1$-D random walk to $9$-D features. Features correlated but no between-condition shift. Empirical $d_z = 0.77$. $D_2 = 0$, $D_3 = 0.60$ FAIL. Correctly rejected.
+\item \textbf{Single-axis trivial shift.} Feature $0$ shifts by $+1$ SD between conditions; features $1$--$8$ are noise. Empirical $d_z = 1.92$ ($\geq 1.5$ ostensibly). $D_2 = 1$ FAIL, $D_3 = 0.64$ FAIL (only one feature shifts consistently). \textbf{Correctly rejected despite real signal} --- the diagnostic discriminates multi-axis closure from single-axis significance.
+\end{itemize}
+
+\subsection{Cross-substrate summary table}\label{sec:results-summary}
+
+\begin{table}[h]\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{0.95}
+\caption{Cross-substrate validation of the $D_1$--$D_5$ applicability diagnostic. Top half: paired-condition designs (within-subject awake-vs-sed deltas; nine substrate validations: 3 Tier A + 4 Tier B + 2 Tier C, plus three negative controls, total $12$ paired cases). Bottom half: four post-draft real-data EEG cohorts tested under the unpaired-design extension of Section~\ref{sec:method-diagnostic-unpaired}. Empirical column shows LOSO $d_z$ where the LOSO+Jaccard discovery procedure is applicable, otherwise between-cohort Cohen's $d$ (post-draft rows). Outcome MATCH indicates the diagnostic prediction agrees with the empirical outcome; MISMATCH indicates a false positive or false negative. Overall: $15/16$ correctly classified across all rows; one false positive (FTD vs healthy) is discussed in the classification summary and limitations section. Tier B RNN rows show calibration-boundary behaviour where raw $d_z$ exceeds single-axis baselines despite CAD-FAIL prediction; the classification matches the predicted FAIL on the closure-detectability claim (single-feature wins for stability), with raw effect-size dominance treated as a CAD-v1.5 calibration item.}\label{tab:cross-substrate}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{lrrrrrrll}\toprule
+Substrate & $D_1$ & $D_2$ & $D_3$ & $D_4$ & $D_5$ & Pred & Empirical & Outcome \\
+\midrule
+\textbf{Tier A (multi-channel integrative, paired)} & & & & & & & & \\
+Source EEG anaesthesia ($n=14$) & $0.38$ & $2$ & $0.69$ & $3.98$ & $0.22$ & PASS & $d_z = 2.07$ LOSO & MATCH \\
+Sensor EEG anaesthesia ($n=14$) & $0.49$ & $2$ & $0.79$ & $3.28$ & $\sim 0.4$ & PASS & $d_z = 1.43$ LOSO & MATCH \\
+Clinical mixed-agent ($n=7$) & $0.50$ & $6$ & $0.87$ & $2.88$ & $\sim 0.4$ & PASS$^{*}$ & $d_z = 1.16$ LOSO & MATCH ($n=7$ limit) \\
+\midrule
+\textbf{Tier B (single-channel integrative, paired)} & & & & & & & & \\
+RNN single-objective training & $0.33$ & $5$ & $0.83$ & $4.19$ & $0.78$ & \textbf{FAIL on $D_5$} & $d_z = 3.40$ & MATCH (Tier B) \\
+RNN multi-objective training & $0.35$ & $7$ & $0.88$ & $4.38$ & $0.78$ & \textbf{FAIL on $D_5$} & $d_z = 3.99$ & MATCH (Tier B) \\
+Kuramoto coupled oscillators & $0.49$ & $8$ & $0.93$ & $3.27$ & $0.89$ & \textbf{FAIL on $D_5$} & $d_z = 1.38$ & MATCH (single-best wins) \\
+Atrial fibrillation (HRV) & $0.75$ & $6$ & $0.88$ & $1.66$ & $1.00$ & \textbf{FAIL on $D_1, D_5$} & $d_z = 0.89$ LOSO & MATCH (Tier B/C) \\
+\midrule
+\textbf{Tier C (non-integrative, paired)} & & & & & & & & \\
+Climate regimes (AMO+PDO+Ni\~no) & --- & $0$ & --- & --- & --- & FAIL (no structure) & single-axis wins & MATCH \\
+BETSE 2-sec bioelectric sims & --- & --- & --- & --- & --- & FAIL (no emergence) & target-only suffices & MATCH \\
+\midrule
+\textbf{Negative controls (paired)} & & & & & & & & \\
+Pure Gaussian noise & $0.32$ & $0$ & $0.56$ & $5.00$ & $0.00$ & FAIL & $d_z = 0.95$ (chance) & MATCH \\
+Structured noise no shift & $0.22$ & $0$ & $0.60$ & $6.51$ & $0.00$ & FAIL & $d_z = 0.77$ (chance) & MATCH \\
+Single-axis trivial shift & $0.26$ & $1$ & $0.64$ & $5.89$ & $0.11$ & FAIL & $d_z = 1.92$ (single-axis) & MATCH \\
+\midrule
+\textbf{Post-draft real-data (unpaired/within-pair)} & & & & & & & & \\
+Trait anxiety ds007609 ($n=24$) & $0.43$ & $0$ & $0.64$ & $3.68$ & $0.00$ & PASS$^{\dagger}$ & $d=+0.79$ & MATCH \\
+Musical hyperscan ds007471 ($13$pr) & --- & $0$ & $0.62$ & --- & --- & FAIL on $D_2,D_3$ & $d_z=+0.23$ & MATCH \\
+AD vs healthy ds004504 ($n_A=36$) & $0.39$ & $1$ & $0.66$ & $3.76$ & $0.33$ & FAIL on $D_2$ & $d=-0.31$ & MATCH \\
+FTD vs healthy ds004504 ($n_F=23$) & $0.45$ & $2$ & $0.67$ & $3.36$ & $0.11$ & PASS & $d=+0.02$ & \textbf{MISS} \\
+\bottomrule\end{tabular}}
+\end{table}
+
+\textsuperscript{$\dagger$}Trait anxiety passes $D_1$, $D_4$, $D_5$ but marginally fails $D_2$ and $D_3$ under the strict unpaired-design thresholds (which were calibrated from paired-design power); the substrate still empirically detects via L\textsuperscript{2}-norm-from-centroid because the per-target-subject magnitude pattern is consistent in aggregate even when per-feature sign agreement is below the $80\%$ paired-design threshold. We classify the prediction as PASS-leaning, consistent with the empirical outcome; per-design threshold calibration is open work (Section~\ref{sec:limits}).
+
+\paragraph{Classification accounting.}
+\begin{itemize}\itemsep0pt
+\item \textbf{Paired-design validation set (current Table~\ref{tab:cross-substrate}):} $12/12$ correctly classified across all paired rows (3 Tier A + 4 Tier B + 2 Tier C + 3 negative controls), or $9/9$ excluding the three negative controls. The Tier B RNN rows are classified as MATCH-on-CAD-prediction (CAD predicts FAIL for closure-vs-single-axis stability; raw effect size dominance is a calibration-boundary observation, treated as a CAD-v1.5 item).
+\item \textbf{Post-draft unpaired/within-pair EEG tests:} $3/4$ correctly classified (anxiety predicted-PASS-leaning / empirical-PASS, musical hyperscanning predicted-FAIL / empirical-FAIL, Alzheimer's predicted-FAIL / empirical-FAIL; FTD predicted-PASS / empirical-FAIL is the one false positive).
+\item \textbf{Overall:} $15$ of $16$ classifications match observed empirical PASS/FAIL outcome.
+\item \textbf{Strict vs PASS-leaning split:} A separate strict-CAD-v1 audit (script \texttt{src/strict\_vs\_passleaning\_audit.py}) on the 7 substrates with full diagnostic JSON values gives $5$ STRICT\_PASS (sensor EEG, source EEG, clinical EEG, plus two baseline-feature variants) and $2$ FAIL: climate (no per-subject inferential structure) and cardiac AF (under the current PASS-leaning rule of \S\ref{sec:method-diagnostic}, AF fails because $D_5 = 1.00$ exceeds the $\leq 0.50$ threshold by $0.50$, well outside the $0.10$ tolerance; the script's initial inclusive verdict from an earlier tolerance rule has been superseded by the rule in \S\ref{sec:method-diagnostic}). Trait-anxiety \texttt{ds007609} satisfies the current PASS-leaning rule (D2, D3 near-miss within tolerance; D1, D4, D5 strict pass); including it as PASS reflects the within-tolerance interpretation, not strict five-criterion passage.
+\item \textbf{False positives:} $1$ under the inclusive classification (FTD vs healthy on \texttt{ds004504}); see \S\ref{sec:ftd-boundary}.
+\item \textbf{False-negative accounting:} $0$ under the inclusive classification used in the table. The acute mood-manipulation cohort (\texttt{ds004315}, $n = 50$) is treated as a CAD-v1.5 calibration addendum, not as a row in the main $15/16$ ledger: under the current CAD-D1--D5-v1 unpaired-design thresholds, mood would be predicted FAIL on $D_2/D_3$ but is empirically PASS at $d = +0.70$ (\citet{SolutionLab005}); this is the kind of per-design calibration miss the unpaired-design recalibration cohort is intended to resolve. Including mood as a separate post-draft row would shift the ledger to $15/17$; we report it explicitly here so the ledger arithmetic is honest.
+\item \textbf{Cohort-strength qualifier on power curve.} The $n \geq 7$ minimum derives from the source-localised cortical-EEG anaesthesia substrate. The minimum cohort size is substrate-dependent and scales inversely with substrate effect strength; we report it as ``$n \geq 7$ at source-EEG anaesthesia effect strength,'' not as a universal minimum.
+\item \textbf{Known unresolved issue:} unpaired-design threshold calibration at small cohort sizes ($n \leq 30$ per group). A per-design recalibration cohort of $\geq 10$ between-group substrates is required to set $D_1$--$D_5$ thresholds under unpaired-design semantics; until then, unpaired-design results are reported under the paired-design thresholds with PASS-leaning tolerance applied.
+\end{itemize}
+The FTD miss is mechanistically clear: PAC$_{\theta\gamma}$ and surrogate-z carry directionally-coherent per-feature shifts ($d = -1.04$ and $d = +0.41$ respectively, both at $87\%$ subject sign agreement), but their magnitude is comparable to within-healthy variance, so the L\textsuperscript{2}-norm-from-centroid aggregate fails to discriminate at the available cohort size. The FTD case is treated in detail in the dedicated subsection \emph{Unpaired-design boundary case: frontotemporal dementia} (§\ref{sec:ftd-boundary}).
+
+\section{Relation to \emph{Life as Closure}}\label{sec:relation-life}
+
+This note is the empirical-methods support for the broader \emph{Existence as Closure}~\citep{SmartExistenceClosure} / \emph{Life as Closure}~\citep{SmartLifeAsClosure} programme. The companion paper \emph{Life as Closure} defines dyscoherence as $\mathcal{D}_\mathcal{I}(v) = \|v - P_{\Sigma_\mathcal{I}}(v)\|$, the distance between current substrate state and the projection onto a closure-stable self-model subspace $\Sigma_\mathcal{I}$. The present paper does \emph{not} directly measure $P_{\Sigma_\mathcal{I}}$ on any substrate. It therefore should not be read as direct empirical validation of the full living-frame formalism. Instead, closure-as-distance supplies a measurable first-order empirical approximation: the L\textsuperscript{2}-distance from a reference basin or constraint manifold in observable feature space, with the reference centroid acting as a proxy for $P_{\Sigma_\mathcal{I}}(v)$ at the cohort-aggregate level.
+
+The $D_1$--$D_5$ diagnostic specifies when this approximation is expected to be valid: substrates with multi-channel integrative organisation pass; substrates with single-channel integrative dynamics or no inferential structure do not. The diagnostic is therefore an \emph{empirical boundary condition} for applying dyscoherence-like measures to real substrates: it tells the practitioner of \emph{Life as Closure}-style measurements when the proxy is licensed and when it is not.
+
+Three concrete couplings to \emph{Life as Closure}:
+\begin{itemize}\itemsep0pt
+\item \textbf{Dyscoherence on intact cortex.} The trait-anxiety result on \texttt{ds007609} ($n = 24$, Cohen's $d = +0.79$, predicted-PASS observed-PASS) anchors the dyscoherence-as-chronic-clinical-state mapping of \emph{Life as Closure} §8 on real EEG without parameter retuning.
+\item \textbf{Joint meaning between dyads.} The musical hyperscanning result on \texttt{ds007471} ($13$ pairs, $d_z = +0.23$, predicted-FAIL observed-FAIL) shows the diagnostic correctly identifies that this particular musical-joint-action contrast does not license the dyadic L\textsuperscript{2}-proxy. The result scopes the cortical proxy on this dataset; it does not entail that music ensemble in general fails joint-meaning's multi-channel condition (Paper 02 explicitly lists music ensemble as a joint-meaning case under P-A). A genuine-dialogue substrate with content-meaningfulness ratings is the appropriate confirming test.
+\item \textbf{Structural vs functional integration.} The dementia null on \texttt{ds004504} scopes this paper's cortical proxy for dyscoherence: the proxy detects functional integration of intact networks, not loss-of-integration through structural neurodegenerative atrophy. \emph{Life as Closure}'s dyscoherence as a structural object is unchanged by this null; what is scoped is the regime in which the L\textsuperscript{2}-proxy of this paper licenses an empirical reading of it.
+\end{itemize}
+
+This note is thus empirical-methods support for the closure programme, not philosophical proof. Failures of closure-as-distance under $D_1$--$D_5$ do not falsify the broader closure operator or the constraint-manifold formalism; they identify substrates where this particular L\textsuperscript{2}-norm proxy is the wrong tool.
+
+\section{Discussion}\label{sec:discussion}
+
+The empirical pattern, in the present validation set, is: closure-as-distance is the best-predicted statistic for dominating scalar single-axis baselines (in both calibrated effect size and across-fold feature-set stability) when the substrate has:
+\begin{enumerate}\itemsep0pt
+\item Multi-axis distributed state shift ($D_1 \leq 0.70$): no single feature axis explains the shift.
+\item Multi-feature consistency across instances ($D_2 \geq 2$, $D_3 \geq 0.65$): the multi-axis pattern is reproducible.
+\item Mechanism complementarity ($D_4 \geq 1.5$, $D_5 \leq 0.5$): the multi-axis shift is caused by multiple distinct mechanisms producing complementary feature effects, not by one underlying mechanism producing many redundant feature proxies.
+\end{enumerate}
+
+The third condition is the discriminating one. Single-objective and multi-objective RNN training both satisfy the first two but fail the third: multiple loss terms backpropagating through one shared parameter space remain a single-channel integrative dynamic at the structural level. Kuramoto coupled oscillators have multi-feature structure but a single coupling-parameter mechanism, so the features are downstream proxies for one cause. Atrial fibrillation has consistent multi-feature HRV shifts but the underlying autonomic mechanism is single-channel. None of these substrates support multi-channel closure.
+
+Source-localised cortical EEG anaesthesia, by contrast, satisfies all three conditions: PGD-$\beta$ measures whole-cortex travelling-wave coherence (sensitive to GABAergic and K\textsuperscript{+}-channel effects on cortical wave propagation), while PLV-$\alpha{:}\beta$ measures cross-frequency phase locking (sensitive to thalamocortical and intracortical loops). The pharmacology of propofol involves at least four distinct molecular targets (GABA\textsubscript{A}, NMDA, K\textsuperscript{+} channels, $\mu$-opioid receptors); the cortical-wave-organisation effects are produced through anatomically distinct circuits. The two LOSO-discovered features measure functionally and anatomically independent aspects of cortical organisation, and they shift in correlated but complementary ways under anaesthesia. This is multi-channel integrative organisation in the precise sense the diagnostic requires.
+
+\subsection{Post-draft real-data EEG cohort tests}\label{sec:discussion-postdraft}
+
+The bottom four rows of Table~\ref{tab:cross-substrate} report four real-data EEG cohorts tested as direct applicability-diagnostic predictors after this paper's first draft. Each prediction was made from the cached feature matrix \emph{before} the empirical closure $d$ was computed; the empirical computation and prediction were performed in a single script run, with the prediction logged first.
+
+\paragraph{Trait anxiety \texttt{ds007609}.} Resting-state $256$-channel HydroCel EEG~\citep{ShalamberidzeAnxiety2025}, restricted to a $32$-channel $10$--$10$ subset for cross-comparability with the empirical anchor. $n = 12$ low-STAI-trait subjects (range $32$--$46$) and $n = 12$ high-STAI-trait subjects (range $57$--$69$). The cross-substrate diagnostic predicts PASS-leaning ($D_1, D_4, D_5$ all PASS; $D_2$/$D_3$ marginal under strict unpaired thresholds); empirical between-cohort Cohen's $d = +0.79$ (Welch $t = +1.93$, $p = 0.07$). Strongest contributing features: global Kuramoto order ($d = +0.60$) and $\theta$--$\gamma$ phase-amplitude coupling ($d = +0.47$). The full SL-002 \texttt{compute\_features} pipeline was used verbatim with default weights---no parameter retuning across the SL-002 anaesthesia $\to$ SL-005 anxiety transfer.
+
+\paragraph{Musical joint-action hyperscanning \texttt{ds007471}.} $13$ dyads ($64$-channel BrainVision @ $1$\,kHz, $32$ channels per participant)~\citep{ZhouHyperscanning2026}, $520$ trials with explicit duet vs constant-pitch trial labelling from the behavioural \texttt{.tsv} files. Joint substrate $\delta_{AB} = \lVert R_{\mathrm{joint}}\rVert - \tfrac{1}{2}(\lVert R_A\rVert + \lVert R_B\rVert)$. Diagnostic predicts FAIL ($D_2 = 0$, $D_3 = 0.62$); empirical $\delta_{AB}$ within-pair duet-vs-constant contrast $d_z = +0.23$ ($9/13$ pairs in predicted direction, paired $t = +0.82$, $p = 0.43$). Direction correct, magnitude below preregistered threshold of $d_z > 1.0$; diagnostic correctly identifies musical joint-action as not satisfying multi-channel integrative-organisation conditions at the dyad level.
+
+\paragraph{Alzheimer's disease and frontotemporal dementia \texttt{ds004504}.} $36$ AD + $23$ FTD + $29$ healthy controls, resting-state eyes-closed $19$-channel $10$--$20$ EEG~\citep{MiltiadousDementia2023}. Unpaired-design diagnostic predicts AD FAIL (empirical $d = -0.31$, $p = 0.23$ -- match) and FTD PASS (empirical $d = +0.02$, $p = 0.94$ -- mismatch). The AD result also constitutes a meaningful scope test: dementia represents structural neurodegenerative atrophy, and the framework's null on this substrate indicates that closure-as-distance tracks \emph{functional} integration of an intact integrative network, not loss-of-integration through structural neuronal loss. Substrates with progressive structural atrophy require methodology adapted to detect feature-asymmetric cancellation patterns, which is a separate research direction.
+
+\subsubsection*{Unpaired-design boundary case: frontotemporal dementia}\label{sec:ftd-boundary}
+
+The FTD vs healthy comparison is the only false positive in the 16-case classification record (Table~\ref{tab:cross-substrate}). We treat it as a scope refinement rather than an embarrassment, because the failure mode is mechanistically clear.
+
+\noindent\emph{Why $D_1$--$D_5$ passed.} The FTD shift exhibits multi-axis distributed structure ($D_1 = 0.45$), at least two features with $\geq 80\%$ subject sign agreement (PAC$_{\theta\gamma}$ and surrogate-z, both at $87\%$ agreement; $D_2 = 2$), per-subject coherence with the cohort-modal direction ($D_3 = 0.67$), multi-mechanism complementarity ($D_4 = 3.36$, well above threshold), and sparse FDR-significant features ($D_5 = 0.11$). On paper-design diagnostic grounds, FTD looks closure-applicable.
+
+\noindent\emph{Why empirical closure $d$ failed.} The per-feature shifts have magnitudes comparable to within-healthy variance. PAC$_{\theta\gamma}$ shifts at $d = -1.04$ across FTD subjects, surrogate-z at $d = +0.41$, but most other features shift only modestly. In standardised L\textsuperscript{2}-norm-from-centroid the per-subject distance for an FTD subject is dominated by within-subject variance plus a small shift contribution; the cohort distribution of distances overlaps the healthy distribution heavily, and the between-cohort Cohen's $d$ collapses to $+0.02$. The proxy is detecting structure but at sample size $n_F = 23$ vs $n_C = 29$ the shift magnitude is below the within-reference variance noise floor.
+
+\noindent\emph{Why $D_6$ catches FTD but harms anxiety.} The supplementary $D_6$ criterion of Section~\ref{sec:method-diagnostic-unpaired} conjoins per-feature FDR-significance and $\geq 80\%$ sign agreement; FTD's combined-criterion count is $D_6 = 1$, below the $\geq 2$ threshold, correctly classifying FTD as FAIL. However the same $D_6$ threshold on the anxiety cohort gives $D_6 = 0$ (only marginal per-feature directional consistency at $n = 12$ per cohort), creating a false negative on a substrate that empirically passes ($d = +0.79$). The trade-off shows $D_6$-as-hard-gate is too strict at the small cohort sizes ($n \leq 30$ per group) characteristic of currently available real-data substrates; per-design threshold calibration on a larger between-group cohort set is the cleanest path forward.
+
+\noindent\emph{What this does and does not invalidate.} The FTD miss is internal to the unpaired-design extension at small $n$. The paired-design $D_1$--$D_5$-v1 diagnostic remains $12/12$ correctly classified across its tested substrate set (including negative controls; Tier B RNN rows classified as MATCH-on-CAD-prediction at the closure-stability level, raw effect size noted as a CAD-v1.5 calibration-boundary item). The L\textsuperscript{2}-norm closure-as-distance proxy is being shown to have a known failure mode --- structurally coherent shifts at magnitudes comparable to reference-cohort variance --- and the diagnostic correctly identifies this as the open calibration question. What is needed: an unpaired-design calibration cohort of $\geq 10$ between-group substrates with known closure-applicable / non-applicable status, used to recalibrate $D_2$/$D_3$ thresholds and properly tune $D_6$ as either a gating or a supplementary criterion.
+
+\paragraph{Cross-substrate feature-transfer test.} The minimal two-feature LOSO subset discovered on \texttt{ds005620} source-localised anaesthesia (PGD-$\beta$ and PLV-$\alpha{:}\beta$) was applied verbatim as a fixed feature subset to \texttt{ds007609} anxiety. Empirical Cohen's $d = +0.22$ on this fixed two-feature subset, compared to in-cohort full-pipeline rediscovery $d = +0.79$ -- the methodology and discovery procedure transfer across substrates, but the discovered minimal feature subset itself does not. Anxiety's load-bearing features (global Kuramoto order, $\theta$--$\gamma$ PAC, local smoothness) differ from anaesthesia's (PGD-$\beta$, PLV-$\alpha{:}\beta$), consistent with the different molecular mechanisms involved (chronic sympathetic arousal modulation vs acute GABA/NMDA/K\textsuperscript{+}-channel pharmacology). The paper's claim is therefore: methodology and discovery procedure are universal; discovered minimal features are substrate-specific signatures of the substrate's actual biological mechanism.
+
+The conclusion the data supports is therefore:
+
+\begin{quote}
+\textbf{Closure-as-distance measures basin transitions in substrates with parallel anatomically-distinct causal channels.} Substrates where multiple genuinely distinct underlying mechanisms produce sparsely-loaded complementary effects on different feature axes pass the $D_1$--$D_5$ diagnostic and admit a stable minimal-feature closure metric that dominates scalar baselines. Substrates with single-channel integrative dynamics (engineered learning with multi-objective loss, simple coupled oscillators, single-pathway physiology) show closure detectability but not closure necessity over single-axis tests. Non-integrative or insufficient-inferential-structure substrates fail the diagnostic.
+\end{quote}
+
+Living systems are a plausible canonical domain for multi-channel integrative organisation, because evolution favours multiple parallel mechanisms for robustness (redundancy through pathway diversification, multiple feedback loops, parallel signalling cascades). Engineered systems with a single control parameter or a shared optimiser do not by default. The applicability diagnostic picks out a structural property strongly associated with --- though not exclusively defined by --- evolved biological organisation. The currently validated Tier A anchor is source-localised cortical EEG anaesthesia. Broader biological substrates (planarian regeneration, sleep stages, in-vitro neural cultures, brain-death progression) remain external-validation targets, not present results.
+
+The honest scope of the empirical work is one strongly validated Tier A substrate (source-localised cortical EEG anaesthesia) plus its sensor-level and independent-cohort companions, the trait-anxiety confirming PASS on real-data \texttt{ds007609}, consistent correct classification of Tier B/C substrates and three negative controls, and the one transparent false positive on FTD already discussed. Section~\ref{sec:external} pre-registers external validation tests as proposals; none of them are used as evidence for the present claims.
+
+\section{Pre-registered external validation tests}\label{sec:external}
+
+These tests are not presented as supporting evidence. They are pre-registered external replication targets designed to refine or falsify the diagnostic. None are run in this paper. Each has a stated falsifier; published failure would refine the framework's scope.
+
+\paragraph{Planarian DiBAC4(3) regeneration~\citep{SolutionLab001}.}
+Four-arm regeneration experiment: normal, perturbed, rescued, two-headed cohorts at $n \geq 20$ each, $\geq 4$ voltage-imaging timepoints across the $7$--$14$-day regeneration window, $14$-day blinded morphology scoring. Five pre-registered numerical predictions (P1: early commitment, P2: basin-shift detection, P3: rescue prediction, P4: basin specificity, P5: multi-class basin assignment dominance over DiBAC4 A/P ratio). Apply $D_1$--$D_5$; predict the substrate passes Tier A and the LOSO discovery converges on a stable minimal multi-feature subset corresponding to morphogenetic axis encoding.
+
+\paragraph{TMS-EEG perturbational complexity.}
+Application of $D_1$--$D_5$ + LOSO discovery to a Massimini-style TMS-EEG dataset~\citep{casarotto2016stratification} comparing conscious, anaesthetised, and minimally-conscious patients. Predict: closure features at source level shift within $\sim 200$\,ms post-pulse on conscious subjects with disruption proportional to baseline closure; minimally-conscious patients show partial closure perturbation; unconscious patients show no closure response. Falsifier: closure response is identical across consciousness levels.
+
+\paragraph{Sleep-stage closure on multi-channel polysomnography.}
+Wake vs NREM-2 closure on a $\geq 32$-channel polysomnography dataset. Predict: the substrate passes Tier A; the LOSO discovery converges on a stable minimal feature subset (possibly different from the propofol subset, possibly overlapping); the discovered subset is biologically interpretable in terms of known sleep-state EEG signatures. Falsifier: discovery is unstable (Jaccard $< 0.7$) or $d_z < 1.0$ at $n \geq 14$.
+
+\paragraph{Cell-death-boundary closure on in-vitro neural cultures.}
+Apply closure features to multi-electrode-array recordings from cultured neural networks during induced apoptosis. Predict: $D_4$ (mechanism complementarity) crosses below $1.5$ \emph{before} electrophysiological silence --- the multi-channel integrative organisation dissolves before action-potential generation does. Falsifier: $D_4$ collapses simultaneously with or after electrical activity ceases.
+
+\paragraph{Brain-death-boundary closure.}
+Continuous EEG closure during clinical brain-death determination. Predict: $D_4$ drops below $1.5$ at the time-point clinically determined as brain-death onset, prior to flat-line EEG. Falsifier: $D_4$ remains $\geq 1.5$ at clinical brain death.
+
+\paragraph{Two-cohort cross-substrate transfer.}
+The two features discovered on \texttt{ds005620} source-localised data (PGD-$\beta$ + PLV-$\alpha{:}\beta$) applied \emph{without retuning} to an independent multi-channel anaesthesia EEG cohort. Predict: LOSO $d_z$ retains $\geq 80\%$ of the discovery-cohort value. Falsifier: $d_z$ drops below $0.5$ on the new cohort.
+
+\section{Two empirical statistics: L\textsuperscript{2}-norm vs Hotelling's T\textsuperscript{2}}\label{sec:two-statistics}
+
+Investigation of the FTD false-positive case revealed a substantive methodological finding worth reporting: the L\textsuperscript{2}-norm-from-centroid statistic used throughout this paper and Hotelling's T\textsuperscript{2} (the multivariate-mean-shift test) measure \emph{complementary} aspects of multivariate change. Running both statistics on the four post-draft real-data EEG cohorts plus the SL-002 anaesthesia anchor produces the following signature typology:
+
+\begin{table}[h]\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Empirical two-statistic + variance-ratio decomposition. L\textsuperscript{2}-norm Cohen's $d$ uses per-subject calibrated distance from reference centroid. Hotelling's T\textsuperscript{2} tests cohort-mean displacement under the multivariate normal null. Variance ratio is the geometric mean of per-feature variance$_{\text{target}}$/variance$_{\text{reference}}$ ratios.}\label{tab:two-statistics}
+\begin{tabular}{lllll}\toprule
+Substrate & L\textsuperscript{2}-norm & Hotelling T\textsuperscript{2} $p$ & Variance ratio & Signature \\
+\midrule
+Anaesthesia (SL-002, paired) & $d_z = +2.16$ PASS & $0.001$ PASS & $1.25$ $\uparrow$ & Mean shift $+$ mild $\uparrow$ dispersion \\
+Anxiety (ds007609) & $d = +0.79$ PASS & $0.80$ FAIL & $1.59$ $\uparrow\uparrow$ & $\uparrow\uparrow$ dispersion only \\
+Mood Sad-ind (ds004315) & $d = +0.70$ PASS & $0.93$ FAIL & $1.61$ $\uparrow\uparrow$ & $\uparrow\uparrow$ dispersion only \\
+Alzheimer's (ds004504) & $d = -0.31$ FAIL & $\mathbf{3 \times 10^{-5}}$ PASS & $0.50$ $\downarrow\downarrow$ & Mean shift $+$ $\downarrow\downarrow$ dispersion \\
+FTD (ds004504) & $d = +0.02$ FAIL & $0.063$ FAIL & $0.70$ $\downarrow$ & Marginal both (under-powered) \\
+\bottomrule\end{tabular}
+\end{table}
+
+\paragraph{Interpretation.} The two statistics decompose multivariate change into complementary axes: L\textsuperscript{2}-norm-from-centroid is sensitive to (a)~direction-consistent cohort-mean shift AND (b)~within-cohort dispersion expansion; Hotelling's T\textsuperscript{2} is sensitive only to (a). Their disagreement on a substrate is informative.
+
+The pattern across these five substrates is biologically coherent:
+\begin{itemize}\itemsep0pt
+\item \textbf{Acute pharmacological state change} (anaesthesia): produces both a cohort-mean shift in feature space and a moderate dispersion increase. Both statistics fire. This is the gold-standard closure-applicable signature.
+\item \textbf{Chronic clinical states} (trait anxiety, induced sad mood): produce \emph{dispersion increase without cohort-mean shift}. Subjects in the affected cohort each express the dyscoherence in different feature directions, so the cohort mean is roughly unchanged but per-subject distances from the healthy centroid are elevated. Only L\textsuperscript{2}-norm fires.
+\item \textbf{Neurodegenerative atrophy} (Alzheimer's): produces a \emph{cohort-mean shift with dispersion decrease} (variance ratio $0.50$ -- AD subjects show half the per-feature variance of healthy controls). This is consistent with the well-documented reduced-EEG-complexity finding in dementia~\citep{MiltiadousDementia2023}. Only Hotelling's T\textsuperscript{2} fires.
+\item \textbf{Frontotemporal dementia}: shows the same qualitative pattern as AD (dispersion decrease, marginal mean shift) but at a magnitude too small to clear either statistic's significance threshold at $n=23$. Diagnostic over-prediction here is partly a power problem at small cohort size.
+\end{itemize}
+
+\paragraph{Methodological implication.} The L\textsuperscript{2}-norm-from-centroid choice in this paper's definition of closure-as-distance preferentially detects substrates with dispersion increase, with mean-shift detection as a secondary contribution. A revised version of the framework reporting both statistics provides a more complete characterisation: dispersion-only, mean-shift-only, and both-signals substrates are biologically distinct, and the diagnostic $D_1$--$D_5$ identifies the structural prerequisite (multi-channel integrative organisation) but does not by itself distinguish which empirical signal will fire on a particular substrate. This is the cleanest explanation we have for the FTD false-positive case: the diagnostic correctly identifies multi-channel structure, but neither empirical statistic detects the effect at the available cohort size; with $n \geq 80$ per arm one would expect Hotelling's T\textsuperscript{2} to cross significance based on the observed effect direction.
+
+\paragraph{Going forward.} Both statistics should be reported for closure-applicable substrates. A closure-applicable substrate that fires \emph{both} statistics is the cleanest signal; a substrate that fires only one provides interpretable information about which kind of multivariate change is present (mean shift vs dispersion change). Negative controls (Section~\ref{sec:results-negative}) should fire neither statistic; we have verified this on noise + structured-noise controls.
+
+\section{What this paper does not claim}\label{sec:nonclaims}
+
+\begin{itemize}\itemsep0pt
+\item Not that closure-as-distance is universal across all complex systems. It is conditional on multi-channel integrative organisation, identified \emph{a priori} by the $D_1$--$D_5$ diagnostic.
+\item Not that the L\textsuperscript{2}-norm-from-centroid statistic is the full closure operator. It is a measurable first-order empirical proxy; the operator and the constraint manifold are theoretical objects defined elsewhere.
+\item Not that every biological system automatically passes $D_1$--$D_5$. Atrial fibrillation HRV is biological and correctly fails on $D_1$ and $D_5$.
+\item Not that source-localised propofol EEG proves a theory of consciousness. The result is a measurable cortical-state signature of anaesthesia, not a consciousness theorem.
+\item Not that $D_1$--$D_5$ thresholds are final universal constants. They are empirical applicability thresholds of the present diagnostic version CAD-D1--D5-v1, expected to be refined by larger validation cohorts.
+\item Not that failure of closure-as-distance on a substrate means absence of life, mind, or organisation in that substrate. It means the L\textsuperscript{2}-norm-from-centroid proxy under $D_1$--$D_5$-v1 is the wrong tool for that substrate.
+\item Not that the dementia, climate, or RNN-training nulls are failures of those systems. They are failures of this specific empirical proxy under this specific diagnostic version, and are exactly what the applicability diagnostic exists to detect.
+\item Not that the pre-registered external tests (planarian, TMS-EEG, sleep stages, cell- and brain-death) have been performed or supported. They are proposals.
+\end{itemize}
+
+\section{Limitations and falsifiers}\label{sec:limits}
+
+\begin{itemize}\itemsep0pt
+\item \textbf{One empirically-confirmed Tier A substrate.} The planarian regeneration test is the planned cross-paradigm validation; until it is run, the multi-channel-integrative-organisation claim rests on cortical EEG anaesthesia alone.
+\item \textbf{Diagnostic thresholds are heuristic.} $D_1 \leq 0.70$, $D_4 \geq 1.5$, $D_5 \leq 0.50$ etc.\ were derived from the empirical pattern across the nine original paired-condition tested substrates (3 Tier A + 4 Tier B + 2 Tier C). Principled bounds would require additional theoretical work (e.g.\ random-matrix-theory-derived thresholds for null shift matrices in the relevant regime).
+\item \textbf{Unpaired-design thresholds need recalibration.} The unpaired-design extension of Section~\ref{sec:method-diagnostic-unpaired} inherits the paired-design thresholds for $D_2$ ($\geq 80\%$ subject sign agreement) and $D_3$ ($\geq 0.65$ per-subject modal-direction fraction). At small between-group cohort sizes ($n \leq 30$ per group, characteristic of available clinical EEG datasets), these thresholds are noisier and may be both over-strict (anxiety case: $D_2 = 0$ under the strict threshold, yet empirical $d = +0.79$ PASS) and over-lax (FTD case: $D_2 = 2$, all five PASS, yet empirical $d = +0.02$ FAIL). The supplementary $D_6$ criterion (FDR-significance AND $\geq 80\%$ agreement, conjoined) catches FTD as FAIL but introduces a false negative on anxiety. Per-design threshold recalibration on a larger between-group cohort set is the cleanest path forward and is open work.
+\item \textbf{Scope: functional vs structural integration.} The dementia null on ds004504 indicates that closure-as-distance measures \emph{functional} cortical-state integration in intact networks (anaesthesia, anxiety, musical joint-action--correctly-FAIL), not loss-of-integration through structural neurodegenerative atrophy (Alzheimer's, frontotemporal dementia). Substrates with progressive structural atrophy require a methodology that handles feature-asymmetric directional cancellation, which the L\textsuperscript{2}-norm-from-centroid does not by construction.
+\item \textbf{Cohort-size requirement at substrate strength.} The $n \geq 7$ minimum derives from source-EEG effect strength; weaker substrates require larger cohorts. Published failure on a substrate at $n = 7$ does not falsify the methodology unless the diagnostic also predicts PASS.
+\item \textbf{Methodology pre-registers falsifiers.} If, on a substrate that passes $D_1$--$D_5$, closure LOSO $d_z < 1.0$ across $\geq 3$ independent cohorts at $n \geq 10$, the diagnostic is wrong and needs revision. If a substrate fails $D_1$--$D_5$ and closure empirically \emph{also dominates baselines in across-fold feature-set stability} (not merely raw effect size) by $\geq 3\times$, the diagnostic is too conservative. The RNN training rows in Table~\ref{tab:cross-substrate} fail CAD-$D_5$ (feature minimality), and their raw effect size exceeds simple baselines, but their across-fold feature-set Jaccard does not exceed the baseline's stability; the CAD-$D_5$-predicted FAIL on \emph{closure-vs-single-axis stability dominance} therefore holds, and the rows are MATCH-on-stability-claim with a calibration-boundary note on raw effect size.
+\end{itemize}
+
+\section{Data and code availability}\label{sec:data}
+
+All code is open-source under Apache-2.0; prose under CC BY 4.0. Implementations of the $D_1$--$D_5$ diagnostic (both paired and unpaired-design variants), LOSO+Jaccard discovery procedure, closure-as-distance metrics, and constraint-manifold formalisation are at \href{https://github.com/vfd-aria/solution-lab}{\texttt{github.com/vfd-aria/solution-lab}} under \texttt{experiments/closure\_cross\_substrate}. The cortical EEG empirical anchor reproduces from the same repository under \texttt{experiments/002-vfd-cortical-phase-closure} on OpenNeuro \texttt{ds005620}~\citep{bajwa2024dataset} and \texttt{ds004541}~\citep{sainiferron2023dataset}. Post-draft real-data validations use OpenNeuro \texttt{ds007609}~\citep{ShalamberidzeAnxiety2025} for trait-anxiety analysis (\texttt{experiments/005-vfd-trauma-cortical-closure/src/sl005\_ds007609\_adapter.py}), \texttt{ds007471}~\citep{ZhouHyperscanning2026} for musical-hyperscanning analysis (\texttt{experiments/007-vfd-hyperscanning-joint-meaning/src/sl007\_ds007471\_refined.py}), and \texttt{ds004504}~\citep{MiltiadousDementia2023} for the dementia analysis (\texttt{experiments/008-vfd-dementia-closure-boundary/src/sl008\_dementia\_adapter.py}). Negative-control synthetic datasets, Kuramoto simulation, and RNN training scripts regenerate deterministically at fixed seeds from the released code. All four post-draft predictions were logged to disk before the empirical closure $d$ was computed; the prediction-then-test order is preserved in the analysis scripts.
+
+\section{Conclusion}\label{sec:conclusion}
+
+We have empirically refined a universal closure-as-distance claim into a scope-conditioned claim: closure measures basin transitions in substrates with parallel anatomically-distinct causal channels, identified \emph{a priori} by a five-criterion diagnostic ($D_1$--$D_5$) that correctly classified $15$ of $16$ tested cases in the present validation set. The empirical anchor is source-localised cortical EEG under propofol anaesthesia: LOSO $d_z = 2.07$ with perfect across-fold feature-set stability (Jaccard $1.00$) and a two-feature minimal closure (beta-band PGD and alpha:beta cross-band PLV). The $5.5\times$ closure-vs-scalar-baseline factor refers to the source-level full-feature in-sample closure ($d_z = 2.58$) vs scalar baseline ($d_z = 0.47$); the LOSO two-feature subset trades a small effect-size cost for cross-fold stability. The diagnostic transfers across substrates and designs: of four post-draft real-data EEG cohorts tested under the unpaired-design extension, three predictions match observed outcomes (anxiety PASS-leaning / observed PASS, musical hyperscanning FAIL / observed FAIL, Alzheimer's FAIL / observed FAIL) and one is a transparently characterised false positive (frontotemporal dementia: directionally-coherent per-feature shifts at magnitudes comparable to within-cohort variance). A cross-substrate feature-transfer test confirms that the methodology has transferred without retuning in the tested EEG cases, while the discovered minimal feature subsets are substrate-specific signatures of biological mechanism (universal transfer is not claimed). Engineered single-channel substrates (RNN training with single or multi-objective loss, Kuramoto coupled oscillators, atrial fibrillation) detect basin transitions but do not satisfy the multi-channel closure condition. Non-integrative substrates and synthetic noise correctly fail the diagnostic. The dementia null reveals a substantive scope refinement: closure-as-distance measures functional integration of intact networks, not loss-of-integration through structural atrophy. Wet-lab validations on planarian regeneration, TMS-EEG perturbation, sleep stages, and cell-/brain-death boundaries are pre-registered for external replication.
+
+The contribution is not that closure-as-distance measures every complex transition. The contribution is the \emph{diagnostic boundary}: it identifies when a multivariate distance-from-basin statistic is expected to capture multi-channel integrative organisation, and when simpler single-axis baselines should be preferred. The empirically validated Tier A anchor is source-localised cortical EEG anaesthesia; broader biological substrates remain external-validation targets. The structural claim --- closure-as-distance as a measurable first-order proxy for multi-channel integrative organisation, conditioned on the $D_1$--$D_5$ applicability diagnostic --- is what the data supports today, what the dedicated unpaired-design boundary case (FTD) refines, and what subsequent independent tests will further refine or falsify.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

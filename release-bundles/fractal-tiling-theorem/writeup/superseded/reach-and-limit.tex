@@ -1,0 +1,240 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{definition}
+\newtheorem{result}[theorem]{Certified Result}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\K}{K}
+\newcommand{\zetaK}{\zeta_{K}}
+\newcommand{\Icos}{\mathcal{I}}
+\renewcommand{\Theta}{\vartheta}
+
+\title{The Closure Geometry Reaches $\zetaK$, Not $\zeta$:\\
+a Certified Negative on the 600-Cell Bridge}
+\author{(VFD programme --- working draft)}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The icosian / $600$-cell closure geometry realizes, over $K=\Q(\sqrt5)$, the
+Dedekind-type $L$-function $\zetaK(s)\,\zetaK(s-1)$; this is established in prior work
+of the programme and recalled here. We ask the natural follow-on question---whether the
+\emph{same} geometry realizes the Riemann zeta function $\zeta$ itself---and answer it
+in the negative. Using a reproducible, gate-first verification engine, we certify that
+the proposed ``substrate $\to\zeta$'' correspondence \textbf{fails} on several
+independent diagnostics (zero positions, nearest-neighbour spacing, on-line density,
+and degree), confirmed by two largely-disjoint routes (a spacing route and a counting
+route). The conclusion is a mapped boundary: the closure geometry's arithmetic reach is
+exactly $\zetaK(s)\zetaK(s-1)$---which contains $\zeta$ only as a factor---and not
+$\zeta$. \textbf{No claim is made about the Riemann Hypothesis}, and no positivity,
+operator, arithmetic-surface, or physical/cosmological claim is made or implied. The
+engine issues verification certificates only; it defines and issues no proof
+certificate.
+\end{abstract}
+
+\section{Introduction and scope}
+The $600$-cell is the regular $4$-polytope whose $120$ vertices are the unit icosians,
+i.e.\ the binary icosahedral group $2I$; the icosian ring is a maximal order in a
+definite quaternion algebra over $K=\Q(\sqrt5)$, and its underlying lattice is a copy of
+$E_8$ \cite{ConwaySloane}. Prior work of this programme \cite{IcosianTriad} established,
+with out-of-sample numerical verification, that the icosian theta series realizes the
+rank-two product $\zetaK(s)\zetaK(s-1)$. This note takes that result as input (the
+\emph{reach}) and settles a single follow-on question (the \emph{limit}).
+
+\paragraph{What is claimed.}
+(i) A recollection of the verified correspondences---icosian $\to\zetaK(s)\zetaK(s-1)$,
+the rational $24$-cell $\to\zeta(s)\zeta(s-1)$, the $\varphi$-shell $\to L(s,\chi_5)$
+(\S\ref{sec:reach}); and (ii) a \emph{certified negative}: the natural
+``substrate $\to\zeta$'' correspondence does not hold, by a reproducible verification
+gate (\S\ref{sec:limit}).
+
+\paragraph{What is not claimed.}
+Nothing about the location of the zeros of $\zeta$ (the Riemann Hypothesis); no
+positivity, self-adjointness, operator, or arithmetic-surface statement; no connection
+to any physical or cosmological model. These boundaries are deliberate and
+load-bearing. The negative of \S\ref{sec:limit} is a statement that a specific
+\emph{construction} fails to realize $\zeta$; it is not a statement about the zeros of
+$\zeta$ and implies nothing about RH.
+
+\section{Preliminaries}
+Let $K=\Q(\sqrt5)$, $\varphi=\tfrac{1+\sqrt5}{2}$, $\mathcal{O}_K=\Z[\varphi]$. The
+Dedekind zeta function factors classically as
+\begin{equation}\label{eq:dedekind}
+  \zetaK(s)=\zeta(s)\,L(s,\chi_5),
+\end{equation}
+with $\chi_5$ the even real quadratic character mod $5$ \cite{Neukirch}; $\zeta$ has a
+simple pole at $s=1$, and $L(\cdot,\chi_5)$ is entire. The icosian ring $\Icos$ is the
+$\Z[\varphi]$-order on the $120$ unit icosians; its $24$-element rational sub-structure
+is the ring of Hurwitz units (the $24$-cell / $2T$, over $K=\Q$), and the remaining $96$
+vertices form the $\varphi$-shell. The coordinate Galois involution
+$\sigma:\sqrt5\mapsto-\sqrt5$ fixes the $24$-cell pointwise and permutes the $\varphi$-shell.
+
+\begin{lemma}[class number one]\label{lem:h1}
+Let $B$ be the definite quaternion algebra over $K=\Q(\sqrt5)$ ramified exactly at the
+two infinite places, and $\Icos\subset B$ the icosian maximal order. Then $\Icos$ has a
+single left-ideal class.
+\end{lemma}
+\begin{proof}[Reference]
+$(B,\Icos)$ is the maximal-order case with invariants $(n,d_F,D,N)=(2,5,1,1)$ in the
+Kirschmer--Voight enumeration of definite quaternion orders of class number one over
+totally real fields \cite[Table 8.2]{KirschmerVoight} (see also Vign\'eras
+\cite{Vigneras}). This is the left-ideal class number entering the Siegel--Weil average
+used in \cite{IcosianTriad}.
+\end{proof}
+
+\section{The reach: verified correspondences}\label{sec:reach}
+We recall the established positive correspondences; the first is the principal input,
+proved and out-of-sample verified in \cite{IcosianTriad} and not reproved here.
+
+\begin{proposition}[recalled from \cite{IcosianTriad}]\label{prop:icosian}
+The Hilbert theta series of the icosian order over $K$ (weight two, level $(D,N)=(1,1)$,
+normalized to leading coefficient $1$) satisfies
+$L(\Theta_{\Icos},s)=\zetaK(s)\,\zetaK(s-1)$. By Siegel--Weil and Lemma~\ref{lem:h1}
+(single class), the theta series equals the corresponding Eisenstein series with no
+cuspidal contribution; the representation numbers were obtained by exact short-vector
+enumeration over $\Z[\varphi]$ and matched, out of sample, to the Dirichlet
+coefficients of $\zetaK(s)\zetaK(s-1)$.
+\end{proposition}
+
+\begin{result}\label{res:24cell}
+The rational $24$-cell (Hurwitz) theta series realizes $\zeta(s)\,\zeta(s-1)$.
+\end{result}
+\begin{proposition}\label{prop:online}
+On the critical line $\mathrm{Re}(s)=\tfrac12$, the zeros of $\zeta(s)\zeta(s-1)$ are
+exactly those nontrivial zeros of $\zeta$ that lie on that line; the factor
+$\zeta(s-1)$ contributes none of them.
+\end{proposition}
+\begin{proof}
+A nontrivial zero of $\zeta(s-1)$ sits at $s=1+\rho$ with $\mathrm{Re}(\rho)\in(0,1)$,
+hence $\mathrm{Re}(s)\in(1,2)$; the trivial zeros of $\zeta(s-1)$ are at $s=1-2n$
+($n\ge1$). Neither meets $\mathrm{Re}(s)=\tfrac12$, so the on-line zeros of the product
+are precisely the on-line zeros of $\zeta(s)$. This concerns \emph{which} zeros lie on
+the line and asserts nothing about whether all nontrivial zeros of $\zeta$ do.
+\end{proof}
+
+\begin{result}\label{res:twin}
+The $96$-vertex $\varphi$-shell (the Galois-sign component) realizes $L(s,\chi_5)$: its
+on-line zeros coincide, to tested precision, with those of $L(s,\chi_5)$; no coincidence
+with a Riemann zero was observed in the tested range.
+\end{result}
+
+Via \eqref{eq:dedekind}, these are mutually consistent: the full icosian object carries
+$\zetaK(s)\zetaK(s-1)=\zeta(s)L(s,\chi_5)\zeta(s-1)L(s-1,\chi_5)$; its Galois-fixed part
+carries the $\zeta$-factor (the $24$-cell), its Galois-sign part the $L(s,\chi_5)$
+factor (the $\varphi$-shell).
+
+\section{The limit: a verification gate and the negative}\label{sec:limit}
+
+\subsection{The gate}
+A proposed correspondence (``expression'') supplies a parameter-free procedure that
+produces the on-line zeros of a claimed $L$-function \emph{without taking the target as
+input}. The gate evaluates: \textbf{no-hardcoding} (the target is not an input),
+\textbf{provenance} (no constant declared fitted/tuned), \textbf{fingerprint}
+(nearest-neighbour spacing; fraction of normalized gaps below $0.3$),
+\textbf{pointwise} (agreement of the first eight zeros, tolerance $0.2$),
+\textbf{density} (on-line zeros per unit height), \textbf{rigidity} (number variance
+$\Sigma^2(\ell)$), and structural \textbf{degree} and \textbf{pole}. An expression is
+\emph{verified} only if it passes all applicable checks; a hashed certificate is emitted
+either way. The engine is a \emph{certifier}, not a search.
+
+\paragraph{Honest reading of the gate.} The \textbf{no-hardcoding} and
+\textbf{provenance} checks act on the expression's declared procedure and provenance
+string; they catch a \emph{declared} fitted map but rely on honest declaration, not on
+program analysis. Accordingly the gate certifies the \emph{consistency} of a declared
+correspondence against the named target's invariants; the geometry$\to$arithmetic
+enumeration itself is the separate computation of \cite{IcosianTriad}, cited above, not
+re-performed by the gate.
+
+\subsection{The certified negative}
+\begin{result}[the $(O2)$ negative]\label{res:o2}
+The proposed correspondence ``substrate $\to\zeta$'' is \textbf{rejected}. The
+substrate's on-line content is that of $\zetaK(s)\zetaK(s-1)$ (degree $4$), which by
+\eqref{eq:dedekind} is $\zeta(s)L(s,\chi_5)\zeta(s-1)L(s-1,\chi_5)$; this contains
+$\zeta$ only as a factor. Against the target $\zeta$ (degree $1$) the gate fails on:
+\emph{degree} ($4$ vs $1$); \emph{fingerprint} (spacing fraction $0.077$ for the
+superposition vs $0.000$ for a single $\zeta$-type spectrum); \emph{pointwise}
+(maximum displacement over the first eight zeros $\approx 22.3$; the first-zero
+displacement alone is $\approx 7.5$); and \emph{density} (see Result~\ref{res:o2b}).
+\end{result}
+
+\begin{result}[independent counting route]\label{res:o2b}
+A route largely disjoint from the spacing diagnostics: since the substrate carries the
+union of the zeros of $\zeta$ and of $L(\chi_5)$ (and their $s\!-\!1$ shifts), its
+on-line density strictly exceeds that of $\zeta$---empirically a ratio $\approx 4.7,
+3.7, 3.1$ at heights $30, 40, 50$, tending to $2$ asymptotically as each factor
+contributes $\sim\tfrac1{2\pi}\log\tfrac{T}{2\pi}$. A spectrum strictly denser than
+$\zeta$'s is not $\zeta$'s. (This route shares only the \emph{density} diagnostic with
+Result~\ref{res:o2}; the spacing/fingerprint evidence is disjoint from it.)
+\end{result}
+
+\subsection{Controls}
+\begin{result}[fitted-map control]\label{res:fit}
+A correspondence whose provenance \emph{declares} a least-squares fit to the zeros is
+rejected on \textbf{provenance} alone, independent of how well its output matches. This
+reproduces, mechanically, a fitted-map trap caught in a prior internal audit of this
+programme.
+\end{result}
+\begin{result}[class-vs-individual control]\label{res:gue}
+A generic GUE operator (random Hermitian, no arithmetic) \emph{passes} the
+\textbf{fingerprint} check---it has the right universality class---but \emph{fails}
+\textbf{pointwise} (it is not the right individual spectrum), and in the saved atlas
+also fails density and rigidity. We rest this control on the pointwise failure: GUE-class
+membership is shown to be insufficient to be $\zeta$. (The density/rigidity numbers here
+depend on a window-scaling convention and are not advanced as intrinsic individual
+discriminators.)
+\end{result}
+
+\begin{center}\small
+\begin{tabular}{llp{4.3cm}}
+\hline
+expression & verdict & failing checks \\
+\hline
+$24$-cell $\to \zeta(s)\zeta(s-1)$ & \textsc{verified} & --- \\
+icosian $\to \zetaK(s)\zetaK(s-1)$ & \textsc{verified} & --- \\
+$\varphi$-shell $\to L(s,\chi_5)$ & \textsc{verified} & --- \\
+substrate $\to \zeta$ (bridge) & \textsc{rejected} & degree, fingerprint, pointwise, density \\
+fitted map $\to \zeta$ & \textsc{rejected} & provenance \\
+generic GUE $\to \zeta$ & \textsc{rejected} & pointwise (class $\ne$ individual) \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Reproducibility and scope}
+The gate, certificates (content-hashed), and the atlas accompany this note in
+\texttt{vfd\_math\_engine/}. We claim only what the certificates state: which
+correspondences pass the gate and which do not. The geometry$\to$arithmetic enumeration
+underlying Proposition~\ref{prop:icosian} is the separate, out-of-sample computation of
+\cite{IcosianTriad}.
+
+The net statement is a \emph{boundary}: the closure geometry realizes
+$\zetaK(s)\zetaK(s-1)$ and provably (within the gate's scope) not $\zeta$. We make no
+claim about the Riemann Hypothesis. No proof certificate is defined or issued.
+
+\begin{thebibliography}{9}
+\bibitem{ConwaySloane} J.~H.~Conway, N.~J.~A.~Sloane, \emph{Sphere Packings, Lattices
+  and Groups}, Springer.
+\bibitem{Neukirch} J.~Neukirch, \emph{Algebraic Number Theory}, Springer.
+\bibitem{IcosianTriad} VFD programme, \emph{The Icosian Triad on $V_{600}$} (and
+  companion computations), \texttt{icosian-triad-v600} release; establishes
+  $L(\Theta_{\Icos},s)=\zetaK(s)\zetaK(s-1)$ with out-of-sample verification.
+\bibitem{KirschmerVoight} M.~Kirschmer, J.~Voight, \emph{Algorithmic enumeration of
+  ideal classes for quaternion orders}, SIAM J.\ Comput.\ \textbf{39} (2010), Table 8.2.
+\bibitem{Vigneras} M.-F.~Vign\'eras, \emph{Arithm\'etique des alg\`ebres de
+  quaternions}, Lecture Notes in Math.\ \textbf{800}, Springer (1980).
+\bibitem{Siegel} C.~L.~Siegel, \emph{\"Uber die analytische Theorie der quadratischen
+  Formen}, Ann.\ of Math.\ (1935).
+\bibitem{Weil1965} A.~Weil, \emph{Sur la formule de Siegel\dots}, Acta Math.\ (1965).
+\end{thebibliography}
+
+\end{document}

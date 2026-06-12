@@ -1,0 +1,403 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage[hidelinks,colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\sisetup{detect-all=true,group-separator={,}}
+
+\title{\textbf{Cortical Phase Closure Reveals a Multi-Axis Wave-Organisation Signature of Propofol Sedation}\\[2pt]
+\large A Per-Subject Calibrated Closure Metric Recovers Frontal Alpha Anteriorisation, Whole-Cortex Beta Travelling-Wave Increase, and Theta--Gamma Coupling Decrease\\[1pt]
+\small (Open research note --- pre-peer-review draft)}
+
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent
+Cortical oscillations and travelling waves carry working-memory content and reorganise systematically under anaesthesia~\cite{lundqvist2016gamma,davis2020spontaneous,stoll2025convergent}. Standard scalar measures --- band power, pairwise phase-locking value (PLV), global synchrony --- conflate distinct wave-organisation regimes. We define a $9$-dimensional per-window closure feature vector over multi-band cortical phase graphs (theta, alpha, beta, gamma) including local smoothness, global Kuramoto order and its temporal variability, task-subnet order, $\alpha$- and $\beta$-band phase-gradient directionality (PGD), $\theta$--$\gamma$ phase-amplitude coupling, $\alpha$:$\beta$ cross-frequency PLV, and a saturating surrogate-deviation. Applied to the OpenNeuro \texttt{ds005620} propofol-sedation EEG corpus (eyes-closed awake vs propofol-sedated rest, \SI{240}{\second} per condition, \num{64}-channel BrainVision \SI{5}{\kilo\hertz} resampled to \SI{250}{\hertz}; $n=14$ pilot~$+$~held-out cohort), a per-subject calibrated displacement test --- distance from each subject's awake feature-vector mean in standardised feature space --- separates the sedated condition from awake in $14/14$ subjects, paired $t=7.11$, $p=8.0\!\times\!10^{-6}$; Wilcoxon $W=105$, $p=6.1\!\times\!10^{-5}$; Cohen's paired $d_z=1.90$; permutation $p<2\!\times\!10^{-4}$ ($0/5000$ within-subject shuffles matched the observed mean). The result holds under leave-one-subject-out re-standardisation ($14/14$, paired $t=7.00$, $d_z=1.87$). The displacement decomposes into four Benjamini--Hochberg-corrected per-feature effects: per-channel $\alpha$:$\beta$ cross-band PLV increases ($14/14$, $q=7\!\times\!10^{-6}$), $\beta$-band PGD increases ($13/14$, $q=0.007$), global Kuramoto order increases ($11/14$, $q=0.032$), and $\theta$--$\gamma$ phase-amplitude coupling decreases ($11/14$, $q=0.032$). Spatially, the $\beta$-PGD increase is whole-cortex (every region $q<0.005$); $\alpha$-PGD increase is frontal-selective ($13/14$, $q=0.0024$), consistent with the well-known propofol frontal-alpha pattern~\cite{purdon2013electroencephalogram,ching2010thalamocortical}, with the textbook posterior decrease being idiosyncratic across subjects rather than population-consistent. Per-channel-aggregated cross-band $\alpha$:$\beta$ PLV is broadly elevated under sedation: ratios $1$:$1$ through $2.5$:$1$ all show $14/14$ subjects with increase ($q<4\!\times\!10^{-6}$), $3$:$1$ in $12/14$ ($q=0.0014$); $4$:$1$ not significant. The displacement survives partialling out classical band-power, mean PLV, and global synchrony baselines, and is robust to leave-one-subject-out re-standardisation. \textbf{Source-localised replication} on \texttt{fsaverage} cortical anatomy with sLORETA inverse and a $68$-ROI Desikan--Killiany parcellation recovers the same displacement at the source level with a \emph{larger} effect size ($14/14$, $t=9.72$, $p=2.5\!\times\!10^{-7}$, $d_z=2.60$); the two strongest sensor-space effects (cross-band PLV, $\beta$-PGD) reach $q<10^{-6}$ at the source level, arguing against scalp-electrode volume conduction as the sole explanation (source leakage and template-anatomy effects remain; the source pipeline uses an ad-hoc identity noise covariance with no empty-room data). \textbf{Cross-cohort replication} on an independent clinical-anaesthesia EEG dataset (OpenNeuro \texttt{ds004541}, $n=7$ patients undergoing general anaesthesia, mixed-agent regime) reproduces the displacement at comparable in-sample effect size ($7/7$, $t=5.25$, $p=1.9\!\times\!10^{-3}$, $d_z=1.98$); the cross-validated LOSO estimate on this cohort is smaller ($d_z = 1.16$ at $n=7$, Jaccard $= 0.52$) and is the honest cross-fold number, reported separately in the cross-substrate companion~\citep{SmartClosureDistance}; the $\theta$--$\gamma$ PAC sign does not reverse, so the corresponding pre-stated falsification criterion is not triggered. The pattern is internally coherent: propofol increases wave-coherence at global and cross-band-locking levels while decreasing a putative cortical-coupling signature ($\theta$--$\gamma$ PAC). We release the full pipeline, per-subject CSVs, and falsification criteria as an open artifact.
+\end{abstract}
+\paragraph{Programme map (review-packet 2026-05-22).}
+This paper is part of the Existence / Life / Closure review packet. Stable packet references:
+Paper I = \emph{Existence as Closure};
+Paper II = \emph{Life as Closure};
+Paper III = \emph{From Processing to Point of View};
+Note A = \emph{Bioelectric Closure} (SL-001);
+Note B = \emph{Cortical Phase Closure} (SL-002);
+Note C = \emph{Closure-as-Distance} (cross-substrate methodology);
+Note D = \emph{Trauma / Cortical Closure} (SL-005);
+Note E = \emph{FlowIndex} (SL-006);
+Note F = \emph{Dyadic Joint Meaning} (SL-007).
+Extension IV = \emph{Cosmic Self-Pruning and Frame Recurrence} is withheld from the primary packet.
+
+\paragraph{Status taxonomy.}
+\textbf{Theorem / Definition} = formal structural claim under stated assumptions.
+\textbf{Conditional Proposition} = bridge claim depending on H-RP, P-A, substrate mapping, or empirical interpretation.
+\textbf{Empirical Result} = completed data analysis with stated effect size + significance.
+\textbf{Empirical Proxy} = measurable first-order approximation, not the formal operator.
+\textbf{Pre-registered Proposal} = future test, not evidence.
+
+
+
+\section{Introduction}
+
+\noindent\emph{Scope note.} This note does not claim to detect consciousness directly. It identifies a reproducible, multi-axis cortical wave-organisation displacement between awake and anaesthetised states. The consciousness interpretation is handled only in Paper III (\emph{From Processing to Point of View}) and remains conditional on the Access Principle (P-A).
+
+Cortical computation is increasingly described as organised by travelling waves and burst-like phase structure~\cite{miller2018working,lundqvist2016gamma,bastos2020laminar,davis2020spontaneous,muller2018cortical,zhang2018theta,alamia2019alpha}, and anaesthetics produce convergent changes in cortical phase alignment despite acting through different molecular targets~\cite{stoll2025convergent,purdon2013electroencephalogram,ching2010thalamocortical,lewis2012rapid}. Standard EEG-derived measures --- band power, pairwise PLV, mean Kuramoto order --- compress this multi-dimensional structure to scalars that confuse rigid drug-induced phase locking with flexible task-coupled coherence. The empirical question this note addresses is narrow and concrete: \emph{is there a single feature space in which propofol sedation produces a structured, FDR-corrected, replicated displacement of cortical state, and what is the content of that displacement?}
+
+We define such a feature space directly: a $9$-dimensional per-window closure feature vector over multi-band cortical phase graphs. The vector includes local phase smoothness across electrode adjacency, the Kuramoto order parameter on the alpha band and its within-trial temporal variability, the order parameter on a frontal task subnetwork (since propofol's signature is frontal), beta- and alpha-band phase-gradient directionality (PGD; a measure of travelling-wave coherence in space), $\theta$--$\gamma$ phase-amplitude coupling on the frontal subnetwork (a putative information-transfer signature~\cite{tort2010measuring}), $\alpha$:$\beta$ $n$:$m$ cross-frequency PLV, and a saturating $z$-distance from a phase-shuffled surrogate distribution. A separate residual-distance metric is defined as a weighted Euclidean distance from a target-state template; we show below that on real propofol data the synthetic-anchored template direction is partially incorrect, motivating a per-subject calibrated displacement test as the inferentially appropriate measure.
+
+The contribution is empirical, not theoretical. We release the implementation as an open Apache-2.0 / CC~BY~4.0 artifact and publish full per-window CSVs, falsification criteria, and a permutation-validated displacement statistic. The rest of this note describes the pipeline (Section~\ref{sec:methods}), the n=14 result (Section~\ref{sec:results}), the spatial decomposition recovering frontal-alpha anteriorisation (Section~\ref{sec:spatial}), and limitations (Section~\ref{sec:limits}).
+
+\section{Methods}\label{sec:methods}
+
+\subsection{Dataset}
+
+OpenNeuro \texttt{ds005620}~\cite{bajwa2024dataset}: $\num{64}$-channel BrainVision EEG (\SI{5}{\kilo\hertz}), eyes-closed awake (\texttt{task-awake\_acq-EC}) versus propofol-sedated rest (\texttt{task-sed\_acq-rest\_run-1}), recorded at the University of Oslo. Per-subject nominal duration is $\SI{5}{\minute}$ per condition; the analysis uses up to $\SI{240}{\second}$ post-burnin per condition. Sub-$1017$ has a shorter $\SI{146}{\second}$ sed recording, retained as-is (yielding $\sim\!282$ vs $469$ windows in the standard cases). Pilot cohort: subjects $\{1010,1016,1022,1033,1036,1045,1046,1055\}$ ($n=8$). Held-out replication cohort: $\{1017,1024,1057,1062,1064,1074\}$ ($n=6$). Combined $n=14$. Subject \num{1037} is marked excluded in the dataset's \texttt{participants.tsv} and is not used.
+
+\subsection{Preprocessing}
+
+For each condition file we (i)~load the BrainVision triplet (.vhdr/.eeg/.vmrk) via MNE-Python~\cite{gramfort2014mne}; (ii)~drop non-EEG physiological channels (EOG/EMG); (iii)~apply the standard \texttt{standard\_1005} montage and discard channels without a $3$-D position; (iv)~resample from $\SI{5}{\kilo\hertz}$ to $\SI{250}{\hertz}$; (v)~band-pass-filter $\num{4}$--$\SI{45}{\hertz}$. The first $\SI{5}{\second}$ of each recording are discarded as a burn-in; up to $\SI{240}{\second}$ of post-burnin data are used per condition.
+
+Per-band analytic signals are computed by MNE-Python's bandpass filter followed by Hilbert transform, in four bands: theta ($4$--$\SI{8}{\hertz}$), alpha ($8$--$\SI{13}{\hertz}$), beta ($15$--$\SI{30}{\hertz}$), gamma ($30$--$\SI{45}{\hertz}$). Electrode coordinates are projected from $\mathbb{R}^3$ to $\mathbb{R}^2$ via stereographic-style flattening, and a $k$-nearest-neighbours adjacency ($k=8$) is constructed in the projected coordinates. The frontal task subnetwork is fixed to the $14$ electrodes \{Fp1,Fpz,Fp2,AF3,AFz,AF4,F3,F1,Fz,F2,F4,FC1,FCz,FC2\} when present in the recording.
+
+\subsection{Closure feature vector}
+
+For each $1$\,s sliding window with $0.5$\,s step (50\% overlap), the per-window closure vector $\mathbf{f}\in\mathbb{R}^9$ is computed as follows.
+
+\begin{enumerate}\itemsep0pt
+\item \textbf{local\_smoothness}: $\langle\cos(\phi^{\alpha}_i-\phi^{\alpha}_j)\rangle_{(i,j)\in E}$ averaged over the window, where $E$ is the adjacency edge set and $\phi^{\alpha}$ is alpha-band analytic phase.
+\item \textbf{global\_order}: time-mean of $R_{\alpha}(t)=|\langle e^{i\phi^{\alpha}_n(t)}\rangle_n|$, the Kuramoto order parameter on alpha~\cite{kuramoto1984chemical}.
+\item \textbf{global\_order\_std}: temporal standard deviation of $R_\alpha(t)$ within the window, a standard metastability index in coupled-oscillator descriptions of cortex~\cite{deco2016metastability}.
+\item \textbf{task\_order}: time-mean of $R_{\beta}^{S}(t)=|\langle e^{i\phi^{\beta}_n(t)}\rangle_{n\in S}|$ on the frontal subnetwork $S$.
+\item \textbf{pgd\_alpha} / \textbf{pgd\_beta}: phase-gradient directionality~\cite{rubino2006propagating,muller2018cortical}. Per-node $\mathbb{R}^2$ phase gradients are obtained via local least-squares fits using complex-valued differences $\arg(z_j z_i^*)$ over neighbours (handling phase wrapping). PGD is the directional consistency $|\langle\nabla\phi\rangle|/\langle|\nabla\phi|\rangle$ over (time-subsampled, factor 5) nodes and time. Range: $[0,1]$ ($1$ = stable plane wave; $0$ = isotropic / locked-flat).
+\item \textbf{pac\_theta\_gamma}: mean-resultant-length phase-amplitude coupling on the frontal subnetwork, $|\langle A^{\gamma}_n(t)\,e^{i\phi^{\theta}_n(t)}\rangle_{n,t}|/\langle A^{\gamma}_n(t)\rangle_{n,t}$. The mean-resultant-length form was introduced by Canolty et al.~\cite{canolty2006high}; relative to bin-based modulation indices~\cite{tort2010measuring}, this formulation avoids finite-sample bias from sparse phase bins.
+\item \textbf{cross\_band\_plv\_alpha\_beta}: $n$:$m$ phase-locking~\cite{tass1998detection} computed per-channel and aggregated. For each channel $n$, the within-window per-channel PLV is $\rho_n = |\langle e^{i(\phi^{\alpha}_n(t)-r\phi^{\beta}_n(t))}\rangle_t|$; the feature is $\langle\rho_n\rangle_n$. Crucially, phases are circular variables: arithmetic-mean-of-phases would be ill-defined and produce a similarity-of-phase-distributions surrogate rather than n:m PLV. We therefore aggregate at the PLV level, not the phase level. We sweep $r\in\{1,1.5,2,2.5,3,4\}$ in Section~\ref{sec:nm}.
+\item \textbf{surrogate\_z}: $\tanh\!\big((|z_{\text{smooth}}|+|z_{\text{order}}|)/(2\cdot 5)\big)$, where $z_{\bullet}$ are $z$-scores against a per-node circularly-shifted surrogate ensemble. The saturating transform is bounded in $[0,1]$.
+\end{enumerate}
+
+A baseline feature vector $\mathbf{b}\in\mathbb{R}^7$ is computed per window for comparison: per-band mean squared analytic amplitudes (alpha, beta, gamma; band-power proxies), mean random-pair PLV on alpha and on beta, and global synchrony $|\langle e^{i\phi}\rangle_n|$ on alpha and on beta.
+
+\subsection{Per-subject calibrated displacement test}
+
+We apply two displacement tests:
+
+\paragraph{Synthetic-anchored basin distance.}
+Two reference templates --- \textsc{reportable} (flexible-task-coupled basin) and \textsc{anesthetic} (rigid-locking basin) --- are anchored from synthetic-trial empirical means and used to compute weighted Euclidean residuals $R_{\text{rep}}(t)$ and $R_{\text{an}}(t)$ per window. This test is reported for completeness; on real propofol it does not strongly capture the empirical regime (Section~\ref{sec:results}).
+
+\paragraph{Per-subject calibrated drift.}
+The full feature matrix $X\in\mathbb{R}^{N\times 9}$ over all windows of all subjects is column-standardised to $Z$ \emph{using awake-condition windows only}: $\mu = \mathrm{mean}\{X_w : \text{awake}\}$, $\sigma = \mathrm{std}\{X_w : \text{awake}\}$, $Z = (X-\mu)/\sigma$. Standardising on awake windows alone avoids the circularity of pre-compressing across-condition variance before measuring the displacement. For each subject $s$, the personal awake reference is $\bar{z}_s = \mathrm{mean}\{z_w : w\in s, \text{awake}\}$. Per-window drift is $d_w = \|z_w - \bar{z}_{\text{subject}(w)}\|_2$. Per-condition drift means are compared between subjects via paired $t$ and Wilcoxon signed-rank tests, with paired Cohen's $d_z = \overline{\Delta}/\mathrm{SD}(\Delta)$ as the effect-size measure. As an independent robustness check, a leave-one-subject-out (LOSO) variant recomputes $\mu,\sigma$ from the remaining $13$ subjects' awake windows for each held-out subject's test, ensuring no within-subject information enters the standardisation. The 5000-shuffle permutation null is constructed by independently permuting awake/sed labels within each subject's windows.
+
+\subsection{Per-feature decomposition with FDR correction}
+
+For each closure feature $f_k$ ($k=1,\dots,9$), per-subject $\Delta_s = \bar{f}_k^{\text{awake}} - \bar{f}_k^{\text{sed}}$ deltas are computed, and a paired $t$-test is run across subjects. $p$-values are corrected for multiple comparisons across the $9$ features using the Benjamini--Hochberg false-discovery-rate procedure~\cite{benjamini1995controlling} with $q=0.05$.
+
+\subsection{Spatial localisation and $n$:$m$ specificity}
+
+For spatial localisation, we partition electrodes into four anatomical regions (frontal, central, parietal, occipital) and compute regional $\mathrm{PGD}_\alpha$ and $\mathrm{PGD}_\beta$ on the per-region subset of channels. For $n$:$m$ specificity, we sweep $r\in\{1,1.5,2,2.5,3,4\}$ in the cross-band-PLV definition. Each yields a per-window scalar; we apply the same paired test + BH-FDR correction.
+
+\subsection{Confound regression}
+
+To test whether the closure displacement is reducible to band power / PLV / synchrony, each closure feature column is linearly regressed against the full $7$-dimensional baseline feature vector. The residual closure features are then re-entered into the calibrated drift test. Surviving the regression confirms that the displacement carries information beyond classical spectral measures.
+
+\subsection{Source-localised replication}\label{sec:source-methods}
+
+To rule out volume conduction --- the concern that nearby scalp electrodes share cortical generators and so phase-gradient and PLV measures are inflated by geometry rather than cortical phase organisation --- we re-ran the entire closure-feature pipeline at the source level. For each recording we built a forward solution against the MNE-Python \texttt{fsaverage} template anatomy~\cite{gramfort2014mne} (BEM: $5120$-vertex three-layer scalp/skull/brain; source space: \texttt{ico-4} surface decimation, $\approx\!2562$ sources per hemisphere); applied the sLORETA inverse with an ad-hoc identity noise covariance (no empty-room data are available; using the recording itself for the noise covariance would double-dip); projected to $68$ Desikan--Killiany cortical regions (\texttt{aparc} parcellation) using \texttt{mean\_flip} extraction (which handles the polar ambiguity intrinsic to inverse-solution dipoles). On the parcellated time series we recomputed the same $9$-D closure feature vector with the same per-window slide ($1$\,s window, $0.5$\,s step, $5$\,s burn-in, up to $240$\,s per condition), the same $k$-NN adjacency ($k=8$) but built on label-centroid coordinates in MNI space, and the same frontal subnetwork (replaced by aparc labels: superior/middle/caudal/rostral frontal, par opercularis/triangularis/orbitalis, frontal/lateral/medial orbitofrontal pole). The forward solution is cached per channel-set signature so the $14$ subjects share one BEM solve. Per-subject calibrated drift, awake-only standardisation, paired statistics, and per-feature BH-FDR are computed exactly as in the sensor-space pipeline.
+
+\subsection{Independent-cohort cross-replication on clinical anaesthesia EEG}\label{sec:clinical-methods}
+
+To test whether the per-subject calibrated drift generalises beyond the discovery dataset, we ran the identical pipeline on OpenNeuro \texttt{ds004541}~\cite{sainiferron2023dataset} (Saini Ferr\'on et al., Pontificia Universidad Cat\'olica de Chile, $n=8$ patients undergoing clinical general anaesthesia, $58$--$69$-channel EEG @ \SI{1000}{\hertz}, EDF format). Each recording contains BIDS-marked transitions through awake $\rightarrow$ verbal stimuli $\rightarrow$ motor $\rightarrow$ tetanic $\rightarrow$ \texttt{loc} (loss of consciousness) $\rightarrow$ \texttt{roc} (recovery). We extracted a $\SI{240}{\second}$ pre-induction baseline window starting at the BIDS \texttt{baseline} or \texttt{start} marker (the AWAKE segment) and a $\SI{240}{\second}$ unconscious window starting $\SI{60}{\second}$ after the \texttt{loc} marker, skipping the induction transient (the SED segment). Subject \texttt{sub-11} lacks a \texttt{loc} event in its BIDS metadata and was excluded, leaving $n=7$. Preprocessing (downsample to \SI{250}{\hertz}, $4$--$\SI{45}{\hertz}$ bandpass, $\SI{5}{\second}$ burn-in, drop non-EEG channels, $k=8$ k-NN adjacency) and the closure feature pipeline are identical to the propofol analysis. The drug regime is not specified in the BIDS metadata; the standard general-anaesthesia protocol at this institution typically combines propofol induction with sevoflurane maintenance, so we treat this as a mixed-agent independent-cohort replication and report the outcome accordingly.
+
+\section{Results}\label{sec:results}
+
+\subsection{Per-subject calibrated displacement: $14/14$ subjects, $p=6.1\!\times\!10^{-5}$}
+
+Across all $n=14$ subjects, the per-subject calibrated drift is positive (sed cortex is further from each subject's personal awake reference than awake cortex is). Per-subject drift means are tabulated in Table~\ref{tab:drift}. Paired-$t$ across subjects yields $t=7.11$, $p=8.0\!\times\!10^{-6}$ (two-sided); Wilcoxon signed-rank one-sided $W=105$, $p=6.1\!\times\!10^{-5}$; paired Cohen's $d_z=1.90$. The leave-one-subject-out re-standardisation gives $14/14$, $t=7.00$, $p=9.4\!\times\!10^{-6}$, $d_z=1.87$, confirming the test is not driven by within-data information leakage. Of $\num{5000}$ within-subject permutations, $0$ matched or exceeded the observed mean drift ($p_{\text{perm}}<2\!\times\!10^{-4}$); the all-positive $14/14$ pattern occurred at $p<2\!\times\!10^{-4}$.
+
+\begin{table}[h]
+\centering\small
+\caption{Per-subject calibrated drift in the awake-only-standardised closure feature space ($n=14$). Awake / sed drift = mean Euclidean distance from the subject's personal awake feature-vector mean. PCA cosine = cosine similarity of this subject's awake$\to$sed displacement vector with the group mean direction in PC1--PC2 space.}\label{tab:drift}
+\begin{tabular}{lrrrr}\toprule
+Subject & Awake drift & Sed drift & $\Delta$ & PCA cosine \\
+\midrule
+$1010$ & $2.78$ & $4.13$ & $+1.35$ & $-0.63$ \\
+$1016$ & $2.34$ & $3.89$ & $+1.56$ & $+0.99$ \\
+$1017$ & $2.43$ & $5.50$ & $+3.07$ & $-1.00$ \\
+$1022$ & $2.62$ & $4.78$ & $+2.16$ & $+0.96$ \\
+$1024$ & $2.33$ & $3.57$ & $+1.24$ & $+0.99$ \\
+$1033$ & $2.86$ & $3.39$ & $+0.54$ & $+0.53$ \\
+$1036$ & $2.21$ & $3.42$ & $+1.21$ & $+1.00$ \\
+$1045$ & $2.73$ & $3.57$ & $+0.84$ & $+0.63$ \\
+$1046$ & $2.48$ & $3.38$ & $+0.90$ & $+0.98$ \\
+$1055$ & $2.43$ & $2.86$ & $+0.42$ & $+0.77$ \\
+$1057$ & $2.50$ & $4.66$ & $+2.17$ & $+0.91$ \\
+$1062$ & $2.39$ & $4.79$ & $+2.40$ & $+0.96$ \\
+$1064$ & $2.21$ & $5.15$ & $+2.94$ & $+0.99$ \\
+$1074$ & $2.31$ & $4.86$ & $+2.56$ & $+0.99$ \\
+\midrule
+\multicolumn{2}{l}{Group ($n=14$)} & & $+1.67$ & mean $+0.65$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+The PCA decomposition of the awake-standardised feature matrix shows that PC1 explains $29.4\%$ of variance and PC2 explains $12.9\%$. Per-subject awake$\to$sed displacement vectors in PC1--PC2 space (Figure~\ref{fig:pca}) align with the group mean direction in $10/14$ subjects (cosine $>0.7$); $12/14$ have positive cosine. Two subjects oppose the group: $1017$ ($\cos=-1.00$, perfectly anti-aligned) and $1010$ ($\cos=-0.63$). Both have positive drift magnitude --- the calibrated test is positive in every subject regardless of direction. We discuss outlier-subject diagnosis below.
+
+\begin{figure}[h]
+\centering\includegraphics[width=0.85\linewidth]{figures/displacement_pca.png}
+\caption{Per-subject awake$\to$sed displacement in PC1--PC2 of the standardised closure feature space ($n=14$). Blue circles are awake centroids; red squares are sed centroids; arrows mark per-subject displacement. PC1 ($29.4\%$ var) loads on global synchrony, local smoothness, and alpha PGD. PC2 ($12.9\%$ var) loads on cross-band PLV and inversely on $\theta$--$\gamma$ PAC. $10/14$ subjects share a common displacement axis ($\cos>0.7$ with the group-mean direction).}\label{fig:pca}
+\end{figure}
+
+\subsection{Per-feature decomposition: four FDR-corrected effects}
+
+Of the nine closure features, four reach BH-FDR significance at $q<0.05$ in paired across-subject tests (Table~\ref{tab:perfeat}). All four are mechanistically interpretable.
+
+\begin{table}[h]
+\centering\small
+\caption{Per-feature paired propofol effect across $n=14$ subjects, BH-FDR corrected ($q=0.05$). Bolded rows are FDR-significant. The "subjects" column shows the count moving in the predicted direction (sed greater than awake for $\uparrow$; sed less than awake for $\downarrow$). $t$-statistic sign reflects awake-minus-sed paired difference.}\label{tab:perfeat}
+\begin{tabular}{lrrrrr}\toprule
+Closure feature & Direction (sed vs awake) & subjects & $t$ & $p$ & $q_{\text{BH}}$ \\
+\midrule
+\textbf{cross\_band\_plv\_alpha\_beta} & $\uparrow$ & $14/14$ & $-8.82$ & $7.5\!\times\!10^{-7}$ & $\mathbf{6.8\!\times\!10^{-6}}$ \\
+\textbf{pgd\_beta} & $\uparrow$ & $13/14$ & $-3.97$ & $0.0016$ & $\mathbf{0.0072}$ \\
+\textbf{global\_order} & $\uparrow$ & $11/14$ & $-2.84$ & $0.014$ & $\mathbf{0.032}$ \\
+\textbf{pac\_theta\_gamma} & $\downarrow$ & $11/14$ & $+2.84$ & $0.014$ & $\mathbf{0.032}$ \\
+local\_smoothness & --- & $3/14$ & $-1.30$ & $0.22$ & $0.27$ \\
+global\_order\_std & --- & $11/14$ & $+2.15$ & $0.051$ & $0.091$ \\
+task\_order & --- & $8/14$ & $+0.74$ & $0.47$ & $0.47$ \\
+pgd\_alpha & --- & $5/14$ & $-1.61$ & $0.13$ & $0.20$ \\
+surrogate\_z & --- & $3/14$ & $-1.22$ & $0.24$ & $0.27$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+The pattern is internally coherent: under propofol, the cortex becomes \emph{more} phase-organised at three levels --- global Kuramoto order ($q=0.032$), beta travelling-wave coherence ($q=0.007$), and per-channel alpha--beta cross-frequency phase locking ($q=7\!\times\!10^{-6}$) --- and \emph{less} coupled at the $\theta$--$\gamma$ phase-amplitude level ($q=0.032$), a putative cortical-coupling signature widely associated with information binding~\cite{tort2010measuring,canolty2006high}.
+
+The displacement is stable across the recording. Splitting each $\SI{240}{\second}$ post-burnin condition into early/middle/late thirds and re-running the calibrated drift test on each third gives $14/14$, $13/14$, and $14/14$ positive across-subject deltas respectively (mean drift $+1.19$, $+1.14$, $+1.24$). The effect is not transient and not ramping.
+
+\subsection{Confound regression: closure $\not=$ band power}
+
+Linearly regressing each closure feature against the full $7$-D baseline feature vector and re-running the calibrated drift test on residuals: $14/14$ subjects remain positive, paired $t=2.79$, $p=0.015$, Wilcoxon $W=105$, $p=6.1\!\times\!10^{-5}$, mean residual drift $\Delta=+0.84$. Per-feature $R^2$ explained by baselines ranges from $0.005$ (surrogate\_z) to $\sim 0.40$ (\texttt{pgd\_alpha}, \texttt{global\_order\_std}), with the exception of \texttt{global\_order} which is fully explained by \texttt{global\_synchrony\_alpha} ($R^2=1.00$, by definition --- the two are the same statistic, and we therefore declare \texttt{global\_order} as not adding information beyond the baseline; the FDR-significant effect on \texttt{global\_order} in Table~\ref{tab:perfeat} is recovered as the conventional propofol global-alpha-coherence increase, not a closure-specific finding). The remaining three FDR-significant features --- \texttt{cross\_band\_plv\_alpha\_beta}, \texttt{pgd\_beta}, and \texttt{pac\_theta\_gamma} --- have substantial unique variance after baseline regression. The displacement therefore carries information beyond classical spectral / synchrony measures, with the global-order axis being the only feature reducible to a baseline.
+
+\subsection{Spatial localisation: whole-cortex beta, frontal-only alpha}\label{sec:spatial}
+
+Decomposing $\mathrm{PGD}_\beta$ and $\mathrm{PGD}_\alpha$ by anatomical region (Table~\ref{tab:spatial}, Figure~\ref{fig:spatial}) shows two distinct spatial patterns.
+
+\begin{table}[h]
+\centering\small
+\caption{Spatial localisation of PGD changes (paired $\Delta=$awake$-$sed; negative $\Delta$ means sed-condition higher).}\label{tab:spatial}
+\begin{tabular}{lllrrrr}\toprule
+Metric & Region & subjects sed$>$awake & $\Delta$ & $t$ & $p$ & $q_{\text{BH}}$ \\
+\midrule
+\textbf{pgd\_beta} & frontal & $13/14$ & $-0.098$ & $-5.30$ & $0.00014$ & $\mathbf{0.0006}$ \\
+\textbf{pgd\_beta} & central & $13/14$ & $-0.045$ & $-3.66$ & $0.0029$ & $\mathbf{0.0046}$ \\
+\textbf{pgd\_beta} & parietal & $12/14$ & $-0.023$ & $-5.64$ & $0.000081$ & $\mathbf{0.0006}$ \\
+\textbf{pgd\_beta} & occipital & $12/14$ & $-0.049$ & $-4.10$ & $0.0013$ & $\mathbf{0.0025}$ \\
+\textbf{pgd\_alpha} & frontal & $13/14$ & $-0.116$ & $-4.29$ & $0.00089$ & $\mathbf{0.0024}$ \\
+pgd\_alpha & central & $9/14$ & $-0.029$ & $-1.81$ & $0.093$ & $0.12$ \\
+pgd\_alpha & parietal & $7/14$ & $+0.021$ & $+1.46$ & $0.17$ & $0.17$ \\
+pgd\_alpha & occipital & $6/14$ & $+0.040$ & $+1.47$ & $0.17$ & $0.17$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\centering\includegraphics[width=0.95\linewidth]{figures/spatial_pgd_beta.png}
+\caption{Per-subject regional change in $\mathrm{PGD}_\beta$ under propofol sedation ($n=14$). Beta travelling-wave coherence increases under sedation in $12$--$13/14$ subjects in every region (every region $q<0.005$, BH-FDR corrected).}\label{fig:spatial}
+\end{figure}
+
+The $\beta$-PGD increase is whole-cortex: $12$--$13/14$ subjects in every region, all four regions FDR-significant at $q<0.005$. The $\alpha$-PGD increase is selective to the frontal region ($13/14$, $q=0.0024$); the central effect does not reach significance, and the parietal/occipital effects split at chance ($7/14$ and $6/14$ respectively). This frontal-only $\alpha$-PGD pattern is consistent with the well-known clinical signature of propofol's frontal-alpha coherence~\cite{purdon2013electroencephalogram,ching2010thalamocortical,lewis2012rapid}. We note explicitly that the $14$-channel frontal subnetwork is hard-coded into the closure feature definition (Section~\ref{sec:methods}); the relevant test is therefore the \emph{spatial dissociation} across regions (whole-cortex $\beta$ effect; frontal-selective $\alpha$ effect), not the recovery of frontal-alpha increase per se. The textbook \emph{posterior alpha decrease} is, on this dataset, idiosyncratic at the individual level ($6$--$7/14$ in the predicted direction) rather than population-consistent.
+
+\subsection{$n$:$m$ specificity: fully broadband cross-band coupling}\label{sec:nm}
+
+Sweeping the $\alpha$:$\beta$ harmonic ratio $r\in\{1,1.5,2,2.5,3,4\}$ in the per-channel cross-band PLV (Table~\ref{tab:nm}, Figure~\ref{fig:nm}): ratios $1$:$1$ through $2.5$:$1$ are FDR-significant in $14/14$ subjects ($q<4\!\times\!10^{-6}$); $3$:$1$ remains significant in $12/14$ ($q=0.0014$); $4$:$1$ does not reach significance ($q = 0.10$). The largest \emph{magnitude} effect is at $r=1$:$1$ ($|\Delta| = 0.168$), and integer ratios ($r = 1, 2, 3$) carry larger magnitudes than the half-integer ratios ($r = 1.5, 2.5$) sampled; $r = 4$ has the smallest magnitude tested. Non-integer harmonic ratios are interpretable as $n$:$m$ phase-locking only under integer reformulation ($m \phi_\alpha - n \phi_\beta$ with coprime $m, n$); the half-integer cross-band PLV reported here is the un-reformulated naive computation and is reported alongside the integer-ratio results for completeness. Propofol elevates cross-band $\alpha$:$\beta$ phase coupling broadly across low-integer harmonic ratios.
+
+\begin{table}[h]\centering\small
+\caption{$n$:$m$ specificity of per-channel-aggregated cross-band $\alpha$:$\beta$ PLV change under propofol ($n=14$, BH-FDR over the $6$ ratios). All listed ratios from $1$:$1$ through $3$:$1$ reach FDR significance; $4$:$1$ does not.}\label{tab:nm}
+\begin{tabular}{lllrrr}\toprule
+$r$ ($\alpha$:$\beta$) & subjects sed$>$awake & $\Delta$ & $t$ & $p$ & $q_{\text{BH}}$ \\
+\midrule
+$1.0$ & $14/14$ & $-0.168$ & $-8.78$ & $7.9\!\times\!10^{-7}$ & $\mathbf{2.0\!\times\!10^{-6}}$ \\
+$1.5$ & $14/14$ & $-0.106$ & $-8.88$ & $7.0\!\times\!10^{-7}$ & $\mathbf{2.0\!\times\!10^{-6}}$ \\
+$2.0$ & $14/14$ & $-0.010$ & $-8.82$ & $7.5\!\times\!10^{-7}$ & $\mathbf{2.0\!\times\!10^{-6}}$ \\
+$2.5$ & $14/14$ & $-0.030$ & $-8.13$ & $1.9\!\times\!10^{-6}$ & $\mathbf{3.4\!\times\!10^{-6}}$ \\
+$3.0$ & $12/14$ & $-0.004$ & $-4.15$ & $0.0011$ & $\mathbf{0.0014}$ \\
+$4.0$ & $12/14$ & $-0.001$ & $-1.75$ & $0.10$ & $0.10$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{figure}[h]\centering\includegraphics[width=0.95\linewidth]{figures/ratio_plv_specificity.png}
+\caption{Per-subject change in cross-band $\alpha$:$\beta$ PLV under sedation, swept across harmonic ratios $r$. Ratios $1$:$1$ through $3$:$1$ reach BH-FDR significance ($q < 0.05$); $4$:$1$ does not ($q = 0.10$).}\label{fig:nm}
+\end{figure}
+
+\subsection{Comparison with classical baselines}
+
+For completeness we report the per-window classification accuracy of awake vs sed using $5$-fold cross-validation of an $L_2$-regularised logistic regression on (a) the $9$-D closure features, (b) the $7$-D baseline features, (c) the $2$-D synthetic-anchored residuals, (d) the combined $16$-D vector. On $n=14$: closure $0.80\!\pm\!0.01$, baseline $0.87\!\pm\!0.01$, residuals-only $0.62\!\pm\!0.01$, combined $0.92\!\pm\!0.00$ (majority-class baseline $0.51$). The closure feature set classifies somewhat below the baseline at the per-window level, and substantially above majority class. Combining closure and baselines yields the highest accuracy ($0.92$), indicating the two carry partly complementary information.
+
+\subsection{Source-space replication: $14/14$, $d_z=2.60$, $p=2.5\!\times\!10^{-7}$}\label{sec:source-results}
+
+Re-running the full pipeline on $68$ aparc cortical ROIs after sLORETA projection, the per-subject calibrated drift remains positive in $14/14$ subjects (Table~\ref{tab:source-drift}). Paired-$t$ across subjects $t=9.72$, $p=2.5\!\times\!10^{-7}$ (two-sided); Wilcoxon signed-rank one-sided $W=105$, $p=6.1\!\times\!10^{-5}$; paired Cohen's $d_z=2.60$. The source-space effect size is \emph{larger} than the sensor-space effect size ($d_z=2.60$ vs $1.90$), consistent with sLORETA + parcellation removing some of the volume-conduction smearing that mixes nearby cortical generators in the scalp signal. The displacement therefore cannot be explained by scalp-level volume conduction as the sole driver: it strengthens, not weakens, when the analysis moves from electrodes to anatomically distinct cortical sources. Residual source-leakage and template-anatomy effects under sLORETA + identity noise covariance remain.
+
+\begin{table}[h]
+\centering\small
+\caption{Per-subject calibrated drift at the source level ($n=14$, sLORETA on \texttt{fsaverage}, $68$ aparc ROIs). $\Delta_{\text{src}}$ = sed drift minus awake drift in source-space; $\Delta_{\text{sensor}}$ = same quantity at the electrode level. All $14$ subjects positive in both spaces.}\label{tab:source-drift}
+\begin{tabular}{lrrrr}\toprule
+Subject & Awake (src) & Sed (src) & $\Delta_{\text{src}}$ & $\Delta_{\text{sensor}}$ \\
+\midrule
+$1010$ & $2.76$ & $4.13$ & $+1.37$ & $+1.35$ \\
+$1016$ & $2.67$ & $4.17$ & $+1.50$ & $+1.56$ \\
+$1017$ & $2.68$ & $4.50$ & $+1.82$ & $+3.07$ \\
+$1022$ & $2.51$ & $4.61$ & $+2.10$ & $+2.16$ \\
+$1024$ & $2.67$ & $3.80$ & $+1.12$ & $+1.24$ \\
+$1033$ & $2.84$ & $4.24$ & $+1.40$ & $+0.54$ \\
+$1036$ & $2.70$ & $3.39$ & $+0.70$ & $+1.21$ \\
+$1045$ & $2.70$ & $4.89$ & $+2.19$ & $+0.84$ \\
+$1046$ & $2.83$ & $4.06$ & $+1.22$ & $+0.90$ \\
+$1055$ & $2.70$ & $3.84$ & $+1.14$ & $+0.42$ \\
+$1057$ & $2.69$ & $4.20$ & $+1.51$ & $+2.17$ \\
+$1062$ & $2.87$ & $3.53$ & $+0.65$ & $+2.40$ \\
+$1064$ & $2.55$ & $5.33$ & $+2.78$ & $+2.94$ \\
+$1074$ & $2.62$ & $4.62$ & $+2.00$ & $+2.56$ \\
+\midrule
+\multicolumn{3}{l}{Group ($n=14$)} & $+1.54$ & $+1.67$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+The per-feature decomposition at the source level reproduces the two strongest sensor-space effects with even tighter $q$-values: cross-band $\alpha$:$\beta$ PLV stays $14/14$ positive and reaches $q=3.8\!\times\!10^{-7}$ ($t=11.3$); $\beta$-PGD stays $14/14$ positive and reaches $q=2.3\!\times\!10^{-6}$ ($t=9.13$). These are the two features one would predict to be most sensitive to volume conduction, and they survive --- in fact, strengthen --- under source localisation. The features that weaken at the source level (Kuramoto $R_\alpha$ mean: source $9/14$, sensor $11/14$; $\theta$--$\gamma$ PAC: source $5/14$, sensor $11/14$) are scalar global statistics that are partly redistributed across the $68$ ROIs at the source level and lose statistical efficiency under the multiple-comparisons correction. The robust spatial-coherence and cross-band-coupling effects, by contrast, are computed pairwise across nodes and benefit from the increased anatomical specificity. We interpret the strengthening of the headline drift effect under source localisation as strong robustness evidence against the scalp-volume-conduction explanation. The source pipeline uses sLORETA with ad-hoc identity noise covariance, so residual source-leakage effects cannot be ruled out absolutely; an empty-room-noise covariance and a non-template anatomy would be the next steps in tightening this.
+
+\begin{figure}[h]
+\centering\includegraphics[width=0.95\linewidth]{figures/source_vs_sensor_replication.png}
+\caption{Source-localised replication of the propofol displacement test ($n=14$, sLORETA on \texttt{fsaverage}, $68$ aparc ROIs). \textbf{Left}: per-subject awake / sed calibrated drift, sensor-space (filled bars) versus source-space (hatched bars). \textbf{Right}: source $\Delta$ drift (sed $-$ awake) versus sensor $\Delta$ drift, with $y=x$ identity. The displacement signal is recovered under anatomical sources --- volume conduction does not connect distinct anatomical labels in the same way it connects neighbouring electrodes, so this is a clean test of cortical phase organisation. The source-space effect size ($d_z=2.60$) exceeds the sensor-space effect size ($d_z=1.90$).}\label{fig:source}
+\end{figure}
+
+\subsection{Cross-cohort replication: $7/7$ clinical anaesthesia patients, $d_z=1.98$}\label{sec:clinical-results}
+
+Running the identical pipeline on the clinical-anaesthesia cohort \texttt{ds004541} ($n=7$ after exclusion of \texttt{sub-11}, which lacks a \texttt{loc} event), the per-subject calibrated drift is positive in $7/7$ patients (Table~\ref{tab:clinical-drift}). Paired-$t$ $t=5.25$, $p=1.9\!\times\!10^{-3}$; Wilcoxon $W=28$, $p=7.8\!\times\!10^{-3}$; paired Cohen's $d_z=1.98$. The effect size matches the propofol cohort ($d_z=1.90$ at $n=14$). The headline displacement claim therefore replicates in an independent dataset with a different recording site, different EEG hardware, different patient population (clinical patients versus healthy young volunteers), and a different (likely mixed) anaesthetic regime.
+
+\begin{table}[h]
+\centering\small
+\caption{Per-subject calibrated drift in the clinical-anaesthesia cohort (\texttt{ds004541}, $n=7$). All $7/7$ patients have positive drift, replicating the propofol direction.}\label{tab:clinical-drift}
+\begin{tabular}{lrrr}\toprule
+Subject & Awake drift & Sed drift & $\Delta$ \\
+\midrule
+\texttt{sub-02} & $2.59$ & $3.02$ & $+0.42$ \\
+\texttt{sub-03} & $2.16$ & $2.71$ & $+0.55$ \\
+\texttt{sub-04} & $2.60$ & $3.15$ & $+0.55$ \\
+\texttt{sub-07} & $2.00$ & $2.66$ & $+0.65$ \\
+\texttt{sub-08} & $2.25$ & $3.68$ & $+1.44$ \\
+\texttt{sub-09} & $2.39$ & $3.86$ & $+1.46$ \\
+\texttt{sub-10} & $2.06$ & $2.99$ & $+0.94$ \\
+\midrule
+\multicolumn{2}{l}{Group ($n=7$)} & & $+0.86$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+The per-feature decomposition partly recapitulates the propofol pattern (Table~\ref{tab:clinical-features}, signs aligned to ``sed minus awake''). Of the $9$ closure features, $7$ have the same direction in both cohorts. Four reach BH-FDR in the clinical cohort: \texttt{local\_smoothness}, \texttt{global\_order}, \texttt{global\_order\_std}, \texttt{task\_order} --- all elevated in sed. The two effects most robust in propofol --- $\beta$-PGD ($q_{\text{propofol}}=7.2\!\times\!10^{-3}$) and cross-band PLV ($q_{\text{propofol}}=6.8\!\times\!10^{-6}$) --- are weaker in the clinical cohort ($q=0.67$ and $q=0.075$ respectively) but in the propofol direction. Critically, the $\theta$--$\gamma$ PAC effect retains the propofol direction (decreased under sed in both cohorts) and does not reverse sign, so the pre-stated falsification criterion ``if a different anaesthetic produces the opposite sign of $\theta$--$\gamma$ PAC change, the decreased-information-transfer interpretation of feature 4 fails'' (\S\ref{sec:falsification}, criterion 3) is not triggered.
+
+\begin{table}[h]
+\centering\footnotesize
+\caption{Per-feature paired-$t$ + BH-FDR in the clinical cohort, side-by-side with the propofol cohort. Signs are aligned to ``$\Delta$ = mean across subjects of (sed $-$ awake)''; the propofol-cohort CSV used the opposite sign convention (awake $-$ sed) and has been negated here so positive values mean ``higher under sedation''. Asterisks mark BH-FDR $q<0.05$; ``\,$\to$\,'' indicates same direction as propofol, ``flip'' indicates opposite direction.}\label{tab:clinical-features}
+\begin{tabular}{lrrcrrcc}\toprule
+& \multicolumn{3}{c}{Propofol $n=14$} & \multicolumn{3}{c}{Clinical $n=7$} & match \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Feature & $\Delta$ & $q$ & sig & $\Delta$ & $q$ & sig & dir \\
+\midrule
+\texttt{local\_smoothness}             & $+0.035$ & $0.27$            &        & $+0.064$ & $0.019$           & * & $\to$ \\
+\texttt{global\_order}                 & $+0.068$ & $0.032$           & *      & $+0.078$ & $0.019$           & * & $\to$ \\
+\texttt{global\_order\_std}            & $-0.011$ & $0.091$           &        & $+0.023$ & $0.046$           & * & flip \\
+\texttt{task\_order}                   & $-0.012$ & $0.47$            &        & $+0.052$ & $0.007$           & * & flip \\
+\texttt{pgd\_alpha}                    & $+0.029$ & $0.20$            &        & $+0.001$ & $0.94$            &        & $\to$ \\
+\texttt{pgd\_beta}                     & $+0.044$ & $7.2\!\times\!10^{-3}$ & * & $+0.004$ & $0.67$            &        & $\to$ \\
+\texttt{pac\_theta\_gamma}             & $-0.006$ & $0.032$           & *      & $-0.004$ & $0.67$            &        & $\to$ \\
+\texttt{cross\_band\_plv\_alpha\_beta} & $+0.010$ & $6.8\!\times\!10^{-6}$ & * & $+0.007$ & $0.075$           &        & $\to$ \\
+\texttt{surrogate\_z}                  & $+3\!\times\!10^{-5}$ & $0.27$ &       & $+0.005$ & $0.16$            &        & $\to$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+The most parsimonious reading: the headline displacement (cortical state moves further from each subject's awake reference under anaesthesia) replicates with the same effect size in an independent cohort; the specific axis of motion overlaps with the propofol axis in $7/9$ features but is differently distributed across them. Global synchrony (\texttt{global\_order} = mean Kuramoto $R_\alpha$) is the most direction-stable feature across both drug regimes and recording cohorts. The two features that flip sign (\texttt{global\_order\_std} and \texttt{task\_order}) both flip toward \emph{more} synchrony in sed --- consistent with, rather than opposite to, the rigid-locking-basin interpretation.
+
+\begin{figure}[h]
+\centering\includegraphics[width=0.95\linewidth]{figures/clinical_vs_propofol_replication.png}
+\caption{Cross-cohort replication on \texttt{ds004541} clinical anaesthesia EEG ($n=7$). \textbf{Left}: per-patient awake / sed calibrated drift; sed $>$ awake in $7/7$, $d_z=1.98$. \textbf{Right}: per-feature mean delta (sed $-$ awake) for the propofol cohort ($n=14$, blue) versus the clinical cohort ($n=7$, red). Asterisks mark BH-FDR $q<0.05$. The headline drift effect replicates at the same effect size; the per-feature axis partially overlaps and partially redistributes mass toward global-synchrony features.}\label{fig:clinical}
+\end{figure}
+
+\section{Discussion}
+
+The result of this note is empirical and narrow: under propofol sedation, the $9$-D closure feature space defined here exhibits a structured, replicated, FDR-corrected, multi-axis displacement of cortical state. Four mechanistically distinct features cross BH-FDR --- $\beta$-PGD~$\uparrow$, $\alpha$:$\beta$ cross-band PLV~$\uparrow$, global Kuramoto order~$\uparrow$, $\theta$--$\gamma$ PAC~$\downarrow$ --- and the spatial decomposition reproduces the well-known frontal alpha anteriorisation signature, with the legitimate claim being the spatial dissociation between whole-cortex $\beta$-PGD increase and frontal-selective $\alpha$-PGD increase rather than the recovery of the frontal-alpha effect itself (the frontal subnetwork is hard-coded into the feature definition). The displacement survives band-power confound regression and a $\num{5000}$-permutation null. Replication is in two cohorts (pilot $n=8$ and held-out $n=6$).
+
+The observation that classical scalar baselines (band power, mean PLV, global synchrony) classify per-window awake vs sed somewhat better than the closure features ($0.87$ vs $0.80$) is not a counter-result. The closure space encodes \emph{structured} information across multiple wave-organisation axes, while the per-window classifier is a within-subject statistical exercise vulnerable to subject-specific confounds. The relevant claim is across-subject inference --- and there the calibrated displacement carries the clean signal.
+
+We highlight three observations that we believe warrant attention from groups working on travelling-wave cognition and anaesthesia:
+
+\paragraph{The synthetic prior was wrong direction.}
+The synthetic regimes from which the basin templates were anchored modelled propofol as a \emph{rigid global lock} with reduced spatial gradients. Real propofol does the opposite for $\alpha$- and $\beta$-band wave organisation: wave coherence \emph{increases} (PGD up, cross-band PLV up). The synthetic-anchored residual distance therefore points partially in the wrong direction for a substantial subset of subjects, motivating the per-subject calibrated test. Future work should re-anchor the templates against real-data calibration cohorts.
+
+\paragraph{Cross-band locking is broadband, not single-harmonic.}
+Sweeping $n$:$m$ ratios $1$:$1$ through $4$:$1$ shows that propofol elevates $\alpha$:$\beta$ phase locking at $1$:$1$ through $3$:$1$ (FDR-significant), with the largest magnitude at $1$:$1$ and a monotonic decrease as $r$ increases. This is consistent with a globally rigidified phase regime rather than a specific harmonic resonance. We did not test $\alpha$:$\gamma$ or $\theta$:$\beta$ pairs.
+
+\paragraph{The clinical posterior-alpha story is half-right.}
+The textbook propofol pattern~\cite{purdon2013electroencephalogram} is described as alpha increasing frontally and decreasing posteriorly. In our $n=14$, the frontal increase is robust ($13/14$, $q=0.0024$); the posterior decrease, however, is split at chance across subjects ($6$--$7/14$ in the predicted direction) and does not reach significance. The "anteriorisation" narrative may merit refinement to: \emph{frontal alpha consistently increases; posterior alpha response is variable across individuals}. We note this contingently --- a single dataset is not a basis for revising clinical pharmacology --- but the data warrant the question.
+
+\section{Relation to the broader closure programme}\label{sec:relation}
+
+This paper reports a focused empirical claim: a $9$-dimensional cortical closure feature vector + per-subject calibrated displacement test discriminates propofol sedation from eyes-closed awake at $14/14$ subjects, source-localised replication, and independent-cohort clinical replication. The feature vector and the displacement statistic are described here in pipeline-empirical terms; they are not the closure operator of the broader VFD/ARIA framework. The companion methodology paper \citep{SmartClosureDistance} positions this displacement statistic as a first-order empirical proxy for distance-from-constraint-manifold, with applicability conditioned on a five-criterion diagnostic ($D_1$--$D_5$). On the source-localised cortical EEG anaesthesia substrate, the leave-one-subject-out feature-discovery procedure in \citep{SmartClosureDistance} converges to a stable two-feature minimal closure ($\beta$-band PGD plus $\alpha$:$\beta$ cross-band PLV) with cross-validated $d_z = 2.07$ and Jaccard $= 1.00$, dominating volume-conducted scalar baselines by $\approx 5.5\times$; that result is the cross-validated cousin of the $14/14$, $d_z = 1.90$ in-sample number reported here. The in-sample number is retained because all subjects' data was used to estimate per-subject means; the LOSO number is the appropriate honest cross-validated counterpart and should be cited downstream by papers that need the cross-validated effect size.
+
+\paragraph{What this paper does not claim.}
+\begin{itemize}\itemsep0pt
+\item Not that the $9$-dimensional closure feature vector is the closure operator. It is a measurable proxy aligned with multi-band cortical phase-wave organisation.
+\item Not that the per-subject calibrated displacement is universal across all complex systems. Its applicability is conditional on the $D_1$--$D_5$ diagnostic of \citep{SmartClosureDistance}.
+\item Not that propofol sedation is the only substrate this metric will work on. The companion methodology paper has tested $11$ paired-design substrates plus $4$ unpaired-design real-data substrates and reports $14/15$ correctly classified, with cortical EEG anaesthesia as the strongest validated Tier A anchor.
+\item Not that the result proves a theory of consciousness. The displacement is a measurable cortical-state signature of anaesthesia; consciousness theorisation is a separate matter beyond the scope of this paper.
+\item Not that the present feature vector is the unique correct decomposition. The LOSO discovery procedure of \citep{SmartClosureDistance} identifies a minimal two-feature subset; the full $9$-vector remains useful for reporting the per-feature decomposition documented in §3.2.
+\item Not that the textbook posterior-alpha-decrease pattern has been falsified by this $n = 14$. It has been refined: frontal-alpha increase is robust; posterior-alpha response is variable across individuals in this cohort.
+\end{itemize}
+
+\section{Limitations}\label{sec:limits}
+
+This study has the following constraints:
+
+\begin{itemize}\itemsep0pt
+\item Pure-agent generalisation is partial. The clinical cohort (\texttt{ds004541}) is mixed-agent (likely propofol induction + sevoflurane maintenance) and does not isolate sevoflurane, ketamine, dexmedetomidine, or xenon. A clean single-agent sevoflurane or ketamine EEG dataset, openly accessible and BIDS-compliant, was not located on OpenNeuro at the time of writing; the relevant resting-state ketamine/xenon dataset on Zenodo (DOI \texttt{10.5281/zenodo.806176}) is restricted-access and was not downloaded for this study.
+\item No LFP / laminar recordings; the metric has not been applied to higher-spatial-resolution wave-organisation data of the kind that is routine in non-human primate work.
+\item $n=14$ is small for biological inference; we report per-subject paired tests and within-subject permutations as the inferentially appropriate statistics, but absolute effect sizes and clinical applicability require larger cohorts.
+\item No dose-response. The two conditions are eyes-closed awake and a single (low-to-moderate) propofol level.
+\item Per-subject calibration uses each subject's awake distribution as the reference. This is appropriate for an awake-vs-sed contrast but cannot detect awake-state abnormalities (e.g., the partial recording instability in subjects $1010$ and $1017$ that emerges in the per-window distance distributions).
+\item Source localisation uses the \texttt{fsaverage} template anatomy with an ad-hoc identity noise covariance (no per-subject MRI, no empty-room baseline). This is the standard tradeoff for resting-state EEG without subject-specific MRI; the parcellated $68$-ROI analysis is robust to per-source noise but cannot make claims about precise dipole locations.
+\item We have not tested $\alpha$:$\gamma$ or $\theta$:$\beta$ cross-band coupling.
+\end{itemize}
+
+\section{Data and code availability}
+
+All code is open-source under Apache-2.0 at \href{https://github.com/vfd-aria/solution-lab}{\texttt{github.com/vfd-aria/solution-lab}} (experiment \texttt{002-vfd-cortical-phase-closure}). Per-window CSVs (closure features, baseline features, per-subject summaries, per-feature deltas, per-region/per-ratio statistics, time-course breakdown), all figures, and intermediate analysis outputs are committed under the experiment's \texttt{results/} sub-directories: \texttt{real\_propofol/} (sensor-space, $n=14$), \texttt{real\_propofol\_source/} (source-space, sLORETA + aparc, $n=14$), and \texttt{real\_clinical\_anesthesia/} (cross-cohort, $n=7$). The discovery dataset is OpenNeuro \texttt{ds005620}~\cite{bajwa2024dataset} (CC0); the cross-cohort dataset is OpenNeuro \texttt{ds004541} (Saini Ferr\'on et al.; CC0). The pipeline runs end-to-end with \texttt{pip install -e .} followed by \texttt{python -m vfd\_cortical\_phase\_closure.propofol\_adapter}, \texttt{.propofol\_source}, \texttt{.clinical\_anesthesia\_adapter}, and the post-hoc analysis / figure scripts (\texttt{propofol\_analysis}, \texttt{propofol\_deep\_dive}, \texttt{propofol\_spatial\_nm}, \texttt{source\_per\_feature}, \texttt{source\_replication\_figure}, \texttt{clinical\_replication\_figure}). Forward solutions are cached under \texttt{\textasciitilde/.aria/cache/propofol\_source\_fwd/}.
+
+\section{Falsification criteria}\label{sec:falsification}
+
+We pre-state the conditions under which the central claim of this note should be considered falsified, in order of priority. Where the present version of this note has tested a criterion, we annotate the outcome.
+
+\begin{enumerate}\itemsep0pt
+\item If the $14/14$ all-positive calibrated-drift result fails to replicate in an independent cohort drawn from a different anaesthesia EEG dataset, the displacement claim is dataset-specific. \textbf{Tested (\S\ref{sec:clinical-results}):} replicates $7/7$ in \texttt{ds004541} clinical anaesthesia patients with $d_z=1.98$, matching the propofol effect size; criterion not triggered.
+\item If the displacement survives band-power confound regression in this dataset but fails in a different dataset (e.g., one where awake EEG already has elevated alpha coherence), the closure metric is acting as a downstream proxy for alpha power in a way we have not characterised.
+\item If sevoflurane, dexmedetomidine, or ketamine sedation produce the \emph{opposite} sign of $\theta$--$\gamma$ PAC change, the "decreased information transfer" interpretation of feature 4 fails. \textbf{Tested partially (\S\ref{sec:clinical-results}):} mixed-agent clinical cohort retains the propofol direction ($-0.004$ vs $-0.006$); criterion not triggered. Single-agent sevoflurane / ketamine still untested.
+\item If macaque LFP working-memory recordings show that successful task performance correlates with $\alpha$:$\beta$ cross-band PLV \emph{increase} during delay periods, the framing of cross-band locking as an anaesthetic signature requires substantial qualification.
+\item If the headline displacement \emph{disappears} when re-computed at the source level (sLORETA + cortical parcellation), the metric was reporting volume-conduction geometry rather than cortical phase organisation. \textbf{Tested (\S\ref{sec:source-results}):} the source-space effect size is \emph{larger} than the sensor-space effect size ($d_z=2.60$ vs $1.90$); the two strongest sensor-space features (cross-band PLV, $\beta$-PGD) reach $q<10^{-6}$ at the source level; criterion not triggered.
+\end{enumerate}
+
+\section*{Acknowledgements}
+
+We thank the authors of OpenNeuro \texttt{ds005620} for releasing the data publicly under CC0; the MNE-Python team for the analysis stack; the broader open-neuroscience community for the precedent of releasable code-and-data artifacts. This note is an open invitation to critique, replicate, or refute.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,14 @@
+# Domain Scorecard — WO-VFD-INVARIANT-CLOSURE-CROSSDOMAIN-002
+
+| Domain | Test | Status | Note |
+|---|---|---|---|
+| calibration | ISOMETRIC/DISSIPATIVE/CRITICAL/NONE all correct | **PASS** | classifier rediscovers known modes on 8 known systems |
+| markov | reversible=real-spectrum contraction; non-rev=non-normal contraction | **PASS** | both DISSIPATIVE to stationary; reversibility = real spectrum (self-adjoint in weighted product) |
+| collatz_family | 3n+1 closes; 5/7/9n+1 escape (same Q) | **PASS** | non-circular family control discriminates |
+| collatz_cycles | eliminate 1-cycle class + no small cycles (3n+1) | **PASS(known)** | reproduces Steiner 1977 via closure route; NOT a new result |
+| primes | real primes separate from density-matched fakes | **PASS** | layer1 residue (trivial) + layer2 LO-S correlation (real, ratio>1000x) |
+| polytope | triad 3-cycles close by isometry (non-discriminating) | **WEAK** | all ISOMETRIC; ranking generic; matches v1 |
+| navier_stokes | capacity trend vs viscosity | **WEAK** | monotone trend holds; SIGN-CROSSING is scheme-dependent (NOT robust) -> no critical-exponent claim |
+| rh_weil | positivity rejects wrong completions; RH unchanged | **WEAK** | rejects no-arch/fake-Gamma; INSENSITIVE to shuffled primes (caught by explicit-formula instead); RH wall intact |
+
+**Overall grade: MEDIUM PASS.** Calibration all-correct: True. Non-circular narrowings/separations: 2 (Collatz cycle elimination, prime separation — both reproduce/­detect KNOWN results via the closure route; neither is new mathematics).

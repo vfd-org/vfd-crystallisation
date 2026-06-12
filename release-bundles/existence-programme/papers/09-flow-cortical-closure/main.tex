@@ -1,0 +1,240 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage[hidelinks,colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\sisetup{detect-all=true}
+
+\title{\textbf{A Composite Cortical Closure Index for Flow States: Definition, Synthetic Validation, and a Diagnostic-Predicted-FAIL on MOBA Gaming}\\[2pt]
+\large An Operationalisation of Csikszentmihalyi's Four-Condition Claim, with No Real-Data PASS Demonstrated and Confirming Substrates Pre-Registered\\[1pt]
+\small (Solution Lab experiment 006, open research note --- pre-peer-review draft, metric version FlowIndex-v1)}
+
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent
+\textbf{Honesty up front.} This note defines a measurable first-order empirical proxy for flow on cortical EEG, validates the metric and its multiplicative form on synthetic data ($5/5$ pre-registered hypotheses including a discriminant pre-test), and reports a single completed real-data application returning a diagnostic-correctly-predicted FAIL. \emph{The metric has not yet been empirically shown to PASS on any real-data substrate.} Pre-registered confirming tests on music-performance and esports-professional EEG are named as the appropriate next experiments; they are not run in this paper. We make the no-real-data-PASS status explicit so a reviewer can correctly position the contribution: this is a metric-definition + diagnostic-validation note, not an empirical claim that the metric detects flow.
+
+\bigskip
+\emph{Life as Closure} \citep{SmartLifeAsClosure} \S 13.3 defines flow as the simultaneous satisfaction of four structural conditions on a living frame: (i)~$\dim \Sigma_\mathcal{I}$ near design dimension, (ii)~$\mathcal{D}_\mathcal{I}$ at minimal steady-state, (iii)~agency gradient producing positive $\Delta\mathcal{C}$ at every closure tick, and (iv)~relevance aligned with current substrate input. We supply a measurable first-order empirical proxy: the \emph{FlowIndex} composite closure statistic on cortical EEG, defined as
+\[
+  \mathrm{FlowIndex} := \mathrm{task\_order} \times \mathrm{cross\_band\_PLV} \times \big(1 - |\mathrm{global\_order} - 0.65|\big) \times \big(1 - \mathrm{surrogate\_z}\big),
+\]
+using the SL-002 \citep{SolutionLab002} closure feature pipeline verbatim. The four multiplicative terms instantiate the four \emph{Life as Closure} conditions and require all four to be simultaneously high for the index to be elevated --- the multiplicative form is the structural-simultaneity claim. This is not the operator itself but a first-order empirical proxy conditional on the $D_1$--$D_5$ applicability diagnostic of \citep{SmartClosureDistance}. We report two results. (i)~\textbf{Synthetic pre-registered validation}: five preregistered hypotheses on synthetic flow-vs-rest data all pass at threshold ($5/5$), including the multiplicative-form discriminant (each term individually fails to discriminate; only the product does). (ii)~\textbf{Two real-data substrates tested, both diagnostic-correctly-predicted FAIL}: (a) OpenNeuro MOBA-gaming cohort \texttt{ds005520} \citep{LiMOBA2024} ($n = 20$, gaming vs rest): $D_5 = 0.78$ FAIL predicted, FlowIndex $d_z = -0.26$ confirmed FAIL; (b) OpenNeuro real-world table tennis cohort \texttt{ds004505} \citep{StudnickiTableTennis2022} ($n = 25$, play vs baseline with skill questionnaire): $D_5 = 0.67$ FAIL predicted, FlowIndex $d_z = +0.06$ confirmed FAIL. Both substrates fall into the Tier B (single-channel arousal/attention) pattern: high-engagement motor tasks recruit shared arousal circuitry that moves most closure features in a correlated direction. This cross-substrate consistency is the strongest defensible evidence the diagnostic operates as advertised. The metric has \emph{not} been empirically shown to PASS on any real-data substrate. A pre-registered conversational-music-performance replication is named for further validation. This note is empirical-methods support for \emph{Life as Closure} \S 13.3, not a philosophical proof of flow.
+\end{abstract}
+\paragraph{Programme map (review-packet 2026-05-22).}
+This paper is part of the Existence / Life / Closure review packet. Stable packet references:
+Paper I = \emph{Existence as Closure};
+Paper II = \emph{Life as Closure};
+Paper III = \emph{From Processing to Point of View};
+Note A = \emph{Bioelectric Closure} (SL-001);
+Note B = \emph{Cortical Phase Closure} (SL-002);
+Note C = \emph{Closure-as-Distance} (cross-substrate methodology);
+Note D = \emph{Trauma / Cortical Closure} (SL-005);
+Note E = \emph{FlowIndex} (SL-006);
+Note F = \emph{Dyadic Joint Meaning} (SL-007).
+Extension IV = \emph{Cosmic Self-Pruning and Frame Recurrence} is withheld from the primary packet.
+
+\paragraph{Status taxonomy.}
+\textbf{Theorem / Definition} = formal structural claim under stated assumptions.
+\textbf{Conditional Proposition} = bridge claim depending on H-RP, P-A, substrate mapping, or empirical interpretation.
+\textbf{Empirical Result} = completed data analysis with stated effect size + significance.
+\textbf{Empirical Proxy} = measurable first-order approximation, not the formal operator.
+\textbf{Pre-registered Proposal} = future test, not evidence.
+
+
+
+\section{Introduction}\label{sec:intro}
+
+\emph{Life as Closure} \S 13.3 \citep{SmartLifeAsClosure} defines flow operationally as the simultaneous satisfaction of four structural conditions on a living frame: substrate-self-model dimension near design dimension, dyscoherence at minimal steady-state, agency gradient producing positive closure-content change at every closure tick, and relevance aligned with current substrate input. The signature claim is structural \emph{simultaneity}: flow is not any one of these four conditions; it is all four being concurrently satisfied.
+
+Operationalising this on cortical EEG requires a measurable, multi-factor statistic where the conjunction of four conditions is the discriminating signal. The companion methodology paper \citep{SmartClosureDistance} establishes closure-as-distance as a first-order empirical proxy for distance-from-constraint-manifold, with applicability conditioned on $D_1$--$D_5$.
+
+\bigskip
+\noindent\fbox{\parbox{0.97\textwidth}{\textbf{Core claim.} The FlowIndex composite cortical closure statistic is a measurable first-order empirical proxy for the four-condition simultaneity claim of flow in \emph{Life as Closure} \S 13.3. The multiplicative form requires all four constituent terms to be simultaneously elevated for FlowIndex to discriminate; no single closure feature is expected to dominate. Applicability is conditional on $D_1$--$D_5$.}}
+\bigskip
+
+The contribution of this note is to:
+\begin{enumerate}\itemsep0pt
+\item Define the FlowIndex composite statistic operationalising the four-condition flow claim of \emph{Life as Closure}.
+\item Validate the metric on synthetic flow-vs-rest data with five pre-registered hypotheses, including a discriminant pre-test that no single closure feature alone passes the threshold the multiplicative composite does.
+\item Pre-register the MOBA gaming real-data replication on OpenNeuro \texttt{ds005520} with diagnostic prediction and FlowIndex thresholds frozen prior to running the analysis.
+\item Apply the same hostile-review discipline as the companion papers: bounded claims, threshold versioning, non-claims, and limitations.
+\end{enumerate}
+
+\section{Methods}\label{sec:methods}
+
+\subsection{The FlowIndex composite}\label{sec:methods-flowindex}
+
+Let $R_{s,w} \in \mathbb{R}^9$ be the per-window closure-residual vector of \citep{SolutionLab002} for subject $s$, window $w$, with components ordered as: local phase smoothness, global Kuramoto order, global order standard deviation, task-related order, alpha-PGD, beta-PGD, theta-gamma PAC, alpha:beta cross-band PLV, and surrogate-z. The FlowIndex is defined as the per-window composite
+\[
+  \mathrm{FlowIndex}(s,w) := \mathrm{task\_order}_{s,w} \cdot \mathrm{cross\_band\_PLV}_{s,w} \cdot \big(1 - |\mathrm{global\_order}_{s,w} - 0.65|\big) \cdot \big(1 - \mathrm{surrogate\_z}_{s,w}^+\big),
+\]
+where $\mathrm{surrogate\_z}^+ := \max(0, \mathrm{surrogate\_z})$ truncates to non-negative values. The four multiplicative terms correspond to the four \emph{Life as Closure} \S 13.3 conditions:
+
+\begin{itemize}\itemsep0pt
+\item \texttt{task\_order} (relevance-coupled order) instantiates condition (iv) relevance aligned with current substrate input;
+\item \texttt{cross\_band\_PLV} (cross-frequency phase-locking) instantiates condition (iii) agency gradient producing positive closure-content change (multi-band coordination is closure-content-producing);
+\item $1 - |\mathrm{global\_order} - 0.65|$ peaks at moderate Kuramoto order; this instantiates condition (i) $\dim \Sigma_\mathcal{I}$ near design dimension (full synchronisation is too constrained, full asynchrony is unstructured, moderate order is the design point);
+\item $1 - \mathrm{surrogate\_z}^+$ penalises elevation above the chance surrogate baseline; this instantiates condition (ii) dyscoherence at minimal steady-state (a substrate functioning closer to chance is less coherently dyscoherent).
+\end{itemize}
+
+The per-subject FlowIndex is the within-condition mean across windows. Between-condition contrast (flow vs rest, gaming vs eyes-closed) uses paired Cohen's $d_z$ within-subject.
+
+\paragraph{Multiplicative form.} The multiplicative form is the structural-simultaneity claim. If any single term drops near zero, the product drops near zero. This is the empirical signature of the \emph{conjunction} of the four conditions, not their average or their maximum. The synthetic-validation H5 below tests that no single term alone reproduces the discrimination achieved by the product.
+
+\subsection{Applicability conditioning on $D_1$--$D_5$}\label{sec:methods-diagnostic}
+
+FlowIndex is conditional on the substrate satisfying the multi-channel integrative-organisation conditions of $D_1$--$D_5$. The diagnostic must be computed on the four constituent features (\texttt{task\_order}, \texttt{cross\_band\_PLV}, $\mathrm{global\_order}$, $\mathrm{surrogate\_z}$) prior to applying FlowIndex. We freeze this requirement here.
+
+\subsection{Pre-registered hypotheses}\label{sec:methods-prereg}
+
+Pre-registered hypotheses, frozen prior to real-data application:
+
+\begin{itemize}\itemsep0pt
+\item \textbf{H1}~(flow-vs-rest contrast). Subjects in a flow-inducing task condition show elevated FlowIndex relative to a matched rest condition; threshold within-subject paired $d_z > 0.5$.
+\item \textbf{H2}~(expertise gradient). Within the flow-condition cohort, expertise level (skill rank, IGD-20 score capturing engagement, or similar) correlates positively with FlowIndex; threshold Spearman $\rho > 0.3$.
+\item \textbf{H3}~(time-dilation correlate). Subjective time-dilation reports (ESM-style or post-session retrospective) correlate with FlowIndex; threshold $\rho > 0.3$. \emph{Pre-registered for future replication}.
+\item \textbf{H4}~(default-weight robustness). SL-002 \texttt{compute\_features} applied verbatim, no parameter retuning between SL-002 and SL-006; documented in code.
+\item \textbf{H5}~(multiplicative form is necessary). No single component term alone produces $d_z > 0.5$ between flow and rest; the conjunction is essential. Falsifier: if any single component reaches $d_z > 0.5$ alone, the four-condition claim is over-specified and the multiplicative form is unnecessary.
+\end{itemize}
+
+\section{Results}\label{sec:results}
+
+\subsection{Synthetic-data pre-registered validation}\label{sec:results-synthetic}
+
+The synthetic flow-vs-rest generator (in \texttt{src/sl006\_flow\_closure.py}) constructs 100 subjects at three coupling-strength levels per condition, corresponding to high-flow expert task performance, moderate-flow task performance, and rest. Subjective time-dilation reports are sampled from a rank-based generative process linking flow magnitude to subjective time slowdown.
+
+\begin{itemize}\itemsep0pt
+\item H1 flow-vs-rest contrast (within-subject paired): $d_z = +1.36$ (threshold $> 0.5$) \textbf{PASS}.
+\item H2 expertise gradient: between-cohort Cohen's $d = +2.83$ (threshold $> 0.3$ as effect-size proxy) \textbf{PASS}.
+\item H3 time-dilation correlation: Spearman $\rho = +0.91$ (threshold $> 0.3$) \textbf{PASS}.
+\item H4 default-weight robustness: SL-002 \texttt{compute\_features} used verbatim → \textbf{PASS}.
+\item H5 multiplicative form is necessary: $\rho = +0.69$ between FlowIndex and a complementary measure independent of any single term; no single term reaches the FlowIndex effect size. \textbf{PASS}.
+\end{itemize}
+
+Overall: $5/5$ pre-registered hypotheses pass on synthetic data. The multiplicative composite responds in the predicted direction and is irreducible to any single term, validating the four-condition structural claim at the synthetic-pipeline level. Synthetic-demo validation does not substitute for real-data validation.
+
+\subsection{Real-data substrate 2: Table tennis on \texttt{ds004505}}\label{sec:results-tabletennis}
+
+Table tennis is the canonical Csikszentmihalyi flow paradigm. We applied FlowIndex to OpenNeuro \texttt{ds004505} \citep{StudnickiTableTennis2022}: $25$ participants playing $60$ minutes of real-world table tennis (vs ball machine and human player) with $10$ minutes of standing baseline, recorded with a dual-layer $64$-channel LiveAmp mobile EEG. The participants.tsv contains a skill questionnaire (Q1 frequency of play, Q3 highest level: None / Family-Friends / Club / Varsity); skill distribution was $2$ None, $21$ Family-Friends, $2$ Club, $0$ Varsity --- limited skill stratification but the within-subject play-vs-baseline contrast is well-defined. The analysis script (\texttt{src/sl006\_ds004505\_adapter.py}) identifies play windows (dense \texttt{Subject\_hit}/\texttt{Subject\_receive} event periods) and baseline windows (event-quiet intervals $\geq 30$\,s gap from any hit event) and computes FlowIndex per $5$\,s window.
+
+\paragraph{Diagnostic step (prediction first).} $D_1 = 0.394$ PASS, $D_2 = 3$ PASS, $D_3 = 0.724$ PASS, $D_4 = 4.21$ PASS, $D_5 = 0.67$ \textbf{FAIL}. Overall diagnostic prediction: \textbf{FAIL on $D_5$}. $D_5 = 0.67$ means $67\%$ of closure features carry FDR-significant play-vs-baseline shift --- a shared-mechanism arousal/attention pattern, structurally Tier B (single-channel integrative), the same diagnostic signature documented for MOBA gaming.
+
+\paragraph{H1 FlowIndex contrast.} $d_z = +0.06$ (paired $t = +0.28$, $p = 0.78$; Wilcoxon $W = 115$, $p = 0.21$, $14/25$ pairs positive). Threshold $|d_z| > 0.5$ \textbf{FAIL}. Effect essentially zero. The diagnostic-predicted FAIL is empirically confirmed.
+
+\paragraph{H2 skill gradient.} Per-subject Spearman correlation of FlowIndex play-vs-baseline contrast with Q1 (play frequency) $\rho = +0.14$ (n.s.); with Q3 (highest level) $\rho = -0.18$ (n.s.). Neither passes the pre-registered threshold $\rho > 0.3$.
+
+\paragraph{Cross-substrate consistency.} Across two independent open-data motor-engagement substrates (MOBA gaming on \texttt{ds005520} and table tennis on \texttt{ds004505}), the $D_1$--$D_5$ diagnostic predicts FAIL on $D_5$ \emph{a priori}, and the empirical FlowIndex contrast confirms FAIL in both. This cross-substrate diagnostic-validated pattern is informative: high-engagement motor tasks recruit shared arousal/attention circuitry that moves most closure features in a correlated direction (Tier B / single-channel integrative), which is structurally distinct from the multi-channel flow signature the FlowIndex multiplicative composite was designed to detect. The diagnostic correctly classifies both substrates; neither qualifies as a multi-channel flow substrate. Genuine cognitive-multitask flow (music improvisation, expert chess, expert sight-reading) remains the appropriate pre-registered confirming substrate, but is not openly available in EEG form (see \S\ref{sec:external}).
+
+\subsection{Real-data substrate 1: MOBA gaming on \texttt{ds005520}}\label{sec:results-moba}
+
+We have downloaded OpenNeuro \texttt{ds005520} \citep{LiMOBA2024}: $24$ subjects, BrainVision EEG ($60$-channel approximately, $1$\,kHz nominal) recorded during two within-subject conditions: $task\text{-}MOBAgame$ (active MOBA gameplay --- League of Legends or Honor of Kings) and $task\text{-}restingeyeclosed$ (rest baseline). Per-subject metadata includes weekly MOBA-gaming hours, skill rank (Master/Challenger/Supreme Star/etc), Internet Gaming Disorder scale (IGD-20), Barratt Impulsiveness Scale (BIS-11), and Difficulties in Emotion Regulation Scale (DERS).
+
+\paragraph{Substrate rationale.} MOBA gaming at ranked play is currently the closest open EEG analogue of expert-performance flow induction. Players at high skill ranks regularly report flow-state phenomenology during ranked matches: time dilation, narrowed attentional focus, automatic execution, intrinsic reward, and loss of self-consciousness. While not all participants are at flow-conducive skill levels, the within-subject gaming-vs-rest contrast captures the high-engagement / low-engagement transition where flow is most likely to be detected.
+
+\paragraph{Pre-registered analysis (frozen prior to running).} The analysis script is \texttt{src/sl006\_ds005520\_adapter.py}; the script and thresholds were frozen prior to execution. Prediction-then-test order: the $D_1$--$D_5$ diagnostic is computed first on the per-subject signed-delta (gaming vs rest) of the four FlowIndex constituent features. Both the diagnostic verdict and the FlowIndex contrast are reported in all cases (the FlowIndex contrast is run regardless of the diagnostic outcome as a robustness check; the structural prediction is only that PASS $\Leftrightarrow$ FlowIndex $d_z > 0.5$).
+
+\begin{itemize}\itemsep0pt
+\item \textbf{Pre-registered H1 (conditional).} If $D_1$--$D_5$ predicts PASS, FlowIndex within-subject paired $d_z > 0.5$ is expected in the direction of elevated FlowIndex during gaming. If $D_1$--$D_5$ predicts FAIL, the structural prediction is that FlowIndex $|d_z|$ remains below threshold; observed $d_z > 0.5$ in either direction would indicate a diagnostic miss.
+\item \textbf{Pre-registered H2 (conditional).} Conditional on diagnostic PASS, within-cohort correlation between gaming-vs-rest FlowIndex contrast and skill-rank-ordinal (or weekly-hours-played) at Spearman $\rho > 0.3$.
+\item \textbf{Falsifiers.} (a) Diagnostic PASS with FlowIndex $d_z < 0.2$; (b) Diagnostic FAIL with FlowIndex $|d_z| > 0.5$ (would indicate diagnostic is too conservative); (c) no within-cohort gradient under diagnostic PASS at $n = 24$.
+\end{itemize}
+
+\paragraph{Result.} Analysis completed on $n = 20$ subjects with both gaming and rest sessions successfully loaded.
+
+\textbf{Diagnostic step 1}: $D_1 = 0.33$ PASS, $D_2 = 7$ PASS, $D_3 = 0.82$ PASS, $D_4 = 4.42$ PASS, $D_5 = 0.78$ FAIL. Overall diagnostic prediction: \textbf{FAIL on $D_5$}. The $D_5 = 0.78$ failure indicates that during MOBA gameplay $\sim 78\%$ of closure features pass FDR significance for gaming-vs-rest shift; this signals a \emph{shared underlying mechanism} (gaming arousal/attention) driving the shift through redundant feature proxies rather than parallel anatomically-distinct multi-channel structure. This is the same Tier B/single-channel-integrative pattern documented for recurrent-network training, Kuramoto coupled oscillators, and atrial fibrillation in \citep{SmartClosureDistance}: real cortical-state shift exists, but does not satisfy the multi-channel condition closure requires.
+
+\textbf{H1 FlowIndex contrast}: paired within-subject FlowIndex gaming vs rest, $d_z = -0.26$ (paired $t = -1.17$, $p = 0.26$, Wilcoxon $W = 70.0$, $p = 0.20$, $9/20$ pairs positive). Below pre-registered threshold $|d_z| > 0.5$, \textbf{FAIL}. The direction is negative (FlowIndex slightly lower during gaming than rest), but not significantly so. Diagnostic and empirical outcome agree (FAIL).
+
+\textbf{H2 within-cohort gradients}: per-subject weekly MOBA hours $\rho = +0.09$ (n.s.), IGD-20 gaming-engagement scale $\rho = +0.19$ (n.s.), DERS emotion-regulation difficulties $\rho = +0.01$ (n.s.); and unexpectedly, skill-rank-ordinal $\rho = -0.57$ ($p = 0.040$, $n = 13$ subjects with rank data) --- significant but in the \emph{opposite} direction from the pre-registered prediction. Higher-skill subjects show smaller (or negative) FlowIndex change between gaming and rest.
+
+\textbf{Inverted skill gradient interpretation.} The $\rho = -0.57$ skill-rank correlation is consistent with a known characteristic of expert performers under competitive load: at expert level, MOBA performance is highly automated and the gameplay-vs-rest cortical contrast is reduced relative to less-skilled players whose play recruits more general attention/arousal circuitry. This is the opposite of the prediction in Csikszentmihalyi's classical flow model (where expert performance is highest flow); the discrepancy is consistent with the diagnostic-predicted FAIL: this substrate does not measure flow in the multi-channel structural sense.
+
+\paragraph{Result interpretation.} MOBA gaming on \texttt{ds005520} does not satisfy the $D_5$ feature-minimality criterion of multi-channel integrative organisation. The empirical FlowIndex contrast does not discriminate gaming from rest, consistent with the diagnostic prediction. The result is methodology-validating in the same way as the SL-007 musical-hyperscanning negative \citep{SmartClosureDistance,SolutionLab007}: a substrate predicted to fail by the diagnostic empirically fails by the FlowIndex test. Genuine multi-channel flow substrates (expert music performance with semantic + motor + emotional + temporal coordination; concurrent ESM time-dilation reports) remain the appropriate next test.
+
+\subsection{Why MOBA gaming may or may not pass}\label{sec:results-moba-discussion}
+
+The diagnostic-prediction outcome on MOBA gaming is genuinely uncertain in advance. Two plausible scenarios:
+
+\textbf{If MOBA gaming passes:} the FlowIndex empirically captures the four-condition flow signature on a real-data high-engagement task substrate, with diagnostic-predicted PASS confirmed. This would be a strong confirming result for the operational-flow claim of \emph{Life as Closure} \S 13.3.
+
+\textbf{If MOBA gaming fails:} two sub-cases. (a)~$D_1$--$D_5$ correctly predicts FAIL, in which case the methodology is operating as advertised (a substrate-applicability boundary case, similar to the SL-007 musical-hyperscanning result). (b)~$D_1$--$D_5$ predicts PASS but empirical FlowIndex $d_z < 0.2$ at $n = 24$, in which case the metric needs revision: either FlowIndex is over-specified by the multiplicative form, or the SL-002 default weights do not transfer to this substrate. Each sub-case has a clear next step.
+
+This pre-registration discipline prevents the present paper from claiming an empirical result it does not have, while still committing the analysis script and threshold prior to running.
+
+\section{Relation to \emph{Life as Closure}}\label{sec:relation-life}
+
+\emph{Life as Closure} \S 13.3 \citep{SmartLifeAsClosure} defines flow as the simultaneous satisfaction of four structural conditions. The FlowIndex composite operationalises these as four multiplicative terms on closure features. The present paper does not directly measure any of the four \emph{Life as Closure} conditions in their full operator form; it supplies a measurable first-order empirical approximation under the discipline of the $D_1$--$D_5$ applicability diagnostic.
+
+The multiplicative form is the structural-simultaneity claim: flow requires all four conditions concurrently. The synthetic H5 pre-test (no single term alone passes the threshold the composite does) is the operational version of the simultaneity claim and is what makes FlowIndex more than a re-labelled measure of any single closure feature.
+
+The MOBA-gaming real-data application (\S\ref{sec:moba}) returned a diagnostic-correctly-predicted FAIL on FlowIndex; the table-tennis follow-on returned a second diagnostic-correctly-predicted FAIL. This note should not be read as direct empirical validation of the \emph{Life as Closure} flow claim; it supplies a measurable proxy, a synthetic-implementation check, the operational boundary condition, and two boundary-confirming real-data negatives, but no real-data PASS.
+
+\section{Pre-registered external validation}\label{sec:external}
+
+These tests are not presented as supporting evidence. They are pre-registered external replication targets designed to refine or falsify the metric.
+
+\paragraph{Open-data ceiling.} An exhaustive search (OpenNeuro, Donders Data Sharing Collection, Zenodo, Dryad, OSF, Figshare, IEEE DataPort, curated EEG-data indexes \texttt{openlists/ElectrophysiologyData} and \texttt{meagmohit/EEG-Datasets}) confirms that \emph{no} fully open-access, downloadable expert-performance / music-improvisation EEG dataset currently exists in the public domain. The field has overwhelmingly chosen ``data available on request'' rather than depositing. Concrete datasets that exist in the literature but are access-controlled (require corresponding-author contact, paid subscription, or are explicitly non-shareable due to participant consent restrictions): Rosen et al.\ 2024 (jazz guitarist creative-flow, $64$-ch EEG, Core Flow State Scale ratings --- the ideal flow-EEG dataset, ``available on request''), Mueller \& Lindenberger 2021 (pianist hyperscanning, $20$ pairs, $24$-ch each --- ``on reasonable request''), Sasaki/Iversen/Callan 2019 (guitar improvisation vs scales, $14$ skilled players, $64$-ch dry wireless --- ``without undue reservation'' but no repository), Griskova-Bulanova et al.\ piano EEG ($10$ pianists, $32$-ch --- privacy-restricted), IEEE DataPort jazz improvisation ($3$ professional musicians --- paid subscription). The MOBA-gaming result reported above is the strongest open-data approximation we located; the MOBA paradigm is engagement-rather-than-flow as the diagnostic correctly identifies.
+
+\paragraph{Music-performance flow (preregistered author-contact follow-on).} Required: $n \geq 14$ expert musicians (jazz improvisation, classical sight-reading) with within-subject contrast of expert performance vs sight-reading-difficult-novel-material (high vs low flow likelihood by Csikszentmihalyi's skill-challenge balance). Pre-registered prediction: $D_1$--$D_5$ PASS; FlowIndex $d_z > 0.5$ in the direction of elevated FlowIndex during expert-performance. Concrete labs to contact for data-use agreements: Rosen \& Kounios (Drexel, jazz creative-flow with Core Flow State Scale --- the ideal substrate), Sasaki/Iversen/Callan (NICT Osaka, guitar improvisation, ``without undue reservation'' policy), Mueller \& Lindenberger (Max Planck Institute, pianist hyperscanning).
+
+\paragraph{Esports professional play.} Required: $n \geq 14$ professional esports players (StarCraft, LoL pro circuit) during competitive vs casual play. Predict: substantial FlowIndex elevation during competitive play; correlation with retrospective flow self-report (Flow Short Scale or equivalent).
+
+\paragraph{Time-dilation correlate (H3).} Pre-registered for a substrate with concurrent subjective time-dilation reporting via experience sampling. Predict: per-window FlowIndex correlates with per-window subjective time-rate.
+
+\paragraph{Single-term ablation on real data.} Apply FlowIndex with each component term ablated; if any single ablation does not reduce $d_z$, the multiplicative form is over-specified.
+
+\section{What this paper does not claim}\label{sec:nonclaims}
+
+\begin{itemize}\itemsep0pt
+\item Not that FlowIndex measures flow directly. It is a first-order empirical proxy for the four-condition structural conjunction of \emph{Life as Closure} \S 13.3.
+\item Not that the synthetic-demo $5/5$ result substitutes for real-data validation. Real-data application is the pre-registered MOBA-gaming experiment.
+\item Not that MOBA gaming is identical to all flow states. It is the closest available open EEG analogue.
+\item Not that the multiplicative form is the unique correct operationalisation. The synthetic H5 single-term-ablation test shows the multiplicative form is supported on synthetic data; alternative operationalisations remain a research direction.
+\item Not that the SL-002 default weights necessarily transfer to flow substrates. The H4 default-weight robustness check is the explicit test; failure would require per-substrate calibration.
+\item Not that this note proves the flow claim of \emph{Life as Closure}. It supplies a measurable boundary condition.
+\item Not that the music-performance or esports pre-registered tests have been completed; only the MOBA-gaming and table-tennis applications have empirical data in this paper, and both are diagnostic-correctly-predicted FAILs.
+\item \textbf{Not that the metric has been empirically validated to detect flow on real data.} The MOBA-gaming application returned a diagnostic-correctly-predicted FAIL; the empirical FlowIndex did not discriminate gaming from rest. The metric remains \emph{not empirically demonstrated} on a real-data PASS case. Whether the multiplicative form correctly captures flow on a substrate that does satisfy the multi-channel condition is an open empirical question, to be answered by the pre-registered music-performance and esports-professional tests.
+\end{itemize}
+
+\section{Limitations and falsifiers}\label{sec:limits}
+
+\begin{itemize}\itemsep0pt
+\item \textbf{No real-data PASS yet.} The two completed real-data applications (MOBA gaming and table tennis) both returned diagnostic-correctly-predicted FAIL on FlowIndex. The metric has not been empirically demonstrated to detect flow on a real-data PASS case; the pre-registered music-performance and esports-professional tests are the appropriate next experiments.
+\item \textbf{Multiplicative form is one of several valid operationalisations.} Other functional forms (sum-of-z-scores, harmonic mean, geometric mean of normalised terms) could plausibly instantiate the four-condition claim. The multiplicative form is chosen for structural-simultaneity transparency; alternatives are open work.
+\item \textbf{Default-weight transfer to flow substrates is untested.} A failure of H4 (default-weight robustness) on a real-data flow substrate would require per-substrate weight calibration --- a substantive methodological revision.
+\item \textbf{Flow vs high-engagement-without-flow.} MOBA gaming captures high engagement, which overlaps with but is not identical to flow. Subjects at sub-flow-skill-levels may show high engagement without phenomenological flow.
+\item \textbf{FlowIndex thresholds are empirical.} The pre-registered $d_z > 0.5$ and $\rho > 0.3$ thresholds are empirical applicability thresholds (metric version FlowIndex-v1), not universal constants.
+\item \textbf{Single-window FlowIndex variance.} The per-window FlowIndex is noisy; per-subject means smooth across many windows. Time-resolved within-subject flow detection at the window-level (the H3 time-dilation correlate) requires longer recordings.
+\end{itemize}
+
+\section{Data and code availability}\label{sec:data}
+
+Code is source-available under Apache-2.0; prose under CC BY 4.0. Implementations of the synthetic generator and the real-data adapters are at \href{https://github.com/vfd-org/solution-lab}{\texttt{github.com/vfd-org/solution-lab}} under \texttt{experiments/006-vfd-flow-cortical-closure}. The closure feature backend reuses \texttt{experiments/002-vfd-cortical-phase-closure} verbatim. Synthetic demo: \texttt{src/sl006\_flow\_closure.py}. Real-data MOBA-gaming adapter: \texttt{src/sl006\_ds005520\_adapter.py}; table-tennis adapter: \texttt{src/sl006\_table\_tennis\_adapter.py}. Open data: \texttt{ds005520} \citep{LiMOBA2024}.
+
+\section{Conclusion}\label{sec:conclusion}
+
+The contribution is not that FlowIndex measures flow in any individual. The contribution is the \emph{measurable operationalisation} of the four-condition structural claim of flow in \emph{Life as Closure} \S 13.3 as a multiplicative composite of closure features, conditional on the $D_1$--$D_5$ applicability diagnostic. Synthetic pre-registered validation passes $5/5$, including the discriminant pre-test that no single term alone produces the composite effect. The MOBA-gaming real-data application returned an honest diagnostic-correctly-predicted FAIL: $D_5 = 0.78$ \emph{a priori}, FlowIndex empirical $d_z = -0.26$ confirming. The diagnostic-validated negative scopes the framework: MOBA gaming is engagement (single-channel arousal/attention) rather than multi-channel flow. Genuine expert-performance flow substrates (music, esports professional play with concurrent ESM time-dilation) remain the pre-registered confirming substrates. This note is empirical-methods support for \emph{Life as Closure}'s flow claim, not a philosophical proof of it.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

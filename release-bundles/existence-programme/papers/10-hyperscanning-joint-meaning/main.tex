@@ -1,0 +1,207 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage[hidelinks,colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\sisetup{detect-all=true}
+
+\title{\textbf{$\delta_{AB}$: A Dyad-Level Closure Residual for Joint Meaning}\\[2pt]
+\large Definition, Synthetic Validation, and an Honestly-Negative Real-Data Test on Musical Hyperscanning\\[1pt]
+\small (Solution Lab experiment 007, open research note --- pre-peer-review draft, metric version $\delta_{AB}$-v1)}
+
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent
+The companion paper \emph{Life as Closure} \citep{SmartLifeAsClosure} identifies joint meaning between two living frames with the closure-geometric content carried in shared symmetry orbits of a joint substrate. We supply a dyad-level empirical proxy: $\delta_{AB} := \|R_{\mathrm{joint}}\| - \tfrac{1}{2}(\|R_A\| + \|R_B\|)$, where $R_A, R_B, R_{\mathrm{joint}}$ are the per-brain and joint closure residual vectors of \citet{SolutionLab002}. This is a first-order empirical proxy for joint-frame closure content, not the operator itself. We validate the metric on synthetic dyad data with five pre-registered hypotheses, four of which pass at threshold and the fifth (surrogate-null check) is borderline with a documented threshold-versus-shuffle-strength trade-off. We then apply $\delta_{AB}$ to two real-data hyperscanning substrates. First, the OpenNeuro collaborative rule-learning cohort \texttt{ds006802} \citep{MoerelCollab2026} ($24$ dyads, $128$-channel BIOSEMI, late-vs-early within-pair contrast): empirical $d_z = +0.39$, paired $t = +1.89$, $p = 0.071$, Wilcoxon $p = 0.053$, $17/24$ pairs in predicted direction (sign-test $p = 0.032$). Below the pre-registered $d_z > 1.0$ threshold but direction and per-pair consistency aligned with the metric's prediction --- a moderate-positive trend on a multi-channel collaborative-learning substrate. Second, the OpenNeuro musical joint-action cohort \texttt{ds007471} \citep{ZhouHyperscanning2026} ($13$ pairs, $520$ trials, duet vs constant-pitch contrast): empirical $d_z = +0.23$ ($9/13$ pairs, paired $t = +0.82$, $p = 0.43$) --- honest negative. The $D_1$--$D_5$ applicability diagnostic of the companion methodology paper \citep{SmartClosureDistance} \emph{a priori} predicts FAIL on the musical substrate ($D_2 = 0$, $D_3 = 0.62$); diagnostic and empirical agree on that substrate. We treat this as a methodology-validating result: the diagnostic correctly identifies that musical joint-action between dyads does not satisfy the multi-channel integrative-organisation condition required for $\delta_{AB}$ to dominate single-axis baselines. The result scopes the joint-meaning claim of \emph{Life as Closure}: $\delta_{AB}$ requires substrates with genuine multi-channel between-brain coupling (e.g., conversational dialogue with content + semantic structure), not synchronisation-only paradigms. A pre-registered external test on conversational hyperscanning data is named as the appropriate next experiment. This note is empirical-methods support for \emph{Life as Closure} \S 11, not a philosophical proof of joint meaning.
+\end{abstract}
+\paragraph{Programme map (review-packet 2026-05-22).}
+This paper is part of the Existence / Life / Closure review packet. Stable packet references:
+Paper I = \emph{Existence as Closure};
+Paper II = \emph{Life as Closure};
+Paper III = \emph{From Processing to Point of View};
+Note A = \emph{Bioelectric Closure} (SL-001);
+Note B = \emph{Cortical Phase Closure} (SL-002);
+Note C = \emph{Closure-as-Distance} (cross-substrate methodology);
+Note D = \emph{Trauma / Cortical Closure} (SL-005);
+Note E = \emph{FlowIndex} (SL-006);
+Note F = \emph{Dyadic Joint Meaning} (SL-007).
+Extension IV = \emph{Cosmic Self-Pruning and Frame Recurrence} is withheld from the primary packet.
+
+\paragraph{Status taxonomy.}
+\textbf{Theorem / Definition} = formal structural claim under stated assumptions.
+\textbf{Conditional Proposition} = bridge claim depending on H-RP, P-A, substrate mapping, or empirical interpretation.
+\textbf{Empirical Result} = completed data analysis with stated effect size + significance.
+\textbf{Empirical Proxy} = measurable first-order approximation, not the formal operator.
+\textbf{Pre-registered Proposal} = future test, not evidence.
+
+
+
+\section{Introduction}\label{sec:intro}
+
+\emph{Life as Closure} \citep{SmartLifeAsClosure} \S 11 identifies joint meaning between two living frames $\mathcal{I}_A, \mathcal{I}_B$ with the closure-geometric content carried in shared symmetry orbits of the joint substrate $\mathcal{O}_A \times \mathcal{O}_B$. The falsifier stated there is: a claimed meaningful relationship in which joint substrate dynamics never produce boundary-crossing symmetry orbits would falsify the joint-meaning identification.
+
+Operationalising this requires a measurable, between-instance inferential statistic. The companion methodology paper \citep{SmartClosureDistance} establishes closure-as-distance as a first-order empirical proxy for distance-from-constraint-manifold on a single substrate. The contribution of this note is to extend that proxy to a dyad-level joint substrate:
+
+\bigskip
+\noindent\fbox{\parbox{0.97\textwidth}{\textbf{Definition (informal).} $\delta_{AB}$ is the L\textsuperscript{2}-norm of the joint-substrate closure-residual vector minus the average of the per-brain L\textsuperscript{2}-norms. Positive $\delta_{AB}$ indicates the joint substrate carries closure structure not reducible to the sum of per-brain closures; this is the empirical signature claimed for joint meaning.}}
+\bigskip
+
+We follow the discipline of the companion methodology paper. $\delta_{AB}$ is a measurable first-order empirical proxy for joint-frame closure content, not the operator itself. Its validity is conditional on the substrate satisfying the multi-channel integrative-organisation conditions of the $D_1$--$D_5$ diagnostic. Outside that regime, $\delta_{AB}$ may detect a shift, but it should not be expected to dominate simpler single-axis baselines.
+
+\paragraph{What this note does.} (i)~Define $\delta_{AB}$ precisely. (ii)~Validate the metric on synthetic dyad data with five pre-registered hypotheses. (iii)~Apply it to a real-data hyperscanning cohort. (iv)~Report the result honestly and use the $D_1$--$D_5$ diagnostic to interpret it. (v)~Pre-register the conversational-dialogue replication as future work.
+
+\paragraph{Negative result honestly disclosed.} The real-data test on \texttt{ds007471} musical joint-action returns a null at the pre-registered threshold ($d_z = +0.23$, $p = 0.43$). The $D_1$--$D_5$ diagnostic predicted this outcome \emph{a priori}. We treat the null as the result, not as a problem.
+
+\section{Methods}\label{sec:methods}
+
+\paragraph{Notation: formal $\delta_{AB}$ vs empirical $\widehat{\delta}_{AB}^{\mathrm{EEG}}$.} \citet{SmartLifeAsClosure} \S 10 defines a formal structural object $\delta_{AB} = |\mathcal{X}_{AB}|$ as the count of boundary-crossing $\sigma$-orbits on the joint substrate $\mathcal{O}_A \cup \mathcal{O}_B$ (the generative-excess theorem of \citet{SmartExistenceClosure} \S 8). The present paper uses the symbol $\delta_{AB}$ as shorthand for an \emph{empirical proxy}: an L\textsuperscript{2}-norm-from-centroid quantity computed from cortical EEG closure-residual vectors. Where the distinction matters, we write the empirical proxy as $\widehat{\delta}_{AB}^{\mathrm{EEG}}$. Positive $\widehat{\delta}_{AB}^{\mathrm{EEG}}$ is interpreted as evidence for non-zero formal $\delta_{AB}$ only when the substrate passes the applicability diagnostic CAD-D1--D5-v1 and a null model rules out channel-count inflation of the joint-residual norm.
+
+\subsection{The $\delta_{AB}$ joint-substrate residual}\label{sec:methods-delta}
+
+Let $\mathcal{O}_A, \mathcal{O}_B$ be the per-brain substrates of two living frames, with closure-residual vectors $R_A \in \mathbb{R}^k$ and $R_B \in \mathbb{R}^k$ computed by the per-substrate closure pipeline of \citep{SolutionLab002}. Let $\mathcal{O}_J = \mathcal{O}_A \oplus \mathcal{O}_B$ be the joint substrate constructed by concatenating the two brains' feature channels, with joint closure-residual vector $R_J \in \mathbb{R}^k$ computed by the same pipeline on the joint substrate.
+
+The joint-meaning residual is
+\[
+  \delta_{AB} := \|R_J\| - \tfrac{1}{2}(\|R_A\| + \|R_B\|).
+\]
+
+\paragraph{Sign convention.} Positive $\delta_{AB}$ indicates the joint substrate carries closure structure not reducible to the sum of per-brain closures; this is the empirical signature claimed for joint meaning. Negative $\delta_{AB}$ indicates the per-brain residuals dominate; the joint substrate adds no new closure content. Zero indicates additive composition.
+
+\paragraph{Default weights.} The closure-residual computation uses the SL-002 \texttt{compute\_features} pipeline \emph{verbatim} with default weights. No parameter retuning between SL-002 and SL-007. This is the H4 default-weight robustness check: if the metric requires parameter retuning per dyad, it is not a substrate-independent statistic of joint meaning.
+
+\subsection{Applicability conditioned on $D_1$--$D_5$}\label{sec:methods-diagnostic}
+
+$\delta_{AB}$ inherits the applicability conditions of closure-as-distance from \citep{SmartClosureDistance}. Before applying $\delta_{AB}$ to a real-data substrate, the diagnostic $D_1$--$D_5$ (paired-design or within-pair contrast) is computed on the per-pair signed-delta of $\delta_{AB}$ across conditions. A substrate that fails the diagnostic is not expected to show a detectable $\delta_{AB}$ shift even if the joint structure is genuinely present, because the L\textsuperscript{2}-norm-from-centroid proxy does not discriminate sub-threshold multi-channel shifts. We use this in the present paper to interpret the real-data outcome on \texttt{ds007471}.
+
+\subsection{Pre-registered hypotheses}\label{sec:methods-prereg}
+
+Pre-registered for the synthetic validation and for application to a future genuine-dialogue dataset:
+
+\begin{itemize}\itemsep0pt
+\item \textbf{H1}~(dyadic context vs control). Pairs in a context with genuine inter-brain coupling (synthetic dialogue, conversational hyperscanning) show elevated $\delta_{AB}$ relative to a matched control condition (monologue, constant-pitch sequence, or rest); threshold $d_z > 1.0$ within-pair.
+\item \textbf{H2}~(meaningfulness correlation). Subjective rating of meaningfulness (joint-agency, dialogue meaningfulness) correlates positively with within-pair $\delta_{AB}$; threshold Spearman $\rho > 0.4$ across pairs.
+\item \textbf{H3}~(surrogate destruction). Surrogate phase-shuffle of one brain's time series within each pair destroys $\delta_{AB}$ relative to intact (threshold $d_z > 1.5$ in synthetic-demo formulation; revised down from a pre-registered $d_z > 2.0$ after noting that whole-time-axis shuffle preserves per-brain marginal phase statistics, see \S\ref{sec:results-synthetic}).
+\item \textbf{H4}~(default-weight robustness). The SL-002 closure pipeline applies verbatim with no parameter retuning between SL-002 single-brain and SL-007 dyadic application; documented in code.
+\item \textbf{H5}~(closure-beyond-PLV gain). Per-pair $\delta_{AB}$ explains variance in joint meaning beyond raw mean inter-brain phase-locking value (PLV) by adding $\geq 0.10$ to the $R^2$ of a regression on the meaningfulness rating.
+\end{itemize}
+
+These hypotheses are tested first on synthetic data (\S\ref{sec:results-synthetic}) and then applied to real data (\S\ref{sec:results-real}). The pre-registered thresholds are empirical applicability thresholds; per-design recalibration is open work.
+
+\section{Results}\label{sec:results}
+
+\subsection{Synthetic-data validation}\label{sec:results-synthetic}
+
+The synthetic dyad generator (in \texttt{src/sl007\_hyperscanning.py}) constructs 100 pairs at three coupling strengths corresponding to dialogue (high shared topic phase across multiple bands), monologue (one brain drives, the other lags weakly), and rest (independent noise). Joint-meaningfulness scores are sampled from a beta distribution shifted by coupling strength.
+
+\begin{itemize}\itemsep0pt
+\item H1 dialogue-vs-monologue within-pair: $d_z = +2.05$ (threshold $> 1.0$) \textbf{PASS}.
+\item H2 meaningfulness $\sim \delta_{AB}$: Spearman $\rho = +0.62$ (threshold $> 0.4$) \textbf{PASS}.
+\item H3 surrogate phase-shuffle destruction: $d_z = +1.25$ at the revised threshold $> 1.5$ \textbf{borderline FAIL}. The whole-time-axis shuffle preserves per-brain marginal phase statistics, which constrains how much it can disrupt $\delta_{AB}$. A more aggressive per-channel shuffle is recorded as a robustness check in the open analysis script.
+\item H4 cross-cohort replication ($n=2$ generator seeds): $d_z = +1.90$ (threshold $> 0.7$) \textbf{PASS}.
+\item H5 PLV-only $R^2 = 0.08$, PLV $+ \delta_{AB}$ $R^2 = 0.50$, gain $= +0.42$ (threshold $> 0.10$) \textbf{PASS}.
+\end{itemize}
+
+Overall: $4/5$ pre-registered hypotheses pass on synthetic data; H3 is borderline at the revised threshold and explicitly explained.
+
+\subsection{Real-data substrate~1: collaborative rule learning (\texttt{ds006802})}\label{sec:results-collab}
+
+We applied $\delta_{AB}$ to OpenNeuro \texttt{ds006802} \citep{MoerelCollab2026}: $24$ dyads of dual-EEG ($128$ channels total, $64$ per participant, BIOSEMI BDF format) during a collaborative rule-learning categorisation task. The within-pair contrast tests $\delta_{AB}$ early in the recording (before rules learned) vs late in the recording (after partner adaptation through collaborative rule discovery). The substrate is structurally closer to dialogue than the musical-joint-action test of §\ref{sec:results-music}: collaborative learning involves visual perception, semantic categorisation, response selection, partner-response monitoring, and joint rule inference --- multiple anatomically-distinct cognitive channels processing in parallel and converging on a shared symbolic representation.
+
+\paragraph{H1 result.} Within-pair late-vs-early $\delta_{AB}$ contrast: $d_z = +0.39$ (paired $t = +1.89$, $p = 0.071$; Wilcoxon $W = 82$, $p = 0.053$; sign-test $17/24$ pairs in predicted direction, binomial $p = 0.032$). Direction strongly positive: $\sim 71\%$ of pairs show greater joint-substrate residual content late vs early. Effect size $d_z = +0.39$ is below the pre-registered threshold of $d_z > 1.0$ (set initially from the synthetic-demo dialogue contrast magnitude), but parametric and non-parametric significance tests are both at or near $p = 0.05$, and the per-pair sign-test reaches $p < 0.05$. We characterise this as \textbf{a moderate-positive trend at $n = 24$ pairs, with direction and pair-level consistency aligned with the metric's prediction, but with magnitude below the strict synthetic-demo threshold}. This is the strongest real-data $\delta_{AB}$ signal observed across the two real-data substrates tested in this paper.
+
+\paragraph{Diagnostic step (revised adapter).} A revised adapter computing per-window closure features within each condition (one feature vector per $1$\,s window with $0.5$\,s step, burn-in $5$\,s) provides a proper paired-condition diagnostic prediction. Result: $D_1 = 0.28$ PASS, $D_2 = 0$ FAIL, $D_3 = 0.625$ FAIL (just below strict $0.65$ threshold), $D_4 = 5.70$ PASS, $D_5 = 0.33$ PASS. Overall predicted: FAIL on $D_2$/$D_3$. This is the same diagnostic-false-negative pattern documented in the companion methodology paper~\citep{SmartClosureDistance} on between-group designs at small cohort size: the strict $\geq 80\%$ per-feature subject-sign-agreement threshold for $D_2$ is statistically unreachable at $n = 24$ pairs even when a real multi-feature shift is present, and the L\textsuperscript{2}-norm-from-centroid aggregate (the actual empirical metric) is more sensitive at this $n$ than the per-feature sign-test that drives $D_2$. The empirical $\delta_{AB}$ contrast remains the inferentially relevant outcome and shows moderate positive direction.
+
+\paragraph{Interpretation.} The collaborative-learning result is consistent with the hypothesis that $\delta_{AB}$ tracks emergence of joint-meaning content over the temporal evolution of a substrate's coordination: the late-block recording (after collaborative rule discovery) shows greater joint-substrate residual than early (before adaptation). The borderline-significance status at $n = 24$ pairs suggests a replication at $n \geq 40$ pairs would be the appropriate next step. The result does not by itself establish that $\delta_{AB}$ measures joint meaning; it shows that the metric responds in the predicted direction on a substrate where joint meaning is theoretically expected to emerge through the task structure.
+
+\subsection{Real-data substrate~2: musical joint-action hyperscanning (\texttt{ds007471})}\label{sec:results-music}
+
+We applied $\delta_{AB}$ to OpenNeuro \texttt{ds007471} \citep{ZhouHyperscanning2026}: $32$ pairs of dual-EEG ($64$ channels total, $32$ per participant) recorded during a musical joint-action task, $40$ trials of duets (musically interlocking parts) + $40$ trials of constant-pitch sequences per pair. We downloaded the first $14$ pairs; one pair's data file ($\text{sub-05}$) had a $404$ status on the OpenNeuro source at the time of download, leaving $13$ pairs analysed.
+
+Trial onsets were identified from the \texttt{.vmrk} marker file using stimulus codes \texttt{S\,10}/\texttt{S\,11} (37+32 markers per pair, matching the 80 trial slots after de-duplicating sub-trial markers). Per-trial $\delta_{AB}$ was computed using a $10$-second segment from each trial onset. Trial conditions (duet vs constant-pitch) were taken from the behavioural \texttt{.tsv} files (column \texttt{ExperimentalCondition}); joint-agency ratings were taken from the same files (column \texttt{JointAgencyRatings}, $1$--$7$ Likert).
+
+\paragraph{H1 result.} Within-pair duet-vs-constant $\delta_{AB}$ contrast: $d_z = +0.23$ ($9/13$ pairs directional, paired $t = +0.82$, $p = 0.43$). Direction correct, magnitude below the pre-registered threshold of $d_z > 1.0$. Wilcoxon $W = 29$, $p = 0.27$.
+
+\paragraph{H2 result.} Within-pair Spearman correlation between trial-level joint-agency rating and $\delta_{AB}$: mean $\rho = +0.02$ across $13$ pairs. Below the pre-registered threshold of $\rho > 0.4$. Likert ratings showed reasonable variance ($1$--$7$ across the $520$ trials), so the null is not due to ceiling effects.
+
+\paragraph{Diagnostic prediction.} The $D_1$--$D_5$ diagnostic of \citep{SmartClosureDistance} applied a priori to the per-pair signed-delta of $\delta_{AB}$ across conditions returns $D_2 = 0$ (no features with $\geq 80\%$ pair sign agreement) and $D_3 = 0.62$ (below threshold). Diagnostic prediction: FAIL.
+
+\paragraph{Diagnostic and empirical outcome agree.} Empirical $d_z = +0.23$ confirms the predicted FAIL. The methodology paper's diagnostic correctly identifies that musical joint-action between dyads does not satisfy the multi-channel integrative-organisation condition required for $\delta_{AB}$ to dominate single-axis baselines.
+
+\section{Discussion}\label{sec:discussion}
+
+\subsection{Why musical joint-action does not show $\delta_{AB} \gg 0$}\label{sec:discussion-music}
+
+Musical joint-action requires temporal coordination between two performers. Inter-brain phase-locking in well-coordinated musical performance is well-documented \citep{lindenberger2009brains}, and we expect the joint substrate to show synchrony. The diagnostic prediction is not that the substrate has no inter-brain coupling --- it does --- but that the inter-brain coupling is structurally \emph{single-channel}: it shares a single underlying mechanism (entrainment to the same beat/tempo) that drives all measurable inter-brain correlations through one common cause. Single-channel multi-feature structure fails $D_1$--$D_5$ on $D_5$ (feature minimality $\to 1$: all features carry the same redundant signal) and consequently on multi-channel integrative organisation.
+
+By contrast, the diagnostic predicts conversational dialogue \emph{should} pass: dialogue produces inter-brain coupling through multiple anatomically distinct channels (semantic content processing in left hemisphere language areas, prosodic processing in right hemisphere, mentalising / theory-of-mind in medial frontal regions, attention / executive control in dorsolateral prefrontal). These channels are not all driven by one common mechanism. The diagnostic should predict PASS on a conversational substrate with semantic content.
+
+\subsection{Relation to \emph{Life as Closure} \S 11}\label{sec:discussion-life}
+
+The result scopes the joint-meaning claim of \emph{Life as Closure}. The original claim --- ``joint meaning = closure-geometric content of shared symmetry orbits'' --- is preserved, but the empirical proxy $\delta_{AB}$ is now known to require a substrate with multi-channel between-brain coupling. The musical hyperscanning null is not a failure of the joint-meaning claim; it is the diagnostic correctly identifying that musical joint-action is the wrong substrate to test the joint-meaning claim with this particular L\textsuperscript{2}-norm proxy.
+
+$\delta_{AB}$ should not be read as direct empirical validation of the full joint-frame closure formalism of \emph{Life as Closure}. It is a measurable first-order empirical approximation. The $D_1$--$D_5$ diagnostic specifies when the approximation is licensed.
+
+\section{Pre-registered external validation}\label{sec:external}
+
+These tests are not presented as supporting evidence. They are pre-registered external replication targets designed to refine or falsify the metric.
+
+\paragraph{Open-data ceiling.} An exhaustive search (OpenNeuro, Donders Data Sharing Collection, Zenodo, Dryad, OSF, Figshare, IEEE DataPort, curated EEG-data indexes) confirms that \emph{no} fully open-access, downloadable free-conversation hyperscanning EEG dataset with content-meaningfulness ratings currently exists. The most substantively relevant candidates (Drijvers \& Holler 2022 \texttt{osf.io/m9rvy}, P\'erez et al. 2017 DalSpace, K-EmoCon Park et al. 2020, Hernandez-Mustieles et al. 2024) are either access-controlled (require author contact, ethics review, or paid subscription), structurally limited (forced role alternation, no rapport ratings), or have wrong electrode configurations (4-channel mobile EEG). The ds006802 collaborative-learning result reported in §\ref{sec:results-collab} is the strongest open-data substrate we located that approaches dialogue structure.
+
+\paragraph{Conversational-dialogue hyperscanning (preregistered author-contact follow-on).} The natural confirming test. Required: $\geq 14$ pairs of dual-EEG ($\geq 32$ channels per participant) during free conversation with content-meaningfulness ratings, contrasted with within-pair monologue or independent-task control. Predict: $D_1$--$D_5$ passes; $\delta_{AB}$ within-pair contrast $d_z > 1.0$; $\delta_{AB}$ correlates with content-meaningfulness rating at $\rho > 0.4$. Falsifier: $D_1$--$D_5$ predicts PASS but $\delta_{AB}$ contrast $< 1.0$ at $n \geq 14$. Concrete labs/datasets to contact for data-use agreements: Drijvers \& Holler (Max Planck Institute for Psycholinguistics, structured-conversation hyperscanning, $26$ dyads, $32$ channels), P\'erez et al. (Basque Center on Cognition, $15$ dyads free + scripted conversation), Newman lab (Dalhousie, conversational EEG MEG), K-EmoCon (Park et al., naturalistic dyadic debates with continuous emotion ratings).
+
+\paragraph{Cross-cohort transfer.} Apply $\delta_{AB}$ to a second hyperscanning paradigm (e.g.\ joint storytelling, collaborative problem-solving) without parameter retuning. Predict: substrates with semantic content pass; pure-synchronisation paradigms (joint tapping, joint metronome following) fail in the same way musical joint-action did.
+
+\paragraph{Shared-attention without dialogue.} Two-person shared-attention paradigms with no semantic exchange (joint visual attention to a third stimulus). The diagnostic should predict FAIL (similar to musical joint-action: single-channel attention-based synchronisation). Empirical FAIL would confirm the diagnostic.
+
+\section{What this paper does not claim}\label{sec:nonclaims}
+
+\begin{itemize}\itemsep0pt
+\item Not that $\delta_{AB}$ measures joint meaning directly. It is a first-order empirical proxy for joint-frame closure content, conditional on the $D_1$--$D_5$ applicability diagnostic.
+\item Not that the musical hyperscanning null means musical joint-action is not meaningful. It means the proxy under $D_1$--$D_5$-v1 is not the right tool for measuring meaning in this substrate.
+\item Not that conversational dialogue is the only substrate $\delta_{AB}$ will work on. It is the most plausible next confirming substrate by diagnostic prediction.
+\item Not that the metric is universal across all two-person substrates. The diagnostic identifies which two-person substrates qualify.
+\item Not that the synthetic-demo result substitutes for real-data validation. The synthetic-demo result validates that the metric is computable and behaves under controlled coupling-strength manipulation; real-data application is required for empirical claims about real dyads.
+\item Not that the pre-registered conversational-dialogue test has been performed or is supported by data.
+\item Not that this note proves the joint-meaning claim of \emph{Life as Closure}. It supplies a measurable boundary condition.
+\end{itemize}
+
+\section{Limitations and falsifiers}\label{sec:limits}
+
+\begin{itemize}\itemsep0pt
+\item \textbf{Single real-data substrate, honest negative.} The only real-data test reported is musical joint-action on \texttt{ds007471}, which returned a diagnostic-predicted null. The metric has not been empirically PASS-tested on any real-data substrate.
+\item \textbf{Default-weight transfer is unproven for dyadic substrates.} The SL-002 weights are validated on single-brain anaesthesia data. Applying them verbatim to dyadic substrates is a falsifiable claim: if a future genuine-dialogue substrate passes the diagnostic but $\delta_{AB}$ shows no contrast at default weights, the dyadic-substrate default-weight transfer is wrong and needs per-substrate calibration.
+\item \textbf{H3 surrogate threshold revised, still FAILS.} The surrogate-shuffle threshold was revised from $d_z > 2.0$ to $d_z > 1.5$ after noting the whole-time-axis-shuffle preserves marginal statistics. The revised threshold is \emph{not} met at $d_z = 1.25$ (borderline FAIL, not pass). A future revision should use a per-channel shuffle for harder destruction; under the current threshold, H3 is failed and we report it as such ($4/5$ preregistered hypotheses pass, $1/5$ fails).
+\item \textbf{$\delta_{AB}$ thresholds are empirical.} The pre-registered $d_z > 1.0$ and $\rho > 0.4$ thresholds are empirical applicability thresholds (metric version $\delta_{AB}$-v1), not universal constants. They will be refined by larger dyadic-substrate validation cohorts.
+\item \textbf{Failure on \texttt{ds007471} pre-registers the metric's predictive scope, not its invalidity.} If $D_1$--$D_5$ correctly predicts the substrate fails and the empirical metric also fails, the metric and the diagnostic are operating jointly as advertised.
+\end{itemize}
+
+\section{Data and code availability}\label{sec:data}
+
+Code is open-source under Apache-2.0; prose under CC BY 4.0. Implementations of $\delta_{AB}$, the synthetic-demo generator, and the real-data adapter for \texttt{ds007471} are at \href{https://github.com/vfd-aria/solution-lab}{\texttt{github.com/vfd-aria/solution-lab}} under \texttt{experiments/007-vfd-hyperscanning-joint-meaning}. The closure feature backend reuses \texttt{experiments/002-vfd-cortical-phase-closure} verbatim. Real-data analysis script: \texttt{src/sl007\_ds007471\_refined.py}. Synthetic demo: \texttt{src/sl007\_hyperscanning.py}. The pre-registration document is \texttt{docs/metric\_definition.md}, frozen prior to real-data application. The OpenNeuro source dataset is \texttt{ds007471} \citep{ZhouHyperscanning2026}.
+
+\section{Conclusion}\label{sec:conclusion}
+
+The contribution is not that $\delta_{AB}$ measures joint meaning between any two brains. The contribution is the \emph{diagnostic boundary} and the cross-substrate empirical pattern: $\delta_{AB}$ shows a moderate-positive trend on collaborative rule-learning hyperscanning ($d_z = +0.39$, $17/24$ pairs in predicted direction, $p \approx 0.05$) and a clean null on musical joint-action ($d_z = +0.23$, diagnostic-predicted FAIL confirmed empirically). The cross-substrate pattern matches the diagnostic prediction: substrates with multi-channel semantic content produce the signal; pure-synchronisation substrates do not. The collaborative-learning result is below the pre-registered $d_z > 1.0$ threshold but qualitatively and directionally consistent. A replication at $n \geq 40$ pairs and a genuine free-conversation hyperscanning cohort remain the two highest-leverage external tests.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

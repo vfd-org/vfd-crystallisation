@@ -1,0 +1,508 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\geometry{margin=2.7cm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{principle}[theorem]{Diagnostic thesis}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\F}{\mathbb{F}}
+
+% status tags (shared with the capstone)
+\newcommand{\TAGthm}{{\small\textsf{[\textcolor{green!45!black}{theorem}]}}}
+\newcommand{\TAGver}{{\small\textsf{[\textcolor{blue!60!black}{verified}]}}}
+\newcommand{\TAGev}{{\small\textsf{[\textcolor{orange!80!black}{evidence}]}}}
+\newcommand{\TAGconj}{{\small\textsf{[\textcolor{purple}{conjecture}]}}}
+\newcommand{\TAGopen}{{\small\textsf{[\textcolor{red!70!black}{open}]}}}
+\newcommand{\TAGphil}{{\small\textsf{[\textcolor{gray}{interpretation}]}}}
+
+\hypersetup{colorlinks=true, linkcolor=blue!55!black,
+  citecolor=blue!55!black, urlcolor=blue!55!black}
+
+\title{\textbf{The Void and the Structure}\\
+\large What the Riemann zeros are, how the primes grow from them,\\
+and why the problem resists construction --- a diagnosis, not an impossibility}
+\author{Lee Smart \\ \small Institute of Vibrational Field Dynamics}
+\date{2026-05-30 \quad v0.1 (draft)}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{\parbox{0.93\textwidth}{\centering\small
+\textsc{Pre-peer-review open research essay.} \textbf{This paper proves
+neither the Riemann Hypothesis nor its unprovability.} It does two honest
+things: (i) it describes the nontrivial zeros as a generative \emph{absence}
+and states precisely, with classical results, how the primes are
+reconstructed from them; and (ii) it offers a \emph{diagnosis of difficulty}
+--- a principled account of why RH has resisted every constructive method.
+Claims are tagged \TAGthm, \TAGver, \TAGev, \TAGconj, \TAGopen, or
+\TAGphil\ (a marked, non--load-bearing interpretive register). The
+diagnosis is a heuristic thesis (\TAGconj), \emph{not} a theorem; in
+particular we do \textbf{not} claim RH can never be proved (see
+\S\ref{sec:boundary}).}}
+\end{center}
+
+\begin{abstract}
+The nontrivial zeros of an L-function are not a constructed object but an
+\emph{absence}: the locus where the function vanishes, realised in Connes'
+spectral picture as an \emph{absorption spectrum} --- missing lines in a
+continuous scaling spectrum. We take this seriously as the object's defining
+character. First, we record the classical fact that the entire multiplicative
+structure of the integers --- the primes --- is reconstructed \emph{from} this
+absence: the Riemann--von Mangoldt explicit formula writes the prime-counting
+staircase as a sum of waves whose frequencies are exactly the zeros. The
+structure grows out of the void. Second, we describe the void's
+character as far as proof allows: it is eternal in the precise sense of being
+timeless, uncreated, and observer-independent; it is unbounded; and beyond a
+fixed set of arithmetic constraints it is \emph{formless} in an exact sense
+(its fine statistics are those of the most structureless Hermitian ensemble,
+GUE). Third --- the technical heart --- we give a diagnosis of why RH resists
+construction: random-matrix \emph{universality} hands you the void's
+\emph{class} for free, but its specific member is fixed only by the primes, so
+any construction that does not already encode the arithmetic underdetermines
+the object to the universal class. Proof proceeds by building structure; the
+target is an absence pinned only by the arithmetic. That mismatch, we argue,
+is the friction. We are explicit that this is a diagnosis of \emph{hardness},
+not a proof of \emph{impossibility}: no independence result is known, much is
+known about the void, and were RH ever shown independent of a sound theory it
+would thereby be true.
+\end{abstract}
+
+\tableofcontents
+
+\section{Stance}\label{sec:stance}
+This is a companion to the frontier capstone of this bundle. Its computations
+are those of the capstone, together with one demonstration new to this
+companion (Prop.\ \ref{prop:detprob}, \texttt{deterministic\_probability.py});
+no result here exceeds the capstone's verified status. Its purpose is
+conceptual: to say cleanly \emph{what} the zeros are, \emph{how} the primes
+issue from them, and \emph{why} the problem is hard. Two disciplines hold
+throughout. (1) The mathematics stays mathematical: every load-bearing
+statement is a theorem, a verified computation, or an explicitly named open
+problem. (2) Where the essay reaches for words like ``eternal'' or
+``timeless,'' those words are used in a precise, defensible sense and are
+marked \TAGphil; any further meaning a reader brings is theirs, and the text
+neither asserts nor needs it (\S\ref{sec:discipline}).
+
+\section{The void: an absence, not an object}\label{sec:void}
+
+\begin{definition}[The void]\label{def:void}
+For an L-function $L(s)$, the \emph{void} is the set
+$Z=\{\rho : L(\rho)=0,\ 0<\Re\rho<1\}$ of nontrivial zeros --- the points where
+$L$ \emph{takes the value zero}. (The concrete claims below --- primes,
+$\psi(x)$, $N(T)$, the proportion on the line, RH --- are stated for the
+Riemann zeta function; the ``$L$-function'' phrasing marks the general frame,
+and we flag where generality is not yet established.)
+\end{definition}
+
+The word ``absence'' below refers not to the analytic value at $\rho$ (which is
+$0$), but to the \emph{spectral} reading: in Connes' framework the zeros are
+the lines \emph{missing} from a continuous spectrum. Two features make
+``absence,'' in that sense, the right word rather than a metaphor.
+
+\begin{proposition}[Spectral realisation as absorption, \TAGthm\ (Connes
+\cite{Connes})]\label{prop:absorption}
+On the adele class space $\A_\Q/\Q^\times$ the idele-class group acts by
+scaling; the zeros appear not as eigenvalues added to a spectrum but as an
+\emph{absorption spectrum} --- the frequencies \emph{missing} from an otherwise
+continuous spectrum. RH is the statement that these absences lie on the
+critical line.
+\end{proposition}
+
+\begin{remark}[Why ``not an object'']\label{rem:notobject}
+The Hilbert--Pólya programme seeks a self-adjoint operator whose spectrum
+\emph{is} $Z$. No such operator has been constructed (\TAGopen). Until it is,
+$Z$ is specified by a \emph{condition} ($L=0$), not by a construction; and in
+the one rigorous spectral picture we have (Proposition
+\ref{prop:absorption}), $Z$ is precisely what is \emph{absent}. The void is
+something you \emph{locate}, not something you \emph{build}. This is not a
+deficiency of effort; \S\ref{sec:resist} argues it is intrinsic to the object.
+\end{remark}
+
+\section{The structure grows from the void}\label{sec:grows}
+
+The decisive fact --- and the honest form of ``the void generates the
+structure'' --- is classical.
+
+\begin{theorem}[Explicit formula; Riemann, von Mangoldt, \TAGthm]\label{thm:explicit}
+For $x>1$ not a prime power, with $\psi(x)=\sum_{p^k\le x}\log p$ the
+Chebyshev prime-counting function,
+\[
+  \psi(x) \;=\; x \;-\; \sum_{\rho}\frac{x^{\rho}}{\rho}
+                  \;-\; \log(2\pi) \;-\; \tfrac12\log\!\bigl(1-x^{-2}\bigr),
+\]
+the sum over nontrivial zeros $\rho$ taken in the usual symmetric limiting
+sense ($\lim_{T\to\infty}\sum_{|\Im\rho|\le T}$). Writing
+$\rho=\tfrac12+i\gamma$ (the on-line case), the zero term is a sum of
+\emph{waves},
+\[
+  \sum_{\gamma>0}\frac{2\,x^{1/2}}{|\rho|}\,
+     \cos\!\bigl(\gamma\log x-\arg\rho\bigr),
+\]
+each zero contributing one frequency $\gamma$ in the variable $\log x$.
+\end{theorem}
+
+\begin{corollary}[\TAGthm]\label{cor:fromvoid}
+For $\zeta$, the prime-counting function $\psi(x)$ is reconstructed from the
+nontrivial zeros together with the standard smooth and trivial-zero terms: it
+is $x$ corrected by the harmonics of the zeros. Since prime powers, hence the
+primes, are recoverable from $\psi$, the prime distribution is in this sense
+the \emph{interference pattern} of the void's frequencies.
+\end{corollary}
+
+\begin{remark}[Diffraction; the two sides of one identity, \TAGver]
+The same identity, read the other way, is a diffraction: the formal spectrum
+$D(t)=\sum_\gamma\cos(\gamma t)$ has its sharp peaks (Bragg peaks) exactly at
+$t=\log p^k$. The identity is classical (Dyson's quasicrystal \cite{Dyson});
+the script \texttt{route\_b/diffraction\_quasicrystal.py} illustrates it
+($11/11$ peaks matched), it does not establish it. Zeros diffract into primes; primes diffract into zeros. Neither
+is prior --- but if one insists on a direction of generation, Theorem
+\ref{thm:explicit} writes the \emph{primes as built from the zeros}.
+\end{remark}
+
+So ``the geometry grows out of the void'' has an exact reading, and it stops
+exactly where the mathematics stops: the void generates the \emph{primes}.
+Any extension of ``generates'' beyond arithmetic is interpretation
+(\S\ref{sec:discipline}), not a consequence of Theorem \ref{thm:explicit}.
+
+\section{The character of the void}\label{sec:character}
+
+We can say a great deal about the void --- which is itself the refutation of
+``nothing can be known about it'' (\S\ref{sec:boundary}). What follows is
+defensible in the marked sense.
+
+\begin{proposition}[It is populated and counted, \TAGthm]\label{prop:counted}
+There are infinitely many zeros (Hardy); the count to height $T$ is
+$N(T)=\frac{T}{2\pi}\log\frac{T}{2\pi}-\frac{T}{2\pi}+O(\log T)$
+(Riemann--von Mangoldt). A positive proportion --- at least $2/5$
+\cite{Conrey} --- lie on the line, and the lowest zeros have been verified on
+the line to very large height \cite{Platt,Gourdon}. The void is partially but
+extensively charted; what is open is a single uniform statement about
+\emph{all} of it.
+\end{proposition}
+
+\begin{proposition}[Zero correlations match GUE under restricted support,
+\TAGthm/\TAGev]\label{prop:formless}
+For test functions of suitably restricted support, the pair correlation
+(Montgomery \cite{Montgomery}, under the stated conventions) and the $n$-level
+correlations (Rudnick--Sarnak \cite{RudnickSarnak}) of the zeros agree with
+those of the \textbf{GUE} ensemble. This is a theorem \emph{within those
+support restrictions and hypotheses}; the unrestricted GUE law for all
+statistics is a conjecture. Numerically, every test performed in this bundle
+is consistent with GUE (\texttt{route\_b/quantum\_chaos\_test.py},
+\texttt{shape\_search.py}, \texttt{deterministic\_probability.py}), with no
+counterexample found.
+\end{proposition}
+
+\begin{remark}[``Formless,'' read honestly, \TAGphil]\label{rem:formless}
+GUE is the relevant \emph{unitary} random-matrix universality class. Calling
+the void ``formless'' is an interpretive gloss on Prop.\ \ref{prop:formless}:
+to the extent the statistics have been settled they show \emph{no structure
+beyond} the unitary universality class, and no additional structure has been
+found where they have not. The word is a useful summary, not a theorem that
+the void has ``no structure beyond arithmetic constraints'' --- that stronger
+statement is not proved.
+\end{remark}
+
+\begin{proposition}[It is timeless, uncreated, observer-free, \TAGphil]\label{prop:eternal}
+$Z$ is a property of $L$, hence of the integers: it is not located in space or
+in time, it was not brought into being and cannot be unmade, and it is
+identical for every reasoner who computes it. In this precise sense --- and
+\emph{only} this sense --- the word ``eternal'' is exact. It requires no belief:
+the zeros are reached by proof and computation, not faith.
+\end{proposition}
+
+\begin{remark}[How a formless object is known, \TAGphil]\label{rem:knowing}
+``Formless'' (Prop.\ \ref{prop:formless}) does not mean
+``informationless.'' It means the object is known by its \emph{law}, not by
+a \emph{figure} --- exactly as a gas has no shape yet an exact
+thermodynamics (temperature, pressure, the Maxwell--Boltzmann law) known
+precisely and \emph{provably}. The information a formless object yields is
+statistical and structural, and it can be exact. For the void, moreover, much
+of this knowledge is \emph{proof}, not inference: the count $N(T)$, the
+proportion of zeros on the line, the explicit formula (Theorem
+\ref{thm:explicit}), and the restricted-support correlations (Prop.\
+\ref{prop:formless}, within their support restrictions) are \emph{theorems},
+deduced, not measured. What remains \emph{inference} --- the step from GUE
+statistics to a self-adjoint generator (the Hilbert--Pólya picture) --- is held
+separately as \emph{evidence} and never as proof, and that is precisely the
+seam at which RH is still open. So the honest position answers the natural
+worry directly: a formless object is knowable \emph{through its law} --- partly
+by rigorous theorems, partly by tested statistical prediction; the parts we
+have proved are undeniable; and the single part that is only \emph{inferred} is
+exactly the part that keeps RH open. The physical analogue is real, not rhetorical: GUE statistics are
+\emph{measured} in heavy nuclei and chaotic microwave cavities (Wigner;
+Montgomery--Odlyzko) --- one observes a formless ensemble through its level
+spacings, never by viewing a shape. Formlessness is a limit on \emph{figure},
+not on \emph{knowledge}.
+\end{remark}
+
+\section{The void's law is the quantum-chaos law}\label{sec:quantum}
+
+The zeros' statistics (Prop.\ \ref{prop:formless}) are those expected for
+\textbf{GUE}, the law of quantum chaotic spectra with broken time-reversal
+symmetry --- proven under restricted support and matched numerically; the same
+law measured in heavy nuclei \cite{Wigner} and chaotic microwave cavities
+\cite{Stockmann}. We make the resulting ``deterministic probability'' explicit.
+
+\begin{proposition}[Deterministic object, quantum-chaos statistics, \TAGev,
+\texttt{route\_b/deterministic\_probability.py}]\label{prop:detprob}
+The first $300$ Riemann zeros, computed numerically to high precision
+(\texttt{mpmath.zetazero}; a fixed, deterministic arithmetic object), have
+consecutive-spacing ratio $\langle r\rangle=0.617$; a \emph{genuinely random}
+GUE matrix ($600{\times}600$, bulk eigenvalues, fixed seed) gives $\langle
+r\rangle=0.593$. Both lie near the GUE value $0.6027$ and far from Poisson
+($0.386$) and from a rigid lattice ($1.0$). The statistic $\langle r\rangle$
+is unfolding-free, so the comparison uses \emph{no} fitted parameter. (One
+matrix draw and $300$ zeros are a finite sample, not a stable benchmark; the
+point is qualitative agreement of class, not a precise constant.)
+\end{proposition}
+
+\begin{remark}[Necessity and chance in one object, \TAGphil]
+The zeros are not random --- $\zeta$ is one fixed function. Yet they exhibit
+the statistics predicted for a quantum-chaotic (GUE) spectrum. This is
+\emph{deterministic pseudorandomness} (Montgomery--Odlyzko \cite{Odlyzko};
+established, reproduced here, not new): the void is where \emph{necessity}
+(the zeros are determined) and \emph{chance} (they wear the GUE law) coincide
+in the same object. This is evidence for the spectral (Hilbert--Pólya)
+picture; it does \emph{not} exhibit the operator and does \emph{not} advance
+RH.
+\end{remark}
+
+\begin{remark}[Consilience with the programme's Born-rule work, \TAGphil]
+The same principle --- a deterministic substrate that appears probabilistic ---
+is proposed physically in this programme's crystallisation papers
+\cite{BridgePaper,ProbGeom}, where a deterministic constraint-selection
+mechanism is conjectured to underlie the Born rule $|\langle\psi_i|\psi
+\rangle|^2$. The bridge paper \cite{BridgePaper} states plainly that its
+Born-rule recovery is \emph{conjectured, not proven}; Paper~XXX
+\cite{ProbGeom} argues a \emph{conditional} reconstruction under imported
+assumptions --- a weaker-than-unconditional but stronger-than-conjecture
+status. The connection to the void is a \emph{shared principle}, not a
+derivation, and across \emph{different} notions of probability: the Born rule
+concerns measurement \emph{outcomes}, whereas the void concerns \emph{spectral
+statistics}. The void's modest contribution is a clean, parameter-free
+\emph{illustration} that the principle can hold --- a deterministic object
+whose statistics are, in the tested and restricted senses, consistent with a
+quantum-random one. It does not derive the Born rule and does not discharge
+the open conjecture of \cite{BridgePaper}.
+\end{remark}
+
+\section{Why the problem resists construction}\label{sec:resist}
+
+We now give the diagnosis. It is a heuristic thesis (\TAGconj), supported by
+the structure established above and by the explicit computations of this
+bundle, \emph{not} a theorem.
+
+\begin{proposition}[Universality gives the class for free, \TAGev]\label{prop:universal}
+GUE statistics are \emph{universal}: broad classes of Hermitian random-matrix
+ensembles share them under precise universality hypotheses (the general
+mathematical fact, independent of the zeros). In this bundle, a rigid scaling
+generator perturbed by a \emph{generic} Hermitian term moves to the GUE class
+(\texttt{route\_b/first\_principles\_scaling.py}), and a search over shapes
+matches the zeros to the GUE \emph{ensemble} effortlessly while no symmetric or
+polytopal figure fits (\texttt{shape\_search.py}). The \emph{class} of the void
+is cheap to reproduce.
+\end{proposition}
+
+\begin{proposition}[The member is fixed by the arithmetic, \TAGthm/\TAGev]
+\label{prop:member}
+By Theorem \ref{thm:explicit} the specific zeros are in exact duality with the
+specific primes. The GUE \emph{ensemble} is shared by countless operators; the
+\emph{one} member whose spectrum is $Z$ is singled out, in the
+explicit-formula sense, by the full arithmetic data of $\Z$.
+\end{proposition}
+
+\begin{principle}[The construction--absence mismatch, \TAGconj]\label{prin:mismatch}
+The known routes to RH proceed by \emph{constructing a structure}: a
+self-adjoint operator (Hilbert--Pólya, Berry--Keating), a positivity
+(Weil/Connes, de Branges, Li), or a geometry (a curve over $\F_1$, a
+foliated space). Heuristically, a construction that does not already encode the
+full prime data reproduces (by universality, Prop.\ \ref{prop:universal}) the
+right \emph{class} but not the right \emph{member} (Prop.\ \ref{prop:member});
+to reach the member one must feed in the arithmetic, and
+making \emph{that} self-adjoint (or positive) \emph{without already assuming
+the conclusion} is the recurrent wall. In short: \textbf{our methods define by
+what they build (presence); the target is an absence carrying, as far as is
+known, no structure beyond its universality class. The friction between a
+constructive method and a formless, arithmetically-pinned target is, on this
+diagnosis, why RH is hard.}
+\end{principle}
+
+\begin{remark}[``You need shape to define something'']
+This is the exact, defensible form of that intuition. A proof needs a
+\emph{handle} --- an operator, a form, a variety --- something with shape. The
+void offers an absence whose only ``shape'' beyond the arithmetic is maximal
+formlessness (Proposition \ref{prop:formless}). The intuition is right as a
+\emph{diagnosis of difficulty}; it is \emph{not} a proof that no handle exists
+(\S\ref{sec:boundary}). The honest frontier --- the $\F_1$ / arithmetic-site
+programme (Connes--Consani; Deninger) --- is precisely the attempt to build a
+geometry in which the void acquires a handle and Weil's function-field proof
+transfers.
+\end{remark}
+
+\section{The boundary: hardness is not impossibility}\label{sec:boundary}
+
+This section is the integrity of the paper. The diagnosis of
+\S\ref{sec:resist} explains why RH is \emph{hard}; it does \emph{not} show RH
+is \emph{unprovable}, and we explicitly decline that stronger claim, for three
+independent reasons.
+
+\begin{enumerate}[label=(\arabic*),leftmargin=*]
+\item \textbf{No independence result exists.} RH has never been shown
+independent of PA, ZFC, or any standard theory. ``Open'' is not ``undecidable.''
+A proof could arrive by a method outside every route catalogued in Diagnostic
+thesis \ref{prin:mismatch} --- that catalogue is a description of \emph{past}
+attempts, not a closed classification of all possible ones.
+\item \textbf{If RH were independent of a sound theory, it would be true.} RH
+has known $\Pi_1$ equivalents --- e.g.\ the Lagarias \cite{Lagarias} form of
+Robin's inequality, an arithmetic statement whose failure at some $n$ would be
+a finitely checkable counterexample. For any sound theory strong enough to
+verify such counterexamples, independence of that $\Pi_1$ formulation would
+imply it has no counterexample, i.e.\ would force RH \emph{true}. A true
+$\Pi_1$ statement cannot be ``false-but-unprovable.'' Even the unprovability
+door opens onto truth, not onto an unknowable void.
+\item \textbf{The void is extensively known} (\S\ref{sec:character}): counted
+to height $T$, at least $2/5$ on the line, $\sim10^{13}$ verified, statistics
+classified. ``You can never know anything about it'' is simply false. What is
+open is one uniform statement, not the object's knowability.
+\end{enumerate}
+
+\begin{tcolorbox}[colback=red!2,colframe=red!50!black,arc=2mm,
+  title={\textbf{What this paper does and does not claim}},
+  fonttitle=\bfseries,breakable]
+\textbf{Claims (\TAGthm/\TAGver/\TAGev):} the zeros are an absence; the primes
+are reconstructed from them; the void is timeless/observer-free and formless in
+exact senses; and a principled \emph{diagnosis} of why construction stalls.\\[2pt]
+\textbf{Does \emph{not} claim:} that RH is false, that RH is unprovable, that
+RH ``can never be proven,'' or that the void is unknowable. Those are
+\emph{not} consequences of anything above, and the mathematics does not
+support them.
+\end{tcolorbox}
+
+\section{Scope discipline}\label{sec:discipline}
+
+The mathematics here uses only L-functions, their zeros, the explicit formula,
+and random-matrix classification. \textbf{No observer, no consciousness, no
+``self,'' no purpose, and no deity enters any definition, and none is needed.}
+The essay's defensible reach is the following ladder; the line marks exactly
+where mathematics ends and a reader's interpretation begins.
+
+\begin{center}
+\begin{tcolorbox}[colback=gray!3,colframe=gray!55!black,arc=2mm,width=0.95\textwidth,
+  title={\textbf{The ladder, and where it stops}},fonttitle=\bfseries]
+\ttfamily\small
+the void \hfill the zeros exist and are infinite \;[theorem]\\
+generation \hfill primes $=$ the void's harmonics (explicit formula) \;[theorem]\\
+formlessness \hfill GUE under restricted support; matched in tests \;[theorem(restr.)$+$ev.]\\
+necessity \hfill determined once the integers are fixed \;[determinacy]\\
+intelligibility \hfill in fact computed, to large height \;[fact]\\
+eternity \hfill not in space/time; same for all; by proof, not faith \;[exact sense]\\[2pt]
+\textmd{\rule{0.9\textwidth}{0.4pt}}\\[2pt]
+$\blacktriangle$ above: each rung at the strength actually proved --- undeniable as written\\
+$\blacktriangledown$ below: the reader's, and the text does not enter it\\[2pt]
+life \;$\cdot$\; consciousness \;$\cdot$\; meaning \;$\cdot$\; the sacred \;$\cdot$\; God \;$\cdot$\; a presence
+\end{tcolorbox}
+\end{center}
+
+\begin{remark}[What ``undeniable'' requires, \TAGphil]\label{rem:undeniable}
+Every rung above the line is stated at \emph{exactly} the strength that has
+been proved. Two are theorems (the void, generation) and one a plain fact
+(intelligibility); one (formlessness) is a theorem only under restricted
+support, plus numerical evidence (Prop.\ \ref{prop:formless}); and two
+(necessity, eternity) hold in a precisely fixed sense --- the zeros are
+determined once the integers are fixed --- rather than by a substantive
+theorem. An earlier draft listed a ``self-modelling (Gödel)'' rung as a
+theorem; it is not proved in this paper and has been removed. This
+is the \emph{only} honest route to ``undeniable'': one reaches it by
+\emph{trimming each claim to its proven core}, never by strengthening the
+language to sound stronger. A rung inflated past its proof is the first thing a
+referee strikes out --- and it takes the credible rungs down with it. The
+ladder is undeniable because, and only because, nothing on it reaches past what
+is shown.
+\end{remark}
+
+Consistent with the programme's discipline (``$X$ exists $\Leftrightarrow
+\mathcal{C}(X)=X$''; no ``primes are alive''; no ``universe is conscious''),
+the items below the line are not claimed, not implied, and not required. The
+restraint is deliberate: a description that points only at what is true is the
+one a reader can trust when deciding, for themselves, what it means.
+
+\section*{Conclusion}
+The Riemann zeros are best understood as a \emph{generative absence}: a void,
+in the exact sense of a vanishing locus realised spectrally as missing lines,
+from which --- by the explicit formula --- the prime structure is
+reconstructed as interference. The void is timeless, uncreated, and the same
+for everyone, and its statistics are those of the unitary universality class
+(proven under restricted support, matched in every test). Our methods of proof
+build structure with shape; the void is an absence with
+no shape beyond the arithmetic that pins it; and that mismatch is, on the
+honest diagnosis offered here, why every construction has stalled at the same
+wall. But hardness is not impossibility: nothing here shows RH cannot be
+proved, and a great deal is known about the void. What the mathematics gives
+is a true and bounded thing --- an eternal, observer-free, generative absence,
+fully real and not taken on faith. What anyone makes of it past that line is
+theirs to decide.
+
+\begin{thebibliography}{9}
+\bibitem{Connes} Connes, A. \emph{Trace formula in noncommutative geometry
+and the zeros of the Riemann zeta function.} Selecta Math.\ 5 (1999), 29--106.
+\bibitem{Montgomery} Montgomery, H.L. \emph{The pair correlation of zeros of
+the zeta function.} Proc.\ Sympos.\ Pure Math.\ 24 (1973), 181--193.
+\bibitem{RudnickSarnak} Rudnick, Z., Sarnak, P. \emph{Zeros of principal
+L-functions and random matrix theory.} Duke Math.\ J.\ 81 (1996), 269--322.
+\bibitem{Odlyzko} Odlyzko, A.M. \emph{On the distribution of spacings between
+zeros of the zeta function.} Math.\ Comp.\ 48 (1987), 273--308.
+\bibitem{Conrey} Conrey, J.B. \emph{More than two fifths of the zeros of the
+Riemann zeta function are on the critical line.} J.\ reine angew.\ Math.\ 399
+(1989), 1--26.
+\bibitem{Platt} Platt, D.J. \emph{Isolating some non-trivial zeros of zeta.}
+Math.\ Comp.\ 86 (2017), 2449--2467.
+\bibitem{Gourdon} Gourdon, X. \emph{The $10^{13}$ first zeros of the Riemann
+zeta function, and zeros computation at very large height.} (2004), preprint.
+\bibitem{Wigner} Wigner, E.P. \emph{Characteristic vectors of bordered
+matrices with infinite dimensions.} Ann.\ of Math.\ 62 (1955), 548--564.
+\bibitem{Stockmann} St\"ockmann, H.-J. \emph{Quantum Chaos: An Introduction.}
+Cambridge University Press, 1999.
+\bibitem{Lagarias} Lagarias, J.C. \emph{An elementary problem equivalent to
+the Riemann hypothesis.} Amer.\ Math.\ Monthly 109 (2002), 534--543.
+\bibitem{Dyson} Dyson, F.J. \emph{Birds and frogs.} Notices Amer.\ Math.\ Soc.\
+56 (2009), 212--223.
+\bibitem{ConnesConsani} Connes, A., Consani, C. \emph{Schemes over $\F_1$ and
+zeta functions.} Compositio Math.\ 146 (2010), 1383--1415.
+\bibitem{Deninger} Deninger, C. \emph{Some analogies between number theory and
+dynamical systems on foliated spaces.} Proc.\ ICM Berlin 1998, Vol.\ I, 163--186.
+\bibitem{IK} Iwaniec, H., Kowalski, E. \emph{Analytic Number Theory.} AMS
+Colloq.\ Publ.\ 53, 2004.
+\bibitem{BridgePaper} Smart, L. \emph{From Dirac Solutions to Physical
+Reality: A Crystallisation-Based Selection Architecture.} VFD programme
+(bridge paper); the Born-rule recovery is stated as conjectured, not proven.
+\bibitem{ProbGeom} Smart, L. \emph{Probability as Constraint Geometry.} VFD
+programme (Paper XXX).
+\end{thebibliography}
+
+\end{document}

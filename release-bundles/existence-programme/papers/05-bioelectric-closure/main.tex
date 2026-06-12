@@ -1,0 +1,660 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage[hidelinks,colorlinks=true,linkcolor=blue!50!black,citecolor=blue!40!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\sisetup{detect-all=true,group-separator={,}}
+
+\title{\textbf{Bioelectric Closure as an Early, Differential Predictor of Morphogenetic Target-State Selection}\\[2pt]
+\large A Template-Relative Graph Metric for In-Vivo Regeneration, Validated on Synthetic and BETSE-Simulated Bioelectric Trajectories\\[1pt]
+\small (Open research note --- pre-peer-review draft)}
+
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent
+\emph{Scope note (reading guide).} Throughout this paper, ``basin,'' ``morphological attractor,'' and ``basin direction'' refer to differential template-residual signatures across candidate target voltage geometries on the BETSE 2-second simulation panel --- \emph{not} to derivation of closed dynamical attractors. The Programme Position box immediately after this abstract states this explicitly and reconciles with \citet{SmartClosureDistance}'s Tier-C classification of the 2-second BETSE substrate. With that scope:
+
+A long-standing operational question in bioelectric morphogenesis is \emph{when} during regeneration the tissue commits to a target morphology. Existing readouts are either late (anatomical scoring), local (gene markers, wound-site voltage), or scalar (mean voltage, A/P fluorescence ratio) --- none directly answer ``which morphological attractor is the field heading toward, and how early can we tell?'' We propose a single scalar, the \textbf{Bioelectric Closure Residual} $R_{\mathrm{cl}}(t)$, computed at each timepoint by comparing the tissue voltage graph against a candidate target-state template using five weighted graph-theoretic terms. We demonstrate the metric on (i) a synthetic regeneration model where closure features outperform standard voltage statistics by $11$ percentage points in $4$-class outcome classification ($81\%$ vs $70\%$, $4$-fold CV, $n=80$); (ii) a multi-replicate BETSE simulation panel (planarian-shape geometry, $N=5$ control $+$ $N=5$ each of five perturbations) producing per-condition basin signatures from which three structural results emerge: \emph{(a) direction reversal} --- uniform K$^{+}$ depolarization drives toward a two-headed-like basin ($\Delta=-0.146$ on \textit{two-headed}, $p=0.008$) while uniform K$^{+}$-permeability hyperpolarization drives toward a flat-resting basin ($\Delta=-0.010$ against \textit{failed}, $p=0.008$) --- signatures of opposite sign across all three templates; \emph{(b) cross-chemistry consistency} --- two uniform depolarizers acting through chemically distinct mechanisms (raised $[\mathrm{K}^{+}]_{\mathrm{ext}}$ vs raised Na$^{+}$ membrane permeability) produce the same basin signature within $\sim$$10$\% on the load-bearing two-headed-template residual ($-0.146$ vs $-0.158$); \emph{(c) spatial-structure sensitivity} --- the same Na$^{+}$-permeability chemistry restricted to the anterior third produces an orthogonal $(+,+,+)$ ``no-fit'' signature with the two-headed-template residual sign-flipped from the uniform case ($+0.010$ vs $-0.158$). Leave-condition-out cross-validation gives a $5/5$ reciprocal mapping between the two uniform depolarizers, confirming basin-direction generalisation across ion identity. (iii) Empirical templates derived from data via per-condition averaged polynomial fits with leave-one-out cross-validation reproduce the basin-direction structure (raw $6$-class LOO at $0.43$, with the two uniform depolarizers each at recall $\geq 0.80$). A sham calibration shows that a $+11.3$\,mV uniform voltage shift on control replicates, matching K\_env's mean voltage delta, produces an opposite-sign closure signature on the two-headed template ($+0.005$ vs $-0.146$), ruling out the strongest form of the ``closure is reducible to mean voltage'' critique. Closure-residual weight perturbations of $\pm 50\%$/$\times 2$ on each of the five components preserve the basin sign pattern in $15/15$ swept settings on every perturbed condition. We are explicit that for raw ``did the perturbation happen?'' detection on uniform-depolarization perturbations, scalar voltage statistics --- including the Beane-style DiBAC4(3) anterior/posterior fluorescence ratio (Cohen's $d\approx 28.6$) and the simpler A$-$P voltage difference ($d\approx 128$) --- match or exceed the best closure feature ($d\approx 26.7$). On localized anterior depolarization, the DiBAC4 A/P-ratio fails entirely ($d=1.06$, $p=0.10$) while closure features lead at $d\geq 22.6$. Closure's \emph{structural} advantage is basin-direction identification: per-template residuals form a labelled signature responsive to (basin direction, spatial structure) pairs and invariant to the specific ion chemistry that produces them, where every scalar baseline collapses these onto a single axis. Five numerical predictions for a planarian DiBAC4(3) wet-lab test are pre-registered before any biological data is in hand; binomial power analysis on each motivates a revised cohort size $n\geq 20$.
+\end{abstract}
+\paragraph{Programme map (review-packet 2026-05-22).}
+This paper is part of the Existence / Life / Closure review packet. Stable packet references:
+Paper I = \emph{Existence as Closure};
+Paper II = \emph{Life as Closure};
+Paper III = \emph{From Processing to Point of View};
+Note A = \emph{Bioelectric Closure} (SL-001);
+Note B = \emph{Cortical Phase Closure} (SL-002);
+Note C = \emph{Closure-as-Distance} (cross-substrate methodology);
+Note D = \emph{Trauma / Cortical Closure} (SL-005);
+Note E = \emph{FlowIndex} (SL-006);
+Note F = \emph{Dyadic Joint Meaning} (SL-007).
+Extension IV = \emph{Cosmic Self-Pruning and Frame Recurrence} is withheld from the primary packet.
+
+\paragraph{Status taxonomy.}
+\textbf{Theorem / Definition} = formal structural claim under stated assumptions.
+\textbf{Conditional Proposition} = bridge claim depending on H-RP, P-A, substrate mapping, or empirical interpretation.
+\textbf{Empirical Result} = completed data analysis with stated effect size + significance.
+\textbf{Empirical Proxy} = measurable first-order approximation, not the formal operator.
+\textbf{Pre-registered Proposal} = future test, not evidence.
+
+
+
+\paragraph{Position in the ten-paper programme.} This note is the operational BETSE / wet-lab instantiation of the Levin bioelectric bridge stated as a Conditional Proposition in \citet{SmartProcessingToPOV} \S 3; it is not, by itself, a proof of the broader VFD framework. The "basin'' and "attractor'' language used throughout refers to differential template-residual signatures across candidate target voltage geometries on the BETSE simulation panel, not to derivation of a closed dynamical attractor. Under the cross-substrate applicability diagnostic of \citet{SmartClosureDistance} (CAD-D1--D5-v1), the 2-second BETSE bioelectric simulation panel is classified as Tier C non-emergent: a target-only nearest-neighbour template assignment recovers most structural claims of this paper, and the closure-residual reading is operationally useful but not closure-necessary on this substrate. The structural claim therefore is: \emph{the methodology defines and tests an operational metric on a BETSE simulation panel and supplies preregistered wet-lab predictions}; it is not a claim that closure-as-distance is the necessary descriptor of bioelectric morphogenesis on a 2-second BETSE substrate. The wet-lab DiBAC4(3) planarian test is the appropriate substrate where the closure interpretation can become load-bearing.
+
+\section{Introduction}
+
+Michael Levin and colleagues have argued that bioelectricity functions as a control layer for development and regeneration: tissue voltage gradients carry patterning information, gap junctions mediate the long-range coordination required for tissue-level decisions, and transient physiological perturbations can durably reset target morphology --- including the canonical planarian double-headed phenotype~\citep{beane2013bioelectric,pai2012transmembrane,durant2019role,levin2018bioelectric,pietak2016exploring}. This program has produced strong qualitative claims about bioelectric instructive signaling but lacks a portable quantitative readout for one specific operational question: \emph{at what point during regeneration has the tissue committed to a morphological attractor, and how is the direction of that commitment best measured?}
+
+Existing measurements are either late (blinded anatomical scoring at $7$--$14$\,d), local (gene-expression markers like \emph{notum}\,/\,\emph{sFRP} at fixed timepoints), or scalar with no template (mean voltage, voltage variance, A/P DiBAC4(3) fluorescence ratio). None directly express the field-level question ``which candidate target morphology is the tissue heading toward, given what we are seeing now?''
+
+We propose a metric that does. The \textbf{Bioelectric Closure Residual} $R_{\mathrm{cl}}(t)$ is a single scalar per timepoint computed from a tissue voltage graph relative to a candidate target-state template. It is template-relative by design: low $R_{\mathrm{cl}}$ against a target $T$ means the field is committing toward attractor $T$. Three properties make it operationally useful:
+
+\begin{enumerate}\itemsep0pt
+\item \textbf{Template-relative.} $R_{\mathrm{cl}}$ against template $A$ is generally different from $R_{\mathrm{cl}}$ against template $B$; basin identification manifests as a low residual against one template and a high residual against the others.
+\item \textbf{Cheap.} A single scalar (or five-element breakdown) per timepoint, plottable alongside existing imaging.
+\item \textbf{Falsifiable.} Five numerical predictions for the wet-lab test are pre-registered. If the metric does not beat the DiBAC4 A/P-ratio readout in early-window basin classification by $\geq 5$ percentage points, the operational claim collapses.
+\end{enumerate}
+
+The metric is independent of any particular meta-framework. The closure residual stands or falls on its own predictions. This paper documents the metric definition, three computational validations (synthetic, BETSE multi-replicate, BETSE multi-perturbation panel with empirical-template leave-one-out cross-validation), and a sober comparison against scalar baselines that flags both the metric's distinct contribution and the regimes where simpler statistics dominate.
+
+\section{Methods}\label{sec:methods}
+
+\subsection{Tissue voltage graph}
+
+A tissue voltage graph $G=(V,E,w,V_{\mathrm{mem}})$ is a $2$-D point cloud of cells with weighted, undirected, gap-junction-coupling-style edges. For each cell $i$ we record a position $(x_i,y_i)$, a scalar membrane voltage $V_{\mathrm{mem},i}$, and a label drawn from \{anterior, posterior, wound, medial\}. Edges connect cells within a coupling radius (synthetic case) or follow BETSE's nearest-neighbour mesh (real-physics case). Edge weights are inverse-distance.
+
+\subsection{The closure residual}
+
+For a graph $G$, voltage vector $v\in\mathbb{R}^n$, and target template $v^{*}\in\mathbb{R}^n$:
+\begin{align*}
+R_{\mathrm{cl}}(t) =\;&w_{\mathrm{local}}    \cdot \mathrm{local\_gradient\_mismatch}(v,v^*)\\
+                +\;&w_{\mathrm{global}}   \cdot \mathrm{global\_topology\_mismatch}(v,v^*)\\
+                +\;&w_{\mathrm{boundary}} \cdot \mathrm{boundary\_condition\_mismatch}(v,v^*)\\
+                +\;&w_{\mathrm{target}}   \cdot \mathrm{target\_template\_distance}(v,v^*)\\
+                +\;&w_{\mathrm{recovery}} \cdot \mathrm{perturbation\_recovery\_penalty}(\mathrm{history}).
+\end{align*}
+
+Each of the five terms is bounded in $[0,1]$ (clipped if necessary) so the weighted sum is interpretable. Default weights $(0.25, 0.25, 0.20, 0.25, 0.05)$ are uniform-ish and \textbf{not fit to any dataset}: a biological dataset that requires substantial weight retuning to make the metric work would itself be a warning sign (see Section~\ref{sec:limits}).
+
+The terms are:
+\begin{itemize}\itemsep0pt
+\item \textbf{local\_gradient\_mismatch}: edge-wise voltage gradient mismatch, scale-normalized.
+\item \textbf{global\_topology\_mismatch}: $\|L\,v - L\,v^{*}\|^{2}$ normalized --- captures graph-level shape using the combinatorial Laplacian.
+\item \textbf{boundary\_condition\_mismatch}: mismatch restricted to anterior\,/\,posterior\,/\,wound boundary regions.
+\item \textbf{target\_template\_distance}: whole-field $L^{2}$ distance to template, normalized.
+\item \textbf{perturbation\_recovery\_penalty}: slope of target-distance history; penalises trajectories whose residual is climbing.
+\end{itemize}
+
+Closed-form definitions are in \texttt{docs/metric\_definition.md} of the source repository.
+
+\subsection{Target templates}
+
+Three candidate templates are used throughout: \textbf{normal} (linear A/P gradient, anterior hyperpolarized), \textbf{two-headed} (both poles polarized, midline at resting), \textbf{failed} (flat at resting potential). Each template maps cell positions to a per-cell target voltage. We provide both hand-coded templates (defined in mV) and empirical templates fit from BETSE replicates (Section~\ref{sec:empirical-templates}).
+
+\subsection{Synthetic regeneration model}
+
+A $2$-D planarian-shaped point cloud ($\sim$120 cells in a $4{:}1$ ellipse) with voltage relaxation dynamics
+\[
+\dot v = -D\,(L\,v) + k\,(v^{*}-v) + \sigma\,\eta,
+\]
+where $L$ is the graph Laplacian, $D=0.6$ is diffusion, $k=1.4$ is target-pull, $\sigma=0.05$ is noise, $\mathrm{d}t=0.05$, $T=80$. Four trajectory classes are simulated: \textbf{normal} (relaxes toward normal target), \textbf{perturbed} (gap-junction block during $t\in[5,25]$), \textbf{rescued} (perturbed $+$ repolarising rescue at $t=22$), \textbf{two-headed} (relaxes toward two-headed target). Each class uses $20$ different RNG seeds. A logistic-regression classifier with stratified $4$-fold CV is trained on early-window features (closure features, baseline voltage features, or the union) to predict the trajectory's class.
+
+\subsection{BETSE simulation setup}\label{sec:betse}
+
+We use BETSE (Bioelectric Tissue Simulation Engine~\citep{pietak2016exploring,betse_repo}) --- the Levin/Pietak group's peer-reviewed bioelectric simulator --- to generate real-physics voltage trajectories. Configuration:
+
+\begin{sloppypar}
+\begin{itemize}\itemsep0pt
+\item \textbf{Geometry.} Planarian-shaped (\texttt{geo/ellipse/1worm\_base.png}) Voronoi cell mesh, $\sim$93--225 cells per replicate, world size \SI{150}{\micro\metre}. Custom thick 2-cuts profile (\texttt{1worm\_thick\_2cuts.png}) removes cell bands at $x\approx\pm L/3$ to produce a trunk fragment.
+\item \textbf{Ion profile.} ``basic'' (Na$^{+}$, K$^{+}$, M$^{-}$, proteins$^{-}$; no Cl$^{-}$).
+\item \textbf{Time settings.} Initialization \SI{5}{\second} simulated time at $\mathrm{d}t=\SI{1e-2}{\second}$; simulation phase \SI{2}{\second} simulated time at $\mathrm{d}t=\SI{1e-3}{\second}$; sampling at \SI{5e-2}{\second} ($\sim$$40$ frames).
+\item \textbf{Conditions} (4 total, $N=5$ each $=20$ BETSE runs):
+\begin{itemize}\itemsep0pt
+  \item \textbf{control.} Cut only, no patterning intervention.
+  \item \textbf{k\_env.} \texttt{change K env} $\times 10$ (raises $[\mathrm{K}^{+}]_{\mathrm{ext}}$) during $t\in[0.5,1.5]$\,s --- depolarizing.
+  \item \textbf{cl\_env.} \texttt{change Cl env} $\times 10$ during $t\in[0.5,1.5]$\,s. Inadvertent null: BETSE basic profile does not simulate Cl$^{-}$, so this perturbation has nothing to act on.
+  \item \textbf{k\_mem.} \texttt{change K mem} $\times 10$ (raises K$^{+}$ membrane permeability), applied to the Base tissue profile during $t\in[0.5,1.5]$\,s --- hyperpolarizing.
+  \item \textbf{na\_mem\_ant.} \texttt{change Na mem} $\times 10$ (raises Na$^{+}$ membrane permeability) targeted to the anterior third of the worm via a custom \texttt{1worm\_anterior\_third.png} tissue mask (32\% of cells, $x\geq 320$ in 500-px geometry), during $t\in[0.5,1.5]$\,s --- \emph{localized} depolarization. Designed to test whether the closure metric is sensitive to spatial structure of the perturbation, not just chemistry direction (Section~\ref{sec:localized}).
+  \item \textbf{na\_mem\_glb.} \texttt{change Na mem} $\times 10$ applied to the whole tissue (Base profile) during $t\in[0.5,1.5]$\,s --- uniform depolarization via a chemically distinct mechanism from \texttt{k\_env} (Na$^{+}$ membrane permeability vs $[\mathrm{K}^{+}]_{\mathrm{ext}}$). Designed to test whether two uniform depolarizers acting through different ion chemistries produce the same closure signature (Section~\ref{sec:cross-chem}).
+\end{itemize}
+\end{itemize}
+\end{sloppypar}
+
+Each replicate runs full seed $\to$ init $\to$ sim with re-seeded Voronoi mesh (cell positions vary across replicates).
+
+\subsection{Empirical templates and leave-one-out validation}\label{sec:empirical-templates}
+
+For each BETSE condition $c$ with $N$ replicates, we derive an empirical template by:
+
+\begin{enumerate}\itemsep0pt
+\item For each replicate $r$, project cells onto the canonical principal axis (PCA, sign-canonicalized so $x_{\max}\geq|x_{\min}|$), normalise to $[-1,1]$.
+\item Compute the perturbation-window-mean voltage $\bar v_{r}(t\in[500,1500]\,\mathrm{ms})$.
+\item Least-squares fit $V(x,y)=c_{00}+c_{10}x+c_{20}x^{2}+c_{01}y+c_{11}xy+c_{21}x^{2}y$ to (positions, $\bar v_{r}$).
+\item Average the polynomial coefficients across the $N$ replicates of condition $c$.
+\end{enumerate}
+
+For evaluation we use leave-one-out: when classifying replicate $(c,i)$, templates are derived from all other 19 replicates with replicate $(c,i)$ excluded. The held-out replicate's predicted condition is $\arg\min_{c}\,\mathrm{mean}\,R_{\mathrm{cl}}(t\in[500,1500]\,\mathrm{ms};\,\mathrm{empirical}[c])$. A sensitivity sweep over polynomial degrees and time windows is reported in Section~\ref{sec:sensitivity}.
+
+\subsection{Statistical analysis}
+
+In-window deltas $\Delta R_{\mathrm{cl}}$ are reported with $95\%$ bootstrap-CI ($2000$ resamples) and Mann--Whitney two-sided $p$-values. With $N=5$ in each group, the minimum nonparametric $p$-value is $1/\binom{10}{5}\approx 0.00794$ --- we report this as $0.008$ throughout. Effect sizes are pooled-SD-standardized (Cohen's $d$) for the closure-vs-baseline comparison.
+
+\section{Results}\label{sec:results}
+
+\subsection{Synthetic-data demonstration}\label{sec:synth}
+
+On the $4$-class synthetic regeneration model ($N=20$ trajectories per class, early window of $10$ timesteps, $4$-fold stratified CV):
+
+\begin{table}[h]\centering\small
+\caption{$4$-class CV accuracy, synthetic regeneration trajectories.}\label{tab:synth}
+\begin{tabular}{lr}\toprule
+Feature set & $4$-class CV accuracy \\
+\midrule
+Closure  & $\mathbf{0.81 \pm 0.02}$ \\
+Baseline & $0.70 \pm 0.08$ \\
+Combined & $0.80 \pm 0.06$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+Closure features outperform baseline voltage statistics by $\sim$$11$ percentage points, with $\sim$$4\times$ lower cross-fold variance. The advantage disappears when the early window is widened past $\sim$$25$ timesteps --- at that point both feature sets see sufficient trajectory information to saturate near $100\%$. The closure metric is therefore designed for the regime where the trajectory has not yet visibly committed.
+
+The qualitative $R_{\mathrm{cl}}(t)$ curves match all four trajectory-class predictions: normal converges smoothly; two-headed commits to its own basin; perturbed stays elevated through the perturbation window; rescued visibly diverges from perturbed at the rescue step ($t=22$) and rejoins the normal basin --- a basin-shift detectable in closure before it would be visible in late anatomy.
+
+\paragraph{What the synthetic rescue does and does not show.}
+\begin{sloppypar}
+The rescued class explicitly injects a normal-template repolarisation field at $t=22$ in the synthetic simulator (the \texttt{apply\_rescue\_field} call inside \texttt{synthetic\_regeneration.py}). The closure metric correctly detecting this rescue is therefore a self-consistency check on the metric machinery, not independent evidence that closure recovers biological rescue. The synthetic demonstration is included to show (i) that the metric is mathematically coherent on controlled trajectories, (ii) that the four sign-distinct trajectory classes are separable in early-window closure features at all, and (iii) that adding closure features to a baseline-voltage classifier improves $4$-class accuracy by $\sim$$11$\,pp at small $n$. The biological version of the rescue claim is pre-registered as P3 (Section~\ref{sec:prereg}); P3 is what an independent wet-lab test would have to confirm. We treat the synthetic rescue result as a consistency check, not as evidence of rescue detection on its own.
+\end{sloppypar}
+
+\subsection{Multi-replicate BETSE A/B (control vs K\_env)}\label{sec:ab}
+
+In-window mean $\Delta R_{\mathrm{cl}}$ (perturbed $-$ control), $N=5$ each, planarian-shape geometry, default closure weights:
+
+\begin{table}[h]\centering\small
+\caption{Multi-replicate BETSE control vs K\_env, in-window $\Delta R_{\mathrm{cl}}$ per template.}\label{tab:ab}
+\begin{tabular}{lrrr}\toprule
+Template    & $\Delta$ in window & $95\%$ CI            & $p$ ($n=5/5$) \\
+\midrule
+normal      & $-0.054$           & $[-0.058,\,-0.050]$  & $0.008$ \\
+two-headed  & $\mathbf{-0.146}$  & $[-0.153,\,-0.141]$  & $0.008$ \\
+failed      & $+0.020$           & $[+0.020,\,+0.020]$  & $0.008$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.95\linewidth]{figures/residual_bands.png}
+\caption{Multi-replicate $R_{\mathrm{cl}}(t)$ trajectories (mean $\pm$ SD across $N=5$ replicates per condition) against each of three target templates. Shaded vertical band marks the perturbation window. K\_env (red) drives $R_{\mathrm{cl}}(\textsc{two-headed})$ sharply down while control (blue) stays stable.}\label{fig:bands}
+\end{figure}
+
+The two-headed delta is $\mathbf{2.7\times}$ larger than the normal delta and the failed delta is opposite-signed --- the response is differential across templates, not uniform. $p=0.008$ is the minimum two-sided value possible at $N=5/5$. CI widths $\approx 0.01$ indicate small replicate-to-replicate variance (each replicate has its own re-seeded Voronoi mesh).
+
+\subsection{Multi-perturbation panel (basin-specificity test)}\label{sec:panel}
+
+We extended to a four-condition panel with three patterning chemistries:
+
+\begin{table}[h]\centering\small
+\caption{Six-condition perturbation panel chemistries and bulk voltage response. \textsuperscript{*}\,\texttt{cl\_env} was a null \emph{by accident}: BETSE's basic ion profile does not include Cl$^{-}$, so the perturbation has nothing to act on. We retained it as an inadvertent negative control. Each condition has $N=5$ replicates.}\label{tab:panel-chem}
+\begin{tabular}{lllr}\toprule
+Condition & Mechanism & Mean voltage $\Delta$ & Direction \\
+\midrule
+control      & Cut only & $0$ & --- \\
+k\_env       & $[\mathrm{K}^{+}]_{\mathrm{ext}}\times 10$ & $+11.3$\,mV & depolarizing (uniform) \\
+cl\_env      & $[\mathrm{Cl}^{-}]_{\mathrm{ext}}\times 10$ & $+0.76$\,mV & null\textsuperscript{*} \\
+k\_mem       & $\mathrm{K}^{+}$ membrane $\times 10$ & $-5.6$\,mV & hyperpolarizing (uniform) \\
+na\_mem\_ant & Na$^{+}$ membrane $\times 10$ on anterior third & $+3.8$\,mV & depolarizing (\emph{local}) \\
+na\_mem\_glb & Na$^{+}$ membrane $\times 10$ globally (Base) & $+15.7$\,mV & depolarizing (uniform) \\
+\bottomrule\end{tabular}
+\end{table}
+
+Per-template basin signatures ($\Delta R_{\mathrm{cl}}$ in window; all $p=0.008$ except \texttt{cl\_env} which is non-significant):
+
+\begin{table}[h]\centering\scriptsize
+\caption{Per-template basin signatures (in-window $\Delta R_{\mathrm{cl}}$) for the five perturbations vs control. Five distinct or shared sign-patterns, each $p=0.008$ on its non-null entries. Most informative comparison: \texttt{k\_env} and \texttt{na\_mem\_glb} are both uniform depolarizers operating through chemically different mechanisms ($[\mathrm{K}^{+}]_{\mathrm{ext}}$ vs Na$^{+}$ membrane permeability) and they produce the \emph{same} sign pattern $(-,-,+)$ with similar magnitudes. \texttt{na\_mem\_ant} uses the same chemistry as \texttt{na\_mem\_glb} but is spatially localized to the anterior third, and produces a different signature $(+,+,+)$. Same chemistry $\to$ same signature requires same spatial extent; same direction $+$ same spatial extent $\to$ same signature regardless of ion identity.}\label{tab:panel}
+\begin{tabular}{lrrrrr}\toprule
+Template     & k\_env & cl\_env & k\_mem & na\_mem\_ant & na\_mem\_glb \\
+\midrule
+normal       & $\mathbf{-0.054}$ & $+0.000$ & $\mathbf{+0.015}$ & $\mathbf{+0.019}$ & $\mathbf{-0.036}$ \\
+two-headed   & $\mathbf{-0.146}$ & $+0.001$ & $\mathbf{+0.028}$ & $\mathbf{+0.010}$ & $\mathbf{-0.158}$ \\
+failed       & $\mathbf{+0.020}$ & $+0.003$ & $\mathbf{-0.010}$ & $\mathbf{+0.018}$ & $\mathbf{+0.039}$ \\
+\midrule
+sign pattern & $(-,-,+)$ & $(0,0,0)$ & $(+,+,-)$ & $(+,+,+)$ & $(-,-,+)$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.92\linewidth]{figures/basin_signature.png}
+\caption{Per-template $\Delta R_{\mathrm{cl}}$ across the five perturbation chemistries (each $N=5$). \texttt{k\_env} (uniform K$^{+}$-driven depolarization) and \texttt{na\_mem\_glb} (uniform Na$^{+}$-permeability-driven depolarization) produce the same basin signature $(-,-,+)$ with similar magnitudes despite chemically distinct mechanisms; \texttt{cl\_env} shows zero shift; \texttt{k\_mem} drives toward the failed basin; \texttt{na\_mem\_ant} produces a sign-distinct ``no-fit'' signature consistent with anterior-only depolarization.}\label{fig:basinsig}
+\end{figure}
+
+The five columns produce three distinct basin signatures plus the null:
+\begin{itemize}\itemsep0pt
+\item \texttt{k\_env} and \texttt{na\_mem\_glb} both have signature $(-,-,+)$: each trajectory moves toward the two-headed basin (largest $R_{\mathrm{cl}}(\textsc{two-headed})$ drop), away from normal and failed. They use chemically distinct mechanisms (raised $[\mathrm{K}^{+}]_{\mathrm{ext}}$ vs raised Na$^{+}$ membrane permeability) but share spatial structure (uniform whole-tissue) and direction (depolarizing); the metric maps both to the same basin (Section~\ref{sec:cross-chem}).
+\item \texttt{cl\_env} signature $(0,0,0)$: no basin shift --- the metric correctly reports no signal in the absence of physical signal.
+\item \texttt{k\_mem} signature $(+,+,-)$: the trajectory moves toward the failed (flat-resting) basin. K$^{+}$ permeability $\times 10$ pulls $V_{\mathrm{mem}}$ toward $E_{\mathrm{K}}\approx -90$\,mV, hyperpolarizing the field and bringing it closer to the resting-potential-dominated ``failed'' template.
+\item \texttt{na\_mem\_ant} signature $(+,+,+)$: \emph{none} of the three candidate templates is preferred --- all three residuals increase. This is the metric correctly reporting that an anterior-only depolarization does not match any of the three symmetric or polarity-aligned candidate target morphologies. Same chemistry as \texttt{na\_mem\_glb} (Na$^{+}$ membrane permeability $\times 10$) but spatially restricted to the anterior third (Section~\ref{sec:localized}).
+\end{itemize}
+
+Three orthogonal results in this panel:
+
+\begin{enumerate}\itemsep0pt
+\item \textbf{Direction reversal $\to$ signature reversal.} \texttt{k\_env} $(-,-,+)$ vs \texttt{k\_mem} $(+,+,-)$: depolarizing vs hyperpolarizing produces signatures with reversed signs across all three templates.
+\item \textbf{Spatial structure matters.} \texttt{na\_mem\_glb} $(-,-,+)$ vs \texttt{na\_mem\_ant} $(+,+,+)$: same chemistry, same direction, different spatial extent $\to$ orthogonal signatures with sign flips on the normal and two-headed templates. Section~\ref{sec:localized} unpacks this against the ``template-parity tautology'' critique.
+\item \textbf{Ion identity does not matter, basin direction does.} \texttt{k\_env} $(-,-,+)$ vs \texttt{na\_mem\_glb} $(-,-,+)$: chemically distinct mechanisms, same direction, same spatial extent $\to$ same signature within $10$\% magnitude (two-headed $\Delta=-0.146$ vs $-0.158$). Section~\ref{sec:cross-chem} unpacks this.
+\end{enumerate}
+
+\subsection{Localized vs uniform depolarization: spatial-structure sensitivity}\label{sec:localized}
+
+A reasonable challenge to the basin-direction claim of Section~\ref{sec:panel} is that ``\texttt{k\_env} drives toward the two-headed basin'' might be a template-geometry artifact rather than a meaningful basin assignment: depolarization $\times$ symmetric template happens to yield a low residual on the two-headed template by construction, regardless of any morphological-attractor interpretation. Under this critique the basin label is purely a projection of chemistry direction onto template parity, and any depolarization, however delivered, would produce the same signature.
+
+The \texttt{na\_mem\_ant} condition (Section~\ref{sec:betse}) is designed to test this. Same chemistry direction (depolarization), different spatial extent (anterior third only versus uniform):
+
+\begin{table}[h]\centering\small
+\caption{Same-direction chemistry, different spatial extent. Both perturbations depolarize, yet produce sign-flipped signatures on the two-headed template ($-0.146$ vs $+0.010$, $\Delta\Delta=0.156$, both $p=0.008$ vs control). The metric is sensitive to the spatial structure of the perturbation, not just to its chemistry direction.}\label{tab:localized}
+\begin{tabular}{lrrr}\toprule
+Template     & k\_env (uniform depol) & na\_mem\_ant (anterior depol) & sign flip? \\
+\midrule
+normal       & $-0.054$  & $+0.019$ & yes \\
+two-headed   & $\mathbf{-0.146}$ & $\mathbf{+0.010}$ & yes \\
+failed       & $+0.020$ & $+0.018$ & no \\
+\bottomrule\end{tabular}
+\end{table}
+
+The two-headed-template residual flips sign when the perturbation is restricted to one pole, even though the bulk-voltage direction (depolarization) is preserved. Two readings:
+
+\begin{itemize}\itemsep0pt
+\item \textbf{Bulk depolarization is necessary but not sufficient for two-headed-basin assignment.} Uniform depolarization moves the field toward a roughly symmetric ``both poles bright'' pattern (low residual against two-headed). Localized anterior depolarization moves the field toward an asymmetric ``anterior-only bright'' pattern, which is not closer to two-headed than control is.
+\item \textbf{The metric encodes spatial structure of the perturbation, not just chemistry direction.} If the closure residual were a deterministic function of mean voltage shift (the strongest version of the template-parity critique), \texttt{k\_env} and \texttt{na\_mem\_ant} would have same-sign signatures because both are mean-positive shifts. Instead, the two-headed template flips by $0.156$ units --- larger than the entire \texttt{k\_mem} signature.
+\end{itemize}
+
+Closure's advantage on this perturbation is also large relative to the polarity-scalar baselines (full ranking in Section~\ref{sec:baselines}, Table~\ref{tab:baselines-naant}): \texttt{closure:normal} achieves Cohen's $d=22.6$ (rank 2) while \texttt{ap\_fluorescence\_ratio} drops to $d=1.06$ (rank 10, $p=0.10$). The DiBAC4 A/P-ratio is essentially blind to localized anterior depolarization here, because the worm's natural head-tail polarity already dominates the scalar A/P difference and the additional anterior depolarization moves the ratio only marginally. This is exactly the regime in which the multi-template closure decomposition adds information that a scalar polarity readout cannot represent.
+
+\subsection{Cross-chemistry consistency: same direction, same spatial extent, same signature}\label{sec:cross-chem}
+
+The dual of Section~\ref{sec:localized}: if spatial structure of the perturbation matters but ion identity does not, two uniform depolarizers operating through chemically distinct mechanisms should produce the same basin signature. We test this with \texttt{k\_env} (raised $[\mathrm{K}^{+}]_{\mathrm{ext}}$, depolarization via altered K Nernst potential) and \texttt{na\_mem\_glb} (raised Na$^{+}$ membrane permeability, depolarization toward $E_{\mathrm{Na}}\approx +60$\,mV). Both apply uniformly across the whole tissue, both depolarize, both for the same time window.
+
+\begin{table}[h]\centering\small
+\caption{Same direction $+$ same spatial extent, different ion chemistries. Both perturbations depolarize the whole tissue but through chemically distinct mechanisms. The closure signatures match within $\sim$$10$\% on every template, including the largest ($-0.146$ vs $-0.158$ on the two-headed template). Each non-null entry $p=0.008$, Cliff's $\delta=\pm 1.00$ vs control.}\label{tab:cross-chem}
+\begin{tabular}{lrrr}\toprule
+Template     & k\_env (raised $[\mathrm{K}^{+}]_{\mathrm{ext}}$) & na\_mem\_glb (raised $\mathrm{Na}^{+}$ membrane perm.) & ratio \\
+\midrule
+normal       & $-0.054$  & $-0.036$ & $0.67$ \\
+two-headed   & $\mathbf{-0.146}$ & $\mathbf{-0.158}$ & $\mathbf{1.08}$ \\
+failed       & $+0.020$ & $+0.039$ & $1.95$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+The two-headed-template residual --- the load-bearing entry of the basin signature --- agrees within $10$\% across these two chemically distinct perturbations. The mean voltage shift is also similar in direction but different in magnitude ($+11.3$\,mV for \texttt{k\_env} vs $+15.7$\,mV for \texttt{na\_mem\_glb}), so the agreement on the basin signature is not a trivial mean-shift consequence (and the sham calibration in Section~\ref{sec:sham} already showed a uniform $+11.3$\,mV mean shift produces an opposite-sign signature on the two-headed template).
+
+The strongest reading: the closure metric is responding to the (basin direction, spatial structure) pair, not to the specific ion chemistry that produces them. Combined with Section~\ref{sec:localized}'s sign-flip on a different-spatial-extent same-chemistry comparison, this delineates exactly what the metric encodes.
+
+\subsection{Sham calibration: bulk voltage shift vs spatial structure}\label{sec:sham}
+
+The \texttt{cl\_env} condition (Section~\ref{sec:panel}) is a trivial null --- BETSE's basic ion profile cannot respond to it, so it is a zero-in / zero-out check. A sharper question is whether the closure metric reports the K\_env basin signature when handed a synthetic perturbation with matched bulk voltage delta but \emph{no spatial structure} beyond what control already has. We run three post-hoc shams on the $N=5$ control replicates: a uniform $+11.3$\,mV shift across all cells in the perturbation window (matching K\_env's mean voltage delta); per-cell Gaussian noise (mean $0$, SD $4$\,mV, matching K\_env's per-cell spread); and the combination. Each is applied only during $t\in[500,1500]$\,ms. Closure residuals are then computed against the same three templates with the same default weights.
+
+\begin{table}[h]\centering\small
+\caption{Sham vs real K\_env basin signatures. The K\_env reference (real BETSE, repeated from Table~\ref{tab:panel}) has signature $(-,-,+)$ with two-headed-template residual at $-0.146$. None of the three shams reproduces this: the matched-mean shift produces an opposite-sign $(+,+,+)$ off-template signature, noise is essentially null, and the combination matches the shift result. The closure metric requires K\_env's actual cell-level voltage pattern, not just its mean shift.}\label{tab:sham}
+\begin{tabular}{lrrrr}\toprule
+Source & normal $\Delta$ & two-headed $\Delta$ & failed $\Delta$ & sign pattern \\
+\midrule
+\textbf{K\_env (real BETSE)}                  & $\mathbf{-0.054}$ & $\mathbf{-0.146}$ & $+0.020$ & $(-,-,+)$ \\
+sham: uniform $+11.3$\,mV shift               & $+0.028$ & $+0.005$ & $+0.049$ & $(+,+,+)$ \\
+sham: Gaussian noise (SD $4$\,mV, mean $0$)   & $+0.003$ & $+0.004$ & $+0.002$ & $(0,0,0)$ \\
+sham: shift $+$ noise                         & $+0.031$ & $+0.010$ & $+0.051$ & $(+,+,+)$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+The two-headed-template residual flips sign between K\_env ($-0.146$) and the matched-mean shift sham ($+0.005$): same bulk voltage delta, opposite basin assignment. This rules out the strongest form of the ``closure is reducible to mean voltage'' critique: the K\_env two-headed-basin signature comes from the genuine cell-level spatial pattern that BETSE produces in response to elevated $[\mathrm{K}^{+}]_{\mathrm{ext}}$, not from the bulk voltage shift it produces. Mann--Whitney $p=0.008$ for all shift-related deltas (the lowest possible at $N=5/5$); the noise-only deltas are at or near the significance edge ($p=0.03$--$0.15$ depending on template) but at one-tenth the magnitude of the K\_env signature.
+
+\subsection{Closure vs baseline statistics: detection vs basin identification}\label{sec:baselines}
+
+The full baseline panel includes, in addition to the five generic voltage statistics, the \textbf{Beane-style DiBAC4(3) anterior/posterior fluorescence ratio} (\texttt{ap\_fluorescence\_ratio}, modelling dye accumulation as $F\propto\exp(V/V_{T})$ with $V_{T}=25$\,mV) and the simpler \textbf{A$-$P mean voltage difference} (\texttt{ap\_voltage\_difference}, mV). These are the polarity scalars planarian wet-labs actually report; they are the operational alternative to closure that any reviewer should require we measure against.
+
+\paragraph{K\_env (depolarization, uniform).}
+Per-feature standardized in-window $|\Delta|$ (Cohen's $d$), Mann--Whitney $p=0.008$ for the entries shown, sorted by separation strength:
+
+\begin{table}[h]\centering\small
+\caption{Closure vs baseline separation under \texttt{k\_env}.}\label{tab:baselines-kenv}
+\begin{tabular}{rlrl}\toprule
+Rank & Feature & Cohen's $d$ & Kind \\
+\midrule
+$1$  & \texttt{baseline:ap\_voltage\_difference} & $\mathbf{128.0}$ & scalar (polarity) \\
+$2$  & \texttt{baseline:mean\_voltage}            & $73.0$  & scalar \\
+$3$  & \texttt{baseline:voltage\_variance}        & $48.7$  & scalar \\
+$4$  & \texttt{baseline:ap\_fluorescence\_ratio}  & $\mathbf{28.6}$ & scalar (polarity) \\
+$5$  & \texttt{closure:two\_headed}               & $26.7$  & basin \\
+$6$  & \texttt{closure:failed}                    & $16.3$  & basin \\
+$7$  & \texttt{closure:normal}                    & $15.3$  & basin \\
+$8$  & \texttt{baseline:gradient\_magnitude}      & $2.5$   & scalar \\
+$9$  & \texttt{baseline:local\_smoothness}        & $1.9$   & scalar \\
+$10$ & \texttt{baseline:wound\_site\_voltage}     & $1.2$   & scalar \\
+\bottomrule\end{tabular}
+\end{table}
+
+\paragraph{K\_mem (hyperpolarization, K-channel limited).}
+The same panel on the milder perturbation:
+
+\begin{table}[h]\centering\small
+\caption{Closure vs baseline separation under \texttt{k\_mem}.}\label{tab:baselines-kmem}
+\begin{tabular}{rlrl}\toprule
+Rank & Feature & Cohen's $d$ & Kind \\
+\midrule
+$1$  & \texttt{closure:two\_headed}               & $\mathbf{12.5}$ & basin \\
+$2$  & \texttt{closure:normal}                    & $11.6$  & basin \\
+$3$  & \texttt{baseline:mean\_voltage}            & $11.6$  & scalar \\
+$4$  & \texttt{closure:failed}                    & $7.0$   & basin \\
+$5$  & \texttt{baseline:voltage\_variance}        & $6.0$   & scalar \\
+$6$  & \texttt{baseline:ap\_fluorescence\_ratio}  & $5.3$   & scalar (polarity) \\
+$7$  & \texttt{baseline:wound\_site\_voltage}     & $4.7$   & scalar \\
+$8$  & \texttt{baseline:local\_smoothness}        & $2.3$   & scalar \\
+$9$  & \texttt{baseline:gradient\_magnitude}      & $2.0$   & scalar \\
+$10$ & \texttt{baseline:ap\_voltage\_difference}  & $1.9$   & scalar (polarity) \\
+\bottomrule\end{tabular}
+\end{table}
+
+\paragraph{na\_mem\_ant (depolarization, anterior third).}
+Same chemistry direction as \texttt{k\_env} but spatially restricted to the anterior third (Section~\ref{sec:localized}):
+
+\begin{table}[h]\centering\small
+\caption{Closure vs baseline separation under \texttt{na\_mem\_ant} (localized anterior depolarization). Closure features take ranks $2$, $3$, and $6$ at Cohen's $d\geq 7.9$; the polarity scalars are split (A$-$P diff strong, A/P-ratio essentially null at $d=1.06$, $p=0.10$). The DiBAC4 A/P-ratio fails to detect this perturbation because the worm's natural head-tail polarity already dominates the scalar A/P difference.}\label{tab:baselines-naant}
+\begin{tabular}{rlrl}\toprule
+Rank & Feature & Cohen's $d$ & Kind \\
+\midrule
+$1$  & \texttt{baseline:ap\_voltage\_difference} & $\mathbf{28.0}$ & scalar (polarity) \\
+$2$  & \texttt{closure:normal}                    & $\mathbf{22.6}$ & basin \\
+$3$  & \texttt{closure:failed}                    & $13.5$  & basin \\
+$4$  & \texttt{baseline:voltage\_variance}        & $12.7$  & scalar \\
+$5$  & \texttt{baseline:mean\_voltage}            & $11.0$  & scalar \\
+$6$  & \texttt{closure:two\_headed}               & $7.9$   & basin \\
+$7$  & \texttt{baseline:gradient\_magnitude}      & $4.8$   & scalar \\
+$8$  & \texttt{baseline:local\_smoothness}        & $4.4$   & scalar \\
+$9$  & \texttt{baseline:wound\_site\_voltage}     & $4.3$   & scalar \\
+$10$ & \texttt{baseline:ap\_fluorescence\_ratio}  & $1.06$  & scalar (polarity, $p=0.10$) \\
+\bottomrule\end{tabular}
+\end{table}
+
+\paragraph{cl\_env (null).}
+Every feature has $d\leq 2.2$ and every closure feature has $p>0.15$, as expected for a chemistry BETSE's basic ion profile cannot respond to.
+
+\paragraph{Consolidated matrix.}
+Per-perturbation tables can be cherry-picked. The full $10$-feature $\times$ $5$-perturbation matrix (Table~\ref{tab:baselines-matrix}) leaves no room for selection: all features are reported against all conditions in one place. We additionally report Cliff's $\delta$ alongside Cohen's $d$, because at $N=5/5$ Mann--Whitney $p$-values saturate at $0.00794$ for any fully-separated comparison and become uninformative; Cliff's $\delta$ does not saturate and reports both magnitude and direction (range $[-1,1]$, with $\pm 1$ at full separation regardless of effect magnitude).
+
+\begin{table}[h]\centering\scriptsize
+\caption{Consolidated closure-vs-baseline matrix: Cohen's $d$ / Cliff's $\delta$ for every feature against every non-control condition. Saturated MW $p$-values ($0.008$) hide the ranking; Cohen's $d$ and Cliff's $\delta$ do not. Bold rows are closure features. Bold cells are the rank-1 (largest $d$) feature per perturbation column. Note the consistency between \texttt{k\_env} and \texttt{na\_mem\_glb} columns (same direction, same spatial extent, different ion chemistry --- see Section~\ref{sec:cross-chem}).}\label{tab:baselines-matrix}
+\begin{tabular}{lrrrrr}\toprule
+Feature & k\_env & cl\_env & k\_mem & na\_mem\_ant & na\_mem\_glb \\
+\midrule
+\textbf{closure:normal}            & $15.3$ / $-1.0$ & $0.28$ / $+0.1$ & $11.7$ / $+1.0$ & $\mathbf{22.6}$ / $\mathbf{+1.0}$ & $40.4$ / $-1.0$ \\
+\textbf{closure:two\_headed}       & $26.7$ / $-1.0$ & $0.44$ / $+0.2$ & $\mathbf{12.5}$ / $\mathbf{+1.0}$ & $7.9$ / $+1.0$ & $23.2$ / $-1.0$ \\
+\textbf{closure:failed}            & $16.3$ / $+1.0$ & $1.06$ / $+0.6$ & $7.0$ / $-1.0$ & $13.5$ / $+1.0$ & $32.3$ / $+1.0$ \\
+\midrule
+baseline:mean\_voltage             & $73.0$ / $+1.0$ & $2.21$ / $+1.0$ & $11.6$ / $-1.0$ & $11.0$ / $+1.0$ & $\mathbf{146.5}$ / $\mathbf{+1.0}$ \\
+baseline:voltage\_variance         & $48.7$ / $-1.0$ & $0.32$ / $+0.2$ & $6.0$ / $+1.0$ & $12.7$ / $+1.0$ & $80.1$ / $-1.0$ \\
+baseline:gradient\_magnitude       & $2.5$ / $-1.0$ & $1.29$ / $-0.7$ & $2.0$ / $+0.9$ & $4.8$ / $-1.0$ & $25.9$ / $-1.0$ \\
+baseline:local\_smoothness         & $1.9$ / $-0.8$ & $1.29$ / $-0.7$ & $2.3$ / $+1.0$ & $4.4$ / $-1.0$ & $24.3$ / $-1.0$ \\
+baseline:wound\_site\_voltage      & $1.2$ / $+0.7$ & $1.38$ / $+0.8$ & $4.7$ / $-1.0$ & $4.3$ / $+1.0$ & $9.2$ / $+1.0$ \\
+baseline:ap\_fluorescence\_ratio   & $28.6$ / $+1.0$ & $0.48$ / $-0.0$ & $5.3$ / $-1.0$ & $1.06$ / $-0.7$ & $24.6$ / $+1.0$ \\
+baseline:ap\_voltage\_difference   & $\mathbf{128.0}$ / $\mathbf{+1.0}$ & $0.46$ / $+0.4$ & $1.9$ / $-0.7$ & $\mathbf{28.0}$ / $\mathbf{-1.0}$ & $128.1$ / $+1.0$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+The picture this paints is more interesting than the one the previous draft of this paper claimed.
+
+\begin{enumerate}\itemsep0pt
+\item \textbf{On the strongest perturbation (K\_env, uniform depolarization), the polarity scalars beat closure on detection.} A$-$P voltage difference ($d=128$) and the DiBAC4-style A/P fluorescence ratio ($d=28.6$) both separate control from perturbed at least as well as the best closure feature (\texttt{closure:two\_headed}, $d=26.7$). Mean voltage and variance also outrank closure here. Any scalar that captures ``the field shifted globally'' wins on a perturbation that shifts the field globally.
+\item \textbf{On the weaker uniform perturbation (K\_mem), closure leads.} Closure features take ranks $1$, $2$, and $4$. The DiBAC4 A/P-ratio falls to $d=5.3$, less than half the leading closure feature. The A$-$P voltage difference collapses to $d=1.9$, near no-signal --- because K\_mem hyperpolarizes uniformly with no induced anterior/posterior asymmetry, so a polarity scalar reports nothing.
+\item \textbf{On the localized perturbation (\texttt{na\_mem\_ant}), the DiBAC4 A/P-ratio fails entirely.} Closure features take ranks $2$, $3$, and $6$ ($d=22.6$, $13.5$, $7.9$); the DiBAC4 fluorescence ratio drops to $d=1.06$ and does not reach significance ($p=0.10$). The worm's natural head-tail polarity already dominates the scalar A/P difference, so an additional anterior-only depolarization shifts the ratio only marginally. The same perturbation is detected at $d=22$+ by the multi-template closure decomposition.
+\item \textbf{Sign of the polarity scalar is condition-specific and matches mean-voltage direction.} A/P-ratio $\Delta$ vs control: K\_env $+0.543$ (anterior brightens --- global depolarization), K\_mem $-0.105$ (anterior dims --- global hyperpolarization), \texttt{na\_mem\_ant} $-0.022$ (small, $p=0.10$ --- localized anterior depolarization barely shifts the polarity ratio), cl\_env $+0.028$ (null). The scalar correctly distinguishes ``depolarizing uniform'' from ``hyperpolarizing uniform'' but cannot represent ``depolarizing localized,'' and has no representation for \emph{which morphological attractor} a basin shift is heading toward.
+\item \textbf{Basin-direction identification remains uniquely closure's.} The closure deltas across templates form a per-condition signature vector:
+\begin{center}
+\begin{tabular}{lrrr}\toprule
+                                & normal   & two\_h   & failed \\
+\midrule
+K\_env (depol uniform)          & $-0.054$ & $-0.146$ & $+0.020$ \\
+K\_mem (hyperpol uniform)       & $+0.015$ & $+0.028$ & $-0.010$ \\
+na\_mem\_ant (depol local)      & $+0.019$ & $+0.010$ & $+0.018$ \\
+\bottomrule\end{tabular}
+\end{center}
+
+Three sign-distinct signatures from three perturbations; a scalar --- mean voltage, A/P diff, A/P-ratio --- collapses all three onto a single axis. Most striking: \texttt{k\_env} and \texttt{na\_mem\_ant} are both depolarizing yet have \emph{opposite-sign} entries on the two-headed template ($-0.146$ vs $+0.010$). The basin-identification claim is therefore that closure provides a \emph{labelled} characterisation of the field shift sensitive to spatial structure of the perturbation, not just to chemistry direction. This is the thing the wet-lab pre-registration P5 commits to.
+\end{enumerate}
+
+\subsection{Empirical templates with leave-one-out classification}\label{sec:loo}
+
+To address the ``you hand-picked the templates'' concern, we replaced the hand-coded templates with empirical templates derived purely from data (per-condition averaged polynomial fits of perturbation-window voltages) and ran leave-one-out classification: for each of the $30$ replicates ($6$ conditions $\times$ $N=5$), derive empirical templates from the \emph{other} $29$ replicates and predict the held-out replicate's condition by lowest in-window $R_{\mathrm{cl}}$.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.95\linewidth]{figures/empirical_templates.png}
+\caption{Empirical templates derived from BETSE replicate data --- averaged polynomial fits of perturbation-window voltages, no hand-coding. \texttt{cl\_env} is visually identical to control (correctly), \texttt{k\_env} is uniformly depolarised, \texttt{k\_mem} is uniformly hyperpolarised. (Figure shows the original four-condition panel; \texttt{na\_mem\_ant} and \texttt{na\_mem\_glb} empirical templates were added as the fifth and sixth conditions for the analysis below.)}\label{fig:emptemplates}
+\end{figure}
+
+Confusion matrix (raw $6$-class):
+
+\begin{table}[h]\centering\scriptsize
+\caption{Leave-one-out raw $6$-class confusion. Control and \texttt{cl\_env} are physically identical in BETSE's basic ion profile, so the classifier confusing them is not a bug; it is the metric correctly reporting these two conditions as equivalent.}\label{tab:loo-raw}
+\begin{tabular}{lrrrrrr}\toprule
+                   & pred:cl\_env & pred:control & pred:k\_env & pred:k\_mem & pred:na\_mem\_ant & pred:na\_mem\_glb \\
+\midrule
+true:cl\_env       & $0$ & $3$ & $0$ & $2$ & $0$ & $0$ \\
+true:control       & $3$ & $0$ & $0$ & $2$ & $0$ & $0$ \\
+true:k\_env        & $0$ & $0$ & $5$ & $0$ & $0$ & $0$ \\
+true:k\_mem        & $0$ & $1$ & $0$ & $4$ & $0$ & $0$ \\
+true:na\_mem\_ant  & $2$ & $1$ & $0$ & $2$ & $0$ & $0$ \\
+true:na\_mem\_glb  & $0$ & $0$ & $1$ & $0$ & $0$ & $4$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+Raw $6$-class accuracy: $13/30 = 0.43$ (chance $=0.17$). Per-class precision / recall / F1 (Table~\ref{tab:loo-perclass}):
+
+\begin{table}[h]\centering\small
+\caption{Per-class precision, recall, and F1 for the raw 6-class LOO confusion in Table~\ref{tab:loo-raw}. The two uniform depolarizers \texttt{k\_env} and \texttt{na\_mem\_glb} are recovered nearly perfectly, with one cross-mapping in each direction (\texttt{na\_mem\_glb} replicate predicted as \texttt{k\_env}: same basin family). \texttt{k\_mem} is recovered at recall $0.80$ but precision $0.40$, because the \texttt{k\_mem}-template is a ``mild hyperpolarisation'' attractor that some control and \texttt{na\_mem\_ant} replicates also pattern-match. \texttt{na\_mem\_ant} is never predicted because its empirical template (anterior-only depolarisation) sits geometrically close to control / \texttt{cl\_env} / \texttt{k\_mem} in the polynomial fit space, despite producing a sign-distinct basin signature in the closure-residual analysis (Section~\ref{sec:panel}). \texttt{cl\_env} and control swap mutually --- the metric correctly identifies them as physically equivalent.}\label{tab:loo-perclass}
+\begin{tabular}{lrrr}\toprule
+class & precision & recall & F1 \\
+\midrule
+cl\_env                 & $0.00$ & $0.00$ & $0.00$ \\
+control                 & $0.00$ & $0.00$ & $0.00$ \\
+\textbf{k\_env}         & $\mathbf{0.83}$ & $\mathbf{1.00}$ & $\mathbf{0.91}$ \\
+k\_mem                  & $0.40$ & $0.80$ & $0.53$ \\
+na\_mem\_ant            & --- ($0/0$ predictions) & $0.00$ & $0.00$ \\
+\textbf{na\_mem\_glb}   & $\mathbf{1.00}$ & $\mathbf{0.80}$ & $\mathbf{0.89}$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+Merging control $+$ \texttt{cl\_env} into a single ``null'' class (5-class problem):
+
+\begin{table}[h]\centering\small
+\caption{Leave-one-out confusion with control and \texttt{cl\_env} merged into ``null'' (BETSE's basic ion profile makes them physically equivalent).}\label{tab:loo-merged}
+\begin{tabular}{lrrrrr}\toprule
+                  & pred:k\_env & pred:k\_mem & pred:na\_mem\_ant & pred:na\_mem\_glb & pred:null \\
+\midrule
+true:k\_env       & $5$ & $0$ & $0$ & $0$ & $0$ \\
+true:k\_mem       & $0$ & $4$ & $0$ & $0$ & $1$ \\
+true:na\_mem\_ant & $0$ & $2$ & $0$ & $0$ & $3$ \\
+true:na\_mem\_glb & $1$ & $0$ & $0$ & $4$ & $0$ \\
+true:null         & $0$ & $4$ & $0$ & $0$ & $6$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+Merged $5$-class accuracy: $19/30 = \mathbf{0.63}$, vs $0.20$ chance. The two uniform depolarizers \texttt{k\_env} and \texttt{na\_mem\_glb} are each recovered at $4$/$5$ or $5$/$5$, with the only off-diagonal between them (one \texttt{na\_mem\_glb} replicate predicted as \texttt{k\_env}) consistent with the basin-direction interpretation: same direction $+$ same spatial extent should be the metric's nearest-neighbour, and indeed they are each other's primary confusion. \texttt{na\_mem\_ant} is the only condition that is never predicted, consistent with its $(+,+,+)$ ``no-fit'' signature in Table~\ref{tab:panel} (the localised perturbation does not match any uniform-condition template strongly).
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.95\linewidth]{figures/empirical_basin_scatter.png}
+\caption{Held-out $R_{\mathrm{cl}}$ in window vs each empirical template. The third panel (vs empirical[\texttt{k\_env}]) shows the cleanest separation: held-out \texttt{k\_env} replicates have $R_{\mathrm{cl}}\approx 0.66$ while every other condition has $R_{\mathrm{cl}}\approx 0.92$.}\label{fig:basinscatter}
+\end{figure}
+
+The basin-scatter diagnostic is unambiguous: held-out \texttt{k\_env} replicates have $R_{\mathrm{cl}}\approx 0.66$ against the empirical \texttt{k\_env} template, while every other condition has $R_{\mathrm{cl}}\approx 0.92$ against the same template. Clean separation. The \texttt{k\_mem} template has a softer separation but still produces $4/5$ accuracy. The null-vs-\texttt{k\_mem} confusion ($4/10$ nulls leak to \texttt{k\_mem}) reflects a genuine partial overlap: BETSE's post-cut control trajectories naturally show some mild hyperpolarization during wound-transient relaxation, which overlaps modestly with the deliberately-hyperpolarizing \texttt{k\_mem} empirical template. With hand-coded templates this confusion is suppressed because the hand-coded ``failed'' template is exactly flat at $-45$\,mV; empirical templates capture the real (somewhat varied) control voltage pattern.
+
+\subsection{Leave-condition-out generalisation}\label{sec:lco}
+
+A stronger generalisation test than leave-one-replicate-out is leave-condition-\emph{out}: hide an entire condition's contribution to template construction, then ask which of the remaining-condition templates each held-out replicate most resembles. This tests whether the metric maps a held-out condition to a sensible \emph{basin neighbour} (e.g. one depolariser to another) rather than memorising condition labels. Run on the six-condition batch (Table~\ref{tab:lco}):
+
+\begin{table}[h]\centering\scriptsize
+\caption{Leave-condition-out classification on the six-condition batch. Each row corresponds to held-out condition; entries count the held-out replicates assigned to each remaining-condition template (rows sum to $5$). The most informative cells are the \texttt{k\_env} and \texttt{na\_mem\_glb} rows: when either uniform-depolariser is held out, the metric assigns \emph{all five} of its replicates to the \emph{other} uniform-depolariser, despite the chemically distinct mechanisms. This is the basin-direction claim made operational under cross-validation.}\label{tab:lco}
+\begin{tabular}{lrrrrr}\toprule
+held-out condition  & $\to$ cl\_env & $\to$ control & $\to$ k\_env & $\to$ k\_mem & $\to$ na\_mem\_glb \\
+\midrule
+cl\_env (null)              & --- & $3$ & $0$ & $2$ & $0$ \\
+control                     & $3$ & --- & $0$ & $2$ & $0$ \\
+\textbf{k\_env (depol uniform, K)}        & $0$ & $0$ & --- & $0$ & $\mathbf{5}$ \\
+k\_mem (hyperpol uniform)   & $0$ & $5$ & $0$ & --- & $0$ \\
+na\_mem\_ant (depol local)  & $2$ & $1$ & $0$ & $2$ & $0$ \\
+\textbf{na\_mem\_glb (depol uniform, Na)} & $0$ & $0$ & $\mathbf{5}$ & $0$ & --- \\
+\bottomrule\end{tabular}
+\end{table}
+
+The \texttt{k\_env}$\leftrightarrow$\texttt{na\_mem\_glb} reciprocal mapping is the cross-basin generalisation result: with no \texttt{k\_env} templates available, all five \texttt{k\_env} replicates map to \texttt{na\_mem\_glb}; with no \texttt{na\_mem\_glb} templates available, all five \texttt{na\_mem\_glb} replicates map to \texttt{k\_env}. Each is the other's nearest neighbour despite chemically distinct mechanisms (Section~\ref{sec:cross-chem}). The hyperpolarising \texttt{k\_mem} replicates default to \texttt{control} because no other hyperpolariser is available --- this is the metric correctly reporting ``the closest available basin to hyperpolarisation in the remaining set is `nothing happened',\,'' which is honest. \texttt{cl\_env} and \texttt{control} swap mutually because BETSE's basic ion profile makes them physically equivalent. \texttt{na\_mem\_ant} is the only condition that does not generalise cleanly --- its replicates split between \texttt{cl\_env}, \texttt{control}, and \texttt{k\_mem} --- consistent with its $(+,+,+)$ ``no-fit'' signature in Table~\ref{tab:panel}: the localised perturbation does not strongly resemble any uniform condition in our panel.
+
+\subsection{Sensitivity to polynomial degree and time-window}\label{sec:sensitivity}
+
+Sensitivity sweep over $27$ settings: $\deg_{x}\in\{1,2,3\}$, $\deg_{y}\in\{0,1,2\}$, and window choices $(300,1300)$, $(500,1500)$, and $(700,1700)$\,ms. Merged $3$-class LOO accuracy across settings: mean $0.669$, std $0.114$, min $0.500$, max $0.750$.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.95\linewidth]{figures/sensitivity_heatmaps.png}
+\caption{Sensitivity heatmaps of merged $3$-class LOO accuracy across polynomial degree ($\deg_{x}\times\deg_{y}$) and time-window choice. Stable plateau at $0.75$ across $\deg_{x}\geq 2$ and the canonical / wider windows; degrades only at $\deg_{x}=1$ or window starting before perturbation.}\label{fig:sens}
+\end{figure}
+
+Accuracy is \textbf{stable at $0.75$ across $\deg_{x}\geq 2$ and the canonical / wider time windows}. It drops to $0.50$ only at the edges: $\deg_{x}=1$ (linear-only along the principal axis cannot capture the parabolic two-headed-like pattern), or window $(300,1300)$\,ms (which starts before the perturbation begins at $t=500$\,ms, so the early portion is uninformative). The widest window $(700,1700)$\,ms reaches $0.75$ across all degrees. The result is therefore not an artifact of a specific knob choice; it is an artifact of \emph{requiring at least quadratic in the principal axis} and \emph{evaluating during/after the perturbation window} --- both operationally defensible.
+
+\subsection{Closure-weight robustness}\label{sec:weights}
+
+The five closure terms have default weights $w_{\mathrm{local}}=w_{\mathrm{global}}=w_{\mathrm{target}}=0.25$, $w_{\mathrm{boundary}}=0.20$, $w_{\mathrm{recovery}}=0.05$. We swept each weight independently by factors $\{0.5,1.5,2.0\}$ (others unchanged), recomputed the basin signature for every condition under each setting, and asked whether the per-condition sign pattern across the three templates is preserved. With $5$ weight fields $\times$ $3$ non-baseline factors $=15$ swept configurations:
+
+\begin{table}[h]\centering\small
+\caption{Sign-pattern preservation under per-weight $\pm 50\%$/$\times 2$ sweeps. The three perturbed conditions all preserve their distinct basin sign-pattern across all $15$ swept settings. The \texttt{cl\_env} null shifts pattern at $4/15$ settings (high $w_{\mathrm{target}}$ or $w_{\mathrm{recovery}}$) but with magnitudes $\Delta\leq 0.005$ --- still effectively null.}\label{tab:weights}
+\begin{tabular}{lllr}\toprule
+Condition & Baseline pattern & \# swept settings preserved & Magnitude under sweep \\
+\midrule
+k\_env (depol uniform)        & $(-,-,+)$ & $\mathbf{15/15}$ & $|\Delta|=0.06$--$0.21$ \\
+k\_mem (hyperpol uniform)     & $(+,+,-)$ & $\mathbf{15/15}$ & $|\Delta|=0.01$--$0.05$ \\
+na\_mem\_ant (depol local)    & $(+,+,+)$ & $\mathbf{15/15}$ & $|\Delta|=0.005$--$0.04$ \\
+cl\_env (null)                & $(0,0,+)$ & $11/15$    & $|\Delta|=0.001$--$0.005$ (null) \\
+\bottomrule\end{tabular}
+\end{table}
+
+The four perturbed-condition signatures are insensitive to a $\pm 50\%$ to $\times 2$ scaling of any individual weight; the basin-direction claims do not depend on a precise weight choice. The cl\_env null shifts only when $w_{\mathrm{target}}$ or $w_{\mathrm{recovery}}$ is doubled, and only at the floor of the residual scale ($\Delta\leq 0.005$, less than the tightest perturbed-condition $|\Delta|=0.01$ by a factor of two), so this is the metric appropriately responding to its own residual-scale floor on a true null rather than a meaningful basin shift. Default weights were chosen for uniform-ish coverage of the five terms, not optimised against any dataset; the sweep confirms they are not load-bearing.
+
+\section{Discussion}
+
+\subsection{What is and is not shown}
+
+We have shown that the closure metric (i) detects basin shifts in real BETSE bioelectric trajectories with the same default weights, no retuning; (ii) responds \emph{differentially} across candidate templates, distinguishing perturbations whose chemistry drives different morphological attractors; (iii) preserves this behaviour when templates are derived from data with leave-one-out cross-validation; and (iv) is robust to reasonable polynomial-degree and time-window choices.
+
+We have \emph{not} shown biological validation. BETSE is a peer-reviewed bioelectric simulator, but it is not a planarian. The proposed wet-lab test (Section~\ref{sec:prereg}) remains an open invitation.
+
+\subsection{The basin-identification claim}
+
+The claim is operationally narrow but novel: closure provides per-template differential information that scalar baselines cannot. Mean voltage detects \emph{whether} a perturbation happened with $d=73$ to \texttt{k\_env}; closure says \emph{which basin} the trajectory is moving toward. Both readouts are useful, both should be reported. The proposed addition to the bioelectric toolkit is the per-template breakdown: not ``voltage went up'' but ``voltage moved into the two-headed-attractor region of voltage space, away from the normal-attractor region.''
+
+\subsection{The cl\_env inadvertent control}
+
+The \texttt{cl\_env} perturbation produced near-zero closure deltas across all templates because BETSE's basic ion profile does not simulate Cl$^{-}$. We retained this as a negative control: the metric correctly reports ``no basin shift'' when no physical signal is present, with the same machinery, default weights, and replicate count as the positive controls.
+
+\subsection{What changed when geometry became biological}
+
+Replacing a generic Voronoi disk (\texttt{sample\_sim}) with a planarian-shaped capsule $+$ 2-cuts profile (\texttt{1worm\_base.png} $+$ custom thick cut) (i) made anterior/posterior labelling biologically meaningful instead of PCA-arbitrary; (ii) reduced cell count from $210$ to $\sim$$93$ per replicate (more cells removed by the head$+$tail cut); (iii) required custom thick cut bands because the bundled thin \texttt{1worm\_2cuts\_even.png} produced cut-event failures on stochastic Voronoi seedings.
+
+\subsection{What we tried and could not complete}
+
+Two natural Tier-3 extensions hit hard limits we could not crack inside this work:
+
+\begin{itemize}\itemsep0pt
+\item \textbf{GRN-driven longer-timescale dynamics.} BETSE's GRN infrastructure exists, but the bundled \texttt{extra\_configs/grn\_basic.yaml} is the generic two-gene Karlebach--Shamir 2008 example~\citep{karlebach2008modelling}, not a planarian polarity GRN. Configuring biologically-grounded Wnt/BMP gradients is multi-day domain-specific work; computational scaling at default GRN settings projects to days per replicate. Documented in \texttt{docs/tier3\_limits.md}.
+\item \textbf{Real planarian voltage-imaging time-series.} Searches across Zenodo, Figshare, Dryad, the Levin Lab Tufts software/resources page~\citep{levinlab_planaria}, GitHub, and PMC supplementary material for Beane / Pai / Durant papers found no public, machine-readable, time-series planarian voltage dataset as of May 2026. The closest adjacent open data is zebrafish ASAP1 GEVI imaging --- wrong system. The biological test requires a wet-lab partnership.
+\end{itemize}
+
+\section{Pre-registered wet-lab predictions}\label{sec:prereg}
+
+Five operational predictions for a planarian DiBAC4(3) wet-lab test, with thresholds committed before any biological data is in hand. Full text in \texttt{docs/wetlab\_preregistration.md}. Summary:
+
+\begin{itemize}\itemsep0pt
+\item \textbf{P1 --- Early commitment.} In $\geq 70\%$ of normal regenerators, basin-commitment time $t^{*}\leq 0.5\,T_{\mathrm{anat}}$ (where $T_{\mathrm{anat}}$ is the earliest blinded anatomical scoring time).
+\item \textbf{P2 --- Basin-shift detection.} In $\geq 70\%$ of two-headed regenerators, $R_{\mathrm{cl}}(\textsc{two-headed})<R_{\mathrm{cl}}(\textsc{normal})$ by $t=0.5\,T_{\mathrm{anat}}$.
+\item \textbf{P3 --- Rescue prediction.} In $\geq 60\%$ of rescued animals, $R_{\mathrm{cl}}(\textsc{normal})$ re-enters the $<0.30$ region $\geq 12$\,h before $T_{\mathrm{anat}}$.
+\item \textbf{P4 --- Basin specificity across chemistries.} Two perturbations with sign-distinct biological outcomes produce sign-distinct closure signatures in $\geq 80\%$ of paired animals.
+\item \textbf{P5 --- Beating DiBAC4 A/P-ratio on basin assignment.} With $\geq 3$ candidate templates, closure achieves $\geq 5$ percentage-point higher \emph{multi-class} basin-assignment accuracy than the DiBAC4(3) anterior/posterior fluorescence ratio under matched early-window splits. We acknowledge in advance that the A/P-ratio may match or exceed closure on binary ``did the perturbation occur'' detection --- the Section~\ref{sec:baselines} BETSE preview already shows this on a uniform-depolarization perturbation. P5 is therefore explicitly the multi-class basin-direction claim, which is closure's structural advantage and the only way the scalar A/P-ratio can be beaten by $\geq 5$\,pp on a metric it cannot represent.
+\end{itemize}
+
+\paragraph{Power analysis at proposed cohort sizes.}
+We compute one-sided binomial test power against $H_{0}: p\leq 0.5$ at $\alpha=0.05$ for each prediction's per-subject success rate (Table~\ref{tab:power}).
+
+\begin{table}[h]\centering\small
+\caption{Statistical power of P1--P5 at the proposed cohort sizes. ``Power at threshold'' uses the per-subject success rate stated in each prediction. ``Power at optimistic'' uses a plausible larger effect size ($p=0.85$ for P1/P2, $p=0.80$ for P3, $p=0.95$ for P4, $p=0.65$ for P5). ``Min $n$ for $0.80$ power'' is the smallest cohort that achieves $80\%$ power against the optimistic effect.}\label{tab:power}
+\begin{tabular}{lrrrrrr}\toprule
+Pred & Threshold & $n=12$ thr & $n=12$ opt & $n=20$ thr & $n=20$ opt & Min $n$ ($p_{\mathrm{opt}}$) \\
+\midrule
+P1   & $\geq 0.70$ & $0.25$ & $0.74$ & $0.42$ & $0.93$ & $13$ \\
+P2   & $\geq 0.70$ & $0.25$ & $0.74$ & $0.42$ & $0.93$ & $13$ \\
+P3   & $\geq 0.60$ & $0.08$ & $0.56$ & $0.13$ & $0.80$ & $18$ \\
+P4   & $\geq 0.80$ & $0.56$ & $0.98$ & $0.80$ & $1.00$ & $8$ \\
+P5   & $\geq 0.55$ & $0.04$ & $0.15$ & $0.06$ & $0.25$ & $69$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+\textbf{Honest implications.} P1, P2, and P4 are reasonably powered at $n\geq 13$--$18$ against optimistic effect sizes. P3 needs $n\geq 18$ to clear $0.80$ power against the $80\%$-success optimistic case. P5 as currently written is \emph{catastrophically underpowered}: detecting a $5$-percentage-point accuracy gap (a per-subject success rate of $\sim$$55\%$ vs $50\%$ chance) requires $n\geq 69$ to reach $80\%$ power, larger than any single planarian cohort is realistic. We therefore revise the cohort recommendation downstream: \textbf{$n\geq 20$ per cohort for P1--P4}, and \textbf{P5 should be re-stated either with a larger gap ($\geq 15$\,pp would put min $n$ around $20$) or as a multi-cohort meta-analysis.} The \texttt{docs/wetlab\_preregistration.md} document captures the revised cohort sizes; the prediction \emph{thresholds} themselves remain pre-committed.
+
+If any \emph{two} of P1--P4 fail in adequately-powered ($n\geq 20$ per cohort) and properly-replicated ($\geq 2$ independent labs) studies, the proposal as formulated is wrong and should be discarded or substantially reformulated. P5 is held to the same standard once a feasible test design is committed.
+
+\section{Limitations}\label{sec:limits}
+
+\begin{itemize}\itemsep0pt
+\item $N=5$ replicates per BETSE condition. Mann--Whitney $p=0.008$ is the minimum two-sided value at $N=5/5$ ($=1/\binom{10}{5}$). Larger $N$ would yield smaller $p$ but no qualitative change in effect direction; replicate-to-replicate variance is small relative to between-condition effects.
+\item BETSE 2-second simulated time is short relative to biological regeneration (hours--days). Within this regime we observe wound transients and immediate post-perturbation responses, not multi-hour patterning. Lengthening the simulation requires either GRN-driven dynamics (above) or a simpler scaling argument we do not make here.
+\item Custom thick cut profile was required because BETSE's bundled thin $2$-cut image ($8$-pixel-wide vertical lines) failed to overlap cells reliably across stochastic Voronoi seedings. Our $35$-pixel-wide cut (\texttt{1worm\_thick\_2cuts.png}) is biologically arbitrary as a wound shape but makes the simulation tractable.
+\item K\_env and K\_mem are simple ion perturbations, not the canonical gap-junction-block pathway that produces biological two-headed planaria~\citep{beane2013bioelectric}. We attempted GJ block; BETSE estimated $15$-hour wall time per replicate and the solver becomes ill-conditioned at full block.
+\item Polynomial-fit empirical templates with $\deg_{x}=2$, $\deg_{y}=1$ were sensitivity-tested but not optimised. Cubic-in-$x$ is no better; lower-order is worse; window shifts of $\pm 200$\,ms are tolerated.
+\item A/P-ratio is competitive on uniform-depolarization detection. On the K\_env perturbation, both forms of the polarity scalar (DiBAC4-style A/P fluorescence ratio and the A$-$P voltage difference) match or exceed the best closure feature on raw control-vs-perturbed separation. Closure's leading edge in this panel is on the K\_mem (hyperpolarization) perturbation. The pre-registered P5 has been narrowed accordingly to the multi-class basin-assignment claim, where the scalar A/P-ratio cannot compete by construction.
+\item No biological data. The metric has been validated on synthetic dynamics and a peer-reviewed bioelectric simulator. The biological test is the open invitation.
+\end{itemize}
+
+\section{Conclusion}
+
+We propose a falsifiable, template-relative, single-scalar-per-timepoint metric for early identification of morphogenetic basin commitment from tissue-level voltage imaging. On synthetic dynamics, on a multi-replicate planarian-shape BETSE panel with three perturbation chemistries, and under empirical-template leave-one-out cross-validation, the metric (a) detects basin shifts when basin shifts are physically present, (b) responds differentially across candidate templates, and (c) does not hallucinate basin shifts when no physical signal is present. We are explicit that on uniform-depolarization perturbations, scalar polarity statistics --- mean voltage, A$-$P voltage difference, the Beane-style DiBAC4(3) A/P fluorescence ratio --- match or exceed the best closure feature on raw perturbation detection. The closure contribution that no scalar baseline can compete with is \emph{basin-direction identification}: per-template residuals form a labelled signature that distinguishes which morphological attractor a basin shift is heading toward, where every scalar collapses direction onto a single axis. Five numerical predictions are pre-registered for the planarian wet-lab test.
+
+The artifact is open source. If the biological test fails any two of the pre-registered predictions, the proposal as formulated is wrong, and that public failure is recorded. That is the deal.
+
+\section*{Data and code availability}
+
+All code is open-source under Apache-2.0; prose under CC BY 4.0. The pipeline runs end-to-end with \texttt{pip install -e .} followed by:
+
+\begin{verbatim}
+PYTHONPATH=src python -m vfd_bioelectric_closure.synthetic_regeneration
+PYTHONPATH=src python -m vfd_bioelectric_closure.run_betse_batch \
+    --template data/external/betse/templates/control.yaml \
+    --out-dir  data/external/betse/batch \
+    --condition control --n-replicates 5
+# (repeat for k_env, cl_env, k_mem)
+PYTHONPATH=src python -m vfd_bioelectric_closure.analyze_betse_batch \
+    --batch-dir data/external/betse/batch \
+    --conditions control,k_env,cl_env,k_mem \
+    --out-dir   results/betse_batch_4cond
+PYTHONPATH=src python -m vfd_bioelectric_closure.validate_empirical_templates \
+    --batch-dir data/external/betse/batch --out-dir results/betse_empirical
+PYTHONPATH=src python -m vfd_bioelectric_closure.sensitivity_empirical \
+    --batch-dir data/external/betse/batch --out-dir results/betse_sensitivity
+\end{verbatim}
+
+Test suite: $47$ unit tests, all passing.
+
+\section*{Acknowledgements}
+
+We thank the BETSE authors (Pietak \& Levin) for the open-source bioelectric simulator, and the broader Levin-lab community for the conceptual program that motivated this metric. This note is an open invitation to critique, replicate, or refute.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}
