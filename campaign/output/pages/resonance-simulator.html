@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Crystal Resonance Simulator — VFD</title>
+<meta name="description" content="Interactive simulator of the VFD resonance chain: the 600-cell's exact spectrum, mass as closure frequency, the golden mass ladder, and hydrogen from the derived equations. No fitted parameters anywhere.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,500;0,700;1,300;1,500&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0a07; --bg2:#121008; --panel:#171309; --line:#2c2514;
+  --gold:#d9a93f; --gold-dim:#8a6d28; --gold-bright:#f4c860;
+  --ice:#8fc3d9; --ice-dim:#4a7384;
+  --txt:#e8e0cd; --txt-dim:#9a8f74; --txt-faint:#5e5640;
+  --red:#c96a4a; --green:#9ab85c;
+  --serif:'Spectral',Georgia,serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--txt); font-family:var(--serif);
+  font-weight:300; line-height:1.65; overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+header{
+  padding:72px 0 36px; position:relative;
+  background:
+    radial-gradient(1200px 500px at 70% -10%, rgba(217,169,63,.10), transparent 60%),
+    radial-gradient(800px 400px at 10% 0%, rgba(143,195,217,.05), transparent 60%);
+  border-bottom:1px solid var(--line);
+}
+.kicker{
+  font-family:var(--mono); font-size:11px; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--gold); margin-bottom:18px;
+}
+h1{
+  font-weight:700; font-size:clamp(34px,5.5vw,58px); line-height:1.05;
+  letter-spacing:-0.01em; max-width:820px;
+}
+h1 em{font-style:italic;font-weight:300;color:var(--gold-bright)}
+.lede{
+  max-width:680px; margin-top:22px; font-size:18px; color:var(--txt-dim);
+}
+.lede b{color:var(--txt);font-weight:500}
+.chain{
+  display:flex; flex-wrap:wrap; gap:10px; margin-top:34px;
+  font-family:var(--mono); font-size:11.5px;
+}
+.chain a{
+  text-decoration:none; color:var(--txt-dim); border:1px solid var(--line);
+  padding:8px 13px; border-radius:3px; background:rgba(23,19,9,.6);
+  transition:all .25s; display:flex; gap:9px; align-items:center;
+}
+.chain a:hover{border-color:var(--gold-dim); color:var(--txt); transform:translateY(-2px)}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+.d-der{background:var(--gold)} .d-open{background:var(--red)} .d-thm{background:var(--green)}
+section{padding:64px 0; border-bottom:1px solid var(--line); position:relative}
+.sec-num{
+  font-family:var(--mono); color:var(--gold); font-size:12px;
+  letter-spacing:.28em; text-transform:uppercase; margin-bottom:12px;
+}
+h2{font-weight:500; font-size:clamp(24px,3.4vw,34px); margin-bottom:8px}
+.grade{
+  display:inline-block; font-family:var(--mono); font-size:10.5px;
+  letter-spacing:.18em; padding:3px 10px; border-radius:2px;
+  vertical-align:middle; margin-left:12px; transform:translateY(-3px);
+}
+.g-der{background:rgba(217,169,63,.14); color:var(--gold-bright); border:1px solid var(--gold-dim)}
+.g-open{background:rgba(201,106,74,.12); color:#e09a7e; border:1px solid #6b3a28}
+.sub{color:var(--txt-dim); max-width:660px; margin-bottom:30px; font-size:16.5px}
+.sub code,.note code,td code{font-family:var(--mono);font-size:.86em;color:var(--ice)}
+.panel{
+  background:linear-gradient(180deg, var(--panel), var(--bg2));
+  border:1px solid var(--line); border-radius:6px; padding:22px;
+}
+canvas{display:block;width:100%}
+.note{
+  font-family:var(--mono); font-size:12px; color:var(--txt-faint);
+  margin-top:14px; line-height:1.7;
+}
+.note b{color:var(--txt-dim);font-weight:600}
+/* ladder layout */
+.ladder-grid{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(280px,1fr); gap:22px}
+@media(max-width:900px){.ladder-grid{grid-template-columns:1fr}}
+#ladder{cursor:pointer}
+.readout{font-family:var(--mono)}
+.readout h3{
+  font-family:var(--serif); font-weight:500; font-size:26px; color:var(--gold-bright);
+  margin-bottom:2px;
+}
+.readout .sect{font-size:11px;letter-spacing:.2em;color:var(--txt-faint);text-transform:uppercase}
+.rrow{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:12.5px}
+.rrow span:first-child{color:var(--txt-dim)}
+.rrow span:last-child{color:var(--txt);text-align:right}
+.dev-good{color:var(--green)!important} .dev-mid{color:var(--gold-bright)!important} .dev-bad{color:var(--red)!important}
+.gradechip{font-size:10px;letter-spacing:.14em;padding:2px 8px;border-radius:2px}
+/* toggle */
+.toggle{
+  display:inline-flex; border:1px solid var(--line); border-radius:3px;
+  overflow:hidden; font-family:var(--mono); font-size:11.5px; margin:14px 0 4px;
+}
+.toggle button{
+  background:none; border:none; color:var(--txt-dim); padding:8px 16px;
+  cursor:pointer; letter-spacing:.06em; transition:all .2s; font-family:inherit;
+}
+.toggle button.on{background:rgba(217,169,63,.16); color:var(--gold-bright)}
+.hydro-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.9fr);gap:22px}
+@media(max-width:860px){.hydro-grid{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px}
+th{
+  text-align:left;color:var(--txt-faint);font-weight:400;letter-spacing:.12em;
+  text-transform:uppercase;font-size:10px;padding:8px 10px;border-bottom:1px solid var(--line);
+}
+td{padding:8px 10px;border-bottom:1px solid rgba(44,37,20,.5);color:var(--txt-dim)}
+td:first-child{color:var(--txt)}
+.open-fence{
+  border-left:3px solid var(--red); padding:18px 22px; margin-top:26px;
+  background:rgba(201,106,74,.05); border-radius:0 4px 4px 0;
+}
+.open-fence h4{font-weight:500;color:#e09a7e;font-size:17px;margin-bottom:8px}
+.open-fence p{font-size:14.5px;color:var(--txt-dim)}
+footer{padding:48px 0 80px; color:var(--txt-faint); font-size:14px}
+footer a{color:var(--ice);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+::selection{background:rgba(217,169,63,.3)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kicker">Vibrational Field Dynamics · companion explorable</div>
+    <h1>The Crystal <em>Resonance</em> Simulator</h1>
+    <p class="lede">How one shape's vibrations become particles, weights, and atoms.
+    Everything below is <b>computed live from the framework's own constants</b> —
+    the golden ratio, one anchor shell, and the derived equations. <b>Nothing is fitted.</b>
+    Where the framework is open, the simulator says so.</p>
+    <nav class="chain">
+      <a href="#ring"><span class="dot d-der"></span>1 · the ring — derived, exact</a>
+      <a href="#mass"><span class="dot d-der"></span>2 · mass = closure frequency</a>
+      <a href="#ladder"><span class="dot d-der"></span>3 · the golden ladder</a>
+      <a href="#ladder"><span class="dot d-open"></span>4 · shell selection — open</a>
+      <a href="#atoms"><span class="dot d-thm"></span>5 · atoms — theorem</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ 1 · THE RING ============ -->
+<section id="ring">
+  <div class="wrap reveal">
+    <div class="sec-num">Link 1 · derived, machine-verified</div>
+    <h2>How the crystal rings <span class="grade g-der">EXACT</span></h2>
+    <p class="sub">The 600-cell's vibration spectrum is a closed formula:
+    λ<sub>k</sub> = 12(1 − sin((k+1)π/5)/((k+1)sin(π/5))). Its overtone families come in
+    perfect squares — 1, 4, 9, 16, 25, 36 — the unmistakable signature of a
+    three-dimensional sphere. <b>Click a harmonic to pluck it.</b></p>
+    <div class="panel">
+      <canvas id="spec" height="240"></canvas>
+      <div class="note">multiplicities are <b>(k+1)²</b> — an S² arena would give 2k+1, an S⁴ arena ⅙(k+1)(k+2)(2k+3).
+      verified at machine precision: <code>verify_rendering_layer.py</code> (21/21).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2+3+4 · LADDER ============ -->
+<section id="ladder">
+  <div class="wrap reveal">
+    <div class="sec-num">Links 2 · 3 · 4</div>
+    <h2>The golden mass ladder
+      <span class="grade g-der">LADDER DERIVED</span><span class="grade g-open">RUNG SELECTION OPEN</span></h2>
+    <p class="sub">A particle is a standing wave that closes on itself; its frequency
+    <b>is</b> its mass. The substrate is golden-ratio self-similar, so each refinement
+    level divides mass by φ: <b>m&nbsp;=&nbsp;m<sub>P</sub>&nbsp;φ<sup>−N</sup></b>.
+    Anchored only on the muon's structural shell (96&nbsp;=&nbsp;24×4), every rung value is
+    parameter-free. The dots sit at their <b>true measured positions</b> — distance from a
+    rung is the framework's real, unfitted error. <b>Select a particle.</b></p>
+    <div class="ladder-grid">
+      <div class="panel"><canvas id="lad" height="640"></canvas>
+        <div class="note"><b>read the picture:</b> the muon sits dead on its rung (anchor, ppm);
+        the Z almost (−2.3%); the down quark floats half a rung off (+26%) — exactly where “mass”
+        is scheme-dependent. lepton offsets 0.071 &lt; bosons 0.184 &lt; quarks 0.288 (mean |shells|).</div>
+      </div>
+      <div>
+        <div class="panel readout" id="readout"></div>
+        <div class="panel" style="margin-top:18px">
+          <div class="sec-num" style="margin-bottom:8px">the standing wave</div>
+          <canvas id="wave" height="130"></canvas>
+          <div class="note" id="wavenote"></div>
+        </div>
+      </div>
+    </div>
+    <div class="open-fence">
+      <h4>Link 4 — which rung a particle takes: open, and fenced</h4>
+      <p>The rule selecting integer shells is <b>provably not</b> a function of charge, colour,
+      chirality or generation (the curvature obstruction), and eight geometric/prime sieves test
+      null. It behaves like an <i>interacting</i> standing-wave condition — blocked behind the
+      coupling sector. The record: <code>docs/shell-rule-wo.md</code>, 11 machine-checked
+      conclusions including every null.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 · ATOMS ============ -->
+<section id="atoms">
+  <div class="wrap reveal">
+    <div class="sec-num">Link 5 · theorem of the derived layer</div>
+    <h2>Atoms come for free <span class="grade g-der">DERIVED CHAIN</span></h2>
+    <p class="sub">Once a mode has a mass, a charge, the Schrödinger equation and the Coulomb
+    law — all four now in the derived layer — hydrogen is a <b>theorem</b>. Watch the error:
+    with the framework's own electron (shell 107), every level is off by exactly the electron's
+    +3.9% shell offset and <i>nothing else</i>. Swap in the measured electron and it is exact.</p>
+    <div class="hydro-grid">
+      <div class="panel">
+        <canvas id="hyd" height="360"></canvas>
+      </div>
+      <div>
+        <div class="toggle" id="metoggle">
+          <button class="on" data-m="placed">framework m<sub>e</sub> (shell 107)</button>
+          <button data-m="measured">measured m<sub>e</sub></button>
+        </div>
+        <div class="panel readout" id="hydout"></div>
+        <div class="note">α⁻¹ = 137 + π/87 = <span id="alphav"></span> (conditional chain, +1.0×10⁻⁶ vs CODATA).
+        E<sub>n</sub> = −α²m<sub>e</sub>c²/2n².</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEDGER ============ -->
+<section id="ledger">
+  <div class="wrap reveal">
+    <div class="sec-num">The honesty ledger</div>
+    <h2>What is determined today</h2>
+    <p class="sub">The simulator's grades, particle by particle — the same output as the
+    repository's <code>sm_ledger.py</code>.</p>
+    <div class="panel" style="overflow-x:auto">
+      <table id="ledtab"></table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Every number on this page is recomputed in your browser from φ, the muon anchor, and the
+    derived equations — view source. Verify the claims yourself:
+    <a href="https://github.com/vfd-org/crystal-and-clock-companion">github.com/vfd-org/crystal-and-clock-companion</a>
+    — thirteen suites, 228+ checks, <code>bash run_all_verifications.sh</code>.
+    Papers LIII–LVIII; the open items are listed, not hidden.
+    <br><br>Institute of Vibrational Field Dynamics · companion to <i>The Crystal and the Clock</i></p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+/* ---------- framework constants: nothing fitted ---------- */
+const PHI = (1 + Math.sqrt(5)) / 2;
+const LNPHI = Math.log(PHI);
+const M_MU = 0.1056583755;            // GeV (anchor input)
+const N_MU = 96;                      // structural shell (H-shell-96)
+const M_P  = M_MU * Math.pow(PHI, 96);
+const ALPHA = 1 / (137 + Math.PI / 87);
+const HBARC_M = 1.9733e-16;           // GeV^-1 -> metres
+/* particles: name, PDG mass GeV, integer shell, sector, grade */
+const P = [
+ ["electron",5.1099895e-4,107,"lepton","PLACED"],
+ ["muon",0.1056583755,96,"lepton","ANCHOR · H-shell-96"],
+ ["tau",1.77686,90,"lepton","PLACED"],
+ ["up",2.16e-3,104,"quark","PLACED"],
+ ["down",4.67e-3,102,"quark","PLACED"],
+ ["strange",0.0934,96,"quark","PLACED"],
+ ["charm",1.273,91,"quark","PLACED"],
+ ["bottom",4.18,88,"quark","PLACED"],
+ ["top",172.76,81,"quark","PLACED"],
+ ["proton",0.93827209,91,"composite","PLACED"],
+ ["W",80.377,82,"boson","PLACED"],
+ ["Z",91.1876,82,"boson","PLACED"],
+ ["Higgs",125.25,81,"boson","PLACED"],
+].map(([n,m,N,s,g])=>({n,m,N,s,g,
+  Nreal: Math.log(M_P/m)/LNPHI,
+  mpred: M_MU*Math.pow(PHI, N_MU-N)}));
+const SECCOL = {lepton:"#d9a93f", quark:"#c96a4a", boson:"#8fc3d9", composite:"#9ab85c"};
+const LAM = [0,1,2,3,4,5].map(k=>12*(1-Math.sin((k+1)*Math.PI/5)/((k+1)*Math.sin(Math.PI/5))));
+const DPR = Math.min(window.devicePixelRatio||1, 2);
+function fit(cv){ const w = cv.clientWidth, h = +cv.getAttribute("height");
+  cv.width=w*DPR; cv.height=h*DPR; cv.style.height=h+"px";
+  const g=cv.getContext("2d"); g.setTransform(DPR,0,0,DPR,0,0); return [g,w,h]; }
+const fmt=(x,d=4)=>{ if(x===0)return "0";
+  const a=Math.abs(x); if(a>=1e4||a<1e-3) return x.toExponential(d-1);
+  return x.toPrecision(d); };
+
+/* ---------- 1 · spectrum ---------- */
+const spec = document.getElementById("spec");
+let plucked = 1, pluckT = 0;
+function drawSpec(t){
+  const [g,w,h]=fit(spec); g.clearRect(0,0,w,h);
+  const L=46,R=18,B=34,T=18, X=l=>L+(w-L-R)*l/15, Y=v=>h-B-(h-B-T)*v/40;
+  g.strokeStyle="#2c2514"; g.beginPath(); g.moveTo(L,h-B); g.lineTo(w-R,h-B); g.stroke();
+  g.font="10px IBM Plex Mono"; g.fillStyle="#5e5640";
+  g.fillText("frequency λ →", w-110, h-10);
+  g.save(); g.translate(12,h/2); g.rotate(-Math.PI/2);
+  g.fillText("patterns", -28, 0); g.restore();
+  LAM.forEach((lam,k)=>{
+    const mult=(k+1)*(k+1), x=X(lam), bw=13;
+    const sel = k===plucked;
+    const ring = sel ? 1+0.06*Math.sin((t-pluckT)/90*Math.sqrt(lam+0.5)) : 1;
+    g.fillStyle = sel ? "#f4c860" : "#8a6d28";
+    g.fillRect(x-bw/2, Y(mult*ring), bw, h-B-Y(mult*ring));
+    g.fillStyle = sel ? "#f4c860" : "#9a8f74";
+    g.textAlign="center";
+    g.fillText(`${mult}=${k+1}²`, x, Y(mult*ring)-8);
+    g.fillStyle="#5e5640"; g.fillText(`k=${k}`, x, h-B+14);
+    g.textAlign="left";
+  });
+}
+spec.addEventListener("click",e=>{
+  const r=spec.getBoundingClientRect(), w=r.width, L=46,R=18;
+  const lx=(e.clientX-r.left-L)/(w-L-R)*15;
+  let best=0,bd=1e9; LAM.forEach((lam,k)=>{const d=Math.abs(lam-lx); if(d<bd){bd=d;best=k;}});
+  plucked=best; pluckT=performance.now();
+});
+
+/* ---------- 2+3 · ladder ---------- */
+const lad = document.getElementById("lad");
+let sel = P[1]; // muon
+const NMIN=79.5, NMAX=108.5;
+const LANE={lepton:0.18, quark:0.45, boson:0.72, composite:0.90};
+function ladY(N,h){ return 26+(h-60)*(N-NMIN)/(NMAX-NMIN); }
+function drawLadder(t){
+  const [g,w,h]=fit(lad); g.clearRect(0,0,w,h);
+  // rungs
+  for(let N=80; N<=108; N++){
+    const y=ladY(N,h);
+    g.strokeStyle = N%4===0 ? "#3a3118" : "#241e10";
+    g.beginPath(); g.moveTo(64,y); g.lineTo(w-14,y); g.stroke();
+    if(N%4===0){ g.fillStyle="#5e5640"; g.font="10px IBM Plex Mono";
+      g.fillText("N="+N, 8, y+3);
+      g.fillStyle="#3f382a";
+      g.fillText(fmt(M_MU*Math.pow(PHI,N_MU-N),2)+" GeV", 8, y+14); }
+  }
+  // phi-step bracket
+  const y1=ladY(95,h), y2=ladY(96,h);
+  g.strokeStyle="#8a6d28"; g.beginPath(); g.moveTo(w-22,y1); g.lineTo(w-22,y2); g.stroke();
+  g.fillStyle="#d9a93f"; g.font="11px IBM Plex Mono"; g.textAlign="right";
+  g.fillText("×φ", w-28, (y1+y2)/2+4); g.textAlign="left";
+  // particles at TRUE positions
+  P.forEach(p=>{
+    const x=64+(w-100)*LANE[p.s], yTrue=ladY(p.Nreal,h), yRung=ladY(p.N,h);
+    g.strokeStyle="rgba(154,143,116,.35)";
+    g.beginPath(); g.moveTo(x,yRung); g.lineTo(x,yTrue); g.stroke();
+    g.fillStyle="rgba(154,143,116,.5)";
+    g.fillRect(x-5,yRung-0.5,10,1);
+    const isSel = p===sel;
+    const pulse = isSel ? 1.5+0.5*Math.sin(t/300) : 0;
+    g.beginPath(); g.arc(x,yTrue,5+pulse,0,7);
+    g.fillStyle=SECCOL[p.s]; g.fill();
+    if(isSel){ g.strokeStyle=SECCOL[p.s]; g.beginPath(); g.arc(x,yTrue,10+pulse,0,7); g.stroke(); }
+    g.fillStyle = isSel ? "#e8e0cd" : "#9a8f74";
+    g.font=(isSel?"600 ":"")+"11px IBM Plex Mono";
+    g.fillText(p.n, x+12, yTrue+4);
+  });
+  // legend
+  let lx=70; g.font="10px IBM Plex Mono";
+  Object.entries(SECCOL).forEach(([s,c])=>{
+    g.fillStyle=c; g.beginPath(); g.arc(lx,16,4,0,7); g.fill();
+    g.fillStyle="#9a8f74"; g.fillText(s,lx+8,19); lx+=g.measureText(s).width+34;
+  });
+}
+lad.addEventListener("click",e=>{
+  const r=lad.getBoundingClientRect(), h=+lad.getAttribute("height"), w=r.width;
+  let best=null,bd=1e9;
+  P.forEach(p=>{
+    const x=64+(w-100)*LANE[p.s], y=ladY(p.Nreal,h);
+    const d=Math.hypot(e.clientX-r.left-x, e.clientY-r.top-y);
+    if(d<bd){bd=d;best=p;}
+  });
+  if(bd<46){ sel=best; renderReadout(); }
+});
+function devClass(d){ const a=Math.abs(d); return a<0.05?"dev-good":a<0.12?"dev-mid":"dev-bad"; }
+function renderReadout(){
+  const p=sel, dev=p.mpred/p.m-1, off=p.Nreal-p.N;
+  document.getElementById("readout").innerHTML = `
+    <div class="sect">${p.s}</div><h3>${p.n}</h3>
+    <div class="rrow"><span>integer shell N</span><span>${p.N}${p.N===96?" = 24×4":""}</span></div>
+    <div class="rrow"><span>rung value m<sub>P</sub>φ<sup>−N</sup></span><span>${fmt(p.mpred)} GeV</span></div>
+    <div class="rrow"><span>measured (PDG)</span><span>${fmt(p.m)} GeV</span></div>
+    <div class="rrow"><span>deviation</span><span class="${devClass(dev)}">${(dev*100).toFixed(p.n==="muon"?3:1)}%</span></div>
+    <div class="rrow"><span>shell offset</span><span class="${devClass(off)}">${off>=0?"+":""}${off.toFixed(3)}</span></div>
+    <div class="rrow"><span>grade</span><span class="gradechip g-der">${p.g}</span></div>`;
+  document.getElementById("wavenote").innerHTML =
+    `rest frequency ∝ φ<sup>−N</sup> — the ${p.n}'s clock runs <b>φ<sup>${96-p.N>=0?"+":""}${96-p.N}</sup> ≈ ${fmt(Math.pow(PHI,96-p.N),3)}×</b> the muon's. drawn rate is log-compressed for visibility; the readout is exact.`;
+}
+/* standing wave */
+const wave=document.getElementById("wave");
+function drawWave(t){
+  const [g,w,h]=fit(wave); g.clearRect(0,0,w,h);
+  const om = 0.004*Math.pow(PHI,(96-sel.N)/6);   // log-compressed display rate
+  const env = x=>Math.exp(-Math.pow((x-w/2)/(w*0.22),2));
+  g.beginPath();
+  for(let x=0;x<=w;x++){
+    const y=h/2 + Math.cos(x/w*8*Math.PI)*Math.cos(om*t)*env(x)*(h*0.38);
+    x?g.lineTo(x,y):g.moveTo(x,y);
+  }
+  g.strokeStyle=SECCOL[sel.s]; g.lineWidth=1.6; g.stroke(); g.lineWidth=1;
+  g.strokeStyle="rgba(154,143,116,.25)";
+  g.beginPath();
+  for(let x=0;x<=w;x++){const y=h/2+env(x)*(h*0.38); x?g.lineTo(x,y):g.moveTo(x,y);}
+  for(let x=w;x>=0;x--){const y=h/2-env(x)*(h*0.38); g.lineTo(x,y);}
+  g.stroke();
+}
+
+/* ---------- 5 · hydrogen ---------- */
+let meMode="placed";
+const ME_PLACED = M_MU*Math.pow(PHI,96-107), ME_MEAS = 5.1099895e-4;
+document.getElementById("alphav").textContent = (137+Math.PI/87).toFixed(7);
+document.getElementById("metoggle").addEventListener("click",e=>{
+  if(e.target.dataset.m){ meMode=e.target.dataset.m;
+    document.querySelectorAll("#metoggle button").forEach(b=>b.classList.toggle("on",b===e.target));
+    renderHyd(); }
+});
+function E1(me){ return -0.5*ALPHA*ALPHA*me*1e9; }   // eV
+function renderHyd(){
+  const me = meMode==="placed"?ME_PLACED:ME_MEAS;
+  const cv=document.getElementById("hyd"); const [g,w,h]=fit(cv); g.clearRect(0,0,w,h);
+  const Emin=-15.2, Y=E=>30+(h-66)*(E-0)/(Emin-0);
+  g.font="10px IBM Plex Mono";
+  // QED reference levels (ice, dashed)
+  for(let n=1;n<=5;n++){
+    const E=E1(ME_MEAS)/(n*n), y=Y(E);
+    g.strokeStyle="rgba(143,195,217,.35)"; g.setLineDash([4,4]);
+    g.beginPath(); g.moveTo(60,y); g.lineTo(w-20,y); g.stroke(); g.setLineDash([]);
+  }
+  // framework levels (gold, solid)
+  for(let n=1;n<=5;n++){
+    const E=E1(me)/(n*n), y=Y(E);
+    g.strokeStyle="#d9a93f"; g.beginPath(); g.moveTo(60,y); g.lineTo(w-20,y); g.stroke();
+    g.fillStyle="#9a8f74"; g.fillText(`n=${n}`, 24, y+3);
+    if(n<3){ g.fillStyle="#d9a93f"; g.fillText(E.toFixed(2)+" eV", w-86, y-5); }
+  }
+  g.fillStyle="#8fc3d9"; g.fillText("· · · QED reference", 60, h-14);
+  g.fillStyle="#d9a93f"; g.fillText("— this simulator", 220, h-14);
+  // Lyman-alpha arrow
+  const yA=Y(E1(me)), yB=Y(E1(me)/4);
+  g.strokeStyle="#c96a4a"; g.beginPath(); g.moveTo(110,yB); g.lineTo(110,yA); g.stroke();
+  g.beginPath(); g.moveTo(106,yA-7); g.lineTo(110,yA); g.lineTo(114,yA-7); g.stroke();
+  const lam_nm = 1239.84/(E1(me)/4 - E1(me));
+  g.fillStyle="#c96a4a"; g.fillText("Lyman-α "+lam_nm.toFixed(1)+" nm", 118, (yA+yB)/2);
+  const dev = E1(me)/E1(ME_MEAS)-1;
+  document.getElementById("hydout").innerHTML = `
+    <div class="sect">hydrogen, from the derived equations</div>
+    <h3>E₁ = ${E1(me).toFixed(3)} eV</h3>
+    <div class="rrow"><span>QED / measured</span><span>−13.606 eV</span></div>
+    <div class="rrow"><span>deviation</span><span class="${devClass(dev)}">${(dev*100).toFixed(2)}%</span></div>
+    <div class="rrow"><span>Bohr radius</span><span>${fmt(HBARC_M/(ALPHA*me),3)} m</span></div>
+    <div class="rrow"><span>electron input</span><span>${meMode==="placed"?"shell 107 (+3.9%)":"measured"}</span></div>
+    <div class="rrow"><span>residual source</span><span>${meMode==="placed"?"= mₑ shell offset, nothing else":"α chain only (10⁻⁶)"}</span></div>`;
+}
+
+/* ---------- ledger table ---------- */
+(function(){
+  const rows = P.map(p=>{
+    const dev=p.mpred/p.m-1;
+    return `<tr><td>${p.n}</td><td>${p.N}</td><td>${fmt(p.mpred)}</td><td>${fmt(p.m)}</td>
+      <td class="${devClass(dev)}">${(dev*100).toFixed(1)}%</td><td>${p.g}</td></tr>`;
+  }).join("");
+  document.getElementById("ledtab").innerHTML =
+    `<thead><tr><th>particle</th><th>shell</th><th>rung [GeV]</th><th>PDG [GeV]</th><th>dev</th><th>grade</th></tr></thead>
+     <tbody>${rows}</tbody>
+     <tbody><tr><td colspan="6" style="color:#5e5640;font-size:11px;padding-top:12px">
+     structural today: gauge inventory · chirality · charge lattice in thirds · force-law forms.
+     conditional: G (−1.9×10⁻⁴), α⁻¹ (+1.0×10⁻⁶). open, named: shell selection · offsets ·
+     independent hypercharge · generations (D₄-triality conjecture) · neutrinos · running couplings.</td></tr></tbody>`;
+})();
+
+/* ---------- loop + reveal ---------- */
+renderReadout(); renderHyd();
+function loop(t){ drawSpec(t); drawLadder(t); drawWave(t); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add("in")),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+window.addEventListener("resize",renderHyd);
+</script>
+</body>
+</html>
