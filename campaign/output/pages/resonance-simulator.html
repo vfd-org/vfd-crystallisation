@@ -130,6 +130,28 @@ footer a{color:var(--ice);text-decoration:none}
 footer a:hover{text-decoration:underline}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
+/* decomposition */
+.miss-row{display:grid;grid-template-columns:92px 1fr 64px 110px;gap:12px;align-items:center;
+  padding:7px 0;border-bottom:1px solid rgba(44,37,20,.5);font-family:var(--mono);font-size:12px}
+.miss-row .nm{color:var(--txt)}
+.miss-bar{height:8px;border-radius:2px;background:var(--line);position:relative;overflow:hidden}
+.miss-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:2px}
+.miss-off{text-align:right;color:var(--txt-dim)}
+.catchip{font-size:9.5px;letter-spacing:.12em;padding:2px 7px;border-radius:2px;text-align:center}
+.cat-ANCHOR{background:rgba(244,200,96,.16);color:var(--gold-bright);border:1px solid var(--gold-dim)}
+.cat-PLACEMENT{background:rgba(154,184,92,.12);color:var(--green);border:1px solid #4a5a2c}
+.cat-MIXING{background:rgba(143,195,217,.12);color:var(--ice);border:1px solid var(--ice-dim)}
+.cat-SCHEME{background:rgba(138,90,63,.14);color:#c89a78;border:1px solid #5a3f2c}
+.cat-BINDING{background:rgba(154,184,92,.08);color:#8aa05c;border:1px solid #3f4a2c}
+.cat-DRESSING{background:rgba(201,106,74,.12);color:#e09a7e;border:1px solid #6b3a28}
+.miss-reading{grid-column:1/-1;font-size:11px;color:var(--txt-faint);padding:0 0 4px 0;display:none}
+.miss-row.open .miss-reading{display:block}
+.miss-row{cursor:pointer}
+.factgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px}
+.fact{border:1px solid var(--line);border-radius:4px;padding:14px 16px;background:rgba(23,19,9,.5)}
+.fact .fid{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.2em}
+.fact h5{font-family:var(--serif);font-weight:500;font-size:15.5px;margin:4px 0 6px;color:var(--txt)}
+.fact p{font-family:var(--mono);font-size:11px;color:var(--txt-dim);line-height:1.6}
 ::selection{background:rgba(217,169,63,.3)}
 </style>
 </head>
@@ -208,6 +230,18 @@ footer a:hover{text-decoration:underline}
   </div>
 </section>
 
+<!-- ============ 4½ · DECOMPOSITION ============ -->
+<section id="misses">
+  <div class="wrap reveal">
+    <div class="sec-num">The decomposition · checks SR6, SR9, SR10</div>
+    <h2>Where the misses come from <span class="grade g-der">ATTRIBUTED</span></h2>
+    <p class="sub">The deviations are not one mystery. Each miss has a dominant, recorded cause —
+    and two of the four causes are not the framework's to explain at all. <b>Click a row.</b></p>
+    <div class="panel" id="missrows"></div>
+    <div class="factgrid" id="factcards"></div>
+  </div>
+</section>
+
 <!-- ============ 5 · ATOMS ============ -->
 <section id="atoms">
   <div class="wrap reveal">
@@ -252,7 +286,7 @@ footer a:hover{text-decoration:underline}
     <p>Every number on this page is recomputed in your browser from φ, the muon anchor, and the
     derived equations — view source. Verify the claims yourself:
     <a href="https://github.com/vfd-org/crystal-and-clock-companion">github.com/vfd-org/crystal-and-clock-companion</a>
-    — thirteen suites, 228+ checks, <code>bash run_all_verifications.sh</code>.
+    — thirteen suites, 230+ checks, <code>bash run_all_verifications.sh</code>.
     Papers LIII–LVIII; the open items are listed, not hidden.
     <br><br>Institute of Vibrational Field Dynamics · companion to <i>The Crystal and the Clock</i></p>
   </div>
@@ -339,6 +373,44 @@ spec.addEventListener("click",e=>{
   plucked=best; pluckT=performance.now();
 });
 
+/* ---------- decomposition section ---------- */
+const CATEGORY = {
+ muon:["ANCHOR","the one structural rung (96 = 24\u00d74); the ladder's anchor"],
+ Z:["PLACEMENT","sharp placement: \u22122.3%"],
+ W:["MIXING","= Z's rung + the Weinberg angle (a named open): not an independent miss. sin\u00b2\u03b8_W = 0.2231 vs PDG 0.2233"],
+ up:["SCHEME","compared against an MS-bar bookkeeping number, not a physical pitch"],
+ down:["SCHEME","compared against an MS-bar bookkeeping number, not a physical pitch"],
+ strange:["SCHEME","compared against an MS-bar bookkeeping number, not a physical pitch"],
+ charm:["SCHEME","compared against an MS-bar bookkeeping number, not a physical pitch"],
+ bottom:["SCHEME","compared against an MS-bar bookkeeping number, not a physical pitch"],
+ proton:["BINDING","~99% QCD binding energy; not the bare ladder's to sound"],
+ electron:["DRESSING","the genuine open layer: interaction self-energy on a bare note"],
+ tau:["DRESSING","the genuine open layer: interaction self-energy on a bare note"],
+ top:["DRESSING","the genuine open layer: interaction self-energy on a bare note"],
+ Higgs:["DRESSING","the genuine open layer: interaction self-energy on a bare note"],
+};
+const CATCOL = {ANCHOR:"#f4c860",PLACEMENT:"#9ab85c",MIXING:"#8fc3d9",
+                SCHEME:"#c89a78",BINDING:"#8aa05c",DRESSING:"#e09a7e"};
+(function(){
+  const rows=[...P].sort((a,b)=>Math.abs(b.Nreal-b.N)-Math.abs(a.Nreal-a.N)).map(p=>{
+    const off=p.Nreal-p.N, cat=CATEGORY[p.n][0];
+    return `<div class="miss-row" onclick="this.classList.toggle('open')">
+      <span class="nm">${p.n}</span>
+      <span class="miss-bar"><i style="width:${Math.min(100,Math.abs(off)/0.5*100)}%;background:${CATCOL[cat]}"></i></span>
+      <span class="miss-off">${off>=0?"+":""}${off.toFixed(3)}</span>
+      <span class="catchip cat-${cat}">${cat}</span>
+      <span class="miss-reading">${CATEGORY[p.n][1]}</span></div>`;
+  }).join("");
+  document.getElementById("missrows").innerHTML =
+    `<div class="note" style="margin:0 0 10px">|shell offset| by particle, coloured by attributed cause (half a shell = the maximum possible miss)</div>`+rows;
+  const facts=[["SR9","not finer rungs","sub-rung positions are chance-like at half- and quarter-shell grids (p = 0.32, 0.40): the missing layer is not more geometry of the same kind."],
+   ["SR10","the W is the Z plus the mixing","W\u2013Z shell split 0.262 = log_\u03c6(1/cos \u03b8_W) exactly; the EW sector has one placement (Z), one named open (the mixing), and the Higgs."],
+   ["SR6","the gradient","mean |offset|: leptons 0.071 &lt; EW bosons 0.184 &lt; quarks 0.288 &lt; composite 0.462 \u2014 sharpest where mass is physical, worst where it is bookkeeping."]];
+  document.getElementById("factcards").innerHTML = facts.map(([id,t,x])=>
+    `<div class="fact"><span class="fid">${id} \u00b7 machine-checked</span><h5>${t}</h5><p>${x}</p></div>`).join("");
+})();
+
+
 /* ---------- 2+3 · ladder ---------- */
 const lad = document.getElementById("lad");
 let sel = P[1]; // muon
@@ -405,7 +477,8 @@ function renderReadout(){
     <div class="rrow"><span>measured (PDG)</span><span>${fmt(p.m)} GeV</span></div>
     <div class="rrow"><span>deviation</span><span class="${devClass(dev)}">${(dev*100).toFixed(p.n==="muon"?3:1)}%</span></div>
     <div class="rrow"><span>shell offset</span><span class="${devClass(off)}">${off>=0?"+":""}${off.toFixed(3)}</span></div>
-    <div class="rrow"><span>grade</span><span class="gradechip g-der">${p.g}</span></div>`;
+    <div class="rrow"><span>grade</span><span class="gradechip g-der">${p.g}</span></div>
+    <div class="rrow"><span>miss attributed to</span><span class="catchip cat-${CATEGORY[p.n][0]}">${CATEGORY[p.n][0]}</span></div>`;
   document.getElementById("wavenote").innerHTML =
     `rest frequency ∝ φ<sup>−N</sup> — the ${p.n}'s clock runs <b>φ<sup>${96-p.N>=0?"+":""}${96-p.N}</sup> ≈ ${fmt(Math.pow(PHI,96-p.N),3)}×</b> the muon's. drawn rate is log-compressed for visibility; the readout is exact.`;
 }
