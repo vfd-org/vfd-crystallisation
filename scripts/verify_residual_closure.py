@@ -522,6 +522,11 @@ def sm_gauge_structure():
     check("SM2 stabiliser of e1 has dimension 8", len(stab) == 8,
           f"dim = {len(stab)}")
 
+    # SM3a: derivations are skew-symmetric (they preserve the norm form)
+    ok_skew = all(np.max(np.abs(D + D.T)) < 1e-9 for D in stab)
+    check("SM3a stabiliser elements are skew-symmetric (norm form preserved)",
+          ok_skew)
+
     # SM3: complex-linearity and tracelessness -> su(3)
     # L1[k, j] = component k of e1 e_j (left multiplication by e1)
     L1 = np.array([[m8[1, j, k] for j in range(8)] for k in range(8)])

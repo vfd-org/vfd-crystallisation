@@ -1,0 +1,134 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\twoI}{2\mathbf{I}}
+\newcommand{\Oc}{\mathbb{O}}
+\newcommand{\Hq}{\mathbb{H}}
+
+\title{The Gauge-Group Inventory from the Two Arenas\\[6pt]
+\large $SU(3)\times SU(2)$ with a Distinguished Clock Circle: Octonionic Stabiliser, Quaternionic Frame Split,\\ the Lie-Algebra Consistency Null --- and the Wiring That Remains Open}
+\author{Lee Smart\\ \textit{Institute of Vibrational Field Dynamics}\\ \texttt{contact@vibrationalfielddynamics.org}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed). Computational claims verified by \texttt{scripts/verify\_residual\_closure.py} (items SM0--SM6 with SM3a; suite 24/24) and \texttt{scripts/verify\_crystal\_forcing.py} (items YM1--YM2; suite 17/17, counts as of this revision). The word \emph{inventory} is load-bearing and mechanism-scoped: this paper derives which groups the two-arena mechanism makes available and why that mechanism yields no others --- not charges, not chirality, not couplings, and not an exclusion of symmetry from other origins (\S\ref{sec:honest}).
+
+\begin{abstract}
+The Standard Model's internal symmetry is built from three factors: $SU(3)$, $SU(2)$, $U(1)$. This paper derives the internal symmetry structure that the two-arena mechanism of the rendered VFD substrate makes available --- and matches it against that inventory --- from three inputs the programme has already established: (A1) the renderable arenas are the parallelisable spheres $S^1, S^3, S^7$ of Adams' theorem, with the one-dimensional case excluded by the three-axis scene requirement, leaving the quaternionic 3-sphere and the octonionic 7-sphere; the division-algebra tower stops there (we exhibit a sedenion zero divisor explicitly); (A2) the rendered observer frame splits the quaternionic symmetry --- right multiplication is consumed as the scene's spatial rotations, left multiplication transports frames trivially and is internal; (A3) the tick distinguishes one axis (the pentagonal clock element, order 10, and the chart on the octonionic arena likewise requires choosing the clock unit). The derivations are by direct computation, with no Lie-theoretic data supplied as input: the derivation algebra of the octonions, computed as the null space of the Leibniz linear system over the Cayley--Dickson multiplication table, has dimension 14 ($\mathfrak g_2$); the subalgebra stabilising the clock unit has dimension 8, commutes with the complex structure $J = L_{e_1}$, is skew-symmetric (derivations preserve the norm form), complex-traceless, and of the full dimension $8 = \dim\mathfrak{su}(3)$ --- so it equals $\mathfrak{su}(3)$, with compactness, simplicity, and rank 2 verified as corroboration. The quaternionic arena contributes exactly one internal $SU(2)$ (the left factor), and the clock element lies in a unique circle subgroup, a distinguished $U(1)_{\rm clock} \subset SU(2)$. A companion dynamical pair of checks illustrates, with a falsifiable null, the classical theorem that gauge consistency of a self-coupled vector multiplet forces a Lie-algebra coupling (the $su(2)$ multiplet's gauge variation cancels at first order, odd-part scaling $O(s^3)$, ratio $8.00$; a non-Jacobi coupling fails at first order, ratio $2.03$). The honest boundary is stated at full strength, beginning in the main theorem itself: the derived structure is $SU(3)\times SU(2)$ \emph{with a distinguished circle subgroup inside the} $SU(2)$ --- the three Standard-Model factor types all appear, but the independent hypercharge $U(1)$ of the Standard Model (equivalently the Weinberg angle and the embedding pattern) is \emph{not} derived; neither are chirality, representation content, coupling strengths, or the heavy-sector masses. The gap has moved from ``no mechanism'' to ``mechanism with unfinished wiring.''
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+The gravity chain of this programme (Papers LIII \citep{SmartLIII}, LVII \citep{SmartLVII}) derives the form of general relativity from one mechanism: collective fields plus the substrate's indifference to observer bookkeeping force unique gauge-invariant dynamics. The electromagnetic case rides the same theorem one rank down. The natural next question --- where does the \emph{rest} of the Standard Model's symmetry come from? --- splits into two parts of very different difficulty: which groups (the inventory), and how they wire to matter (charges, chirality, mixing, couplings). This paper gives a computationally checked derivation of the inventory the two-arena mechanism produces, under the stated arena inputs, and is explicit that it does not settle the second part --- nor exclude internal symmetry arising from mechanisms other than the arenas.
+
+The classical precedent is G\"unaydin--G\"ursey \citep{GunaydinGursey1973}: colour $SU(3)$ as the stabiliser of a complex structure inside $G_2 = \mathrm{Aut}(\Oc)$; the surrounding literature on division-algebra approaches to the Standard Model is substantial \citep{Dixon1994, Furey2016, Baez2002}. What the present programme adds is \emph{necessity at the input layer}: the octonionic arena is not chosen here --- the rung-ladder theorems leave exactly two arenas able to host the three-axis scene (the 3- and 7-sphere), and the clock-unit selection that breaks $G_2 \to SU(3)$ is the same selection the rendering chart already makes. The inventory then assembles with no further choices.
+
+\subsection{Inputs}
+
+\begin{itemize}
+\item[\textbf{(A1)}] \emph{Two arenas, and the tower stops.} Adams' Hopf-invariant-one theorem \citep{Adams1960} allows parallelisable spheres in dimensions $0,1,3,7$ only; the programme's rendering requirements (a three-axis scene; rung-ladder theorems) exclude the zero- and one-dimensional cases, leaving $S^3$ (quaternionic) and $S^7$ (octonionic). The division-algebra ladder $\mathbb R \to \mathbb C \to \Hq \to \Oc$ ends at the octonions: the next Cayley--Dickson double (sedenions) has zero divisors --- sim SM6 exhibits $(e_2 - e_9)(e_6 - e_{13}) = 0$ explicitly from the constructed multiplication table.
+\item[\textbf{(A2)}] \emph{The frame split.} On the quaternionic arena, right multiplication by a unit quaternion rotates the canonical observer frame by the adjoint action (it \emph{is} a spatial rotation of the scene), while left multiplication transports frame components trivially --- it is internal. Machine-verified on the actual 600-cell (gravity-chain suite, sims T14a--b); this paper re-uses the result.
+\item[\textbf{(A3)}] \emph{The tick distinguishes an axis.} The pentagonal clock is left multiplication by a specific order-10 unit (real part $\cos(\pi/5) = \varphi/2$; sim SM5 verifies the order and frame-triviality), and on the octonionic arena the rendering-chart construction distinguishes one imaginary unit as the clock axis (the octonionic chart of the rung-ladder documents, \texttt{docs/rung-dimension-ladder.md} \S7.2) --- we take this selection as part of (A3); its necessity is inherited from that construction, not re-derived here.
+\end{itemize}
+
+%==================================================================
+\section{The octonionic factor: $G_2 \to SU(3)$ by computation}\label{sec:su3}
+%==================================================================
+
+All structure below is computed from the Cayley--Dickson construction $\mathbb R \to \mathbb C \to \Hq \to \Oc$; sim SM0 confirms the resulting 8-dimensional algebra composes norms ($|xy| = |x||y|$, the Hurwitz property), so it is the octonions.
+
+\begin{theorem}[$\mathrm{Der}(\Oc) = \mathfrak g_2$, dimension 14]\label{thm:g2}
+The space of derivations --- linear maps $D$ on $\Oc$ with $D(xy) = D(x)y + xD(y)$ --- computed as the null space of the $512\times64$ Leibniz linear system over the multiplication table, has dimension exactly \textbf{14} (verification item SM1). The dimension is the computation's output, with no Lie-theoretic input; the \emph{name} $\mathfrak g_2$ then attaches via the standard identification $\mathrm{Der}(\Oc) \cong \mathfrak g_2$ \citep{Baez2002}.
+\end{theorem}
+
+\begin{theorem}[The clock-unit stabiliser is $\mathfrak{su}(3)$]\label{thm:su3}
+Within $\mathrm{Der}(\Oc)$, the subalgebra annihilating the clock unit $e_1$ has dimension \textbf{8} (sim SM2), and:
+\begin{itemize}
+\item[(i)] every element is skew-symmetric on the imaginary octonions (derivations of a composition algebra preserve the norm form; verified numerically, item SM3a), commutes with the complex structure $J = L_{e_1}$ on the six transverse directions, where $J^2 = -1$ (automatic from the Leibniz rule, $D(e_1x) = e_1D(x)$ when $De_1 = 0$; verified), and is complex-traceless: $\mathrm{tr}(D|_W) = \mathrm{tr}(JD|_W) = 0$ (item SM3). Skew $+$ $J$-linear places it in $\mathfrak u(3)$ on $W \cong \mathbb C^3$; complex-tracelessness refines this to $\mathfrak{su}(3)$;
+\item[(ii)] the inclusion is an equality by dimension: the stabiliser has dimension $8 = \dim\mathfrak{su}(3)$. As corroboration (not load-bearing), the algebra is verified closed under brackets (residuals $<10^{-8}$), compact (negative-definite Killing form), simple (random-element ideal closure), and of rank 2 (item SM4).
+\end{itemize}
+Hence the stabiliser \emph{is} $\mathfrak{su}(3)$ as a Lie algebra; the corresponding connected automorphism subgroup is $SU(3)$ (exponentiation inside the compact group $G_2$; we use the group name for the physics statements and the algebra name for the computations). The composition-algebra facts used are exactly two, both classical and both verified numerically here: derivations annihilate $1$ and preserve the norm form (hence are skew), and left multiplication by a unit imaginary octonion squares to $-1$ on its transverse space.
+\end{theorem}
+
+So the same clock-unit selection that builds the octonionic rendering chart breaks $G_2 \to SU(3)$, and the six transverse units organise into $\mathbb C^3$. This is the G\"unaydin--G\"ursey mechanism with its choice removed: by (A1) the arena is forced, and by (A3) the unit selection is the chart's, not the model-builder's.
+
+%==================================================================
+\section{The quaternionic factor: internal $SU(2)$ and the clock $U(1)$}\label{sec:su2}
+%==================================================================
+
+On the 3-sphere arena the isometry relevant to the substrate is $SU(2)_L \times SU(2)_R$ (left and right unit-quaternion multiplication). By (A2) the right factor is spent: it acts on the canonical frame $\{v_0i, v_0j, v_0k\}$ by the adjoint rotation and is the scene's spatial rotation group. The left factor commutes with the entire rendered frame structure --- frame components transport trivially under it --- so it is the arena's \emph{internal} symmetry: an exact $SU(2)$ that rotates substrate content without moving the scene.
+
+Inside it, the tick (A3) distinguishes the one-parameter subgroup through the clock element: sim SM5 locates the clock vertex ($q_0 = \varphi/2$), confirms its left-permutation has order exactly 10, and that it is frame-trivial. Being of finite order it generates a cyclic group $\mathbb Z_{10}$, which lies in exactly one circle subgroup (the one-parameter rotation group about its axis): a distinguished $U(1)_{\rm clock} \subset SU(2)_{\rm left}$.
+
+\begin{theorem}[The inventory]\label{thm:inventory}
+The internal symmetry structure produced by the two-arena mechanism is
+$$SU(3) \;\times\; SU(2), \qquad \text{with a distinguished circle subgroup } U(1)_{\rm clock} \subset SU(2),$$
+and the mechanism produces nothing else: the arena tower stops at the octonions (A1/SM6); the octonionic arena contributes exactly $SU(3)$ (Theorem~\ref{thm:su3}: its full $G_2$ is broken by the same clock selection that builds the chart); the quaternionic arena contributes exactly one internal $SU(2)$ (the other factor being the scene's rotations); and the tick distinguishes exactly one circle inside it. The extraction rule being scoped is: continuous internal factors arise, in this mechanism, only as (a) automorphism groups of an arena's division algebra surviving the chart construction, or (b) arena isometry factors not consumed by the rendered frame. Under that rule, more independent continuous factors would require more division algebras, and there are none. The rule does not exclude internal symmetry of other origins (discrete remnants, emergent symmetries of the dynamics, representation-level structure).
+
+The Standard-Model comparison is then precise: all three SM factor \emph{types} appear --- an $SU(3)$, an $SU(2)$, and a distinguished $U(1)$ --- but the SM's hypercharge $U(1)_Y$ is an \emph{independent} factor not contained in $SU(2)_L$, and that independence is exactly what the mechanism has not yet produced (\S\ref{sec:honest}).
+\end{theorem}
+
+%==================================================================
+\section{Dynamics: the coupling must be a Lie algebra}\label{sec:ym}
+%==================================================================
+
+The inventory concerns symmetry of the substrate; gauge \emph{dynamics} for each factor rides the chart-freedom uniqueness mechanism of the gravity chain. The abelian case is proven there (Maxwell forced; Paper LIII sim T13). The non-abelian completion has a sharp consistency theorem, here verified numerically with a genuine null:
+
+\begin{proposition}[Lie-algebra forcing: the classical theorem, machine-illustrated]\label{thm:lie}
+Consider a multiplet of vector fields $A^a_\mu$ with field strength $F^a_{\mu\nu} = \partial_\mu A^a_\nu - \partial_\nu A^a_\mu + f^{abc}A^b_\mu A^c_\nu$ and gauge transformation $\delta A^a_\mu = \partial_\mu\chi^a + f^{abc}A^b_\mu\chi^c$. On a 4-dimensional grid with the full nonlinear action $S = \tfrac14\int (F^a_{\mu\nu})^2$:
+\begin{itemize}
+\item[(i)] for $f = \varepsilon_{abc}$ ($su(2)$), the odd-in-$s$ part of $S(A + s\,\delta A)$ scales as $O(s^3)$ (measured ratio $8.00$ under halving): the first-order gauge variation cancels exactly (sim YM1);
+\item[(ii)] for a coupling tensor antisymmetric in its first two indices but violating the Jacobi identity, the odd part scales as $O(s)$ (measured ratio $2.03$): invariance fails at first order (sim YM2).
+\end{itemize}
+These two computations \emph{illustrate, with a falsifiable null}, the classical theorem that consistency of the self-coupled multiplet forces the charge algebra to be a Lie algebra \citep{GellMannGlashow1961, Deser1970}; the theorem itself --- every consistent cubic completion of $N$ Maxwell fields is Yang--Mills for some Lie algebra --- is the deformation-theoretic result of \citet{BarnichHenneaux1993}, cited, not re-derived. (Index convention: $f^{abc}$ is antisymmetric in $(a,b)$ as used in both the transformation law and the field strength, all colour indices written down; for the $su(2)$ case $f = \varepsilon$ is totally antisymmetric.)
+\end{proposition}
+
+Together: the inventory (Theorem~\ref{thm:inventory}) supplies the available algebras; the cited forcing theorem (Proposition~\ref{thm:lie}) plus the uniqueness mechanism supply the form of their dynamics. What neither supplies is the wiring.
+
+%==================================================================
+\section{The honest boundary: what is NOT derived}\label{sec:honest}
+%==================================================================
+
+Stated at full strength, because a hostile reader should find it stated by us first:
+
+\begin{enumerate}
+\item \textbf{The embedding pattern / Weinberg angle.} In the Standard Model, hypercharge $U(1)_Y$ is \emph{not} a subgroup of $SU(2)_L$; the electroweak group mixes the factors (and the global structure is $S(U(3){\times}U(2))$-like). Here the derived $U(1)_{\rm clock}$ sits inside the internal $SU(2)$. The inventory matches; the embedding does not yet. Deriving the correct mixing is open.
+\item \textbf{Chirality.} Why the internal $SU(2)$ couples to left-handed matter only: not derived.
+\item \textbf{Representation content.} The split $\Oc\otimes\mathbb C \supset \mathbb C \oplus \mathbb C^3$ under $SU(3)$ offers the classical lepton/quark slot pattern \citep{GunaydinGursey1973}; actual fermion assignments, the three generations, and anomaly cancellation: not derived.
+\item \textbf{Couplings and masses.} Gauge coupling strengths: not derived. Heavy masses (W, Z, Higgs, heavy quarks) have cascade shell \emph{placements} (Z at shell 82, offset $-0.049$) but the shell integers are not derived --- the same open item as the conditional Newton's-constant anchor of Paper LVII \citep{SmartLVII}.
+\item \textbf{Non-abelian uniqueness.} Proposition~\ref{thm:lie} is an illustration-with-null of a cited classical theorem, not an independent proof; the deformation-cohomology argument is \citet{BarnichHenneaux1993}'s.
+\item \textbf{Mechanism scope.} The inventory theorem excludes further factors \emph{from the arena mechanism} only; internal symmetry from other structures (discrete remnants, emergent symmetries of the dynamics) is not excluded.
+\end{enumerate}
+
+Before this work the programme's honest list said the gauge bundle ``is not derived.'' That sentence is now too strong, and its correct replacement is exact: \emph{the shape of the bundle is derived; the wiring is not.}
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+Manuscript: \texttt{papers/paper-lvi/paper-lvi.tex}; derivation notes: \texttt{docs/gauge-group-from-arenas.md}. Verification: \texttt{python3 scripts/verify\_residual\_closure.py} (SM0--SM6 among 23/23; NumPy, SciPy, SymPy) and \texttt{python3 scripts/verify\_crystal\_forcing.py} (YM1--YM2 among 14/14). The octonions are constructed in-script by Cayley--Dickson doubling; nothing about $G_2$ or $\mathfrak{su}(3)$ is assumed as input anywhere.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

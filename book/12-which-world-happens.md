@@ -1,4 +1,4 @@
-# Chapter 11 — Which World Happens
+# Chapter 12 — Which World Happens
 
 Balance a marble on the very top of a smooth dome. It cannot stay. The least breath of air, the faintest tremor in the table, and it rolls, and it rolls in some particular direction, down one side rather than another. But look at the situation just before it moves. The dome is perfectly round. Every direction is as good as every other. There is nothing in the setup that prefers north over south or east over west. And yet the marble has to go somewhere; it cannot roll in all directions at once or sit forever at a point it cannot keep. So the perfect symmetry of the dome is broken, and what breaks it is not a law of domes, which treats every direction alike, but the particular history of that particular marble, the stray nudge that happened to come from one side. The law gives you the dome. The accident gives you the direction.
 

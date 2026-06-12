@@ -89,6 +89,21 @@ def cf_forcing():
     n = len(verts)
     idx = {key(v): i for i, v in enumerate(verts)}
 
+    # CF0: data-file provenance — the stored vertices ARE the
+    # unit-circumradius 600-cell: 120 distinct unit quaternions whose
+    # pairwise inner products take only the nine icosian values.
+    phi = (1 + np.sqrt(5)) / 2
+    norms_ok = np.max(np.abs(np.linalg.norm(verts, axis=1) - 1)) < 1e-12
+    distinct = len(idx) == 120
+    G = verts @ verts.T
+    allowed = np.array([1.0, -1.0, 0.5, -0.5, 0.0,
+                        phi / 2, -phi / 2, 1 / (2 * phi), -1 / (2 * phi)])
+    vals_ok = np.max(np.min(np.abs(G[..., None] - allowed), axis=-1)) < 1e-9
+    deg12 = np.all(np.sum(np.abs(G - phi / 2) < 1e-9, axis=1) == 12)
+    check("CF0 data provenance: 120 distinct unit quaternions, icosian "
+          "inner-product spectrum, 12 nearest neighbours at phi/2",
+          norms_ok and distinct and vals_ok and deg12)
+
     # CF1: closure under multiplication and inverses
     mul = np.zeros((n, n), dtype=int)
     ok_closed = True
@@ -178,8 +193,14 @@ def cf_forcing():
     for p in range(ncl):
         for q in range(ncl):
             A[p, q] = np.sum(sizes * chi2 * chars[p] * chars[q]) / n
+    ok_int = np.max(np.abs(A - np.round(A))) < 1e-9
     A = np.round(A)
-    deg = (A > 0).sum(axis=1) - np.diag(A > 0)
+    ok_mats = (ok_int and np.allclose(A, A.T)
+               and np.all((A == 0) | (A == 1) | (np.eye(ncl) > 0))
+               and np.all(np.diag(A) == 0)
+               and np.all(A >= 0))
+    check("CF4 pre-check: McKay matrix is symmetric, non-negative integer, "
+          "0/1 off-diagonal, zero diagonal", ok_mats)
     Adj = (A > 0).astype(int)
     np.fill_diagonal(Adj, 0)
     nedge = Adj.sum() // 2
@@ -276,10 +297,26 @@ def ge_graph_knows_shape():
 
     G_rec = X @ X.T
     G_true = verts @ verts.T
-    # compare as multisets per row (allow global O(4) rotation)
-    ok_gram = np.max(np.abs(np.sort(G_rec, axis=1) - np.sort(G_true, axis=1))) < 1e-8
-    check("GE1 spectral embedding reproduces the 600-cell's inner-product "
-          "geometry exactly (up to global rotation)", ok_gram)
+    # full Gram-matrix equality, same vertex labelling
+    ok_gram = np.max(np.abs(G_rec - G_true)) < 1e-9
+    check("GE1 full Gram matrix of the spectral embedding equals the "
+          "600-cell's (same labelling, every angle)", ok_gram,
+          f"max |G_rec - G_true| = {np.max(np.abs(G_rec - G_true)):.2e}")
+    # and the explicit global alignment: Procrustes. Eigenvector signs are
+    # free, so orient the eigenbasis first to make the alignment a proper
+    # rotation (flip one column if the optimal orthogonal map is improper).
+    U, _, Vt = np.linalg.svd(X.T @ verts)
+    if np.linalg.det(U @ Vt) < 0:
+        X[:, -1] *= -1.0
+        U, _, Vt = np.linalg.svd(X.T @ verts)
+    R = U @ Vt
+    ok_proc = (np.max(np.abs(X @ R - verts)) < 1e-9
+               and abs(np.linalg.det(R) - 1.0) < 1e-9)
+    check("GE1b with oriented eigenbasis, an explicit proper rotation "
+          "(det = +1) maps the reconstruction onto the true vertices "
+          "pointwise", ok_proc,
+          f"max coordinate dev = {np.max(np.abs(X @ R - verts)):.2e}, "
+          f"det R = {np.linalg.det(R):+.1f}")
     # and the neighbour relation is recovered: largest off-diagonal inner
     # product = cos 36 deg = phi/2, exactly the edge relation
     phi = (1 + np.sqrt(5)) / 2

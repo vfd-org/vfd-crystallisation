@@ -1,0 +1,193 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\twoI}{2\mathbf{I}}
+\newcommand{\Hq}{\mathbb{H}}
+\newcommand{\Vsix}{V_{600}}
+
+\title{The Rendering Layer\\[6pt]
+\large Spectral Dimension Three, the Canonical Kernel, the Observer Chart,\\ and Second-Order Time from the 600-Cell Substrate}
+\author{Lee Smart\\ \textit{Institute of Vibrational Field Dynamics}\\ \texttt{contact@vibrationalfielddynamics.org}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed). All computational claims verified by \texttt{scripts/verify\_rendering\_layer.py} (21/21 PASS), with named items cross-checked by \texttt{verify\_gap\_strengthening.py} (22/22, including the irreducibility item SR1 and the distinctness item SR2), \texttt{verify\_crystal\_forcing.py} GE0--GE3, \texttt{verify\_residual\_closure.py} RC1--RC3, and the gravity-chain suite \texttt{verify\_gr\_closure.py} item T10. The bridge is conditional where stated: R4 rests on the named Hypothesis (H-equiv) plus the discretisation stencil, and general-readout simultaneity rests on (H-simul-int).
+
+\begin{abstract}
+The VFD programme requires a constructive bridge from a substrate state $F_t \in \mathbb R^{\Vsix}$ on the 120 vertices of the 600-cell to a \emph{spatial scene}: a field over a local three-dimensional chart anchored at an observer location. This paper supplies that bridge in four results --- three theorem-grade, one (the time structure) conditional on a named hypothesis --- and verifies each numerically. (R1) \emph{Arena}: the graph Laplacian of $\Vsix$, computed from connectivity alone, has eigenspace multiplicities that are exactly the squares $\{1,4,9,16,25,36\}$ of the $S^3$ harmonic levels $k=0..5$ (plus three folded blocks), with the closed-form dispersion relation $\lambda_k = 12\bigl(1 - \sin((k{+}1)\pi/5)/((k{+}1)\sin(\pi/5))\bigr)$ holding at machine precision; three independent diagnostics (multiplicity law, Weyl exponent $3.09$, dispersion constant) read the $S^3$ harmonic signature --- spatial dimension \textbf{3} --- off the connectivity table alone, the embedding itself being the substrate's definition. (R2) \emph{Kernel}: of four axioms, the stationarity axiom (K4) selects the operator family $\pi_r = (I + r^2L)^{-1}$ outright and the remaining three hold for it as theorems, which is automorphism-equivariant and exponentially local with monotone coherence length. (R3) \emph{Chart}: quaternionic parallelism hands every anchor a canonical right-handed orthonormal 3-frame $\{v_0i, v_0j, v_0k\}$ with no per-anchor freedom (the global basis $(i,j,k)$ being part of the substrate's definition), and the quaternion exponential supplies closed-form normal coordinates; the rendered scene decomposes exactly into a static background (the time-invariant bulk component) plus a dynamic foreground carried by the boundary. (R4) \emph{Time}: clock reversal is an \emph{inner} automorphism --- exactly ten elements $g \in \twoI$ conjugate the pentagonal clock to its inverse --- and under the named equivariance hypothesis (H-equiv) this excludes first-order time derivatives in the effective continuum dynamics; with the reversal-symmetric centered stencil this yields the wave operator $\Box = c^{-2}\partial_t^2 - \nabla^2$, $c = a/\tau$ (units pending the gravity chain's physical calibration). The open residuals are stated: (H-simul-int) integrability of the nonlinear arg-min readout family, kernel uniqueness beyond the resolvent axiom (K4), and the phenomenological-access question, which this construction does not address.
+\end{abstract}
+
+%==================================================================
+\section{Introduction and position}\label{sec:intro}
+%==================================================================
+
+Earlier papers of the programme establish a substrate (the 600-cell graph with closure dynamics), a projection theory producing one observable per anchor event (Paper XXXIII), and a forcing argument for the substrate object itself (Paper LIV \citep{SmartLIV}). What none of them constructs is the layer a physical interpretation actually leans on: how vertex data becomes a \emph{scene} --- a field in three spatial dimensions around a located observer, with a definite time structure. This paper constructs that layer and proves its four load-bearing properties. Throughout, $\Vsix$ denotes the 600-cell vertex set ($= \twoI \subset S^3 \subset \Hq$, each vertex adjacent to its 12 nearest neighbours at inner product $\varphi/2$), $L = 12I - A$ its graph Laplacian, and $F_t = F^{\mathcal B}_t + F^\partial_t$ the substrate state with its invariant-bulk/dynamic-boundary split (20 + 100 vertices).
+
+The four requirements, each derived or reduced to a named hypothesis:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ & Requirement & Result \\
+\midrule
+R1 & the arena and its dimension & intrinsic $S^3$; dimension 3 from the spectrum (\S\ref{sec:arena}) \\
+R2 & the vertex-to-field kernel & unique canonical family $\pi_r = (I+r^2L)^{-1}$ (\S\ref{sec:kernel}) \\
+R3 & basepoint, axes, chart, scene & quaternionic frame + exponential chart (\S\ref{sec:chart}) \\
+R4 & the time structure & second order from inner reversal, under (H-equiv) (\S\ref{sec:time}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%==================================================================
+\section{R1 --- the arena: dimension three from the spectrum}\label{sec:arena}
+%==================================================================
+
+\begin{proposition}[Intrinsic arena]\label{prop:intrinsic}
+Every structure of the framework that is defined from the graph and embedding data of $\Vsix$ depends only on the intrinsic data of $\Vsix \subset S^3$: adjacency, shells, and any functional built from pairwise inner products are functions of geodesic distances, and the pentagonal clock is left multiplication by a group element --- an isometry of $S^3$, defined without reference to the ambient radial direction. The ambient $\mathbb R^4$ enters only through the unit-norm constraint and is never varied: the arena these structures see is the intrinsic 3-manifold $S^3$.
+\end{proposition}
+
+To be precise about what is input and what is read out: the \emph{definition} of the substrate places $\Vsix$ in $S^3 \subset \Hq$ (Paper LIV's forcing chain, an input here). The content of this section is that the \emph{bare graph}, stripped of the embedding, independently carries the $S^3$ signature --- in its multiplicities, its dispersion, and (Paper LIV, items GE0--GE3) in a spectral self-embedding that reconstructs the geometry pointwise. ``Independently corroborated from connectivity alone'' is the defensible statement, and it is what the theorems below establish.
+
+\begin{theorem}[Square-multiplicity law]\label{thm:squares}
+The eigenspace multiplicities of $L$ are exactly the squares of the dimensions of the nine irreducible representations of $\twoI$:
+$$\{1, 4, 9, 16, 25, 36\} \cup \{4, 9, 16\}, \qquad \text{sum} = 120,$$
+at nine pairwise-distinct eigenvalues (sims R1a, SR2).
+\end{theorem}
+
+\begin{proof}
+$\Vsix$ is the Cayley graph of $\twoI$ with connecting set $S$ = the 12 elements of real part $\cos(\pi/5)$ --- a single conjugacy class, closed under inversion. For a Cayley graph whose connecting set is a union of conjugacy classes the adjacency operator is central in the group algebra, so by Peter--Weyl, $L^2(G) = \bigoplus_\rho \rho \otimes \rho^*$, it acts on the $\rho$-isotypic block of dimension $(\dim\rho)^2$ as the scalar $a_\rho = \frac{1}{\dim\rho}\sum_{s\in S}\chi_\rho(s)$ \citep{Babai1979, DiaconisShahshahani1981}. The irrep dimensions of $\twoI$ are $\{1,2,2',3,3',4,4',5,6\}$ (computed from the multiplication table alone in Paper LIV, Theorem 3), giving the stated multiplicities. Distinctness of the nine scalars is verified numerically (eigenvalues $0, 2.292, 5.528, 9, 12, 14, 14.472, 15, 15.708$), so no two blocks merge.
+\end{proof}
+
+\begin{theorem}[Harmonic identification; exact dispersion]\label{thm:dispersion}
+Under the McKay correspondence the unprimed irreps are the restrictions of the $SU(2)$ representations $V_k$, $k = 0,\ldots,5$, which remain irreducible on $\twoI$ in this range --- verified computationally (gap-strengthening item SR1) rather than assumed --- giving the $S^3$ harmonic levels with multiplicity $(k+1)^2$. Their eigenvalues are exactly
+$$\lambda_k \;=\; 12\left(1 - \frac{\sin((k+1)\pi/5)}{(k+1)\sin(\pi/5)}\right), \qquad k = 0,\dots,5,$$
+verified at machine precision (sim R1f). The primed blocks fold from higher harmonics ($V_6 = 3'\oplus 4'$, $V_7 \supset 2'$; the standard McKay branching for $\twoI$, cited not re-derived).
+\end{theorem}
+
+\begin{proof}
+$S$ is the class of rotation angle $2\pi/5$ (quaternion half-angle $\theta = \pi/5$); the $SU(2)$ character is $\chi_{V_k}(\theta) = \sin((k{+}1)\theta)/\sin\theta$; substitute into $a_\rho$ with $|S| = 12$, $\dim V_k = k+1$, and use $\lambda_k = 12 - a_k$. Sampled low harmonics are moreover \emph{exact} eigenvectors: the four coordinate functions satisfy $L x = (12 - 6\varphi)x$ identically, and the nine traceless quadratics likewise at $\lambda_2$ (sims RC1a--b of the residual-closure suite; this is the $k\le5$ instance of the rung-ladder intertwiner theorem).
+\end{proof}
+
+\begin{corollary}[Spectral dimension 3]\label{cor:dim3}
+The small-$k$ expansion is $\lambda_k = 2\theta^2\,k(k+2)\bigl[1 - \tfrac{(3n^2-7)\theta^2}{60} + O(\theta^4)\bigr]$, $n = k{+}1$: the Laplace--Beltrami spectrum $k(k+2)$ of the \emph{round $S^3$} with an explicit expansion coefficient, so $L \to -2a^2\Delta_{S^3}$ with $a = \pi/5$ the geodesic edge length --- the limit statement being band-wise on this fixed graph and rate-wise for the design-refinement family of the rung ladder (Paper LVII's continuum-control theorem makes this precise). Three independent diagnostics give the dimension: (i) the multiplicity law $(k+1)^2$ is specific to $S^3$ ($S^2$ would give $2k+1$, $S^4$ would give $\tfrac16(k{+}1)(k{+}2)(2k{+}3)$); (ii) Weyl counting over the harmonic blocks fits $N(\lambda)\propto\lambda^{d/2}$ with $d = 3.09$ (sim R1e); (iii) the dispersion constant: for an isotropic degree-12 neighbour set on a $d$-manifold, $L \approx -(12a^2/2d)\Delta$, and $12/(2\cdot3) = 2$ matches the measured constant. None of the three diagnostics inputs a dimension; what they establish is that the connectivity table independently carries the $S^3$ harmonic signature (the embedding itself being the substrate's definition, per the remark after Proposition~\ref{prop:intrinsic}).
+\end{corollary}
+
+%==================================================================
+\section{R2 --- the canonical kernel}\label{sec:kernel}
+%==================================================================
+
+The frame-resolution map of the cosmogenesis layer previously had a free radius and free weights. The kernel is now derived from four axioms.
+
+\begin{definition}[Kernel axioms]\label{def:axioms}
+\textbf{(K1)} substrate-intrinsic: $\pi_r = f_r(L)$. \textbf{(K2)} renderable: entrywise non-negative; preserves constants. \textbf{(K3)} resolution limits: $\pi_r \to I$ as $r\to0$; $\pi_r \to$ global mean as $r\to\infty$. \textbf{(K4)} closure-response stationarity (for $r > 0$, on the connected substrate graph): $\pi_r(F)$ solves $(L + r^{-2}I)\psi = r^{-2}F$ --- rendering is the substrate's own response operator $C_\varphi^{-1}$ at coherence length $r$, source-normalised.
+\end{definition}
+
+\begin{theorem}[Canonical kernel]\label{thm:kernel}
+(K4) determines the operator outright, and the family it determines,
+$$\pi_r \;=\; (I + r^2 L)^{-1},$$
+satisfies (K1)--(K3). In this precise sense the axioms are satisfied by exactly one family: (K4) selects it, and the remaining axioms are theorems about it rather than further constraints.
+\end{theorem}
+
+\begin{proof}
+(K4) fixes the operator: $\psi = (I + r^2L)^{-1}F$. (K1): a function of $L$. (K2): $I + r^2L$ is a symmetric, strictly diagonally dominant M-matrix, so its inverse is entrywise non-negative; $L\mathbf 1 = 0$ gives $\pi_r\mathbf1 = \mathbf1$ and, by symmetry, column-stochasticity (mass preservation). (K3): immediate limits ($r\to\infty$ projects onto $\ker L$ = constants, the graph being connected). Sims R2a--R2e verify positivity, bistochasticity to $10^{-10}$, and both limits.
+\end{proof}
+
+\begin{lemma}[Equivariance; locality]\label{lem:equiv}
+$\pi_r$ commutes with every automorphism of $\Vsix$ (commutator norms $\sim10^{-16}$, sim R2f), and its rows decay exponentially in graph distance with coherence length $\xi(r)$ monotone in $r$ over the tested range ($\xi = 0.51$ to $25.5$ edges for $r = 0.25$ to $4$; verification item R2c --- a computational statement on the 120-vertex graph). In the continuum limit of \S\ref{sec:arena} the kernel row is the screened (Yukawa) Green function of $1 - 2a^2r^2\Delta_{S^3}$; in one projected coordinate, exactly the $\tfrac{\varphi}{2}e^{-|x|/\varphi}$ kernel of the programme's response-operator family with $\varphi \mapsto r$. The flavour-physics (b-anomaly) test probes the same response-operator family; this is shared-structure support for the kernel choice, indirect rather than a direct empirical validation of rendering.
+\end{lemma}
+
+\begin{remark}[A correction made by this construction]\label{rem:correction}
+The earlier cosmogenesis statement that frame maps fix the bulk \emph{pointwise} is too strong --- it contradicts strict positivity (any genuinely smoothing kernel mixes neighbours). What survives, and is carried by $\pi_r$: equivariance (above); \emph{time}-invariance of the rendered bulk (the bulk component is constant in $t$, so its rendering is a static field); and exact conservation. The corrected reading: all frames share one static background and differ in the resolution of the dynamic boundary content. This correction is recorded rather than hidden; the upstream document is patched.
+\end{remark}
+
+\begin{remark}[Named open: uniqueness beyond (K4)]
+(K4) is the strongest axiom --- it selects the resolvent family outright. Whether a weaker Markov/semigroup axiom still forces $\pi_r$ is open (item 7.3 of the derivation notes). The other three axioms alone admit, e.g., the heat semigroup $e^{-tL}$; (K4) is motivated by identifying rendering with the substrate's own stationary response, the same operator the b-anomaly test probes.
+\end{remark}
+
+%==================================================================
+\section{R3 --- chart, frame, scene}\label{sec:chart}
+%==================================================================
+
+\begin{proposition}[Canonical observer frame]\label{prop:frame}
+Every anchor $v_0 \in \Vsix$ carries the canonical right-handed orthonormal tangent frame
+$$e_a(v_0) = v_0\,u_a, \qquad (u_1,u_2,u_3) = (i,j,k),$$
+with no choice involved beyond the fixed quaternionic basis $(i,j,k)$ and its orientation, which are part of the substrate's definition: given them, the frame at every anchor is the left-translation of the imaginary units --- the global parallelism of $S^3$ as a Lie group, the same at every vertex with no per-anchor freedom. (Tangency and orthonormality are two-line computations; sim R3a verifies all 120 anchors.) The substrate hands every observer three spatial axes because $\dim\mathrm{Im}\,\Hq = 3$ --- the same fact that makes the arena three-dimensional.
+\end{proposition}
+
+\begin{definition}[Anchor chart; rendering map; scene]\label{def:scene}
+For an anchor $v_0$ and resolution $r$, the chart is the geodesic normal-coordinate map $\mathrm{ch}_{v_0}(x) = v_0\cdot\exp(x^1i + x^2j + x^3k)$ on a ball $B_\ell(0)\subset\mathbb R^3$ ($\xi(r)a \lesssim \ell \ll \pi$) --- a closed-form quaternion exponential, no connection chosen. The rendering map is
+$$\mathcal R_{\mathcal I}(F_t)(x) \;=\; \sum_{u\in \Vsix} G_r\bigl(d_{S^3}(\mathrm{ch}_{v_0}(x), u)\bigr)\,F_t(u),$$
+with $G_r$ the continuum kernel of Lemma~\ref{lem:equiv}, normalised to $\mathcal R_{\mathcal I}(\mathbf 1) = 1$. Two maps are involved and we keep them separate: the \emph{discrete rendering} $\mathcal R^{\rm disc}_{\mathcal I}(F)(u) := (\pi_r F)(u)$ on vertices, which is exact and carries every exact statement below; and the \emph{continuum interpolant} displayed above, a canonical choice (the same response operator extended off-vertex) that agrees with the discrete map up to the lattice corrections of Theorem~\ref{thm:dispersion} --- canonical by construction, not claimed exact. The scene at tick $t$ is $s_{\mathcal I, t} = \mathcal R_{\mathcal I}(F_t)$: a field on a 3-ball.
+\end{definition}
+
+\begin{theorem}[Scene decomposition]\label{thm:scene}
+For every observer instance and tick,
+$$s_{\mathcal I,t} \;=\; \underbrace{\mathcal R_{\mathcal I}(F^{\mathcal B}_0)}_{\text{static background}} \;+\; \underbrace{\mathcal R_{\mathcal I}(F^\partial_t)}_{\text{dynamic foreground}},$$
+the background independent of $t$ and common to all resolutions up to smoothing; all temporal change is carried by the rendered boundary. The inputs are linearity of $\mathcal R_{\mathcal I}$ and the substrate's bulk time-invariance (the cosmogenesis accumulation theorem, imported); verification items R3b--R3c confirm the split and the exact clock-invariance of the rendered bulk. The rendered background is moreover, as a verified computational statement, an exact function of graph-distance to the bulk --- a determined radial profile, not a free texture (gap-closure item G4, within-shell spread $10^{-17}$).
+\end{theorem}
+
+%==================================================================
+\section{R4 --- second-order time from inner reversal}\label{sec:time}
+%==================================================================
+
+Why is the emergent time derivative second order (wave-type) rather than first order (diffusion-type)? The answer is an exact, inner symmetry of the substrate.
+
+\begin{lemma}[Clock reversal is inner]\label{lem:reversal}
+Let $\tau \in \Vsix$ be the order-10 pentagonal-clock generator. Exactly \textbf{10} elements $g \in \twoI$ satisfy $g\tau g^{-1} = \tau^{-1}$ (for the canonical $\tau$, one is $g = i$). \emph{Proof sketch:} conjugation by a unit quaternion rotates the imaginary axis $\hat n$ of $\tau = \cos\theta + \sin\theta\,\hat n$; the condition holds iff that rotation sends $\hat n \mapsto -\hat n$, i.e.\ $g$ lifts a $180^\circ$ rotation about an axis perpendicular to $\hat n$, and the icosahedral group has exactly five such 2-fold axes per 5-fold axis, each with two lifts $\pm g$. To be precise about the two distinct actions: the \emph{clock} acts on vertices by left multiplication $T_\tau: x \mapsto \tau x$, while the \emph{reverser} acts by the conjugation permutation $\varsigma_g: x \mapsto gxg^{-1}$ (well-defined on $\Vsix$ because the vertex set is the group); then $\varsigma_g T_\tau \varsigma_g^{-1} = T_{g\tau g^{-1}} = T_{\tau^{-1}}$ exactly, and $\varsigma_g$ is a graph automorphism. All verified exhaustively (items R4a--R4c).
+\end{lemma}
+
+\begin{hypothesis}[(H-equiv), named and inherited]\label{hyp:equiv}
+The substrate's residual-generation law is equivariant under $\mathrm{Aut}(\Vsix)$: $\rho(PF; P\Pi_0) = P\rho(F;\Pi_0)$ for every automorphism $P$. This strengthens the conditional symmetry-class invariance established for the projection layer's minimisers (Paper XXXIII \citep{SmartXXXIII}) to a residual-law equivariance, and is adopted here as a named hypothesis --- motivated by the closure residual being built from graph data alone, but not proven from XXXIII's results. Everything in R4 is conditional on it.
+\end{hypothesis}
+
+\begin{proposition}[Second-order effective time]\label{prop:secondorder}
+Assume (H-equiv), and consider effective continuum descriptions that are local, scalar, and invariant under the substrate's spatial isometries (the class the rendering construction produces). Then the admissible effective continuum equations for the rendered scene are invariant under $(x,t)\mapsto(R_gx, -t)$ where $R_g$ is the spatial isometry induced by a reverser $g$ of Lemma~\ref{lem:reversal}. Any term first-order in $\partial_t$ and invariant under the spatial rotation reverses sign under this map and must vanish. With first-order terms excluded, the reversal-symmetric discretisation of the tick dynamics is the centered second difference --- the unique second-order stencil even under reflection about its centre --- whose continuum limit is $\partial_t^2$ at $O(\tau_{\rm tick}^2)$ (verified on actual 600-cell eigenmodes, gravity-suite item T10). Combined with $L \to -2a^2\Delta$ (Corollary~\ref{cor:dim3}):
+$$\Box \;=\; c^{-2}\partial_t^2 - \nabla^2, \qquad c = a/\tau_{\rm tick},$$ where $a = \pi/5$ is the geodesic edge angle, so $c$ acquires physical units only once a physical length per edge and time per tick are calibrated (the calibration question of the gravity chain \citep{SmartLIII}).
+
+\end{proposition}
+
+\begin{remark}
+The mechanism is \emph{inner} --- left multiplication by an icosian unit --- which is structurally stronger than an earlier speculation that time reversal was a Galois action on coordinates (it is not; the coordinate involution does not preserve $\Vsix$ pointwise). Being inner, the mechanism survives at every cascade rung with no arithmetic input. This proposition supplies the justification half of the gravity chain's (H-wave); the gravity papers (LIII, LVII) consume it.
+\end{remark}
+
+%==================================================================
+\section{Simultaneity, and what remains open}\label{sec:open}
+%==================================================================
+
+\begin{proposition}[Simultaneity, linear class]\label{prop:simul}
+For the linear response-kernel projection class, the scene \emph{is} the family of single-anchor readouts: $s_{\mathcal I,t}(\mathrm{ch}^{-1}(u)) = \langle[\pi_r]_{u,\cdot}, F_t\rangle$ for every chart anchor $u$ --- both sides are the same linear functional because the scene is defined on vertices by the discrete kernel (Definition~\ref{def:scene}), so all readouts are mutually consistent by construction.
+\end{proposition}
+
+For the general nonlinear arg-min readout, consistency reduces to an integrability condition: the readout family must be the gradient of the scene potential $\Phi_F(u) = \min_\Pi \Delta_{\rm cl}(\Pi; u)$. The quadratic case is proven (curl-free; verified with a genuine non-integrable null that fails the test); the general case is the named residual \textbf{(H-simul-int)}.
+
+\textbf{Open after this paper:} (H-simul-int); kernel uniqueness under axioms weaker than (K4); the $\varphi$-recursive closed form of the background profile; and the phenomenological-access question (P-A) --- this paper constructs the scene and does not claim the scene is experience.
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+Manuscript: \texttt{papers/paper-lv/paper-lv.tex}; derivation notes: \texttt{docs/rendering-layer.md}. Verification: \texttt{python3 scripts/verify\_rendering\_layer.py} (21/21; NumPy + \texttt{scripts/600cell\_data.npz}); hardened cross-checks in \texttt{verify\_gap\_strengthening.py} (22/22, including the distinctness item SR2 and the corrected curl test); band-exactness items in \texttt{verify\_residual\_closure.py} RC1--RC3; the spectral self-embedding in \texttt{verify\_crystal\_forcing.py} GE0--GE3.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

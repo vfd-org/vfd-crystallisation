@@ -1,0 +1,165 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\twoI}{2\mathbf{I}}
+\newcommand{\twoT}{2\mathbf{T}}
+\newcommand{\twoO}{2\mathbf{O}}
+\newcommand{\Hq}{\mathbb{H}}
+
+\title{The Forced Crystal\\[6pt]
+\large The Binary Icosahedral Group as the Unique Perfect Quaternionic Substrate,\\
+McKay/E8 from the Multiplication Table, and the Graph That Knows Its Own Shape}
+\author{Lee Smart\\ \textit{Institute of Vibrational Field Dynamics}\\ \texttt{contact@vibrationalfielddynamics.org}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed). This paper's computational claims are items CF0--CF6 and GE0--GE3 of \texttt{scripts/verify\_crystal\_forcing.py} (the suite's YM items belong to Paper LVI \citep{SmartLVI}); the suite passes 17/17, including the data-provenance check CF0 that the bundled vertex file is the unit-circumradius 600-cell.
+
+\begin{abstract}
+The VFD programme builds physics on the 600-cell, the convex regular 4-polytope whose 120 vertices are the binary icosahedral group $\twoI \subset S^3 \subset \Hq$. This paper isolates and verifies the claim that this object is \emph{forced} --- conditional on three named requirements and the classical classification of finite subgroups of $SU(2)$, nothing is selected: given (W1) the arena is the unit quaternions (the renderable 3-sphere of the rung-ladder theorems), (W2) the substrate is a finite set closed under the arena's own composition law, and (W3) terminality (no nontrivial abelian quotient, and containment in no larger finite subgroup), exactly one object survives the classical ADE classification of finite subgroups of $SU(2)$: $\twoI$ is the unique nontrivial perfect finite group of unit quaternions, the larger of the two maximal ones, and its elements placed in the arena they act on are the 600-cell. Three further results sharpen the picture, each verified by direct computation with no representation matrices supplied as input: (i) the crystal's points are its own symmetry operations (vertex set $=$ group, exact closure); (ii) the Burnside--Dixon class-sum algorithm applied to the bare multiplication table recovers the irreducible representation dimensions $\{1,2,2,3,3,4,4,5,6\}$, and the McKay graph built from the \emph{geometric} 2-dimensional character $\chi_2(g) = 2q_0(g)$ is the affine E8 Dynkin diagram, with the dimension vector its Perron eigenvector at eigenvalue 2 --- the E8 connection is internal to the crystal's harmonics, not imported; (iii) from the bare adjacency matrix alone (a $120\times120$ table of 0s and 1s), the first excited Laplacian eigenspace reconstructs the 600-cell pointwise: the full Gram matrix is recovered at machine precision and an explicit proper rotation maps the reconstruction onto the true vertices, including the golden-ratio edge relation $\cos 36^\circ = \varphi/2$, which regenerates the adjacency matrix that was the input. The honest boundary is stated: (W1)--(W3) are the modelling frame, argued elsewhere in the programme; the $SU(2)$ classification is classical and cited; the unbounded-extension computation is a witness to maximality, not its proof.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+A foundational programme that starts from one geometric object owes its readers an account of why \emph{that} object. ``It has pleasing properties'' is not an account; a forcing argument is: name the requirements, show that exactly one object satisfies them, and locate the requirements' own justification. This paper does that for the 600-cell, and then verifies, by direct machine computation from first principles, three structural facts the programme's narrative leans on: the identity of crystal and symmetry group, the internality of the E8 connection, and the recoverability of the full geometry from the bare connectivity.
+
+The paper is deliberately self-contained and elementary in its verified core: nothing below takes representation matrices, Lie theory, or the classification theorem as computational input --- character data is re-derived from the multiplication table, and the one classical theorem used (the ADE classification) is cited explicitly where it carries weight. Every numbered computational claim names the check that verifies it in \texttt{scripts/verify\_crystal\_forcing.py}.
+
+\subsection{The requirements}
+
+\begin{itemize}
+\item[\textbf{(W1)}] \emph{The arena is the unit quaternions $S^3$.} This is an input from elsewhere in the programme: Adams' Hopf-invariant-one theorem allows parallelisable spheres only in dimensions $0, 1, 3, 7$; the rendering requirements of the programme (a three-axis scene; Paper~LV \citep{SmartLV} and \texttt{docs/rung-dimension-ladder.md}) exclude the zero- and one-dimensional cases, leaving $S^3$ as the spatial arena and $S^7$ as the one higher arena. Its points are rotations: a unit quaternion acts on the arena by multiplication.
+\item[\textbf{(W2)}] \emph{The substrate is finite and closed under composition.} A discrete substrate is a finite point set; since the points are themselves rotation operators (W1), self-consistency of the set under its own ambient law means closure under multiplication and inverses: the set is a finite subgroup of unit quaternions.
+\item[\textbf{(W3)}] \emph{Terminality.} Two precise conditions. (a) \emph{Perfectness}: the group equals its own commutator subgroup, so it admits no nontrivial homomorphism onto an abelian group --- no degree of freedom of the substrate can be ``switched off'' by passing to a simpler shadow. (b) \emph{Maximality}: the group is contained in no strictly larger finite subgroup of $S^3$.
+\end{itemize}
+
+(W1) is a theorem of the programme given its rendering axioms; (W2) and (W3) are the programme's no-arbitrary-structure posture, stated here as named hypotheses so the reader can weigh them. Given the three, what follows is mathematics.
+
+%==================================================================
+\section{The classification and the unique survivor}\label{sec:survivor}
+%==================================================================
+
+The finite subgroups of the unit quaternions ($= SU(2)$) are classically classified \citep{Klein1884, Conway2003}: two infinite families, cyclic $\mathbb Z_n$ and binary dihedral $2D_n$ ($|2D_n| = 4n$), and three exceptional groups, binary tetrahedral $\twoT$ (order 24), binary octahedral $\twoO$ (48), binary icosahedral $\twoI$ (120) --- the ADE list.
+
+\begin{theorem}[The unique survivor]\label{thm:survivor}
+Against (W2)--(W3):
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Candidate & closed (W2) & perfect (W3a) & maximal (W3b) \\
+\midrule
+$\mathbb Z_n$ & yes & no (abelian) & no ($\subset \mathbb Z_{2n}$) \\
+$2D_n$ & yes & no (abelian quotients) & no ($\subset 2D_{2n}$) \\
+$\twoT$ & yes & no (quotient $\mathbb Z_3$) & no ($\subset \twoO$) \\
+$\twoO$ & yes & no (quotient $\mathbb Z_2$) & yes \\
+$\twoI$ & yes & \textbf{yes} & \textbf{yes} \\
+\bottomrule
+\end{tabular}
+\end{center}
+$\twoI$ is the unique \emph{nontrivial} perfect finite subgroup of the unit quaternions (the trivial group being vacuously perfect and excluded as a substrate), and the larger of the two maximal ones. (W3a) with nontriviality selects it alone; so does (W3b) with a largest-order tie-break over $\twoO$; together they overdetermine it.
+\end{theorem}
+
+\begin{proof}
+Given the classification, the non-exceptional rows are elementary: cyclic and binary dihedral groups have abelian quotients (themselves; $2D_n \twoheadrightarrow \mathbb Z_2$) and embed in the next member of their family, so are neither perfect nor maximal; $\twoT/\{\pm1\} \cong A_4 \twoheadrightarrow \mathbb Z_3$ and $\twoT \subset \twoO$; $\twoO/\{\pm1\} \cong S_4 \twoheadrightarrow \mathbb Z_2$.
+
+\emph{Perfectness of $\twoI$.} The image of $[\twoI,\twoI]$ under $\twoI \to \twoI/\{\pm1\} \cong A_5$ is $[A_5, A_5] = A_5$ ($A_5$ is simple non-abelian), so $[\twoI,\twoI]$ has order 60 or 120. If 60, it meets $\{\pm1\}$ trivially and is therefore isomorphic to $A_5$, which contains elements of order 2; but the only element of order 2 among the unit quaternions is $-1$ (if $g^2 = 1$ then $g = \pm1$), which is excluded. So $[\twoI,\twoI] = \twoI$. (Sim CF2 witnesses this computationally, closing a sampled commutator set to all 120 elements; the proof above is what establishes it.)
+
+\emph{Maximality of $\twoI$.} Suppose $\twoI \subsetneq H$ with $H$ a finite subgroup of the unit quaternions. By the classification $H$ is cyclic, binary dihedral, or one of $\twoT, \twoO, \twoI$. The last three are excluded by order ($24, 48, 120 < |H|$). Cyclic groups are abelian and binary dihedral groups are solvable (extensions of a cyclic group by $\mathbb Z_2$); every subgroup of a solvable group is solvable, but $\twoI$ is not solvable (it surjects onto the simple non-abelian $A_5$). Contradiction. For $\twoO$ (recorded for completeness of the table): $\twoO \not\subset \twoI$ since $48 \nmid 120$; and if $\twoO \subset 2D_n$ then $S_4 \cong \twoO/\{\pm1\}$ would embed in $2D_n/\{\pm1\} \cong D_n$, whose subgroups are all cyclic or dihedral --- $S_4$ is neither. So $\twoO$ is maximal as well, and the size criterion of (W3b) selects $\twoI$ over it; perfectness (W3a) selects $\twoI$ outright.
+\end{proof}
+
+\begin{theorem}[The crystal is its own symmetry group]\label{thm:selfgroup}
+The 120 vertices of the unit-radius 600-cell, as quaternions, are closed under quaternion multiplication and inversion, with identity $(1,0,0,0)$: the vertex set \emph{is} $\twoI$. (Sim CF1: exact closure of all $120\times120$ products and all inverses.)
+\end{theorem}
+
+This is the precise content of the slogan ``nothing chosen'': no points were placed on a sphere; the elements of the surviving composition law, plotted in the arena they act on, are the geometry. The subgroup chain is also concrete: the 24 vertices of unit norm with coordinates of type $(\pm1,0,0,0)$ and $(\pm\tfrac12,\pm\tfrac12,\pm\tfrac12,\pm\tfrac12)$ form the 24-cell and are exactly the subgroup $\twoT$ (sim CF5) --- the coarse gravity rung of the cascade sits inside the fine quantum rung as a subgroup, not merely a subset.
+
+\begin{remark}[Extension witness]\label{rem:witness}
+Sim CF6 adjoins a single unit quaternion outside $\twoI$ (rotation angle $0.7$) and samples the generated closure (stride-sampled group multipliers plus the new element on both sides): the distinct-word count grows $121 \to 132 \to 221 \to 525 \to 2335$ over four rounds without closing. This \emph{witnesses} what Theorem~\ref{thm:survivor} proves --- there is no strictly larger finite subgroup of $S^3$ containing $\twoI$ --- and is labelled a witness, not a proof: a finite computation cannot exclude closure at some enormous order, the theorem does.
+\end{remark}
+
+%==================================================================
+\section{McKay/E8 from the multiplication table}\label{sec:mckay}
+%==================================================================
+
+The programme presents the 600-cell as a shadow of E8. The precise statement is McKay's correspondence \citep{McKay1980}, and the point of this section is that it is verifiable from the crystal's multiplication table plus its geometric 2-dimensional character (the vertex coordinates --- which, by Theorem~\ref{thm:selfgroup}, are themselves group data) --- the E8 structure is read out of the object, not built into it.
+
+\begin{theorem}[Character dimensions by Burnside--Dixon]\label{thm:dims}
+$\twoI$ has exactly 9 conjugacy classes (sim CF3a). The class-sum algebra --- the $9\times9$ matrices of class-multiplication coefficients, computed by enumerating all $120 \times 120$ products --- has a simultaneous eigenbasis whose eigenvalue data, via the standard Burnside--Dixon normalisation, yields irreducible character degrees
+$$\{1,\ 2,\ 2,\ 3,\ 3,\ 4,\ 4,\ 5,\ 6\}, \qquad \textstyle\sum d_i^2 = 120,$$
+each within $10^{-6}$ of an exact integer (sim CF3b). No representation matrices are constructed or assumed; the input is the multiplication table, and the Burnside--Dixon normalisation is classical \citep{Dixon1967}.
+\end{theorem}
+
+\begin{theorem}[McKay graph $=$ affine E8]\label{thm:mckay}
+Let $\chi_2(g) = 2q_0(g)$ (twice the real part of the quaternion --- the character of the crystal's geometric spin-$\tfrac12$ action, read directly off the vertex coordinates). Define on the 9 irreducible characters the matrix
+$$A_{ij} \;=\; \frac{1}{|G|}\sum_{\text{classes } k} |C_k|\, \chi_2(g_k)\, \chi_i(g_k)\, \chi_j(g_k),$$
+the multiplicity of irrep $j$ in $\chi_2 \otimes$ irrep $i$. Computed from the character table produced alongside Theorem~\ref{thm:dims}'s dimensions (the same Burnside--Dixon eigendata), $A$ is verified to be a symmetric non-negative integer matrix with 0/1 off-diagonal entries and zero diagonal (sim CF4 pre-check), and its graph is a \emph{tree} with exactly one degree-3 node and arm lengths $\{1, 2, 5\}$: the affine E8 Dynkin diagram (sim CF4a). Moreover the dimension vector $d$ of Theorem~\ref{thm:dims} satisfies
+$$A\,d \;=\; 2\,d$$
+exactly (sim CF4b): the irrep dimensions are the marks of affine E8, and $2 = \chi_2(1)$ is the Perron eigenvalue.
+\end{theorem}
+
+\begin{remark}
+Both theorems are classical in content \citep{McKay1980}; what the verification adds is provenance: every number flows from the 120 quaternions. In the programme's terms, the E8 pinnacle of the cascade is what the crystal's own harmonics report when asked how they combine with the crystal's geometric action --- internal, not decorative.
+\end{remark}
+
+%==================================================================
+\section{The graph knows its own shape}\label{sec:graph}
+%==================================================================
+
+The companion rendering-layer results (Paper LV) read the dimension of space off the crystal's spectrum. The sharpest form of the ``no dimension smuggled in'' claim is the following reconstruction theorem, verified end-to-end.
+
+\begin{theorem}[Spectral self-embedding]\label{thm:embed}
+Let $A$ be the $120\times120$ adjacency matrix of the 600-cell's edge graph (each vertex joined to its 12 nearest neighbours) and $L = 12I - A$ its Laplacian. Then:
+\begin{itemize}
+\item[(i)] the first nonzero eigenvalue of $L$ has multiplicity exactly 4 (sim GE0);
+\item[(ii)] the rows of the orthonormal eigenbasis of that eigenspace, scaled by the tight-frame constant $\sqrt{120/4}$, all have norm 1 to within $2\times10^{-15}$: the reconstruction places all 120 points on one sphere in $\mathbb R^4$ (sim GE2);
+\item[(iii)] the \emph{full} Gram matrix of the reconstruction equals that of the true 600-cell vertices entrywise, in the same vertex labelling, to $5\times10^{-15}$, and, with the eigenbasis orientation chosen accordingly (a sign freedom the construction always has), an explicit proper rotation ($\det = +1$, verified) maps the reconstructed coordinates onto the true vertices pointwise to $4\times10^{-15}$ (items GE1, GE1b);
+\item[(iv)] the largest off-diagonal inner product of the reconstruction is $\varphi/2 = \cos 36^\circ$ to $10^{-9}$ (exactness following from (iii) and the coordinate-eigenvector identity in the proof below), and marking the pairs achieving it reproduces the input adjacency matrix (sim GE3).
+\end{itemize}
+\end{theorem}
+
+\begin{proof}[Why this works]
+By Theorem~\ref{thm:selfgroup} the graph is vertex-transitive under a group acting irreducibly on $\mathbb R^4$ by left/right multiplication; the coordinate functions are then eigenvectors of $L$ (each vertex's 12 neighbours lie at a fixed angle on a symmetric cone, so $\sum_{w\sim v} w = (12\cos 36^\circ)\,v = 6\varphi\, v$, giving $L v_{\rm coord} = (12 - 6\varphi)v_{\rm coord}$), and the 4-dimensional coordinate eigenspace is the lowest nonzero level. The eigenbasis therefore spans the same space as the coordinates, and the tight-frame property follows from vertex-transitivity. The multiplicity-4 and first-level facts are themselves established by the spectral theory of Paper LV (its square-multiplicity and dispersion theorems: nine distinct block eigenvalues with the coordinate block lowest); within this paper they are taken from the verified computation GE0. Granting them, the Gram-matrix reconstruction involves no choices, and coordinates are determined up to one global orthogonal transformation, realised here by an explicit proper rotation.
+\end{proof}
+
+The loop graph $\to$ spectrum $\to$ embedding $\to$ graph closes with no parameter at any step (the embedding determined up to the global isometry that any coordinate description carries). The connectivity table alone determines the dimension (four ambient, three intrinsic), the arena (one sphere), every pairwise angle (full Gram matrix, GE1), and the golden-ratio edge relation. This is the theorem behind the book's Chapter 4 claim, and the strongest sense in which nothing about the geometry was put in by hand.
+
+%==================================================================
+\section{Honest boundary}\label{sec:honest}
+%==================================================================
+
+\begin{itemize}
+\item (W1)--(W3) are the modelling frame. (W1) is derived in the rung-ladder work from renderability; (W2) finiteness is the substrate-discreteness axiom; (W3) is the no-arbitrary-structure principle. Given them, \S\ref{sec:survivor}--\S\ref{sec:graph} are theorems; the frame itself is physics posture, and a reader may weigh it.
+\item The ADE classification is classical and cited, not re-proven; CF6 is a witness (Remark~\ref{rem:witness}); GE0's first-level multiplicity is computational here, with the analytic source in Paper LV \citep{SmartLV}.
+\item Nothing in this paper concerns dynamics; the dynamical load (kernel, wave equation, gravity chain) is carried by Papers LV \citep{SmartLV} and LIII/LVII \citep{SmartLIII, SmartLVII}.
+\end{itemize}
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+This manuscript lives at \texttt{papers/paper-liv/paper-liv.tex}; the derivation notes are \texttt{docs/why-this-crystal.md}. All claims: \texttt{python3 scripts/verify\_crystal\_forcing.py} from the repository root (NumPy only; data file \texttt{scripts/600cell\_data.npz}), expected output 17 PASS / 0 FAIL, items CF0--CF6 and GE0--GE3 as cited per theorem above. The suite's remaining items (YM1--YM2) belong to Paper LVI \citep{SmartLVI}.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

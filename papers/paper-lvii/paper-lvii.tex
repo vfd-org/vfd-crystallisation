@@ -1,0 +1,157 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+
+\title{Residual Closure of the Gravity Chain\\[6pt]
+\large In-House Bootstrap, Non-Gaussian Effective Action, Explicit-Rate Continuum Control,\\ and a Conditional Numerical Anchor for Newton's Constant}
+\author{Lee Smart\\ \textit{Institute of Vibrational Field Dynamics}\\ \texttt{contact@vibrationalfielddynamics.org}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed). Companion and second pass to Paper LIII \citep{SmartLIII}. This paper's computational claims are items RB1--RB2c, RG1--RG3, RC1--RC3, and RGRAV1--2 of \texttt{scripts/verify\_residual\_closure.py} (the suite's SM items belong to Paper LVI \citep{SmartLVI}); the full suite passes 24/24.
+
+\begin{abstract}
+Paper LIII derived the Einstein field equations from the VFD substrate at effective-field level and closed with five named residuals. This paper upgrades four of them, each by derivation rather than retreat. \textbf{(R-boot, closed in-house.)} The nonlinear completion no longer rests on citation alone: the first-order (Palatini) one-step argument --- the flat background appears in exactly one term of the free spin-2 Lagrangian, coupling the field to its own stress tensor is the substitution $\eta^{\mu\nu} \to \eta^{\mu\nu} + h^{\mu\nu}$ there, and the iteration closes in one step because the background is then gone --- is derived in the programme's own pages, with two machine witnesses: the quadratic germ of the full nonlinear Einstein--Hilbert action equals $\tfrac12 S_{FP}$ on a 4D grid (measured constant $0.500002$, constant across random metrics to $4\times10^{-5}$), and, symbolically, the second-order term of isotropic Schwarzschild exactly cancels the self-energy of the first-order field, with the truncated linear theory leaving the nonzero residual $-3\varepsilon^2/r^4$ as the falsifiable null. Only the all-orders uniqueness statement remains cited (Wald 1986). \textbf{(R-Gauss, generalised.)} Via Cram\'er's theorem the quadratic effective action of the collective metric extends from Gaussian to i.i.d.\ substrate modes of any law with finite exponential moments near zero, under a named isotropy hypothesis (H-iso) on the mode statistics (motivated by, not derived from, the substrate's operator equivariance): the rate function is smooth and strictly convex at the background with $I'' = 1/\mathrm{Var}(x^2)$ exactly (kurtosis-corrected), so non-Gaussianity renormalises only the coefficient absorbed into $G$ while the gauge-forced form survives; anisotropic or correlated statistics remain the named residual. \textbf{(R-cont, converted to an explicit-rate theorem.)} For the field dynamics there is nothing left to converge: sampled harmonics are exact eigenvectors of the substrate Laplacian (band exactness), eigenvalues match the continuum with the closed-form expansion coefficient $(1-\rho_k) = (3n^2{-}7)\theta^2/60 + O(\theta^4)$ (exact for the fixed substrate, the rate statement for the design-refinement family), and the rendering kernel suppresses each above-band eigenvector by exactly $1/(1+r^2\lambda)$; what remains open is only the Gromov--Hausdorff statement about the arena geometry (renamed R-GH, Paper XL). \textbf{(R-G, conditionally anchored.)} Under the prior structural hypothesis H-shell-96 --- the muon at cascade shell $96 = 24\times4$, the shell already used by the programme's muon $g{-}2$ analysis --- Newton's constant acquires a conditional numerical anchor: $G = \hbar c/(m_\mu\varphi^{96})^2 = 6.67305\times10^{-11}\,\mathrm{m^3kg^{-1}s^{-2}}$, within $1.9\times10^{-4}$ of measurement. The conditionality, the look-elsewhere statistics ($p\approx0.006$), and the physical reality of the residual offset are stated in full; an honesty gate shows the proton/$\alpha_G$ route is \emph{not} integer-forced and is rejected.
+\end{abstract}
+
+%==================================================================
+\section{Introduction}\label{sec:intro}
+%==================================================================
+
+Paper LIII \citep{SmartLIII} ended with a residual ledger: (R-cont) continuum rigor, (R-Gauss) the Gaussian-regime restriction, (R-boot) the imported classical bootstrap, (R-G) the calibration status of $G$, (R-$\Lambda$) the cosmological constant (fixed independently by the cosmology branch and not treated here). The programme's discipline is that residuals are work orders. This paper executes four of them. Each section states what was owed, derives the upgrade, and names what remains; every numerical claim cites its check in \texttt{verify\_residual\_closure.py}.
+
+%==================================================================
+\section{R-boot: the bootstrap, in-house}\label{sec:boot}
+%==================================================================
+
+\subsection{The one-step argument}
+
+In first-order (Palatini) form, with $h^{\mu\nu}$ and $\Gamma^\lambda_{\mu\nu}$ independent, the free massless spin-2 theory is
+\begin{equation}
+\mathcal L_0 \;=\; h^{\mu\nu}\bigl(\partial_\alpha\Gamma^\alpha_{\mu\nu} - \partial_\nu\Gamma^\alpha_{\mu\alpha}\bigr) \;+\; \eta^{\mu\nu}\bigl(\Gamma^\alpha_{\mu\beta}\Gamma^\beta_{\nu\alpha} - \Gamma^\alpha_{\mu\nu}\Gamma^\beta_{\alpha\beta}\bigr);
+\label{eq:palatini}
+\end{equation}
+eliminating $\Gamma$ by its algebraic equation of motion returns Fierz--Pauli, the unique gauge-forced quadratic action of Paper LIII. The self-coupling requirement --- $h$ couples to the \emph{total} stress tensor, including its own --- meets \eqref{eq:palatini} at exactly one place: the flat background $\eta^{\mu\nu}$ appears only in the $\Gamma\Gamma$ term, so the field's stress tensor with respect to the background lives there and nowhere else. Coupling $h$ to it is the substitution
+$$\eta^{\mu\nu} \;\longrightarrow\; \eta^{\mu\nu} + h^{\mu\nu},$$
+and the substitution closes the iteration in one step: afterwards the background appears nowhere, so there is no further stress tensor to add. Defining $\mathfrak g^{\mu\nu} := \sqrt{-g}\,g^{\mu\nu} = \eta^{\mu\nu} + h^{\mu\nu}$, the result is identically the Palatini form of the Einstein--Hilbert action. This reproduces Deser's one-step construction \citep{Deser1970} in the programme's own pages, modulo the standard boundary-term and field-density conventions, rather than citing it as a black box. What we continue to cite is the \emph{uniqueness} of the completion across all theories \citep{Wald1986} --- a statement about the space of alternatives, not a step of the construction.
+
+\subsection{Machine witnesses}
+
+\begin{proposition}[Numerical witness: the Einstein--Hilbert quadratic germ is Fierz--Pauli]\label{prop:rb1}
+On a periodic $8^4$ grid with spectral derivatives, the full nonlinear Einstein--Hilbert action (Christoffels, Ricci, $\sqrt{-g}R$, no weak-field approximation in the evaluator) of $g = \eta + \varepsilon h$ for random multi-mode $h$ satisfies $S_{EH} = \tfrac12\varepsilon^2 S_{FP}[h] + O(\varepsilon^3)$, with the constant measured as $0.500002$ and stable across random metrics to $4\times10^{-5}$ (verification item RB1). This is a finite numerical witness on random grid fields, complementing the analytic uniqueness theorem of Paper LIII; it is labelled a proposition accordingly.
+\end{proposition}
+
+\begin{proposition}[Symbolic check: the second-order Schwarzschild self-coupling identity]\label{prop:rb2}
+Symbolically (sympy, exact rational/trigonometric arithmetic): the isotropic Schwarzschild metric truncated at second order, $f = 1 - 4\varepsilon A + 8\varepsilon^2A^2$, $g = 1 + 4\varepsilon A + 6\varepsilon^2A^2$, $A = M/2r$, satisfies the full Einstein equations through $O(\varepsilon^2)$ identically: the second-order metric coefficients cancel the self-energy of the first-order field (sims RB2a--b). The null: truncating at first order leaves $G^t{}_t = -3\varepsilon^2/r^4 \neq 0$ (item RB2c; the mass $M$ is absorbed into $\varepsilon$, so the $M^2$ scaling sits in $\varepsilon^2$) --- the linear theory alone is inconsistent, and what repairs it is exactly the self-coupling of the one-step construction above. This verifies the mechanism on the spherically symmetric solution; it is not itself a proof of the general completion, which is the cited uniqueness statement.
+\end{proposition}
+
+\textbf{Status.} (R-boot) closed in-house; residual import reduced to the all-orders uniqueness citation.
+
+%==================================================================
+\section{R-Gauss: beyond the Gaussian regime}\label{sec:gauss}
+%==================================================================
+
+Paper LIII's Proposition (quadratic effective action for the collective metric) assumed Gaussian substrate fluctuations (Wishart argument).
+
+\begin{theorem}[Cram\'er upgrade]\label{thm:cramer}
+Let the substrate modes be i.i.d., with non-degenerate $x^2$ and finite exponential moments in a neighbourhood of zero (bounded modes suffice). Adopt the named hypothesis \textbf{(H-iso)}: the mode law is invariant under $\mathrm{Aut}(V_{600})$ --- motivated by, but not derived from, the kernel and dynamics equivariance of Paper LV (which constrains the operators, not the statistics; the statistical statement is adopted here as a hypothesis). Under (H-iso) the mode covariance has no preferred direction, the collective second-moment field decomposes into isotropic invariant sectors, and each sector's large deviations are controlled by the scalar susceptibility: the scalar rate function $I$ gives $\Gamma_N[h] = N\,I(h)$ sector-wise, with (i) $I$ is smooth and strictly convex near the background with its minimum exactly there; (ii) $I'' = 1/\mathrm{Var}(x^2)$ --- the kurtosis-corrected inverse susceptibility; (iii) at the fluctuation scale $\delta h \sim N^{-1/2}$ the cubic term is $O(N^{-1/2})$ relative to the quadratic.
+\end{theorem}
+
+\begin{proof}
+Cram\'er's theorem (classical, unconditional \citep{DemboZeitouni}) gives the LDP with $I(s) = \sup_t[ts - \Lambda(t)]$, $\Lambda$ the cumulant generating function of $x^2$, finite for the stated mode classes; smoothness and strict convexity near the mean follow from $\Lambda$ analytic with $\Lambda'' > 0$. The scalar statements (i)--(iii) are unconditional --- Cram\'er's theorem applied to $x^2$; the tensor statement is exactly as strong as (H-iso), which is named in the theorem, not hidden in it. Verification items RG1--RG3 confirm (i)--(iii) for uniform and two-scale (strongly non-Gaussian) modes: $I'' = 1/\mathrm{Var}(x^2)$ to $10^{-4}$, cubic/quadratic ratio scaling $4.00$ under $N \to 16N$, and the empirical $N^{-1/2}$ premise.
+\end{proof}
+
+\textbf{The physics point.} Under (H-iso) --- non-Gaussianity changes only the \emph{coefficient} of the quadratic effective action, which the Newtonian matching absorbs into $16\pi G/c^4$; the \emph{form} of the dynamics is fixed by the gauge-invariance uniqueness theorem, which never sees the coefficient. Anisotropic or correlated mode statistics could deform the quadratic form itself; that possibility is exactly the renamed residual below. The residual is renamed \textbf{(R-corr)}: strongly-\emph{correlated} substrate regimes (where modes are not independent), with the deep-nonlinear region governed in any case by \S\ref{sec:boot}'s completion.
+
+%==================================================================
+\section{R-cont: an explicit-rate theorem}\label{sec:cont}
+%==================================================================
+
+The old residual --- ``the strict discrete-to-continuum limit is open'' --- conflated the convergence of the \emph{field dynamics} (which the gravity chain uses) with the convergence of the \emph{arena geometry} (Gromov--Hausdorff). The first is now a theorem with explicit constants.
+
+\begin{theorem}[Field-dynamics continuum control]\label{thm:rate}
+On the 600-cell substrate, whose resolution parameter is $\theta = \pi/5$ (the ``rate'' statements below are coefficients of the closed-form dispersion's expansion in $\theta$, exact for this fixed substrate and controlling the design-refinement family of the rung ladder, where $\theta$ decreases rung by rung):
+\begin{itemize}
+\item[(i)] \emph{Band exactness.} Sampled $S^3$ harmonics of degree $k \le 5$ are \emph{exact} eigenvectors of the graph Laplacian: verified directly in this suite for the coordinate functions and the traceless quadratics to $7\times10^{-15}$ (items RC1a--b); the full $k \le 5$ statement is the rung-ladder intertwiner theorem, imported from its own verified document (25/25), not re-proven here. On the rendered band nothing converges --- the discrete spatial eigenfunctions are the continuum ones, sampled.
+\item[(ii)] \emph{Eigenvalue rate.} The closed-form dispersion $\lambda_k = 12\bigl(1 - \frac{\sin((k+1)\theta)}{(k+1)\sin\theta}\bigr)$ expands as
+$$\lambda_k = 2\theta^2 k(k+2)\Bigl[1 - \frac{(3n^2 - 7)\theta^2}{60} + O(\theta^4)\Bigr], \qquad n = k+1,$$
+(using $\sin n\theta/(n\sin\theta) = 1 - \tfrac{(n^2-1)\theta^2}{6} + \tfrac{(n^2-1)(3n^2-7)\theta^4}{360} - \cdots$ and $k(k+2) = n^2-1$): continuum eigenvalues with a proven second-order rate; the rate term is confirmed against the exact formula and the spectrum carries each value with full multiplicity $(k+1)^2$ (sims RC2, RC2b).
+\item[(iii)] \emph{Aliasing bound.} The canonical kernel suppresses each above-band eigenvector by exactly $1/(1 + r^2\lambda)$; for general above-band content this gives the norm bound $1/(1 + r^2\lambda_{\min,>K})$ (item RC3 checks the eigenvector statement to $10^{-12}$).
+\item[(iv)] \emph{Time step.} The leapfrog tick reproduces continuum frequencies at $O(\tau^2)$ (Paper LIII suite, sim T10).
+\end{itemize}
+Every constant is explicit. What this does not prove: that the vertex set with its graph metric converges in the Gromov--Hausdorff sense to round $S^3$ under refinement --- the geometric statement, which remains with Paper XL's programme and is renamed \textbf{(R-GH)}. After this theorem, (R-GH) is a refinement of rigor about the arena, not a gap in the low-band field-dynamics statement proved here.
+\end{theorem}
+
+%==================================================================
+\section{R-G: Newton's constant, conditionally anchored}\label{sec:G}
+%==================================================================
+
+With $c$ and $\hbar$ substrate-assigned, fixing $G$ is equivalent to fixing one dimensionless number --- the Planck mass in units of one derived particle mass.
+
+\begin{hypothesis}[H-shell-96]\label{hyp:shell}
+The muon's cascade shell $N_\mu = \log_\varphi(m_P/m_\mu)$ is exactly the structural integer $96 = 24\times4$. \emph{Provenance:} the shell-placement table of the cascade mass analysis finds $N_\mu = 95.9998$ (offset $-2\times10^{-4}$, parts-per-million in mass), and the integer 96 with its $24\times4$ reading was adopted by the programme's muon $g{-}2$ analysis (Paper LII) prior to, and independently of, the present question.
+\end{hypothesis}
+
+\begin{theorem}[Conditional numerical anchor for $G$]\label{thm:G}
+Under Hypothesis~\ref{hyp:shell},
+$$G \;=\; \frac{\hbar c}{(m_\mu\,\varphi^{96})^2} \;=\; 6.67305\times10^{-11}\ \mathrm{m^3\,kg^{-1}\,s^{-2}},$$
+against the measured $6.67430(15)\times10^{-11}$: relative deviation $-1.9\times10^{-4}$ (sim RGRAV1).
+\end{theorem}
+
+\textbf{Honesty block, in full.}
+\begin{itemize}
+\item \emph{Non-circularity rests on documented prior usage --- and is partial.} The shell integer was first read off using measured $G$, so the inversion is reverse-engineered unless the integer carries weight from elsewhere. The weight it has: Paper LII \citep{SmartLII} adopted $96 = 24\times4$ as the muon's structural shell for the $g{-}2$ analysis, in a document predating this question within the programme's record (in-repo documentation; we note a reader cannot verify the chronology independently of that record). We therefore call this an \emph{anchor}, not a determination: it fixes $G$ \emph{given} a hypothesis that is itself still open. The chance probability of one particle landing within $2\times10^{-4}$ of an integer shell is $4\times10^{-4}$; corrected for look-elsewhere over the 14 particles of the table, $p \approx 0.006$. Suggestive, not conclusive.
+\item \emph{The deviation is real.} $G$ is measured to $2.2\times10^{-5}$, so the $-1.9\times10^{-4}$ gap is significant: equivalently the muon's offset $-2\times10^{-4}$ shells is physical (radiative-correction scale), not noise. The theorem is accurate to $1.9\times10^{-4}$ and says so.
+\item \emph{Honesty gate.} The direct $\alpha_G$ route through the proton fails integer forcing (proton shell $91.46$, offset $0.46$, among the worst in the table) and is rejected by the gate (sim RGRAV2). One pre-specified anchor (the muon, fixed by Paper LII's usage before this computation), one prediction, one recorded deviation; the only alternative route considered (the proton) is rejected by the stated gate rather than silently dropped.
+\item \emph{What would unconditionalise it.} A derivation of the integer 96 from the cascade itself --- the same open item as the heavy-sector shell integers (Paper XL \citep{SmartXL} hosts the geometric residual; \texttt{cascade-masses.md} the shell table). A derivation of 96 that then \emph{missed} measured $G$ would kill the anchor: the hypothesis is falsifiable in both directions.
+\end{itemize}
+
+%==================================================================
+\section{The ledger after this paper}\label{sec:ledger}
+%==================================================================
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Residual & Paper LIII status & status now \\
+\midrule
+R-boot & cited (Deser 1970 etc.) & \textbf{closed in-house}; only all-orders uniqueness cited \\
+R-Gauss & Gaussian only & \textbf{generalised}; renamed (R-corr): correlated regime \\
+R-cont & open programme & \textbf{explicit-rate theorem}; renamed (R-GH): arena geometry \\
+R-G & calibration & \textbf{conditional anchor}, $1.9\times10^{-4}$, under H-shell-96 \\
+R-$\Lambda$ & cosmology branch & unchanged \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The surviving items differ in kind from the obstacle that blocked the chain for two years: (R-GH) and the uniqueness citation are rigor-grade; (R-corr) and the shell-96 derivation are genuine open mechanisms, but localised and named, each with a stated falsification route. We record them as such rather than minimising them.
+
+%==================================================================
+\section{Reproducibility}\label{sec:repro}
+%==================================================================
+
+Manuscript: \texttt{papers/paper-lvii/paper-lvii.tex}; derivation notes: \texttt{docs/residual-closure-derivation.md}. Verification: \texttt{python3 scripts/verify\_residual\_closure.py} (23/23; NumPy, SciPy, SymPy; data file \texttt{scripts/600cell\_data.npz}), items RB1--RB2c (\S\ref{sec:boot}), RG1--RG3 (\S\ref{sec:gauss}), RC1--RC3 (\S\ref{sec:cont}), RGRAV1--2 (\S\ref{sec:G}); the suite's SM items belong to Paper LVI. The first pass of the chain, including its own residual ledger, is Paper LIII with \texttt{verify\_gr\_closure.py} (39/39).
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

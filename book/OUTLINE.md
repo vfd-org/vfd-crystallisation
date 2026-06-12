@@ -18,7 +18,7 @@
 Carroll's signature move, and ours: **separate the core you can check from the frontier you are interpreting.**
 
 - **Core (verifiable, a laptop confirms it):** the geometry — the 600-cell, E8, the spectral facts, the dimension-3 result, the canonical kernel, the inner clock-mirror. These are classical mathematics; the book invites the reader to recompute them.
-- **Frontier (openly interpretive / open):** that the scene *is* lived reality (P-A — never claimed), the universal selection law, the continuum-limit rigor of the gravity chain (Einstein's equations now derived at effective level, `docs/gr-closure-derivation.md`). Flagged as open, every time.
+- **Frontier (openly interpretive / open):** that the scene *is* lived reality (P-A — never claimed), the universal selection law, the Gromov–Hausdorff arena-smoothness theorem (R-GH — the field continuum limit is now a theorem; only the arena geometry remains, `docs/residual-closure-derivation.md`/`docs/gr-closure-derivation.md`), and the Standard-Model wiring (gauge-group inventory now derived `docs/gauge-group-from-arenas.md`; charges/chirality/mixing/heavy-sector open). Flagged as open, every time.
 
 **Framing discipline** (from `feedback_existence_framing`, `feedback_mathematical_framing_discipline`): never "the universe is conscious," never "primes are alive," never "the universe had to exist." The spine claim is *X exists ⟺ 𝒞(X) = X*. The seven-level ladder is distinction → relation → closure → attractors → irreducible modes → bounded frames → internal self-modelling. The reader supplies meaning; the prose never leans on interpretation to carry a factual claim.
 
@@ -26,7 +26,7 @@ Source spine for the math: `docs/geometry-to-reality.md`, `docs/rendering-layer.
 
 ---
 
-## Structure: 5 parts, 13 chapters
+## Structure: 5 parts, 14 chapters
 
 ### Part I — The Question
 1. **The View From Inside** — nobody has seen the universe from outside; what would it take for a world to build itself, with nothing imported? Structure-first vs space-first. *Status: DRAFTED.*
@@ -43,35 +43,40 @@ Source spine for the math: `docs/geometry-to-reality.md`, `docs/rendering-layer.
 8. **The Measured Numbers** — projection into masses, radii, couplings; what is actually verified (the b-anomaly kernel witness), and the discipline of the six projection classes.
 
 ### Part IV — The Ladder
-9. **One World, Many Resolutions** — the cascade as resolution levels of one S³; the intertwiner theorem; cross-rung coupling as sampling.
-10. **The Seventh Dimension Upstairs** — octonions and S⁷; why arenas exist only in dimensions 3 and 7 (Adams); the one arena above ours, and why no haze of hidden universes.
-11. **Which World Happens** — selection: many admissible worlds, one crystallises; selection as symmetry-breaking by the accumulated history; life and the observer, honestly framed (P-A held open).
+9. **One World, Many Resolutions** — the cascade as resolution levels of one S³; the intertwiner theorem; cross-rung coupling as sampling; the spherical-design cutoff (which crystals can be rungs). *Split out of the old overloaded Ch9.*
+10. **Laws at Coarse Grain** — what the rungs hand you: Newton + Einstein's GR (mistaken-identity closure, figs 10.1/10.2), the three-pillars (QM/EM/GR off one field), and the SM gauge skeleton (G₂→SU(3), quaternion split→SU(2), clock U(1)) with the wiring open. *New chapter (was the second half of Ch9).*
+11. **The Seventh Dimension Upstairs** — octonions and S⁷; why arenas exist only in dimensions 3 and 7 (Adams); the one arena above ours, and why no haze of hidden universes.
+12. **Which World Happens** — selection: many admissible worlds, one crystallises; selection as symmetry-breaking by the accumulated history; life and the observer, honestly framed (P-A held open).
 
 ### Part V — The Honest Frontier
-12. **What We Don't Know** — the named open problems (the universal selection law, the continuum rigor of the gravity chain, P-A); the discipline of not overclaiming as a feature, not a bug.
-13. **Why It Might Be True / What Would Prove It Wrong** — the verification harness; falsifiability; what a clean refutation would look like.
+13. **What We Don't Know** — the named open problems (the universal selection law, the Gromov–Hausdorff arena-smoothness theorem, the Standard-Model wiring + heavy sector, P-A); residual debts itemised (3 of 4 paid); the discipline of not overclaiming as a feature, not a bug.
+14. **Why It Might Be True / What Would Prove It Wrong** — the verification harness; falsifiability; what a clean refutation would look like.
+
+**Back matter:** Appendix (Check It Yourself) → The Honest Ledger (claim-status table) → Glossary → Further Reading → About the Author → Acknowledgements.
 
 ---
 
 ## Chapter status tracker
 
-**Whole book: complete first draft — 13/13 chapters, ~21,600 words.**
+**Whole book: complete first draft — 14/14 chapters + 6 back-matter sections, ~24k words.**
 
-| Ch | Title | Status | Words | Em-dash/1k |
-|----|-------|--------|-------|------------|
-| 1 | The View From Inside | REVIEWED (codex 3→2/10) + voice-revised | 2226 | 0.45 |
-| 2 | What "Exists" Even Means | REVIEWED (codex 5/10) + voice-revised | 1859 | 1.08 |
-| 3 | The Most Symmetric Thing | REVIEWED (codex 4/10) + voice-revised | 1569 | 0.64 |
-| 4 | What the Spectrum Knows | DRAFTED (+ fig 4.1), review pending | 1830 | 1.09 |
-| 5 | Three Directions, for Free | DRAFTED, review pending | 1594 | 0.63 |
-| 6 | Looking | DRAFTED, review pending | 1647 | 0.61 |
-| 7 | The Mirror That Makes Time | DRAFTED, review pending | 1624 | 0.62 |
-| 8 | The Measured Numbers | DRAFTED, review pending | 1633 | 0.61 |
-| 9 | One World, Many Resolutions | DRAFTED, review pending | 1371 | 0.73 |
-| 10 | The Seventh Dimension Upstairs | DRAFTED, review pending | 1474 | 0.68 |
-| 11 | Which World Happens | DRAFTED, review pending | 1595 | 0.63 |
-| 12 | What We Don't Know | DRAFTED, review pending | 1450 | 0.69 |
-| 13 | Why It Might Be True | DRAFTED, review pending | 1765 | 0.57 |
+| Ch | Title | Status | Em-dash/1k |
+|----|-------|--------|------------|
+| 1 | The View From Inside | REVIEWED (codex 3→2/10) + voice-revised | 0.45 |
+| 2 | What "Exists" Even Means | REVIEWED (codex 5/10) + voice-revised | 1.08 |
+| 3 | The Most Symmetric Thing | REVIEWED + forcing-section added | 0.64 |
+| 4 | What the Spectrum Knows | DRAFTED (+ fig 4.1, circle-closure para) | 1.09 |
+| 5 | Three Directions, for Free | DRAFTED | 0.63 |
+| 6 | Looking | DRAFTED (+ fig 6.1, kernel recipe, 20/100 split) | 0.61 |
+| 7 | The Mirror That Makes Time | DRAFTED | 0.62 |
+| 8 | The Measured Numbers | DRAFTED (+ fig 8.1) | 0.61 |
+| 9 | One World, Many Resolutions | REWRITTEN (ladder only, split) | 0.43 |
+| 10 | Laws at Coarse Grain | NEW (gravity + pillars + gauge, figs 10.1/10.2) | 0.36 |
+| 11 | The Seventh Dimension Upstairs | DRAFTED | 0.68 |
+| 12 | Which World Happens | DRAFTED | 0.63 |
+| 13 | What We Don't Know | DRAFTED (+ residual itemisation) | 0.69 |
+| 14 | Why It Might Be True | DRAFTED | 0.57 |
+| — | Back matter (appendix, ledger, glossary, refs, about, acks) | ADDED | ≤1.0 |
 
 **Remaining to "completed book":** (1) voice-pass codex review of Ch4–13 + revisions (filler cull, esp. residual `exactly`); (2) whole-book continuity/voice pass; (3) front/back matter (preface = honesty contract, contents, "check it yourself" appendix → scripts, acknowledgements); (4) more figures (Track A: 600-cell projection, kernel decay, the cascade ladder; Track B: a crystal/clock opener); (5) typeset to publishable format (LaTeX book → PDF, Markdown master in parallel).
 

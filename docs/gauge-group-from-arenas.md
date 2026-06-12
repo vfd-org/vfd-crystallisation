@@ -1,13 +1,13 @@
-# The Gauge Group from the Two Arenas: SU(3) × SU(2) × U(1) as Forced Structure
+# The Gauge Group from the Two Arenas: SU(3) × SU(2) with a Distinguished Clock Circle
 
 **Date:** 2026-06-12
-**Status:** Structure-level derivation; sim-verified (SM0–SM6 of `scripts/verify_residual_closure.py`, 23/23 overall). The honest boundary is §5: group inventory derived, embedding pattern / charges / chirality / representations open.
+**Status:** Structure-level derivation; sim-verified (SM0–SM6 of `scripts/verify_residual_closure.py`, 24/24 overall). **Corrected 2026-06-12 after hostile codex review of Paper LVI** (`docs/reviews/paper-lvi-20260612T083704Z.md`): the derived structure is SU(3) × SU(2) *with a distinguished circle subgroup inside the SU(2)* — not an independent three-factor product; the order-10 clock element generates ℤ₁₀ lying in a unique circle, it does not generate U(1); the no-others statement is scoped to the arena mechanism. The honest boundary is §5. Paper form: `papers/paper-lvi/`.
 
 ---
 
 ## 1. The claim, stated carefully
 
-The Standard Model's internal symmetry is built from exactly three factors: $SU(3)$, $SU(2)$, $U(1)$. This document derives **that inventory** — these three groups and no others — as the internal symmetry structure available to the rendered substrate, from inputs the programme has already forced:
+The Standard Model's internal symmetry is built from exactly three factors: $SU(3)$, $SU(2)$, $U(1)$. This document derives the internal symmetry structure the **two-arena mechanism** makes available — and matches it against that inventory — from inputs the programme has already established:
 
 - **(A1)** The only renderable arenas are the 3-sphere (quaternionic) and the 7-sphere (octonionic). This is the rung-ladder theorem (Adams' Hopf-invariant-one theorem at its core, `docs/rung-dimension-ladder.md`); the tower stops there because the division-algebra ladder stops: sedenions have zero divisors (sim SM6 exhibits $(e_2 - e_9)(e_6 - e_{13}) = 0$ explicitly).
 - **(A2)** The rendered observer frame splits the quaternionic symmetry: **right** multiplication acts on the spatial frame as the adjoint rotation (it *is* the spatial rotation group of the scene), while **left** multiplication transports frame components trivially — it is **internal**. This was proven and machine-verified in the GR-closure pass (sims T14a–b) and is the load-bearing split here.
@@ -28,15 +28,15 @@ So: choosing the clock unit on the octonionic arena — the same choice the rend
 
 On the 3-sphere arena the symmetry is $SU(2)_L \times SU(2)_R$ (left and right unit-quaternion multiplication). By (A2) the **right** factor is consumed by geometry — it is the rotation group of the rendered spatial frame, already spent as the scene's $SO(3)$. The **left** factor commutes with the entire rendered frame structure: it is the arena's internal symmetry, an exact $SU(2)$.
 
-Inside it, the tick (A3) distinguishes the one-parameter subgroup through the clock element: sim SM5 locates the clock vertex ($q_0 = \varphi/2$), confirms its left-permutation has order exactly 10 (the pentagonal clock), and that it is frame-trivial (internal). The continuous group it generates is a distinguished $U(1)_{\rm clock} \subset SU(2)_{\rm left}$.
+Inside it, the tick (A3) distinguishes the one-parameter subgroup through the clock element: sim SM5 locates the clock vertex ($q_0 = \varphi/2$), confirms its left-permutation has order exactly 10 (the pentagonal clock), and that it is frame-trivial (internal). Being of finite order it generates a cyclic ℤ₁₀, which lies in exactly one circle subgroup (the rotation group about its axis): a distinguished $U(1)_{\rm clock} \subset SU(2)_{\rm left}$.
 
 ## 4. The inventory theorem
 
 Combining §2 and §3 with (A1):
 
-**The internal symmetry structure available to the rendered substrate is**
-$$SU(3) \;\times\; SU(2) \;\times\; U(1),$$
-**and nothing else is available**: the arena tower stops at the octonions (SM6), the octonionic arena contributes exactly $SU(3)$ (its full $G_2$ is broken by the same clock choice that builds the chart), the quaternionic arena contributes exactly one internal $SU(2)$ (the other factor is the scene's spatial rotations), and the tick distinguishes exactly one $U(1)$. Three factors, the right three, with no freedom to add a fourth — the same "forced, not chosen" character as the rest of the programme: more groups would need more division algebras, and there are none.
+**The internal symmetry structure produced by the two-arena mechanism is**
+$$SU(3) \;\times\; SU(2), \qquad \text{with a distinguished circle } U(1)_{\rm clock} \subset SU(2),$$
+**and the mechanism produces nothing else**: the arena tower stops at the octonions (SM6), the octonionic arena contributes exactly $SU(3)$, the quaternionic arena contributes exactly one internal $SU(2)$ (the other factor is the scene's spatial rotations), and the tick distinguishes exactly one circle inside it. All three SM factor *types* appear; the SM's **independent** hypercharge factor does not — that independence is precisely the open wiring of §5. Within the mechanism, more groups would need more division algebras, and there are none (a mechanism-scoped statement, not an exclusion of symmetry from other origins).
 
 ## 5. The honest boundary (what is NOT derived)
 
@@ -45,8 +45,8 @@ Stated plainly, because a hostile reader will look here first:
 1. **The embedding pattern.** In the Standard Model, hypercharge $U(1)_Y$ is **not** a subgroup of $SU(2)_L$; the true gauge group is $S(U(3){\times}U(2))$-like, with $U(1)_Y$ mixing into both factors. Here the derived $U(1)_{\rm clock}$ sits *inside* the internal $SU(2)$. The inventory matches; the product/embedding structure does not yet. Deriving the correct mixing (equivalently the Weinberg angle) is open.
 2. **Chirality.** Why the internal $SU(2)$ couples only to left-handed matter is not derived.
 3. **Representation content.** The $\mathbb C \oplus \mathbb C^3$ split of the complexified octonions under $SU(3)$ offers the classical lepton/quark slot pattern ($\mathbf 1 \oplus \bar{\mathbf 1} \oplus \mathbf 3 \oplus \bar{\mathbf 3}$, Günaydin–Gürsey), but the actual fermion assignments, generation structure, and anomaly bookkeeping are not derived.
-4. **Couplings and the heavy sector.** Gauge coupling strengths are not derived. Heavy masses (W, Z, Higgs, heavy quarks) have cascade *shell placements* (Z at shell 82 with offset 0.049; W at 82, +0.21; Higgs at 81, +0.29; `cascade-masses.md` §E3.1) but the shell integers are not derived — the same open item as (R-G)'s shell-96 hypothesis in the companion document.
-5. **Dynamics.** This document derives the symmetry inventory of the rendered substrate; promoting each factor to a dynamical gauge field rides the same chart-freedom uniqueness mechanism as gravity and electromagnetism (Maxwell case proven, sim T13 of the GR suite; the non-abelian Yang–Mills generalisation of the uniqueness scan is not yet run).
+4. **Couplings and the heavy sector.** Gauge coupling strengths are not derived. Heavy masses (W, Z, Higgs, heavy quarks) have cascade *shell placements* (Z at shell 82 with offset −0.049; W at 82, +0.21; Higgs at 81, +0.29; `cascade-masses.md` §E3.1) but the shell integers are not derived — the same open item as (R-G)'s shell-96 hypothesis in the companion document.
+5. **Dynamics.** This document derives the symmetry inventory of the rendered substrate; promoting each factor to a dynamical gauge field rides the same chart-freedom uniqueness mechanism as gravity and electromagnetism (Maxwell case proven, sim T13 of the GR suite; the non-abelian case has the consistency illustration-with-null YM1–YM2 of `verify_crystal_forcing.py`, with the general uniqueness theorem cited to Barnich–Henneaux).
 
 ## 6. Why this is still a real result
 

@@ -1,4 +1,4 @@
-# Chapter 10 — The Seventh Dimension Upstairs
+# Chapter 11 — The Seventh Dimension Upstairs
 
 The whole of arithmetic grows out of a short and strange ladder, and almost nobody is taught that the ladder has a top.
 

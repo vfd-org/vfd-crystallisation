@@ -14,26 +14,26 @@ python3 scripts/verify_ladder_completion.py      # expect 29 PASS
 python3 scripts/verify_narrative_closure.py      # expect 28 PASS
 python3 scripts/verify_gap_strengthening.py      # expect 22 PASS
 python3 scripts/verify_gr_closure.py             # expect 39 PASS
-python3 scripts/verify_residual_closure.py       # expect 23 PASS  (SciPy, SymPy)
-python3 scripts/verify_crystal_forcing.py        # expect 14 PASS
+python3 scripts/verify_residual_closure.py       # expect 24 PASS  (SciPy, SymPy)
+python3 scripts/verify_crystal_forcing.py        # expect 17 PASS
 python3 scripts/verify_boundary_green_function.py    # Newtonian 1/r witness
 python3 scripts/verify_lemma_2p5_boundary_connectivity.py
 ```
 
-**Total: 201 itemised checks across the eight core suites**, each engineered with a falsifiable null (a wrong-by-construction control that the test must reject), plus the two witness scripts.
+**Total: 205 itemised checks across the eight core suites**, each engineered with a falsifiable null (a wrong-by-construction control that the test must reject), plus the two witness scripts.
 
 ## What each suite carries
 
 | Suite | Checks | Verifies | Book chapters |
 |---|---|---|---|
-| `verify_crystal_forcing.py` | 14 | the crystal is forced (2I unique perfect/maximal, McKay = affine E8 computed from the multiplication table); the graph reconstructs its own geometry from bare adjacency; non-abelian gauge consistency forces a Lie algebra | Ch3, Ch4, Ch9 |
+| `verify_crystal_forcing.py` | 17 | the crystal is forced (2I unique perfect/maximal, McKay = affine E8 computed from the multiplication table); the graph reconstructs its own geometry from bare adjacency; non-abelian gauge consistency forces a Lie algebra | Ch3, Ch4, Ch9 |
 | `verify_rendering_layer.py` | 21 | spectral dimension 3 (square multiplicities, Weyl count, exact dispersion); canonical kernel; quaternionic frames/chart; inner clock reversal ⟹ second-order time | Ch4, Ch5, Ch6, Ch7 |
 | `verify_rung_dimension_ladder.py` | 25 | intertwiner theorem (eigenspaces = sampled harmonics); design cutoffs; arenas only 3D + 7D | Ch9, Ch10 |
 | `verify_ladder_completion.py` | 29 | octonionic S⁷ frames/kernel; folded sector; aliasing tables | Ch10 |
 | `verify_narrative_closure.py` | 28 | the ten geometry→reality gap closures (first pass) | Ch6, Ch11, Ch12 |
 | `verify_gap_strengthening.py` | 22 | hardened re-tests of the same closures with genuine nulls (post-hostile-review) | Ch12 |
 | `verify_gr_closure.py` | 39 | the gravity chain: stress tensor, Fierz–Pauli uniqueness, trace reversal/factor 2, light bending ×2, GW, Schrödinger envelope, equivalence principle, Maxwell | Ch9 |
-| `verify_residual_closure.py` | 23 | residual upgrades: in-house bootstrap, beyond-Gaussian effective action, explicit-rate continuum control, conditional G, gauge-group structure (G₂ → su(3) etc.) | Ch9, Ch12 |
+| `verify_residual_closure.py` | 24 | residual upgrades: in-house bootstrap, beyond-Gaussian effective action, explicit-rate continuum control, conditional G, gauge-group structure (G₂ → su(3) etc.) | Ch9, Ch12 |
 
 Supporting witnesses: `verify_boundary_green_function.py` (discrete 1/r, fit R² = 0.9966), `verify_lemma_2p5_boundary_connectivity.py` (boundary graph 10-regular, connected, λ₂ = 1.77), `verify_hadron_radii.py`, `verify_kappa_descent.py`, `verify_084473_derivation.py`.
 
