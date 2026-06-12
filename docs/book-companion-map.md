@@ -26,6 +26,8 @@
 - **Paper LV** — The Rendering Layer (arena, kernel, chart, second-order time).
 - **Paper LVI** — The Gauge-Group Inventory from the Two Arenas (structure derived, wiring open).
 - **Paper LVII** — Residual Closure of the Gravity Chain (bootstrap in-house; non-Gaussian; explicit rates; conditional G).
+- **Paper LVIII** — Chirality and Charge Quantization from the Two Arenas.
+- **Paper LIX** — The Resonance Chain (mass ladder, placements, deviation decomposition, the fenced selection problem; underpins the ledger simulator and web explorer).
 - **Paper XL** — (updated) the remaining Gromov–Hausdorff arena programme.
 
 Hostile-review hardening: every paper above goes through the codex referee loop (`scripts/review_paper.sh`); reviews land in `docs/reviews/` and are part of the public record, including the findings and how each was answered.

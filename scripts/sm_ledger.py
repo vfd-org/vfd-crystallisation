@@ -161,8 +161,10 @@ def atoms_table():
         print(f"  Bohr radius            {label}: "
               f"a0 = {a0_m:.3e} m (QED value 5.292e-11)")
     print("  Reading: once a mode has mass + charge + Schrodinger + Coulomb,")
-    print("  atom formation is a THEOREM of the derived layer; the residual")
-    print("  error is exactly the mass-input error (electron shell +3.9%).")
+    print("  the nonrelativistic Coulomb atom is a THEOREM of the derived")
+    print("  layer; the residual error is, to leading order, the mass-input")
+    print("  error (electron shell +3.9%). Reduced-mass/fine-structure are")
+    print("  higher-order corrections of the same equations, not re-derived.")
     print()
 
 

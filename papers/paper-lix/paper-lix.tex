@@ -1,0 +1,164 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{observation}[theorem]{Observation}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{The Resonance Chain\\[6pt]
+\large From the Crystal's Ring to Atoms: the Golden Mass Ladder, its Placements,\\ the Deviation Decomposition, and the Fenced Open Problem of Rung Selection}
+\author{Lee Smart\\ \textit{Institute of Vibrational Field Dynamics}\\ \texttt{contact@vibrationalfielddynamics.org}}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status:} Preprint (not peer-reviewed). This paper is the citable record underpinning the programme's Standard-Model ledger simulator (\texttt{scripts/sm\_ledger.py}) and the public web explorer; every number either of those displays is derived or recorded here. Computational claims: \texttt{scripts/explore\_shell\_rule.py} (10/10), \texttt{scripts/explore\_geometric\_ladder.py} (3/3), with upstream inputs from the suites of Papers LIII--LVIII. Grades used throughout: \textsc{derived} / \textsc{conditional} / \textsc{placed} / \textsc{open}, in the sense of \S\ref{sec:grades}.
+
+\begin{abstract}
+This paper assembles, in one citable place, the framework's complete current account of particle masses and the route from the substrate's vibrations to atoms --- including, with equal care, what is derived, what is placed, and what is open. The account is a five-link chain. (1) The crystal's resonant spectrum at fixed grain is exact and closed-form (Paper LV). (2) Mass is closure frequency: a particle is a self-closing mode whose rest frequency is set by the coherence length at which it closes, an identification verified dynamically (Paper LIII). (3) Given the $\varphi$-self-similar refinement of the substrate (a named premise of the cosmogenesis layer) and the verified closure-frequency identification, the mass scale is geometric: $m(N) = m_P\,\varphi^{-N}$, one golden step per refinement level; anchored on the single structural rung $N_\mu = 96 = 24\times4$ (Hypothesis H-shell-96, Paper LII), every rung value is parameter-free, and the thirteen Standard-Model placements land within half a rung across nineteen orders of magnitude --- the muon at parts-per-million, the Z at $-2.3\%$, the worst placements near $\pm25\%$. (4) \emph{Which} rung a particle takes is the open link, and we fence it at proof grade: the curvature obstruction (generation curvatures $(5,3,-2)$ are type-distinct) refutes every rule of the form ``static quantum numbers plus universal generation dependence''; per-type linear rules fail; an information budget ($\le$ 25 parameter bits for the nine charged-fermion integers) sets the bar any future rule must clear; eight geometry- and prime-derived level sieves test null against exact hypergeometric null models after look-elsewhere correction, with the surviving quantitative target recorded (a derived sieve capturing all nine shells at span-density $\le 1/3$); a one-loop-log dressing form is excluded within the lepton sector; and a sector-limited offset--structure correlation that failed its out-of-sample test is recorded as a lead, not a law. The deviations themselves decompose into four recorded causes: they are \emph{not} missing finer rungs (sub-rung positions are chance-like against half- and quarter-shell grids); the W's miss is the Z's placement plus the weak mixing angle exactly ($m_W = m_Z\cos\theta_W$, so the electroweak sector carries one placement, one already-named open, and the Higgs); the light-quark and proton comparisons are scheme and binding artifacts (MS-bar conventions; $\sim$99\% QCD binding energy) rather than failures of a bare spectrum; and the clean remainder --- smallest for the cleanest particles (mean $|$offset$|$: leptons $0.071 <$ EW $0.184 <$ quarks $0.288 <$ composite $0.462$) --- has the profile of interaction dressing, blocked behind the underived coupling sector. (5) The nonrelativistic Coulomb atom then follows as a theorem of the already-derived layer: with the framework's own electron and conditional $\alpha$, hydrogen's ground state computes to $-14.14$ eV against the measured $-13.61$, the discrepancy being, to leading order, the electron's $+3.9\%$ mass-input error; with the measured electron the Coulomb-level values return at the model's own accuracy. Nothing in this paper is fitted; every negative result is published as a constraint.
+\end{abstract}
+
+%==================================================================
+\section{Position, and the grading convention}\label{sec:grades}
+%==================================================================
+
+Papers LIII--LVIII derive the framework's kinematic and dynamical structure: the gravity chain, the gauge inventory, chirality, and the charge lattice. What none of them assembles is the mass story --- the part a reader of the programme's ledger simulator most needs: where the ladder comes from, how good the placements actually are, why most deviations are large, and what stands between the present state and derived masses. This paper is that record. It consolidates, with proofs and machine-checked nulls, material first developed in the repository documents \texttt{resonance-mechanism.md}, \texttt{shell-rule-wo.md} (work order WO-SHELL-OFFSET-001), and \texttt{sm-closeability-audit.md}.
+
+Grades, used on every claim: \textsc{derived} (proved or machine-verified from the framework's structure); \textsc{conditional} (derived under one named open hypothesis); \textsc{placed} (a slot read from data and recorded as postdiction); \textsc{open} (not derived, no mechanism in hand). The discipline behind the grades is the programme's standing rule: golden-ratio expressions are flexible enough to fit any spectrum, so nothing below is fitted, criteria are fixed before judging, look-elsewhere is accounted, and negatives are published.
+
+%==================================================================
+\section{The chain: links 1--3 (links 1--2 \textsc{derived}; link 3 \textsc{conditional})}\label{sec:chain}
+%==================================================================
+
+\textbf{Link 1 --- the ring.} The substrate's resonant spectrum at fixed grain is closed-form and exact: $\lambda_k = 12\bigl(1 - \frac{\sin((k+1)\pi/5)}{(k+1)\sin(\pi/5)}\bigr)$ with multiplicities $(k+1)^2$, $k = 0..5$ --- the harmonics of a 3-sphere (Paper LV \citep{SmartLV}; machine precision). These give fields their shapes; they are not yet masses.
+
+\textbf{Link 2 --- mass is closure frequency.} A particle is a localized mode that closes on itself; its rest frequency is its mass. In the framework this is not an analogy: the massive end of the response family $C_\varphi = L + \varphi^{-2}I$ yields modes obeying $(\Box - \mu^2)F = 0$ with $\mu = \varphi^{-1}$ --- rest frequency set by the closure coherence length --- and the identification is verified dynamically: such a mode's envelope obeys the Schr\"odinger equation with exactly that mass, and its inertia equals its gravitating energy on one simulated wavepacket (Paper LIII \citep{SmartLIII}, items T11--T12).
+
+\textbf{Link 3 --- the golden ladder (conditional on the refinement premise).}
+
+\begin{proposition}[The ladder, from two named premises]\label{prop:ladder}
+Assume: \textbf{(P1)} the substrate's refinement tower rescales its geometry by one factor of $\varphi$ per level --- the $\varphi$-recursive multi-shell refinement stated as Theorem 5.4 of the cosmogenesis layer and used throughout the rung ladder; this premise is a construction of those documents, imported here, not re-proven; \textbf{(P2)} a mode's rest frequency is set by its closure coherence length --- the identification verified dynamically in Paper LIII (items T11--T12). Then a mode closing at depth $N$ closes at coherence length $\propto \varphi^{N}$ and rest mass
+$$m(N) \;=\; m_P\,\varphi^{-N}.$$
+The geometric spacing of the ladder is thereby \textsc{conditional} on (P1) --- with (P2) carrying machine verification --- and the spacing is the only part of the mass story this proposition claims; the integer $N$ for a given particle is not derived (\S\ref{sec:fence}).
+\end{proposition}
+
+\begin{hypothesis}[H-shell-96, the anchor]\label{hyp:anchor}
+The muon's shell is exactly the structural integer $96 = 24\times4$. Provenance: adopted by the muon $g{-}2$ analysis (Paper LII \citep{SmartLII}) prior to and independently of the mass-ladder questions; the measured offset is $-2\times10^{-4}$ shells (parts-per-million in mass). Under this hypothesis $m_P = m_\mu\varphi^{96} = 1.2210\times10^{19}$ GeV, and Newton's constant acquires its conditional anchor (Paper LVII \citep{SmartLVII}).
+\end{hypothesis}
+
+%==================================================================
+\section{The placements (\textsc{placed}; postdiction disclosed)}\label{sec:placements}
+%==================================================================
+
+With the anchor fixed, every particle's rung value is a parameter-free number. The thirteen placements (PDG 2024 central values; shells $N = \mathrm{round}(\log_\varphi(m_P/m))$, first recorded in the cascade mass analysis):
+
+\begin{center}
+\begin{tabular}{lrrrrl}
+\toprule
+particle & $N$ & $m_P\varphi^{-N}$ [GeV] & PDG [GeV] & dev. & offset [shells] \\
+\midrule
+electron & 107 & $5.309\times10^{-4}$ & $5.110\times10^{-4}$ & $+3.9\%$ & $+0.079$ \\
+muon & 96 & $0.10566$ & $0.10566$ & (anchor) & $-0.0002$ \\
+tau & 90 & $1.896$ & $1.777$ & $+6.7\%$ & $+0.135$ \\
+up & 104 & $2.249\times10^{-3}$ & $2.16\times10^{-3}$ & $+4.1\%$ & $+0.084$ \\
+down & 102 & $5.888\times10^{-3}$ & $4.67\times10^{-3}$ & $+26.1\%$ & $+0.481$ \\
+strange & 96 & $0.10566$ & $0.0934$ & $+13.1\%$ & $+0.256$ \\
+charm & 91 & $1.172$ & $1.273$ & $-8.0\%$ & $-0.172$ \\
+bottom & 88 & $4.964$ & $4.18$ & $+18.7\%$ & $+0.357$ \\
+top & 81 & $144.1$ & $172.8$ & $-16.6\%$ & $-0.377$ \\
+proton & 91 & $1.172$ & $0.9383$ & $+24.9\%$ & $+0.462$ \\
+W & 82 & $89.07$ & $80.38$ & $+10.8\%$ & $+0.213$ \\
+Z & 82 & $89.07$ & $91.19$ & $-2.3\%$ & $-0.049$ \\
+Higgs & 81 & $144.1$ & $125.3$ & $+15.1\%$ & $+0.291$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Disclosure: except the muon's, the integers were read from data using measured $m_P$ --- these are \textsc{placed}, postdictions, and the programme's own evidence ledger has always marked the mass placements as noticed-after-the-fact. The calibration that makes the table meaningful: rungs are a factor $\varphi$ apart, so $\pm$half a shell ($\approx \pm24\%$ in mass) is the maximum possible miss given correct integers --- and the placements hold within that across nineteen orders of magnitude, with the muon and Z sharp. Neutrino masses are not placed at all: \textsc{open}.
+
+%==================================================================
+\section{Link 4, fenced: the rung-selection problem (\textsc{open})}\label{sec:fence}
+%==================================================================
+
+The integer-selection rule is the open link, and the work order WO-SHELL-OFFSET-001 fenced it on every accessible side. Each result below is machine-checked (items SR1--SR10, GL1--GL3).
+
+\begin{theorem}[Curvature obstruction; SR1]\label{thm:curv}
+Write the charged-fermion shells by type $T \in \{L, U, D\}$ and generation $g \in \{1,2,3\}$. The generation curvatures $N_T(3) - 2N_T(2) + N_T(1)$ are $(5, 3, -2)$ for $(L, U, D)$ --- three distinct values. In any rule of the form $N = a_T + f(g)$, where $a_T$ depends on arbitrary generation-independent features (charge, colour, isospin, hypercharge, any static quantum numbers) and $f$ is any universal generation function, the curvature equals $f(3) - 2f(2) + f(1)$, independent of type. Hence \emph{every} rule in the class ``static quantum numbers $+$ universal generation dependence'' is refuted.
+\end{theorem}
+
+\begin{proposition}[Cheapest exact class is inadmissible; SR2--SR3]\label{prop:budget}
+Within-type generation steps are unequal for all three types ($L: -11, -6$; $U: -13, -10$; $D: -6, -8$), so even per-type affine rules (six parameters) admit no exact fit; the cheapest exact polynomial class is quadratic-per-type --- nine parameters for nine integers, zero compression. Information budget: the nine integers span 27 values ($\approx 43$ bits); an admissible rule must spend $\le 25$ parameter bits (compression $\ge 1.7\times$). Any future proposal below this bar is numerology by definition, whatever its fit.
+\end{proposition}
+
+\begin{proposition}[Sieve scan; GL1--GL3]\label{prop:sieve}
+A \emph{sieve} --- geometry generating a set of allowed levels, particles occupying allowed levels --- is not a function of quantum numbers, so Theorem~\ref{thm:curv} does not exclude it; it is the one surviving non-dynamical class. Eight geometry- and prime-derived sieves (multiples of 8 and of 6; $24a+5b$ cosets; the $H_4$-degree ladder; $96\pm$ E$_8$ exponents; primes and prime powers; split-prime resonances $p \equiv \pm1 \bmod 5$; pentagonal classes) were scored against exact hypergeometric null models with Bonferroni correction and a density bound: \textbf{all null} (best: multiples of 8, corrected $p = 0.23$). The surviving quantitative door is recorded: a \emph{derived} level set capturing all nine observed shells at span-density $\le 9/27$ clears the bar decisively --- derive first, blind to the table; score once.
+\end{proposition}
+
+\begin{proposition}[Exclusions and a recorded lead; SR7--SR8]\label{prop:lead}
+A one-loop-log dressing $\delta = c\,Q^2\ln(m_P/m)$ is monotone in the shell; the lepton offsets $(+0.079, -0.0002, +0.135)$ are not: excluded within the lepton sector. Separately, signed offsets regress on $(Q^2, \mathrm{colour}, N)$ at $R^2 = 0.86$ in-sample (permutation $p = 0.011$; leave-one-out $0.46$) but the fermion-fitted law fails catastrophically out-of-sample on the bosons it never saw (Z predicted $+1.34$ vs observed $-0.049$, outside the admissible offset range entirely): recorded as a sector-limited lead, not announced as a law.
+\end{proposition}
+
+The conclusion the fence forces: the integers do not factor through static structure, exactly as expected if they encode \emph{interacting} dynamics --- the closure condition of a self-interacting mode. The dependency order for derived masses is therefore: couplings $\to$ closure selection $\to$ shell integers $\to$ offsets.
+
+%==================================================================
+\section{The deviation decomposition (recorded attributions: null tests, bookkeeping, observation)}\label{sec:decomp}
+%==================================================================
+
+The placements' deviations are not one mystery; they decompose into four \emph{recorded} causes. The evidence types differ and are labelled: a Monte-Carlo null (Proposition~\ref{prop:finer}), an algebraic identity (Proposition~\ref{prop:WZ}), and an $n=13$ observation (Observation~\ref{obs:scheme}); none is a derivation of the offsets themselves.
+
+\begin{proposition}[Not finer rungs; SR9]\label{prop:finer}
+Against half-shell and quarter-shell grids, the thirteen sub-rung positions are statistically indistinguishable from uniform (Monte-Carlo $p = 0.32$ and $0.40$; integer grid $p = 0.28$). The missing ingredient is not intermediate rungs of the same geometric kind.
+\end{proposition}
+
+\begin{proposition}[The W is the Z plus the mixing; SR10]\label{prop:WZ}
+The W--Z shell split is $\log_\varphi(m_Z/m_W) = 0.262$, identically $\log_\varphi(1/\cos\theta_W)$ by the standard electroweak relation $m_W = m_Z\cos\theta_W$ (equivalently $\sin^2\theta_W = 0.2231$ from these masses, versus the PDG on-shell $0.2233$). This is bookkeeping, not discovery --- but it is correct bookkeeping: the W carries no independent placement information, and the electroweak sector reduces to \emph{one} placement (Z, $-2.3\%$), one already-named open (the mixing angle / independent hypercharge, Papers LVI/LVIII), and the Higgs.
+\end{proposition}
+
+\begin{observation}[Scheme and binding artifacts; SR6]\label{obs:scheme}
+Mean $|$offset$|$ by sector is monotone: leptons $0.071 <$ EW bosons $0.184 <$ quarks $0.288 <$ composite $0.462$. The ladder is sharpest exactly where mass is a clean pole observable and worst where the comparison number is not a physical mass at all: light-quark entries are MS-bar scheme conventions, and the proton is $\sim$99\% QCD binding energy --- quantities no bare spectrum should reproduce. Recorded implication (falsifiable): reformulating the table against pole/physical masses only should sharpen it materially. ($n = 13$; an observation, not a theorem.)
+\end{observation}
+
+What remains after Propositions~\ref{prop:finer}--\ref{prop:WZ} and Observation~\ref{obs:scheme} is the genuine residual: the lepton-sector offsets ($\le 0.135$ shells) and residual quark structure, with the profile of interaction self-energy on a bare spectrum --- the framework's analogue of radiative corrections, \textsc{open}, blocked behind the coupling sector. Each particle in the ledger and the public explorer carries its attributed cause (\textsc{anchor} / \textsc{placement} / \textsc{mixing} / \textsc{scheme} / \textsc{binding} / \textsc{dressing}).
+
+%==================================================================
+\section{Link 5: atoms as a theorem (\textsc{derived chain})}\label{sec:atoms}
+%==================================================================
+
+Once a mode has a mass, a charge, the Schr\"odinger equation, and the Coulomb law, the \emph{nonrelativistic Coulomb model of the atom} follows by ordinary quantum mechanics --- and each ingredient is in the derived layer: the Schr\"odinger reduction and Maxwell uniqueness (Paper LIII), the charge lattice and chirality (Paper LVIII \citep{SmartLVIII}). Quantitatively, with the framework's conditional $\alpha^{-1} = 137 + \pi/87$ and its \emph{own} electron ($N = 107$, \textsc{placed}):
+$$E_1 = -\tfrac12\alpha^2 m_e c^2 = -14.14\ \mathrm{eV} \quad (\text{measured } -13.606), \qquad a_0 = 5.09\times10^{-11}\ \mathrm m \quad (5.29\times10^{-11}),$$
+and the discrepancy is, to leading order, the electron's $+3.9\%$ mass-input error propagating linearly --- substituting the measured $m_e$ returns the textbook values $E_1 = -13.606$ eV and $a_0 = 5.292\times10^{-11}$ m at the Coulomb model's own accuracy. The standard corrections beyond that model (reduced mass at $5\times10^{-4}$, fine structure at order $\alpha^2$, Lamb and hyperfine effects) are not re-derived here; they belong to the same derived equations applied at higher order, and nothing in the framework obstructs them. The claim is scoped accordingly: hydrogen's Coulomb-level structure is a theorem of the derived layer given the mass input; chemistry downstream needs no further framework input beyond the open mass sector.
+
+%==================================================================
+\section{The simulator as reproducibility artifact}\label{sec:simulator}
+%==================================================================
+
+Two executable artifacts mirror this paper exactly and contain no quantity not derived or recorded here: the command-line ledger \texttt{scripts/sm\_ledger.py} (grades, mass table, charge/coupling/atoms sectors) and the public web explorer (single-file, computing everything in-browser from $\varphi$, the anchor, and the derived equations; the ladder drawn at \emph{true} offsets; the decomposition section required; the Link-4 fence displayed). The maintenance rule is part of the record: the simulators are downstream of the verified repository, never ahead of it --- a quantity enters them only after it carries a verification item. Checks: \texttt{explore\_shell\_rule.py} (10/10), \texttt{explore\_geometric\_ladder.py} (3/3); upstream suites per Papers LIII--LVIII.
+
+%==================================================================
+\section{The honest summary}\label{sec:summary}
+%==================================================================
+
+\textsc{derived}: the exact spectrum; mass as closure frequency; the nonrelativistic Coulomb spectrum of hydrogen from the derived equations. \textsc{conditional}: the ladder spacing (on the refinement premise P1). \emph{Recorded}: the deviation attributions (nulls, one identity, one observation). \textsc{conditional}: the anchor (H-shell-96) and with it $m_P$ and $G$; $\alpha$. \textsc{placed}: twelve of thirteen shell integers (postdictions, disclosed). \textsc{open}: the rung-selection rule (fenced at proof grade: not static structure, not the tested sieves, behind the couplings), the offset dynamics, the independent hypercharge/mixing, neutrinos. The falsifiable items on record: the pole-mass reformulation should sharpen the table; a future derived sieve must hit all nine shells at density $\le 1/3$; a derivation of shell 96 that misses measured $G$ kills the anchor.
+
+\section*{Reproducibility}
+Manuscript: \texttt{papers/paper-lix/paper-lix.tex}. Sources consolidated: \texttt{docs/resonance-mechanism.md}, \texttt{docs/shell-rule-wo.md}, \texttt{docs/sm-closeability-audit.md}; shell table provenance \texttt{papers/cascade-derivation/cascade-masses.md} \S E3. Run: \texttt{python3 scripts/explore\_shell\_rule.py}; \texttt{python3 scripts/explore\_geometric\_ladder.py}; \texttt{python3 scripts/sm\_ledger.py}. Web explorer and its build guide: \texttt{web/} in the companion repository.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
