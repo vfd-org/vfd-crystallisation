@@ -98,6 +98,19 @@ Falsifiers per row live in `out/prime_ledger.json`.
 
 ---
 
+## The realization underneath the provenance
+
+**`realization/`** — the construction the 664/664 provenance certifies, as a
+standalone pure-number-theory artifact: *A native icosian realization of
+Hilbert modular forms over Q(√5)* (`realization/paper/`, v1.0.0-rc2). The
+600-cell's unit group reproduces a **family** of cuspidal Hecke systems with
+no fitted parameters: all 44 good prime ideals at level 31 (norm ≤ 200, both
+Galois conjugates resolved), the 7/7 cuspidal-dimension sequence against
+Dembélé's table (including the absent form at 59), a second rational
+eigenform at level 41 (9/9 out-of-sample), and the genus-2 real-multiplication
+form at level 61. 23 gate tests + an anti-circularity scan:
+`cd realization && python3 -m pytest tests/ && python3 route_b/no_fit_guard.py`.
+
 ## The lab underneath
 
 The wider laboratory asks a single structural question on finite objects where

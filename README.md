@@ -4,6 +4,30 @@
 
 ---
 
+## Reproduce every numerical claim in one command
+
+```bash
+pip install -e .
+vfd verify
+```
+
+That runs the **VFD Explorer** — a unified Python library that
+re-derives every registered numerical claim in the framework from the
+600-cell closure geometry and compares it to the most recent PDG /
+CODATA value. No fitted parameters. No curated successes.
+
+The live credibility report is auto-published from CI on every commit:
+
+> **Live site:** `https://vfd-org.github.io/vfd-crystalisation-paper/`
+> (also available in `docs/report.md` after running `vfd report`).
+
+See `papers/vfd-explorer/WO-VFD-EXPLORER.md` for the design, and
+`docs/` for the site source. The library itself lives in
+`src/vfd_core/`. The existing crystallisation-operator code in
+`src/vfd/crystallisation/` is left untouched.
+
+---
+
 ## What Is This?
 
 The quantum measurement problem asks: when a quantum system is in a superposition of states, how does a single definite outcome emerge? The standard formalism provides probabilities (the Born rule) but no mechanism — it tells you *what* you observe, not *how* selection happens.
@@ -13,6 +37,32 @@ This repository presents the **crystallisation operator**: a framework in which 
 The framework is compatible with standard open quantum system evolution (recovering Lindblad dynamics when the crystallisation coupling is zero) and yields predictions that are quantitatively distinct from decoherence, GRW-style stochastic collapse, and Penrose objective reduction.
 
 This repository presents a testable research framework and supporting reference implementation. It does not assume correctness of the model and is structured to enable independent evaluation.
+
+---
+
+## V$_{600}$ Programme — five publication-ready papers (2026-05-07)
+
+A self-contained, codex-hostile-reviewed five-paper bundle on finite-group structure of the binary icosahedral group $\mathrm{V}_{600} = 2I$, with strict credibility-bar discipline. All five are codex-verified `Publication ready: yes`.
+
+| # | Paper | Headline result | Status |
+|---|---|---|---|
+| 1 | [`bekenstein-incidence`](papers/bekenstein-incidence/) | $\|gH \cap V_{24}\| = 4$ per coset of $\mathrm{Dic}_5$, hence $S/A = 4/16 = 1/4$ matches the Bekenstein–Hawking coefficient | ✅ 6 review rounds |
+| 2 | [`v600-hawking-quantum`](papers/v600-hawking-quantum/) | $\|v - \sigma(v)\|^2 = 5/2$ on every $\sigma$-mobile vertex; spectrum is $24\delta_0 + 96\delta_{5/2}$; finite first-law identity per coset | ✅ 3 review rounds |
+| 3 | [`tau-sigma-construction`](papers/tau-sigma-construction/) | Canonical involution $\tau_\sigma$ with (P1)–(P4) properties + antipodal compatibility; $\mathbb{Z}_2^5 = 32$ phase ambiguity | ✅ 6 review rounds |
+| 4 | [`v600-cosmic-tensions`](papers/v600-cosmic-tensions/) | $\mathrm{tr}(I_C + P_{72})/12 = 13/12$ and $\mathrm{tr}(I_C - P_0)/12 = 11/12$ exact; K-saturated admissibility theorem; explicit Layer-3 coupling hypothesis (NOT a theorem) | ✅ 6 review rounds |
+| 5 | [`v600-unified`](papers/v600-unified/) | Synthesis: structural-spine tuple $\Sigma_{V_{600}}$; Papers 1–4 (Layer 1 only) factor through it | ✅ 5 review rounds |
+
+**Reproduce all five:**
+```bash
+PYTHONPATH=papers/v600-programme/lib python3 -m pytest papers/v600-programme/tests/  # 39 tests
+for p in bekenstein-incidence v600-hawking-quantum tau-sigma-construction v600-cosmic-tensions v600-unified; do
+  PYTHONPATH=papers/v600-programme/lib python3 papers/$p/verify.py
+done
+```
+
+Per-paper arXiv tarballs are under [`papers/v600-programme/release/`](papers/v600-programme/release/). Programme master narrative at [`papers/v600-programme/NARRATIVE.md`](papers/v600-programme/NARRATIVE.md). Resume note at [`papers/v600-programme/RESUME.md`](papers/v600-programme/RESUME.md).
+
+The bundle deliberately does NOT claim a unified physical theory — it claims four narrow finite-group identities plus one structural-spine factorisation. Cosmological coupling rules and CMB / dipole / prediction-manifest builds are explicitly named out-of-scope future work.
 
 ---
 
@@ -112,6 +162,32 @@ In this framework, what is conventionally treated as "collapse" is modelled as c
 1. **Read the flagship paper** (PDF): [`Crystallisation Dynamics as a Deterministic Alternative to Collapse in Open Quantum Systems`](papers/main-preprint/crystallisation-dynamics.pdf)
 2. **See the full publication plan**: [`docs/overview.md`](docs/overview.md)
 3. **Reproduce everything**: [`docs/reproducibility.md`](docs/reproducibility.md)
+
+---
+
+## Paired-preprint releases
+
+Two stand-alone reproducibility bundles built on top of the
+$\varphi$-regularised closure-response operator
+$C_\varphi = L_M + \varphi^{-2}I$ on the 600-cell. Each bundle ships
+its own MIT licence, per-paper PDF + LaTeX source, and self-contained
+numerical verification scripts that reproduce the headline numbers at
+machine precision in seconds.
+
+| bundle | scope | repo |
+|---|---|---|
+| **closure-kernel-papers** | *Operator + active-regime substrate witness.* Paper A defines $C_\varphi$ and proves the operator-norm identity $\\|C_\varphi^{-1}\\| = \varphi^2$ on $V_{600}$; Paper B (`aria-chess-paper`) reports a geometry-fixed substrate witness — 18 preregistered cortical correspondences and 6 drug/sleep EEG signatures from the 600-cell under H₄ Coxeter symmetry. | [vfd-org/closure-kernel-papers](https://github.com/vfd-org/closure-kernel-papers) |
+| **selection-layer-papers** *(new)* | *Dynamical / selection layer on the same operator.* Paper A (`transport-law`) delivers two unconditional Schrödinger-limit theorems — explicit antisymmetric $U(1)$ current with discrete continuity, and the photon-sector $\lambda = 0$ spectral witness on $V_{600}$. Paper B (`adaptive-closure-transport`) extends to the adaptive 4-tuple $(M, L_M, W, R_{\mathrm{hom}})$ and delivers two further theorems: explicit $\twoI$ edge-space decomposition into 6 free orbits / 9 isotypic components, and a closure-derived strongly convex Lyapunov $V_f(W)$ on the closed positive cone with linear-contraction subgradient flow. | [vfd-org/selection-layer-papers](https://github.com/vfd-org/selection-layer-papers) |
+
+Read in the order **closure-kernel-papers → selection-layer-papers**:
+the first establishes what the operator is and that it sits beneath
+two domain-disjoint empirical witnesses; the second describes what
+dynamics that operator carries and how a closure-derived Lyapunov
+selects an operating point on the adaptive extension. Both bundles
+share their operator with the in-repo papers below; the in-repo
+sources for the selection-layer pair are
+[`papers/transport-law/`](papers/transport-law/) and
+[`papers/adaptive-closure-transport/`](papers/adaptive-closure-transport/).
 
 ---
 

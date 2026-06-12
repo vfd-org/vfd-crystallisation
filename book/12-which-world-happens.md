@@ -2,6 +2,8 @@
 
 Balance a marble on the very top of a smooth dome. It cannot stay. The least breath of air, the faintest tremor in the table, and it rolls, and it rolls in some particular direction, down one side rather than another. But look at the situation just before it moves. The dome is perfectly round. Every direction is as good as every other. There is nothing in the setup that prefers north over south or east over west. And yet the marble has to go somewhere; it cannot roll in all directions at once or sit forever at a point it cannot keep. So the perfect symmetry of the dome is broken, and what breaks it is not a law of domes, which treats every direction alike, but the particular history of that particular marble, the stray nudge that happened to come from one side. The law gives you the dome. The accident gives you the direction.
 
+![Figure 12.1. How one world is chosen from many. The marble cannot stay balanced at the symmetric top; it must roll, and it rolls one way rather than another. The law supplies the dome, which plays no favourites among directions. History — a stray nudge — supplies the direction actually taken. This is how a single definite world is selected from a law that allows many, with no hand on the scale.](figures/ch12-symmetry-breaking.png)
+
 This little drama is one of the deepest patterns in physics, and it is the one we need to finish the world. We have spent the whole book building the space of what the crystal can do, the arena, the directions, the looking, the time, the ladder. What we have not done is pick out the one actual world, the specific history you are living through rather than one of the countless others the same geometry would allow. The crystal permits an enormous family of possible scenes, all of them consistent, all of them legal. Which one happens? And why this one?
 
 ## Why a law cannot choose
@@ -33,3 +35,7 @@ The framework builds scenes. It selects, through accumulated history, a single w
 So here is where we have arrived. A world forced into shape by geometry, three-dimensional and directioned, looked at and unfolding in waves of time, sampled at every grain from the quantum to the gravitational, crowned by a seventh-dimensional arena, and selected, from the vast space of the possible, by the whole accumulated weight of its own history. And on the high rungs of its ladder, patterns complicated enough to be alive, built from the same golden forms as the crystal itself. It is, very nearly, a complete account of a universe, assembled from a single shape with nothing carried in from outside.
 
 Very nearly. The honest word is nearly, and a book that has insisted on the difference between the checkable and the speculative owes you a clear-eyed accounting of everything still missing before it allows itself any kind of ending. So let me stop building, and turn, deliberately, to what we do not know.
+
+::: {.codebox}
+**Behind the maths.** Selection by accumulated history works on the crystal as a Lyapunov descent in the worked toy model, verified by `verify_narrative_closure.py` (28 tests). But a single universal law of selection is named open, not derived — it sits in the ledger's open items, and the next chapter sets it squarely on the table. This box points at what is shown; the honesty is in not claiming more.
+:::

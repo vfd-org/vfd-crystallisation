@@ -40,7 +40,7 @@ I want to close with the one acknowledgement I cannot direct at anyone I could n
 
 ## 3. Author details (for the About-the-Author page / copyright)
 
-**Lee Smart** is the author of the Vacuum Field Dynamics research programme, of which this book is the plain-language telling. He works under the Institute of Vibrational Field Dynamics.
+**Lee Smart** is the author of the Vibrational Field Dynamics research programme, of which this book is the plain-language telling. He works under the Institute of Vibrational Field Dynamics.
 
 Correspondence: contact@vibrationalfielddynamics.org · @vfd_org
 

@@ -1,13 +1,25 @@
 # Translation Engine v2
 
-**Extending the closure transformation engine with analytic-side
-transformation kinds and admissibility classes**
+**Bridging the finite algebraic substrate (V₆₀₀, icosian triad,
+closure operator) to the infinite-dimensional analytic side
+(Hilbert modular forms, Hecke operators, analytic continuation).**
 
-This bundle is a working prototype of the next-generation translation
-engine that bridges the **finite algebraic substrate** (V₆₀₀, the
-icosian triad, the closure operator) to the **infinite-dimensional
-analytic side** (Hilbert modular forms, Hecke operators, analytic
-continuation).
+Current version: **v0.3-prototype** (working with real SAGE Hecke data)
+
+## Quick status
+
+- **v0.1** — engine architecture (5 new transformation kinds, 4 new
+  admissibility classes, composition search). Architectural validity
+  demonstrated.
+- **v0.2** — deep admissibility (FE / DN / GUE / Hecke
+  multiplicativity) + N-aware calibrated checks. Engine correctly
+  identifies γ_n itself as HILBERT_POLYA_STRONG.
+- **v0.3** — SAGE integration. Real Hecke matrices from
+  BrandtModule(31, 1) computed by SAGE 9.0 and fed to the engine.
+  Hybrid probe combining SAGE Hecke + V₆₀₀'s 26-dim block reaches
+  **HILBERT_POLYA_PARTIAL** (passes FE + GUE at CANDIDATE).
+- **v0.4** (next) — SAGE 10+ upgrade for icosian-specific BrandtModule
+  over Q(√5).
 
 ## What this bundle adds to the existing engine
 

@@ -1,0 +1,98 @@
+S1 (A_1 powers k=1..6): RMSE = 7.5504
+  coefficients: {'A_1^1': 1.8622, 'A_1^2': 2.9331, 'A_1^3': 2.7598, 'A_1^4': -1.1915, 'A_1^5': 0.156, 'A_1^6': -0.0067}
+S2 (icosian left-mult Hermitians): RMSE = 7.4066
+  coefficients: {'L_g0': 27.8682, 'L_g1': 6.3927, 'L_g2': 9.1098, 'L_g3': 9.1098, 'L_g4': 0.0, 'L_g5': 33.4712}
+S3 (commutators): RMSE = 62.3650
+S4 (Dirac-style couplings): RMSE = 22.6243
+S5 (random Hermitian baseline): median RMSE = 13.4462, best of 50 = 10.3209
+COMBINED (all strategies pooled, 22 features): RMSE = 5.3557
+
+============================================================
+GAP ANALYSIS
+============================================================
+Target: first 26 Riemann gamma_n
+  mean = 58.2730, std = 22.2183
+  range = [14.13, 92.49]
+
+Strategy-by-strategy RMSE (lower = better):
+  S1  A_1 powers (k=1..6):              7.5504
+  S2  icosian left-mult Hermitians:     7.4066
+  S3  commutators [A_1, L_g]:           62.3650
+  S4  Dirac-style spin-vec coupling:    22.6243
+  S5  random Hermitian (control med):   13.4462
+      random Hermitian (best of 50):    10.3209
+  ALL combined LS fit:                  5.3557
+
+A_1 powers do NOT outperform random Hermitians: substrate-intrinsic operators carry no gamma_n information by themselves.
+Combined fit barely beats random: the engine's current grammar is essentially insufficient.
+
+DIAGNOSIS
+----------------------------------------
+The engine's current operator pool (substrate-
+intrinsic operators built from V_600's group
+structure, icosian left-multiplications, commutators,
+and prototype Dirac couplings) CANNOT match gamma_n
+beyond least-squares-fit-with-many-parameters levels.
+
+Specifically:
+  - Substrate algebraic operators have eigenvalues in
+    Z[phi] (the closure of Z under phi-recursion).
+  - gamma_n are believed transcendental and
+    algebraically independent over Q.
+  - No algebraic combination of substrate operators
+    can produce transcendental eigenvalues.
+
+THE MISSING PIECE (precise specification)
+----------------------------------------
+To find T with SPECTRAL_MATCH = EXACT, the engine
+requires the following EXTENSION:
+
+Required transformation kind:
+  HECKE_ON_HILBERT_MODULAR_FORM
+    Input: weight (k, k), level N, prime p (ideal of Z[phi])
+    Output: explicit Hecke matrix T_p with entries
+            computed from Brandt matrices over the
+            maximal icosian order, with FOR REAL
+            eigenvectors in the actual M_2(k, N) basis
+            (not random Q matrices).
+    Backend: SAGE / Pari / Magma; not pure Python.
+
+Required admissibility class:
+  SELBERG_TRACE_CONSISTENT
+    Check: the operator's spectral side matches a
+           geometric (prime-ideal) sum to a stated
+           precision across multiple test functions.
+           This is a *necessary* condition for a true
+           Hilbert-Polya construction.
+
+Required substrate extension:
+  MODULAR_FORM_SPACE
+    Construct the space S_2(N, K) of weight-2 Hilbert
+    modular cusp forms over K = Q(sqrt 5) at level N,
+    embed V_600's 26-dim block as the candidate
+    eigenspace structure, and run the engine on that
+    infinite-dim space (truncated to dim_N for
+    increasing N).
+
+Honest reality check:
+  - These extensions are well-defined and scope-bounded.
+  - SAGE has the necessary Brandt matrix infrastructure.
+  - The construction is the next research milestone.
+  - Whether it WORKS (i.e., produces gamma_n) is the
+    open question the substrate has now precisely
+    localised.
+
+STATUS
+----------------------------------------
+Engine validates as a search tool: it produces ranked
+candidates with admissibility verdicts and a clear
+negative result (no current-grammar composition
+matches gamma_n).  The negative result is itself
+informative: it bounds the search and points at the
+specific extensions needed.
+
+The missing piece is not 'unknown' anymore -- it is
+precisely the wiring of genuine Hecke / Brandt matrix
+data from SAGE into the engine's prototype
+transformation kinds.  That is the next concrete piece
+of research work the architecture supports.

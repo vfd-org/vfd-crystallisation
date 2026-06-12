@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vfd-crystallisation"
-version = "0.1.0"
-description = "VFD Crystallisation Operator: constraint-driven alternative to wavefunction collapse"
+version = "0.2.0"
+description = "VFD: Crystallisation Operator + Explorer — deriving and validating particle physics from 600-cell closure geometry"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.8"
@@ -13,13 +13,32 @@ dependencies = [
     "numpy>=1.20",
     "scipy>=1.7",
     "matplotlib>=3.5",
+    "pyyaml>=6.0",
+    "jinja2>=3.0",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7.0"]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+web = [
+    "mkdocs>=1.5",
+    "mkdocs-material>=9.4",
+    "pymdown-extensions>=10.0",
+]
+
+[project.scripts]
+vfd = "vfd_core.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.setuptools.package-data]
+vfd_core = ["registry/*.yaml", "data/*.npz"]
+
+[tool.pytest.ini_options.markers]
+slow = "slow-running tests (e.g. figure generation)"

@@ -12,6 +12,8 @@ Most spheres can't be combed. The two-dimensional one defeats us, as we just saw
 
 This is not a minor convenience. It is the difference between a space that can host directions and one that can't, and it singles out the three-dimensional sphere from almost every other surface as the rare place where a creature can be handed a consistent left, up, and forward everywhere it goes. The crystal's home is, by a property most spheres lack, exactly the kind of sphere that a world with directions in it requires. We did not arrange this. It is a fact about which dimensions permit smooth combing, and three is one of the lucky few.
 
+![Figure 5.1. The combing problem. On the ordinary 2-sphere any smooth field of directions must fail somewhere — a cowlick, a point where the arrows tear (left). The 3-sphere, where the crystal lives, is one of the rare surfaces that carries a full frame of directions smoothly at every point, with no cowlick anywhere (right); the 7-sphere is the only other. This is why our world can hand you three clean perpendicular axes wherever you stand.](figures/ch05-combing.png)
+
 But to see *why* the three-sphere can be combed, and where the three directions actually come from, we need to meet the strange and beautiful number system that lives in four dimensions.
 
 ## Hamilton's bridge
@@ -41,3 +43,7 @@ All of this, I should say clearly, is ordinary mathematics, as solid as anything
 We have come a fair distance. We have a substrate, the crystal, forced into being by symmetry alone. We have shown that taken as the stuff of the world it already contains the dimension of space and the three directions you move in. What we do not yet have is a world. A dimension and a set of axes is a stage, bare and lit and empty. Nothing is happening on it. Nobody is looking. There is no scene, no change, no flow of time, none of the felt texture of being somewhere. A real world is not just a space; it is a space with something going on in it, seen from somewhere within.
 
 How does the still, silent crystal turn into a scene that someone is looking at? That is the hardest and most interesting question in the book, and it is where we turn next.
+
+::: {.codebox}
+**Behind the maths.** That the three-sphere carries a smooth frame of three perpendicular directions at every one of the crystal's corners — the quaternionic frame field — is part of **Paper LV, _The Rendering Layer_**, built and checked at all hundred and twenty corners by `verify_rendering_layer.py`. That only the three- and seven-spheres can be combed at all is Adams's theorem, cited there as classical mathematics, not a claim of the framework.
+:::

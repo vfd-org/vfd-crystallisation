@@ -22,7 +22,7 @@ The claims and where to test them:
 
 **That a single fixed curve, derived from the geometry, gives a consistent account of a real particle-physics anomaly** (Chapter 8) is documented, with full statistical honesty including the tie and the recorded methodological wobble, in the b-anomaly materials of the wider programme.
 
-The scripts referenced above live in the project repository, in its `scripts` and `book/figures` directories, alongside the working notes that derive the mathematics in full technical detail. The full list, with the exact command for each suite and the number it should print, is kept in the project's verification manifest. They ran, they pass, and they are there to be broken by anyone who suspects otherwise. That is the whole point.
+All of this lives in one public place, the book's companion repository, at <https://github.com/vfd-org/crystal-and-clock-companion>. It holds the six technical papers, the verification suites, the data file, the claim-status ledger, the verification manifest, and the full, unedited referee reports that hardened the papers. The single command `bash run_all_verifications.sh`, run after cloning, reproduces every suite and prints its pass count. Throughout the book, the boxes marked *Behind the maths* at the end of each chapter point to the particular paper and suite that stand behind that chapter, so you can go straight from any claim to the code that checks it. They ran, they pass, and they are there to be broken by anyone who suspects otherwise. That is the whole point.
 
 # A Note on Sources
 

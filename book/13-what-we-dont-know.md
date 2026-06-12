@@ -29,3 +29,9 @@ What is solid is the spine. That the crystal is forced into existence by symmetr
 So the honest shape of the thing is a strong, verified core with a frontier of real and in places deep open problems around it, which is, when you say it plainly, simply what an ambitious young theory looks like at this stage of its life. The core is not waiting on the frontier. The dimension of space is read off the spectrum whether or not we ever derive the Higgs mass. The time-mirror forces waves whether or not we ever solve the problem of experience. A reader is entitled to weigh the core and the frontier separately, to find the core beautiful and the frontier daunting, and to suspend judgment on the whole until more of the frontier is closed. That is exactly the judgment I would ask for. Not belief. Attention.
 
 Which leaves one question, the one any honest theory has to be able to answer and the one I have been saving for the end. Given the open problems, given that this is a bet and not a proof, why might it be true at all, and just as importantly, what would show that it isn't? A proposal that could not be wrong would not be worth the paper, and a proposal that might be right should be able to tell you exactly how to kill it. Let me close the book by telling you both.
+
+::: {.codebox}
+**Behind the maths.** The frontier is documented, not hidden. The hardened re-tests of the gap closures, run against genuine wrong-answer controls after hostile review, are `verify_gap_strengthening.py` (22 tests). The one open continuum-geometry problem — the Gromov–Hausdorff limit of the arena — is the subject of **Paper XL**, the open programme. Every open item in this chapter is graded in the **claim-status ledger**, and the ten unedited referee reports that hardened these papers ship in the companion's `reviews` folder.
+
+Companion: <https://github.com/vfd-org/crystal-and-clock-companion>
+:::

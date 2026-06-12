@@ -1,0 +1,593 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+
+\hypersetup{colorlinks=true, linkcolor=blue!50!black,
+  citecolor=blue!50!black, urlcolor=blue!50!black}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Icosian realization of $\mathbb{Q}(\sqrt5)$ Hilbert modular forms}
+\fancyhead[R]{\small Pre-peer-review preprint}
+\fancyfoot[C]{\thepage}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\Ord}{\mathcal{O}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fq}{\mathfrak{q}}
+\newcommand{\Brandt}{B}
+\newcommand{\OK}{\Ord_K}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Nm}{N}
+\DeclareMathOperator{\disc}{disc}
+
+\newtcolorbox{verifiedbox}[1][]{
+  colback=green!3, colframe=green!45!black,
+  fonttitle=\bfseries, title={Verified (computational, reproducible)}, #1}
+\newtcolorbox{opengapbox}[1][]{
+  colback=red!2, colframe=red!50!black,
+  fonttitle=\bfseries, title={Open / not claimed}, #1}
+\newtcolorbox{interpretbox}[1][]{
+  colback=blue!2, colframe=blue!40!black,
+  fonttitle=\bfseries, title={Interpretation (non-load-bearing)}, #1}
+\newtcolorbox{scopebox}[1][]{
+  colback=gray!4, colframe=gray!55!black,
+  fonttitle=\bfseries, title={Scope}, #1}
+
+\title{\textbf{A native icosian realization of Hilbert modular forms
+over $\Q(\sqrt5)$}\\[0.4em]
+\large The $600$-cell unit group reproduces a family of cuspidal Hecke
+systems --- parameter-free and out-of-sample}
+
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+
+\date{2026-06-12 \quad (pre-peer-review preprint, v1.0.0-rc2)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+We give an independent, parameter-free implementation of the standard
+definite Brandt method for cuspidal Hilbert modular forms over
+$K=\Q(\sqrt5)$, driven entirely by the geometry of the $600$-cell. The
+binary icosahedral group $2I$ is the reduced-norm-one unit group of a
+maximal order $\Ord$ (the \emph{icosian ring}) in the definite
+quaternion algebra ramified at the two infinite places of $K$; its
+lattice is $E_8$. For a split prime $\fp\subset\OK$ we build the Brandt
+module of $\Ord$ at level $\fp$ purely from the action of
+$A_5=2I/\{\pm1\}$ on $\PP^1(\OK/\fp)$, with no input from elliptic
+curves, modular symbols, or $L$-function tables. The resulting Hecke
+operators are integral and self-adjoint, and we verify against
+independently point-counted data that this construction reproduces
+\emph{a family} of forms, not a single example:
+(i) the complete prime-level cuspidal-dimension sequence over $K$ for
+norm ${<}100$ ($7/7$ agreements with Demb\'el\'e, including the two
+non-obvious cases --- the absent form at norm $59$ and the jump to a
+genus-$2$ form at norm $61$);
+(ii) the full Hecke eigenvalue sets of \emph{two} rational eigenforms
+(levels $31$ and $41$), matched out-of-sample against brute-force point
+counts of the associated elliptic curves at every prime tested, with no
+fitting;
+(iii) the genus-$2$ form at level $61$, whose irrational eigenvalues in
+$\Z[\varphi]$ (real multiplication by $K$) the geometry reconstructs,
+matching the published values exactly at the inert primes.
+We close with an explicitly heuristic discussion of how this finite,
+self-adjoint, coefficient-side structure relates to the Riemann
+Hypothesis, emphasizing the gap rather than bridging it: RH is the
+\emph{global, analytic} positivity equivalent to the Weil and Li
+criteria, of which a finite Brandt computation supplies nothing.
+\textbf{This paper proves no Millennium problem and claims no progress
+on one.} Its contribution is a clean, reproducible geometric realization
+of known arithmetic, and an honest delimitation of the gap that remains.
+\end{abstract}
+
+\begin{scopebox}
+This is a \emph{reproduction-and-map} paper. The arithmetic it recovers
+is due to Demb\'el\'e \cite{Dembele2005} and is an instance of the
+Jacquet--Langlands correspondence \cite{JacquetLanglands1970,
+Eichler1973}; our contribution is the independent, parameter-free
+\emph{geometric} route (native icosian arithmetic, no computer-algebra
+modular package), the explicit no-fit out-of-sample protocol, and a
+precise statement of what the verified structure does \emph{not} reach
+(\S\ref{sec:rh}). The arithmetic targets are Demb\'el\'e's known
+examples; the novelty is independent implementation and provenance,
+not new forms. We claim \emph{validation and exposition}, not new
+number theory, and \emph{no} progress on RH itself.
+\end{scopebox}
+
+\section{Introduction}\label{sec:intro}
+
+The $600$-cell is the regular convex $4$-polytope whose $120$ vertices
+are the unit icosians: the binary icosahedral group $2I\subset
+\mathbb{H}$ of order $120$. Viewed as a lattice in $\R^4\cong\mathbb{H}$,
+the icosians are a copy of $E_8$ over $\Z$, and a copy of the Hurwitz-type
+maximal order $\Ord$ in the definite quaternion algebra
+$B=\left(\tfrac{-1,-1}{K}\right)$ over $K=\Q(\sqrt5)$
+\cite{ConwaySloane1999,Voight2021}. This is the smallest arithmetic
+setting in which the golden ratio $\varphi=(1+\sqrt5)/2$ and the
+icosahedral symmetry that organizes the $600$-cell become number
+theory.
+
+By the Jacquet--Langlands correspondence and the Eichler basis problem
+\cite{JacquetLanglands1970,Eichler1973,Vigneras1980}, the Brandt module
+of $\Ord$ at a prime level $\fp$ computes the Hilbert cusp forms of
+parallel weight $2$ and level $\fp$ over $K$. Demb\'el\'e
+\cite{Dembele2005} used exactly this to produce the first explicit
+tables of such forms; the smallest level carrying a cusp form has norm
+$31$, and the associated rational eigenform corresponds to an elliptic
+curve over $K$ \cite{BoberEtAl2012}.
+
+Our question is narrow and testable: \emph{does the $600$-cell geometry,
+used on its own terms, reproduce this arithmetic?} We answer yes, and
+quantitatively. The validation is anti-circular by construction: every
+target we compare against is generated independently --- by brute-force
+point counting of an elliptic curve, or from the published literature
+--- and is used \emph{only in comparison}, never in building the Brandt
+operators.
+
+\paragraph{Results.}
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{One form, completely (\S\ref{sec:level31}).} At level
+$\fp_{31}$ the geometry gives a $2$-dimensional Brandt module, Eichler
+mass $8/15$, a $1$-dimensional cuspidal eigenform, and Hecke
+eigenvalues matching the point-counted curve $31.1\text{-}a1$ at all
+$44$ good prime ideals of norm ${\le}200$ (over $25$ rational-prime
+norm buckets): at each split norm the two totally positive generators
+resolve the \emph{complete} eigenvalue pair $\{a_\fq,a_{\fq'}\}$, not
+merely one representative, and the Brandt value at the level ideal
+itself recovers the Steinberg datum $a_{\fp_{31}}=-1$ used by the
+Atkin--Lehner check.
+\item \textbf{A family, by dimension (\S\ref{sec:dims}).} The geometric
+orbit count reproduces the entire prime-level cuspidal-dimension
+sequence over $K$ for norm ${<}100$: $7/7$ agreement with
+\cite{Dembele2005}, including the absence of a form at norm $59$ and
+the jump to cuspidal dimension $2$ at norm $61$.
+\item \textbf{A family, by eigenvalue (\S\ref{sec:level41}).} A second
+rational eigenform, at level $\fp_{41}$, is built by the same procedure
+and matched out-of-sample (full eigenvalue sets, $9/9$ primes) against
+the point-counted curve $E_{41}:y^2+\varphi y=x^3-\varphi x^2$.
+\item \textbf{The non-rational form (\S\ref{sec:level61}).} At level
+$\fp_{61}$ the geometry yields cuspidal dimension $2$ --- the
+genus-$2$ abelian surface with real multiplication by $K$ of
+\cite[Rem.~4.4]{Dembele2005}. From the $3\times3$ Brandt matrix we
+recover, at each of the six tested primes (norms $4$--$49$), an
+eigenvalue whose field-theoretic discriminant is
+$5\cdot(\text{square})$, i.e.\ an irrational element of $\Z[\varphi]$;
+at the three inert primes the values match the published ones exactly.
+\item \textbf{The certificate algebra, and a precise non-claim
+(\S\ref{sec:cert}--\S\ref{sec:rh}).} The Brandt operators are
+self-adjoint for the orbit-size measure --- an exactly checkable
+certificate in a small algebra we make precise. A closing section
+states exactly which analytic statements (Weil/Li positivity, i.e.\
+GRH-type questions for the assembled $L$-functions) the finite
+computation does \emph{not} reach, and why a finite coefficient
+computation cannot reach them.
+\end{enumerate}
+
+All computations are pure Python, reproduce in seconds to minutes, and
+are included with the paper; \S\ref{sec:repro} gives the manifest.
+
+\section{The icosian order and its Brandt module}\label{sec:setup}
+
+Let $K=\Q(\sqrt5)$, $\varphi=(1+\sqrt5)/2$, $\OK=\Z[\varphi]$, with
+$\Nm(a+b\varphi)=a^2+ab-b^2$ and nontrivial automorphism
+$\sigma:\varphi\mapsto1-\varphi$. Let $B=\left(\tfrac{-1,-1}{K}\right)$
+with standard basis $1,i,j,k$. The \emph{icosian ring} $\Ord$ is the
+maximal order whose group of reduced-norm-one units is the binary
+icosahedral group, $\Ord^1=2I$, $|2I|=120$; as a $\Z$-lattice $\Ord$ is
+$E_8$ \cite{ConwaySloane1999,Voight2021}. $B$ is ramified exactly at the
+two infinite places of $K$, hence definite, and (its maximal orders
+form) a single ideal class.
+
+Throughout we take the level $\fp\subset\OK$ to be a prime that
+\emph{splits} in $K$, so that $\Nm(\fp)=q$ is a rational prime and the
+residue field is $\OK/\fp\cong\F_q$. (The levels $31,41,61$ used below
+are all split; the inert and ramified cases, with residue field
+$\F_{q^2}$ or $\F_q$, are not needed.) For odd $q$ fix a local splitting
+\[
+  \iota_\fp:\ \Ord\otimes_{\OK}(\OK)_\fp\ \xrightarrow{\ \sim\ }\
+  M_2(\OK/\fp)=M_2(\F_q),
+\]
+constructed explicitly by solving $i^2=j^2=-1$, $ij=-ji$ over $\F_q$
+(possible since $-1$ is a sum of two squares mod $q$). The unit group
+$2I$ acts through $\iota_\fp$ on the $q+1$ points of $\PP^1(\F_q)$;
+since $-1\in2I$ acts trivially, the action factors through
+$A_5=2I/\{\pm1\}$. Because $\Ord$ has class number one, the right-ideal
+classes of the Eichler order $\Ord_0(\fp)$ identify with
+$\Ord^1\backslash\PP^1(\OK/\fp)$, i.e.\ with the $A_5$-orbits on
+$\PP^1(\F_q)$ (the definite/Brandt method;
+\cite[Ch.~41]{Voight2021}, \cite{Vigneras1980}). Write $h$ for the
+number of orbits and $\mu=(\mu_1,\dots,\mu_h)$ for their sizes, so
+$\sum_i\mu_i=q+1$.
+
+\paragraph{Brandt operators.}
+For a totally positive $\varpi\in\OK$ with $\Nm(\varpi)=\Nm(\fq)$,
+$\fq\nmid\fp$, enumerate the icosians of reduced norm $\varpi$ (a
+short-vector enumeration in $E_8$). Their number is
+$120\,r(\varpi)$ where $r(\varpi)=\Nm(\fq)+1$ is the relevant Brandt /
+theta coefficient for the icosian order at the primes we use; we verify
+this count at construction time as a gate. Push each element through
+$\iota_\fp$ to a matrix in $\mathrm{GL}_2(\F_q)$, and let it permute
+$\PP^1(\F_q)$. Accumulating the induced map on orbits gives the Brandt
+matrix $\Brandt(\fq)\in M_h(\Q)$,
+\begin{equation}
+  \Brandt(\fq)_{IJ}=\frac{1}{120\,\mu_I}
+  \#\{\,(x,\gamma): x\in\text{orbit }I,\ \Nm(\gamma)=\varpi,\
+  x\cdot\iota_\fp(\gamma)\in\text{orbit }J\,\}.
+  \label{eq:brandt}
+\end{equation}
+These are the Hecke operators $T_\fq$ on the Brandt module. Three
+intrinsic invariants are checked at construction time, before any
+arithmetic target is consulted:
+\begin{itemize}[leftmargin=1.5em]
+\item \emph{Eisenstein row sums:} $\sum_J\Brandt(\fq)_{IJ}=\Nm(\fq)+1$
+(the all-ones vector is the Eisenstein eigenvector);
+\item \emph{integrality:} $\Brandt(\fq)\in M_h(\Z)$;
+\item \emph{self-adjointness:} $\mu_I\Brandt(\fq)_{IJ}=
+\mu_J\Brandt(\fq)_{JI}$, i.e.\ $\Brandt(\fq)$ is symmetric for the inner
+product weighted by the orbit sizes $\mu$.
+\end{itemize}
+The cuspidal subspace is the $\mu$-orthogonal complement of the
+Eisenstein vector; on it the eigenvalues of $\Brandt(\fq)$ are the
+Hecke eigenvalues $a_\fq$ of the cusp forms of level $\fp$.
+
+\begin{scopebox}
+Equation \eqref{eq:brandt} and the bijection ``classes $=$ $A_5$-orbits''
+are standard for class number one \cite{Vigneras1980,Voight2021}. The
+point of the paper is that we instantiate them with nothing but icosian
+short-vector arithmetic and the $A_5$-action, and then test the output
+against independent data.
+\end{scopebox}
+
+\section{Level 31: one form, completely}\label{sec:level31}
+
+At $\fp_{31}=(5\varphi-2)$, $\Nm(\fp_{31})=31$ (the smallest norm
+carrying a cusp form \cite{Dembele2005}), the $A_5$-action on
+$\PP^1(\F_{31})$ has two orbits, $\mu=(12,20)$, so $h=2$ and the
+cuspidal dimension is $1$. The point stabilizers have orders
+$60/12=5$ and $60/20=3$, giving Eichler mass
+$\tfrac15+\tfrac13=\tfrac{8}{15}=\tfrac{1}{60}(31+1)$, in agreement with
+the mass formula (with $|\zeta_K(-1)|/2=1/60$ for $K$). The cuspidal
+eigenvector is $(3,-5)$.
+
+\paragraph{Out-of-sample match.}
+Independently of the geometry we form the target by brute-force point
+counting of the elliptic curve $31.1\text{-}a1/K$,
+$[a_1,\dots,a_6]=[1,\varphi+1,\varphi,\varphi,0]$, setting
+$a_\fq=\Nm(\fq)+1-\#E(\OK/\fq)$. No $L$-function table is read. The
+Brandt eigenvalues from \eqref{eq:brandt} agree with $a_\fq$ at all
+$44$ good prime ideals of norm $\le200$, both Galois-conjugate ideals
+resolved individually at every split norm
+(\texttt{data/level31\_per\_ideal.json}); the level ideal itself is
+excluded from the good-prime comparison, and its Brandt value $-1$ is
+exactly the Steinberg datum consumed by the Atkin--Lehner sign check
+below.
+
+\begin{verifiedbox}
+\textbf{Split-prime completeness.} For a split rational prime
+$q=\fq\fq'$ the two Hecke eigenvalues $a_\fq,a_{\fq'}$ are the values at
+the totally positive generator $\varpi$ and at its conjugate
+$\sigma(\varpi)$. The geometry reproduces the \emph{full set}
+$\{a_\fq,a_{\fq'}\}$ --- not one representative up to the global Galois
+involution. For $q=11,\dots,89$:
+\begin{center}\resizebox{\linewidth}{!}{$
+\begin{array}{c|ccccccccc}
+q & 11 & 19 & 29 & 41 & 59 & 61 & 71 & 79 & 89\\\hline
+\{a_\fq,a_{\fq'}\} & \{\mbox{-}4,4\} & \{\mbox{-}4,4\} & \{\mbox{-}2\}
+& \{\mbox{-}6\} & \{\mbox{-}4,12\} & \{\mbox{-}2,6\} & \{\mbox{-}8,0\}
+& \{0,16\} & \{\mbox{-}6,10\}
+\end{array}
+$}\end{center}
+matching the point-counted target exactly (singletons at $q=29,41$
+occur where $a_\fq=a_{\fq'}$).
+\end{verifiedbox}
+
+\paragraph{Atkin--Lehner sign.}
+\sloppy At $\fp_{31}$ the curve $31.1\text{-}a1$ has nonsplit multiplicative
+reduction ($\#E_{\mathrm{ns}}(\F_{31})=q+1$, i.e.\ $a_{\fp_{31}}=-1$).
+With the standard newform convention $W_\fp=-a_\fp$ at a prime of
+multiplicative reduction exactly dividing the level, the Atkin--Lehner
+(Fricke) eigenvalue is $W_{31}=-a_{\fp_{31}}=+1$, consistent with the
+Brandt data.
+
+\section{A family, by dimension}\label{sec:dims}
+
+The orbit count of \S\ref{sec:setup} gives the Brandt dimension $h$, and
+hence the cuspidal dimension $h-1$ at every prime level with no further
+computation. (The Eisenstein subspace at prime level is $1$-dimensional
+because $K=\Q(\sqrt5)$ has narrow class number one, so there is a single
+Eisenstein class, the all-ones vector.) Table~\ref{tab:dims} compares
+the geometric output with Demb\'el\'e's table \cite{Dembele2005} at
+every split prime level in his displayed range ($31\le\Nm\le89$); the
+smaller split prime norms ($11,19,29$) all give cuspidal dimension $0$,
+consistent with $31$ being the smallest level carrying a cusp form.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{r|ccccccc}
+\toprule
+$\Nm(\fp)$ & 31 & 41 & 59 & 61 & 71 & 79 & 89\\
+\midrule
+geometry (cusp.\ dim) & 1 & 1 & 0 & 2 & 1 & 1 & 1\\
+Demb\'el\'e \cite{Dembele2005} & 1 & 1 & 0 & 2 & 1 & 1 & 1\\
+type & ell. & ell. & --- & gen.~2 & ell. & ell. & ell.\\
+\bottomrule
+\end{tabular}
+\caption{Prime-level cuspidal dimensions over $\Q(\sqrt5)$, geometry vs
+Demb\'el\'e. $7/7$. The two informative cases are $59$ (no
+weight-$(2,2)$ cusp form, only Eisenstein \cite[Ex.~3.6]{Dembele2005})
+and $61$ (the first form with coefficients outside $\Q$, a genus-$2$
+surface \cite[Rem.~4.4]{Dembele2005}).}
+\label{tab:dims}
+\end{table}
+
+The point of Table~\ref{tab:dims} is that the orbit count is not tuned
+to one example: with no free parameters it reproduces a non-obvious
+\emph{sequence}, including a vanishing ($59$) and a jump to a
+non-rational form ($61$). The same computation continues to larger
+split levels at no extra cost; we do not tabulate those here, as we have
+not cross-checked them against an independent source.
+
+\section{A family, by eigenvalue: level 41}\label{sec:level41}
+
+We repeat \S\ref{sec:level31} verbatim at $\fp_{41}$ ($\Nm=41$, split):
+the $A_5$-action on $\PP^1(\F_{41})$ has two orbits, $\mu=(12,30)$,
+$h=2$, cuspidal dimension $1$. The cuspidal eigenvalues are integral,
+self-adjoint, and satisfy the Ramanujan bound
+$|a_\fq|\le2\sqrt{\Nm(\fq)}$ at every prime tested.
+
+For the out-of-sample target we point-count Demb\'el\'e's curve
+$E_{41}:y^2+\varphi y=x^3-\varphi x^2$
+(\cite[Tab.~4]{Dembele2005}, $[a_1,\dots,a_6]=[0,-\varphi,\varphi,0,0]$).
+
+\begin{verifiedbox}
+\textbf{Second form, out-of-sample, no fit.} Geometric eigenvalue sets
+$\{a_\fq,a_{\fq'}\}$ vs point-counted $E_{41}$:
+\begin{center}\resizebox{\linewidth}{!}{$
+\begin{array}{c|ccccccccc}
+q & 11 & 19 & 29 & 31 & 59 & 61 & 71 & 79 & 89\\\hline
+\text{geom} & \{\mbox{-}2,5\} & \{\mbox{-}1,6\} & \{2,9\}
+& \{\mbox{-}10,4\} & \{\mbox{-}3,4\} & \{\mbox{-}8,6\}
+& \{\mbox{-}12,9\} & \{\mbox{-}11,\mbox{-}4\} & \{\mbox{-}8,\mbox{-}1\}\\
+E_{41} & \{\mbox{-}2,5\} & \{\mbox{-}1,6\} & \{2,9\}
+& \{\mbox{-}10,4\} & \{\mbox{-}3,4\} & \{\mbox{-}8,6\}
+& \{\mbox{-}12,9\} & \{\mbox{-}11,\mbox{-}4\} & \{\mbox{-}8,\mbox{-}1\}
+\end{array}
+$}\end{center}
+$9/9$. The same construction, re-pointed to a different level, recovers
+a different eigenform eigenvalue-for-eigenvalue.
+\end{verifiedbox}
+
+\section{The non-rational form: level 61}\label{sec:level61}
+
+At $\fp_{61}$ ($\Nm=61$, split) the $A_5$-action on $\PP^1(\F_{61})$ has
+\emph{three} orbits, $\mu=(12,20,30)$, $h=3$, so the cuspidal dimension
+is $2$. By \cite[Rem.~4.4]{Dembele2005}, $61$ is the smallest level
+whose newform has coefficients outside $\Q$: the associated Shimura
+curve has genus $2$, and its Jacobian is a modular abelian surface with
+real multiplication by $\Q(\sqrt5)$. The $h=2$ shortcut of
+\S\ref{sec:level31} does not apply; instead we read the eigenvalue off
+the $3\times3$ matrix.
+
+The all-ones vector is the Eisenstein eigenvector (eigenvalue
+$\Nm(\fq)+1$), so the characteristic polynomial of $\Brandt(\fq)$
+factors over $\Q$ as $(x-(\Nm(\fq)+1))\,g_\fq(x)$, where $g_\fq(x)=
+x^2-t_\fq x+n_\fq$ is the characteristic polynomial of the $2$-dimensional
+cuspidal block. Comparing traces and determinants,
+\begin{equation}
+  t_\fq=\operatorname{tr}\Brandt(\fq)-(\Nm(\fq)+1),
+  \qquad
+  n_\fq=\frac{\det\Brandt(\fq)}{\Nm(\fq)+1}\ \in\Z,
+  \label{eq:rm}
+\end{equation}
+\emph{a priori} two rational integers. Whether the two cuspidal
+eigenvalues are rational (two forms) or an irrational conjugate pair
+(one form with real multiplication) is then decided by the
+discriminant $t_\fq^2-4n_\fq$ --- which we compute, rather than assume.
+
+\begin{verifiedbox}
+\textbf{Real multiplication, reconstructed.} From \eqref{eq:rm} the
+discriminant $t_\fq^2-4n_\fq$ equals $5\cdot(\text{square})$ at every
+prime $\Nm(\fq)\in\{4,9,11,19,29,49\}$. Hence $g_\fq$ is irreducible
+over $\Q$ with roots $a_\fq,\sigma(a_\fq)\in\Z[\varphi]$ a Galois-conjugate
+pair: a \emph{single} eigenform with real multiplication by $K$, not two
+rational forms. At the inert primes (one prime per rational prime, hence
+unambiguous) the eigenvalue matches \cite{Dembele2005} exactly:
+\[
+  a_4=2\varphi-2,\qquad a_9=-\varphi-2,\qquad a_{49}=-4\varphi+2,
+\]
+i.e.\ $(t_\fq,n_\fq)=(-2,-4),(-5,5),(0,-20)$ respectively. The
+Ramanujan bound holds on both real embeddings throughout.
+\end{verifiedbox}
+
+The real multiplication is not merely consistent with the data; it
+follows from it:
+
+\begin{proposition}\label{prop:rm}
+If $g_\fq$ has non-square discriminant for even a single $\fq$, then the
+$2$-dimensional cuspidal Brandt module at level $\fp_{61}$ is irreducible
+over $\Q$, the (commutative) Hecke algebra acts on it through the
+quadratic field $\Q(\sqrt{t_\fq^2-4n_\fq})$, and every Hecke eigenvalue
+lies in that field. In particular, $t_4^2-4n_4=20=5\cdot2^2$ gives
+$\Q(\sqrt5)$, so the level-$61$ eigenform has real multiplication by
+$\Q(\sqrt5)$ and all its eigenvalues lie in $\Z[\varphi]$.
+\end{proposition}
+\begin{proof}
+On the $2$-dimensional cuspidal space, $t_\fq^2-4n_\fq$ non-square makes
+$g_\fq$ irreducible over $\Q$, so $T_\fq$ acts irreducibly. Any operator
+commuting with such an irreducible quadratic operator lies in
+$\Q[T_\fq]\cong\Q(\sqrt{t_\fq^2-4n_\fq})$, a field; the Hecke operators
+all commute and preserve the space, so they lie in $\Q[T_\fq]$, and every
+cuspidal Hecke eigenvalue lies in $E:=\Q(\sqrt{t_\fq^2-4n_\fq})$. The
+value $t_4^2-4n_4=20$ fixes $E=\Q(\sqrt5)$; integrality of the Brandt
+matrices puts the eigenvalues in $\OK=\Z[\varphi]$.
+\end{proof}
+
+So the geometry does not merely \emph{count} the dimension-$2$ space at
+$61$, nor merely match six published values: it \emph{proves}, from a
+single discriminant, that the form has real multiplication by
+$\Q(\sqrt5)$, and reconstructs its irrational Hecke eigenvalues.
+
+\section{The closure certificate algebra}\label{sec:cert}
+
+The recurring structural fact above is that each Hecke operator carries
+a positive invariant form. We isolate this as a small certificate
+algebra, both because it is the cleanest statement of what the geometry
+guarantees and because it is the bridge to \S\ref{sec:rh}.
+
+\begin{definition}[Positive symmetrizer]
+A \emph{positive symmetrizer} for $T\in M_n(\R)$ is a symmetric positive
+definite $G$ with $GT=T^\top G$. Then $T$ is self-adjoint for the inner
+product $\langle u,v\rangle_G=u^\top G v$, so it has real spectrum and a
+$G$-orthonormal eigenbasis.
+\end{definition}
+
+\noindent
+(This is the self-adjoint, ``lossless'' end of a broader closure
+taxonomy --- dissipative $T^\top GT\prec G$, isometric $T^\top GT=G$ ---
+which we do not need here: the Brandt operators are not contractions,
+having Eisenstein eigenvalue $\Nm(\fq)+1>1$.)
+
+\begin{proposition}\label{prop:selfadj}
+For every $\fq\nmid\fp$ the Brandt operator $\Brandt(\fq)$ admits the
+positive symmetrizer $G=\operatorname{diag}(\mu)$, hence has real
+spectrum and a $\mu$-orthonormal eigenbasis.
+\end{proposition}
+\begin{proof}
+The raw incidence count $C_{IJ}=\#\{(x,\gamma):x\in\text{orbit }I,
+\Nm(\gamma)=\varpi, x\iota_\fp(\gamma)\in\text{orbit }J\}$ satisfies
+$C_{IJ}=C_{JI}$ via the involution $(x,\gamma)\mapsto(x\gamma,
+\bar\gamma)$ (using $\gamma\bar\gamma=\Nm(\gamma)$ acting as a scalar
+on $\PP^1$). Since $\Brandt(\fq)_{IJ}=C_{IJ}/(120\,\mu_I)$ by
+\eqref{eq:brandt}, this gives $\mu_I\Brandt(\fq)_{IJ}=
+\mu_J\Brandt(\fq)_{JI}$, i.e.\ $G\Brandt(\fq)=\Brandt(\fq)^\top G$.
+\end{proof}
+
+\noindent
+Real spectrum is thus elementary. The sharper \emph{Ramanujan bound}
+$|a_\fq|\le2\sqrt{\Nm(\fq)}$ that we observe at every tested prime is
+\emph{not} elementary: it is the Ramanujan--Petersson bound for these
+Hilbert cusp forms, transported through Jacquet--Langlands and proved by
+Eichler--Shimura/Deligne \cite{JacquetLanglands1970,Eichler1973}; in
+this paper we record it as a property satisfied by the computed
+eigenvalues, not as something we prove. The Brandt operators are, in
+short, the \emph{positive, finite, real-spectrum} fragment of the
+arithmetic.
+
+\section{Scope: what the finite computation does not reach}\label{sec:rh}
+
+Nothing in \S\ref{sec:level31}--\S\ref{sec:cert} depends on this
+section, and it contains no new theorem. We include it only to state
+precisely what the verified structure does \emph{not} reach.
+
+\medskip\noindent\textbf{The rigorous statement.}
+For an $L$-function, RH is equivalent to genuine positivity criteria:
+the Weil explicit-formula positivity \cite{Weil1952} and Li's criterion
+$\lambda_n\ge0$ for all $n$ \cite{Li1997,BombieriLagarias1999}. These
+are theorems (equivalences); they concern the \emph{global, analytic}
+$L$-function and an \emph{infinite} family of positivity conditions.
+
+\medskip\noindent\textbf{What the geometry delivers, and what it does not.}
+\begin{verifiedbox}
+The icosian construction delivers the \emph{coefficient side}: the Hecke
+eigenvalues $a_\fq$, equivalently the local factors of the automorphic
+$L$-functions, with real spectrum (Prop.~\ref{prop:selfadj}) and the
+observed Ramanujan bound. This is finite, per-prime, local data.
+\end{verifiedbox}
+
+\begin{opengapbox}
+RH / GRH is the global, analytic statement that the assembled
+$L$-function has no off-line zero --- the infinite positivity of
+Weil/Li. A finite Brandt computation produces eigenvalue
+\emph{coefficients}, not zeros, and supplies none of this positivity.
+Programs that would close the gap --- a self-adjoint operator with the
+zeros as spectrum (Hilbert--P\'olya), or Connes's arithmetic-site trace
+formula \cite{Connes1999} --- remain open; we make no contribution to
+them. Mirror symmetry (the functional equation) alone does not force
+zeros onto the line: the Davenport--Heilbronn phenomenon
+\cite{Davenport1936} exhibits Dirichlet series with the functional
+equation yet off-line zeros.
+\end{opengapbox}
+
+
+\section{Reproducibility}\label{sec:repro}
+
+All results are produced by pure-Python scripts in the accompanying
+bundle (\texttt{route\_b/}); none requires a computer-algebra modular
+package. The anti-circularity discipline is enforced in code: targets
+are computed by \texttt{point\_count\_target.py} (brute-force
+$\#E(\OK/\fq)$) and read only at comparison time.
+\begin{center}
+\small
+\begin{tabular}{ll}
+\toprule
+script & result \\
+\midrule
+\texttt{ideal\_classes.py} & level-$31$ orbits, mass $8/15$, $h=2$ \\
+\texttt{brandt\_matrices.py} & Brandt/Hecke operators \eqref{eq:brandt}, invariants \\
+\texttt{brandt\_level.py} & the engine at an arbitrary split prime level \\
+\texttt{hecke\_compare.py} & level $31$, original out-of-sample protocol \\
+\texttt{level31\_full\_ideals.py} & level $31$, all $44$ ideals $\Nm\le200$
+  $\to$ \texttt{data/level31\_per\_ideal.json} \\
+\texttt{second\_form\_level41.py} & level $41$, $9/9$ vs $E_{41}$
+  $\to$ \texttt{data/level41\_results.json} \\
+\texttt{genus2\_form\_level61.py} & level $61$ genus-$2$, RM eigenvalues
+  $\to$ \texttt{data/level61\_results.json} \\
+\texttt{multilevel\_dimensions.py} & dimension sequence (Table~\ref{tab:dims})
+  $\to$ \texttt{data/dimension\_sequence.json} \\
+\texttt{no\_fit\_guard.py} & anti-circularity check over the full geometry path \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Conclusion}
+
+We have shown, by an independent geometric route, that the $600$-cell /
+icosian order reproduces a \emph{family} of Hilbert modular forms over
+$\Q(\sqrt5)$: a non-obvious dimension sequence ($7/7$), the full Hecke
+systems of two rational eigenforms (out-of-sample, no fit), and the
+irrational eigenvalues of the genus-$2$ form at level $61$. We have
+framed the self-adjoint Hecke operators in a closure/resonance
+certificate algebra and used it to state exactly what separates this
+verified, finite, coefficient-side structure from the Riemann
+Hypothesis: the global analytic positivity, the lossless self-adjoint
+engine, which we characterize and do not construct. The value of the
+work is a clean, reproducible realization of known arithmetic from
+polytope geometry, and an honest account of the gap that remains.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

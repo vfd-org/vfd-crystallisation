@@ -46,7 +46,7 @@ The grades, strongest first, mean exactly this:
 | The proton's radius is four times a length it already defines | Witnessed | within 0.04% | 8 |
 | The B-meson anomaly: one fixed-shape curve, right sign five times | Tie | statistically undecided, wobble recorded | 8 |
 | Newton's constant from the muon's rung on the mass ladder | Conditional | within two parts in ten thousand | 8 |
-| The dark-energy fraction and the expansion rate, from the cosmology side | Witnessed | within a fraction of a percent of Planck | 8 |
+| The dark-energy fraction and the expansion rate, from the cosmology side | Witnessed | within a fraction of a percent of Planck | 10 |
 
 ## The named open problems
 
