@@ -142,6 +142,30 @@ def coupling_table():
     print()
 
 
+def atoms_table():
+    print("=" * 78)
+    print("ATOMS SECTOR — standard quantum mechanics on the DERIVED equations")
+    print("(Schrodinger: Paper LIII T11; Coulomb/Maxwell: LIII T13; charges:")
+    print(" Paper LVIII). Inputs: alpha (CONDITIONAL chain), m_e (PLACED).")
+    print("=" * 78)
+    alpha = 1 / (137 + np.pi / 87)
+    me_GeV = M_MU * PHI ** (96 - 107)      # electron at its integer shell
+    me_meas = 5.1099895e-4
+    for label, me in (("with PLACED m_e (shell 107)", me_GeV),
+                      ("with measured m_e (for reference)", me_meas)):
+        E1 = -0.5 * alpha**2 * me * 1e9    # eV
+        a0 = 1.0 / (alpha * me)            # 1/GeV
+        a0_m = a0 * 1.9733e-16             # GeV^-1 -> m
+        print(f"  hydrogen ground state {label}: "
+              f"E1 = {E1:8.3f} eV   (QED value -13.606)")
+        print(f"  Bohr radius            {label}: "
+              f"a0 = {a0_m:.3e} m (QED value 5.292e-11)")
+    print("  Reading: once a mode has mass + charge + Schrodinger + Coulomb,")
+    print("  atom formation is a THEOREM of the derived layer; the residual")
+    print("  error is exactly the mass-input error (electron shell +3.9%).")
+    print()
+
+
 def main():
     print()
     print("THE STANDARD-MODEL LEDGER — what the framework determines today,")
@@ -150,6 +174,7 @@ def main():
     charge_table()
     mass_table()
     coupling_table()
+    atoms_table()
     print("=" * 78)
     print("BOTTOM LINE")
     print("=" * 78)
