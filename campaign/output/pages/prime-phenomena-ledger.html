@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ten prime phenomena, one instrument, one command</title>
+<style>
+  :root { --ink:#1a1f2b; --soft:#5b6472; --line:#e3e6eb; --accent:#0b6e4f; --bg:#fbfbf9; }
+  * { box-sizing:border-box; }
+  body { font:17px/1.65 Georgia,'Times New Roman',serif; color:var(--ink);
+         background:var(--bg); margin:0; }
+  main { max-width:760px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:1.7em; line-height:1.25; margin:0 0 .4em; }
+  .claim { font-size:1.12em; color:var(--soft); margin-bottom:2em; }
+  .numbers { display:flex; gap:16px; flex-wrap:wrap; margin:2em 0; }
+  .num { flex:1 1 180px; border:1px solid var(--line); border-radius:8px;
+          padding:14px 18px; background:#fff; }
+  .num b { display:block; font-size:1.35em; font-family:ui-monospace,Menlo,monospace; }
+  .num span { color:var(--soft); font-size:.85em; }
+  .err b { color:var(--accent); }
+  h2 { font-size:1.05em; letter-spacing:.04em; text-transform:uppercase;
+        color:var(--soft); border-bottom:1px solid var(--line);
+        padding-bottom:.3em; margin-top:2.4em; }
+  ol li { margin:.45em 0; }
+  pre { background:#11151d; color:#dde3ec; padding:18px 20px; border-radius:8px;
+         overflow-x:auto; font:14px/1.6 ui-monospace,Menlo,monospace; }
+  .falsifier { border-left:3px solid var(--accent); padding:.2em 0 .2em 1em;
+                color:var(--ink); }
+  a { color:var(--accent); }
+  footer { margin-top:3em; color:var(--soft); font-size:.85em;
+            border-top:1px solid var(--line); padding-top:1em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ten prime phenomena, one instrument, one command</h1>
+  <p class="claim">A ten-row ledger runs the named prime-distribution phenomena through one computational instrument: twin primes (0.003% vs Hardy–Littlewood), all even gaps, Goldbach per-N, Dirichlet equidistribution, Chebyshev bias (Leech&#x27;s 26,861 exact), Q(√5) splitting, Sato–Tate on our own Brandt data, Cramér gaps (record 220 after 47,326,693 reproduced), Mersenne (the marked boundary row), and GUE zero statistics — 10/10 PASS against pre-set gates, in about ten seconds, with a falsifier stored per row.</p>
+
+  <div class="numbers">
+    <div class="num"><b>10/10 rows PASS (pre-registered gates)</b><span>this computation</span></div>
+    <div class="num"><b>classical results + literature constants (Leech 1957, maximal-gap records, ST moments)</b><span>measured / independent</span></div>
+    <div class="num err"><b>0.003%–0.65% on statistical rows; deterministic anchors exact</b><span>difference</span></div>
+  </div>
+
+  <h2>Everything that goes in</h2>
+  <ol>
+    <li>A prime sieve to 5×10⁷ and 1,983 PARI-computed zeta zeros — nothing else</li>
+    <li>Per-place admissibility counting (the local layer of every row)</li>
+    <li>Three theorem-grade anchor rows (Dirichlet, Chebotarev, Sato–Tate) calibrating the instrument</li>
+    <li>Gates set before the data were inspected; one boundary row (Mersenne) marking where the method fails</li>
+  </ol>
+
+  <h2>Run it yourself</h2>
+  <pre>git clone https://github.com/vfd-org/closure-positivity-lab
+cd release-bundles/closure-positivity-lab
+python3 -m lab.prime_ledger   # deps: numpy (PARI/GP only to regenerate the zeros)</pre>
+
+  <h2>How to kill this claim</h2>
+  <p class="falsifier">python3 -m lab.prime_ledger re-runs everything; any row drifting from its gate at larger sieve bounds kills that row, and a phenomenon that cannot be factored as (local product) × (zero-distribution statement) breaks the organising thesis — by the ledger&#x27;s rules it would be published as a counterexample row.</p>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://github.com/vfd-org/closure-positivity-lab">https://github.com/vfd-org/closure-positivity-lab</a> (repo)</li>
+    <li><a href="https://en.wikipedia.org/wiki/Twin_prime">https://en.wikipedia.org/wiki/Twin_prime</a> (external)</li>
+    <li>paper: papers/prime-phenomena-ledger.pdf (review-hardened, GO)</li>
+  </ul>
+
+  <footer>One result, fully stated. Pre-peer-review; every input and the
+  falsifier are above. Part of the VFD programme &mdash; but this page stands
+  or falls on its own.</footer>
+</main>
+</body>
+</html>

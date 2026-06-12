@@ -1,8 +1,8 @@
 # The realization: icosian geometry = Hilbert modular arithmetic
 
 **Paper: `paper/icosian-realization.pdf`** — *A native icosian realization of
-Hilbert modular forms over Q(√5)* (v1.0.0-rc2). The Wave-1 anchor of the
-prime/RH line: pure number theory, parameter-free, out-of-sample.
+Hilbert modular forms over Q(√5)* (v1.0.0-rc2). The anchor artifact of this repository's
+number-theory line: pure number theory, parameter-free, out-of-sample.
 
 Headline verifications (all reproducible below, all gated by tests):
 
@@ -69,11 +69,13 @@ out of sample, with **zero fitted parameters**:
 
 The Brandt matrices `B(P)` are self-adjoint in the natural orbit-size measure
 `mu = (20,12)`, and `(3,-5)` is orthogonal to the Eisenstein line `(1,1)` under
-`mu` (`20·3 − 12·5 = 0`). At the primes with an unambiguous eigenvalue (inert,
-ramified, and split primes whose two conjugates coincide) the match is **exact**
-(7/7: `N(P) = 4,5,9,29,41,49,169`); at the remaining split primes it is exact up
-to the single global Galois involution of `Q(sqrt 5)`, which permutes the two
-primes above `p`.
+`mu` (`20·3 − 12·5 = 0`). The per-ideal statement requires fixing a labeling convention: the engine's
+level splitting sends phi to 13 mod 31, so its level ideal is sigma(5phi-2) —
+the Galois conjugate of the curve's conductor — and the geometric eigenvalue
+at ideal P is the Brandt value at a generator of sigma(P). With that single
+global involution fixed once, **all 44 good prime ideals match individually**
+(`data/level31_per_ideal.json`; the script fails if any single ideal needs its
+own adjustment).
 
 ## How it stays honest (no fitting, no LMFDB)
 

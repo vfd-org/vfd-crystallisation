@@ -10,7 +10,7 @@ For each good prime ideal P (P not dividing the conductor) we compute
     a_P = N(P) + 1 - #E(O_K / P)
 by exhaustively counting points of E over the residue field O_K/P.  By
 modularity over Q(sqrt5) these Frobenius traces ARE the Hecke eigenvalues of
-the cuspidal Hilbert newform at level (5phi-2) -- the RH-bearing object.
+the cuspidal Hilbert newform at level (5phi-2) -- the arithmetic target object.
 
 Honesty checks built in:
   * Ramanujan  |a_P| <= 2 sqrt(N(P))  (must hold for a cusp form; an

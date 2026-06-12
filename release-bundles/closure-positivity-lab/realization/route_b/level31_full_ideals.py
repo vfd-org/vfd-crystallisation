@@ -60,14 +60,17 @@ def run():
             all_match = False
             continue
         if kind != "split":
-            # inert/ramified: Galois-stable ideal, no labeling subtlety
+            # inert/ramified: Galois-stable ideal (sigma(P) = P), so the
+            # sigma convention is trivial; same schema as split rows
             a_geo = eng.brandt_matrix(gen)["cuspidal_eigenvalue"]
             t = pair[0]
             match = a_geo == t["a_p"]
             all_match &= match
             n_ideals += 1
             rows.append({"p": p, "norm": t["norm"], "kind": kind,
-                         "phi_mod_p": None, "generator": list(gen),
+                         "phi_mod_p": t.get("phi_mod_p"),
+                         "ideal_generator": list(gen),
+                         "evaluated_at_sigma_generator": list(gen),
                          "geometric_a": a_geo, "target_a_p": t["a_p"],
                          "match": match})
             continue

@@ -45,8 +45,12 @@ def test_level31_per_ideal_artifact():
     d = json.load(open(path))
     assert d["all_match"] is True
     assert d["n_prime_ideals"] == 44
-    lvl = [r for r in d["rows"] if r["norm"] == 31][0]
-    assert lvl["steinberg_at_level_ideal"] == -1
+    assert all(r["match"] for r in d["rows"])
+    assert d["engine_level_ideal"] == "sigma(5phi-2)"
+    assert d["steinberg_at_engine_level_ideal"] == -1
+    # every split ideal row is labeled and individually checked
+    split_rows = [r for r in d["rows"] if r["kind"] == "split"]
+    assert all(r["phi_mod_p"] is not None for r in split_rows)
 
 
 def test_engine_p1_sizes():

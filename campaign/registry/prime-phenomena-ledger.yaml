@@ -1,0 +1,48 @@
+slug: prime-phenomena-ledger
+priority: 6
+status: verified
+segment: number-theorists
+title: "Ten prime phenomena, one instrument, one command"
+claim: >
+  A ten-row ledger runs the named prime-distribution phenomena through one
+  computational instrument: twin primes (0.003% vs Hardy–Littlewood), all even
+  gaps, Goldbach per-N, Dirichlet equidistribution, Chebyshev bias (Leech's
+  26,861 exact), Q(√5) splitting, Sato–Tate on our own Brandt data, Cramér
+  gaps (record 220 after 47,326,693 reproduced), Mersenne (the marked boundary
+  row), and GUE zero statistics — 10/10 PASS against pre-set gates, in about
+  ten seconds, with a falsifier stored per row.
+value: "10/10 rows PASS (pre-registered gates)"
+target: "classical results + literature constants (Leech 1957, maximal-gap records, ST moments)"
+error: "0.003%–0.65% on statistical rows; deterministic anchors exact"
+inputs:
+  - "A prime sieve to 5×10⁷ and 1,983 PARI-computed zeta zeros — nothing else"
+  - "Per-place admissibility counting (the local layer of every row)"
+  - "Three theorem-grade anchor rows (Dirichlet, Chebotarev, Sato–Tate) calibrating the instrument"
+  - "Gates set before the data were inspected; one boundary row (Mersenne) marking where the method fails"
+falsifier: >
+  python3 -m lab.prime_ledger re-runs everything; any row drifting from its
+  gate at larger sieve bounds kills that row, and a phenomenon that cannot be
+  factored as (local product) × (zero-distribution statement) breaks the
+  organising thesis — by the ledger's rules it would be published as a
+  counterexample row.
+script:
+  cwd: release-bundles/closure-positivity-lab
+  cmd: python3 -m lab.prime_ledger
+  deps: numpy (PARI/GP only to regenerate the zeros)
+  evidence: release-bundles/closure-positivity-lab/out/prime_ledger.json
+links:
+  repo: "https://github.com/vfd-org/closure-positivity-lab"
+  local: release-bundles/closure-positivity-lab/lab/prime_ledger
+  paper: "papers/prime-phenomena-ledger.pdf (review-hardened, GO)"
+  external: "https://en.wikipedia.org/wiki/Twin_prime"
+post_hook: >
+  We ran ten famous prime phenomena through one instrument with pre-registered
+  gates: 10/10 pass in ten seconds — including Leech's 26,861 and the maximal
+  gap 220 reproduced exactly — and the one place the method fails is marked as
+  a row, not hidden.
+figure_idea: >
+  The ledger as a scorecard graphic: ten rows, verdict column all PASS, the
+  three theorem anchors and the boundary row visually distinguished.
+notes: >
+  Scope per the paper: layer-1 classical (verified, not discovered); no
+  RH/GRH/infinitude claims; nine of ten factor, the tenth marks the boundary.

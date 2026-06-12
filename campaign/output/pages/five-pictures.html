@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Derive Hardy–Littlewood by playing: the prime wheels</title>
+<style>
+  :root { --ink:#1a1f2b; --soft:#5b6472; --line:#e3e6eb; --accent:#0b6e4f; --bg:#fbfbf9; }
+  * { box-sizing:border-box; }
+  body { font:17px/1.65 Georgia,'Times New Roman',serif; color:var(--ink);
+         background:var(--bg); margin:0; }
+  main { max-width:760px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:1.7em; line-height:1.25; margin:0 0 .4em; }
+  .claim { font-size:1.12em; color:var(--soft); margin-bottom:2em; }
+  .numbers { display:flex; gap:16px; flex-wrap:wrap; margin:2em 0; }
+  .num { flex:1 1 180px; border:1px solid var(--line); border-radius:8px;
+          padding:14px 18px; background:#fff; }
+  .num b { display:block; font-size:1.35em; font-family:ui-monospace,Menlo,monospace; }
+  .num span { color:var(--soft); font-size:.85em; }
+  .err b { color:var(--accent); }
+  h2 { font-size:1.05em; letter-spacing:.04em; text-transform:uppercase;
+        color:var(--soft); border-bottom:1px solid var(--line);
+        padding-bottom:.3em; margin-top:2.4em; }
+  ol li { margin:.45em 0; }
+  pre { background:#11151d; color:#dde3ec; padding:18px 20px; border-radius:8px;
+         overflow-x:auto; font:14px/1.6 ui-monospace,Menlo,monospace; }
+  .falsifier { border-left:3px solid var(--accent); padding:.2em 0 .2em 1em;
+                color:var(--ink); }
+  a { color:var(--accent); }
+  footer { margin-top:3em; color:var(--soft); font-size:.85em;
+            border-top:1px solid var(--line); padding-top:1em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Derive Hardy–Littlewood by playing: the prime wheels</h1>
+  <p class="claim">Prime patterns live or die cell-by-cell on each prime&#x27;s wheel, and counting the surviving cells derives the Hardy–Littlewood constants in full: why twins occur, why gap-6 pairs occur exactly twice as often (predicted exactly; sieve says 1.9950), and why (n, n+2, n+4) happens exactly once in all of mathematics. An in-browser lab sieves to 2×10⁷ live and verifies any pattern you invent on the spot.</p>
+
+  <div class="numbers">
+    <div class="num"><b>twins predicted to 0.16% in-browser; every preset within Poisson noise</b><span>this computation</span></div>
+    <div class="num"><b>live sieve counts, computed in the visitor&#x27;s own browser</b><span>measured / independent</span></div>
+    <div class="num err"><b>nothing pre-recorded; the page computes everything on load</b><span>difference</span></div>
+  </div>
+
+  <h2>Everything that goes in</h2>
+  <ol>
+    <li>Residue wheels (finite cyclic screens) — the entire local mechanism</li>
+    <li>One multiplication: survival ratio per wheel, product over all wheels</li>
+    <li>The standard density integral (log-space, documented lower limit)</li>
+    <li>An in-browser sieve to 2×10⁷ as the referee</li>
+  </ol>
+
+  <h2>Run it yourself</h2>
+  <pre>git clone https://github.com/vfd-org/closure-positivity-lab
+cd release-bundles/closure-positivity-lab
+open explorables/residue-wheels.html  (or explorables/index.html for the 5-scene tour)   # deps: a web browser</pre>
+
+  <h2>How to kill this claim</h2>
+  <p class="falsifier">Type any offsets into explorables/residue-wheels.html: a pattern whose live count departs from the wheel product beyond Poisson noise kills the law on the spot, in the visitor&#x27;s own browser.</p>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://github.com/vfd-org/closure-positivity-lab">https://github.com/vfd-org/closure-positivity-lab</a> (repo)</li>
+    <li><a href="https://en.wikipedia.org/wiki/First_Hardy%E2%80%93Littlewood_conjecture">https://en.wikipedia.org/wiki/First_Hardy%E2%80%93Littlewood_conjecture</a> (external)</li>
+    <li>paper: papers/how-the-primes-work.pdf — Prime Patterns in Five Computed Pictures (GO)</li>
+  </ul>
+
+  <footer>One result, fully stated. Pre-peer-review; every input and the
+  falsifier are above. Part of the VFD programme &mdash; but this page stands
+  or falls on its own.</footer>
+</main>
+</body>
+</html>
