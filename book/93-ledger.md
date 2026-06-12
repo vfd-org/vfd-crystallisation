@@ -39,7 +39,7 @@ The grades, strongest first, mean exactly this:
 | Inertial mass equals gravitating mass, because they are one field | Derived | agree to two parts in ten thousand | 10 |
 | The quantum wave equation from the same field's slow envelope | Derived | small, controlled error | 10 |
 | The same uniqueness forces the electromagnetic field equations one rung down | Theorem (given grid-indifference) | null space exact | 10 |
-| Three symmetry groups of the sizes the Standard Model uses, from the two number systems | Theorem (algebra only) | dims 14/8/3/1; the physical wiring is open | 10 |
+| Three symmetry groups of the sizes the Standard Model uses, from the two number systems | Theorem (algebra only) | SU(3), SU(2), U(1), dims 8/3/1 (parent G2 is 14); wiring open | 10 |
 
 ## The measured numbers
 
