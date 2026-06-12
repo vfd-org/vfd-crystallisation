@@ -157,9 +157,15 @@ def atoms_table():
         a0 = 1.0 / (alpha * me)            # 1/GeV
         a0_m = a0 * 1.9733e-16             # GeV^-1 -> m
         print(f"  hydrogen ground state {label}: "
-              f"E1 = {E1:8.3f} eV   (QED value -13.606)")
+              f"E1 = {E1:8.3f} eV   (Rydberg reference -13.6057)")
         print(f"  Bohr radius            {label}: "
-              f"a0 = {a0_m:.3e} m (QED value 5.292e-11)")
+              f"a0 = {a0_m:.3e} m (reference 5.292e-11)")
+    # first correction beyond the Coulomb model, same equations: reduced mass
+    mu_red = me_meas / (1 + me_meas / 0.93827209)
+    E1r = -0.5 * alpha**2 * mu_red * 1e9
+    print(f"  first higher-order correction (reduced mass, same equations):")
+    print(f"    E1 = {E1r:8.4f} eV vs measured ionization -13.5984 eV")
+    print(f"    (residual falls 7.3 -> 0.13 meV, a factor ~55, no new input)")
     print("  Reading: once a mode has mass + charge + Schrodinger + Coulomb,")
     print("  the nonrelativistic Coulomb atom is a THEOREM of the derived")
     print("  layer; the residual error is, to leading order, the mass-input")

@@ -244,6 +244,20 @@ def sr9_finer_rungs_null():
           "rungs", ok, "; ".join(dets))
 
 
+def sr11_affine_obstruction():
+    print("SR11: the separability obstruction, strengthened to affine")
+    # N_T(g) = a_T + b_T f(g) (any universal f; a_T, b_T arbitrary functions
+    # of static quantum numbers) forces the anchored ratio
+    # (N_T(3)-N_T(1))/(N_T(2)-N_T(1)) = (f(3)-f(1))/(f(2)-f(1))
+    # to be type-independent. The observed ratios are distinct.
+    ratios = {t: (ns[2] - ns[0]) / (ns[1] - ns[0]) for t, ns in SHELLS.items()}
+    distinct = len({round(r, 6) for r in ratios.values()}) == 3
+    check("SR11 anchored generation ratios (L,U,D) = (1.545, 1.769, 2.333) "
+          "all distinct: every AFFINE-separable rule N = a_T + b_T f(g) is "
+          "refuted (subsumes the additive SR1 and the multiplicative case)",
+          distinct, f"{ {t: round(r,3) for t,r in ratios.items()} }")
+
+
 def sr10_ew_decomposition():
     print("SR10: the W deviation = Z placement + the Weinberg angle")
     PHI = (1 + 5 ** 0.5) / 2
@@ -277,6 +291,7 @@ def main():
     sr8_lepton_log_null()
     sr9_finer_rungs_null()
     sr10_ew_decomposition()
+    sr11_affine_obstruction()
     print("=" * 70)
     print(f"SUMMARY: {len(PASS)} PASS, {len(FAIL)} FAIL")
     for name in FAIL:

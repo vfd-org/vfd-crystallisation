@@ -529,7 +529,7 @@ function renderHyd(){
     g.fillStyle="#9a8f74"; g.fillText(`n=${n}`, 24, y+3);
     if(n<3){ g.fillStyle="#d9a93f"; g.fillText(E.toFixed(2)+" eV", w-86, y-5); }
   }
-  g.fillStyle="#8fc3d9"; g.fillText("· · · QED reference", 60, h-14);
+  g.fillStyle="#8fc3d9"; g.fillText("· · · Rydberg reference", 60, h-14);
   g.fillStyle="#d9a93f"; g.fillText("— this simulator", 220, h-14);
   // Lyman-alpha arrow
   const yA=Y(E1(me)), yB=Y(E1(me)/4);
@@ -541,11 +541,12 @@ function renderHyd(){
   document.getElementById("hydout").innerHTML = `
     <div class="sect">hydrogen, from the derived equations</div>
     <h3>E₁ = ${E1(me).toFixed(3)} eV</h3>
-    <div class="rrow"><span>QED / measured</span><span>−13.606 eV</span></div>
+    <div class="rrow"><span>Rydberg reference</span><span>−13.6057 eV</span></div>
     <div class="rrow"><span>deviation</span><span class="${devClass(dev)}">${(dev*100).toFixed(2)}%</span></div>
     <div class="rrow"><span>Bohr radius</span><span>${fmt(HBARC_M/(ALPHA*me),3)} m</span></div>
     <div class="rrow"><span>electron input</span><span>${meMode==="placed"?"shell 107 (+3.9%)":"measured"}</span></div>
-    <div class="rrow"><span>residual source</span><span>${meMode==="placed"?"= mₑ shell offset, nothing else":"α chain only (10⁻⁶)"}</span></div>`;
+    <div class="rrow"><span>residual source</span><span>${meMode==="placed"?"= mₑ shell offset (leading order)":"α chain only (10⁻⁶)"}</span></div>
+    ${meMode==="measured"?`<div class="rrow"><span>+ reduced mass (same eqs)</span><span class="dev-good">−13.5983 eV vs −13.5984 measured</span></div>`:""}`;
 }
 
 /* ---------- ledger table ---------- */
