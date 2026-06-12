@@ -2,7 +2,7 @@
 
 A friend who reviews theories for a living once told me that the fastest way to judge one is to skip to where it admits what it can't do. A theory with no honest list of failures is either trivial or lying, because any proposal bold enough to matter will have a frontier, a ragged edge where it runs out, and the character of a theory shows in how it treats that edge. So this is the chapter where I take you to the edge of everything I've built and walk you along it, and I want you to read it not as an apology but as the most truthful part of the book. The gaps are real. Some of them are deep. Naming them plainly is the price of having asked you to take the rest seriously.
 
-Let me sort them, roughly, from the merely unfinished to the genuinely hard.
+I will sort them, roughly, from the merely unfinished to the genuinely hard.
 
 ## The unfinished
 
@@ -22,11 +22,11 @@ The second is the one I flagged most solemnly last chapter, and it is the deepes
 
 ## What is actually solid
 
-It would be a strange book that spent a chapter on its failures without setting them against what it has, so let me do that, briefly and without inflation, because the gaps mean something different depending on what they are gaps in.
+It would be a strange book that spent a chapter on its failures without setting them against what it has, so I will do that, briefly and without inflation, because the gaps mean something different depending on what they are gaps in.
 
 What is solid is the spine. That the crystal is forced into existence by symmetry alone, with nothing chosen, is mathematics. That its spectrum carries the signature of three-dimensional space, three independent ways, with no dimensional input, is mathematics you could check tonight. That the three-sphere is combable and hands every point three perpendicular directions, that only the dimensions three and seven can host a renderable arena at all, that the crystal contains within its own symmetry a mirror that reverses its clock and forces time to run in waves, these are checkable facts about a definite object, and they are the load-bearing beams of the whole structure. The looking, the scene, the kernel that does the rendering, the split into a fixed background and a moving foreground, are built and largely verified. Newton's gravity comes out, and as of the final draft Einstein's machinery follows it, carrying the rigor debt recorded above. One fixed prediction has been laid against real experimental data from two collaborations and survived, undecided but un-refuted. None of that is speculation, and none of it goes away because the harder problems remain open.
 
-So the honest shape of the thing is a strong, verified core with a frontier of real and in places deep open problems around it, which is, when you say it plainly, simply what an ambitious young theory looks like at this stage of its life. The core is not waiting on the frontier. The dimension of space is read off the spectrum whether or not we ever derive the Higgs mass. The time-mirror forces waves whether or not we ever solve the problem of experience. A reader is entitled to weigh the core and the frontier separately, to find the core beautiful and the frontier daunting, and to suspend judgment on the whole until more of the frontier is closed. That is exactly the judgment I would ask for. Not belief. Attention.
+So the honest shape of the thing is a strong, verified core with a frontier of real and in places deep open problems around it, which is, when you say it plainly, what an ambitious young theory looks like at this stage of its life. The core is not waiting on the frontier. The dimension of space is read off the spectrum whether or not we ever derive the Higgs mass. The time-mirror forces waves whether or not we ever solve the problem of experience. A reader is entitled to weigh the core and the frontier separately, to find the core beautiful and the frontier daunting, and to suspend judgment on the whole until more of the frontier is closed. That is exactly the judgment I would ask for. Not belief. Attention.
 
 Which leaves one question, the one any honest theory has to be able to answer and the one I have been saving for the end. Given the open problems, given that this is a bet and not a proof, why might it be true at all, and just as importantly, what would show that it isn't? A proposal that could not be wrong would not be worth the paper, and a proposal that might be right should be able to tell you exactly how to kill it. Let me close the book by telling you both.
 
