@@ -145,7 +145,7 @@ footer a:hover{text-decoration:underline}
     Where the framework is open, the simulator says so.</p>
     <nav class="chain">
       <a href="#ring"><span class="dot d-der"></span>1 · the ring — derived, exact</a>
-      <a href="#mass"><span class="dot d-der"></span>2 · mass = closure frequency</a>
+      <a href="#ladder"><span class="dot d-der"></span>2 · mass = closure frequency</a>
       <a href="#ladder"><span class="dot d-der"></span>3 · the golden ladder</a>
       <a href="#ladder"><span class="dot d-open"></span>4 · shell selection — open</a>
       <a href="#atoms"><span class="dot d-thm"></span>5 · atoms — theorem</a>
@@ -289,9 +289,21 @@ const P = [
 const SECCOL = {lepton:"#d9a93f", quark:"#c96a4a", boson:"#8fc3d9", composite:"#9ab85c"};
 const LAM = [0,1,2,3,4,5].map(k=>12*(1-Math.sin((k+1)*Math.PI/5)/((k+1)*Math.sin(Math.PI/5))));
 const DPR = Math.min(window.devicePixelRatio||1, 2);
-function fit(cv){ const w = cv.clientWidth, h = +cv.getAttribute("height");
-  cv.width=w*DPR; cv.height=h*DPR; cv.style.height=h+"px";
-  const g=cv.getContext("2d"); g.setTransform(DPR,0,0,DPR,0,0); return [g,w,h]; }
+/* resize ONLY when layout width changes (resizing clears + thrashes);
+   clear once per call; return null while the canvas has no layout yet */
+function fit(cv){
+  const w = cv.clientWidth, h = +cv.getAttribute("height");
+  if (!w) return null;
+  if (cv.__w !== w){
+    cv.__w = w;
+    cv.width = Math.round(w*DPR); cv.height = Math.round(h*DPR);
+    cv.style.height = h + "px";
+  }
+  const g = cv.getContext("2d");
+  g.setTransform(DPR,0,0,DPR,0,0);
+  g.clearRect(0,0,w,h);
+  return [g,w,h];
+}
 const fmt=(x,d=4)=>{ if(x===0)return "0";
   const a=Math.abs(x); if(a>=1e4||a<1e-3) return x.toExponential(d-1);
   return x.toPrecision(d); };
@@ -300,7 +312,7 @@ const fmt=(x,d=4)=>{ if(x===0)return "0";
 const spec = document.getElementById("spec");
 let plucked = 1, pluckT = 0;
 function drawSpec(t){
-  const [g,w,h]=fit(spec); g.clearRect(0,0,w,h);
+  const f=fit(spec); if(!f) return; const [g,w,h]=f;
   const L=46,R=18,B=34,T=18, X=l=>L+(w-L-R)*l/15, Y=v=>h-B-(h-B-T)*v/40;
   g.strokeStyle="#2c2514"; g.beginPath(); g.moveTo(L,h-B); g.lineTo(w-R,h-B); g.stroke();
   g.font="10px IBM Plex Mono"; g.fillStyle="#5e5640";
@@ -334,7 +346,7 @@ const NMIN=79.5, NMAX=108.5;
 const LANE={lepton:0.18, quark:0.45, boson:0.72, composite:0.90};
 function ladY(N,h){ return 26+(h-60)*(N-NMIN)/(NMAX-NMIN); }
 function drawLadder(t){
-  const [g,w,h]=fit(lad); g.clearRect(0,0,w,h);
+  const f=fit(lad); if(!f) return; const [g,w,h]=f;
   // rungs
   for(let N=80; N<=108; N++){
     const y=ladY(N,h);
@@ -374,7 +386,7 @@ function drawLadder(t){
   });
 }
 lad.addEventListener("click",e=>{
-  const r=lad.getBoundingClientRect(), h=+lad.getAttribute("height"), w=r.width;
+  const r=lad.getBoundingClientRect(), h=+lad.getAttribute("height"), w=lad.clientWidth;
   let best=null,bd=1e9;
   P.forEach(p=>{
     const x=64+(w-100)*LANE[p.s], y=ladY(p.Nreal,h);
@@ -400,7 +412,7 @@ function renderReadout(){
 /* standing wave */
 const wave=document.getElementById("wave");
 function drawWave(t){
-  const [g,w,h]=fit(wave); g.clearRect(0,0,w,h);
+  const f=fit(wave); if(!f) return; const [g,w,h]=f;
   const om = 0.004*Math.pow(PHI,(96-sel.N)/6);   // log-compressed display rate
   const env = x=>Math.exp(-Math.pow((x-w/2)/(w*0.22),2));
   g.beginPath();
@@ -428,7 +440,7 @@ document.getElementById("metoggle").addEventListener("click",e=>{
 function E1(me){ return -0.5*ALPHA*ALPHA*me*1e9; }   // eV
 function renderHyd(){
   const me = meMode==="placed"?ME_PLACED:ME_MEAS;
-  const cv=document.getElementById("hyd"); const [g,w,h]=fit(cv); g.clearRect(0,0,w,h);
+  const cv=document.getElementById("hyd"); const f=fit(cv); if(!f) return; const [g,w,h]=f;
   const Emin=-15.2, Y=E=>30+(h-66)*(E-0)/(Emin-0);
   g.font="10px IBM Plex Mono";
   // QED reference levels (ice, dashed)
