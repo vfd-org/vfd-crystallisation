@@ -121,6 +121,33 @@ eigenform at level 41 (9/9 out-of-sample), and the genus-2 real-multiplication
 form at level 61. 23 gate tests + an anti-circularity scan:
 `cd realization && python3 -m pytest tests/ && python3 route_b/no_fit_guard.py`.
 
+## The second floor of the wall: the pair-correlation instrument
+
+The gap-1 probes (see the gaps work order) eliminated every periodic
+VFD-native channel for twin-prime infinitude: the question lives in an
+aperiodic, pair-coupled, spectral-side mechanism. This instrument measures
+that mechanism's first object on the repository's own zeros:
+
+```bash
+python3 -m lab.pair_correlation    # -> out/pair_correlation.json
+```
+
+- **Gated:** the unfolded spectral form factor K(τ) of the 1,983 zeta
+  zeros — ramp slope 1.20 in the Montgomery-ramp window (corresponding to the
+  proven Fourier-side range of the weighted F), plateau mean 1.14 (flat)
+  on the conjectural range, vs the sine-kernel min(τ,1). The
+  plateau is *consistency with* the GUE conjecture, not evidence of proof.
+- **Reported:** Montgomery's original F(α,T) with its computable finite-T
+  level d_T = 0.638 marked — the measured plateau is consistent with
+  domination by that diagonal level, as finite-T behaviour predicts.
+- **The bridge, sourced:** under RH (the standard conditional form), by
+  Goldston–Montgomery, F ≈ 1 on [1, A] is
+  equivalent to the variance asymptotic for primes in intervals h ~ x^{1/A};
+  fixed-gap (twin) statements require strictly more. Nothing here proves
+  any of it.
+- Figure: `figures/fig_pair_correlation.png`; exploratory icosian-L panel
+  (33 zeros, never gated) in the JSON.
+
 ## The lab underneath
 
 The wider laboratory asks a single structural question on finite objects where
