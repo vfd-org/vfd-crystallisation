@@ -67,6 +67,21 @@ A genuinely different class, proposed from the 5×24 Schläfli structure: the ge
 
 **Verdict: NULL across all eight admissible generators** — none beats chance after correction. **The open door, quantified (GL3):** a *derived* level set capturing all nine observed shells clears the pre-registered bar iff its span-density is ≤ 9/27 ≈ one-third. That is the precise target for any future intermediate-geometry construction (finer Schläfli strata, new prime-resonance levels from the pentagonal-clock instrument): derive the set first, from geometry, with no sight of the shell table — then score it once.
 
+## 4c. Phase D: the primitive-rational offset correspondence (the lead that passed its control)
+
+Re-reading Paper V through the ladder: its forward-traceable chain ratios (1−R_I = 5/6, R_D(4) = 15, V₃ = 42 …) are rationals built from substrate counts — so the hypothesis: **the offset factor r = m_rung/m_measured has the form 1 ± a/b with b a primitive count**. Tested with sieve-grade discipline (`scripts/explore_offset_rationals.py`, 5/5):
+
+| check | result |
+|---|---|
+| registered primitive alphabet (42 members; denominators = named counts {5,6,8,9,12,14,15,16,20,24,30,42}) | **p = 0.0019; 8/12 particles within 0.2%** (chance 3.9) |
+| **discriminating control**: larger alphabet of non-primitive prime denominators | **null** (p = 0.42, 5/12) — the offsets prefer primitive denominators *specifically* |
+| uncontaminated Paper-V-native sub-alphabet {5,6,12,15,20,24,30,42} | p = 0.015, 7/12 |
+| sensitivity (a ≤ 2) | weakens to p = 0.067 — the a = 3 forms (19/16, 23/20) matter; disclosed |
+
+The corrected ladder: bottom 19/16 (−0.001%), tau 16/15 (+0.034%), Higgs 23/20 (+0.056%), Z 41/42 (+0.060%), proton 5/4 (−0.091%), top 5/6 = 1−R_I (+0.105%, Paper V's own ratio form) … **mean |error| 0.198%** at ~5.4 bits/particle — Paper-V-class structure recovered with a tiny alphabet and a passed control.
+
+**Disclosure (binding):** the alphabet was assembled with partial sight of the data; mitigations are the density-controlled null, the passed discriminating control, and the surviving uncontaminated sub-alphabet. **Grade: RECORDED CORRESPONDENCE — a lead, not a derivation, not a prediction.** The alphabet is **frozen** for all future re-tests (improved mass measurements re-score it unchanged; the precision entries are *not* within experimental uncertainty, so sharper theory — not sharper data — is what can confirm or kill it). The derivational target it sharpens: obtain a/b per particle from the closure mode's population structure — the same target as the offset dynamics, now with a concrete shape.
+
 ## 5. Verification
 
-`scripts/explore_shell_rule.py` — 10/10 PASS; `scripts/explore_geometric_ladder.py` — 3/3 PASS (Phase C); each PASS reproduces a recorded conclusion including each null. Companion to `docs/sm-closeability-audit.md` §2 and `scripts/sm_ledger.py`.
+`scripts/explore_shell_rule.py` — 10/10 PASS; `scripts/explore_geometric_ladder.py` — 3/3 PASS (Phase C); `scripts/explore_offset_rationals.py` — 5/5 PASS (Phase D); each PASS reproduces a recorded conclusion including each null. Companion to `docs/sm-closeability-audit.md` §2 and `scripts/sm_ledger.py`.
