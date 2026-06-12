@@ -11,7 +11,10 @@ rh_claim: NO_RH_PROOF_CLAIMED
 ```
 
 The nontrivial eigenvalues of the icosian Brandt/Hecke correspondence operators
-over `Z[phi]`, at level `(5phi-2)`, reproduce the independently point-counted
+over `Z[phi]`, at the norm-31 prime level (the engine's splitting root 13
+places it at `sigma(5phi-2)`, the Galois conjugate of the reference curve's
+conductor `(5phi-2)` — see the per-ideal convention below), reproduce the
+independently point-counted
 cuspidal coefficients `a_P` of the norm-31 Hilbert newform — out of sample, with
 **zero fitted parameters**.
 
@@ -29,14 +32,15 @@ K = Q(sqrt 5),  O_K = Z[phi],  phi^2 = phi + 1
 B = (-1,-1 / K)  definite quaternion algebra, ramified at both real places
 I = icosian ring = maximal order,  class number h(I) = 1
 I^1 = 120 reduced-norm-1 units = 2I (binary icosahedral),  I^1/{±1} = A_5
-level  N = (5phi-2),  N(N) = 31
+level  N : the norm-31 prime (engine kernel = sigma(5phi-2); curve conductor = (5phi-2))
 target  E = 31.1-a1 / K,  a_P = N(P)+1 - #E(O_K/P)
 ```
 
 ## Method (native, class-number-1 definite method)
 
-Because `h(I)=1`, the right-ideal classes of the Eichler order of level
-`(5phi-2)` are the orbits of `A_5 = I^1/{±1}` on `P^1(O_K/N) = P^1(F_31)` via the
+Because `h(I)=1`, the right-ideal classes of the Eichler order at the norm-31
+level (the engine's kernel ideal `sigma(5phi-2)`; the reference curve's
+conductor is its conjugate `(5phi-2)`) are the orbits of `A_5 = I^1/{±1}` on `P^1(O_K/N) = P^1(F_31)` via the
 explicit local splitting `B ⊗ F_31 ≅ M_2(F_31)`. The Hecke operator `T_P`
 (`P ∤ N`) is built from the icosian elements of reduced norm `varpi_P` (a totally
 positive generator of `P`), enumerated completely by Fincke–Pohst short-vector
@@ -76,16 +80,18 @@ in-sample & out-of-sample cuspidal match ?        PASS  (11/11 and 13/13)
    eigenform (the norm-31 newform), orthogonal to Eisenstein under `mu`. Its
    eigenvalue `a_P = trace B(P) − (N(P)+1)` equals the brute-force point-counted
    `a_P`:
-   - **7/7 EXACT** at the primes with an unambiguous eigenvalue — the inert
-     (`N(P) = 4,9,49,169`), ramified (`N(P)=5`), and split-with-coincident-
-     conjugate (`N(P)=29,41`) primes;
-   - **24/24** matching the genuine eigenvalue at the rational prime overall
-     (11 in-sample `N(P) ≤ 71`, 13 out-of-sample `N(P) ≤ 200`).
-   At split primes the operator returns `a_P` for one of the two Galois-conjugate
-   primes above `p`; the choice is the single global involution `phi ↔ 1-phi`
-   (the embedding `K -> F_31` fixed once in the splitting), exactly like the one
-   global sign convention in any Hecke normalization. It is not a per-prime
-   degree of freedom and nothing is tuned to the target.
+   - **44/44 per-ideal** (superseding the original 24-bucket protocol below):
+     after fixing the single labeling convention once — the engine's splitting
+     root is 13, so its level is `sigma(5phi-2)` and the geometric value at
+     ideal `P` is the Brandt eigenvalue at a generator of `sigma(P)` — every
+     individually-labeled good prime ideal of norm ≤ 200 matches
+     (`data/level31_per_ideal.json`; the script fails if any single ideal
+     needs its own adjustment). The involution is the embedding `K -> F_31`
+     fixed once in the splitting, exactly like the one global sign convention
+     in any Hecke normalization — not a per-prime degree of freedom, and
+     nothing is tuned to the target.
+   - Original protocol record: 24/24 at the rational-prime level (11 in-sample,
+     13 out-of-sample), see `results.json`.
 
 ## Non-fitting / non-LMFDB compliance
 
@@ -121,9 +127,10 @@ development; the shipped pipeline is pure Python (`numpy` for one Cholesky).
 ## Reproduce
 
 ```bash
-cd release-bundles/fractal-tiling-theorem/icosian_brandt_cuspidal_geometry
-python3 route_b/brandt_level31.py          # full pipeline, writes results.json
-for t in tests/test_*.py; do python3 "$t"; done
+cd realization                              # from the closure-positivity-lab root
+python3 route_b/brandt_level31.py           # original pipeline, writes results.json
+python3 route_b/level31_full_ideals.py      # all 44 ideals per-ideal (~10 min)
+python3 -m pytest tests/                    # 23 gates
 ```
 
 ## What this does NOT establish

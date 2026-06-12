@@ -65,6 +65,7 @@ def run():
             a_geo = eng.brandt_matrix(gen)["cuspidal_eigenvalue"]
             t = pair[0]
             match = a_geo == t["a_p"]
+            ram = abs(a_geo) <= 2 * math.sqrt(t["norm"]) + 1e-9
             all_match &= match
             n_ideals += 1
             rows.append({"p": p, "norm": t["norm"], "kind": kind,
@@ -72,7 +73,7 @@ def run():
                          "ideal_generator": list(gen),
                          "evaluated_at_sigma_generator": list(gen),
                          "geometric_a": a_geo, "target_a_p": t["a_p"],
-                         "match": match})
+                         "ramanujan": ram, "match": match})
             continue
         # split: label each target ideal by its root; the geometric value AT
         # ideal P is the Brandt eigenvalue at a generator of sigma(P) — the
