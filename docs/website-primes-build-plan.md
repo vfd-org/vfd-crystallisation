@@ -99,9 +99,9 @@ Source of truth: `realization/README.md` (mirror its claims table exactly).
   points to /primes/the-anchor/; a new small "Play" card points to
   /primes/explore/.
 - Articles index: add the five /primes/ pages under a "Prime numbers and
-  the zeta function" group; mark rh-witness-resonance and
-  critical-line-pullback entries (if listed) as "undergoing review — not
-  yet part of the narrative" or remove them from the index until §3 lands.
+  the zeta function" group; update the rh-witness-resonance and
+  critical-line-pullback entries to their hardened versions (v2.0.0-rc1 /
+  v1.1.0-rc1) with their new standalone repo links.
 - Each X post in the campaign series (docs/prime-drop-plan.md §3) lands on
   its page: post 1 → /primes/explore/ (gap slider), post 2 →
   /primes/the-anchor/, post 3 → /primes/the-l-function/, post 4 →
